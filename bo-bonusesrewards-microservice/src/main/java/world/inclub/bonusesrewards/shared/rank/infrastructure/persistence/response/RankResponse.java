@@ -1,0 +1,33 @@
+package world.inclub.bonusesrewards.shared.rank.infrastructure.persistence.response;
+
+public record RankResponse(
+        Long idRange,
+        Long fkRange,
+        String name,
+        String description,
+        String requiredCode,
+        Integer points,
+        Double bauto,
+        Integer volumenRango,
+        Integer estatus,
+        Integer lineasactivas,
+        Integer puntosminimosDirectos,
+        Integer pointminimo,
+        Integer scopeAfil,
+        Integer scopeResid,
+        Integer pointmaximo,
+        Integer position,
+        Integer award,
+        Integer maintenance,
+        Integer directPartners,
+        Integer minPartners,
+        Integer requiredRanges,
+        String code,
+        Integer amountMaintenance,
+        Integer pointsRequired,
+        Integer pointsRequiredd,
+        Integer pointsRequireddd,
+        Integer pointsRequiredddd,
+        Integer pointsResidualComission,
+        Integer mediana
+) {}

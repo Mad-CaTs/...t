@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Ticket</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+        html,
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.4;
+            letter-spacing: 0;
+            color: #363A3E;
+            width: 559px;
+            /* Fixed width */
+            height: 684px;
+            /* Fixed height */
+            box-sizing: border-box;
+            /* include padding in fixed size */
+            position: relative;
+        }
+
+        .gap-55>*+* {
+            margin-top: 55px;
+        }
+
+        @page {
+            size: 559px 684px;
+            margin: 0;
+            padding: 32px 32px 0 32px;
+        }
+
+        body {
+            page-break-inside: avoid;
+            break-inside: avoid;
+            overflow: hidden;
+        }
+
+        .ticket-title {
+            font-size: 8px;
+            font-weight: 600;
+            color: #363A3E;
+            line-height: 12px;
+        }
+
+        .muted {
+            color: #555;
+            font-weight: 600;
+        }
+
+        .stack-tight>* {
+            margin: 0;
+            padding: 0;
+        }
+
+        .stack-tight>*+* {
+            margin-top: 0;
+        }
+
+        /* Campos comunes (Precio, Comisión, Evento, Lugar) */
+        .field-label {
+            font-size: 10px;
+            font-weight: 600;
+            line-height: 12px;
+            margin: 0;
+        }
+
+        .field-value {
+            font-size: 10px;
+            font-weight: 400;
+            line-height: 14px;
+            margin: 0;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        .ticket-number {
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 14px;
+        }
+
+        .attendee-name {
+            font-size: 8px;
+            font-weight: 600;
+            line-height: 12px;
+        }
+
+        .dni-label {
+            font-size: 10px;
+            font-weight: 400;
+            line-height: 14px;
+        }
+
+        .dni-number {
+            font-size: 10px;
+            font-weight: 600;
+            line-height: 14px;
+        }
+
+        .notice {
+            font-size: 8px;
+            font-weight: 600;
+            line-height: 12px;
+            margin: 0;
+        }
+
+        .notice-detail {
+            font-size: 12px;
+            font-weight: 400;
+            line-height: 14px;
+            margin-top: 4px;
+        }
+
+        ol {
+            margin-top: 8px;
+            padding-left: 16px;
+        }
+
+        /* Estilo de la lista de condiciones */
+        ol li {
+            font-size: 10px;
+            font-weight: 400;
+            line-height: 12px;
+            text-align: justify;
+            text-justify: inter-word;
+            /* mejor distribución de espacios en PDF/HTML */
+        }
+
+        /* Columna izquierda wrapper interno para gap */
+        .column-left-inner {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .column-left-inner>*+* {
+            margin-top: 4px;
+            margin-right: 24px;
+        }
+
+        .column-middle-inner {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .column-middle-inner>*+* {
+            margin-top: 4px;
+            margin-right: 24px;
+        }
+
+
+        .footer-container {
+            position: fixed;
+            bottom: 32px;
+            left: 0;
+            right: 0;
+            width: 559px;
+            padding: 0;
+            margin: 0;
+            z-index: 10;
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+        .footer-container img {
+            width: 559px;
+            padding: 0;
+            margin: 0;
+            margin-left: -32px;
+            margin-right: -32px;
+            display: block;
+        }
+
+        .qr-cell {
+            width: 20%;
+            height: 100%;
+            padding-left: 24px;
+        }
+
+        .qr-wrapper {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .qr-wrapper img {
+            width: 130px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body class="gap-55">
+    <table width="100%" cellspacing="0" cellpadding="0">
+        <tr>
+            <td style="padding-left:48px;">
+                <img src="{{logo}}" alt="Inclub"
+                    width="80" />
+            </td>
+        </tr>
+
+        <!-- Datos principales del ticket -->
+        <table width="100%" cellspacing="0" cellpadding="0">
+            <tr valign="top">
+                <!-- Columna Izquierda -->
+                <td style="width:35%; vertical-align: bottom;">
+                    <div class="column-left-inner">
+                        <!-- Datos del Ticket -->
+                        <div>
+                            <div class="ticket-title">E-TICKET</div>
+                            <div class="ticket-number">N° {{ticketCode}}</div>
+                        </div>
+                        <!-- Datos del Asistente -->
+                        <div>
+                            <div class="attendee-name">{{fullName}}</div>
+                            <div class="dni-label">
+                                {{documentType}} <span class="dni-number">{{documentNumber}}</span>
+                            </div>
+                        </div>
+
+                        <!-- Precio -->
+                        <div>
+                            <div class="field-label">Precio</div>
+                            <div class="field-value">{{price}}</div>
+                        </div>
+                    </div>
+                </td>
+                <!-- Columna Medio -->
+                <td style="width:45%; vertical-align: bottom;">
+                    <div class="column-middle-inner">
+                        <!-- Evento -->
+                        <div>
+                            <div class="field-label">Evento</div>
+                            <div class="field-value">{{eventName}}</div>
+                        </div>
+
+                        <!-- Lugar -->
+                        <div>
+                            <div class="field-label">Lugar</div>
+                            <div class="field-value">{{place}}</div>
+                        </div>
+                    </div>
+                </td>
+                <!-- Columna Derecha (qr) -->
+                <td class="qr-cell">
+                    <div class="qr-wrapper">
+                        <!-- Placeholder visual; luego reemplazar por {{qrImage}} -->
+                        <img src="{{qrImage}}" alt="qr" />
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <!-- Condiciones / Información del E-ticket -->
+        <div>
+            <p class="notice">ESTE ES UN TICKET ELECTRÓNICO</p>
+            <p class="notice-detail">Válido para una persona y solo para el evento y la fecha indicada.</p>
+            <ol>
+                <li>El E-ticket es una entrada válida, por lo que será canjeado por una entrada tradicional en el punto
+                    de
+                    venta o boletería.
+                </li>
+                <li>Con el E-ticket puedes acercarte directamente al evento presentándolo de manera virtual o puedes
+                    llevarlo impreso.
+                </li>
+                <li>Para descargar el E-ticket debes ingresar con tu usuario a "MIS ENTRADAS" en
+                    <a href="https://www.inclub.world/backoffice/login-selection" style="color:#136077; text-decoration:underline;"
+                        target="_blank">www.inclub/eventos</a> donde encontrarás el detalle de tu compra y tus e-tickets
+                    para
+                    descarga.
+                </li>
+                <li>Al elegir E-ticket aceptas no divulgarlo ni compartirlo con terceros, ya que esto podría afectar tu
+                    ingreso al evento.
+                </li>
+                <li>El E-ticket cuenta con un sistema de control y seguridad que impide que, en caso de duplicados,
+                    ingrese
+                    más de una persona con el mismo código; solo la primera validación permitirá el acceso.
+                </li>
+            </ol>
+        </div>
+
+    </table>
+    <table width="100%" cellspacing="0" cellpadding="0" class="footer-container">
+        <tr>
+            <td>
+                <img src="{{footer}}"
+                    alt="footer" />
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>

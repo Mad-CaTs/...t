@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: bo-ticket-microservice
+  config:
+    import: optional:configserver:${CONFIG_SERVER_URL:http://bosrvcfg.inclub.world/}
