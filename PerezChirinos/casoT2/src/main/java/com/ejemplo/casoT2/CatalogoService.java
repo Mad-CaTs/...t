@@ -2,7 +2,7 @@ package com.ejemplo.casoT2;
 
 import com.ejemplo.casoT2.model.Categoria;
 import com.ejemplo.casoT2.model.Producto;
-import jakarta.jws.WebService;
+import javax.jws.WebService;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

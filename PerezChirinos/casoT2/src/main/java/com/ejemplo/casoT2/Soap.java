@@ -1,9 +1,9 @@
 package com.ejemplo.casoT2;
 
-import jakarta.servlet.ServletContextEvent;
-import jakarta.servlet.ServletContextListener;
-import jakarta.servlet.annotation.WebListener;
-import jakarta.xml.ws.Endpoint;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
+import javax.servlet.annotation.WebListener;
+import javax.xml.ws.Endpoint;
 
 @WebListener
 public class Soap implements ServletContextListener {
