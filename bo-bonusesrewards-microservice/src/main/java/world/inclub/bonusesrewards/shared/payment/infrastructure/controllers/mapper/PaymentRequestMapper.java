@@ -6,16 +6,16 @@ import world.inclub.bonusesrewards.shared.payment.infrastructure.controllers.dto
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.List;
 
 @Component
 public class PaymentRequestMapper {
 
     public MakePaymentCommand toCommand(MakePaymentRequest request) {
 
-        List<MakePaymentCommand.Voucher> commandVouchers = request.getVouchers().stream()
-                .map(this::toCommandVoucher)
-                .toList();
+        MakePaymentCommand.Voucher commandVoucher = null;
+        if (request.getVouchers() != null && !request.getVouchers().isEmpty()) {
+            commandVoucher = toCommandVoucher(request.getVouchers().get(0));
+        }
 
         BigDecimal normalizedSubTotal = request.getSubTotalAmount() == null
                 ? null
@@ -39,7 +39,7 @@ public class PaymentRequestMapper {
                 normalizedSubTotal,
                 normalizedCommission,
                 normalizedTotal,
-                commandVouchers,
+                commandVoucher,
                 request.getPaymentDate()
         );
     }

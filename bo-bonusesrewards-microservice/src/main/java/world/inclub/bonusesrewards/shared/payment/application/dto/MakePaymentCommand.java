@@ -10,17 +10,17 @@ import java.time.Instant;
 import java.util.UUID;
 
 public record MakePaymentCommand(
-    UUID scheduleId,
-    Long memberId,
-    BonusType bonusType,
-    PaymentType paymentType,
-    Integer paymentSubTypeId,
-    CurrencyType currencyType,
-    BigDecimal subTotalAmount,
-    BigDecimal commissionAmount,
-    BigDecimal totalAmount,
-    Voucher voucher,
-    Instant paymentDate
+        UUID scheduleId,
+        Long memberId,
+        Integer bonusTypeId,
+        Integer paymentTypeId,
+        Integer paymentSubTypeId,
+        Integer currencyTypeId,
+        BigDecimal subTotalAmount,
+        BigDecimal commissionAmount,
+        BigDecimal totalAmount,
+        Voucher voucher,
+        Instant paymentDate
 ) {
     public record Voucher(
             String operationNumber,
