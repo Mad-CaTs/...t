@@ -4,6 +4,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import world.inclub.bonusesrewards.carbonus.domain.model.CarPaymentSchedule;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -38,5 +39,4 @@ public interface CarPaymentScheduleRepositoryPort {
      * @return a Mono emitting the last CarPaymentSchedule if found, or empty if not found
      */
     Mono<CarPaymentSchedule> findLastByCarAssignmentId(UUID carAssignmentId);
-
 }

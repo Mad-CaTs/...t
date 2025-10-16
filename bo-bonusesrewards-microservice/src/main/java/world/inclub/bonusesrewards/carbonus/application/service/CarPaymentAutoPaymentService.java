@@ -12,7 +12,7 @@ import world.inclub.bonusesrewards.carbonus.domain.model.CarPaymentSchedule;
 import world.inclub.bonusesrewards.carbonus.domain.port.CarPaymentScheduleRepositoryPort;
 import world.inclub.bonusesrewards.shared.infrastructure.context.TimezoneContext;
 import world.inclub.bonusesrewards.shared.logging.LoggerService;
-import world.inclub.bonusesrewards.shared.payment.domain.PaymentStatus;
+import world.inclub.bonusesrewards.shared.payment.domain.model.PaymentStatus;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
