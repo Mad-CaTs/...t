@@ -2,7 +2,7 @@ package world.inclub.bonusesrewards.shared.payment.application.service.interface
 
 import reactor.core.publisher.Mono;
 import world.inclub.bonusesrewards.shared.payment.application.dto.MakePaymentCommand;
-import world.inclub.bonusesrewards.shared.payment.infrastructure.controllers.dto.response.PaymentResponseDto;
+import world.inclub.bonusesrewards.shared.payment.api.dto.PaymentResponseDto;
 
 public interface PaymentService {
 
@@ -10,6 +10,6 @@ public interface PaymentService {
 
     Mono<PaymentResponseDto> approvePayment(Long paymentId);
 
-    Mono<PaymentResponseDto> rejectPayment(Long paymentId, String reason, String detail);
+    Mono<PaymentResponseDto> rejectPayment(Long paymentId, Long reasonId, String detail);
 
 }

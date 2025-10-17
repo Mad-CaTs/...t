@@ -6,21 +6,19 @@ import world.inclub.bonusesrewards.shared.payment.domain.model.CurrencyType;
 import world.inclub.bonusesrewards.shared.payment.domain.model.PaymentType;
 
 import java.math.BigDecimal;
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public record MakePaymentCommand(
         UUID scheduleId,
         Long memberId,
-        Integer bonusTypeId,
-        Integer paymentTypeId,
+        BonusType bonusTypeId,
+        PaymentType paymentType,
         Integer paymentSubTypeId,
-        Integer currencyTypeId,
-        BigDecimal subTotalAmount,
-        BigDecimal commissionAmount,
-        BigDecimal totalAmount,
+        CurrencyType currencyType,
         Voucher voucher,
-        Instant paymentDate
+        BigDecimal totalAmount,
+        LocalDateTime paymentDate
 ) {
     public record Voucher(
             String operationNumber,

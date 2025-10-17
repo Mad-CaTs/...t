@@ -3,5 +3,3 @@ spring:
     name: bo-bonusesrewards-microservice
   config:
     import: optional:configserver:${CONFIG_SERVER_URL:http://localhost:8888/}
-
-

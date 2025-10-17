@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
@@ -14,9 +15,9 @@ import java.util.UUID;
 @AllArgsConstructor
 public class PaymentRejection {
 
-    private Long id;
+    private UUID id;
     private UUID paymentId;
     private Long reasonId;
     private String note;
-    private Instant createdAt;
+    private LocalDateTime createdAt;
 }

@@ -1,0 +1,63 @@
+package world.inclub.bonusesrewards.shared.payment.infrastructure.controllers.dto;
+
+import jakarta.validation.constraints.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.http.codec.multipart.FilePart;
+import world.inclub.bonusesrewards.shared.bonus.domain.model.BonusType;
+import world.inclub.bonusesrewards.shared.payment.domain.model.CurrencyType;
+import world.inclub.bonusesrewards.shared.payment.domain.model.PaymentType;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.UUID;
+
+@Data
+@NoArgsConstructor
+public class MakePaymentRequest {
+
+    @NotNull
+    private UUID scheduleId;
+
+    @NotNull
+    @Positive
+    private Long memberId;
+
+    @NotNull
+    @Positive
+    private BonusType bonusType;
+
+    @NotNull
+    @Positive
+    private PaymentType paymentType;
+
+    @NotNull
+    private Integer paymentSubTypeId;
+
+    @NotNull
+    @Positive
+    private CurrencyType currencyType;
+
+    @NotNull
+    @Positive
+    private BigDecimal totalAmount;
+
+    private Voucher voucher;
+
+    @NotNull
+    private LocalDateTime paymentDate;
+
+    @Data
+    @NoArgsConstructor
+    public static class Voucher {
+
+        @NotBlank
+        private String operationNumber;
+
+        @NotBlank
+        private String note;
+
+        @NotBlank
+        private FilePart image;
+    }
+}

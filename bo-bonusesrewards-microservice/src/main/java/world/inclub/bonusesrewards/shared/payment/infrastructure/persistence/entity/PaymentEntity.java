@@ -4,9 +4,14 @@ import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
+import world.inclub.bonusesrewards.shared.bonus.domain.model.BonusType;
+import world.inclub.bonusesrewards.shared.payment.domain.model.CurrencyType;
+import world.inclub.bonusesrewards.shared.payment.domain.model.PaymentStatus;
+import world.inclub.bonusesrewards.shared.payment.domain.model.PaymentType;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import static world.inclub.bonusesrewards.shared.payment.infrastructure.persistence.schema.PaymentSchema.SCHEMA;
@@ -23,7 +28,7 @@ public class PaymentEntity {
     private UUID id;
 
     @Column("bonus_type_id")
-    private Integer bonusTypeId;
+    private BonusType bonusTypeId;
 
     @Column("source_table_type_id")
     private Integer sourceTableTypeId;
@@ -35,16 +40,16 @@ public class PaymentEntity {
     private Long memberId;
 
     @Column("payment_type_id")
-    private Integer paymentTypeId;
+    private PaymentType paymentType;
 
     @Column("payment_sub_type_id")
     private Integer paymentSubTypeId;
 
     @Column("status_id")
-    private Integer statusId;
+    private PaymentStatus status;
 
     @Column("currency_type_id")
-    private Integer currencyTypeId;
+    private CurrencyType currencyType;
 
     @Column("sub_total_amount")
     private BigDecimal subTotalAmount;
@@ -56,11 +61,11 @@ public class PaymentEntity {
     private BigDecimal totalAmount;
 
     @Column("payment_date")
-    private Instant paymentDate;
+    private LocalDateTime paymentDate;
 
     @Column("created_at")
-    private Instant createdAt;
+    private LocalDateTime createdAt;
 
     @Column("updated_at")
-    private Instant updatedAt;
+    private LocalDateTime updatedAt;
 }

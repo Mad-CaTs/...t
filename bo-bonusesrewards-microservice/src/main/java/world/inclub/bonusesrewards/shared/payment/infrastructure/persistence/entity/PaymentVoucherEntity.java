@@ -9,6 +9,7 @@ import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import static world.inclub.bonusesrewards.shared.payment.infrastructure.persistence.schema.PaymentSchema.SCHEMA;
@@ -22,7 +23,7 @@ import static world.inclub.bonusesrewards.shared.payment.infrastructure.persiste
 public class PaymentVoucherEntity {
 
     @Id
-    private Long id;
+    private UUID id;
 
     @Column("payment_id")
     private UUID paymentId;
@@ -37,5 +38,5 @@ public class PaymentVoucherEntity {
     private String imageUrl;
 
     @Column("created_at")
-    private Instant createdAt;
+    private LocalDateTime createdAt;
 }

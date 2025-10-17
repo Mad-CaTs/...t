@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
@@ -14,10 +14,10 @@ import java.util.UUID;
 @AllArgsConstructor
 public class PaymentVoucher {
 
-    private Long id;
+    private UUID id;
     private UUID paymentId;
     private String operationNumber;
     private String note;
     private String imageUrl;
-    private Instant createdAt;
+    private LocalDateTime createdAt;
 }

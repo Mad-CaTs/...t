@@ -8,7 +8,7 @@ import world.inclub.bonusesrewards.shared.payment.infrastructure.persistence.ent
 
 import java.util.UUID;
 
-public interface PaymentRejectionR2dbcRepository extends R2dbcRepository<PaymentRejectionEntity, Long> {
+public interface PaymentRejectionR2dbcRepository extends R2dbcRepository<PaymentRejectionEntity, UUID> {
 
     @Query("""
             SELECT * 

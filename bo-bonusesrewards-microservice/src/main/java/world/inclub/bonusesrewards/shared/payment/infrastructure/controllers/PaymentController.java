@@ -11,10 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 import world.inclub.bonusesrewards.shared.payment.application.service.interfaces.PaymentService;
-import world.inclub.bonusesrewards.shared.payment.infrastructure.controllers.dto.request.MakePaymentRequest;
+import world.inclub.bonusesrewards.shared.payment.infrastructure.controllers.dto.MakePaymentRequest;
 import world.inclub.bonusesrewards.shared.payment.infrastructure.controllers.mapper.PaymentRequestMapper;
-import world.inclub.bonusesrewards.shared.response.ResponseHandler;
-
+import world.inclub.bonusesrewards.shared.payment.infrastructure.config.handler.ResponseHandler;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/car-bonus/payments")

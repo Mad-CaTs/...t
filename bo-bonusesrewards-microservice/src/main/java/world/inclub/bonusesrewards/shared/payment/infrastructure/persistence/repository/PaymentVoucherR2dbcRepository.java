@@ -8,7 +8,7 @@ import world.inclub.bonusesrewards.shared.payment.infrastructure.persistence.ent
 
 import java.util.UUID;
 
-public interface PaymentVoucherR2dbcRepository extends R2dbcRepository<PaymentVoucherEntity, Long> {
+public interface PaymentVoucherR2dbcRepository extends R2dbcRepository<PaymentVoucherEntity, UUID> {
 
     @Query("""
             SELECT * FROM bo_bonus_reward.payment_vouchers

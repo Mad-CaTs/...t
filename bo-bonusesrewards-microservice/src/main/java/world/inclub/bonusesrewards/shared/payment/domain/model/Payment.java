@@ -4,9 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import world.inclub.bonusesrewards.shared.bonus.domain.model.BonusType;
 
 import java.math.BigDecimal;
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
@@ -16,18 +17,18 @@ import java.util.UUID;
 public class Payment {
 
     private UUID id;
-    private Integer bonusTypeId;
+    private BonusType bonusType;
     private Integer sourceTableTypeId;
     private UUID sourceRecordId;
     private Long memberId;
-    private Integer paymentTypeId;
+    private PaymentType paymentType;
     private Integer paymentSubTypeId;
-    private Integer statusId;
-    private Integer currencyTypeId;
+    private PaymentStatus status;
+    private CurrencyType currencyType;
     private BigDecimal subTotalAmount;
     private BigDecimal commissionAmount;
     private BigDecimal totalAmount;
-    private Instant paymentDate;
-    private Instant createdAt;
-    private Instant updatedAt;
+    private LocalDateTime paymentDate;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }

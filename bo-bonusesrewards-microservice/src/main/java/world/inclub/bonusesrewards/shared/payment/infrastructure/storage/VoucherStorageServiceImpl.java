@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 import world.inclub.bonusesrewards.shared.payment.application.service.interfaces.CloudStorageService;
 import world.inclub.bonusesrewards.shared.payment.application.service.interfaces.VoucherStorageService;
+import world.inclub.bonusesrewards.shared.utils.filestorage.infrastructure.StorageProperties;
 
 @Service
 @RequiredArgsConstructor
