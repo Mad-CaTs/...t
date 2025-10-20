@@ -1,0 +1,51 @@
+package world.inclub.appnotification.transfer.application.dto;
+
+import lombok.Builder;
+import java.time.LocalDateTime;
+
+@Builder
+public record TransferNotificationMessage(
+        Long id_transfer_request,
+        Integer id_transfer_status,
+        Integer id_transfer_type,
+        Long id_membership,
+        Long id_user_from,
+        Long id_user_to,
+        Long sponsor_id,
+        Long id_detail_transfer,
+        Long transferRequestId,
+        String toUser,
+        String fromUser,
+        String dniUrl,
+        String declarationJuradaUrl,
+        String dni_solicitante,
+        String declaracion_jurada,
+        String dni_receptor,
+        String recipientEmail,
+        String to,
+        String user_to_nombre,
+        String user_to_apellido,
+        String user_to_numero_documento,
+        Integer user_to_tipo_documento,
+        String user_to_genero,
+        String user_to_celular,
+        String user_from_nombre,
+        String user_from_last_name,
+        String user_from_email,
+        String username_from,
+        String username_child,
+        String sponsor_username,
+        String sponsor_nombre,
+        String sponsor_last_name,
+        String username_to,
+        String nameMembership,
+        String childId,
+        LocalDateTime request_date,
+        LocalDateTime approval_date,
+        LocalDateTime completion_date,
+        String user_to_correo_electronico,
+        String rejectionReason,
+        LocalDateTime rejected_at,
+        Integer rejectionTypeId,
+        String rejectionTypeName) {
+}

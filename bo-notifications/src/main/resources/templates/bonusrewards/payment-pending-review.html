@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Pago en Revisión</title>
+</head>
+
+<body style="margin:0; padding:10px 0px 10px 0px; background-color:#f4f4f4;">
+<table width="550" cellpadding="0" cellspacing="0" border="0" align="center" bgcolor="#f4f4f4"
+       style="border-radius:8px;">
+    <tbody>
+    <tr>
+        <td>
+            <table width="550" cellpadding="0" cellspacing="0" border="0" align="center" bgcolor="#ffffff"
+                   style="border-radius:8px; overflow: hidden;">
+                <tbody>
+                <tr>
+                    <td>
+                        <table width="550" cellpadding="0" cellspacing="0" border="0" align="center"
+                               style="background: linear-gradient(90deg, #0EA5E9 0%, #F97316 100%);">
+                            <tbody>
+                            <tr>
+                                <td height="5px">&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td align="center"><img src="{{logoUrl}}" alt="InClub Logo" width="120">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td height="5px">&nbsp;</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding:0px 24px 0px 24px;">
+                        <p
+                                style="margin:24px 0px 10px 0px; font-family:Arial,Tahoma,Helvetica; font-size:16px; color:#384860; font-weight:400; line-height:150%; text-align:center;">
+                            <b>Hola, {{fullName}}</b>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td height="10px">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>
+                        <table width="550" cellpadding="0" cellspacing="0" border="0" align="center"
+                               bgcolor="#FFFFFF">
+                            <tbody>
+                            <tr>
+                                <td align="center">
+                                    <img src="{{bannerUrl}}" alt="Banner" style="height:auto; display:block;" width="550">
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td height="10px">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>
+                        <p
+                                style="margin:0px 24px 10px 24px; font-family:Arial,Tahoma,Helvetica; text-align:center; font-size:20px; color:#1E1E1E; font-weight:700; line-height:150%;">
+                            ¡Gracias por su registro!
+                        </p>
+                        <p
+                                style="margin:0px 24px 24px 24px; font-family:Arial,Tahoma,Helvetica; text-align:center; font-size:14px; color:#384860; font-weight:400; line-height:150%;">
+                            Tu recibo de pago esta siendo verificado.
+                        </p>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td height="10px">&nbsp;</td>
+    </tr>
+    <tr>
+        <td>
+            <table width="550" cellpadding="0" cellspacing="0" border="0" align="center" bgcolor="#ffffff"
+                   style="border-radius:8px; overflow: hidden;">
+                <tbody>
+                <tr>
+                    <td>
+                        <table width="502" cellpadding="0" cellspacing="0" border="0" align="center"
+                               bgcolor="#FFFFFF">
+                            <tbody>
+                            <tr>
+                                <td
+                                        style="font-family:Arial,Tahoma,Helvetica; text-align: left; font-size:14px; color:#1E1E1E; font-weight:700; word-break:break-word; padding:24px 0px 12px 0px;">
+                                    Detalle del producto
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <table width="502" cellpadding="0" cellspacing="0" border="0">
+                                        <tbody>
+                                        <tr>
+                                            <td
+                                                    style="font-family:Arial,Tahoma,Helvetica; text-align: left; font-size:14px; color:#64676C; font-weight:400; padding:0px 0px 4px 0px;">
+                                                Cuota Inicial - {{installmentNumber}}
+                                            </td>
+                                            <td
+                                                    style="font-family:Arial,Tahoma,Helvetica; text-align: right; font-size:14px; color:#1E1E1E; font-weight:700; padding:0px 0px 4px 0px;">
+                                                {{totalAmount}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2"
+                                                style="font-family:Arial,Tahoma,Helvetica; text-align: left; font-size:14px; color:#64676C; font-weight:400; padding:0px 0px 4px 0px;">
+                                                {{bonusType}}
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td height="12px">&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td
+                                        style="font-family:Arial,Tahoma,Helvetica; text-align: left; font-size:14px; color:#1E1E1E; font-weight:700; word-break:break-word; padding:0px 0px 12px 0px;">
+                                    Forma de pago
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <table width="502" cellpadding="0" cellspacing="0" border="0">
+                                        <tbody>
+                                        <tr>
+                                            <td
+                                                    style="font-family:Arial,Tahoma,Helvetica; text-align: left; font-size:14px; color:#64676C; font-weight:400; padding:0px 0px 4px 0px;">
+                                                {{paymentType}}
+                                            </td>
+                                            <td
+                                                    style="font-family:Arial,Tahoma,Helvetica; text-align: right; font-size:14px; color:#64676C; font-weight:400; padding:0px 0px 4px 0px;">
+                                                {{paymentSubType}}
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td height="24px">&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td
+                                        style="font-family:Arial,Tahoma,Helvetica; text-align: center; font-size:14px; color:#1E1E1E; font-weight:700; word-break:break-word; padding:0px 0px 12px 0px;">
+                                    Nuestros canales de atención
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" style="padding:0px 0px 24px 0px;">
+                                    <table cellpadding="0" cellspacing="0" border="0" align="center">
+                                        <tbody>
+                                        <tr>
+                                            <td align="center" style="padding:0px 15px;">
+                                                <table cellpadding="0" cellspacing="0" border="0">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td align="center">
+                                                            <div style="width:40px; height:40px; background-color:#E8F4F8; border-radius:8px; display:flex; align-items:center; justify-content:center;">
+                                                                <img src="https://img.icons8.com/color/48/000000/google-web-search.png" alt="Centro de ayuda" width="24" height="24">
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="center" style="padding-top:8px;">
+                                                            <span style="font-family:Arial,Tahoma,Helvetica; font-size:12px; color:#136077; font-weight:400;">Centro de ayuda</span>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                            <td align="center" style="padding:0px 15px;">
+                                                <table cellpadding="0" cellspacing="0" border="0">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td align="center">
+                                                            <div style="width:40px; height:40px; background-color:#E8F4F8; border-radius:8px; display:flex; align-items:center; justify-content:center;">
+                                                                <img src="https://img.icons8.com/color/48/000000/whatsapp.png" alt="Whatsapp" width="24" height="24">
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="center" style="padding-top:8px;">
+                                                            <span style="font-family:Arial,Tahoma,Helvetica; font-size:12px; color:#136077; font-weight:400;">Whatsapp</span>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                            <td align="center" style="padding:0px 15px;">
+                                                <table cellpadding="0" cellspacing="0" border="0">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td align="center">
+                                                            <div style="width:40px; height:40px; background-color:#E8F4F8; border-radius:8px; display:flex; align-items:center; justify-content:center;">
+                                                                <img src="https://img.icons8.com/color/48/000000/email.png" alt="Correo" width="24" height="24">
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="center" style="padding-top:8px;">
+                                                            <span style="font-family:Arial,Tahoma,Helvetica; font-size:12px; color:#136077; font-weight:400;">Correo</span>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td height="10px">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>
+                        <table width="502" cellpadding="0" cellspacing="0" border="0" align="center"
+                               bgcolor="#FFFFFF">
+                            <tbody>
+                            <tr>
+                                <td
+                                        style="font-family:Arial,Tahoma,Helvetica; text-align: left; font-size:14px; color:#1E1E1E; font-weight:700; word-break:break-word; padding:0px 0px 4px 0px;">
+                                    ¿Necesitas ayuda?
+                                </td>
+                            </tr>
+                            <tr>
+                                <td
+                                        style="font-family:Arial,Tahoma,Helvetica; text-align: left; font-size:14px; color:#1E1E1E; font-weight:400; word-break:break-word; padding:0px 0px 24px 0px;">
+                                    Envíe sus comentarios o información de errores a
+                                    <a href="mailto:{{supportEmail}}"
+                                       style="color:#136077; text-decoration:underline;">
+                                        {{supportEmail}}
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p
+                                style="font-family:Arial,Tahoma,Helvetica; font-size:12px; color:#64676C; margin:0; background:#F9F9F9; padding:15px 0px 15px 0px; text-align:center;">
+                            &copy;{{year}} InClub. Todos los derechos reservados.
+                        </p>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+
+</html>

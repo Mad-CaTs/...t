@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Actualización de las Comisiones</title>
+    <style>
+      .container {
+        max-width: 600px;
+        margin: 20px auto;
+        border-radius: 15px;
+        overflow: hidden;
+      }
+
+      .container > * {
+        margin-bottom: 10px;
+      }
+
+      .container > *:last-child {
+        margin-bottom: 0;
+      }
+
+      .header img {
+        width: 100%;
+        height: 200px;
+        display: block;
+        object-fit: cover;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+      }
+
+      .content {
+        background: #ffffff;
+        padding: 45px;
+        color: #333;
+        text-align: left;
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+      }
+
+      .p-color {
+        color: #384860 !important;
+        font-size: 16px !important;
+      }
+
+      .p-color-body {
+        font-size: 16px !important;
+      }
+
+      .table-detail {
+        width: 90%;
+        margin: 0 auto 10px;
+        border-collapse: collapse;
+      }
+      .table-detail td {
+        font-size: 14px;
+        line-height: 1.4;
+        padding: 0;
+      }
+      .table-detail .label {
+        color: #1f2937;
+        font-weight: 500;
+      }
+      .table-detail .value {
+        color: #5f7081;
+        text-align: right;
+      }
+      .table-detail .label-bold,
+      .table-detail .value-bold {
+        font-weight: 600;
+      }
+
+      .table-detail .label-bold {
+        text-align: left;
+      }
+
+      .table-detail .value-bold {
+        text-align: right;
+      }
+
+      .content h2 {
+        color: #333;
+        font-weight: bold;
+        margin-bottom: 5px;
+        text-align: center;
+      }
+
+      .content p {
+        font-size: 16px;
+        margin-bottom: 15px;
+        line-height: 1.5;
+      }
+
+      .box {
+        background: #f9faff;
+        padding: 2rem;
+        border-radius: 30px;
+        margin-top: 20px;
+        margin-right: auto;
+      }
+
+      .box-title {
+        font-size: 16px;
+        color: #121a26;
+        max-width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 0;
+        margin-bottom: 0 !important;
+        font-weight: 600;
+      }
+
+      .box p {
+        font-size: 20px;
+        color: #121a26;
+        max-width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 0;
+      }
+
+      .box-hr {
+        width: 90%;
+        background-color: #ededed !important;
+        border: 0.5px solid #ededed;
+      }
+
+      .p-box-detail-bold {
+        font-weight: 600;
+        margin: 0 !important;
+        font-size: 14px !important;
+      }
+
+      .p-box-detail.negative {
+        color: #e53e3e !important;
+      }
+
+      .box-title-message {
+        font-size: 13px !important;
+        margin: auto !important;
+        text-align: justify;
+        color: #5f7081 !important;
+      }
+
+      .box-period-message {
+        font-size: 13px !important;
+        margin: auto !important;
+        text-align: justify;
+      }
+
+      .footer {
+        padding: 15px;
+        text-align: center;
+        font-size: 14px;
+        color: #666;
+        background: #f8f8f8;
+      }
+
+      .footer a {
+        color: #157efb;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      .help-section {
+        background: #ffffff;
+        padding: 10px 45px;
+        text-align: left;
+      }
+
+      .help-section h3 {
+        font-size: 18px;
+        color: #333;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+
+      .help-section p {
+        font-size: 14px;
+        color: #555;
+        line-height: 1.6;
+      }
+
+      .help-section a {
+        color: #007bff;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      .border-15 {
+        border-radius: 15px;
+        overflow: hidden;
+      }
+
+      .title-container {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .title {
+        font-size: 16px;
+        font-weight: 600;
+        color: #1f2937;
+      }
+
+      .support-channels {
+        text-align: center;
+        margin-top: 20px;
+      }
+      .support-channels .channels-list {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 0;
+      }
+      .support-channels .channel-item {
+        text-decoration: none;
+        font-size: 14px;
+        color: #19809e;
+      }
+      .support-channels .channel-item img {
+        display: block;
+        margin: 0 auto 5px;
+        width: 32px;
+        height: 32px;
+      }
+    </style>
+  </head>
+
+  <body
+    style="
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      font-family: Arial, sans-serif;
+    "
+  >
+    <div class="container" style="padding: 20px">
+      <div>
+        <div class="header">
+          <img
+            src="https://s3.us-east-2.amazonaws.com/backoffice.documents/bo-imagenes/Keola_correo.jpeg"
+            alt="Company Logo"
+          />
+        </div>
+        <div class="content">
+          <h2 class="p-color">Notificación</h2>
+          <p class="p-color">
+            Hola, {{name}}. Le notificamos la actualización de su comisión. Esto
+            son los detalles:
+          </p>
+
+          <div class="box">
+            <p class="box-title">Detalle de la comisión</p>
+            <hr class="box-hr" />
+
+            <table class="table-detail">
+              <tr>
+                <td class="label">Tipo de Bono</td>
+                <td class="value">{{typeBonusName}}</td>
+              </tr>
+            </table>
+
+            <table class="table-detail">
+              <tr>
+                <td class="label">Monto</td>
+                <td class="value">{{amount}}</td>
+              </tr>
+            </table>
+
+
+
+
+            <hr class="box-hr" />
+
+            <table class="table-detail">
+              <tr>
+                <td class="label-bold">Ciclo de referencia</td>
+                <td class="value-bold">{{period}}</td>
+              </tr>
+            </table>
+
+            <table class="table-detail">
+              <tr>
+                <td class="label">Fecha de registro</td>
+                <td class="value">{{registerDate}}</td>
+              </tr>
+            </table>
+          </div>
+
+          <div class="box">
+            <p class="box-title-message">Tener en cuenta:</p>
+            <p class="box-period-message">
+              La modificación es referente al ciclo actual y el monto se
+              reflejará en sus comisiones y se actualizará el día de su pago
+              mediante el wallet.
+            </p>
+          </div>
+
+          <div class="support-channels">
+            <h3 class="p-color">Nuestros canales de atención</h3>
+            <div class="channels-list">
+              <a
+                href="https://soporte.inclub.com"
+                target="_blank"
+                class="channel-item"
+              >
+                <img
+                  src="../static/images/help-center.png"
+                  alt="Centro de ayuda"
+                />
+                Centro de ayuda
+              </a>
+              <a
+                href="https://wa.me/1234567890"
+                target="_blank"
+                class="channel-item"
+              >
+                <img src="../static/images/whatsapp.png" alt="Whatsapp" />
+                Whatsapp
+              </a>
+              <a href="mailto:soporteinclub@gmail.com" class="channel-item">
+                <img src="../static/images/mail.png" alt="Correo" />
+                Correo
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="border-15">
+        <div class="help-section">
+          <h3>¿Necesitas ayuda?</h3>
+          <p class="p-color">
+            Envie su cometario o información de errores a
+            <a href="mailto:soporteinclub@gmail.com">soporteinclub@gmail.com</a
+            >.
+          </p>
+        </div>
+        <div class="footer">
+          &copy; {{year}} Inclub. Todos los derechos reservados.
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
