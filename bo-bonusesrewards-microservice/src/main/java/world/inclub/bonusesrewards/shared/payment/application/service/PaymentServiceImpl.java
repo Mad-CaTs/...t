@@ -11,7 +11,9 @@ import world.inclub.bonusesrewards.shared.exceptions.BadRequestException;
 import world.inclub.bonusesrewards.shared.exceptions.NotFoundException;
 import world.inclub.bonusesrewards.shared.payment.application.dto.ProcessWalletPaymentCommand;
 import world.inclub.bonusesrewards.shared.payment.application.factory.PaymentNotificationFactory;
+import world.inclub.bonusesrewards.shared.payment.application.factory.PaymentRejectionFactory;
 import world.inclub.bonusesrewards.shared.payment.application.service.interfaces.*;
+import world.inclub.bonusesrewards.shared.payment.domain.model.PaymentRejection;
 import world.inclub.bonusesrewards.shared.payment.domain.port.*;
 import world.inclub.bonusesrewards.shared.payment.application.dto.MakePaymentCommand;
 import world.inclub.bonusesrewards.shared.payment.application.dto.PaymentAmounts;
@@ -22,6 +24,9 @@ import world.inclub.bonusesrewards.shared.payment.domain.model.CurrencyType;
 import world.inclub.bonusesrewards.shared.payment.domain.model.Payment;
 import world.inclub.bonusesrewards.shared.payment.domain.model.PaymentStatus;
 import world.inclub.bonusesrewards.shared.payment.api.dto.PaymentResponseDto;
+import world.inclub.bonusesrewards.shared.payment.infrastructure.kafka.producer.PaymentEventProducer;
+import world.inclub.bonusesrewards.shared.payment.infrastructure.kafka.topics.PaymentRejectedEvent;
+import world.inclub.bonusesrewards.shared.utils.TimeLima;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -47,14 +52,16 @@ public class PaymentServiceImpl implements PaymentService {
     private final PaymentFactory paymentFactory;
     private final PaymentVoucherFactory paymentVoucherFactory;
     private final PaymentNotificationFactory paymentNotificationFactory;
+    private final PaymentRejectionFactory paymentRejectionFactory;
 
     private final PaymentMapper paymentMapper;
+
+    private final PaymentEventProducer paymentEventProducer;
 
     @Override
     @Transactional
     public Mono<String> processPayment(MakePaymentCommand command) {
-        return validateScheduleAvailability(command)
-                .then(validateMemberMatchesSchedule(command))
+        return validateSchedule(command)
                 .then(validatePaymentMethod(command))
                 .then(paymentAmountService.validateAndCalculate(command))
                 .flatMap(amounts -> createPayment(command, amounts))
@@ -63,29 +70,18 @@ public class PaymentServiceImpl implements PaymentService {
                 .thenReturn("Payment processed successfully");
     }
 
-    private Mono<Void> validateScheduleAvailability(MakePaymentCommand command) {
+    private Mono<Void> validateSchedule(MakePaymentCommand command) {
         return carPaymentScheduleRepositoryPort.existsById(command.scheduleId())
-                .flatMap(exists -> {
-                    if (!exists) {
-                        return Mono.error(new NotFoundException(
-                                "Car payment schedule not found: " + command.scheduleId()));
-                    }
-                    return Mono.empty();
-                })
-                .then(carPaymentScheduleRepositoryPort.isSchedulePending(command.scheduleId()))
-                .flatMap(isPending -> {
-                    if (isPending == null || !(isPending instanceof Boolean) || !(Boolean) isPending) {
-                        return Mono.error(new BadRequestException(
-                                "Schedule is not pending payment: " + command.scheduleId()));
-                    }
-                    return Mono.empty();
-                });
-    }
-
-    private Mono<Void> validateMemberMatchesSchedule(MakePaymentCommand command) {
-        return carPaymentScheduleRepositoryPort.getMemberIdByScheduleId(command.scheduleId())
+                .filter(Boolean::booleanValue)
                 .switchIfEmpty(Mono.error(new NotFoundException(
-                        "Schedule member not found: " + command.scheduleId())))
+                        "Car payment schedule not found: " + command.scheduleId())))
+
+                .then(carPaymentScheduleRepositoryPort.isSchedulePending(command.scheduleId()))
+                .filter(isPending -> Boolean.TRUE.equals(isPending))
+                .switchIfEmpty(Mono.error(new BadRequestException(
+                        "Schedule is not pending payment: " + command.scheduleId())))
+
+                .then(carPaymentScheduleRepositoryPort.getMemberIdByScheduleId(command.scheduleId()))
                 .filter(scheduleMemberId -> scheduleMemberId.equals(command.memberId()))
                 .switchIfEmpty(Mono.error(new BadRequestException(
                         "Member mismatch for schedule: " + command.scheduleId())))
@@ -187,12 +183,51 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public Mono<PaymentResponseDto> approvePayment(Long paymentId) {
-        return Mono.error(new UnsupportedOperationException("Not implemented yet"));
+    @Transactional
+    public Mono<PaymentResponseDto> approvePayment(UUID paymentId) {
+        return paymentRepositoryPort.findById(paymentId)
+                .switchIfEmpty(Mono.error(new NotFoundException("Payment with ID " + paymentId + " not found")))
+                .filter(payment -> payment.getStatus() == PaymentStatus.PENDING_REVIEW)
+                .switchIfEmpty(Mono.error(new BadRequestException("Payment is not in PENDING_REVIEW status")))
+                .flatMap(payment -> {
+                    payment.setStatus(PaymentStatus.COMPLETED);
+                    return paymentRepositoryPort.save(payment);
+                })
+                .flatMap(payment -> paymentNotification(payment).thenReturn(payment))
+                .map(paymentMapper::toResponseDto);
     }
 
     @Override
-    public Mono<PaymentResponseDto> rejectPayment(Long paymentId, Long reasonId, String detail) {
-        return Mono.error(new UnsupportedOperationException("Not implemented yet"));
+    @Transactional
+    public Mono<PaymentResponseDto> rejectPayment(UUID paymentId, Long reasonId, String detail) {
+        LocalDateTime updatedAt = TimeLima.getLimaTime();
+
+        return paymentRepositoryPort.findById(paymentId)
+                .switchIfEmpty(Mono.error(new NotFoundException("Payment with ID " + paymentId + " not found")))
+                .filter(payment -> payment.getStatus() == PaymentStatus.PENDING_REVIEW)
+                .switchIfEmpty(Mono.error(new BadRequestException("Payment is not in PENDING status")))
+                .flatMap(payment -> {
+                    payment.setStatus(PaymentStatus.REJECTED);
+                    payment.setUpdatedAt(updatedAt);
+                    return paymentRepositoryPort.save(payment);
+                })
+                .flatMap(payment -> {
+                    PaymentRejection rejection = paymentRejectionFactory.createPaymentRejection(paymentId, reasonId, detail);
+                    return paymentRejectionRepositoryPort.save(rejection)
+                            .then(Mono.just(payment));
+                })
+                .flatMap(payment -> {
+                    PaymentRejectedEvent event = PaymentRejectedEvent.builder()
+                            .paymentId(paymentId)
+                            .rejectedAt(updatedAt)
+                            .reasonId(reasonId)
+                            .detail(detail)
+                            .build();
+
+                    return paymentEventProducer.sendPaymentRejectedEvent(event)
+                            .then(Mono.just(payment));
+                })
+                .flatMap(payment -> paymentNotification(payment).thenReturn(payment))
+                .map(paymentMapper::toResponseDto);
     }
 }

@@ -4,12 +4,14 @@ import reactor.core.publisher.Mono;
 import world.inclub.bonusesrewards.shared.payment.application.dto.MakePaymentCommand;
 import world.inclub.bonusesrewards.shared.payment.api.dto.PaymentResponseDto;
 
+import java.util.UUID;
+
 public interface PaymentService {
 
     Mono<String> processPayment(MakePaymentCommand command);
 
-    Mono<PaymentResponseDto> approvePayment(Long paymentId);
+    Mono<PaymentResponseDto> approvePayment(UUID paymentId);
 
-    Mono<PaymentResponseDto> rejectPayment(Long paymentId, Long reasonId, String detail);
+    Mono<PaymentResponseDto> rejectPayment(UUID paymentId, Long reasonId, String detail);
 
 }

@@ -312,6 +312,7 @@ D:\Keola InClub\bo-bonusesrewards-microservice\src\main\java\world\inclub\bonuse
 D:\Keola InClub\bo-bonusesrewards-microservice\src\main\java\world\inclub\bonusesrewards\shared\payment\infrastructure\client\adapter\PaymentSubTypeWebClientAdapter.java
 D:\Keola InClub\bo-bonusesrewards-microservice\src\main\java\world\inclub\bonusesrewards\shared\payment\infrastructure\config\handler\ResponseHandler.java
 D:\Keola InClub\bo-bonusesrewards-microservice\src\main\java\world\inclub\bonusesrewards\shared\payment\infrastructure\controllers\dto\MakePaymentRequest.java
+D:\Keola InClub\bo-bonusesrewards-microservice\src\main\java\world\inclub\bonusesrewards\shared\payment\infrastructure\controllers\dto\RejectPaymentRequest.java
 D:\Keola InClub\bo-bonusesrewards-microservice\src\main\java\world\inclub\bonusesrewards\shared\payment\infrastructure\controllers\mapper\PaymentRequestMapper.java
 D:\Keola InClub\bo-bonusesrewards-microservice\src\main\java\world\inclub\bonusesrewards\shared\payment\infrastructure\controllers\PaymentController.java
 D:\Keola InClub\bo-bonusesrewards-microservice\src\main\java\world\inclub\bonusesrewards\shared\payment\infrastructure\kafka\adapter\KafkaWalletPaymentAdapter.java
@@ -319,6 +320,8 @@ D:\Keola InClub\bo-bonusesrewards-microservice\src\main\java\world\inclub\bonuse
 D:\Keola InClub\bo-bonusesrewards-microservice\src\main\java\world\inclub\bonusesrewards\shared\payment\infrastructure\kafka\dto\ProcessWalletPaymentDto.java
 D:\Keola InClub\bo-bonusesrewards-microservice\src\main\java\world\inclub\bonusesrewards\shared\payment\infrastructure\kafka\KafkaRequestService.java
 D:\Keola InClub\bo-bonusesrewards-microservice\src\main\java\world\inclub\bonusesrewards\shared\payment\infrastructure\kafka\mapper\ProcessWalletPaymentMapper.java
+D:\Keola InClub\bo-bonusesrewards-microservice\src\main\java\world\inclub\bonusesrewards\shared\payment\infrastructure\kafka\producer\PaymentEventProducer.java
+D:\Keola InClub\bo-bonusesrewards-microservice\src\main\java\world\inclub\bonusesrewards\shared\payment\infrastructure\kafka\topics\PaymentRejectedEvent.java
 D:\Keola InClub\bo-bonusesrewards-microservice\src\main\java\world\inclub\bonusesrewards\shared\payment\infrastructure\persistence\adapter\PaymentRejectionRepositoryAdapter.java
 D:\Keola InClub\bo-bonusesrewards-microservice\src\main\java\world\inclub\bonusesrewards\shared\payment\infrastructure\persistence\adapter\PaymentRepositoryAdapter.java
 D:\Keola InClub\bo-bonusesrewards-microservice\src\main\java\world\inclub\bonusesrewards\shared\payment\infrastructure\persistence\adapter\PaymentVoucherRepositoryAdapter.java

@@ -233,6 +233,7 @@ world\inclub\bonusesrewards\shared\member\domain\model\Member.class
 world\inclub\bonusesrewards\shared\bonus\domain\model\Classification.class
 world\inclub\bonusesrewards\carbonus\domain\model\CarQuotation$CarQuotationBuilder.class
 world\inclub\bonusesrewards\shared\bonus\domain\model\Prequalification.class
+world\inclub\bonusesrewards\shared\payment\infrastructure\controllers\dto\RejectPaymentRequest.class
 world\inclub\bonusesrewards\shared\bonus\infrastructure\controllers\mapper\ClassificationExcelResponseMapper.class
 world\inclub\bonusesrewards\shared\payment\application\factory\PaymentRejectionFactory.class
 world\inclub\bonusesrewards\shared\member\application\service\MemberService.class
@@ -326,7 +327,9 @@ world\inclub\bonusesrewards\carbonus\application\usecase\carassignment\detail\al
 world\inclub\bonusesrewards\carbonus\infrastructure\controllers\CarRankBonusDetailController.class
 world\inclub\bonusesrewards\shared\member\domain\port\MemberRepositoryPort.class
 world\inclub\bonusesrewards\shared\payment\application\factory\PaymentVoucherFactory.class
+world\inclub\bonusesrewards\shared\payment\infrastructure\kafka\topics\PaymentRejectedEvent$PaymentRejectedEventBuilder.class
 world\inclub\bonusesrewards\carbonus\infrastructure\controllers\dto\response\CarRankBonusDetailResponse$StatusResponse.class
+world\inclub\bonusesrewards\shared\payment\infrastructure\kafka\producer\PaymentEventProducer.class
 world\inclub\bonusesrewards\shared\payment\infrastructure\controllers\PaymentController.class
 world\inclub\bonusesrewards\carbonus\application\usecase\carrankbonus\detail\SearchCarRankBonusDetailUseCase.class
 world\inclub\bonusesrewards\shared\bonus\application\usecase\member\GetPrequalificationsUseCase.class
@@ -444,6 +447,7 @@ world\inclub\bonusesrewards\shared\bonus\infrastructure\controllers\constants\Bo
 world\inclub\bonusesrewards\shared\utils\filestorage\domain\port\FileStoragePort.class
 world\inclub\bonusesrewards\shared\payment\infrastructure\persistence\adapter\PaymentRejectionRepositoryAdapter.class
 world\inclub\bonusesrewards\shared\payment\infrastructure\persistence\mapper\PaymentRejectionEntityMapper.class
+world\inclub\bonusesrewards\shared\payment\infrastructure\kafka\topics\PaymentRejectedEvent.class
 world\inclub\bonusesrewards\carbonus\application\usecase\carmodel\GetAllCarModelsUseCase.class
 world\inclub\bonusesrewards\shared\rank\domain\port\RankRepositoryPort.class
 world\inclub\bonusesrewards\shared\bonus\infrastructure\controllers\dto\response\BonusRequirementResponse.class

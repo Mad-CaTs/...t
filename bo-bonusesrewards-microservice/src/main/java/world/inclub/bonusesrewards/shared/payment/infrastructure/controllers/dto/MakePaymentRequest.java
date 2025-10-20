@@ -24,18 +24,15 @@ public class MakePaymentRequest {
     private Long memberId;
 
     @NotNull
-    @Positive
     private BonusType bonusType;
 
     @NotNull
-    @Positive
     private PaymentType paymentType;
 
     @NotNull
     private Integer paymentSubTypeId;
 
     @NotNull
-    @Positive
     private CurrencyType currencyType;
 
     @NotNull

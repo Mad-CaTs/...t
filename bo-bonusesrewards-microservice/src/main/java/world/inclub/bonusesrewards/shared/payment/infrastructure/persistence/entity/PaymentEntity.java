@@ -28,7 +28,7 @@ public class PaymentEntity {
     private UUID id;
 
     @Column("bonus_type_id")
-    private BonusType bonusTypeId;
+    private Long bonusTypeId;
 
     @Column("source_table_type_id")
     private Integer sourceTableTypeId;
@@ -40,16 +40,16 @@ public class PaymentEntity {
     private Long memberId;
 
     @Column("payment_type_id")
-    private PaymentType paymentType;
+    private Integer paymentTypeId;
 
     @Column("payment_sub_type_id")
     private Integer paymentSubTypeId;
 
     @Column("status_id")
-    private PaymentStatus status;
+    private Long statusId;
 
     @Column("currency_type_id")
-    private CurrencyType currencyType;
+    private Integer currencyTypeId;
 
     @Column("sub_total_amount")
     private BigDecimal subTotalAmount;
