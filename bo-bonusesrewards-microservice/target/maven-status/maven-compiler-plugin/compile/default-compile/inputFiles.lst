@@ -310,6 +310,7 @@ D:\Keola InClub\bo-bonusesrewards-microservice\src\main\java\world\inclub\bonuse
 D:\Keola InClub\bo-bonusesrewards-microservice\src\main\java\world\inclub\bonusesrewards\shared\payment\infrastructure\client\adapter\ImageWebClientAdapter.java
 D:\Keola InClub\bo-bonusesrewards-microservice\src\main\java\world\inclub\bonusesrewards\shared\payment\infrastructure\client\adapter\MemberWebClientAdapter.java
 D:\Keola InClub\bo-bonusesrewards-microservice\src\main\java\world\inclub\bonusesrewards\shared\payment\infrastructure\client\adapter\PaymentSubTypeWebClientAdapter.java
+D:\Keola InClub\bo-bonusesrewards-microservice\src\main\java\world\inclub\bonusesrewards\shared\payment\infrastructure\client\adapter\WalletWebClientAdapter.java
 D:\Keola InClub\bo-bonusesrewards-microservice\src\main\java\world\inclub\bonusesrewards\shared\payment\infrastructure\config\handler\ResponseHandler.java
 D:\Keola InClub\bo-bonusesrewards-microservice\src\main\java\world\inclub\bonusesrewards\shared\payment\infrastructure\controllers\dto\MakePaymentRequest.java
 D:\Keola InClub\bo-bonusesrewards-microservice\src\main\java\world\inclub\bonusesrewards\shared\payment\infrastructure\controllers\dto\RejectPaymentRequest.java
@@ -325,7 +326,6 @@ D:\Keola InClub\bo-bonusesrewards-microservice\src\main\java\world\inclub\bonuse
 D:\Keola InClub\bo-bonusesrewards-microservice\src\main\java\world\inclub\bonusesrewards\shared\payment\infrastructure\persistence\adapter\PaymentRejectionRepositoryAdapter.java
 D:\Keola InClub\bo-bonusesrewards-microservice\src\main\java\world\inclub\bonusesrewards\shared\payment\infrastructure\persistence\adapter\PaymentRepositoryAdapter.java
 D:\Keola InClub\bo-bonusesrewards-microservice\src\main\java\world\inclub\bonusesrewards\shared\payment\infrastructure\persistence\adapter\PaymentVoucherRepositoryAdapter.java
-D:\Keola InClub\bo-bonusesrewards-microservice\src\main\java\world\inclub\bonusesrewards\shared\payment\infrastructure\persistence\adapter\WalletRepositoryAdapter.java
 D:\Keola InClub\bo-bonusesrewards-microservice\src\main\java\world\inclub\bonusesrewards\shared\payment\infrastructure\persistence\entity\PaymentEntity.java
 D:\Keola InClub\bo-bonusesrewards-microservice\src\main\java\world\inclub\bonusesrewards\shared\payment\infrastructure\persistence\entity\PaymentRejectionEntity.java
 D:\Keola InClub\bo-bonusesrewards-microservice\src\main\java\world\inclub\bonusesrewards\shared\payment\infrastructure\persistence\entity\PaymentVoucherEntity.java

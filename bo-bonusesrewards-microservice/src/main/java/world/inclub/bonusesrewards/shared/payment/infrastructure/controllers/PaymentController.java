@@ -35,7 +35,7 @@ public class PaymentController {
     }
 
     @PutMapping("/{paymentId}/reject")
-    public Mono<ResponseEntity<Object>> rejectPayment(@PathVariable UUID paymentId, @Valid RejectPaymentRequest request) {
+    public Mono<ResponseEntity<Object>> rejectPayment(@PathVariable UUID paymentId, @Valid @RequestBody RejectPaymentRequest request) {
         return ResponseHandler.generateResponse(HttpStatus.OK, paymentService.rejectPayment(paymentId, request.getReasonId(), request.getDetail()), true);
     }
 }

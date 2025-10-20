@@ -185,15 +185,17 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     @Transactional
     public Mono<PaymentResponseDto> approvePayment(UUID paymentId) {
+        LocalDateTime updatedAt = TimeLima.getLimaTime();
+
         return paymentRepositoryPort.findById(paymentId)
                 .switchIfEmpty(Mono.error(new NotFoundException("Payment with ID " + paymentId + " not found")))
                 .filter(payment -> payment.getStatus() == PaymentStatus.PENDING_REVIEW)
                 .switchIfEmpty(Mono.error(new BadRequestException("Payment is not in PENDING_REVIEW status")))
                 .flatMap(payment -> {
                     payment.setStatus(PaymentStatus.COMPLETED);
+                    payment.setUpdatedAt(updatedAt);
                     return paymentRepositoryPort.save(payment);
                 })
-                .flatMap(payment -> paymentNotification(payment).thenReturn(payment))
                 .map(paymentMapper::toResponseDto);
     }
 
@@ -216,18 +218,6 @@ public class PaymentServiceImpl implements PaymentService {
                     return paymentRejectionRepositoryPort.save(rejection)
                             .then(Mono.just(payment));
                 })
-                .flatMap(payment -> {
-                    PaymentRejectedEvent event = PaymentRejectedEvent.builder()
-                            .paymentId(paymentId)
-                            .rejectedAt(updatedAt)
-                            .reasonId(reasonId)
-                            .detail(detail)
-                            .build();
-
-                    return paymentEventProducer.sendPaymentRejectedEvent(event)
-                            .then(Mono.just(payment));
-                })
-                .flatMap(payment -> paymentNotification(payment).thenReturn(payment))
                 .map(paymentMapper::toResponseDto);
     }
 }

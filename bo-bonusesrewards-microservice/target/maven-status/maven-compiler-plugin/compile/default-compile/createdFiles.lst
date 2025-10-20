@@ -121,7 +121,6 @@ world\inclub\bonusesrewards\carbonus\infrastructure\controllers\dto\response\Car
 world\inclub\bonusesrewards\shared\payment\application\dto\ProcessWalletPaymentCommand.class
 world\inclub\bonusesrewards\carbonus\infrastructure\controllers\CarQuotationDetailController.class
 world\inclub\bonusesrewards\carbonus\domain\port\CarRankBonusRepositoryPort.class
-world\inclub\bonusesrewards\shared\payment\infrastructure\persistence\adapter\WalletRepositoryAdapter.class
 world\inclub\bonusesrewards\shared\payment\infrastructure\config\handler\ResponseHandler.class
 world\inclub\bonusesrewards\shared\bonus\infrastructure\controllers\mapper\ClassificationResponseMapper.class
 world\inclub\bonusesrewards\carbonus\infrastructure\controllers\constants\CarBonusApiPaths$RankBonuses.class
@@ -263,6 +262,7 @@ world\inclub\bonusesrewards\shared\payment\domain\port\PaymentVoucherRepositoryP
 world\inclub\bonusesrewards\shared\response\ApiResponse$ApiResponseBuilder.class
 world\inclub\bonusesrewards\shared\bonus\infrastructure\persistence\schema\BonusSchema.class
 world\inclub\bonusesrewards\shared\payment\domain\port\PaymentRepositoryPort.class
+world\inclub\bonusesrewards\shared\payment\infrastructure\client\adapter\WalletWebClientAdapter.class
 world\inclub\bonusesrewards\carbonus\application\service\CarQuotationDetailService.class
 world\inclub\bonusesrewards\carbonus\infrastructure\controllers\constants\CarBonusApiPaths$Quotation.class
 world\inclub\bonusesrewards\shared\infrastructure\security\config\WebCorsConfig.class
@@ -285,6 +285,7 @@ world\inclub\bonusesrewards\shared\rank\infrastructure\persistence\adapter\Membe
 world\inclub\bonusesrewards\shared\payment\infrastructure\kafka\dto\ProcessWalletPaymentDto$ProcessWalletPaymentDtoBuilder.class
 world\inclub\bonusesrewards\carbonus\application\usecase\carmodel\DeleteCarModelByIdUseCase.class
 world\inclub\bonusesrewards\carbonus\infrastructure\controllers\mapper\carquotation\CarQuotationRequestMapper.class
+world\inclub\bonusesrewards\shared\payment\infrastructure\client\adapter\WalletWebClientAdapter$1.class
 world\inclub\bonusesrewards\shared\utils\filestorage\domain\model\FileContext.class
 world\inclub\bonusesrewards\shared\bonus\infrastructure\persistence\entity\ClassificationEntity$ClassificationEntityBuilder.class
 world\inclub\bonusesrewards\shared\bonus\infrastructure\persistence\adapter\ClassificationRepositoryAdapter.class
