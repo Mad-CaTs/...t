@@ -39,6 +39,7 @@ public record PaymentNotificationMessage(
             String paymentType,
             String paymentSubType,
             String currencyType,
+            String currencySymbol,
             BigDecimal subTotalAmount,
             BigDecimal commissionAmount,
             BigDecimal totalAmount,

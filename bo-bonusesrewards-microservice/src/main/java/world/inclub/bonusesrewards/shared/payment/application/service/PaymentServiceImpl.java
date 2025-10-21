@@ -177,7 +177,8 @@ public class PaymentServiceImpl implements PaymentService {
                                                 voucher,
                                                 paymentSubTypeName
                                         )
-                                )).doOnSuccess(r -> System.out.println("Notificación COMPLETED enviada para paymentId=" + payment.getId()));
+                                )
+                        );
 
                         case PENDING_REVIEW -> paymentNotificationService.sendPaymentNotification(
                                 paymentNotificationFactory.toPendingReviewPaymentMessage(
@@ -186,8 +187,7 @@ public class PaymentServiceImpl implements PaymentService {
                                         schedule,
                                         paymentSubTypeName
                                 )
-                        ).doOnSubscribe(s -> System.out.println("Enviando notificación PENDING_REVIEW para paymentId=" + payment.getId()))
-                                .doOnSuccess(r -> System.out.println("Notificación PENDING_REVIEW enviada con éxito."));
+                        );
 
                         case REJECTED -> paymentRejectionRepositoryPort.findByPaymentId(payment.getId())
                                 .flatMap(paymentRejection ->
@@ -204,7 +204,7 @@ public class PaymentServiceImpl implements PaymentService {
                                                                 )
                                                         )
                                                 )
-                                ).doOnSuccess(r -> System.out.println("Notificación REJECTED enviada para paymentId=" + payment.getId()));
+                                );
 
                         case PENDING, FAILED -> Mono.empty();
                     };
@@ -233,6 +233,8 @@ public class PaymentServiceImpl implements PaymentService {
                     payment.setUpdatedAt(updatedAt);
                     return paymentRepositoryPort.save(payment);
                 })
+                .flatMap(payment -> paymentNotification(payment)
+                        .thenReturn(payment))
                 .map(paymentMapper::toResponseDto);
     }
 
@@ -253,8 +255,11 @@ public class PaymentServiceImpl implements PaymentService {
                 .flatMap(payment -> {
                     PaymentRejection rejection = paymentRejectionFactory.createPaymentRejection(paymentId, reasonId, detail);
                     return paymentRejectionRepositoryPort.save(rejection)
-                            .then(Mono.just(payment));
+                            .thenReturn(payment);
                 })
+                .flatMap(payment ->
+                        paymentNotification(payment)
+                                .thenReturn(payment))
                 .map(paymentMapper::toResponseDto);
     }
 }
