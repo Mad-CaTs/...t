@@ -11,6 +11,7 @@ public class PaymentSchema {
         public static final String PAYMENTS = "payments";
         public static final String PAYMENT_VOUCHERS = "payment_vouchers";
         public static final String PAYMENT_REJECTION = "payment_rejection";
+        public static final String PAYMENT_REJECTION_REASONS = "payment_rejection_reasons";
     }
 
     public static class View{

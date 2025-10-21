@@ -5,7 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
+import reactor.util.function.Tuple2;
 import reactor.util.function.Tuples;
+import world.inclub.bonusesrewards.carbonus.domain.model.CarPaymentSchedule;
 import world.inclub.bonusesrewards.carbonus.domain.port.CarPaymentScheduleRepositoryPort;
 import world.inclub.bonusesrewards.shared.exceptions.BadRequestException;
 import world.inclub.bonusesrewards.shared.exceptions.NotFoundException;
@@ -13,19 +15,15 @@ import world.inclub.bonusesrewards.shared.payment.application.dto.ProcessWalletP
 import world.inclub.bonusesrewards.shared.payment.application.factory.PaymentNotificationFactory;
 import world.inclub.bonusesrewards.shared.payment.application.factory.PaymentRejectionFactory;
 import world.inclub.bonusesrewards.shared.payment.application.service.interfaces.*;
-import world.inclub.bonusesrewards.shared.payment.domain.model.PaymentRejection;
+import world.inclub.bonusesrewards.shared.payment.domain.model.*;
 import world.inclub.bonusesrewards.shared.payment.domain.port.*;
 import world.inclub.bonusesrewards.shared.payment.application.dto.MakePaymentCommand;
 import world.inclub.bonusesrewards.shared.payment.application.dto.PaymentAmounts;
 import world.inclub.bonusesrewards.shared.payment.application.factory.PaymentFactory;
 import world.inclub.bonusesrewards.shared.payment.application.factory.PaymentVoucherFactory;
 import world.inclub.bonusesrewards.shared.payment.api.mapper.PaymentMapper;
-import world.inclub.bonusesrewards.shared.payment.domain.model.CurrencyType;
-import world.inclub.bonusesrewards.shared.payment.domain.model.Payment;
-import world.inclub.bonusesrewards.shared.payment.domain.model.PaymentStatus;
 import world.inclub.bonusesrewards.shared.payment.api.dto.PaymentResponseDto;
 import world.inclub.bonusesrewards.shared.payment.infrastructure.kafka.producer.PaymentEventProducer;
-import world.inclub.bonusesrewards.shared.payment.infrastructure.kafka.topics.PaymentRejectedEvent;
 import world.inclub.bonusesrewards.shared.utils.TimeLima;
 
 import java.time.LocalDateTime;
@@ -43,6 +41,8 @@ public class PaymentServiceImpl implements PaymentService {
     private final MemberRepositoryPort memberRepositoryPort;
     private final PaymentVoucherRepositoryPort paymentVoucherRepositoryPort;
     private final PaymentRejectionRepositoryPort paymentRejectionRepositoryPort;
+    private final PaymentSubTypeRepositoryPort paymentSubTypeRepositoryPort;
+    private final PaymentRejectionReasonRepositoryPort paymentRejectionReasonRepositoryPort;
 
     private final PaymentAmountService paymentAmountService;
     private final PaymentNotificationService paymentNotificationService;
@@ -154,22 +154,60 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     private Mono<Void> paymentNotification(Payment payment) {
-        return memberRepositoryPort.getMemberByIdUser(payment.getMemberId())
-                .map(member -> Tuples.of(member.email(), member.name() + " " + member.lastName()))
-                .flatMap(userData -> {
+        Mono<Tuple2<String, String>> userDataMono = memberRepositoryPort.getMemberByIdUser(payment.getMemberId())
+                .map(member -> Tuples.of(member.email(), member.name() + " " + member.lastName()));
+
+        Mono<CarPaymentSchedule> scheduleMono = carPaymentScheduleRepositoryPort.findById(payment.getSourceRecordId());
+
+        Mono<String> paymentSubTypeNameMono = paymentSubTypeRepositoryPort.findById(payment.getPaymentSubTypeId())
+                .map(PaymentSubType::description);
+
+        return Mono.zip(userDataMono, scheduleMono, paymentSubTypeNameMono)
+                .flatMap(tuple -> {
+                    Tuple2<String, String> userData = tuple.getT1();
+                    CarPaymentSchedule schedule = tuple.getT2();
+                    String paymentSubTypeName = tuple.getT3();
+
                     return switch (payment.getStatus()) {
-                        case COMPLETED -> paymentNotificationService.sendPaymentNotification(
-                                paymentNotificationFactory.toApprovedPaymentMessage(userData, payment));
+                        case COMPLETED -> paymentVoucherRepositoryPort.findByPaymentId(payment.getId())
+                                .next()
+                                .flatMap(voucher -> paymentNotificationService.sendPaymentNotification(
+                                        paymentNotificationFactory.toApprovedPaymentMessage(
+                                                userData,
+                                                payment,
+                                                schedule,
+                                                voucher,
+                                                paymentSubTypeName
+                                        )
+                                ));
 
-                        case PENDING -> Mono.empty();
-
-                        case FAILED -> Mono.empty();
-
-                        case PENDING_REVIEW -> Mono.empty();
+                        case PENDING_REVIEW -> paymentNotificationService.sendPaymentNotification(
+                                paymentNotificationFactory.toPendingReviewPaymentMessage(
+                                        userData,
+                                        payment,
+                                        schedule,
+                                        paymentSubTypeName
+                                )
+                        );
 
                         case REJECTED -> paymentRejectionRepositoryPort.findByPaymentId(payment.getId())
-                                .flatMap(paymentRejection -> paymentNotificationService.sendPaymentNotification(
-                                        paymentNotificationFactory.toTemporalRejectedPaymentMessage(userData, payment, paymentRejection)));
+                                .flatMap(paymentRejection ->
+                                        paymentRejectionReasonRepositoryPort.findById(paymentRejection.getReasonId())
+                                                .map(PaymentRejectionReason::getReason)
+                                                .flatMap(rejectionReasonName ->
+                                                        paymentNotificationService.sendPaymentNotification(
+                                                                paymentNotificationFactory.toRejectedPaymentMessage(
+                                                                        userData,
+                                                                        payment,
+                                                                        schedule,
+                                                                        paymentRejection,
+                                                                        rejectionReasonName
+                                                                )
+                                                        )
+                                                )
+                                );
+
+                        case PENDING, FAILED -> Mono.empty();
                     };
                 });
     }

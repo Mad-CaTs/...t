@@ -55,6 +55,7 @@ public class BonusPaymentEmailBuilderAdapter implements EmailTemplateBuilderPort
                 .replace("{{paymentType}}", message.payment().paymentType())
                 .replace("{{paymentSubType}}", message.payment().paymentSubType())
                 .replace("{{installmentNumber}}", message.schedule().installmentNumber().toString())
+                .replace("{{bonusType}}", message.payment().bonusType())
                 .replace("{{paymentDate}}", formatDateTime(message.payment().createdAt()))
                 .replace("{{operationNumber}}", message.voucher().operationNumber())
                 .replace("{{originalValue}}", message.payment().currencyType() + " " + message.payment().subTotalAmount().toString())
@@ -73,6 +74,7 @@ public class BonusPaymentEmailBuilderAdapter implements EmailTemplateBuilderPort
                 .replace("{{rejectionReason}}", message.rejectedPayment().reason())
                 .replace("{{rejectionDetail}}", message.rejectedPayment().detail())
                 .replace("{{installmentNumber}}", message.schedule().installmentNumber().toString())
+                .replace("{{bonusType}}", message.payment().bonusType())
                 .replace("{{totalAmount}}", message.payment().currencyType() + " " + message.payment().totalAmount().toString())
                 .replace("{{supportEmail}}", EmailConstants.SUPPORT_EMAIL)
                 .replace("{{year}}", EmailConstants.getCurrentYear());
