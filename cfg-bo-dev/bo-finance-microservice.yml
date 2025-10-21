@@ -1,0 +1,43 @@
+spring:
+  application.name: bo-finance-microservice
+  devtools:
+    add-properties: false
+  r2dbc:
+    url: r2dbc:postgresql://${DB_HOSTNAME:212.56.44.91}:${DB_PORT:31334}/${DB_NAME:dev_inclub}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:CsOyVa08Q835}
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${AUTHORIZATION_SERVER_URI:https://oauth-dev.inclub.world}
+  kafka:
+    bootstrap-servers: ${KAFKA_HOSTNAME:kafka.inclub.world}:${KAFKA_PORT:29093}
+
+api:
+  documents: '${DOCUMENTS_API:https://documentapi-dev.inclub.world/api/v1}'
+  paneladmin: '${PANELADMIN_API:https://adminpanelapi-dev.inclub.world/api}'
+  comissions: '${COMISSIONS_API:https://commissionsapi-dev.inclub.world/api/v1}'
+
+server:
+  port: ${SERVER_PORT:8779}
+
+springdoc:
+  swagger-ui:
+    use-root-path: true
+    oauth:
+      clientId: back-office
+      clientSecret: secret
+
+logging:
+  level:
+    root: ${LOG_LVL_ROOT:DEBUG}
+    org.apache.kafka: ${LOG_LVL_KAFKA:ERROR}
+    kafka: ${LOG_LVL_KAFKA:ERROR}
+    org.springframework.kafka: ${LOG_LVL_KAFKA:ERROR}
+
+application:
+  name: bo-finance-microservice
+  description: bo-finance-microservice
+  version: v0.0.1-SNAPSHOT
+  inceptionYear: 2024

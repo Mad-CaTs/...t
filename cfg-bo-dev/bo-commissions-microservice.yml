@@ -1,0 +1,38 @@
+spring:
+  data:
+    mongodb:
+      database: ${MONGO_DBNAME:Dev-Dashboard}
+      uri: "mongodb://boadmin:WfRPW8MbHKMqRjsW@212.56.44.91:30234/?retryWrites=true&loadBalanced=false&connectTimeoutMS=10000&authSource=admin&authMechanism=SCRAM-SHA-256"
+  r2dbc:
+    url: r2dbc:postgresql://${DB_HOSTNAME:212.56.44.91}:${DB_PORT:31334}/${DB_NAME:dev_inclub}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:CsOyVa08Q835}
+  kafka:
+    bootstrap-servers: ${KAFKA_HOSTNAME:kafka.inclub.world}:${KAFKA_PORT:29093}
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: ${MAX_FILE_SIZE:100MB}
+      max-request-size: ${MAX_REQUEST_SIZE:100MB}
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+
+server:
+  port: ${SERVER_PORT:8089}
+
+external-services:
+  admin-panel-base-url: https://adminpanelapi-dev.inclub.world/api/
+  account-base-url: https://account-dev.inclub.world/api/v1/account
+  notification-base-url: https://notifications-dev.inclub.world/api/v1/
+  membership-base-url: https://membershipapi-dev.inclub.world/api/v1/
+  document-base-url: https://documentapi-dev.inclub.world/api/v1/s3
+  tree-points-base-url: https://treepointrangeapi-dev.inclub.world/api/v1/
+
+logging:
+  level:
+    root: ${LOG_LVL_ROOT:DEBUG}
+    org.apache.kafka: ${LOG_LVL_KAFKA:ERROR}
+    kafka: ${LOG_LVL_KAFKA:ERROR}
+    org.springframework.kafka: ${LOG_LVL_KAFKA:ERROR}

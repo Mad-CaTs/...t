@@ -1,0 +1,68 @@
+spring:
+  application:
+    name: bo-ticket-microservice
+
+  devtools:
+    add-properties: false
+
+  r2dbc:
+    url: r2dbc:postgresql://${DB_HOSTNAME}:${DB_PORT}/${DB_NAME}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${AUTHORIZATION_SERVER_URI:https://oauth-dev.inclub.world}
+
+  jackson:
+    time-zone: America/Lima
+
+  kafka:
+    bootstrap-servers: ${KAFKA_HOSTNAME:localhost}:${KAFKA_PORT:9092}
+
+server:
+  port: ${SERVER_PORT:8050}
+
+springdoc:
+  swagger-ui:
+    use-root-path: true
+    oauth:
+      clientId: back-office
+      clientSecret: secret
+
+database:
+  host: ${DB_HOSTNAME}
+  port: ${DB_PORT}
+  user: ${DB_USER}
+  password: ${DB_PASSWORD}
+  database: ${DB_NAME}
+  driver: postgresql
+
+storage:
+  vouchers-folder: "30"
+  tickets-folder: "31"
+
+security:
+  aes:
+    secret-key: tqnd3oQosIYhrO7oZrM8e9t7XbS3xQ2zUuHbVfOyXsk=
+
+web-client:
+  admin: ${ADMIN_API:https://adminpanelapi-dev.inclub.world}
+  wallet: ${WALLET_API:https://walletapi-dev.inclub.world}
+  document: ${DOCUMENT_API:https://documentapi-dev.inclub.world/api/v1/s3}
+
+logging:
+  level:
+    root: ${LOG_LVL_ROOT:INFO}
+    org.apache.kafka: ${LOG_LVL_KAFKA:ERROR}
+    kafka: ${LOG_LVL_KAFKA:ERROR}
+    org.springframework.kafka: ${LOG_LVL_KAFKA:ERROR}
+    world.inclub.account: ${LOG_LVL_APP:INFO}
+
+application:
+  name: bo-ticket-microservice
+  description: bo-ticket-microservice
+  version: v0.0.1-SNAPSHOT
+  inceptionYear: 2025

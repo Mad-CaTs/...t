@@ -1,0 +1,72 @@
+logging:
+  config: classpath:logback-spring.xml
+  level:
+    root: ERROR
+    org.springframework.web: ERROR
+    org.springframework.security: ERROR
+    org.springframework.data.mongodb.core.MongoTemplate: ERROR
+    org.springframework.kafka: ERROR
+    world.inclub.sincronize: DEBUG
+  pattern: "%d{yyyy-MM-dd'T'HH:mm:ss.SSSZ}|%t|%p|%F:%L|%m%n"
+
+spring:
+  application.name: ${application.name}
+  r2dbc:
+    url: r2dbc:mssql://154.12.255.143:1433/BO_2023
+    username: sa
+    password: w187hmDD5wR4
+  # Configuracion de Pool de conexiones
+  datasource:
+    hikari:
+      maximum-pool-size: 5
+      idle-timeout: 60000
+      connection-timeout: 30000
+  # Ignorar valores null en response.
+  jackson:
+    default-property-inclusion: non_null
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: Intheclubdesarrollo@gmail.com
+    password: zupmrvrxirdtokrm
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+server:
+  port: 10000
+
+application:
+  name: syncronize-sqlserver
+  description: Proyecto para sincronizar MS SQL Server
+  version: v1.0-SNAPSHOT
+  inceptionYear: 2023
+  key: 43D270AB908206F66253EF8DD27DCF37
+
+bo.sincronize:
+  kafka:
+    broker: kafka.inclub.world:29092
+    types:
+      - oldBoUserDTO:world.inclub.sincronize.sqlserver.kafka.publisher.dto.OldBoUserDTO
+    user.topic: bousertopic
+  sqlserver:
+    olduser:
+      pool:
+        begin: 0
+        end: -1
+        size: 530
+        ids: 
+
+
+keola:
+  jwt:
+    secret: JaNdRgUkXp2r5u8xJaNdRgUkXp2r5u8xxJaNdRgUkXp2r5u8xxJaNdRgUkXp2r5u8xxJaNdRgUkXp2r5u8xxJaNdRgUkXp2r5u8xxJaNdRgUkXp2r5u8xxJaNdRgUkXp2r5u8xxJaNdRgUkXp2r5u8xxJaNdRgUkXp2r5u8xxJaNdRgUkXp2r5u8xxJaNdRgUkXp2r5u8xxJaNdRgUkXp2r5u8xxJaNdRgUkXp2r5u8xxJaNdRgUkXp2r5u8xxJaNdRgUkXp2r5u8x
+    subject: keola.club
+    expirationMs: 86400000
+    key: 43D270AB908206F66253EF8DD27DCF37
+inclub:
+  homepage:
+    url: https://dev.inclub.world

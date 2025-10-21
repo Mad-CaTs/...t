@@ -1,0 +1,46 @@
+spring:
+  application.name: bo-account-microservice
+  devtools:
+    add-properties: false
+  r2dbc:
+    url: r2dbc:postgresql://${DB_HOSTNAME:212.56.44.91}:${DB_PORT:31334}/${DB_NAME:dev_inclub}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:CsOyVa08Q835}
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${AUTHORIZATION_SERVER_URI:https://oauth.inclub.world}
+  kafka:
+    bootstrap-servers: ${KAFKA_HOSTNAME:kafka.inclub.world}:${KAFKA_PORT:29092}
+
+database:
+  host: ${DB_HOSTNAME::212.56.44.91}
+  port: ${DB_PORT:31334}
+  user: ${DB_USER:postgres}
+  password: ${DB_PASSWORD:CsOyVa08Q835}
+  database: ${DB_NAME:dev_inclub}
+  driver: postgresql
+
+server:
+  port: ${SERVER_PORT:8776}
+springdoc:
+  swagger-ui:
+    use-root-path: true
+    oauth:
+      clientId: back-office
+      clientSecret: secret
+
+logging:
+  level:
+    root: ${LOG_LVL_ROOT:INFO}
+    org.apache.kafka: ${LOG_LVL_KAFKA:ERROR}
+    kafka: ${LOG_LVL_KAFKA:ERROR}
+    org.springframework.kafka: ${LOG_LVL_KAFKA:ERROR}
+    world.inclub.account: ${LOG_LVL_APP:INFO}
+
+application:
+  name: bo-account-microservice
+  description: bo-account-microservice
+  version: v0.0.1-SNAPSHOT
+  inceptionYear: 2024

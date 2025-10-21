@@ -1,0 +1,43 @@
+server:
+  port: ${SERVER_PORT:8070}
+
+# Configuraciòn de la base de datos
+spring:
+  application:
+    name: bo-pdf-service
+  datasource:
+    url: jdbc:postgresql://${DB_HOSTNAME:backoffice-develop-postgres}:${DB_PORT:5432}/${DB_NAME:dev-inclub}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:Keola2023}
+    driver-class-name: org.postgresql.Driver
+    inclub:
+      url: jdbc:postgresql://${DB_HOSTNAME:backoffice-develop-postgres}:${DB_PORT:5432}/${DB_NAME:dev-inclub}
+      username: ${DB_USER:postgres}
+      password: ${DB_PASSWORD:Keola2023}
+      driver-class-name: org.postgresql.Driver
+    admin:
+      url: jdbc:postgresql://${DB_HOSTNAME:backoffice-develop-postgres}:${DB_PORT:5432}/${DB_ADMIN:dev_bo_admin}
+      username: ${DB_USER:postgres}
+      password: ${DB_PASSWORD:Keola2023}
+      driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none  # o 'validate', 'create', 'create-drop'
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${AUTHORIZATION_SERVER_URI:https://oauth-dev.inclub.site}
+
+# Configuración de los logs
+logging:
+  level:
+    root: ${LOG_LVL_ROOT:INFO}
+    org.springframework.web: ${LOG_LVL_SPRING_FWK_SECURITY:ERROR}
+    org.springframework.jdbc.core.JdbcTemplate: ${LOG_LVL_SQL:ERROR}
+    org.hibernate.SQL: ${LOG_LVL_SQL:ERROR}

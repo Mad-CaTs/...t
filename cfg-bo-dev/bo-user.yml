@@ -1,0 +1,56 @@
+logging:
+  level:
+    root: ${LOG_LVL_ROOT:INFO}
+    org.springframework.web: ${LOG_LVL_SPRING_FWK:DEBUG}
+    org.springframework.security: ${LOG_LVL_SPRING_FWK:DEBUG}
+    org.springframework.data.mongodb.core.MongoTemplate: ${LOG_LVL_SPRING_FWK:DEBUG}
+    world.inclub.appuser: ${LOG_LVL_MODULE:DEBUG}
+  pattern: "%d{yyyy-MM-dd'T'HH:mm:ss.SSSZ}|%t|%p|%F:%L|%m%n"
+
+spring:
+  application.name: ${application.name}
+  r2dbc:
+    url: r2dbc:postgresql://${DB_HOSTNAME:backoffice-develop-postgres}:${DB_PORT:5432}/${DB_NAME:dev-inclub}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:Keola2023}
+  # Configuracion de Pool de conexiones
+  datasource:
+    hikari:
+      maximum-pool-size: 5
+      idle-timeout: 60000
+      connection-timeout: 30000
+  # Ignorar valores null en response.
+  jackson:
+    default-property-inclusion: non_null
+  mail:
+    # username: soporte@keola.club
+    host: smtp.gmail.com
+    port: 587
+    username: ${SMTP_EMAIL:Intheclubdesarrollo@gmail.com}
+    password: ${SMTP_PASSWORD:zupmrvrxirdtokrm}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+server:
+  port: ${SERVER_PORT:8777}
+
+application:
+  name: user-app
+  description: Proyecto User
+  version: v0.0.1-SNAPSHOT
+  inceptionYear: 2023
+  key: 43D270AB908206F66253EF8DD27DCF37
+
+keola:
+  jwt:
+    secret: ${KEOLA_JWT_SECRET:JaNdRgUkXp2r5u8xJaNdRgUkXp2r5u8xxJaNdRgUkXp2r5u8xxJaNdRgUkXp2r5u8xxJaNdRgUkXp2r5u8xxJaNdRgUkXp2r5u8xxJaNdRgUkXp2r5u8xxJaNdRgUkXp2r5u8xxJaNdRgUkXp2r5u8xxJaNdRgUkXp2r5u8xxJaNdRgUkXp2r5u8xxJaNdRgUkXp2r5u8xxJaNdRgUkXp2r5u8xxJaNdRgUkXp2r5u8xxJaNdRgUkXp2r5u8xxJaNdRgUkXp2r5u8x}
+    subject: keola.club
+    expirationMs: ${KEOLA_JWT_EXPIRATION:86400000}
+    key: ${KEOLA_JWT_KEY:43D270AB908206F66253EF8DD27DCF37}
+inclub:
+  homepage:
+    url: https://dev.inclub.world

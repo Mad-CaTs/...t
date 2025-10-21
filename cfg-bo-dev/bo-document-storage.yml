@@ -1,0 +1,15 @@
+spring:
+  servlet:
+    multipart:
+      max-file-size: ${MAX_FILE_SIZE:70MB}
+      max-request-size: ${MAX_REQUEST_SIZE:150MB}
+
+aws:
+  accessKeyId: ${AWS_ACCESS_KEY_ID}
+  secretKey: ${AWS_SECRET_KEY}
+
+s3:
+  bucketName: ${S3_BUCKET_NAME}
+
+server:
+  port: ${SERVER_PORT:9097}

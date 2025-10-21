@@ -1,0 +1,74 @@
+
+application:
+  name: bo-oauth-server
+  description: Proyecto Oauth2 Authorization Server
+  version: v0.0.1-SNAPSHOT
+  inceptionYear: 2024
+
+intechbo:
+  server:
+    discover: ${DISCOVER_SERVER_PORT:http://discover-dev.inclub.world:8761/eureka}
+    gateway: ${GATEWAY_SERVER_PORT:http://gateway.inclub.world:8090}
+    oauth: ${OAUTH_SERVER_PORT:http://oauth.inclub.world:9000}
+  oauth:
+    issuer: ${OAUTH_SERVER_ISSUER:http://keola-bo-security-microservice-develop:9000}
+    
+eureka:
+  client:
+    service-url:
+      defaultZone: ${intechbo.server.discover}
+    fetch-registry: true
+    register-with-eureka: true
+
+spring:
+  application.name: ${application.name}
+  datasource:
+    url: jdbc:postgresql://${DB_HOSTNAME:backoffice-develop-postgres}:${DB_PORT:5432}/${DB_NAME:dev-inclub}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:Keola2023}
+
+    hikari:
+      maximum-pool-size: 5
+      idle-timeout: 60000
+      connection-timeout: 60000
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  # Ignorar valores null en response.
+  jackson:
+    default-property-inclusion: non_null
+
+mail:
+  host: ${MAIL_HOST:smtp.office365.com}
+  port: 587
+  username: ${MAIL_ACCOUNT:notificacionesinclub@inclub.site}
+  password: ${MAIL_PASSWORD:Inclub12345+}
+  content-type: text/html
+  charset: utf-8
+  properties:
+    mail.transport.protocol: smtp
+    mail.smtp.auth: true
+    mail.smtp.starttls.enable: true
+    mail.debug: true
+
+server:
+  port: ${SERVER_PORT:9000}
+  servlet:
+    session:
+      timeout: 720m
+      cookie:
+        max-age: 720m
+
+logging:
+  level:
+    root: ${LOG_LVL_ROOT:INFO}
+    org:
+      springframework:
+        security: ${LOG_LVL_SPRING_FWK_SECURITY:DEBUG}
+        session: ${LOG_LVL_SPRING_FWK:DEBUG}
+        web: ${LOG_LVL_SPRING_FWK:DEBUG}

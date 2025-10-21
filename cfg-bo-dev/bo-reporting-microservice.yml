@@ -1,0 +1,20 @@
+spring:
+  data:
+    mongodb:
+      database: ${MONGO_DBNAME:Dashboard}
+      uri: "mongodb://${MONGO_USER:boadmin}:${MONGO_PASS:sistemas2023}@${MONGO_HOSTNAME:mongo.inclub.site}:${MONGO_PORT:27017}/?retryWrites=true&loadBalanced=false&connectTimeoutMS=10000&authSource=admin&authMechanism=SCRAM-SHA-256"
+  r2dbc:
+    url: r2dbc:postgresql://${DB_HOSTNAME:backoffice-develop-postgres}:${DB_PORT:5432}/${DB_NAME:dev-inclub}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:Keola2023}
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: ${MAX_FILE_SIZE:100MB}
+      max-request-size: ${MAX_REQUEST_SIZE:100MB}
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+
+server:
+  port: ${SERVER_PORT:8085}

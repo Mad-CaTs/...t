@@ -1,0 +1,58 @@
+spring:
+  application:
+    name: bo-membershippayment-service
+  devtools:
+    add-properties: false
+  r2dbc:
+    url: r2dbc:postgresql://${DB_HOSTNAME:212.56.44.91}:${DB_PORT:31334}/${DB_NAME:dev_inclub}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:CsOyVa08Q835}
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${AUTHORIZATION_SERVER_URI:https://oauth-dev.inclub.world}
+
+      client:
+        registration:
+          client-membership:
+            provider: spring
+            client-id: backoffice-client
+            client-secret: secret
+            authorization-grant-type: client_credentials
+            scope: internal,read,write
+        provider:
+          spring:
+            issuer-uri: ${AUTHORIZATION_SERVER_URI:https://oauth-dev.inclub.world}
+  codec:
+    max-in-memory-size: 16MB
+  webflux:
+    max-buffer-size: 1MB
+  kafka:
+    bootstrap-servers: ${KAFKA_HOSTNAME:kafka.inclub.world}:${KAFKA_PORT:29093}
+
+server:
+  port: ${SERVER_PORT:8777}
+springdoc:
+  swagger-ui:
+    use-root-path: true
+
+logging:
+  level:
+    root: ${LOG_LVL_ROOT:DEBUG}
+    org.apache.kafka: ${LOG_LVL_KAFKA:ERROR}
+    kafka: ${LOG_LVL_KAFKA:ERROR}
+    org.springframework.kafka: ${LOG_LVL_KAFKA:ERROR}
+
+management:
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      show-details: always
+  info:
+    git:
+      mode: full
+  health:
+    circuitbreakers:
+      enabled: true

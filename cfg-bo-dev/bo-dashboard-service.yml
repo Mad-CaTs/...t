@@ -1,0 +1,53 @@
+spring:
+  application:
+    name: bo-dashboard-service
+  data:
+    mongodb:
+      database: ${MONGO_DBNAME:Dev-Dashboard}
+      uri: "mongodb://boadmin:WfRPW8MbHKMqRjsW@212.56.44.91:30234/?retryWrites=true&loadBalanced=false&connectTimeoutMS=10000&authSource=admin&authMechanism=SCRAM-SHA-256"
+  devtools:
+    add-properties: false
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${AUTHORIZATION_SERVER_URI:https://oauth-dev.inclub.world}
+  kafka:
+    bootstrap-servers: ${KAFKA_HOSTNAME:kafka.inclub.world}:${KAFKA_PORT:29093}
+server:
+  port: ${SERVER_PORT:9092}
+springdoc:
+  swagger-ui:
+    use-root-path: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+  health:
+    circuitbreakers:
+      enabled: true
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 2
+        permittedNumberOfCallsInHalfOpenState: 3
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        waitDurationInOpenState: 5s
+        failureRateThreshold: 50
+        eventConsumerBufferSize: 10
+
+logging:
+  level:
+    root: ${LOG_LVL_ROOT:INFO}
+    org.apache.kafka: ${LOG_LVL_KAFKA:ERROR}
+    kafka: ${LOG_LVL_KAFKA:ERROR}
+    org.springframework.kafka: ${LOG_LVL_KAFKA:ERROR}

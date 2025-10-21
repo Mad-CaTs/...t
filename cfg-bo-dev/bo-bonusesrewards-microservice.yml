@@ -1,0 +1,59 @@
+spring:
+  application.name: bo-bonusesrewards-microservice
+  devtools:
+    add-properties: false
+  r2dbc:
+      url: r2dbc:postgresql://${DB_HOSTNAME:212.56.44.91}:${DB_PORT:32534}/${DB_NAME:dev_inclub}
+      username: ${DB_USER:postgres}
+      password: ${DB_PASSWORD:CsOyVa08Q835}
+  data:
+    mongodb:
+      database: ${MONGO_DBNAME:Dev-Dashboard}
+      uri: mongodb://${MONGO_USER:boadmin}:${MONGO_PASS:WfRPW8MbHKMqRjsW}@${MONGO_HOSTNAME:212.56.44.91}:${MONGO_PORT:30234}/?retryWrites=true&loadBalanced=false&connectTimeoutMS=10000&authSource=admin&authMechanism=SCRAM-SHA-256
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${AUTHORIZATION_SERVER_URI:https://oauth-dev.inclub.site}
+  kafka:
+    bootstrap-servers: ${KAFKA_HOSTNAME:localhost}:${KAFKA_PORT:9092}
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 100MB
+      max-request-size: 100MB
+
+storage:
+  quotations-folder: "33"
+  documents-folder: "34"
+  vouchers-folder: "25"
+  cars-folder: "24"
+
+web-client:
+  document: ${DOCUMENT_SERVICE_URL:https://documentapi-dev.inclub.world/api/v1/s3}
+  tree: ${THREE_SERVICE_URL:https://treepointrangeapi-dev.inclub.world}
+  dashboard: ${DASHBOARD_SERVICE_URL:https://dashboardapi-dev.inclub.world}
+  admin: ${ADMIN_PANEL_SERVICE_URL:https://adminpanelapi-dev.inclub.world}
+  ticket: ${TICKET_SERVICE_URL:https://ticketapi-dev.inclub.world}
+
+server:
+  port: ${SERVER_PORT:8716}
+springdoc:
+  swagger-ui:
+    use-root-path: true
+    oauth:
+      clientId: ${OAUTH_CLIENT_ID:back-office}
+      clientSecret: ${OAUTH_CLIENT_SECRET:secret}
+
+logging:
+  level:
+    root: ${LOG_LVL_ROOT:INFO}
+    org.apache.kafka: ${LOG_LVL_KAFKA:ERROR}
+    kafka: ${LOG_LVL_KAFKA:ERROR}
+    org.springframework.kafka: ${LOG_LVL_KAFKA:ERROR}
+
+application:
+  name: bo-bonusesrewards-microservice
+  description: bo-bonusesrewards-microservice
+  version: v0.0.1-SNAPSHOT
+  inceptionYear: 2024

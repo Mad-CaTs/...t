@@ -1,7 +1,7 @@
 package world.inclub.appnotification.bonusrewards.application.dto;
 
 import lombok.Builder;
-import world.inclub.appnotification.bonusrewards.application.enums.PaymentStatus;
+import world.inclub.appnotification.bonusrewards.application.enums.BonusPaymentStatus;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -14,7 +14,7 @@ public record PaymentNotificationMessage(
         Payment payment,
         Voucher voucher,
         RejectedPayment rejectedPayment,
-        PaymentStatus status
+        BonusPaymentStatus status
 ) {
     @Builder
     public record User(

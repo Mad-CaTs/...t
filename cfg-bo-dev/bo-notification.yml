@@ -1,0 +1,88 @@
+spring:
+  application.name: bo-notification
+  devtools:
+    add-properties: false
+  r2dbc:
+    url: r2dbc:postgresql://${DB_HOSTNAME:backoffice-develop-postgres}:${DB_PORT:5432}/${DB_NAME:dev-inclub}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:Keola2023}
+  web:
+    resources:
+      static-locations: classpath:/static/
+  kafka:
+    bootstrap-servers: ${KAFKA_HOSTNAME:localhost}:${KAFKA_PORT:9092}
+
+server:
+  port: ${SERVER_PORT:8777}
+
+springdoc:
+  swagger-ui:
+    use-root-path: true
+
+keola:
+  jwt:
+    secret: ${JWT_SECRET:fjhsadokfjklsdaflkasdjf}
+    subject: keola.club
+    expirationMs: 86400000
+    key: ${JWT_KEY:jfskadljfklasdjfklds}
+    header-authorization: Authorization
+
+gmail:
+  email:
+    sender: ${SMTP_EMAIL:notificacionesinclub@inclub.world}
+    password: ${SMTP_PASSWORD:Inclub12345+}
+    smtp:
+      host: ${SMTP_HOST:smtp.office365.com}
+      port: ${SMTP_PORT:587}
+    name: Inclub Notification
+
+template:
+  alertsponsor:
+    name: email_alert_sponsor.ftl
+  alertsponsorbeneficiary:
+    name: email_alert_sponsor_beneficiary.ftl
+  emailalertpay:
+    name: email_alert_pay.ftl
+  paylater:
+    name: email_pay_later.ftl
+  quotepayer:
+    name: email_quote_payer.ftl
+  emailcredential:
+    name: email_credential_user.ftl
+  emailacceptedpayment:
+    name: email_accepted_payment.ftl
+  emailalertchangepayment:
+    name: email_alertchange_payment.ftl
+  emailsuccesfulpaymentdirectpayment:
+    name: email_succesful_payment_direct_payment.ftl
+  emailrejeactvoucher:
+    name: email_rejeact_voucher.ftl
+  emailtokentransferwallet:
+    name: email_token_transfer_wallet.ftl
+  emailtokengestionbancario:
+    name: email_token_gestion_bancaria.ftl
+  emailtransferforpaymentaftermembership:
+    name: email_paymentaftermembership_transfer.ftl
+  emaildocuments:
+    name: email_documents.ftl
+  emailrejectrentexemption:
+    name: email_reject_rent_exemption.ftl
+  emailrentexemption:
+    name: email_rent_exemption.ftl
+  emailshippingdocumentation:
+    name: email_shipping_documentation.ftl
+  emailtransfernewpartner:
+    name: transfer/email_transfer_to_new_partner.html
+  emailtransferaccepted:
+    name: transfer/email_transfer_accepted.ftl
+  emailtransferpending:
+    name: transfer/email_transfer_pending.ftl
+  emailtransferrejected:
+    name: transfer/email_transfer_rejected.ftl
+  emailtransferdetails:
+    name: transfer/email_transfer_details.ftl
+  url:
+    email: ${URL_EMAIL:http://localhost:8080/templates}
+
+transfer:
+  app-base-url: ${TRANSFER_APP_BASE_URL:https://app.inclub.world}

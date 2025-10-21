@@ -1,0 +1,48 @@
+spring:
+  kafka:
+    bootstrap-servers: ${KAFKA_HOSTNAME:kafka.inclub.world}:${KAFKA_PORT:29093}
+  data:
+    mongodb:
+      database: ${MONGO_DBNAME:TreePointRange}
+      uri: "mongodb://${MONGO_USER:boadmin}:${MONGO_PASS:sistemas2023}@${MONGO_HOSTNAME:mongo.inclub.site}:${MONGO_PORT:27017}/?retryWrites=true&loadBalanced=false&connectTimeoutMS=10000&authSource=admin&authMechanism=SCRAM-SHA-256"
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: ${MAX_FILE_SIZE:100MB}
+      max-request-size: ${MAX_REQUEST_SIZE:100MB}
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+
+database:
+  inclub:
+    host: ${DB_HOSTNAME:212.56.44.91}
+    port: ${DB_PORT:31334}
+    user: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:CsOyVa08Q835}
+    database: ${DB_NAME:dev_inclub}
+    driver: postgresql
+  boadmin:
+    host: ${BOADMIN_DB_HOSTNAME:212.56.44.91}
+    port: ${BOADMIN_DB_PORT:31334}
+    user: ${BOADMIN_DB_USER:postgres}
+    password: ${BOADMIN_DB_PASSWORD:CsOyVa08Q835}
+    database: ${BOADMIN_DB_NAME:dev_bo_admin}
+    driver: postgresql
+
+api:
+  membershippaymentautoapi:
+    url: ${API_MEMBERSHIPPAYMENTAUTO_URL:https://membershipapi-dev.inclub.world}
+  rewardspaymentautoapi:
+    url: ${API_REWARDSPAYMENTAUTO_URL:https://rewardsapi-dev.inclub.world}
+
+server:
+  port: ${SERVER_PORT:8180}
+
+logging:
+  level:
+    root: ${LOG_LVL_ROOT:DEBUG}
+    org.apache.kafka: ${LOG_LVL_KAFKA:ERROR}
+    kafka: ${LOG_LVL_KAFKA:ERROR}
+    org.springframework.kafka: ${LOG_LVL_KAFKA:ERROR}
+    org.springframework.r2dbc.core: ${LOG_LVL_R2DBC_CORE:DEBUG}

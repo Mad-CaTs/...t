@@ -1,0 +1,19 @@
+spring:
+  r2dbc:
+    url: r2dbc:postgresql://${DB_HOSTNAME:backoffice-develop-postgres}:${DB_PORT:5432}/${DB_NAME:dev-inclub}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:Keola2023}
+  kafka:
+    bootstrap-servers: ${KAFKA_HOSTNAME:kafka.inclub.world}:${KAFKA_PORT:29093}
+    consumer:
+      group-id: bo-rewards-package-detail-group
+      auto-offset-reset: earliest
+    topics:
+      package-detail-events: package-detail-topic
+      suscription-events: topic-test-suscription
+
+logging:
+  level:
+    org.apache.kafka: ERROR
+    kafka: ERROR
+    org.springframework.kafka: ERROR

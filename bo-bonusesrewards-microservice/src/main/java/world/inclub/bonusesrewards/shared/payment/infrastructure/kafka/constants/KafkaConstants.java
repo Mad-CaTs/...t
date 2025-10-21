@@ -2,8 +2,8 @@ package world.inclub.bonusesrewards.shared.payment.infrastructure.kafka.constant
 
 public class KafkaConstants {
 
-    public static final String GROUP_ID = "ticket-group-222";
-    public static final String KEY = "ticket-key";
+    public static final String GROUP_ID = "bonus-rewards-group-999";
+    public static final String KEY = "bonus-rewards-key";
 
     public static final class Topic {
 
@@ -13,7 +13,7 @@ public class KafkaConstants {
         }
 
         public static final class Notification {
-            public static final String REQUEST_SEND_NOTIFICATION = "topic-request-send-ticket-notification";
+            public static final String REQUEST_SEND_NOTIFICATION = "topic-request-send-bonus-rewards-payment-notification";
         }
 
     }

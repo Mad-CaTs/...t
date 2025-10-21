@@ -1,0 +1,54 @@
+spring:
+  application.name: bo-wallet-microservice
+  devtools:
+    add-properties: false
+  r2dbc:
+    url: r2dbc:postgresql://${DB_HOSTNAME:212.56.44.91}:${DB_PORT:31334}/${DB_NAME:dev_inclub}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:CsOyVa08Q835}
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${AUTHORIZATION_SERVER_URI:https://oauth-dev.inclub.world}
+  kafka:
+    bootstrap-servers: ${KAFKA_HOSTNAME:kafka.inclub.world}:${KAFKA_PORT:29093}
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 100MB
+      max-request-size: 100MB
+
+api:
+  document:
+    url: ${API_DOCUMENT_URL:https://documentapi-dev.inclub.world}
+  notification:
+    url: ${API_NOTIFICATION_URL:https://notifications-dev.inclub.world}
+  adminpanel:
+    url: ${API_ADMIN_PANEL_URL:https://adminpanelapi-dev.inclub.world}
+  account:
+    url: ${API_ACCOUNT_URL:https://account-dev.inclub.world}
+  membershippayment:
+    url: ${API_MEMBERSHIP_URL:https://membership-dev.inclub.world}
+
+server:
+  port: ${SERVER_PORT:8712}
+springdoc:
+  swagger-ui:
+    use-root-path: true
+    oauth:
+      clientId: ${OAUTH_CLIENT_ID:back-office}
+      clientSecret: ${OAUTH_CLIENT_SECRET:secret}
+
+logging:
+  level:
+    root: ${LOG_LVL_ROOT:INFO}
+    org.apache.kafka: ${LOG_LVL_KAFKA:ERROR}
+    kafka: ${LOG_LVL_KAFKA:ERROR}
+    org.springframework.kafka: ${LOG_LVL_KAFKA:ERROR}
+
+application:
+  name: bo-wallet-microservice
+  description: bo-wallet-microservice
+  version: v0.0.1-SNAPSHOT
+  inceptionYear: 2024

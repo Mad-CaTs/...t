@@ -1,0 +1,20 @@
+spring:
+  application.name: bo-common
+  devtools:
+    add-properties: false
+  r2dbc:
+    url: r2dbc:postgresql://backoffice-develop-postgres:5432/dev-inclub
+    username: postgres
+    password: Keola2023
+server:
+  port: 8777
+springdoc:
+  swagger-ui:
+    use-root-path: true
+keola:
+  jwt:
+    secret: JaNdRgUkXp2r5u8xJaNdRgUkXp2r5u8xxJaNdRgUkXp2r5u8xxJaNdRgUkXp2r5u8xxJaNdRgUkXp2r5u8xxJaNdRgUkXp2r5u8xxJaNdRgUkXp2r5u8xxJaNdRgUkXp2r5u8xxJaNdRgUkXp2r5u8xxJaNdRgUkXp2r5u8xxJaNdRgUkXp2r5u8xxJaNdRgUkXp2r5u8xxJaNdRgUkXp2r5u8xxJaNdRgUkXp2r5u8xxJaNdRgUkXp2r5u8xxJaNdRgUkXp2r5u8x
+    subject: keola.club
+    expirationMs: 86400000
+    key: 43D270AB908206F66253EF8DD27DCF37
+    header-authorization: Authorization

@@ -1,0 +1,69 @@
+spring:
+  data:
+    mongodb:
+      database: Dev-TreePointRange
+      uri: "mongodb://boadmin:WfRPW8MbHKMqRjsW@212.56.44.91:30234/?retryWrites=true&loadBalanced=false&connectTimeoutMS=10000&authSource=admin&authMechanism=SCRAM-SHA-256"
+  datasource:
+    url: jdbc:postgresql://${DB_HOSTNAME:212.56.44.91}:${DB_PORT:31334}/${DB_NAME:dev_inclub}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:CsOyVa08Q835}
+    driver-class-name: org.postgresql.Driver
+  kafka:
+    bootstrap-servers: ${KAFKA_HOSTNAME:kafka.inclub.world}:${KAFKA_PORT:29093}
+  devtools:
+    add-properties: false
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${AUTHORIZATION_SERVER_URI:https://oauth-dev.inclub.world}
+
+api:
+  adminpanel:
+    url: ${API_ADMIN_PANEL_URL:https://adminpanelapi-dev.inclub.world/api/}
+  commissions:
+    url: ${API_COMMISSIONS_URL:https://commissionsapi-dev.inclub.world}
+  collaborator:
+    url: ${API_COLLABORATOR_URL:https://collaboratorsapi-dev.inclub.world}
+  dashboard:
+    url: ${API_DASHBOARD_URL:https://dashboardapi-dev.inclub.world}
+  membershippayment:
+    url: ${API_MEMBERSHIP_URL:https://membershipapi-dev.inclub.world}
+
+server:
+  port: ${SERVER_PORT:9091}
+
+springdoc:
+  swagger-ui:
+    use-root-path: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+  health:
+    circuitbreakers:
+      enabled: true
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 2
+        permittedNumberOfCallsInHalfOpenState: 3
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        waitDurationInOpenState: 5s
+        failureRateThreshold: 50
+        eventConsumerBufferSize: 10
+
+logging:
+  level:
+    org.apache.kafka: ERROR
+    kafka: ERROR
+    org.springframework.kafka: ERROR

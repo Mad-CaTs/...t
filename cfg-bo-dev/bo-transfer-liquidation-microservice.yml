@@ -1,0 +1,84 @@
+spring:
+  application:
+    name: bo-transfer-liquidation-microservice
+    description: bo-transfer-liquidation-microservice
+    version: v0.0.1-SNAPSHOT
+    inceptionYear: 2024
+
+  devtools:
+    add-properties: false
+
+  r2dbc:
+    url: r2dbc:postgresql://${DB_HOSTNAME:212.56.44.91}:${DB_PORT:31185}/${DB_NAME:dev_inclub}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:CsOyVa08Q835}
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${AUTHORIZATION_SERVER_URI:https://oauth-dev.inclub.world}
+      client:
+        registration:
+          client-id: ${OAUTH2_CLIENT_ID}
+          client-secret: ${OAUTH2_CLIENT_SECRET}
+          authorization-grant-type: client_credentials
+          scope: api
+          provider: authorization-server
+        provider:
+          authorization-server:
+            token-uri: ${AUTHORIZATION_SERVER_URI}/oauth/token
+            authorization-uri: ${AUTHORIZATION_SERVER_URI}/oauth/authorize
+
+  kafka:
+    bootstrap-servers: ${KAFKA_HOSTNAME:kafka.inclub.world}:${KAFKA_PORT:29092}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring:
+          json:
+            add:
+              type:
+                headers: false
+
+  logging:
+    level:
+      root: ${LOG_LVL_ROOT:DEBUG}
+      org.apache.kafka: ${LOG_LVL_KAFKA:ERROR}
+      kafka: ${LOG_LVL_KAFKA:ERROR}
+      org.springframework.kafka: ${LOG_LVL_KAFKA:ERROR}
+
+  server:
+    port: ${SERVER_PORT:8095}
+
+  springdoc:
+    swagger-ui:
+      use-root-path: true
+      oauth:
+        clientId: back-office
+        clientSecret: ${OAUTH2_CLIENT_SECRET}
+
+  data:
+    mongodb:
+      uri: mongodb://boadmin:WfRPW8MbHKMqRjsW@212.56.44.91:30234/Dev-TreePointRange?retryWrites=true&loadBalanced=false&connectTimeoutMS=10000&authSource=admin&authMechanism=SCRAM-SHA-256
+
+api:
+  adminpanel:
+    url: ${API_ADMIN_PANEL_URL:https://adminpanelapi-dev.inclub.world/api/}
+  commissions:
+    url: ${API_COMMISSIONS_URL:https://commissionsapi-dev.inclub.world}
+  collaborator:
+    url: ${API_COLLABORATOR_URL:https://collaboratorsapi-dev.inclub.world}
+  account:
+    url: ${API_ACCOUNT_URL:https://account-dev.inclub.site/api/v1/account}
+  localAccount:
+    url: ${API_LOCAL_ACCOUNT_URL:http://account-dev.inclub.world/api/v1/account}
+  notification:
+    url: ${API_NOTIFICATION_URL:https://notifications-dev.inclub.world/}
+  membership:
+    url: ${API_MEMBERSHIP_URL:http://localhost:8777/api/v1/}
+  transfer:
+    url: ${API_TRANSFER_URL:https://adminpanelapi-dev.inclub.site/api/}
+  document:
+    url: ${API_DOCUMENT_URL:https://documentapi-dev.inclub.world/api/v1}
