@@ -1,0 +1,140 @@
+pipeline {
+    agent any
+
+    parameters {
+        string(name: 'COMMIT_HASH', defaultValue: '', description: 'Hash of the commit to deploy')
+    }
+
+    environment {
+        PARENT_DIR_CICD_PATH='/home/elperez/deploy/apps'
+        NAMESPACE = 'intech-world'
+        IMG_REGISTRY_DOMAIN = 'registry.inclub.world'
+        APP_IMAGE = 'bo-wallet-ms'
+        APP_VERSION = "1.0.${BUILD_NUMBER}"
+        K8S_SECRET_REGISTRY = 'intech-registry-secret'
+        DOMAIN = 'walletapi.inclub.world'
+        REPO_URL = 'git@github.com:Inclub-Backoffice/bo-wallet-microservice.git'
+        SSH_USER = 'elperez'
+        SSH_IP = '212.56.44.91'
+        BRANCH = 'master'
+    }
+
+    stages {
+        stage('Define calculated variables') {
+            steps{
+                script {
+                    env.REPO_BRANCH = scm.branches[0].name
+                    env.PARENT_DIR_CICD_ENV_PATH = "${env.PARENT_DIR_CICD_PATH}/${env.BRANCH}"
+                    env.REPO_DIR_PATH = "${env.PARENT_DIR_CICD_ENV_PATH}/repos/${env.APP_IMAGE}"
+                    env.SECRETS_FILE_PATH = "${env.PARENT_DIR_CICD_ENV_PATH}/secrets/${env.APP_IMAGE}.env"
+                    env.K8S_MANIFEST_PATH = "${REPO_DIR_PATH}/scripts/k8s/deployment.yaml"
+                    env.K8S_APP = "${env.APP_IMAGE}-${env.BRANCH}"
+                    env.K8S_SECRET = "${env.K8S_APP}-secret"
+                }
+            }
+
+        }
+
+       stage('Prepare repository') {
+           steps {
+               script {
+                   def command = """
+                       if [ -d ${REPO_DIR_PATH} ]; then
+                           cd ${REPO_DIR_PATH} && git fetch origin
+                       else
+                           git clone ${REPO_URL} ${REPO_DIR_PATH}
+                           cd ${REPO_DIR_PATH}
+                           git fetch origin
+                       fi
+
+                       cd ${REPO_DIR_PATH}
+                       ${params.COMMIT_HASH ? "git checkout ${params.COMMIT_HASH}" : "git checkout origin/${REPO_BRANCH}"}
+                       echo 'COMMIT_HASH:\$(git rev-parse HEAD)'
+                   """
+                   executeRemote(command)
+               }
+           }
+       }
+
+        stage('Build image') {
+            steps {
+                script {
+                    def command = """
+                         cd ${REPO_DIR_PATH}
+                         docker build -f Dockerfile -t "${APP_IMAGE}:${APP_VERSION}" .
+                    """
+                    executeRemote(command)
+                }
+            }
+        }
+
+        stage('Publish image') {
+            steps {
+                script {
+                    def command = """
+                       docker tag "${APP_IMAGE}:${APP_VERSION}" "${IMG_REGISTRY_DOMAIN}/${APP_IMAGE}:${APP_VERSION}"
+                       docker push "${IMG_REGISTRY_DOMAIN}/${APP_IMAGE}:${APP_VERSION}"
+                    """
+                    executeRemote(command)
+                }
+            }
+        }
+
+        stage('Deploy to k8s') {
+            steps {
+                script {
+                    def command = """
+                        export P_K8S_APP="${K8S_APP}"
+                        export P_NAMESPACE="${NAMESPACE}"
+                        export P_IMG_REGISTRY_DOMAIN="${IMG_REGISTRY_DOMAIN}"
+                        export P_APP_IMAGE="${APP_IMAGE}"
+                        export P_APP_VERSION="${APP_VERSION}"
+                        export P_K8S_SECRET="${K8S_SECRET}"
+                        export P_K8S_SECRET_REGISTRY="${K8S_SECRET_REGISTRY}"
+                        export P_DOMAIN="${DOMAIN}"
+
+                        envsubst < ${K8S_MANIFEST_PATH} | kubectl delete -f - --ignore-not-found
+
+                        kubectl create secret generic "${K8S_SECRET}" \
+                        --namespace="${NAMESPACE}" \
+                        --from-env-file="${SECRETS_FILE_PATH}" \
+                        --dry-run=client -o yaml | kubectl apply -f -
+
+                        envsubst < ${K8S_MANIFEST_PATH} | kubectl apply -f -
+                    """
+                    executeRemote(command)
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline executed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed!'
+        }
+    }
+}
+
+def executeRemote(command) {
+    def trimmedCmd = command.trim()
+    sshagent(['ssh-backoffice']) {
+        def output = sh(
+            script: """
+                ssh -o StrictHostKeyChecking=no ${env.SSH_USER}@${env.SSH_IP} 'bash -c "set -e; ${trimmedCmd}; echo _OK_" 2>&1'
+            """,
+            returnStdout: true
+        ).trim()
+
+        def lines = output.readLines()
+        def lastLine = lines[-1]
+
+        if (lastLine != '_OK_') {
+            error("Fail command:\n${command}\nOutput:\n${output}")
+        }else{
+            echo "Output:\n${output}"
+        }
+    }
+}
