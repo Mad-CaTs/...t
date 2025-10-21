@@ -11,7 +11,8 @@ public class RankMapper {
         if (response == null) return null;
         return new Rank(
                 response.idRange(),
-                response.name()
+                response.name(),
+                response.position()
         );
     }
 

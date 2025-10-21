@@ -4,11 +4,10 @@ import org.springframework.stereotype.Component;
 import world.inclub.bonusesrewards.shared.payment.application.dto.MakePaymentCommand;
 import world.inclub.bonusesrewards.shared.payment.application.dto.PaymentAmounts;
 import world.inclub.bonusesrewards.shared.payment.domain.model.Payment;
-import world.inclub.bonusesrewards.shared.payment.domain.model.PaymentStatus;
+import world.inclub.bonusesrewards.shared.payment.domain.model.BonusPaymentStatus;
 import world.inclub.bonusesrewards.shared.payment.domain.model.SourceTableType;
 import world.inclub.bonusesrewards.shared.utils.TimeLima;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Component
@@ -24,7 +23,7 @@ public class PaymentFactory {
                 .memberId(command.memberId())
                 .paymentType(command.paymentType())
                 .paymentSubTypeId(command.paymentSubTypeId())
-                .status(PaymentStatus.PENDING_REVIEW)
+                .status(BonusPaymentStatus.PENDING_REVIEW)
                 .currencyType(command.currencyType())
                 .subTotalAmount(amounts.subTotal())
                 .commissionAmount(amounts.commission())
@@ -44,7 +43,7 @@ public class PaymentFactory {
                 .memberId(command.memberId())
                 .paymentType(command.paymentType())
                 .paymentSubTypeId(command.paymentSubTypeId())
-                .status(PaymentStatus.COMPLETED)
+                .status(BonusPaymentStatus.COMPLETED)
                 .currencyType(command.currencyType())
                 .subTotalAmount(amounts.subTotal())
                 .commissionAmount(amounts.commission())

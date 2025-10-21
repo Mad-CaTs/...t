@@ -11,6 +11,7 @@ import world.inclub.bonusesrewards.carbonus.domain.model.CarPaymentSchedule;
 import world.inclub.bonusesrewards.carbonus.domain.port.CarPaymentScheduleRepositoryPort;
 import world.inclub.bonusesrewards.shared.exceptions.BadRequestException;
 import world.inclub.bonusesrewards.shared.exceptions.NotFoundException;
+import world.inclub.bonusesrewards.shared.member.domain.port.MemberRepositoryPort;
 import world.inclub.bonusesrewards.shared.payment.application.dto.ProcessWalletPaymentCommand;
 import world.inclub.bonusesrewards.shared.payment.application.factory.PaymentNotificationFactory;
 import world.inclub.bonusesrewards.shared.payment.application.factory.PaymentRejectionFactory;
@@ -23,7 +24,6 @@ import world.inclub.bonusesrewards.shared.payment.application.factory.PaymentFac
 import world.inclub.bonusesrewards.shared.payment.application.factory.PaymentVoucherFactory;
 import world.inclub.bonusesrewards.shared.payment.api.mapper.PaymentMapper;
 import world.inclub.bonusesrewards.shared.payment.api.dto.PaymentResponseDto;
-import world.inclub.bonusesrewards.shared.payment.infrastructure.kafka.producer.PaymentEventProducer;
 import world.inclub.bonusesrewards.shared.utils.TimeLima;
 
 import java.time.LocalDateTime;
@@ -55,8 +55,6 @@ public class PaymentServiceImpl implements PaymentService {
     private final PaymentRejectionFactory paymentRejectionFactory;
 
     private final PaymentMapper paymentMapper;
-
-    private final PaymentEventProducer paymentEventProducer;
 
     @Override
     @Transactional
@@ -119,7 +117,7 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     private Mono<Payment> createPayment(MakePaymentCommand command, PaymentAmounts amounts) {
-        return memberRepositoryPort.getMemberByIdUser(command.memberId())
+        return memberRepositoryPort.getById(command.memberId())
                 .map(Optional::of)
                 .defaultIfEmpty(Optional.empty())
                 .flatMap(member -> {
@@ -139,7 +137,7 @@ public class PaymentServiceImpl implements PaymentService {
                         }
                         case WALLET -> {
                             ProcessWalletPaymentCommand process =
-                                    new ProcessWalletPaymentCommand(command.memberId(), amounts.total(), "Ticket purchase payment");
+                                    new ProcessWalletPaymentCommand(command.memberId(), amounts.total(), "Bonus installment payment");
 
                             result = walletPaymentService.sendWalletPayment(process)
                                     .then(paymentRepositoryPort.save(paymentFactory.createPaymentWithApprovedStatus(command, amounts)));
@@ -154,7 +152,7 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     private Mono<Void> paymentNotification(Payment payment) {
-        Mono<Tuple2<String, String>> userDataMono = memberRepositoryPort.getMemberByIdUser(payment.getMemberId())
+        Mono<Tuple2<String, String>> userDataMono = memberRepositoryPort.getById(payment.getMemberId())
                 .map(member -> Tuples.of(member.email(), member.name() + " " + member.lastName()));
 
         Mono<CarPaymentSchedule> scheduleMono = carPaymentScheduleRepositoryPort.findById(payment.getSourceRecordId());
@@ -179,7 +177,7 @@ public class PaymentServiceImpl implements PaymentService {
                                                 voucher,
                                                 paymentSubTypeName
                                         )
-                                ));
+                                )).doOnSuccess(r -> System.out.println("Notificación COMPLETED enviada para paymentId=" + payment.getId()));
 
                         case PENDING_REVIEW -> paymentNotificationService.sendPaymentNotification(
                                 paymentNotificationFactory.toPendingReviewPaymentMessage(
@@ -188,7 +186,8 @@ public class PaymentServiceImpl implements PaymentService {
                                         schedule,
                                         paymentSubTypeName
                                 )
-                        );
+                        ).doOnSubscribe(s -> System.out.println("Enviando notificación PENDING_REVIEW para paymentId=" + payment.getId()))
+                                .doOnSuccess(r -> System.out.println("Notificación PENDING_REVIEW enviada con éxito."));
 
                         case REJECTED -> paymentRejectionRepositoryPort.findByPaymentId(payment.getId())
                                 .flatMap(paymentRejection ->
@@ -205,7 +204,7 @@ public class PaymentServiceImpl implements PaymentService {
                                                                 )
                                                         )
                                                 )
-                                );
+                                ).doOnSuccess(r -> System.out.println("Notificación REJECTED enviada para paymentId=" + payment.getId()));
 
                         case PENDING, FAILED -> Mono.empty();
                     };
@@ -215,7 +214,7 @@ public class PaymentServiceImpl implements PaymentService {
     private Mono<Void> updateScheduleStatus(UUID scheduleId, LocalDateTime paymentDate) {
         return carPaymentScheduleRepositoryPort.updateSchedulePayment(
                 scheduleId,
-                PaymentStatus.COMPLETED.getId().intValue(),
+                BonusPaymentStatus.COMPLETED.getId().intValue(),
                 paymentDate
         );
     }
@@ -227,10 +226,10 @@ public class PaymentServiceImpl implements PaymentService {
 
         return paymentRepositoryPort.findById(paymentId)
                 .switchIfEmpty(Mono.error(new NotFoundException("Payment with ID " + paymentId + " not found")))
-                .filter(payment -> payment.getStatus() == PaymentStatus.PENDING_REVIEW)
+                .filter(payment -> payment.getStatus() == BonusPaymentStatus.PENDING_REVIEW)
                 .switchIfEmpty(Mono.error(new BadRequestException("Payment is not in PENDING_REVIEW status")))
                 .flatMap(payment -> {
-                    payment.setStatus(PaymentStatus.COMPLETED);
+                    payment.setStatus(BonusPaymentStatus.COMPLETED);
                     payment.setUpdatedAt(updatedAt);
                     return paymentRepositoryPort.save(payment);
                 })
@@ -244,10 +243,10 @@ public class PaymentServiceImpl implements PaymentService {
 
         return paymentRepositoryPort.findById(paymentId)
                 .switchIfEmpty(Mono.error(new NotFoundException("Payment with ID " + paymentId + " not found")))
-                .filter(payment -> payment.getStatus() == PaymentStatus.PENDING_REVIEW)
+                .filter(payment -> payment.getStatus() == BonusPaymentStatus.PENDING_REVIEW)
                 .switchIfEmpty(Mono.error(new BadRequestException("Payment is not in PENDING status")))
                 .flatMap(payment -> {
-                    payment.setStatus(PaymentStatus.REJECTED);
+                    payment.setStatus(BonusPaymentStatus.REJECTED);
                     payment.setUpdatedAt(updatedAt);
                     return paymentRepositoryPort.save(payment);
                 })

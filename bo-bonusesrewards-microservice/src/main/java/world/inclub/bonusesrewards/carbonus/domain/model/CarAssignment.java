@@ -15,6 +15,7 @@ import java.util.UUID;
 public record CarAssignment(
         UUID id,
         UUID carId,
+        UUID quotationId,
         Long memberId,
         BigDecimal price,
         BigDecimal interestRate,

@@ -148,4 +148,34 @@ public interface CompoundPeriodReactiveMongoRepository
             Long minRequalifications
     );
 
+    @Aggregation(pipeline = {
+            "{ $match: { id_user: ?0, id_range: { $in: ?1 }, id_state: 1 } }",
+            "{ $sort: { id_user: 1, id_range: 1, period_id: -1 } }",
+            "{ $group: { " +
+                    "_id: '$id_user', " +
+                    "rankId: { $first: '$id_range' }, " +
+                    "rankName: { $first: '$range' }, " +
+                    "periods: { $push: '$period_id' }, " +
+                    "totalDirectPoints: { $first: { $add: [ " +
+                    "{ $ifNull: ['$points_direct1', 0] }, " +
+                    "{ $ifNull: ['$points_direct2', 0] }, " +
+                    "{ $ifNull: ['$points_direct3', 0] } ] } } " +
+                    "} }",
+            "{ $project: { " +
+                    "userId: '$_id', " +
+                    "rankId: 1, " +
+                    "rankName: 1, " +
+                    "totalDirectPoints: 1, " +
+                    "numRequalifications: { $subtract: [ { $size: '$periods' }, 1 ] }, " +
+                    "startPeriod: { $min: '$periods' }, " +
+                    "endPeriod: { $max: '$periods' } " +
+                    "} }",
+            "{ $match: { userId: { $ne: null } } }",
+            "{ $sort: { totalDirectPoints: -1 } }"
+    })
+    Flux<PrequalificationResult> findByMemberIdAndRankIds(
+            Long memberId,
+            List<Long> rankIds
+    );
+
 }

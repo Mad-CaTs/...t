@@ -2,12 +2,16 @@ package world.inclub.bonusesrewards.carbonus.infrastructure.persistence.adapter;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import world.inclub.bonusesrewards.carbonus.domain.dto.CarAssignmentWithClassification;
 import world.inclub.bonusesrewards.carbonus.domain.model.CarAssignment;
 import world.inclub.bonusesrewards.carbonus.domain.port.CarAssignmentRepositoryPort;
+import world.inclub.bonusesrewards.carbonus.infrastructure.persistence.entity.CarAssignmentWithClassificationDTO;
 import world.inclub.bonusesrewards.carbonus.infrastructure.persistence.mapper.CarAssignmentEntityMapper;
 import world.inclub.bonusesrewards.carbonus.infrastructure.persistence.repository.CarAssignmentR2dbcRepository;
 
+import java.util.Collection;
 import java.util.UUID;
 
 @Component
@@ -40,5 +44,19 @@ public class CarAssignmentRepositoryAdapter
     public Mono<Boolean> existsByRankBonusId(UUID rankBonusId) {
         return carAssignmentR2dbcRepository.existsByRankBonusId(rankBonusId);
     }
+
+    @Override
+    public Flux<CarAssignmentWithClassification> findByClassificationIds(Collection<UUID> classificationIds) {
+        return carAssignmentR2dbcRepository.findByClassificationIdIn(classificationIds)
+                .map(this::mapToDomain);
+    }
+
+    private CarAssignmentWithClassification mapToDomain(CarAssignmentWithClassificationDTO dto) {
+        return new CarAssignmentWithClassification(
+                dto.classificationId(),
+                dto.carAssignmentId()
+        );
+    }
+
 
 }

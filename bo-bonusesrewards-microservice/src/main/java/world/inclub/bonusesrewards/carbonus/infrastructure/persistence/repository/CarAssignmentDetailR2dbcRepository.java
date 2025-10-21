@@ -17,10 +17,10 @@ public interface CarAssignmentDetailR2dbcRepository
 
     @Query("""
                 SELECT * FROM bo_bonus_reward.car_assignment_details_view
-                WHERE (COALESCE(:brandName, '') = '' OR brand_name ILIKE '%' || :brandName || '%')
-                  AND (COALESCE(:modelName, '') = '' OR model_name ILIKE '%' || :modelName || '%')
-                  AND (COALESCE(:startDate, '0001-01-01') = '0001-01-01' OR assigned_date >= :startDate)
-                  AND (COALESCE(:endDate, '9999-12-31') = '9999-12-31' OR assigned_date < :endDate)
+                WHERE (:brandName IS NULL OR LOWER(brand_name) LIKE LOWER(CONCAT('%', :brandName, '%')))
+                  AND (:modelName IS NULL OR LOWER(model_name) LIKE LOWER(CONCAT('%', :modelName, '%')))
+                  AND (:startDate IS NULL OR assigned_date >= :startDate)
+                  AND (:endDate IS NULL OR assigned_date <= :endDate)
                 ORDER BY car_id DESC
                 LIMIT :limit OFFSET :offset
             """)
@@ -36,8 +36,8 @@ public interface CarAssignmentDetailR2dbcRepository
 
     @Query("""
                 SELECT COUNT(*) FROM bo_bonus_reward.car_assignment_details_view 
-                WHERE (:brandName IS NULL OR brand_name ILIKE CONCAT('%', :brandName, '%'))
-                  AND (:modelName IS NULL OR model_name ILIKE CONCAT('%', :modelName, '%'))
+                WHERE (:brandName IS NULL OR LOWER(brand_name) LIKE LOWER(CONCAT('%', :brandName, '%')))
+                  AND (:modelName IS NULL OR LOWER(model_name) LIKE LOWER(CONCAT('%', :modelName, '%')))
                   AND (:startDate IS NULL OR assigned_date >= :startDate)
                   AND (:endDate IS NULL OR assigned_date <= :endDate)
             """)

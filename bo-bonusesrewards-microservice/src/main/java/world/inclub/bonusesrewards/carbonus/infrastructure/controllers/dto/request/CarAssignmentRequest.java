@@ -9,6 +9,7 @@ import org.springframework.http.codec.multipart.FilePart;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.UUID;
 
 public record CarAssignmentRequest(
         @Valid CarSummary car,
@@ -22,7 +23,7 @@ public record CarAssignmentRequest(
     ) {}
 
     public record CarAssignmentSummary(
-            @Nullable Long memberId,
+            @Nullable UUID quotationId,
             @NotNull @Positive BigDecimal price,
             @NotNull @Positive BigDecimal interestRate,
             @NotNull @Positive Integer initialInstallmentsCount,

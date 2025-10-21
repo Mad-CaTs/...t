@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 import world.inclub.bonusesrewards.carbonus.application.usecase.carrankbonus.DeleteCarRankBonusUseCase;
-import world.inclub.bonusesrewards.carbonus.application.usecase.carrankbonus.GetCarRankBonusByMemberIdUseCase;
+import world.inclub.bonusesrewards.carbonus.application.usecase.carrankbonus.GetCarRankBonusByQuotationIdUseCase;
 import world.inclub.bonusesrewards.carbonus.application.usecase.carrankbonus.SaveCarRankBonusUseCase;
 import world.inclub.bonusesrewards.carbonus.application.usecase.carrankbonus.UpdateCarRankBonusUseCase;
 import world.inclub.bonusesrewards.carbonus.infrastructure.controllers.constants.CarBonusApiPaths.RankBonuses;
@@ -28,7 +28,7 @@ public class CarRankBonusController {
     private final SaveCarRankBonusUseCase saveCarRankBonusUseCase;
     private final UpdateCarRankBonusUseCase updateCarRankBonusUseCase;
     private final DeleteCarRankBonusUseCase deleteCarRankBonusUseCase;
-    private final GetCarRankBonusByMemberIdUseCase getCarRankBonusByMemberIdUseCase;
+    private final GetCarRankBonusByQuotationIdUseCase getCarRankBonusByQuotationIdUseCase;
 
     private final CarRankBonusRequestMapper carRankBonusRequestMapper;
     private final CarRankBonusResponseMapper carRankBonusResponseMapper;
@@ -66,11 +66,11 @@ public class CarRankBonusController {
         );
     }
 
-    @GetMapping("/member/{memberId}")
-    public Mono<ResponseEntity<ApiResponse<CarRankBonusResponse>>> getByMemberId(@PathVariable Long memberId) {
+    @GetMapping("/member/{quotationId}")
+    public Mono<ResponseEntity<ApiResponse<CarRankBonusResponse>>> getByMemberId(@PathVariable UUID quotationId) {
         return ResponseHandler.generateResponse(
                 HttpStatus.OK,
-                getCarRankBonusByMemberIdUseCase.getByMemberId(memberId)
+                getCarRankBonusByQuotationIdUseCase.findByQuotationId(quotationId)
                         .map(carRankBonusResponseMapper::toResponse),
                 true
         );

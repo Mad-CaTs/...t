@@ -5,6 +5,9 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import world.inclub.bonusesrewards.carbonus.application.usecase.carpaymentschedule.CreateCarPaymentInstallmentsUseCase;
+import world.inclub.bonusesrewards.carbonus.application.usecase.carpaymentschedule.GetAllCarPaymentSchedulesUseCase;
+import world.inclub.bonusesrewards.carbonus.application.usecase.carpaymentschedule.SearchCarPaymentScheduleInitialsUseCase;
+import world.inclub.bonusesrewards.carbonus.application.usecase.carpaymentschedule.SearchCarPaymentSchedulesUseCase;
 import world.inclub.bonusesrewards.carbonus.domain.factory.CarPaymentScheduleFactory;
 import world.inclub.bonusesrewards.carbonus.domain.model.CarPaymentSchedule;
 import world.inclub.bonusesrewards.carbonus.domain.port.CarAssignmentRepositoryPort;
@@ -12,14 +15,21 @@ import world.inclub.bonusesrewards.carbonus.domain.port.CarPaymentScheduleReposi
 import world.inclub.bonusesrewards.carbonus.domain.port.CarRankBonusRepositoryPort;
 import world.inclub.bonusesrewards.carbonus.domain.validator.CarPaymentScheduleValidator;
 import world.inclub.bonusesrewards.shared.exceptions.EntityNotFoundException;
+import world.inclub.bonusesrewards.shared.utils.pagination.application.PageDataBuilder;
+import world.inclub.bonusesrewards.shared.utils.pagination.application.PagedData;
+import world.inclub.bonusesrewards.shared.utils.pagination.domain.Pageable;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class CarPaymentScheduleService
-        implements CreateCarPaymentInstallmentsUseCase {
+        implements CreateCarPaymentInstallmentsUseCase,
+                   GetAllCarPaymentSchedulesUseCase,
+                   SearchCarPaymentScheduleInitialsUseCase,
+                   SearchCarPaymentSchedulesUseCase {
 
     private final CarAssignmentRepositoryPort carAssignmentRepositoryPort;
     private final CarRankBonusRepositoryPort carRankBonusRepositoryPort;
@@ -54,5 +64,61 @@ public class CarPaymentScheduleService
                                         rankBonus
                                 ))))
                 .flatMapMany(carPaymentScheduleRepositoryPort::saveAll);
+    }
+
+    @Override
+    public Flux<CarPaymentSchedule> findByCarAssignmentId(UUID carAssignmentId) {
+        return carPaymentScheduleRepositoryPort
+                .findByCarAssignmentId(carAssignmentId)
+                .switchIfEmpty(Mono.error(new EntityNotFoundException(
+                        "No schedules found for the provided car assignment ID.")));
+    }
+
+    @Override
+    public Mono<PagedData<CarPaymentSchedule>> searchInitials(
+            UUID carAssignmentId,
+            Pageable pageable
+    ) {
+        Flux<CarPaymentSchedule> schedulesFlux = carPaymentScheduleRepositoryPort
+                .findInitialsByCarAssignmentId(carAssignmentId, pageable)
+                .switchIfEmpty(Mono.error(new EntityNotFoundException(
+                        "No initial payment schedules found matching the criteria")));
+
+        Mono<Long> countMono = carPaymentScheduleRepositoryPort
+                .countInitialsByCarAssignmentId(carAssignmentId)
+                .defaultIfEmpty(0L);
+
+        return Mono.zip(schedulesFlux.collectList(), countMono)
+                .map(tuple -> {
+                    List<CarPaymentSchedule> schedules = tuple.getT1();
+                    Long total = tuple.getT2();
+
+                    return PageDataBuilder
+                            .build(schedules, pageable, total);
+                });
+    }
+
+    @Override
+    public Mono<PagedData<CarPaymentSchedule>> searchCarPaymentSchedules(
+            UUID carAssignmentId,
+            Pageable pageable
+    ) {
+        Flux<CarPaymentSchedule> schedulesFlux = carPaymentScheduleRepositoryPort
+                .findAllByCarAssignmentIdWithPagination(carAssignmentId, pageable)
+                .switchIfEmpty(Mono.error(new EntityNotFoundException(
+                        "No payment schedules found matching the criteria")));
+
+        Mono<Long> countMono = carPaymentScheduleRepositoryPort
+                .countByCarAssignmentId(carAssignmentId)
+                .defaultIfEmpty(0L);
+
+        return Mono.zip(schedulesFlux.collectList(), countMono)
+                .map(tuple -> {
+                    List<CarPaymentSchedule> schedules = tuple.getT1();
+                    Long total = tuple.getT2();
+
+                    return PageDataBuilder
+                            .build(schedules, pageable, total);
+                });
     }
 }

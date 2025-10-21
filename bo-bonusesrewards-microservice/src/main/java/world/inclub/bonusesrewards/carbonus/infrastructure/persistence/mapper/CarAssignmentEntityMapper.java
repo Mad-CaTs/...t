@@ -17,6 +17,7 @@ public class CarAssignmentEntityMapper {
         CarAssignmentEntity entity = new CarAssignmentEntity();
         entity.setId(carAssignment.id());
         entity.setCarId(carAssignment.carId());
+        entity.setQuotationId(carAssignment.quotationId());
         entity.setMemberId(carAssignment.memberId());
         entity.setPrice(carAssignment.price());
         entity.setInterestRate(carAssignment.interestRate());
@@ -39,6 +40,7 @@ public class CarAssignmentEntityMapper {
         return CarAssignment.builder()
                 .id(entity.getId())
                 .carId(entity.getCarId())
+                .quotationId(entity.getQuotationId())
                 .memberId(entity.getMemberId())
                 .price(entity.getPrice())
                 .interestRate(entity.getInterestRate())

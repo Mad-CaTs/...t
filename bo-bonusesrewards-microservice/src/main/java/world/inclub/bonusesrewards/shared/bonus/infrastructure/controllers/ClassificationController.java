@@ -8,9 +8,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
-import world.inclub.bonusesrewards.shared.bonus.application.usecase.classification.ClassifyMemberUseCase;
-import world.inclub.bonusesrewards.shared.bonus.application.usecase.classification.GetAllClassificationWithMemberUseCase;
-import world.inclub.bonusesrewards.shared.bonus.application.usecase.classification.SearchClassificationsWithMemberUseCase;
+import world.inclub.bonusesrewards.shared.bonus.application.dto.ClassificationDetailSummary;
+import world.inclub.bonusesrewards.shared.bonus.application.usecase.classification.*;
 import world.inclub.bonusesrewards.shared.bonus.infrastructure.controllers.constants.BonusApiPaths.Classifications;
 import world.inclub.bonusesrewards.shared.bonus.infrastructure.controllers.dto.request.ClassificationSearchCriteriaRequest;
 import world.inclub.bonusesrewards.shared.bonus.infrastructure.controllers.dto.request.PrequalificationRequest;
@@ -36,6 +35,7 @@ public class ClassificationController {
     private final ClassifyMemberUseCase classifyMemberUseCase;
     private final GetAllClassificationWithMemberUseCase getAllClassificationWithMemberUseCase;
     private final SearchClassificationsWithMemberUseCase searchClassificationsUseCase;
+    private final GetClassificationDetailsUseCase getClassificationByMemberIdAndBonusTypedUseCase;
     private final ReportExporter<ClassificationExcelResponse> classificationReportExporter;
     private final ClassificationResponseMapper classificationResponseMapper;
     private final ClassificationExcelResponseMapper classificationExcelResponseMapper;
@@ -87,4 +87,17 @@ public class ClassificationController {
                 .map(classificationResponseMapper::toResponse)
                 .flatMap(pagedData -> ResponseHandler.generateResponse(HttpStatus.OK, pagedData, true));
     }
+
+    @GetMapping("/member/{memberId}/bonus-type/{bonusType}")
+    public Mono<ResponseEntity<ApiResponse<List<ClassificationDetailSummary>>>> getClassificationByMemberId(
+            @PathVariable Long memberId,
+            @PathVariable String bonusType
+    ) {
+        return ResponseHandler.generateResponse(
+                HttpStatus.OK,
+                getClassificationByMemberIdAndBonusTypedUseCase.getDetails(memberId, bonusType),
+                true
+        );
+    }
+
 }

@@ -69,8 +69,7 @@ public class CarRankBonusFactory {
      * @return A new CarRankBonus instance with updated fields and adjusted dates.
      */
     public CarRankBonus update(CarRankBonus oldCarRankBonus, CarRankBonus newCarRankBonus) {
-        return CarRankBonus.builder()
-                .id(oldCarRankBonus.id())
+        return oldCarRankBonus.toBuilder()
                 .rankId(newCarRankBonus.rankId())
                 .monthlyBonus(newCarRankBonus.monthlyBonus())
                 .initialBonus(newCarRankBonus.initialBonus())

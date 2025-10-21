@@ -23,7 +23,7 @@ public class Payment {
     private Long memberId;
     private PaymentType paymentType;
     private Integer paymentSubTypeId;
-    private PaymentStatus status;
+    private BonusPaymentStatus status;
     private CurrencyType currencyType;
     private BigDecimal subTotalAmount;
     private BigDecimal commissionAmount;

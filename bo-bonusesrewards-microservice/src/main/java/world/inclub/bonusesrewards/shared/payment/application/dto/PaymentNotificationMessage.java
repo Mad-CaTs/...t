@@ -1,8 +1,7 @@
 package world.inclub.bonusesrewards.shared.payment.application.dto;
 
 import lombok.Builder;
-import lombok.Data;
-import world.inclub.bonusesrewards.shared.payment.domain.model.PaymentStatus;
+import world.inclub.bonusesrewards.shared.payment.domain.model.BonusPaymentStatus;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -15,7 +14,7 @@ public record PaymentNotificationMessage(
         Payment payment,
         Voucher voucher,
         RejectedPayment rejectedPayment,
-        PaymentStatus status
+        BonusPaymentStatus status
 ) {
     @Builder
     public record User(

@@ -70,6 +70,12 @@ public class CompoundPeriodRepositoryAdapter
         ).map(this::toDomain);
     }
 
+    @Override
+    public Flux<Prequalification> findByMemberIdAndRankIds(Long memberId, List<Long> rankIds) {
+        return mongoRepository.findByMemberIdAndRankIds(memberId, rankIds)
+                .map(this::toDomain);
+    }
+
     private Prequalification toDomain(PrequalificationResult result) {
         return new Prequalification(
                 result.userId(),

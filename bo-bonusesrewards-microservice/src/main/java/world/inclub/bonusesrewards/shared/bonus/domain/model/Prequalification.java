@@ -1,5 +1,8 @@
 package world.inclub.bonusesrewards.shared.bonus.domain.model;
 
+import lombok.Builder;
+
+@Builder(toBuilder = true)
 public record Prequalification(
         Long userId,
         Long rankId,
@@ -8,4 +11,8 @@ public record Prequalification(
         Integer totalDirectPoints,
         Long startPeriod,
         Long endPeriod
-) {}
+) {
+    public static Prequalification empty() {
+        return Prequalification.builder().build();
+    }
+}

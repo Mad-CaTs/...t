@@ -19,4 +19,8 @@ public record Classification(
         Boolean notificationStatus,
         Instant createdAt,
         Instant updatedAt
-) {}
+) {
+    public static Classification empty() {
+        return Classification.builder().build();
+    }
+}

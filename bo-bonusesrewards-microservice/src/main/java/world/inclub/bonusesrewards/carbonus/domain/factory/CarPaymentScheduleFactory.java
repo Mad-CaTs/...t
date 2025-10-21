@@ -2,7 +2,7 @@ package world.inclub.bonusesrewards.carbonus.domain.factory;
 
 import org.springframework.stereotype.Component;
 import world.inclub.bonusesrewards.carbonus.domain.model.*;
-import world.inclub.bonusesrewards.shared.payment.domain.model.PaymentStatus;
+import world.inclub.bonusesrewards.shared.payment.domain.model.BonusPaymentStatus;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -18,7 +18,7 @@ public class CarPaymentScheduleFactory {
 
     public CarPaymentSchedule markAsPaid(CarPaymentSchedule schedule) {
         return schedule.toBuilder()
-                .statusId(PaymentStatus.COMPLETED.getId())
+                .statusId(BonusPaymentStatus.COMPLETED.getId())
                 .paymentDate(Instant.now())
                 .build();
     }
@@ -33,7 +33,7 @@ public class CarPaymentScheduleFactory {
         LocalDate startDate = carAssignment.paymentStartDate();
         List<CarPaymentSchedule> schedules = new ArrayList<>();
         for (int i = 0; i < parts; i++) {
-            LocalDate dueDate = startDate.plusMonths(i);
+            LocalDate dueDate = adjustPaymentDateForMonth(startDate, i);
             schedules.add(buildInitialSchedule(
                     carAssignmentId,
                     i + 1,
@@ -75,11 +75,11 @@ public class CarPaymentScheduleFactory {
         BigDecimal monthlyBonus = rankBonus.monthlyBonus();
 
         List<CarPaymentSchedule> schedules = new ArrayList<>();
-        LocalDate startDate = lastInitial.dueDate().plusMonths(1);
+        LocalDate startDate = carAssignment.paymentStartDate().plusMonths(lastInitial.orderNum());
         int initialSchedulesCount = lastInitial.orderNum();
 
         for (int i = 0; i < periods; i++) {
-            LocalDate dueDate = startDate.plusMonths(i);
+            LocalDate dueDate = adjustPaymentDateForMonth(startDate, i);
 
             BigDecimal memberAssumedPayment = financingInstallment
                     .add(monthlyInsurance)
@@ -181,6 +181,18 @@ public class CarPaymentScheduleFactory {
             result[i] = equalPart;
         }
         return result;
+    }
+
+    private LocalDate adjustPaymentDateForMonth(LocalDate startDate, int monthsToAdd) {
+        LocalDate targetDate = startDate.plusMonths(monthsToAdd);
+        int originalDay = startDate.getDayOfMonth();
+
+        if (targetDate.getDayOfMonth() == originalDay ||
+            targetDate.lengthOfMonth() >= originalDay) {
+            return targetDate.withDayOfMonth(Math.min(originalDay, targetDate.lengthOfMonth()));
+        }
+
+        return targetDate.withDayOfMonth(targetDate.lengthOfMonth());
     }
 
 }

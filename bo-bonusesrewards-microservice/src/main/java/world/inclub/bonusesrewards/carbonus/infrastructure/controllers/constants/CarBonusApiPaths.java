@@ -34,4 +34,13 @@ public class CarBonusApiPaths {
         public static final String DETAIL = BASE + "/details";
     }
 
+    public static class DocumentTypes {
+        public static final String BASE = CarBonusApiPaths.BASE + "/document-types";
+    }
+
+    public static class AssignmentDocuments {
+        public static final String BASE = CarBonusApiPaths.BASE + "/assignment-documents";
+        public static final String DETAIL = BASE + "/details";
+    }
+
 }

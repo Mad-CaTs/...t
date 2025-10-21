@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 import world.inclub.bonusesrewards.carbonus.domain.model.Car;
 import world.inclub.bonusesrewards.carbonus.domain.model.CarAssignment;
 import world.inclub.bonusesrewards.carbonus.domain.model.CarRankBonus;
+import world.inclub.bonusesrewards.shared.bonus.domain.model.Classification;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -18,11 +19,13 @@ public class CarAssignmentFactory {
     public CarAssignment prepareForSave(
             CarAssignment carAssignment,
             Car car,
-            CarRankBonus rankBonus
+            CarRankBonus rankBonus,
+            Classification classification
     ) {
         return CarAssignment.builder()
                 .carId(car.id())
-                .memberId(getMemberIdOrNull(carAssignment))
+                .quotationId(getQuotationIdOrNull(carAssignment))
+                .memberId(getMemberIdOrNull(classification))
                 .price(carAssignment.price())
                 .interestRate(carAssignment.interestRate())
                 .rankBonusId(getRankBonusId(rankBonus))
@@ -30,8 +33,8 @@ public class CarAssignmentFactory {
                 .initialInstallmentsCount(carAssignment.initialInstallmentsCount())
                 .monthlyInstallmentsCount(carAssignment.monthlyInstallmentsCount())
                 .paymentStartDate(carAssignment.paymentStartDate())
-                .assignedDate(getAssignedDate(carAssignment.memberId(), carAssignment.assignedDate()))
-                .isAssigned(getStatus(carAssignment.memberId()))
+                .assignedDate(getAssignedDate(carAssignment.quotationId(), carAssignment.assignedDate()))
+                .isAssigned(getStatus(carAssignment.quotationId()))
                 .build();
     }
 
@@ -41,10 +44,12 @@ public class CarAssignmentFactory {
     public CarAssignment prepareForUpdate(
             CarAssignment carAssignment,
             CarAssignment existingAssignment,
-            CarRankBonus rankBonus
+            CarRankBonus rankBonus,
+            Classification classification
     ) {
         return existingAssignment.toBuilder()
-                .memberId(getMemberIdOrNull(carAssignment))
+                .quotationId(getQuotationIdOrNull(carAssignment))
+                .memberId(getMemberIdOrNull(classification))
                 .price(carAssignment.price())
                 .interestRate(carAssignment.interestRate())
                 .rankBonusId(getRankBonusId(rankBonus))
@@ -52,8 +57,8 @@ public class CarAssignmentFactory {
                 .initialInstallmentsCount(carAssignment.initialInstallmentsCount())
                 .monthlyInstallmentsCount(carAssignment.monthlyInstallmentsCount())
                 .paymentStartDate(carAssignment.paymentStartDate())
-                .assignedDate(getAssignedDate(carAssignment.memberId(), existingAssignment.assignedDate()))
-                .isAssigned(getStatus(carAssignment.memberId()))
+                .assignedDate(getAssignedDate(carAssignment.quotationId(), existingAssignment.assignedDate()))
+                .isAssigned(getStatus(carAssignment.quotationId()))
                 .build();
     }
 
@@ -65,16 +70,20 @@ public class CarAssignmentFactory {
         return result.compareTo(BigDecimal.ZERO) < 0 ? null : result;
     }
 
-    private Long getMemberIdOrNull(CarAssignment carAssignment) {
-        return carAssignment.memberId() != null && carAssignment.memberId() > 0 ? carAssignment.memberId() : null;
+    private UUID getQuotationIdOrNull(CarAssignment carAssignment) {
+        return carAssignment.quotationId() != null ? carAssignment.quotationId() : null;
     }
 
-    private Boolean getStatus(Long memberId) {
-        return memberId != null;
+    private Long getMemberIdOrNull(Classification classification) {
+        return classification != null ? classification.memberId() : null;
     }
 
-    private Instant getAssignedDate(Long memberId, Instant existingAssignedDate) {
-        return memberId != null ? Instant.now() : existingAssignedDate;
+    private Boolean getStatus(UUID carQuotationId) {
+        return carQuotationId != null;
+    }
+
+    private Instant getAssignedDate(UUID carQuotationId, Instant existingAssignedDate) {
+        return carQuotationId != null ? Instant.now() : existingAssignedDate;
     }
 
     private UUID getRankBonusId(CarRankBonus rankBonus) {

@@ -12,7 +12,7 @@ import world.inclub.bonusesrewards.carbonus.domain.model.CarPaymentSchedule;
 import world.inclub.bonusesrewards.carbonus.domain.port.CarPaymentScheduleRepositoryPort;
 import world.inclub.bonusesrewards.shared.infrastructure.context.TimezoneContext;
 import world.inclub.bonusesrewards.shared.logging.LoggerService;
-import world.inclub.bonusesrewards.shared.payment.domain.model.PaymentStatus;
+import world.inclub.bonusesrewards.shared.payment.domain.model.BonusPaymentStatus;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -33,7 +33,7 @@ public class CarPaymentAutoPaymentService
     public Mono<Void> processInitials() {
         return processPayments(() -> carPaymentScheduleRepositoryPort
                 .findOverdueInitials
-                        (PaymentStatus.PENDING.getId(),
+                        (BonusPaymentStatus.PENDING.getId(),
                          getTodayInUserTimezone()), "initial");
     }
 
@@ -41,7 +41,7 @@ public class CarPaymentAutoPaymentService
     public Mono<Void> processMonthlies() {
         return processPayments(() -> carPaymentScheduleRepositoryPort
                 .findDueOrOverdueMonthlies
-                        (PaymentStatus.PENDING.getId(),
+                        (BonusPaymentStatus.PENDING.getId(),
                          getTodayInUserTimezone()), "monthly");
     }
 

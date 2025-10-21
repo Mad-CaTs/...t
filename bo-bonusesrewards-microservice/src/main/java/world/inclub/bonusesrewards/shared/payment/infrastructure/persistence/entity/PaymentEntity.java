@@ -4,13 +4,8 @@ import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
-import world.inclub.bonusesrewards.shared.bonus.domain.model.BonusType;
-import world.inclub.bonusesrewards.shared.payment.domain.model.CurrencyType;
-import world.inclub.bonusesrewards.shared.payment.domain.model.PaymentStatus;
-import world.inclub.bonusesrewards.shared.payment.domain.model.PaymentType;
 
 import java.math.BigDecimal;
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.UUID;
 

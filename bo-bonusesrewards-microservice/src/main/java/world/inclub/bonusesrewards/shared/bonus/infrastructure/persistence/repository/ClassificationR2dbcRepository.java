@@ -1,9 +1,13 @@
 package world.inclub.bonusesrewards.shared.bonus.infrastructure.persistence.repository;
 
 import org.springframework.data.r2dbc.repository.R2dbcRepository;
+import reactor.core.publisher.Flux;
 import world.inclub.bonusesrewards.shared.bonus.infrastructure.persistence.entity.ClassificationEntity;
 
+import java.util.Collection;
 import java.util.UUID;
 
 public interface ClassificationR2dbcRepository
-        extends R2dbcRepository<ClassificationEntity, UUID> {}
+        extends R2dbcRepository<ClassificationEntity, UUID> {
+    Flux<ClassificationEntity> findByMemberIdAndRankIdIn(Long memberId, Collection<Long> rankIds);
+}

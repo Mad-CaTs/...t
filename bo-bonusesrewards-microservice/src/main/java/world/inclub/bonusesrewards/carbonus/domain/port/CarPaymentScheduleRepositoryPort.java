@@ -3,6 +3,7 @@ package world.inclub.bonusesrewards.carbonus.domain.port;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import world.inclub.bonusesrewards.carbonus.domain.model.CarPaymentSchedule;
+import world.inclub.bonusesrewards.shared.utils.pagination.domain.Pageable;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -40,6 +41,17 @@ public interface CarPaymentScheduleRepositoryPort {
      * @return a Mono emitting the last CarPaymentSchedule if found, or empty if not found
      */
     Mono<CarPaymentSchedule> findLastByCarAssignmentId(UUID carAssignmentId);
+
+    Flux<CarPaymentSchedule> findByCarAssignmentId(UUID carAssignmentId);
+
+    Flux<CarPaymentSchedule> findAllByCarAssignmentIdWithPagination(UUID carAssignmentId, Pageable pageable);
+
+    Mono<Long> countByCarAssignmentId(UUID carAssignmentId);
+
+    Flux<CarPaymentSchedule> findInitialsByCarAssignmentId(UUID carAssignmentId, Pageable pageable);
+
+    Mono<Long> countInitialsByCarAssignmentId(UUID carAssignmentId);
+
 
     Mono<CarPaymentSchedule> findById(UUID uuid);
 

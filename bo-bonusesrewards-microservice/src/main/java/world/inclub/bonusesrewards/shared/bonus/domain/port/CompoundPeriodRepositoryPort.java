@@ -79,4 +79,16 @@ public interface CompoundPeriodRepositoryPort {
             Long minRequalifications
     );
 
+    /**
+     * Finds requalifications for a specific member ID and a list of rank IDs.
+     *
+     * @param memberId specific member ID to filter
+     * @param rankIds  list of rank IDs to filter
+     * @return Flux of requalification results for the member ID and rank IDs
+     */
+    Flux<Prequalification> findByMemberIdAndRankIds(
+            Long memberId,
+            List<Long> rankIds
+    );
+
 }

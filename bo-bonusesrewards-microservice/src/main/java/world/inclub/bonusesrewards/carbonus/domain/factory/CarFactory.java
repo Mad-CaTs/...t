@@ -2,11 +2,6 @@ package world.inclub.bonusesrewards.carbonus.domain.factory;
 
 import org.springframework.stereotype.Component;
 import world.inclub.bonusesrewards.carbonus.domain.model.Car;
-import world.inclub.bonusesrewards.carbonus.domain.model.CarRankBonus;
-
-import java.math.BigDecimal;
-import java.time.Instant;
-import java.util.UUID;
 
 @Component
 public class CarFactory {

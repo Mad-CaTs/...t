@@ -14,13 +14,20 @@ public interface CarRankBonusDetailR2dbcRepository
         extends R2dbcRepository<CarRankBonusEntity, UUID> {
 
     @Query("""
-                SELECT * FROM bo_bonus_reward.car_rank_bonuses
-                WHERE (COALESCE(:rankId, 0) = 0 OR rank_id = :rankId)
-                  AND (COALESCE(:startDate, '0001-01-01') = '0001-01-01' OR issue_date <= :endDate)
-                  AND (COALESCE(:endDate, '9999-12-31') = '9999-12-31' OR expiration_date >= :startDate)
-                  AND (:onlyActive IS NULL OR 
-                       (:onlyActive = true AND status_id = 1 AND expiration_date >= :currentDate) OR
-                       (:onlyActive = false AND (status_id != 1 OR expiration_date < :currentDate)))
+                SELECT *
+                FROM bo_bonus_reward.car_rank_bonuses
+                WHERE (:rankId IS NULL OR rank_id = :rankId)
+                  AND (
+                          (:startDate IS NOT NULL AND :endDate IS NOT NULL AND issue_date <= :endDate AND expiration_date >= :startDate)
+                          OR (:startDate IS NOT NULL AND :endDate IS NULL AND expiration_date >= :startDate)
+                          OR (:startDate IS NULL AND :endDate IS NOT NULL AND issue_date <= :endDate)
+                          OR (:startDate IS NULL AND :endDate IS NULL)
+                      )
+                  AND (
+                      :onlyActive IS NULL
+                      OR (:onlyActive = true AND status_id = 1 AND expiration_date >= :currentDate)
+                      OR (:onlyActive = false AND (status_id != 1 OR expiration_date < :currentDate))
+                  )
                 ORDER BY created_at DESC
                 LIMIT :limit OFFSET :offset
             """)
@@ -35,13 +42,20 @@ public interface CarRankBonusDetailR2dbcRepository
     );
 
     @Query("""
-                SELECT COUNT(*) FROM bo_bonus_reward.car_rank_bonuses
-                WHERE (COALESCE(:rankId, 0) = 0 OR rank_id = :rankId)
-                  AND (COALESCE(:startDate, '0001-01-01') = '0001-01-01' OR issue_date <= :endDate)
-                  AND (COALESCE(:endDate, '9999-12-31') = '9999-12-31' OR expiration_date >= :startDate)
-                  AND (:onlyActive IS NULL OR 
-                       (:onlyActive = true AND status_id = 1 AND expiration_date >= :currentDate) OR
-                       (:onlyActive = false AND (status_id != 1 OR expiration_date < :currentDate)))
+                SELECT COUNT(*)
+                FROM bo_bonus_reward.car_rank_bonuses
+                WHERE (:rankId IS NULL OR rank_id = :rankId)
+                  AND (
+                          (:startDate IS NOT NULL AND :endDate IS NOT NULL AND issue_date <= :endDate AND expiration_date >= :startDate)
+                          OR (:startDate IS NOT NULL AND :endDate IS NULL AND expiration_date >= :startDate)
+                          OR (:startDate IS NULL AND :endDate IS NOT NULL AND issue_date <= :endDate)
+                          OR (:startDate IS NULL AND :endDate IS NULL)
+                      )
+                  AND (
+                      :onlyActive IS NULL
+                      OR (:onlyActive = true AND status_id = 1 AND expiration_date >= :currentDate)
+                      OR (:onlyActive = false AND (status_id != 1 OR expiration_date < :currentDate))
+                  )
             """)
     Mono<Long> countWithFilters(
             @Param("rankId") Long rankId,

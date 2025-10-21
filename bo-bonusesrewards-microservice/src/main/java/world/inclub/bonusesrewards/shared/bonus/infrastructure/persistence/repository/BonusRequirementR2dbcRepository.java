@@ -9,4 +9,6 @@ import java.util.UUID;
 public interface BonusRequirementR2dbcRepository
         extends R2dbcRepository<BonusRequirementEntity, UUID> {
     Flux<BonusRequirementEntity> findByRankId(Long rankId);
+
+    Flux<BonusRequirementEntity> findByBonusTypeId(Long bonusTypeId);
 }

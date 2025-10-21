@@ -11,7 +11,7 @@ public class CarRankBonusDetailMapper {
 
     public CarRankBonusDetail toDomain(CarRankBonusEntity entity, Rank rank) {
         if (entity == null) return null;
-        rank = rank == null ? new Rank(entity.getRankId(), null) : rank;
+        rank = rank == null ? Rank.empty().toBuilder().id(entity.getRankId()).build() : rank;
         CarRankBonusStatus status = CarRankBonusStatus.fromId(entity.getStatusId());
         return new CarRankBonusDetail(
                 entity.getId(),

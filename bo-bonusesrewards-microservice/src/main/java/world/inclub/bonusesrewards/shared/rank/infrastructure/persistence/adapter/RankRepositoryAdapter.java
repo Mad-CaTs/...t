@@ -13,6 +13,7 @@ import world.inclub.bonusesrewards.shared.rank.domain.port.RankRepositoryPort;
 import world.inclub.bonusesrewards.shared.rank.infrastructure.persistence.response.RankResponse;
 import world.inclub.bonusesrewards.shared.rank.infrastructure.persistence.mapper.RankMapper;
 
+import java.util.Collection;
 import java.util.List;
 
 @Slf4j
@@ -33,6 +34,12 @@ public class RankRepositoryAdapter
         return getAllRanks()
                 .filter(rank -> rank.id().equals(id))
                 .next();
+    }
+
+    @Override
+    public Flux<Rank> findByIds(Collection<Long> ids) {
+        return getAllRanks()
+                .filter(rank -> ids.contains(rank.id()));
     }
 
     private Flux<Rank> getAllRanks() {

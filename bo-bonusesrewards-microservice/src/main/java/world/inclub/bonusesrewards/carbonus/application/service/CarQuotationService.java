@@ -49,13 +49,16 @@ public class CarQuotationService
                 .flatMap(existingQuotation -> carQuotationRepositoryPort
                         .countAcceptedByClassificationId(existingQuotation.classificationId())
                         .doOnNext(carQuotationValidator::ensureQuotationCanBeUpdated)
-                        .flatMap(acceptedCount -> fileStoragePort
-                                .save(fileResource, FileContext.QUOTATION)
-                                .flatMap(imageUrl -> {
-                                    CarQuotation updatedQuotation = carQuotationFactory
-                                            .update(existingQuotation, carQuotation, imageUrl);
-                                    return carQuotationRepositoryPort.save(updatedQuotation);
-                                })
+                        .flatMap(acceptedCount -> {
+                                     Mono<String> fileUrlMono = fileResource != null
+                                             ? fileStoragePort.save(fileResource, FileContext.DOCUMENT)
+                                             : Mono.just(existingQuotation.quotationUrl());
+                                     return fileUrlMono.flatMap(fileUrl -> {
+                                         CarQuotation updatedQuotation = carQuotationFactory
+                                                 .update(existingQuotation, carQuotation, fileUrl);
+                                         return carQuotationRepositoryPort.save(updatedQuotation);
+                                     });
+                                 }
                         )
                 );
     }

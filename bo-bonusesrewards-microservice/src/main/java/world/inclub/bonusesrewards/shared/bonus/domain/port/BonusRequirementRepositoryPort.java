@@ -16,4 +16,6 @@ public interface BonusRequirementRepositoryPort {
     Mono<Void> deleteById(UUID id);
 
     Flux<BonusRequirement> findByRankId(Long rankId);
+
+    Flux<BonusRequirement> findByBonusTypeId(Long bonusTypeId);
 }

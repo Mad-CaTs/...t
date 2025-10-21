@@ -5,8 +5,10 @@ import world.inclub.bonusesrewards.shared.infrastructure.context.TimezoneContext
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 
 /**
  * Utility class for formatting date and time objects to strings
@@ -121,4 +123,31 @@ public class DateTimeFormatter {
     public static String formatLocalDate(LocalDate date, String defaultValue) {
         return date != null ? ISO_LOCAL_DATE_FORMATTER.format(date) : defaultValue;
     }
+
+    /**
+     * Convert a LocalDate to Instant representing the start of the day in user's timezone
+     *
+     * @param date the LocalDate to convert, can be null
+     * @return Instant representing start of day or null if input is null
+     */
+    public static Instant toStartOfDayInstant(LocalDate date) {
+        if (date == null) return null;
+
+        ZoneId userZone = TimezoneContext.getTimezone();
+        return date.atStartOfDay(userZone).toInstant();
+    }
+
+    /**
+     * Convert a LocalDate to Instant representing the start of the day in user's timezone
+     *
+     * @param date the LocalDate to convert, can be null
+     * @return Instant representing start of day or null if input is null
+     */
+    public static Instant toEndOfDayInstant(LocalDate date) {
+        if (date == null) return null;
+
+        ZoneId userZone = TimezoneContext.getTimezone();
+        return date.atStartOfDay(userZone).toInstant().truncatedTo(ChronoUnit.SECONDS);
+    }
+
 }

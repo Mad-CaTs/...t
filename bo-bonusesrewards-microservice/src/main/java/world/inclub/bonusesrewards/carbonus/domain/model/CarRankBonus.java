@@ -22,4 +22,8 @@ public record CarRankBonus(
         Long statusId,
         Instant createdAt,
         Instant updatedAt
-) {}
+) {
+    public static CarRankBonus empty() {
+        return CarRankBonus.builder().build();
+    }
+}

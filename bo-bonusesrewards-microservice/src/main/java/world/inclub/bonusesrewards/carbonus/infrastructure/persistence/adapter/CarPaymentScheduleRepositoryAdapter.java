@@ -9,8 +9,8 @@ import world.inclub.bonusesrewards.carbonus.domain.port.CarPaymentScheduleReposi
 import world.inclub.bonusesrewards.carbonus.infrastructure.persistence.entity.CarPaymentScheduleEntity;
 import world.inclub.bonusesrewards.carbonus.infrastructure.persistence.mapper.CarPaymentScheduleMapper;
 import world.inclub.bonusesrewards.carbonus.infrastructure.persistence.repository.CarPaymentScheduleR2dbcRepository;
+import world.inclub.bonusesrewards.shared.utils.pagination.domain.Pageable;
 
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -59,11 +59,48 @@ public class CarPaymentScheduleRepositoryAdapter
     }
 
     @Override
+    public Flux<CarPaymentSchedule> findByCarAssignmentId(UUID carAssignmentId) {
+        return carPaymentScheduleR2dbcRepository.findByCarAssignmentId(carAssignmentId)
+                .map(carPaymentScheduleMapper::toDomain);
+    }
+
+    @Override
+    public Flux<CarPaymentSchedule> findAllByCarAssignmentIdWithPagination(UUID carAssignmentId, Pageable pageable) {
+        return carPaymentScheduleR2dbcRepository
+                .findAllByCarAssignmentIdWithPagination(
+                        carAssignmentId,
+                        pageable.limit(),
+                        pageable.offset()
+                )
+                .map(carPaymentScheduleMapper::toDomain);
+    }
+
+    @Override
+    public Mono<Long> countByCarAssignmentId(UUID carAssignmentId) {
+        return carPaymentScheduleR2dbcRepository.countByCarAssignmentId(carAssignmentId);
+    }
+
+    @Override
+    public Flux<CarPaymentSchedule> findInitialsByCarAssignmentId(UUID carAssignmentId, Pageable pageable) {
+        return carPaymentScheduleR2dbcRepository
+                .findInitialsByCarAssignmentId(
+                        carAssignmentId,
+                        pageable.limit(),
+                        pageable.offset()
+                )
+                .map(carPaymentScheduleMapper::toDomain);
+    }
+
+    @Override
+    public Mono<Long> countInitialsByCarAssignmentId(UUID carAssignmentId) {
+        return carPaymentScheduleR2dbcRepository.countInitialsByCarAssignmentId(carAssignmentId);
+    }
+
+    @Override
     public Mono<CarPaymentSchedule> findById(UUID uuid) {
         return carPaymentScheduleR2dbcRepository.findById(uuid)
                 .map(carPaymentScheduleMapper::toDomain);
     }
-
     @Override
     public Mono<Void> updateSchedulePayment(UUID scheduleId, Integer statusId, LocalDateTime paymentDate) {
         return carPaymentScheduleR2dbcRepository.updateSchedulePayment(scheduleId, statusId, paymentDate)
@@ -86,5 +123,4 @@ public class CarPaymentScheduleRepositoryAdapter
     public Mono<Long> getMemberIdByScheduleId(UUID scheduleId) {
         return carPaymentScheduleR2dbcRepository.getMemberIdByScheduleId(scheduleId);
     }
-
 }

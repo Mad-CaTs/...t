@@ -3,12 +3,10 @@ package world.inclub.bonusesrewards.carbonus.infrastructure.controllers.mapper.c
 import org.springframework.stereotype.Component;
 import world.inclub.bonusesrewards.carbonus.domain.criteria.CarRankBonusDetailSearchCriteria;
 import world.inclub.bonusesrewards.carbonus.infrastructure.controllers.dto.request.CarRankBonusDetailSearchRequest;
-import world.inclub.bonusesrewards.shared.infrastructure.context.TimezoneContext;
+import world.inclub.bonusesrewards.shared.utils.datetime.DateTimeFormatter;
 
 import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.ZoneId;
 
 @Component
 public class CarRankBonusDetailSearchRequestMapper {
@@ -17,20 +15,9 @@ public class CarRankBonusDetailSearchRequestMapper {
         if (request == null)
             return CarRankBonusDetailSearchCriteria.empty();
 
-        ZoneId userZone = TimezoneContext.getTimezone();
-
-        Instant startInstant = request.startDate() != null
-                ? request.startDate().atStartOfDay(userZone).toInstant()
-                : null;
-
-        Instant endInstant = request.endDate() != null
-                ? request.endDate().atTime(LocalTime.MAX).atZone(userZone).toInstant()
-                : null;
-
-        Instant currentInstant = LocalDate.now(userZone)
-                .atTime(LocalTime.MAX)
-                .atZone(userZone)
-                .toInstant();
+        Instant startInstant = DateTimeFormatter.toStartOfDayInstant(request.startDate());
+        Instant endInstant = DateTimeFormatter.toEndOfDayInstant(request.endDate());
+        Instant currentInstant = DateTimeFormatter.toEndOfDayInstant(LocalDate.now());
 
         return CarRankBonusDetailSearchCriteria.builder()
                 .rankId(request.rankId())

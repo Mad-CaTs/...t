@@ -32,6 +32,9 @@ public class CarAssignmentEntity
     @Column("car_id")
     private UUID carId;
 
+    @Column("quotation_id")
+    private UUID quotationId;
+
     @Column("member_id")
     private Long memberId;
 

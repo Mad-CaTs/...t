@@ -27,7 +27,44 @@ public interface CarPaymentScheduleR2dbcRepository
     );
 
     Mono<CarPaymentScheduleEntity> findFirstByCarAssignmentIdOrderByOrderNumDesc(UUID carAssignmentId);
+    
+    Flux<CarPaymentScheduleEntity> findByCarAssignmentId(UUID carAssignmentId);
 
+    @Query("""
+            SELECT cps.* FROM bo_bonus_reward.car_payment_schedules cps
+            WHERE cps.car_assignment_id = :carAssignmentId
+            ORDER BY cps.order_num ASC
+            LIMIT :limit OFFSET :offset
+            """)
+    Flux<CarPaymentScheduleEntity> findAllByCarAssignmentIdWithPagination(
+            @Param("carAssignmentId") UUID carAssignmentId,
+            @Param("limit") int limit,
+            @Param("offset") long offset
+    );
+
+    @Query("""
+            SELECT COUNT(cps.id) FROM bo_bonus_reward.car_payment_schedules cps
+            WHERE cps.car_assignment_id = :carAssignmentId
+            """)
+    Mono<Long> countByCarAssignmentId(@Param("carAssignmentId") UUID carAssignmentId);
+
+    @Query("""
+            SELECT cps.* FROM bo_bonus_reward.car_payment_schedules cps
+            WHERE cps.car_assignment_id = :carAssignmentId AND cps.is_initial = TRUE
+            ORDER BY cps.order_num ASC
+            """)
+    Flux<CarPaymentScheduleEntity> findInitialsByCarAssignmentId(
+            @Param("carAssignmentId") UUID carAssignmentId,
+            @Param("limit") int limit,
+            @Param("offset") long offset
+    );
+
+    @Query("""
+            SELECT COUNT(cps.id) FROM bo_bonus_reward.car_payment_schedules cps
+            WHERE cps.car_assignment_id = :carAssignmentId AND cps.is_initial = TRUE
+            """)
+    Mono<Long> countInitialsByCarAssignmentId(@Param("carAssignmentId") UUID car);
+    
     @Modifying
     @Query("""
             UPDATE bo_bonus_reward.car_payment_schedules

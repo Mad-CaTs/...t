@@ -28,8 +28,6 @@ public class KafkaRequestService {
         Message<Object> message = MessageBuilder
                 .withPayload(request)
                 .setHeader(KafkaHeaders.TOPIC, requestTopic)
-
-                .setHeader(KafkaHeaders.KEY, "ticket-key")
                 .setHeader(KafkaHeaders.CORRELATION_ID, correlationId)
                 .setHeader(KafkaHeaders.REPLY_TOPIC, replyTopic)
                 .build();

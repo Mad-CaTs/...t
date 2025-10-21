@@ -47,4 +47,10 @@ public class BonusRequirementRepositoryAdapter
         return r2dbcRepository.findByRankId(rankId)
                 .map(mapper::toDomain);
     }
+
+    @Override
+    public Flux<BonusRequirement> findByBonusTypeId(Long bonusTypeId) {
+        return r2dbcRepository.findByBonusTypeId(bonusTypeId)
+                .map(mapper::toDomain);
+    }
 }

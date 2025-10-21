@@ -10,7 +10,7 @@ import reactor.core.publisher.Mono;
 import world.inclub.bonusesrewards.carbonus.application.usecase.carassignment.*;
 import world.inclub.bonusesrewards.carbonus.domain.model.CarAssignment;
 import world.inclub.bonusesrewards.carbonus.infrastructure.controllers.dto.request.CarAssignmentRequest;
-import world.inclub.bonusesrewards.carbonus.infrastructure.controllers.mapper.carassignment.CarAssigmentRequestMapper;
+import world.inclub.bonusesrewards.carbonus.infrastructure.controllers.mapper.carassignment.CarAssignmentRequestMapper;
 import world.inclub.bonusesrewards.carbonus.domain.model.Car;
 import world.inclub.bonusesrewards.carbonus.infrastructure.controllers.constants.CarBonusApiPaths.CarsAssignments;
 import world.inclub.bonusesrewards.shared.utils.filestorage.infrastructure.FilePartAdapter;
@@ -24,21 +24,21 @@ import java.util.UUID;
 @RequestMapping(CarsAssignments.BASE)
 public class CarAssignmentController {
 
-    private final SaveCarAssigmentUseCase saveCarAssigmentUseCase;
-    private final UpdateCarAssigmentUseCase updateCarAssigmentUseCase;
-    private final DeleteCarAssigmentByIdUseCase deleteCarAssigmentByIdUseCase;
+    private final SaveCarAssignmentUseCase saveCarAssignmentUseCase;
+    private final UpdateCarAssignmentUseCase updateCarAssignmentUseCase;
+    private final DeleteCarAssignmentByIdUseCase deleteCarAssignmentByIdUseCase;
 
-    private final CarAssigmentRequestMapper carAssigmentRequestMapper;
+    private final CarAssignmentRequestMapper carAssignmentRequestMapper;
     private final FilePartAdapter filePartAdapter;
 
     @PostMapping(value = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Mono<ResponseEntity<ApiResponse<String>>> create(@Valid @ModelAttribute CarAssignmentRequest request) {
-        Car car = carAssigmentRequestMapper.toDomainCar(request);
-        CarAssignment carAssignment = carAssigmentRequestMapper.toDomainAssignment(request);
+        Car car = carAssignmentRequestMapper.toDomainCar(request);
+        CarAssignment carAssignment = carAssignmentRequestMapper.toDomainAssignment(request);
         Mono<Void> mono = request.car().image() == null
-                ? saveCarAssigmentUseCase.saveCarAssignment(car, carAssignment, null)
+                ? saveCarAssignmentUseCase.saveCarAssignment(car, carAssignment, null)
                 : filePartAdapter.from(request.car().image())
-                .flatMap(fileResource -> saveCarAssigmentUseCase
+                .flatMap(fileResource -> saveCarAssignmentUseCase
                         .saveCarAssignment(car, carAssignment, fileResource));
         return ResponseHandler
                 .generateResponse(HttpStatus.OK, mono.thenReturn("Car assignment created successfully"), true);
@@ -49,20 +49,20 @@ public class CarAssignmentController {
             @PathVariable UUID id,
             @Valid @ModelAttribute CarAssignmentRequest request
     ) {
-        Car car = carAssigmentRequestMapper.toDomainCar(request);
-        CarAssignment carAssignment = carAssigmentRequestMapper.toDomainAssignment(request);
+        Car car = carAssignmentRequestMapper.toDomainCar(request);
+        CarAssignment carAssignment = carAssignmentRequestMapper.toDomainAssignment(request);
         Mono<Void> mono = request.car().image() == null
-                ? updateCarAssigmentUseCase.updateCarAssigment(id, car, carAssignment, null)
+                ? updateCarAssignmentUseCase.updateCarAssignment(id, car, carAssignment, null)
                 : filePartAdapter.from(request.car().image())
-                .flatMap(fileResource -> updateCarAssigmentUseCase
-                        .updateCarAssigment(id, car, carAssignment, fileResource));
+                .flatMap(fileResource -> updateCarAssignmentUseCase
+                        .updateCarAssignment(id, car, carAssignment, fileResource));
         return ResponseHandler
                 .generateResponse(HttpStatus.OK, mono.thenReturn("Car assignment updated successfully"), true);
     }
 
     @DeleteMapping("/delete/{id}")
     public Mono<ResponseEntity<ApiResponse<String>>> delete(@PathVariable UUID id) {
-        return ResponseHandler.generateResponse(HttpStatus.OK, deleteCarAssigmentByIdUseCase.deleteById(id)
+        return ResponseHandler.generateResponse(HttpStatus.OK, deleteCarAssignmentByIdUseCase.deleteById(id)
                 .thenReturn("Car deleted successfully"), true);
     }
 }
