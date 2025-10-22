@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: bo-membershippayment-service
+  main:
+    allow-bean-definition-overriding: true
+  config:
+    import: optional:configserver:${CONFIG_SERVER_URL:http://bosrvcfg.inclub.world/}
+
+api:
+  adminpanel:
+    url: ${API_ADMINPANEL_URL:https://adminpanelapi.inclub.world/api/}
+
+  collaborator:
+    url: ${API_COLLABORATOR_URL:https://collaboratorsapi.inclub.world/api/collaborators}
+  
+  account:
+    url: ${API_ACCOUNT_URL:https://account.inclub.world/api/v1/account}
+  
+  notifications:
+    url: ${API_NOTIFICATION_URL:https://notifications.inclub.world/}
+
+  document:
+    url: ${API_DOCUMENT_URL:https://documentapi.inclub.world/api/v1/s3}
