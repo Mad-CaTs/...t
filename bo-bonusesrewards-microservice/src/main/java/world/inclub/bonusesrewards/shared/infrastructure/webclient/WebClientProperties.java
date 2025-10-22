@@ -8,5 +8,6 @@ public record WebClientProperties(
         String tree,
         String dashboard,
         String admin,
-        String ticket
+        String ticket,
+        String wallet
 ) {}

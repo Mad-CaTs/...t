@@ -20,7 +20,7 @@ import world.inclub.bonusesrewards.shared.bonus.domain.port.ClassificationReposi
 import world.inclub.bonusesrewards.shared.exceptions.EntityNotFoundException;
 import world.inclub.bonusesrewards.shared.infrastructure.context.TimezoneContext;
 import world.inclub.bonusesrewards.shared.logging.LoggerService;
-import world.inclub.bonusesrewards.shared.payment.domain.PaymentStatus;
+import world.inclub.bonusesrewards.shared.payment.domain.model.PaymentStatus;
 import world.inclub.bonusesrewards.shared.rank.domain.model.Rank;
 import world.inclub.bonusesrewards.shared.rank.domain.port.RankRepositoryPort;
 import world.inclub.bonusesrewards.shared.utils.exchange.domain.ExchangeRate;
