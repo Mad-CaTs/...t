@@ -12,7 +12,15 @@ public record ProcessWalletPaymentDto(
         Boolean isFullPayment,
         String detailPayment
 ) {
+    @Builder
     public record WalletTransaction(
-            BigDecimal amount
+            Integer idWallet,
+            Integer idTypeWalletTransaction,
+            Integer idCurrency,
+            Integer idExchangeRate,
+            BigDecimal amount,
+            Boolean isAvailable,
+            String availabilityDate,
+            String referenceData
     ) {}
 }

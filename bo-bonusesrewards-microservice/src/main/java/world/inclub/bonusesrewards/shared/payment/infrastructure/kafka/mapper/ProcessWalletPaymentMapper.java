@@ -10,11 +10,19 @@ public class ProcessWalletPaymentMapper {
     public ProcessWalletPaymentDto toDto(ProcessWalletPaymentCommand command) {
         return ProcessWalletPaymentDto.builder()
                 .idUserPayment(command.userId())
-                .walletTransaction(new ProcessWalletPaymentDto.WalletTransaction(command.amount()))
+                .walletTransaction(ProcessWalletPaymentDto.WalletTransaction.builder()
+                        .idWallet(null)
+                        .idTypeWalletTransaction(45)
+                        .idCurrency(2)
+                        .idExchangeRate(null)
+                        .amount(command.amount())
+                        .isAvailable(true)
+                        .availabilityDate(null)
+                        .referenceData(command.detail())
+                        .build())
                 .typeWalletTransaction(45)
                 .isFullPayment(true)
                 .detailPayment(command.detail())
                 .build();
     }
-
 }

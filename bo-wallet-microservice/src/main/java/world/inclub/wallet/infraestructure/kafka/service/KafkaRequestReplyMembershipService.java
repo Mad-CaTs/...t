@@ -63,9 +63,13 @@ public class KafkaRequestReplyMembershipService {
                                      @Header(KafkaHeaders.RECEIVED_KEY) String key) {
         // Procesa la solicitud
 
-        iWalletTransactionService.processPaymentWithWallet(request.getIdUserPayment(),
-                request.getWalletTransaction(), request.getTypeWalletTransaction(), request.getIsFullPayment(),
-                request.getDetailPayment()).flatMap(transaction -> {
+        iWalletTransactionService.processPaymentWithWallet(
+                request.getIdUserPayment(),
+                request.getWalletTransaction(),
+                request.getTypeWalletTransaction(),
+                request.getIsFullPayment(),
+                request.getDetailPayment())
+                .flatMap(transaction -> {
 
                     RegisterPaymenWithWalletResponseDTO response = new RegisterPaymenWithWalletResponseDTO(
                         transaction);

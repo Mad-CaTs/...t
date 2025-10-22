@@ -35,6 +35,7 @@ web-client:
   dashboard: ${DASHBOARD_SERVICE_URL:https://dashboardapi-dev.inclub.world}
   admin: ${ADMIN_PANEL_SERVICE_URL:https://adminpanelapi-dev.inclub.world}
   ticket: ${TICKET_SERVICE_URL:https://ticketapi-dev.inclub.world}
+  wallet: ${WALLET_SERVICE_URL:https://walletapi-dev.inclub.world}
 
 server:
   port: ${SERVER_PORT:8716}

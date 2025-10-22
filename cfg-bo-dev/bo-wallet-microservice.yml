@@ -3,7 +3,7 @@ spring:
   devtools:
     add-properties: false
   r2dbc:
-    url: r2dbc:postgresql://${DB_HOSTNAME:212.56.44.91}:${DB_PORT:31334}/${DB_NAME:dev_inclub}
+    url: r2dbc:postgresql://${DB_HOSTNAME:212.56.44.91}:${DB_PORT:32534}/${DB_NAME:dev_inclub}
     username: ${DB_USER:postgres}
     password: ${DB_PASSWORD:CsOyVa08Q835}
   security:
@@ -12,7 +12,19 @@ spring:
         jwt:
           issuer-uri: ${AUTHORIZATION_SERVER_URI:https://oauth-dev.inclub.world}
   kafka:
-    bootstrap-servers: ${KAFKA_HOSTNAME:kafka.inclub.world}:${KAFKA_PORT:29093}
+    bootstrap-servers: ${KAFKA_HOSTNAME:localhost}:${KAFKA_PORT:9092}
+    producer:
+      acks: all
+      retries: 3
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      auto-offset-reset: earliest
+      enable-auto-commit: true
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+    properties:
+      allow.auto.create.topics: true
   servlet:
     multipart:
       enabled: true
@@ -33,6 +45,7 @@ api:
 
 server:
   port: ${SERVER_PORT:8712}
+
 springdoc:
   swagger-ui:
     use-root-path: true

@@ -39,5 +39,4 @@ public class KafkaWalletPaymentAdapter implements WalletPaymentService {
                 .doOnError(error -> log.error("Error processing wallet payment: {}", error.getMessage()))
                 .then();
     }
-
 }
