@@ -10,6 +10,7 @@ import world.inclub.bonusesrewards.shared.exceptions.NotFoundException;
 import world.inclub.bonusesrewards.shared.payment.application.dto.MakePaymentCommand;
 import world.inclub.bonusesrewards.shared.payment.application.dto.PaymentAmounts;
 import world.inclub.bonusesrewards.shared.payment.application.service.interfaces.PaymentAmountService;
+import world.inclub.bonusesrewards.shared.payment.application.service.interfaces.PaymentCurrencyConversionService;
 import world.inclub.bonusesrewards.shared.payment.domain.model.CurrencyType;
 import world.inclub.bonusesrewards.shared.payment.domain.port.PaymentSubTypeRepositoryPort;
 
@@ -22,10 +23,37 @@ import java.math.RoundingMode;
 public class PaymentAmountServiceImpl implements PaymentAmountService {
 
     private final CarPaymentScheduleRepositoryPort scheduleRepository;
-    private final PaymentSubTypeRepositoryPort paymentSubTypeRepositoryPort;
+    private final PaymentSubTypeRepositoryPort paymentSubTypeRepository;
+    private final PaymentCurrencyConversionService paymentCurrencyConversion;
+
+    @Override
+    public Mono<PaymentAmounts> validateAndCalculate(MakePaymentCommand command) {
+        return scheduleRepository.findById(command.scheduleId())
+                .switchIfEmpty(Mono.error(new NotFoundException("Schedule not found")))
+                .flatMap(schedule -> {
+
+                    BigDecimal subTotalUSD = schedule.total();
+
+                    return paymentCurrencyConversion.convertToTargetCurrency(
+                            subTotalUSD,
+                            CurrencyType.USD,
+                            command.currencyType()
+                    ).flatMap(subTotalConverted ->
+                            calculateAmounts(command, subTotalConverted)
+                                    .flatMap(amounts -> {
+                                        if (amounts.total().compareTo(command.totalAmount()) != 0) {
+                                            return Mono.error(new AmountException(
+                                                    "Total amount does not match calculated total, expected: "
+                                                            + amounts.total() + ", provided: " + command.totalAmount()));
+                                        }
+                                        return Mono.just(amounts);
+                                    })
+                    );
+                });
+    }
 
     private Mono<PaymentAmounts> calculateAmounts(MakePaymentCommand command, BigDecimal subTotal) {
-        return paymentSubTypeRepositoryPort.findById(command.paymentSubTypeId())
+        return paymentSubTypeRepository.findById(command.paymentSubTypeId())
                 .switchIfEmpty(Mono.error(new NotFoundException("Payment subtype not found")))
                 .map(paymentSubType -> {
                     BigDecimal commission = BigDecimal.ZERO;
@@ -49,29 +77,9 @@ public class PaymentAmountServiceImpl implements PaymentAmountService {
 
                     commission = commission.setScale(2, RoundingMode.HALF_UP);
 
-                    // Total = subtotal + comisión fija + monto de tasa
                     BigDecimal total = subTotal.add(commission).add(rateAmount);
 
                     return new PaymentAmounts(subTotal, commission, rateAmount, ratePercentage, total);
-                });
-    }
-
-    @Override
-    public Mono<PaymentAmounts> validateAndCalculate(MakePaymentCommand command) {
-        return scheduleRepository.findById(command.scheduleId())
-                .switchIfEmpty(Mono.error(new NotFoundException("Schedule not found")))
-                .flatMap(schedule -> {
-                    BigDecimal subTotal = schedule.total();
-
-                    return calculateAmounts(command, subTotal)
-                            .flatMap(amounts -> {
-                                if (amounts.total().compareTo(command.totalAmount()) != 0) {
-                                    return Mono.error(new AmountException(
-                                            "Total amount does not match calculated total, expected: "
-                                                    + amounts.total() + ", provided: " + command.totalAmount()));
-                                }
-                                return Mono.just(amounts);
-                            });
                 });
     }
 }

@@ -137,17 +137,27 @@ public class PaymentServiceImpl implements PaymentService {
                                     });
                         }
                         case WALLET -> {
-                            ProcessWalletPaymentCommand process =
-                                    new ProcessWalletPaymentCommand(command.memberId(), amounts.total(), "Bonus installment payment");
+                            result = carPaymentScheduleRepositoryPort.findById(command.scheduleId())
+                                    .flatMap(schedule -> {
+                                        String paymentDetail = "Pago de Inicial N° " + schedule.installmentNum();
 
-                            result = walletPaymentService.sendWalletPayment(process)
-                                    .then(paymentRepositoryPort.save(paymentFactory.createPaymentWithApprovedStatus(command, amounts)));
+                                        ProcessWalletPaymentCommand process =
+                                                new ProcessWalletPaymentCommand(
+                                                        command.memberId(),
+                                                        amounts.total(),
+                                                        paymentDetail
+                                                );
+
+                                        return walletPaymentService.sendWalletPayment(process)
+                                                .then(paymentRepositoryPort.save(
+                                                        paymentFactory.createPaymentWithApprovedStatus(command, amounts)
+                                                ));
+                                    });
                         }
                         default -> {
                             result = Mono.error(new BadRequestException("Unsupported payment method"));
                         }
                     }
-
                     return result;
                 });
     }
