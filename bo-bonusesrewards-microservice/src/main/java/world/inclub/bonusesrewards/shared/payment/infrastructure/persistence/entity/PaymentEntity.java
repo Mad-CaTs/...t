@@ -52,6 +52,9 @@ public class PaymentEntity {
     @Column("commission_amount")
     private BigDecimal commissionAmount;
 
+    @Column("rate_amount")
+    private BigDecimal rateAmount;
+
     @Column("total_amount")
     private BigDecimal totalAmount;
 

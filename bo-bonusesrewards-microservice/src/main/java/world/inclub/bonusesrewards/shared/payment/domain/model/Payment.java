@@ -23,10 +23,12 @@ public class Payment {
     private Long memberId;
     private PaymentType paymentType;
     private Integer paymentSubTypeId;
-    private BonusPaymentStatus status;
+    private PaymentStatus status;
     private CurrencyType currencyType;
     private BigDecimal subTotalAmount;
     private BigDecimal commissionAmount;
+    private BigDecimal rateAmount;
+    private BigDecimal ratePercentage;
     private BigDecimal totalAmount;
     private LocalDateTime paymentDate;
     private LocalDateTime createdAt;

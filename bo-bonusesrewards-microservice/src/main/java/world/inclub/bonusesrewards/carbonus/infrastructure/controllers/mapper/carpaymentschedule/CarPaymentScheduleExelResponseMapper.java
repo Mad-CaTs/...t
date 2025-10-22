@@ -3,7 +3,7 @@ package world.inclub.bonusesrewards.carbonus.infrastructure.controllers.mapper.c
 import org.springframework.stereotype.Component;
 import world.inclub.bonusesrewards.carbonus.domain.model.CarPaymentSchedule;
 import world.inclub.bonusesrewards.carbonus.infrastructure.controllers.dto.excel.CarPaymentScheduleExelResponse;
-import world.inclub.bonusesrewards.shared.payment.domain.model.BonusPaymentStatus;
+import world.inclub.bonusesrewards.shared.payment.domain.model.PaymentStatus;
 import world.inclub.bonusesrewards.shared.utils.datetime.DateTimeFormatter;
 
 @Component
@@ -35,7 +35,7 @@ public class CarPaymentScheduleExelResponseMapper {
     }
 
     private String getStatusName(Long statusId) {
-        BonusPaymentStatus status = BonusPaymentStatus.fromId(statusId);
+        PaymentStatus status = PaymentStatus.fromId(statusId);
         return switch (status) {
             case COMPLETED -> "Pagado";
             case PENDING -> "Pendiente";

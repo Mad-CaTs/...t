@@ -16,6 +16,7 @@ public class CarBonusSchema {
         public static final String CAR_QUOTATIONS_TABLE = "car_quotations";
         public static final String CAT_DOCUMENT_TYPE_TABLE = "cat_document_types";
         public static final String CAR_ASSIGNMENT_DOCUMENT_TABLE = "car_assignment_documents";
+        public static final String CAR_BONUS_APPLICATION_TABLE = "car_bonus_applications";
     }
 
     public static class View {

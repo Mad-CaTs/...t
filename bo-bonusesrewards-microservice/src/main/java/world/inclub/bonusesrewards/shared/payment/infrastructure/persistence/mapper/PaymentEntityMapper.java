@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 import world.inclub.bonusesrewards.shared.bonus.domain.model.BonusType;
 import world.inclub.bonusesrewards.shared.payment.domain.model.CurrencyType;
 import world.inclub.bonusesrewards.shared.payment.domain.model.Payment;
-import world.inclub.bonusesrewards.shared.payment.domain.model.BonusPaymentStatus;
+import world.inclub.bonusesrewards.shared.payment.domain.model.PaymentStatus;
 import world.inclub.bonusesrewards.shared.payment.domain.model.PaymentType;
 import world.inclub.bonusesrewards.shared.payment.infrastructure.persistence.entity.PaymentEntity;
 
@@ -22,10 +22,11 @@ public class PaymentEntityMapper {
                 .memberId(entity.getMemberId())
                 .paymentType(PaymentType.fromId(entity.getPaymentTypeId()))
                 .paymentSubTypeId(entity.getPaymentSubTypeId())
-                .status(BonusPaymentStatus.fromId(entity.getStatusId()))
+                .status(PaymentStatus.fromId(entity.getStatusId()))
                 .currencyType(CurrencyType.fromId(entity.getCurrencyTypeId()))
                 .subTotalAmount(entity.getSubTotalAmount())
                 .commissionAmount(entity.getCommissionAmount())
+                .rateAmount(entity.getRateAmount())
                 .totalAmount(entity.getTotalAmount())
                 .paymentDate(entity.getPaymentDate())
                 .createdAt(entity.getCreatedAt())
@@ -48,6 +49,7 @@ public class PaymentEntityMapper {
                 .currencyTypeId(domain.getCurrencyType().getId())
                 .subTotalAmount(domain.getSubTotalAmount())
                 .commissionAmount(domain.getCommissionAmount())
+                .rateAmount(domain.getRateAmount())
                 .totalAmount(domain.getTotalAmount())
                 .paymentDate(domain.getPaymentDate())
                 .createdAt(domain.getCreatedAt())

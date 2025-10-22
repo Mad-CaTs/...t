@@ -1,10 +1,8 @@
 package world.inclub.bonusesrewards.shared.bonus.application.service;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
-import reactor.util.function.Tuple2;
 import world.inclub.bonusesrewards.carbonus.domain.dto.CarAssignmentWithClassification;
 import world.inclub.bonusesrewards.carbonus.domain.model.CarRankBonus;
 import world.inclub.bonusesrewards.carbonus.domain.model.CarRankBonusStatus;
@@ -24,7 +22,6 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-@Slf4j
 @Component
 @RequiredArgsConstructor
 public class CarBonusDetailHandler {
@@ -145,8 +142,6 @@ public class CarBonusDetailHandler {
         if (classificationId == null) {
             return null;
         }
-        log.info("Finding CarAssignmentId for ClassificationId: {}", classificationId);
-        log.info("Available assignments: {}", assignments);
         return assignments.stream()
                 .filter(a -> Objects.equals(a.classificationId(), classificationId))
                 .map(CarAssignmentWithClassification::carAssignmentId)

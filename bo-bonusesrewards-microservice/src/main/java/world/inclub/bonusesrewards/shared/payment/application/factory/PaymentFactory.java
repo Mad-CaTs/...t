@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 import world.inclub.bonusesrewards.shared.payment.application.dto.MakePaymentCommand;
 import world.inclub.bonusesrewards.shared.payment.application.dto.PaymentAmounts;
 import world.inclub.bonusesrewards.shared.payment.domain.model.Payment;
-import world.inclub.bonusesrewards.shared.payment.domain.model.BonusPaymentStatus;
+import world.inclub.bonusesrewards.shared.payment.domain.model.PaymentStatus;
 import world.inclub.bonusesrewards.shared.payment.domain.model.SourceTableType;
 import world.inclub.bonusesrewards.shared.utils.TimeLima;
 
@@ -23,10 +23,12 @@ public class PaymentFactory {
                 .memberId(command.memberId())
                 .paymentType(command.paymentType())
                 .paymentSubTypeId(command.paymentSubTypeId())
-                .status(BonusPaymentStatus.PENDING_REVIEW)
+                .status(PaymentStatus.PENDING_REVIEW)
                 .currencyType(command.currencyType())
                 .subTotalAmount(amounts.subTotal())
                 .commissionAmount(amounts.commission())
+                .rateAmount(amounts.rateAmount())
+                .ratePercentage(amounts.ratePercentage())
                 .totalAmount(amounts.total())
                 .paymentDate(now)
                 .createdAt(now)
@@ -43,10 +45,12 @@ public class PaymentFactory {
                 .memberId(command.memberId())
                 .paymentType(command.paymentType())
                 .paymentSubTypeId(command.paymentSubTypeId())
-                .status(BonusPaymentStatus.COMPLETED)
+                .status(PaymentStatus.COMPLETED)
                 .currencyType(command.currencyType())
                 .subTotalAmount(amounts.subTotal())
                 .commissionAmount(amounts.commission())
+                .rateAmount(amounts.rateAmount())
+                .ratePercentage(amounts.ratePercentage())
                 .totalAmount(amounts.total())
                 .paymentDate(now)
                 .createdAt(now)

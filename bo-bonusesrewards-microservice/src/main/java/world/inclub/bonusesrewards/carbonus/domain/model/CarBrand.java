@@ -6,4 +6,11 @@ import lombok.Builder;
 public record CarBrand(
         Long id,
         String name
-) {}
+) {
+    public static CarBrand empty() {
+        return CarBrand.builder()
+                .id(0L)
+                .name("Unknown Brand")
+                .build();
+    }
+}

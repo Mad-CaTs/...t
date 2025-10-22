@@ -19,6 +19,8 @@ public class PaymentMapper {
                 .currencyType(payment.getCurrencyType())
                 .subTotalAmount(payment.getSubTotalAmount())
                 .commissionAmount(payment.getCommissionAmount())
+                .rateAmount(payment.getRateAmount())
+                .ratePercentage(payment.getRatePercentage())
                 .totalAmount(payment.getTotalAmount())
                 .paymentDate(payment.getPaymentDate())
                 .createdAt(payment.getCreatedAt())

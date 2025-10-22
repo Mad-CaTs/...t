@@ -3,7 +3,7 @@ package world.inclub.bonusesrewards.carbonus.infrastructure.controllers.mapper.c
 import org.springframework.stereotype.Component;
 import world.inclub.bonusesrewards.carbonus.domain.model.CarPaymentSchedule;
 import world.inclub.bonusesrewards.carbonus.infrastructure.controllers.dto.response.CarPaymentScheduleResponse;
-import world.inclub.bonusesrewards.shared.payment.domain.model.BonusPaymentStatus;
+import world.inclub.bonusesrewards.shared.payment.domain.model.PaymentStatus;
 import world.inclub.bonusesrewards.shared.utils.datetime.DateTimeFormatter;
 import world.inclub.bonusesrewards.shared.utils.pagination.application.PagedData;
 import world.inclub.bonusesrewards.shared.utils.pagination.infrastructure.utils.PagedDataMapper;
@@ -37,7 +37,7 @@ public class CarPaymentScheduleResponseMapper {
     }
 
     private CarPaymentScheduleResponse.Status mapStatus(Long statusId) {
-        BonusPaymentStatus status = BonusPaymentStatus.fromId(statusId);
+        PaymentStatus status = PaymentStatus.fromId(statusId);
         return new CarPaymentScheduleResponse.Status(status.getId(), status.getCode());
     }
 

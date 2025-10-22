@@ -40,4 +40,10 @@ public class ClassificationRepositoryAdapter
                 .map(classificationEntityMapper::toDomain);
     }
 
+    @Override
+    public Mono<Classification> findByCarAssignmentId(UUID carAssignmentId) {
+        return classificationR2dbcRepository.findByCarAssignmentId(carAssignmentId)
+                .map(classificationEntityMapper::toDomain);
+    }
+
 }

@@ -24,6 +24,38 @@ public class PaymentAmountServiceImpl implements PaymentAmountService {
     private final CarPaymentScheduleRepositoryPort scheduleRepository;
     private final PaymentSubTypeRepositoryPort paymentSubTypeRepositoryPort;
 
+    private Mono<PaymentAmounts> calculateAmounts(MakePaymentCommand command, BigDecimal subTotal) {
+        return paymentSubTypeRepositoryPort.findById(command.paymentSubTypeId())
+                .switchIfEmpty(Mono.error(new NotFoundException("Payment subtype not found")))
+                .map(paymentSubType -> {
+                    BigDecimal commission = BigDecimal.ZERO;
+                    BigDecimal rateAmount = BigDecimal.ZERO;
+                    BigDecimal ratePercentage = BigDecimal.ZERO;
+
+                    if (command.currencyType() == CurrencyType.USD) {
+                        commission = paymentSubType.commissionDollars();
+                    } else {
+                        commission = paymentSubType.commissionSoles();
+                    }
+
+                    if (paymentSubType.ratePercentage() != null &&
+                            paymentSubType.ratePercentage().compareTo(BigDecimal.ZERO) > 0) {
+                        ratePercentage = paymentSubType.ratePercentage();
+                        BigDecimal tasaDecimal = paymentSubType.ratePercentage()
+                                .divide(BigDecimal.valueOf(100), 8, RoundingMode.HALF_UP);
+                        rateAmount = subTotal.multiply(tasaDecimal)
+                                .setScale(2, RoundingMode.HALF_UP);
+                    }
+
+                    commission = commission.setScale(2, RoundingMode.HALF_UP);
+
+                    // Total = subtotal + comisión fija + monto de tasa
+                    BigDecimal total = subTotal.add(commission).add(rateAmount);
+
+                    return new PaymentAmounts(subTotal, commission, rateAmount, ratePercentage, total);
+                });
+    }
+
     @Override
     public Mono<PaymentAmounts> validateAndCalculate(MakePaymentCommand command) {
         return scheduleRepository.findById(command.scheduleId())
@@ -38,37 +70,8 @@ public class PaymentAmountServiceImpl implements PaymentAmountService {
                                             "Total amount does not match calculated total, expected: "
                                                     + amounts.total() + ", provided: " + command.totalAmount()));
                                 }
-                                return Mono.just(new PaymentAmounts(
-                                        amounts.subTotal(),
-                                        amounts.commission(),
-                                        amounts.total()
-                                ));
+                                return Mono.just(amounts);
                             });
-                });
-    }
-
-    private Mono<PaymentAmounts> calculateAmounts(MakePaymentCommand command, BigDecimal subTotal) {
-        return paymentSubTypeRepositoryPort.findById(command.paymentSubTypeId())
-                .switchIfEmpty(Mono.error(new NotFoundException("Payment subtype not found")))
-                .map(paymentSubType -> {
-                    BigDecimal commission = BigDecimal.ZERO;
-                    if (command.currencyType() == CurrencyType.USD) {
-                        commission = commission.add(paymentSubType.commissionDollars());
-                    } else {
-                        commission = commission.add(paymentSubType.commissionSoles());
-                    }
-
-                    if (paymentSubType.ratePercentage() != null &&
-                            paymentSubType.ratePercentage().compareTo(BigDecimal.ZERO) > 0) {
-                        BigDecimal tasaDecimal = paymentSubType.ratePercentage()
-                                .divide(BigDecimal.valueOf(100), 8, RoundingMode.HALF_UP);
-                        commission = commission.add(subTotal.multiply(tasaDecimal));
-                    }
-
-                    commission = commission.setScale(2, RoundingMode.HALF_UP);
-
-                    BigDecimal total = subTotal.add(commission);
-                    return new PaymentAmounts(subTotal, commission, total);
                 });
     }
 }

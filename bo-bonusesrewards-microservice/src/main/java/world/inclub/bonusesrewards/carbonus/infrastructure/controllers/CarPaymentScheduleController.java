@@ -8,13 +8,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
-import world.inclub.bonusesrewards.carbonus.application.usecase.carpaymentschedule.CreateCarPaymentInstallmentsUseCase;
-import world.inclub.bonusesrewards.carbonus.application.usecase.carpaymentschedule.GetAllCarPaymentSchedulesUseCase;
-import world.inclub.bonusesrewards.carbonus.application.usecase.carpaymentschedule.SearchCarPaymentScheduleInitialsUseCase;
-import world.inclub.bonusesrewards.carbonus.application.usecase.carpaymentschedule.SearchCarPaymentSchedulesUseCase;
+import world.inclub.bonusesrewards.carbonus.application.usecase.carpaymentschedule.*;
 import world.inclub.bonusesrewards.carbonus.infrastructure.controllers.constants.CarBonusApiPaths.PaymentSchedules;
 import world.inclub.bonusesrewards.carbonus.infrastructure.controllers.dto.excel.CarPaymentScheduleExelResponse;
 import world.inclub.bonusesrewards.carbonus.infrastructure.controllers.dto.request.CarPaymentScheduleInstallmentsRequest;
+import world.inclub.bonusesrewards.carbonus.application.dto.CarAssignmentExtraInfoSummary;
 import world.inclub.bonusesrewards.carbonus.infrastructure.controllers.dto.response.CarPaymentScheduleResponse;
 import world.inclub.bonusesrewards.carbonus.infrastructure.controllers.mapper.carpaymentschedule.CarPaymentScheduleExelResponseMapper;
 import world.inclub.bonusesrewards.carbonus.infrastructure.controllers.mapper.carpaymentschedule.CarPaymentScheduleResponseMapper;
@@ -41,6 +39,7 @@ public class CarPaymentScheduleController {
 
     private final CarPaymentScheduleExelResponseMapper carPaymentScheduleExelResponseMapper;
     private final CarPaymentScheduleResponseMapper carPaymentScheduleResponseMapper;
+    private final GetCarAssignmentExtraInfoUseCase getCarAssignmentExtraInfoUseCase;
 
     @PostMapping("/installments/{carAssignmentId}")
     public Mono<ResponseEntity<ApiResponse<String>>> createInstallments(
@@ -103,6 +102,14 @@ public class CarPaymentScheduleController {
                 .map(carPaymentScheduleResponseMapper::toResponse)
                 .flatMap(pagedData ->
                                  ResponseHandler.generateResponse(HttpStatus.OK, pagedData, true));
+    }
+
+    @GetMapping("/extra-info/{carAssignmentId}")
+    public Mono<ResponseEntity<ApiResponse<CarAssignmentExtraInfoSummary>>> getExtraInfo(
+            @PathVariable UUID carAssignmentId
+    ) {
+        return getCarAssignmentExtraInfoUseCase.getExtraInfo(carAssignmentId)
+                .flatMap(data -> ResponseHandler.generateResponse(HttpStatus.OK, data, true));
     }
 
 }

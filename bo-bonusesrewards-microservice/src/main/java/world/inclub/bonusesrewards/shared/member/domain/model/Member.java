@@ -1,7 +1,10 @@
 package world.inclub.bonusesrewards.shared.member.domain.model;
 
+import lombok.Builder;
+
 import java.time.LocalDate;
 
+@Builder
 public record Member(
         Long id,
         String name,
@@ -21,4 +24,12 @@ public record Member(
         String maritalStatus,
         Long stateId,
         Boolean isPromoter
-) {}
+) {
+    public static Member empty() {
+        return Member.builder()
+                .username("Unknown")
+                .name("Unknown")
+                .lastName("Unknown")
+                .build();
+    }
+}

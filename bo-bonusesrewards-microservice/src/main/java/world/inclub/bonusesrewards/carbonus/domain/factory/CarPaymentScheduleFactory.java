@@ -2,7 +2,7 @@ package world.inclub.bonusesrewards.carbonus.domain.factory;
 
 import org.springframework.stereotype.Component;
 import world.inclub.bonusesrewards.carbonus.domain.model.*;
-import world.inclub.bonusesrewards.shared.payment.domain.model.BonusPaymentStatus;
+import world.inclub.bonusesrewards.shared.payment.domain.model.PaymentStatus;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -18,7 +18,7 @@ public class CarPaymentScheduleFactory {
 
     public CarPaymentSchedule markAsPaid(CarPaymentSchedule schedule) {
         return schedule.toBuilder()
-                .statusId(BonusPaymentStatus.COMPLETED.getId())
+                .statusId(PaymentStatus.COMPLETED.getId())
                 .paymentDate(Instant.now())
                 .build();
     }

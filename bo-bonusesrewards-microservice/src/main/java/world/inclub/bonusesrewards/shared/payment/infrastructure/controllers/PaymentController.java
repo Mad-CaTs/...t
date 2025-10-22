@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 import world.inclub.bonusesrewards.shared.payment.application.service.interfaces.PaymentService;
+import world.inclub.bonusesrewards.shared.payment.infrastructure.controllers.dto.CorrectPaymentRequest;
 import world.inclub.bonusesrewards.shared.payment.infrastructure.controllers.dto.MakePaymentRequest;
 import world.inclub.bonusesrewards.shared.payment.infrastructure.controllers.dto.RejectPaymentRequest;
 import world.inclub.bonusesrewards.shared.payment.infrastructure.controllers.mapper.PaymentRequestMapper;
@@ -37,5 +38,19 @@ public class PaymentController {
     @PutMapping("/{paymentId}/reject")
     public Mono<ResponseEntity<Object>> rejectPayment(@PathVariable UUID paymentId, @Valid @RequestBody RejectPaymentRequest request) {
         return ResponseHandler.generateResponse(HttpStatus.OK, paymentService.rejectPayment(paymentId, request.getReasonId(), request.getDetail()), true);
+    }
+
+    @PutMapping(value = "/{paymentId}/correct", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public Mono<ResponseEntity<Object>> correctRejectedPayment(
+            @PathVariable UUID paymentId,
+            @Valid @ModelAttribute CorrectPaymentRequest request) {
+        return ResponseHandler.generateResponse(
+                HttpStatus.OK,
+                paymentService.correctRejectedPayment(
+                        paymentId,
+                        request.getVoucherFile()
+                ),
+                true
+        );
     }
 }

@@ -1,5 +1,6 @@
 package world.inclub.bonusesrewards.shared.payment.application.service.interfaces;
 
+import org.springframework.http.codec.multipart.FilePart;
 import reactor.core.publisher.Mono;
 import world.inclub.bonusesrewards.shared.payment.application.dto.MakePaymentCommand;
 import world.inclub.bonusesrewards.shared.payment.api.dto.PaymentResponseDto;
@@ -14,4 +15,5 @@ public interface PaymentService {
 
     Mono<PaymentResponseDto> rejectPayment(UUID paymentId, Long reasonId, String detail);
 
+    Mono<PaymentResponseDto> correctRejectedPayment(UUID paymentId, FilePart voucherFile);
 }

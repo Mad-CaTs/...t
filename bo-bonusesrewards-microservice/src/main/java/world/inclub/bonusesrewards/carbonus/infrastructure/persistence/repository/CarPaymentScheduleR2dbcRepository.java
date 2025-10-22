@@ -8,7 +8,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import world.inclub.bonusesrewards.carbonus.infrastructure.persistence.entity.CarPaymentScheduleEntity;
 
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -27,7 +26,7 @@ public interface CarPaymentScheduleR2dbcRepository
     );
 
     Mono<CarPaymentScheduleEntity> findFirstByCarAssignmentIdOrderByOrderNumDesc(UUID carAssignmentId);
-    
+
     Flux<CarPaymentScheduleEntity> findByCarAssignmentId(UUID carAssignmentId);
 
     @Query("""

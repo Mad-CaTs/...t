@@ -5,7 +5,6 @@ import reactor.core.publisher.Mono;
 import world.inclub.bonusesrewards.carbonus.domain.model.CarPaymentSchedule;
 import world.inclub.bonusesrewards.shared.utils.pagination.domain.Pageable;
 
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -51,7 +50,6 @@ public interface CarPaymentScheduleRepositoryPort {
     Flux<CarPaymentSchedule> findInitialsByCarAssignmentId(UUID carAssignmentId, Pageable pageable);
 
     Mono<Long> countInitialsByCarAssignmentId(UUID carAssignmentId);
-
 
     Mono<CarPaymentSchedule> findById(UUID uuid);
 

@@ -2,6 +2,7 @@ package world.inclub.bonusesrewards.shared.payment.application.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
@@ -64,7 +65,7 @@ public class PaymentServiceImpl implements PaymentService {
                 .then(paymentAmountService.validateAndCalculate(command))
                 .flatMap(amounts -> createPayment(command, amounts))
                 .flatMap(payment -> paymentNotification(payment))
-                .then(updateScheduleStatus(command.scheduleId(), command.paymentDate()))
+                .then(updateScheduleStatus(command.scheduleId()))
                 .thenReturn("Payment processed successfully");
     }
 
@@ -211,10 +212,12 @@ public class PaymentServiceImpl implements PaymentService {
                 });
     }
 
-    private Mono<Void> updateScheduleStatus(UUID scheduleId, LocalDateTime paymentDate) {
+    private Mono<Void> updateScheduleStatus(UUID scheduleId) {
+        LocalDateTime paymentDate = TimeLima.getLimaTime();
+
         return carPaymentScheduleRepositoryPort.updateSchedulePayment(
                 scheduleId,
-                BonusPaymentStatus.PENDING_REVIEW.getId().intValue(),
+                PaymentStatus.PENDING_REVIEW.getId().intValue(),
                 paymentDate
         );
     }
@@ -226,10 +229,10 @@ public class PaymentServiceImpl implements PaymentService {
 
         return paymentRepositoryPort.findById(paymentId)
                 .switchIfEmpty(Mono.error(new NotFoundException("Payment with ID " + paymentId + " not found")))
-                .filter(payment -> payment.getStatus() == BonusPaymentStatus.PENDING_REVIEW)
+                .filter(payment -> payment.getStatus() == PaymentStatus.PENDING_REVIEW)
                 .switchIfEmpty(Mono.error(new BadRequestException("Payment is not in PENDING_REVIEW status")))
                 .flatMap(payment -> {
-                    payment.setStatus(BonusPaymentStatus.COMPLETED);
+                    payment.setStatus(PaymentStatus.COMPLETED);
                     payment.setUpdatedAt(updatedAt);
                     return paymentRepositoryPort.save(payment);
                 })
@@ -245,10 +248,10 @@ public class PaymentServiceImpl implements PaymentService {
 
         return paymentRepositoryPort.findById(paymentId)
                 .switchIfEmpty(Mono.error(new NotFoundException("Payment with ID " + paymentId + " not found")))
-                .filter(payment -> payment.getStatus() == BonusPaymentStatus.PENDING_REVIEW)
+                .filter(payment -> payment.getStatus() == PaymentStatus.PENDING_REVIEW)
                 .switchIfEmpty(Mono.error(new BadRequestException("Payment is not in PENDING status")))
                 .flatMap(payment -> {
-                    payment.setStatus(BonusPaymentStatus.REJECTED);
+                    payment.setStatus(PaymentStatus.REJECTED);
                     payment.setUpdatedAt(updatedAt);
                     return paymentRepositoryPort.save(payment);
                 })
@@ -260,6 +263,52 @@ public class PaymentServiceImpl implements PaymentService {
                 .flatMap(payment ->
                         paymentNotification(payment)
                                 .thenReturn(payment))
+                .map(paymentMapper::toResponseDto);
+    }
+
+    @Override
+    @Transactional
+    public Mono<PaymentResponseDto> correctRejectedPayment(UUID paymentId, FilePart voucherFile) {
+        return paymentRejectionRepositoryPort.findByPaymentId(paymentId)
+                .switchIfEmpty(Mono.error(new NotFoundException("Payment rejection not found for payment: " + paymentId)))
+                .flatMap(rejection ->
+                        paymentRepositoryPort.findById(paymentId)
+                                .filter(payment -> payment.getStatus() == PaymentStatus.REJECTED)
+                                .switchIfEmpty(Mono.error(new BadRequestException("Payment is not in REJECTED status")))
+                                .flatMap(payment -> {
+                                    LocalDateTime now = TimeLima.getLimaTime();
+                                    LocalDateTime rejectedAt = rejection.getCreatedAt();
+
+                                    if (rejectedAt == null) {
+                                        return Mono.error(new BadRequestException("Payment does not have rejection timestamp"));
+                                    }
+
+                                    return voucherStorageService.saveVoucher(voucherFile)
+                                            .flatMap(voucherUrl -> {
+                                                payment.setStatus(PaymentStatus.PENDING_REVIEW);
+                                                payment.setUpdatedAt(now);
+
+                                                return paymentRepositoryPort.save(payment)
+                                                        .flatMap(savedPayment -> {
+                                                            return paymentVoucherRepositoryPort.findByPaymentId(paymentId)
+                                                                    .next()
+                                                                    .flatMap(existingVoucher -> {
+                                                                        existingVoucher.setImageUrl(voucherUrl);
+                                                                        existingVoucher.setCreatedAt(now);
+                                                                        return paymentVoucherRepositoryPort.save(existingVoucher);
+                                                                    })
+                                                                    .switchIfEmpty(Mono.defer(() -> {
+                                                                        PaymentVoucher newVoucher = paymentVoucherFactory.createPaymentVoucher(paymentId, voucherUrl);
+                                                                        return paymentVoucherRepositoryPort.save(newVoucher);
+                                                                    }))
+                                                                    .thenReturn(savedPayment);
+                                                        });
+                                            });
+                                })
+                                .flatMap(payment -> {
+                                    return paymentNotification(payment).thenReturn(payment);
+                                })
+                )
                 .map(paymentMapper::toResponseDto);
     }
 }

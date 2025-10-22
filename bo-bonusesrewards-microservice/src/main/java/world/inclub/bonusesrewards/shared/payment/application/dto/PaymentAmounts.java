@@ -5,5 +5,7 @@ import java.math.BigDecimal;
 public record PaymentAmounts(
         BigDecimal subTotal,
         BigDecimal commission,
+        BigDecimal rateAmount,
+        BigDecimal ratePercentage,
         BigDecimal total
 ) {}

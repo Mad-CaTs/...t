@@ -7,4 +7,12 @@ public record CarModel(
         Long id,
         String name,
         Long brandId
-) {}
+) {
+    public static CarModel empty() {
+        return CarModel.builder()
+                .id(0L)
+                .name("Unknown Model")
+                .brandId(0L)
+                .build();
+    }
+}

@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 @Getter
 @AllArgsConstructor
-public enum BonusPaymentStatus {
+public enum PaymentStatus {
 
     /**
      * Payment is completed successfully
@@ -34,14 +34,14 @@ public enum BonusPaymentStatus {
     private final Long id;
     private final String code;
 
-    public static BonusPaymentStatus fromId(Long id) {
+    public static PaymentStatus fromId(Long id) {
         return Arrays.stream(values())
                 .filter(status -> status.getId().equals(id))
                 .findFirst()
                 .orElseThrow(() -> new InvalidStatusException("Invalid PaymentStatus ID: " + id));
     }
 
-    public static BonusPaymentStatus fromName(String code) {
+    public static PaymentStatus fromName(String code) {
         return Arrays.stream(values())
                 .filter(status -> status.getCode().equals(code))
                 .findFirst()
