@@ -101,6 +101,7 @@ public class CarPaymentScheduleRepositoryAdapter
         return carPaymentScheduleR2dbcRepository.findById(uuid)
                 .map(carPaymentScheduleMapper::toDomain);
     }
+
     @Override
     public Mono<Void> updateSchedulePayment(UUID scheduleId, Integer statusId, LocalDateTime paymentDate) {
         return carPaymentScheduleR2dbcRepository.updateSchedulePayment(scheduleId, statusId, paymentDate)

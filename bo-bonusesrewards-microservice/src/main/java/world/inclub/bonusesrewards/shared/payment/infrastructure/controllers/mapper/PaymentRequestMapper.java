@@ -3,10 +3,10 @@ package world.inclub.bonusesrewards.shared.payment.infrastructure.controllers.ma
 import org.springframework.stereotype.Component;
 import world.inclub.bonusesrewards.shared.payment.application.dto.MakePaymentCommand;
 import world.inclub.bonusesrewards.shared.payment.infrastructure.controllers.dto.MakePaymentRequest;
+import world.inclub.bonusesrewards.shared.utils.TimeLima;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.List;
 
 @Component
 public class PaymentRequestMapper {
@@ -28,15 +28,13 @@ public class PaymentRequestMapper {
                 request.getCurrencyType(),
                 voucher,
                 normalizedAmount,
-                request.getPaymentDate()
-
-
+                TimeLima.getLimaTime()
         );
     }
 
     private MakePaymentCommand.Voucher toCommandVoucher(MakePaymentRequest.Voucher v) {
         return new MakePaymentCommand.Voucher(
-                v.getOperationNumber(),
+            v.getOperationNumber(),
                 v.getNote(),
                 v.getImage()
         );

@@ -64,7 +64,7 @@ public interface CarPaymentScheduleR2dbcRepository
             WHERE cps.car_assignment_id = :carAssignmentId AND cps.is_initial = TRUE
             """)
     Mono<Long> countInitialsByCarAssignmentId(@Param("carAssignmentId") UUID car);
-    
+
     @Modifying
     @Query("""
             UPDATE bo_bonus_reward.car_payment_schedules

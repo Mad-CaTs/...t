@@ -214,7 +214,7 @@ public class PaymentServiceImpl implements PaymentService {
     private Mono<Void> updateScheduleStatus(UUID scheduleId, LocalDateTime paymentDate) {
         return carPaymentScheduleRepositoryPort.updateSchedulePayment(
                 scheduleId,
-                BonusPaymentStatus.COMPLETED.getId().intValue(),
+                BonusPaymentStatus.PENDING_REVIEW.getId().intValue(),
                 paymentDate
         );
     }

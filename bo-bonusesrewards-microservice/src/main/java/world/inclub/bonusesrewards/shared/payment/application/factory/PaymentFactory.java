@@ -28,7 +28,7 @@ public class PaymentFactory {
                 .subTotalAmount(amounts.subTotal())
                 .commissionAmount(amounts.commission())
                 .totalAmount(amounts.total())
-                .paymentDate(command.paymentDate())
+                .paymentDate(now)
                 .createdAt(now)
                 .build();
     }
@@ -48,7 +48,7 @@ public class PaymentFactory {
                 .subTotalAmount(amounts.subTotal())
                 .commissionAmount(amounts.commission())
                 .totalAmount(amounts.total())
-                .paymentDate(command.paymentDate())
+                .paymentDate(now)
                 .createdAt(now)
                 .build();
     }

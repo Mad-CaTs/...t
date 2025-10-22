@@ -9,7 +9,6 @@ import world.inclub.bonusesrewards.shared.payment.domain.model.CurrencyType;
 import world.inclub.bonusesrewards.shared.payment.domain.model.PaymentType;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
@@ -41,9 +40,6 @@ public class MakePaymentRequest {
 
     private Voucher voucher;
 
-    @NotNull
-    private LocalDateTime paymentDate;
-
     @Data
     @NoArgsConstructor
     public static class Voucher {
@@ -54,7 +50,7 @@ public class MakePaymentRequest {
         @NotBlank
         private String note;
 
-        @NotBlank
+        @NotNull
         private FilePart image;
     }
 }
