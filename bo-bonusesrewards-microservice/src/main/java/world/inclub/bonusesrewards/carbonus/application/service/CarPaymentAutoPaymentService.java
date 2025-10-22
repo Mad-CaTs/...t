@@ -20,7 +20,7 @@ import world.inclub.bonusesrewards.shared.bonus.domain.port.ClassificationReposi
 import world.inclub.bonusesrewards.shared.exceptions.EntityNotFoundException;
 import world.inclub.bonusesrewards.shared.infrastructure.context.TimezoneContext;
 import world.inclub.bonusesrewards.shared.logging.LoggerService;
-import world.inclub.bonusesrewards.shared.payment.domain.model.PaymentStatus;
+import world.inclub.bonusesrewards.shared.payment.domain.PaymentStatus;
 import world.inclub.bonusesrewards.shared.rank.domain.model.Rank;
 import world.inclub.bonusesrewards.shared.rank.domain.port.RankRepositoryPort;
 import world.inclub.bonusesrewards.shared.utils.exchange.domain.ExchangeRate;
@@ -127,16 +127,18 @@ public class CarPaymentAutoPaymentService
                             .flatMap(wallet -> {
                                 Wallet updatedWallet = walletFactory.updateWalletBalance(wallet,
                                                                                          schedule.memberAssumedPayment());
+                                String descriptionRecharge = getReferenceRechargeForSchedule(classification, ranks);
                                 WalletTransaction rechargeWallet = walletTransactionFactory
-                                        .createRechargeWallet(schedule, wallet, exchangeRate.id(),
-                                                              getReferenceRechargeForSchedule(classification,
-                                                                                              ranks));
+                                        .createRechargeWallet(schedule, wallet, exchangeRate.id(), descriptionRecharge);
+
+                                String descriptionDiscount = getReferenceDiscountForSchedule(schedule);
                                 WalletTransaction discountWallet = walletTransactionFactory
                                         .createDiscountWallet(schedule, wallet, exchangeRate.id(),
-                                                              getReferenceDiscountForSchedule(schedule));
+                                                              descriptionDiscount);
 
+                                String description = String.format("%s : %s", descriptionRecharge, descriptionDiscount);
                                 CarBonusApplication carBonusApplication = carBonusApplicationFactory
-                                        .create(schedule);
+                                        .create(schedule, description);
                                 return walletRepositoryPort
                                         .save(updatedWallet)
                                         .then(walletTransactionRepositoryPort

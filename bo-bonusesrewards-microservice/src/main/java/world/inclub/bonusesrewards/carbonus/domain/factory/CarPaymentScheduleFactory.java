@@ -2,7 +2,7 @@ package world.inclub.bonusesrewards.carbonus.domain.factory;
 
 import org.springframework.stereotype.Component;
 import world.inclub.bonusesrewards.carbonus.domain.model.*;
-import world.inclub.bonusesrewards.shared.payment.domain.model.PaymentStatus;
+import world.inclub.bonusesrewards.shared.payment.domain.PaymentStatus;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

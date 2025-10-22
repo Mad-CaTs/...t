@@ -64,8 +64,9 @@ public class PaymentServiceImpl implements PaymentService {
                 .then(validatePaymentMethod(command))
                 .then(paymentAmountService.validateAndCalculate(command))
                 .flatMap(amounts -> createPayment(command, amounts))
-                .flatMap(payment -> paymentNotification(payment))
-                .then(updateScheduleStatus(command.scheduleId()))
+                .flatMap(payment -> paymentNotification(payment)
+                        .then(updateScheduleStatus(payment))
+                        .thenReturn(payment))
                 .thenReturn("Payment processed successfully");
     }
 
@@ -91,6 +92,7 @@ public class PaymentServiceImpl implements PaymentService {
         return switch (command.paymentType()) {
             case BCP, INTERBANK, OTHERS -> validateVoucher(command.voucher());
             case WALLET -> validateWallet(command);
+            case PAYPAL -> validatePayPal(command);
             default -> Mono.error(new BadRequestException("Unsupported payment method"));
         };
     }
@@ -117,6 +119,26 @@ public class PaymentServiceImpl implements PaymentService {
                 });
     }
 
+    private Mono<Void> validatePayPal(MakePaymentCommand command) {
+        if (command.paypal() == null) {
+            return Mono.error(new BadRequestException(
+                    "PayPal information is required for PayPal payments"
+            ));
+        }
+        if (command.paypal().transactionId() == null ||
+                command.paypal().transactionId().isBlank()) {
+            return Mono.error(new BadRequestException(
+                    "PayPal transaction ID is required"
+            ));
+        }
+        if (command.currencyType() != CurrencyType.USD) {
+            return Mono.error(new BadRequestException(
+                    "PayPal payments must be in USD"
+            ));
+        }
+        return Mono.empty();
+    }
+
     private Mono<Payment> createPayment(MakePaymentCommand command, PaymentAmounts amounts) {
         return memberRepositoryPort.getById(command.memberId())
                 .map(Optional::of)
@@ -127,33 +149,32 @@ public class PaymentServiceImpl implements PaymentService {
                     switch (command.paymentType()) {
                         case BCP, INTERBANK, OTHERS -> {
                             result = Mono.zip(
-                                            paymentRepositoryPort.save(paymentFactory.createPaymentWithPendingStatus(command, amounts)),
-                                            voucherStorageService.saveVoucher(command.voucher().image()))
+                                            paymentRepositoryPort.save(
+                                                    paymentFactory.createPaymentWithPendingStatus(command, amounts)
+                                            ),
+                                            voucherStorageService.saveVoucher(command.voucher().image())
+                                    )
                                     .flatMap(tuple2 -> {
                                         Payment payment = tuple2.getT1();
                                         String imageUrl = tuple2.getT2();
-                                        return paymentVoucherRepositoryPort.save(paymentVoucherFactory.createPaymentVoucher(command, payment.getId(), imageUrl))
-                                                .thenReturn(payment);
+                                        return paymentVoucherRepositoryPort.save(
+                                                paymentVoucherFactory.createPaymentVoucher(
+                                                        command,
+                                                        payment.getId(),
+                                                        imageUrl
+                                                )
+                                        ).thenReturn(payment);
                                     });
                         }
+
                         case WALLET -> {
-                            result = carPaymentScheduleRepositoryPort.findById(command.scheduleId())
-                                    .flatMap(schedule -> {
-                                        String paymentDetail = "Pago de Inicial N° " + schedule.installmentNum();
-
-                                        ProcessWalletPaymentCommand process =
-                                                new ProcessWalletPaymentCommand(
-                                                        command.memberId(),
-                                                        amounts.total(),
-                                                        paymentDetail
-                                                );
-
-                                        return walletPaymentService.sendWalletPayment(process)
-                                                .then(paymentRepositoryPort.save(
-                                                        paymentFactory.createPaymentWithApprovedStatus(command, amounts)
-                                                ));
-                                    });
+                            result = processWalletPayment(command, amounts);
                         }
+
+                        case PAYPAL -> {
+                            result = processPayPalPayment(command, amounts);
+                        }
+
                         default -> {
                             result = Mono.error(new BadRequestException("Unsupported payment method"));
                         }
@@ -222,14 +243,72 @@ public class PaymentServiceImpl implements PaymentService {
                 });
     }
 
-    private Mono<Void> updateScheduleStatus(UUID scheduleId) {
-        LocalDateTime paymentDate = TimeLima.getLimaTime();
+    private Mono<Payment> processWalletPayment(MakePaymentCommand command, PaymentAmounts amounts) {
+        return carPaymentScheduleRepositoryPort.findById(command.scheduleId())
+                .flatMap(schedule -> {
+                    String paymentDetail = "Pago de Inicial N° " + schedule.installmentNum();
+
+                    ProcessWalletPaymentCommand process = new ProcessWalletPaymentCommand(
+                            command.memberId(),
+                            amounts.total(),
+                            paymentDetail
+                    );
+
+                    return walletPaymentService.sendWalletPayment(process)
+                            .then(Mono.defer(() -> {
+                                Payment payment = paymentFactory.createPaymentWithApprovedStatus(command, amounts);
+
+                                return paymentRepositoryPort.save(payment)
+                                        .flatMap(savedPayment -> {
+                                            PaymentVoucher walletVoucher = PaymentVoucher.builder()
+                                                    .id(null)
+                                                    .paymentId(savedPayment.getId())
+                                                    .operationNumber(generateWalletOperationNumber(savedPayment.getId()))
+                                                    .note("Pago realizado con Wallet - " + paymentDetail)
+                                                    .imageUrl(null)
+                                                    .createdAt(TimeLima.getLimaTime())
+                                                    .build();
+
+                                            return paymentVoucherRepositoryPort.save(walletVoucher)
+                                                    .thenReturn(savedPayment);
+                                        });
+                            }));
+                });
+    }
+
+    private String generateWalletOperationNumber(UUID paymentId) {
+        String id = paymentId.toString().replace("-", "").substring(0, 12).toUpperCase();
+        return String.format("WALLET-%s", id);
+    }
+
+    private Mono<Payment> processPayPalPayment(MakePaymentCommand command, PaymentAmounts amounts) {
+        Payment payment = paymentFactory.createPaymentWithApprovedStatus(command, amounts);
+
+        return paymentRepositoryPort.save(payment)
+                .flatMap(savedPayment -> {
+                    PaymentVoucher payPalVoucher = PaymentVoucher.builder()
+                            .id(null)
+                            .paymentId(savedPayment.getId())
+                            .operationNumber(command.paypal().transactionId())
+                            .note(command.paypal().note() != null
+                                    ? command.paypal().note()
+                                    : "Pago realizado por PayPal")
+                            .imageUrl(null)
+                            .createdAt(TimeLima.getLimaTime())
+                            .build();
+
+                    return paymentVoucherRepositoryPort.save(payPalVoucher)
+                            .thenReturn(savedPayment);
+                });
+    }
+
+    private Mono<Void> updateScheduleStatus(Payment payment) {
+        LocalDateTime paymentDate = payment.getPaymentDate() != null ? payment.getPaymentDate() : TimeLima.getLimaTime();
 
         return carPaymentScheduleRepositoryPort.updateSchedulePayment(
-                scheduleId,
-                PaymentStatus.PENDING_REVIEW.getId().intValue(),
-                paymentDate
-        );
+                        payment.getSourceRecordId(),
+                        payment.getStatus().getId().intValue(),
+                        paymentDate);
     }
 
     @Override
@@ -244,10 +323,14 @@ public class PaymentServiceImpl implements PaymentService {
                 .flatMap(payment -> {
                     payment.setStatus(PaymentStatus.COMPLETED);
                     payment.setUpdatedAt(updatedAt);
+                    payment.setPaymentDate(updatedAt);
                     return paymentRepositoryPort.save(payment);
                 })
-                .flatMap(payment -> paymentNotification(payment)
-                        .thenReturn(payment))
+                .flatMap(payment ->
+                        paymentNotification(payment)
+                                .then(updateScheduleStatus(payment))
+                                .thenReturn(payment)
+                )
                 .map(paymentMapper::toResponseDto);
     }
 
@@ -272,7 +355,9 @@ public class PaymentServiceImpl implements PaymentService {
                 })
                 .flatMap(payment ->
                         paymentNotification(payment)
-                                .thenReturn(payment))
+                                .then(updateScheduleStatus(payment))
+                                .thenReturn(payment)
+                )
                 .map(paymentMapper::toResponseDto);
     }
 
@@ -316,7 +401,9 @@ public class PaymentServiceImpl implements PaymentService {
                                             });
                                 })
                                 .flatMap(payment -> {
-                                    return paymentNotification(payment).thenReturn(payment);
+                                    return paymentNotification(payment)
+                                            .then(updateScheduleStatus(payment))
+                                            .thenReturn(payment);
                                 })
                 )
                 .map(paymentMapper::toResponseDto);

@@ -43,11 +43,6 @@ public class WebClientConfig {
         return getWebClient(properties.ticket());
     }
 
-    @Bean
-    public WebClient walletWebClient() {
-        return getWebClient(properties.wallet());
-    }
-
     private WebClient getWebClient(String baseUrl) {
         HttpClient httpClient = HttpClient.create()
                 .responseTimeout(Duration.ofMinutes(1))

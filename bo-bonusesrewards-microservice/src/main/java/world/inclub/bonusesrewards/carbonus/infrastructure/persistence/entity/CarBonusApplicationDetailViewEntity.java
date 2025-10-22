@@ -1,6 +1,9 @@
 package world.inclub.bonusesrewards.carbonus.infrastructure.persistence.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
@@ -10,24 +13,30 @@ import java.time.Instant;
 import java.util.UUID;
 
 import static world.inclub.bonusesrewards.carbonus.infrastructure.persistence.schema.CarBonusSchema.SCHEMA;
-import static world.inclub.bonusesrewards.carbonus.infrastructure.persistence.schema.CarBonusSchema.Table.CAR_BONUS_APPLICATION_TABLE;
+import static world.inclub.bonusesrewards.carbonus.infrastructure.persistence.schema.CarBonusSchema.View.CAR_BONUS_APPLICATIONS_DETAIL_VIEW;
 
 @Data
 @Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = CAR_BONUS_APPLICATION_TABLE, schema = SCHEMA)
-public class CarBonusApplicationEntity {
+@Table(name = CAR_BONUS_APPLICATIONS_DETAIL_VIEW, schema = SCHEMA)
+public class CarBonusApplicationDetailViewEntity {
 
     @Id
-    @Column("id")
-    private UUID id;
+    @Column("bonus_application_id")
+    private UUID bonusApplicationId;
 
     @Column("car_assignment_id")
     private UUID carAssignmentId;
 
-    @Column("payment_type_id")
-    private Long paymentTypeId;
+    @Column("member_id")
+    private Long memberId;
+
+    @Column("username")
+    private String username;
+
+    @Column("member_full_name")
+    private String memberFullName;
 
     @Column("bonus_amount")
     private BigDecimal bonusAmount;
@@ -35,11 +44,17 @@ public class CarBonusApplicationEntity {
     @Column("discount_amount")
     private BigDecimal discountAmount;
 
-    @Column("is_initial")
-    private Boolean isInitial;
-
     @Column("description")
     private String description;
+
+    @Column("payment_type_id")
+    private Long paymentTypeId;
+
+    @Column("payment_type_code")
+    private String paymentTypeCode;
+
+    @Column("is_initial")
+    private Boolean isInitial;
 
     @Column("applied_date")
     private Instant appliedDate;

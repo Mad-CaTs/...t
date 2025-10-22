@@ -17,6 +17,7 @@ public record MakePaymentCommand(
         Integer paymentSubTypeId,
         CurrencyType currencyType,
         Voucher voucher,
+        PayPal paypal,
         BigDecimal totalAmount,
         LocalDateTime paymentDate
 ) {
@@ -24,5 +25,9 @@ public record MakePaymentCommand(
             String operationNumber,
             String note,
             FilePart image
+    ) {}
+    public record PayPal(
+            String transactionId,
+            String note
     ) {}
 }

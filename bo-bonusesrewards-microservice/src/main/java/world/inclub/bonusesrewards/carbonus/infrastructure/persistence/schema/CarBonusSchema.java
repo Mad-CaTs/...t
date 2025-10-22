@@ -28,6 +28,7 @@ public class CarBonusSchema {
         public static final String CAR_QUOTATION_PENDING_ASSIGNMENT_VIEW = "car_quotation_pending_assignment_view";
         public static final String CAR_ASSIGNMENT_DOCUMENTS_DETAILS_VIEW = "car_assignment_documents_details_view";
         public static final String CAR_ASSIGNMENT_DOCUMENTS_SUMMARY_VIEW = "car_assignment_documents_summary_view";
+        public static final String CAR_BONUS_APPLICATIONS_DETAIL_VIEW = "car_bonus_applications_details_view";
     }
 
 }

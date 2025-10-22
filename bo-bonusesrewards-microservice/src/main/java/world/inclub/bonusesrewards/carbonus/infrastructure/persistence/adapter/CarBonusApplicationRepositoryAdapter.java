@@ -27,6 +27,8 @@ public class CarBonusApplicationRepositoryAdapter
                 .paymentTypeId(domain.paymentTypeId())
                 .bonusAmount(domain.bonusAmount())
                 .discountAmount(domain.discountAmount())
+                .isInitial(domain.isInitial())
+                .description(domain.description())
                 .appliedDate(domain.appliedDate())
                 .build();
     }
@@ -38,6 +40,8 @@ public class CarBonusApplicationRepositoryAdapter
                 entity.getPaymentTypeId(),
                 entity.getBonusAmount(),
                 entity.getDiscountAmount(),
+                entity.getIsInitial(),
+                entity.getDescription(),
                 entity.getAppliedDate()
         );
     }

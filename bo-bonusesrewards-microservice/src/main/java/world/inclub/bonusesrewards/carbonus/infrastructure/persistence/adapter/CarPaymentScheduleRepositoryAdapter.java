@@ -12,7 +12,6 @@ import world.inclub.bonusesrewards.carbonus.infrastructure.persistence.repositor
 import world.inclub.bonusesrewards.shared.utils.pagination.domain.Pageable;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.UUID;
 import java.util.stream.StreamSupport;
 
@@ -96,32 +95,4 @@ public class CarPaymentScheduleRepositoryAdapter
         return carPaymentScheduleR2dbcRepository.countInitialsByCarAssignmentId(carAssignmentId);
     }
 
-    @Override
-    public Mono<CarPaymentSchedule> findById(UUID uuid) {
-        return carPaymentScheduleR2dbcRepository.findById(uuid)
-                .map(carPaymentScheduleMapper::toDomain);
-    }
-
-    @Override
-    public Mono<Void> updateSchedulePayment(UUID scheduleId, Integer statusId, LocalDateTime paymentDate) {
-        return carPaymentScheduleR2dbcRepository.updateSchedulePayment(scheduleId, statusId, paymentDate)
-                .then();
-    }
-
-    @Override
-    public Mono<Boolean> existsById(UUID scheduleId) {
-        return carPaymentScheduleR2dbcRepository.existsById(scheduleId);
-    }
-
-    @Override
-    public Mono<Boolean> isSchedulePending(UUID uuid) {
-        return carPaymentScheduleR2dbcRepository.findById(uuid)
-                .map(entity -> entity.getStatusId() != null && entity.getStatusId() == 2L)
-                .defaultIfEmpty(false);
-    }
-
-    @Override
-    public Mono<Long> getMemberIdByScheduleId(UUID scheduleId) {
-        return carPaymentScheduleR2dbcRepository.getMemberIdByScheduleId(scheduleId);
-    }
 }

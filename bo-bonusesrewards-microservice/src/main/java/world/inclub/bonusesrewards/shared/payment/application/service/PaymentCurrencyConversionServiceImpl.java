@@ -30,11 +30,10 @@ public class PaymentCurrencyConversionServiceImpl implements PaymentCurrencyConv
                     BigDecimal convertedAmount;
 
                     if (fromCurrency == CurrencyType.USD && toCurrency == CurrencyType.PEN) {
-                        convertedAmount = amount.multiply(exchangeRate.sellRate());
+                        convertedAmount = amount.multiply(exchangeRate.buyRate());
                     } else {
-                        convertedAmount = amount.divide(exchangeRate.buyRate(), 2, RoundingMode.HALF_UP);
+                        convertedAmount = amount.divide(exchangeRate.sellRate(), 2, RoundingMode.HALF_UP);
                     }
-
                     return convertedAmount.setScale(2, RoundingMode.HALF_UP);
                 });
     }

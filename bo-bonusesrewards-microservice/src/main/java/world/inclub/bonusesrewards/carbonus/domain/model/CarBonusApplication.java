@@ -13,5 +13,7 @@ public record CarBonusApplication(
         Long paymentTypeId,
         BigDecimal bonusAmount,
         BigDecimal discountAmount,
+        Boolean isInitial,
+        String description,
         Instant appliedDate
 ) {}

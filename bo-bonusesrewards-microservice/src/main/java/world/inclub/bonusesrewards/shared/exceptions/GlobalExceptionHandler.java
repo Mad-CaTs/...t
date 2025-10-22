@@ -193,36 +193,4 @@ public class GlobalExceptionHandler {
         return Mono.just(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorDetails));
     }
 
-    @ExceptionHandler(BadRequestException.class)
-    public Mono<ResponseEntity<ErrorDetails>> handleBadRequestException(BadRequestException ex, ServerWebExchange exchange) {
-        ErrorDetails errorDetails = new ErrorDetails(
-                ex.getMessage(),
-                exchange.getRequest().getPath().value(),
-                LocalDateTime.now().toString(),
-                HttpStatus.BAD_REQUEST.value()
-        );
-        return Mono.just(ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorDetails));
-    }
-
-    @ExceptionHandler(AmountException.class)
-    public Mono<ResponseEntity<ErrorDetails>> handleAmountException(AmountException ex, ServerWebExchange exchange) {
-        ErrorDetails errorDetails = new ErrorDetails(
-                ex.getMessage(),
-                exchange.getRequest().getPath().value(),
-                LocalDateTime.now().toString(),
-                HttpStatus.CONFLICT.value()
-        );
-        return Mono.just(ResponseEntity.status(HttpStatus.CONFLICT).body(errorDetails));
-    }
-
-    @ExceptionHandler(InternalServerErrorException.class)
-    public Mono<ResponseEntity<ErrorDetails>> handleInternalError(InternalServerErrorException ex) {
-        ErrorDetails errorDetails = new ErrorDetails(
-                ex.getMessage(),
-                "Internal Server Error",
-                LocalDateTime.now().toString(),
-                HttpStatus.INTERNAL_SERVER_ERROR.value()
-        );
-        return Mono.just(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorDetails));
-    }
 }

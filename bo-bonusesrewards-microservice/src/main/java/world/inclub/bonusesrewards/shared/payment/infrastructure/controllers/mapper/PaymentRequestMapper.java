@@ -15,6 +15,8 @@ public class PaymentRequestMapper {
 
         MakePaymentCommand.Voucher voucher = request.getVoucher() == null ? null : toCommandVoucher(request.getVoucher());
 
+        MakePaymentCommand.PayPal paypal = request.getPaypal() == null ? null : toCommandPayPal(request.getPaypal());
+
         BigDecimal normalizedAmount = request.getTotalAmount() == null
                 ? null
                 : request.getTotalAmount().setScale(2, RoundingMode.HALF_UP);
@@ -27,6 +29,7 @@ public class PaymentRequestMapper {
                 request.getPaymentSubTypeId(),
                 request.getCurrencyType(),
                 voucher,
+                paypal,
                 normalizedAmount,
                 TimeLima.getLimaTime()
         );
@@ -37,6 +40,13 @@ public class PaymentRequestMapper {
             v.getOperationNumber(),
                 v.getNote(),
                 v.getImage()
+        );
+    }
+
+    private MakePaymentCommand.PayPal toCommandPayPal(MakePaymentRequest.PayPal p) {
+        return new MakePaymentCommand.PayPal(
+                p.getTransactionId(),
+                p.getNote()
         );
     }
 }

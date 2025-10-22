@@ -6,7 +6,6 @@ import world.inclub.bonusesrewards.carbonus.domain.model.CarPaymentSchedule;
 import world.inclub.bonusesrewards.shared.utils.pagination.domain.Pageable;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 public interface CarPaymentScheduleRepositoryPort {
@@ -51,13 +50,4 @@ public interface CarPaymentScheduleRepositoryPort {
 
     Mono<Long> countInitialsByCarAssignmentId(UUID carAssignmentId);
 
-    Mono<CarPaymentSchedule> findById(UUID uuid);
-
-    Mono<Void> updateSchedulePayment(UUID scheduleId, Integer statusId, LocalDateTime paymentDate);
-
-    Mono<Boolean> existsById(UUID scheduleId);
-
-    Mono<Boolean> isSchedulePending(UUID uuid);
-
-    Mono<Long> getMemberIdByScheduleId(UUID scheduleId);
 }

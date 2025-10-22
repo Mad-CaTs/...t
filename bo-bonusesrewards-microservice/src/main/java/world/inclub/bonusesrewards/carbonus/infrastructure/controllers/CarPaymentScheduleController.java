@@ -12,7 +12,7 @@ import world.inclub.bonusesrewards.carbonus.application.usecase.carpaymentschedu
 import world.inclub.bonusesrewards.carbonus.infrastructure.controllers.constants.CarBonusApiPaths.PaymentSchedules;
 import world.inclub.bonusesrewards.carbonus.infrastructure.controllers.dto.excel.CarPaymentScheduleExelResponse;
 import world.inclub.bonusesrewards.carbonus.infrastructure.controllers.dto.request.CarPaymentScheduleInstallmentsRequest;
-import world.inclub.bonusesrewards.carbonus.application.dto.CarAssignmentExtraInfoSummary;
+import world.inclub.bonusesrewards.carbonus.application.dto.CarPaymentScheduleExtraInfoSummary;
 import world.inclub.bonusesrewards.carbonus.infrastructure.controllers.dto.response.CarPaymentScheduleResponse;
 import world.inclub.bonusesrewards.carbonus.infrastructure.controllers.mapper.carpaymentschedule.CarPaymentScheduleExelResponseMapper;
 import world.inclub.bonusesrewards.carbonus.infrastructure.controllers.mapper.carpaymentschedule.CarPaymentScheduleResponseMapper;
@@ -39,7 +39,7 @@ public class CarPaymentScheduleController {
 
     private final CarPaymentScheduleExelResponseMapper carPaymentScheduleExelResponseMapper;
     private final CarPaymentScheduleResponseMapper carPaymentScheduleResponseMapper;
-    private final GetCarAssignmentExtraInfoUseCase getCarAssignmentExtraInfoUseCase;
+    private final GetCarPaymentScheduleExtraInfoUseCase getCarPaymentScheduleExtraInfoUseCase;
 
     @PostMapping("/installments/{carAssignmentId}")
     public Mono<ResponseEntity<ApiResponse<String>>> createInstallments(
@@ -105,10 +105,10 @@ public class CarPaymentScheduleController {
     }
 
     @GetMapping("/extra-info/{carAssignmentId}")
-    public Mono<ResponseEntity<ApiResponse<CarAssignmentExtraInfoSummary>>> getExtraInfo(
+    public Mono<ResponseEntity<ApiResponse<CarPaymentScheduleExtraInfoSummary>>> getExtraInfo(
             @PathVariable UUID carAssignmentId
     ) {
-        return getCarAssignmentExtraInfoUseCase.getExtraInfo(carAssignmentId)
+        return getCarPaymentScheduleExtraInfoUseCase.getExtraInfo(carAssignmentId)
                 .flatMap(data -> ResponseHandler.generateResponse(HttpStatus.OK, data, true));
     }
 

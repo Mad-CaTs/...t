@@ -1,11 +1,11 @@
-package world.inclub.bonusesrewards.carbonus.application.service.carpaymentschedule;
+package world.inclub.bonusesrewards.carbonus.application.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
-import world.inclub.bonusesrewards.carbonus.application.usecase.carpaymentschedule.GetCarAssignmentExtraInfoUseCase;
+import world.inclub.bonusesrewards.carbonus.application.usecase.carpaymentschedule.GetCarPaymentScheduleExtraInfoUseCase;
 import world.inclub.bonusesrewards.carbonus.domain.port.*;
-import world.inclub.bonusesrewards.carbonus.application.dto.CarAssignmentExtraInfoSummary;
+import world.inclub.bonusesrewards.carbonus.application.dto.CarPaymentScheduleExtraInfoSummary;
 import world.inclub.bonusesrewards.shared.bonus.domain.port.ClassificationRepositoryPort;
 import world.inclub.bonusesrewards.shared.exceptions.EntityNotFoundException;
 import world.inclub.bonusesrewards.shared.member.domain.port.MemberRepositoryPort;
@@ -30,8 +30,8 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class CarAssignmentExtraInfoService
-        implements GetCarAssignmentExtraInfoUseCase {
+public class CarPaymentScheduleExtraInfoService
+        implements GetCarPaymentScheduleExtraInfoUseCase {
     private final CarAssignmentRepositoryPort carAssignmentRepositoryPort;
     private final CarPaymentScheduleRepositoryPort carPaymentScheduleRepositoryPort;
     private final CarQuotationRepositoryPort carQuotationRepositoryPort;
@@ -45,7 +45,7 @@ public class CarAssignmentExtraInfoService
     private final EventRepositoryPort eventRepositoryPort;
 
     @Override
-    public Mono<CarAssignmentExtraInfoSummary> getExtraInfo(UUID carAssignmentId) {
+    public Mono<CarPaymentScheduleExtraInfoSummary> getExtraInfo(UUID carAssignmentId) {
         return carAssignmentRepositoryPort.findById(carAssignmentId)
                 .switchIfEmpty(Mono.error(new EntityNotFoundException("Assignment not found with id: " + carAssignmentId)))
                 .flatMap(carAssignment -> {
@@ -149,7 +149,7 @@ public class CarAssignmentExtraInfoService
                                             LocalDate lastPaymentDate = getInitialOrEndPaymentDate
                                                     (paymentSchedules, false, false);
 
-                                            return CarAssignmentExtraInfoSummary.builder()
+                                            return CarPaymentScheduleExtraInfoSummary.builder()
                                                     .memberId(member.id())
                                                     .username(member.username())
                                                     .memberFullName(member.name() + " " + member.lastName())

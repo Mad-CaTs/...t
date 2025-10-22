@@ -40,6 +40,8 @@ public class MakePaymentRequest {
 
     private Voucher voucher;
 
+    private PayPal paypal;
+
     @Data
     @NoArgsConstructor
     public static class Voucher {
@@ -52,5 +54,15 @@ public class MakePaymentRequest {
 
         @NotNull
         private FilePart image;
+    }
+
+    @Data
+    @NoArgsConstructor
+    public static class PayPal {
+
+        @NotBlank(message = "Transaction ID is required for PayPal payments")
+        private String transactionId;
+
+        private String note;
     }
 }

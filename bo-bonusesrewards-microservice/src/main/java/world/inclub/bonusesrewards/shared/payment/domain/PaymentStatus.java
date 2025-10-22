@@ -1,4 +1,4 @@
-package world.inclub.bonusesrewards.shared.payment.domain.model;
+package world.inclub.bonusesrewards.shared.payment.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

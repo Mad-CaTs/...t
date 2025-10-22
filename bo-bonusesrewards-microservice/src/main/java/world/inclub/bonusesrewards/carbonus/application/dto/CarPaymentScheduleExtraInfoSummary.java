@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Builder
-public record CarAssignmentExtraInfoSummary(
+public record CarPaymentScheduleExtraInfoSummary(
         Long memberId,
         String username,
         String memberFullName,
