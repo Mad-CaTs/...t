@@ -19,7 +19,7 @@ public class PaymentNotificationServiceImpl implements PaymentNotificationServic
     @Override
     public Mono<Void> sendPaymentNotification(PaymentNotificationMessage notificationMessage) {
         return Mono.fromRunnable(() -> {
-            kafkaTemplate.send(Topic.Notification.REQUEST_SEND_NOTIFICATION, notificationMessage);
+            kafkaTemplate.send(Topic.Notification.REQUEST_SEND_PAYMENT_NOTIFICATION, notificationMessage);
         }).then();
     }
 }

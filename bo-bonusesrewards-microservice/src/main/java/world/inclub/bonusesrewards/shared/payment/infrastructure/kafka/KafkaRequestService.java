@@ -8,6 +8,7 @@ import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
+import world.inclub.bonusesrewards.shared.payment.infrastructure.kafka.constants.KafkaConstants;
 
 import java.util.UUID;
 import java.util.concurrent.*;
@@ -28,6 +29,7 @@ public class KafkaRequestService {
         Message<Object> message = MessageBuilder
                 .withPayload(request)
                 .setHeader(KafkaHeaders.TOPIC, requestTopic)
+                .setHeader(KafkaHeaders.KEY, KafkaConstants.KEY)
                 .setHeader(KafkaHeaders.CORRELATION_ID, correlationId)
                 .setHeader(KafkaHeaders.REPLY_TOPIC, replyTopic)
                 .build();

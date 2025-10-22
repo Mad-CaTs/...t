@@ -10,6 +10,7 @@ import world.inclub.bonusesrewards.shared.payment.application.service.interfaces
 import world.inclub.bonusesrewards.shared.payment.infrastructure.kafka.KafkaRequestService;
 import world.inclub.bonusesrewards.shared.payment.infrastructure.kafka.constants.KafkaConstants.Topic;
 import world.inclub.bonusesrewards.shared.payment.infrastructure.kafka.dto.ProcessWalletPaymentDto;
+import world.inclub.bonusesrewards.shared.payment.infrastructure.kafka.dto.WalletPaymentResponseDto;
 import world.inclub.bonusesrewards.shared.payment.infrastructure.kafka.mapper.ProcessWalletPaymentMapper;
 
 
@@ -29,8 +30,8 @@ public class KafkaWalletPaymentAdapter implements WalletPaymentService {
                         Topic.Wallet.REQUEST_REGISTER_PAYMENT_WITH_WALLET,
                         Topic.Wallet.RESPONSE_REGISTER_PAYMENT_WITH_WALLET)
                 .flatMap(response -> {
-                    if (response instanceof ProcessWalletPaymentDto) {
-                        return Mono.just((ProcessWalletPaymentDto) response);
+                    if (response instanceof WalletPaymentResponseDto) {
+                        return Mono.just((WalletPaymentResponseDto) response);
                     } else {
                         return Mono.error(new InternalServerErrorException("Unexpected response type"));
                     }
