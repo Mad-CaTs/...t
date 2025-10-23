@@ -1,0 +1,49 @@
+<div class="modal-header">
+  <div class="d-flex align-items-center">
+    <i class="fas fa-file-alt me-2"></i>
+    <h5 class="modal-title">Confirmar envío de certificado generado</h5>
+  </div>
+  <button type="button" class="btn-close" (click)="activeModal.dismiss()"></button>
+</div>
+
+<div class="modal-body">
+  <p class="text-muted">Por favor, confirme si quiere enviar el documento generado al usuario.</p>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-group mb-3">
+      <label class="form-label">Socio</label>
+      <div class="input-group">
+        <input type="text" 
+               class="form-control" 
+               [value]="recipientName"
+               readonly>
+        <span class="input-group-text">
+          <i class="fas fa-search"></i>
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Mensaje adicional:</label>
+      <textarea class="form-control" 
+                formControlName="message"
+                rows="4"
+                placeholder="Escriba los detalles"></textarea>
+      <small class="text-muted d-block text-end">{{ remainingChars }}/250</small>
+    </div>
+  </form>
+</div>
+
+<div class="modal-footer">
+  <button type="button" 
+          class="btn btn-outline-secondary" 
+          (click)="activeModal.dismiss()">
+    Cancelar
+  </button>
+  <button type="button" 
+          class="btn btn-primary" 
+          (click)="onSubmit()"
+          [disabled]="!form.valid">
+    Enviar
+  </button>
+</div>

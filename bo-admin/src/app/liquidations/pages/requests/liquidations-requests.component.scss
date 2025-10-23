@@ -1,0 +1,9 @@
+.img-light-orange {
+	filter: invert(10%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(180%) contrast(170%);	padding-bottom: 0.7px;
+	margin-right: 1.5px;
+}
+button:hover .img-light-orange,
+button:focus .img-light-orange,
+button:active .img-light-orange {
+	filter: invert(10%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(180%) contrast(170%);
+}

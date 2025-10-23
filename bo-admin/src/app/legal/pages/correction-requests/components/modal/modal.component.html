@@ -1,0 +1,46 @@
+<div class="modal-overlay" *ngIf="showModal">
+    <!-- Modal de Error -->
+    <div class="modal" *ngIf="currentModal?.type === 'error'">
+        <div class="modal-icon error">⚠️</div>
+        <h2>{{ currentModal?.title }}</h2>
+        <p>{{ currentModal?.message }}</p>
+        <button class="btn btn-primary" (click)="closeModal()">Corregir</button>
+    </div>
+
+    <!-- Modal de Éxito -->
+    <div class="modal" *ngIf="currentModal?.type === 'success'">
+        <div class="modal-icon success">✓</div>
+        <h2>{{ currentModal?.title }}</h2>
+        <p>{{ currentModal?.message }}</p>
+        <button class="btn btn-primary" (click)="closeModal()">Continuar</button>
+    </div>
+
+    <!-- Modal de Confirmación -->
+    <div class="modal" *ngIf="currentModal?.type === 'confirm'">
+        <div class="modal-icon">📝</div>
+        <h2>{{ currentModal?.title }}</h2>
+        <div class="form-group">
+            <label>Socio</label>
+            <input type="text" [(ngModel)]="recipientName" class="form-control">
+        </div>
+        <div class="form-group">
+            <label>Mensaje adicional</label>
+            <textarea [(ngModel)]="message" class="form-control" rows="3"></textarea>
+        </div>
+        <div class="modal-actions">
+            <button class="btn btn-secondary" (click)="closeModal()">Cancelar</button>
+            <button class="btn btn-primary" (click)="confirm()">Enviar</button>
+        </div>
+    </div>
+
+    <!-- Modal de Vista Previa -->
+    <div class="modal modal-large" *ngIf="currentModal?.type === 'preview'">
+        <div class="modal-header">
+            <h2>{{ currentModal?.title }}</h2>
+            <button class="close-btn" (click)="closeModal()">×</button>
+        </div>
+        <div class="modal-body">
+            <iframe [src]="documentUrl" width="100%" height="600px"></iframe>
+        </div>
+    </div>
+</div>

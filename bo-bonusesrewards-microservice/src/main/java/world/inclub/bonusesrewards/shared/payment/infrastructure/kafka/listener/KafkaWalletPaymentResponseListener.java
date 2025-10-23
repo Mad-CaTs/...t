@@ -27,11 +27,6 @@ public class KafkaWalletPaymentResponseListener {
             @Header(KafkaHeaders.CORRELATION_ID) String correlationId,
             @Header(KafkaHeaders.RECEIVED_KEY) String key) {
 
-        log.info("Received wallet payment response with correlationId: {}", correlationId);
-        log.debug("Wallet transaction ID: {}, isSuccessful: {}",
-                response.walletTransaction() != null ? response.walletTransaction().idWallet() : null,
-                response.walletTransaction() != null ? response.walletTransaction().idWallet() : null);
-
         kafkaRequestService.completeRequest(correlationId, response);
     }
 }

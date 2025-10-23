@@ -1,0 +1,55 @@
+<div class="list-toolbar">
+  <div class="left-group">
+    <div class="search-wrapper">
+      <label class="search-label">Buscador</label>
+      <div class="input-icon-wrapper">
+        <input
+          type="text"
+          [(ngModel)]="searchValue"
+          [placeholder]="placeholder"
+          (keydown)="preventLeadingSpace($event)"
+          (ngModelChange)="onInputChange($event)"
+        />
+        
+        <i
+          class="bi bi-search search-icon"
+          role="button"
+          tabindex="0"
+          (click)="onSearch()"
+          (keyup.enter)="onSearch()"
+        ></i>
+      </div>
+    </div>
+
+    <div class="search-wrapper"  *ngIf="showDateFilter">
+      <label class="search-label">Fecha de pago</label>
+      <input
+      type="date"
+      class="date-input"
+      [placeholder]="placeholderFecha"
+      [(ngModel)]="paymentDate"
+      (ngModelChange)="onDateChange($event)"
+    />
+    </div>
+    <div class="clear-message" *ngIf="clearMessage">
+          {{ clearMessage }}
+    </div>
+    <i
+      role="button"
+      tabindex="0"
+    ></i>
+
+
+    <div class="type-filter" *ngIf="showTypeFilter">
+      <label class="search-label">{{ typeLabel }}</label>
+      <select [(ngModel)]="selectedType" (ngModelChange)="onTypeChange($event)">
+        <option value="">Todos</option>
+        <option *ngFor="let opt of typeOptions" [value]="opt">{{ opt }}</option>
+      </select>
+    </div>
+  </div>
+
+  <button class="add-button" (click)="onActionClick()" *ngIf="showActionButton">
+    {{ actionText }}
+  </button>
+</div>

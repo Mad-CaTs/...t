@@ -1,0 +1,17 @@
+<div class="d-flex flex-column gap-6 p-6 bg-white w-100">
+	<h1 class="fs-1 text-black fw-medium m-0">Histórico de conciliaciones</h1>
+	<form [formGroup]="form" class="d-flex w-100 flex-column gap-6">
+		<h4 class="fs-5 text-black fw-normal m-0">Buscador</h4>
+		<div class="d-flex flex-column flex-md-row gap-6">
+			<app-input class="w-100" label="Ingrese campo de búsqueda:"
+				placeholder="Buscar por (nombres, apellidos, usuario)" type="search" [formGroup]="form"
+				controlName="search" (input)="filterData()" />
+			<div class="w-100 d-flex flex-column gap-2">
+			</div>
+		</div>
+	</form>
+	<div class="mb-3"></div>
+	<app-table-conciliation-historical [tableData]="filteredData" [loading]="loading" [totalRecords]="totalRecords"
+		[disable]="true" (pageChange)="onPageChange($event)"
+		(refresh)="onRefresh($event)"></app-table-conciliation-historical>
+</div>

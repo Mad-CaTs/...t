@@ -1,0 +1,122 @@
+<app-modal title="Editar Familia de paquetes">
+	<!--Principal form-->
+	<form
+		[formGroup]="form"
+		class="d-flex w-100 flex-column gap-6"
+		*ngIf="view === 1"
+		(sunmit)="onSubmitFamily()"
+	>
+		<app-input
+			label="Nombre"
+			placeholder="Ingrese nombre de familia de paquete"
+			[formGroup]="form"
+			controlName="name"
+		/>
+		<app-textarea
+			label="Descripción"
+			placeholder="Ingrese descripción"
+			[formGroup]="form"
+			controlName="description"
+		/>
+
+		<button class="btn btn-info" type="button" (click)="view = 2">Versiones</button>
+
+		<div class="w-100 d-flex justify-content-center align-items-center gap-4">
+			<button class="btn btn-outline-secondary" type="button" (click)="instanceModal.close()">
+				Cancelar
+			</button>
+			<button class="btn btn-secondary" type="submit" [disabled]="form.invalid || loading" (click)="onSubmitFamily()">
+				Guardar cambios
+			</button>
+		</div>
+	</form>
+	<!--Versions-->
+	<div class="d-flex w-100 flex-column gap-6" *ngIf="view === 2">
+		<span class="fs-6 fw-semibold text-gray-900 d-block border-bottom border-gray-400 pb-3">
+			Detalles de version
+		</span>
+
+		<div class="w-100 d-flex justify-content-between align-items-center gap-4">
+			<span class="fs-6 fw-semibold text-gray-900">Versión actualmente activa</span>
+			<div class="text-gray-700 fw-normal fs-6 d-flex align-items-center gap-2">
+				<span class="fs-6">{{activeVersion}}</span>
+				<i class="bi bi-pencil-square fs-4 cursor-pointer" (click)="view = 3"></i>
+			</div>
+		</div>
+
+		<div class="w-100 d-flex justify-content-between align-items-center gap-4">
+			<span class="fs-6 fw-semibold text-gray-900">Última versión creada</span>
+			<div class="text-gray-700 fw-normal fs-6 d-flex align-items-center gap-2">
+				<span class="fs-6">{{lastVersion}}</span>
+				<i class="bi bi-plus-circle fs-4 cursor-pointer" (click)="view = 4"></i>
+			</div>
+		</div>
+
+		<span class="fs-6 fw-semibold text-gray-900 d-block border-bottom border-gray-400 pb-3">
+			Programado automático
+		</span>
+
+		<div class="w-100 d-flex justify-content-between align-items-center gap-4">
+			<span class="fs-6 fw-semibold text-gray-900">Cambio de versión programada</span>
+			<div class="text-gray-700 fw-normal fs-6 d-flex align-items-center gap-2">
+				<span class="fs-6">No programada</span>
+				<i class="bi bi-pencil-square fs-4 cursor-pointer" (click)="view = 5"></i>
+			</div>
+		</div>
+
+		<button class="btn btn-outline-secondary" type="button" (click)="view = 1">Volver atras</button>
+	</div>
+	<!--Change actualy version-->
+	<form [formGroup]="formChangeVersion" class="d-flex w-100 flex-column gap-6" *ngIf="view === 3">
+		<app-select
+			class="w-100"
+			label="Version"
+			placeholder="Seleccione version"
+			[formGroup]="formChangeVersion"
+			controlName="version"
+			[options]="versionOptions"
+		/>
+
+		<div class="w-100 d-flex justify-content-center align-items-center gap-4">
+			<button class="btn btn-outline-secondary" type="button" (click)="view = 2">Volver atras</button>
+			<button class="btn btn-secondary" type="submit" [disabled]="formChangeVersion.invalid" (click)="onChangeVersion()">
+				Cambiar actual version
+			</button>
+		</div>
+	</form>
+	<!--Add version-->
+	<div class="d-flex w-100 flex-column gap-6" *ngIf="view === 4">
+		<p class="m-0 fs-6 text-center text-gray-700">¿Estás seguro de crear una nueva versión en {{name}} ?</p>
+
+		<div class="w-100 d-flex justify-content-center align-items-center gap-4">
+			<button class="btn btn-outline-secondary" type="button" (click)="view = 2">Volver atras</button>
+			<button class="btn btn-secondary" type="button" (click)="onCreateVersion()" >Crear nueva version</button>
+		</div>
+	</div>
+	<!--Program version-->
+	<form [formGroup]="formProgramChangeVersion" class="d-flex w-100 flex-column gap-6" *ngIf="view === 5">
+		<app-select
+			class="w-100"
+			label="Version"
+			placeholder="Seleccione version"
+			[formGroup]="formProgramChangeVersion"
+			controlName="version"
+			[options]="versionOptions"
+		/>
+
+		<app-input-date
+			class="w-100"
+			label="Fecha"
+			[formGroup]="formProgramChangeVersion"
+			[hasTime]="true"
+			controlName="date"
+		/>
+
+		<div class="w-100 d-flex justify-content-center align-items-center gap-4">
+			<button class="btn btn-outline-secondary" type="button" (click)="view = 2">Volver atras</button>
+			<button class="btn btn-secondary" type="submit" [disabled]="formProgramChangeVersion.invalid">
+				Activar programado
+			</button>
+		</div>
+	</form>
+</app-modal>

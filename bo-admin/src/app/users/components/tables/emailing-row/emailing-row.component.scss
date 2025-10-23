@@ -1,0 +1,55 @@
+.pagination-panel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 0 0 8px 8px;
+  border-top: 1px solid #e9ecef;
+  margin-top: -1px; // Ajuste para conectar con la tabla
+
+  .pagination-info {
+      color: #6c757d;
+      font-size: 0.875rem;
+  }
+
+  .pagination-controls {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      .pagination-page {
+          color: #495057;
+          font-size: 0.875rem;
+          font-weight: 500;
+      }
+
+      .pagination-icon {
+          background: none;
+          border: none;
+          cursor: pointer;
+          padding: 0.25rem;
+          transition: opacity 0.3s;
+
+          .svg-icon {
+              width: 1.5rem;
+              height: 1.5rem;
+              fill: #6c757d;
+          }
+
+          &:hover:not(:disabled) {
+              opacity: 0.8;
+          }
+
+          &:disabled {
+              cursor: not-allowed;
+              opacity: 0.5;
+          }
+      }
+  }
+}
+
+.card {
+  border-radius: 8px;
+  overflow: hidden;
+}

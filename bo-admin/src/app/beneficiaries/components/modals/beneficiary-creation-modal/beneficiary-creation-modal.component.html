@@ -1,0 +1,112 @@
+<div class="beneficiary-modal">
+  <div class="bm-header">
+    <div class="bm-avatar">
+      <i class="pi pi-user"></i>
+    </div>
+    <button class="bm-close" type="button" (click)="close()">
+      <i class="pi pi-times"></i>
+    </button>
+  </div>
+
+  <h5 class="bm-title">{{ isEdit ? 'Editar beneficiario' : 'Agregar nuevo beneficiario' }}</h5>
+  <p class="bm-subtitle">Completa el registro para agregar un beneficiario.</p>
+
+  <form [formGroup]="beneficiaryForm" class="bm-form">
+    <div class="row g-3">
+      <div class="col-12 col-md-6">
+        <app-input [formGroup]="beneficiaryForm" controlName="name"
+          label="Nombres" type="text" placeholder="Ingrese los nombres" class="w-100"></app-input>
+      </div>
+      <div class="col-12 col-md-6">
+        <app-input [formGroup]="beneficiaryForm" controlName="lastName"
+          label="Apellidos" type="text" placeholder="Ingrese los apellidos" class="w-100"></app-input>
+      </div>
+    </div>
+
+    <div class="row g-3">
+      <div class="col-12 col-md-6">
+        <app-select
+          class="w-100"
+          label="País de residencia"
+          placeholder="Selecciona uno"
+          [formGroup]="beneficiaryForm"
+          [options]="nationalitiesList"
+          controlName="residenceCountryId"
+          (onChangeSelection)="getDocumentType($event)">
+        </app-select>
+      </div>
+
+      <div class="col-12 col-md-6">
+        <label class="form-label">Documento de identidad</label>
+        <div class="doc-combo">
+          <app-select
+            class="w-100"
+            placeholder="Selecciona"
+            [formGroup]="beneficiaryForm"
+            [options]="documentTypes"
+            controlName="documentId"
+            >
+          </app-select>
+          <app-input class="w-100" [formGroup]="beneficiaryForm" controlName="nroDocument"
+            label="" type="text" placeholder="12345678"></app-input>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-3">
+      <div class="col-12 col-md-6">
+        <app-select class="w-100" label="Género" placeholder="Selecciona uno"
+           [formGroup]="beneficiaryForm" [options]="optGenders" controlName="gender">
+        </app-select>
+      </div>
+      <div class="col-12 col-md-6">
+      <app-input-date class="w-100" label="Fecha de operación *" [formGroup]="beneficiaryForm" controlName="ageDate"
+                    placeholder="DD/MM/YYYY">
+      </app-input-date>
+      </div>
+    </div>
+
+    <div class="row g-3">
+      <div class="col-12 col-md-6">
+        <app-input [formGroup]="beneficiaryForm" controlName="email"
+          label="Correo electrónico" type="text" placeholder="ej. usuario@email.com" class="w-100">
+        </app-input>
+      </div>
+      <div class="col-12 col-md-6">
+        <label class="form-label">Edad</label>
+        <input class="form-control"[value]="ageDisplay" disabled/>
+      </div>
+    </div>
+
+    <div class="row g-3">
+      <div class="col-12">
+        <app-select
+          class="w-100"
+          label="Membresía"
+          placeholder="Selecciona uno"
+          [formGroup]="beneficiaryForm"
+          controlName="idSubscription"
+          [options]="membershipOptions">
+        </app-select>
+      </div>
+    </div>
+    <br>
+    <div class="bm-info">
+      <i class="pi pi-info-circle"></i>
+      <div>
+        <strong>Información importante</strong>
+        <div class="small text-muted">
+          Recuerde que no podrá realizar el cambio hasta luego de 12 meses. ({{nextChangeDate}}).  
+          Revise bien la información antes de confirmar.
+        </div>
+      </div>
+    </div>
+
+    <div class="bm-footer">
+      <button class="btn btn-outline-secondary" type="button" (click)="close()">Cancelar</button>
+      <button class="btn btn-secondary" type="button" (click)="save()">
+        Guardar
+      </button>
+    </div>
+  </form>
+</div>

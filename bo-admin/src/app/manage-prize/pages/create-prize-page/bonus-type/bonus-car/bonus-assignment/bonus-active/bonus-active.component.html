@@ -1,0 +1,84 @@
+<div class="flex flex-column gap-6 p-6 bg-white w-100">
+
+	<filter-generic
+		[filters]="genericFilters"
+		[values]="filterValues"
+		[columnsDesktop]="3"
+		[showClearButton]="true"
+		[clearLabel]="'Limpiar'"
+		[showActionButton]="true"
+		[actionText]="'Agregar'"
+		[extraButtons]="extraButtons"
+		(valuesChange)="onFiltersChange($event)"
+		(action)="onActionAdd()"
+		(extraAction)="onExtraAction($event)"
+	></filter-generic>
+<div *ngIf="!loading">
+	<ng-container *ngIf="totalFiltered > 0; else emptyState">
+		<app-table-generic
+			[columns]="genericColumns"
+			[keys]="genericKeys"
+			[data]="pagedData"
+			[columnWidths]="genericWidths"
+			[freezeOverflow]="true"
+			[pageIndex]="pageIndex"
+			[pageSize]="pageSize"
+			[showView]="true"
+			[showEdit]="true"
+			[showDelete]="true"
+			[showActions]="true"
+			(view)="onViewRow($event)"
+			(edit)="onEditRow($event)"
+			(delete)="onDeleteRow($event)"
+		></app-table-generic>
+
+		<app-table-paginator
+			[length]="totalFiltered"
+			[pageSize]="pageSize"
+			[pageIndex]="pageIndex"
+			(pageChange)="onPageChange($event)"
+			(pageSizeChange)="onPageSizeChange($event)"
+		></app-table-paginator>
+	</ng-container>
+	<ng-template #emptyState>
+		<app-empty-state message="No data"></app-empty-state>
+	</ng-template>
+
+	<!-- Confirmar eliminación -->
+	<app-modal-confirm-delete
+		*ngIf="showDeleteModal"
+		[title]="'Eliminar'"
+		[message]="'¿Deseas eliminar el registro de este bono? Esta acción no se puede deshacer.'"
+		(confirm)="onConfirmDelete()"
+		(cancel)="onCancelDelete()"
+	></app-modal-confirm-delete>
+
+	<!-- Notificación -->
+	<app-modal-notify
+		*ngIf="showNotify"
+		[title]="notifyTitle"
+		[message]="notifyMessage"
+		[iconType]="notifyType"
+		[oneButton]="true"
+		(confirmed)="onNotifyClose()"
+		(closed)="onNotifyClose()"
+	></app-modal-notify>
+
+	<!-- Modal de Bono (crear/editar/ver) -->
+	<app-bonus-modal
+		*ngIf="showBonusModal"
+		[mode]="bonusModalMode"
+		[initialData]="bonusModalInitialData"
+		(save)="onBonusSave($event)"
+		(close)="onBonusClose()"
+	></app-bonus-modal>
+</div>
+</div>
+<ng-container *ngIf="loading">
+  <app-logo-spinner
+    [show]="true"
+    [fullscreen]="true"
+    [delay]="0"
+    [minVisible]="800">
+  </app-logo-spinner>
+</ng-container>

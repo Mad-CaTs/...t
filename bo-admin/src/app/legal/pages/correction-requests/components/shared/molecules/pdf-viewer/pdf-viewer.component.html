@@ -1,0 +1,38 @@
+<div class="pdf-container">
+    <div class="pdf-toolbar d-flex align-items-center justify-content-between px-4 py-2 border-bottom">
+        <div class="d-flex align-items-center">
+            <div class="page-input d-flex align-items-center bg-white rounded border me-2">
+                <input type="text" class="form-control form-control-sm border-0 text-center" [value]="currentPage"
+                    (change)="onPageChange($event)" />
+            </div>
+            <span class="text-gray-600">/</span>
+            <span class="text-gray-600 ms-2">{{ totalPages }}</span>
+        </div>
+        <div class="d-flex align-items-center">
+            <button class="btn btn-icon btn-sm" [class.disabled]="scale <= 0.5" (click)="zoomOut()">
+                <i class="fas fa-minus"></i>
+            </button>
+            <div class="zoom-input bg-white rounded border mx-2 px-2">
+                <span>{{ Math.round(scale * 100) }}%</span>
+            </div>
+            <button class="btn btn-icon btn-sm" [class.disabled]="scale >= 2" (click)="zoomIn()">
+                <i class="fas fa-plus"></i>
+            </button>
+            <button class="btn btn-icon btn-sm ms-2" (click)="toggleFullscreen()">
+                <i class="fas fa-expand"></i>
+            </button>
+            <button class="btn btn-icon btn-sm" (click)="rotate()">
+                <i class="fas fa-redo"></i>
+            </button>
+            <button class="btn btn-icon btn-sm" (click)="download()">
+                <i class="fas fa-download"></i>
+            </button>
+            <button class="btn btn-icon btn-sm" (click)="print()">
+                <i class="fas fa-print"></i>
+            </button>
+        </div>
+    </div>
+    <div class="pdf-content" #pdfContent>
+        <canvas #pdfCanvas></canvas>
+    </div>
+</div>

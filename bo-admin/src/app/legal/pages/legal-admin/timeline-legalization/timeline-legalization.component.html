@@ -1,0 +1,162 @@
+<h3 class="mb-5">Cronograma de Legalización</h3>
+
+<!-- Botón Nuevo Ciclo -->
+<div class="d-flex justify-content-end mb-3">
+	<button class="btn btn-primary" (click)="openNewCycleModal()">+ Nuevo Ciclo</button>
+</div>
+
+<!-- Calendario -->
+<div class="calendar-wrapper">
+	<full-calendar [options]="calendarOptions"></full-calendar>
+</div>
+<!-- Modal de Evento -->
+<ng-template #eventModal let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title">Detalles del Evento</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+	</div>
+	<div class="modal-body">
+		<div class="event-details">
+			<p><strong>Título: </strong> {{ selectedEvent?.title }}</p>
+
+			<p *ngIf="selectedEvent?.startAt">
+				<strong>Fecha de inicio:</strong> {{ selectedEvent.startAt | date : 'dd/MM/yyyy' }}
+			</p>
+
+			<p *ngIf="selectedEvent?.endAt">
+				<strong>Fecha de fin:</strong> {{ selectedEvent.endAt | date : 'dd/MM/yyyy' }}
+			</p>
+
+			<p *ngIf="selectedEvent?.allDay"><strong>Hora:</strong> Todo el día</p>
+			<p *ngIf="!selectedEvent?.allDay && selectedEvent?.startHourAt">
+				<strong>Hora:</strong> {{ selectedEvent.startHourAt?.substring(0, 5) }} -
+				{{ selectedEvent.endHourAt?.substring(0, 5) }}
+			</p>
+			<p *ngIf="selectedEvent?.location"><strong>Ubicación:</strong> {{ selectedEvent.location }}</p>
+
+			<p *ngIf="selectedEvent?.description">
+				<strong>Descripción:</strong> {{ selectedEvent.description }}
+			</p>
+		</div>
+
+		<!-- Botones de acción alineados horizontalmente -->
+		<div *ngIf="selectedEvent?.editable" class="d-flex justify-content-end gap-2 mt-3">
+			<button class="btn btn-primary" (click)="editEvent()">Editar</button>
+			<button class="btn btn-danger" (click)="deleteCycle()">Eliminar</button>
+		</div>
+	</div>
+</ng-template>
+
+<!-- Modal Nuevo Ciclo -->
+<!-- Modal para registrar nuevo ciclo -->
+<ng-template #newCycleModal let-modal>
+	<!-- 	<div class="modal-header">
+		<h4 class="modal-title">Nuevo ciclo de legalización</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+	</div> -->
+	<div class="modal-header">
+		<h4 class="modal-title">{{ modalTitle }}</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+	</div>
+
+	<form [formGroup]="cycleForm" (ngSubmit)="submitCycleForm(modal)">
+		<div class="modal-body">
+			<!-- Tipo de legalización - una sola columna -->
+			<div class="form-group mb-3">
+				<label for="tipoLegal" class="form-label">Tipo de legalización</label>
+				<select id="tipoLegal" class="form-select" formControlName="type" required>
+					<option value="">Seleccione uno</option>
+					<option value="1">Regular</option>
+					<option value="2">Express</option>
+				</select>
+			</div>
+
+			<div class="row">
+				<div class="col-md-12 mb-3">
+					<label for="cycleName">Nombre del ciclo</label>
+					<input type="text" id="cycleName" class="form-control" formControlName="cycleName" />
+				</div>
+
+				<div class="col-md-4 mb-3">
+					<label for="startDate">Inicio</label>
+					<input type="date" id="startDate" class="form-control" formControlName="startDate" />
+				</div>
+
+				<div class="col-md-4 mb-3">
+					<label for="endDate">Fin</label>
+					<input type="date" id="endDate" class="form-control" formControlName="endDate" />
+				</div>
+
+				<div class="col-md-4 mb-3">
+					<label for="color">Color</label>
+					<input
+						type="color"
+						id="color"
+						class="form-control"
+						formControlName="color"
+						style="height: 70%"
+					/>
+				</div>
+
+				<div class="col-md-12 mb-3 mt-3">
+					<div class="">
+						<input
+							type="checkbox"
+							class="form-check-input"
+							id="allDay"
+							formControlName="allDay"
+						/>
+						<label class="form-check-label" for="allDay" style="margin-left: 1rem"
+							>Todo el día</label
+						>
+					</div>
+				</div>
+
+				<div class="col-md-6 mb-3">
+					<label for="startTime">Hora inicio</label>
+					<input type="time" id="startTime" class="form-control" formControlName="startTime" />
+				</div>
+
+				<div class="col-md-6 mb-3">
+					<label for="endTime">Hora fin</label>
+					<input type="time" id="endTime" class="form-control" formControlName="endTime" />
+				</div>
+
+				<div class="col-md-12 mb-3">
+					<label for="location">Lugar</label>
+					<input type="text" id="location" class="form-control" formControlName="location" />
+				</div>
+
+				<div class="col-md-12 mb-3">
+					<label>Descripción</label>
+					<textarea class="form-control" formControlName="description" rows="3"></textarea>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal-footer">
+			<button type="submit" class="btn btn-primary" [disabled]="cycleForm.invalid">Guardar</button>
+			<button
+				type="button"
+				class="btn btn-outline-secondary"
+				(click)="modal.dismiss(); cycleForm.reset()"
+			>
+				Cancelar
+			</button>
+		</div>
+	</form>
+</ng-template>
+<!-- Modal Confirmacion Eliminar Ciclo -->
+<ng-template #confirmDeleteModal let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title">Confirmar eliminación</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+	</div>
+	<div class="modal-body">
+		<p>¿Estás seguro de que deseas eliminar este ciclo?</p>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Cancelar</button>
+		<button type="button" class="btn btn-danger" (click)="confirmDelete(modal)">Sí, eliminar</button>
+	</div>
+</ng-template>

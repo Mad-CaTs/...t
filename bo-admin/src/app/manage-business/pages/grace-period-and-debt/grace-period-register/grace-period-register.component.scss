@@ -1,0 +1,16 @@
+.table-container {
+    max-height: 420px;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
+.spinner-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.fixed-width-button {
+    width: 80px;
+}

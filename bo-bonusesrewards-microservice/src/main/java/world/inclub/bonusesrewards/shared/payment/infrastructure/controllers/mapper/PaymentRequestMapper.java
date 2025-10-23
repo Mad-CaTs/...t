@@ -37,7 +37,7 @@ public class PaymentRequestMapper {
 
     private MakePaymentCommand.Voucher toCommandVoucher(MakePaymentRequest.Voucher v) {
         return new MakePaymentCommand.Voucher(
-            v.getOperationNumber(),
+                v.getOperationNumber(),
                 v.getNote(),
                 v.getImage()
         );

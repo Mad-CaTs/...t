@@ -1,0 +1,32 @@
+<app-modal [title]="'Editar Seguro de Vehículo'">
+	<form [formGroup]="form" class="d-flex w-100 flex-column gap-6">
+		<div class="w-100 d-flex gap-4">
+			<!-- Seguro Vehicular -->
+			<app-input
+				class="w-50"
+				label="Seguro Vehicular"
+				placeholder="0"
+				[formGroup]="form"
+				controlName="vehicleInsurance"
+				[isCurrency]="true"
+			/>
+
+			<!-- Seguro Vigente (Number field) -->
+			<app-input
+				class="w-50"
+				type="number"
+				label="Seguro Vigente"
+				placeholder="0.00"
+				[formGroup]="form"
+				controlName="currentInsurance"
+			/>
+		</div>
+
+		<div class="w-100 d-flex justify-content-center align-items-center gap-4">
+			<button class="btn btn-secondary" type="submit" (click)="onSubmit()">Guardar</button>
+			<button class="btn btn-outline-secondary" type="button" (click)="instanceModal.close()">
+				Cancelar
+			</button>
+		</div>
+	</form>
+</app-modal>

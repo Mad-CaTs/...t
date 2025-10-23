@@ -1,0 +1,59 @@
+<div class="d-flex flex-column w-100 gap-6">
+	<h4 class="fs-5 text-black fw-medium m-0">Ciclo de Premios(mock)</h4>
+
+	<div class="toolbar-card">
+		<!-- 🔎 Filtros -->
+		<filter-generic
+			[filters]="filters"
+			[values]="filterValues"
+			[columnsDesktop]="3"
+			[showClearButton]="true"
+			[clearLabel]="'Limpiar'"
+			[showActionButton]="true"
+			[actionText]="'Agregar'"
+			(valuesChange)="onFiltersChange($event)"
+			(action)="onAdd()"
+		></filter-generic>
+
+		<!-- 📋 Tabla -->
+		<app-table-generic
+			[columns]="[
+				'N°',
+				'Nombre',
+				'Fecha Inicio',
+				'Fecha Fin',
+				'Rango',
+				'Ciclo Calificación',
+				'N° de recalificación'
+			]"
+			[keys]="[
+				'item',
+				'nombre',
+				'fechaInicio',
+				'fechaFin',
+				'rango',
+				'cicloCalificacion',
+				'numRecalificacion'
+			]"
+			[data]="pagedData"
+			[columnWidths]="['8%', '17%', '15%', '15%', '13%', '10%', '12%']"
+			[showView]="true"
+			[showEdit]="true"
+			[showDelete]="true"
+			(view)="onView($event)"
+			(edit)="onEdit($event)"
+			(delete)="onDelete($event)"
+			[pageIndex]="pageIndex"
+			[pageSize]="pageSize"
+		></app-table-generic>
+
+		<!-- ⏭️ Paginador -->
+		<app-table-paginator
+			[length]="filteredData.length"
+			[pageSize]="pageSize"
+			[pageIndex]="pageIndex"
+			(pageChange)="onPageChange($event)"
+			(pageSizeChange)="onPageSizeChange($event)"
+		></app-table-paginator>
+	</div>
+</div>

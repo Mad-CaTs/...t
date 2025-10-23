@@ -1,0 +1,162 @@
+<div class="d-flex flex-column gap-6 p-6 bg-white w-100">
+  <h1 class="fs-4 text-black fw-medium m-0">Solicitudes de Código Promocional</h1>
+
+  <div class=" d-flex gap-3">
+    <div>
+      <button type="button"
+              class="btn btn-outline-secondary">
+        <div>
+          <div> <span>Exportar data</span>
+          </div>
+        </div>
+      </button>
+    </div>
+    <div>
+      <button type="button"
+              class="btn btn-secondary"
+              (click)="actualizarDatos()">
+        <div>
+          <div>
+            <span>Actualizar datos</span>
+          </div>
+        </div>
+      </button>
+    </div>
+    <div class="ms-auto">
+      <input type="text"
+             class="form-control"
+             placeholder="Buscar..."
+             [(ngModel)]="searchQuery"
+             (input)="filterData()">
+    </div>
+  </div>
+  <app-common-table [headers]="table.headers"
+                    [checkedAll]="table.checkedAll"
+                    [headersMinWidth]="table.headersMinWidth"
+                    [headersMaxWidth]="table.headersMaxWidth"
+                    [noCheckboxes]="table.noCheckBoxes"
+                    [firstEmpty]="false"
+                    [headersArrows]="table.headersArrows"
+                    (onCheckedAll)="table.changeCheckedAll($event)">
+
+    <tr class="w-100 d-flex align-items-center py-1"
+        *ngFor="let item of table.data">
+      <td class="w-100 text-gray-900 text-center fs-6"
+          [ngStyle]="{
+        'min-width.px': table.headersMinWidth[0],
+        'max-width.px': table.headersMaxWidth[0]
+      }">{{ item.orderN }}</td>
+      <td class="w-100 text-gray-900 text-center fs-6"
+          [ngStyle]="{
+        'min-width.px': table.headersMinWidth[1],
+        'max-width.px': table.headersMaxWidth[1]
+      }">{{ item.creationDate | arrayDate }}</td>
+      <td class="w-100 text-gray-900 text-center fs-6"
+          [ngStyle]="{
+        'min-width.px': table.headersMinWidth[2],
+        'max-width.px': table.headersMaxWidth[2]
+      }  
+       "
+          style="overflow-wrap: break-word; word-break: normal; white-space: normal;">
+        {{ item.name }} {{ item.lastname }}
+      </td>
+      <td class="w-100 text-gray-900 text-center fs-6"
+      [ngStyle]="{
+    'min-width.px': table.headersMinWidth[3],
+    'max-width.px': table.headersMaxWidth[3]
+  }  
+   "
+      style="overflow-wrap: break-word; word-break: normal; white-space: normal;">
+    {{ item.customerType === 1 ? 'Promocional' : 'Regular'}} 
+  </td>
+  <td class="w-100 text-gray-900 text-center fs-6"
+  [ngStyle]="{
+'min-width.px': table.headersMinWidth[4],
+'max-width.px': table.headersMaxWidth[4]
+}  
+"
+  style="overflow-wrap: break-word; word-break: normal; white-space: normal;">
+  {{ item.suscriptionName ? item.suscriptionName : '-' }}
+</td>
+      <td class="w-100 text-gray-900 text-center fs-6"
+          [ngStyle]="{
+        'min-width.px': table.headersMinWidth[5],
+        'max-width.px': table.headersMaxWidth[5]
+      }"
+          style="overflow-wrap: break-word; word-break: normal; white-space: normal;">
+        {{ item.nroDocument }}</td>
+      <td class="w-100 text-gray-900 text-center fs-6"
+          [ngStyle]="{
+        'min-width.px': table.headersMinWidth[6],
+        'max-width.px': table.headersMaxWidth[6]
+      }"
+          style="overflow-wrap: break-word; word-break: normal; white-space: normal;">
+        {{ item.email }}</td>
+      <td class="w-100 text-gray-900 text-center fs-6"
+          [ngStyle]="{
+        'min-width.px': table.headersMinWidth[7],
+        'max-width.px': table.headersMaxWidth[7]
+      }">{{ item.nroPhone }}</td>
+      <td class="w-100 text-gray-900 text-center fs-6"
+          [ngStyle]="{
+        'min-width.px': table.headersMinWidth[8],
+        'max-width.px': table.headersMaxWidth[8]
+      }">{{ item.birthDate | arrayDate }}</td>
+      <td class="w-100 text-gray-900 text-center fs-6"
+          [ngStyle]="{
+        'min-width.px': table.headersMinWidth[9],
+        'max-width.px': table.headersMaxWidth[9]
+      }"
+          style="word-break: break-all;">{{ item.sponsorFullname }}</td>
+      <td class="w-100 text-gray-900 text-center fs-6"
+          [ngStyle]="{
+        'min-width.px': table.headersMinWidth[10],
+        'max-width.px': table.headersMaxWidth[10]
+      }"
+          style="overflow-wrap: break-word; word-break: normal; white-space: normal;">
+        {{ item.sponsorUsername }}</td>
+      <td class="w-100 text-gray-900 text-center fs-6"
+          [ngStyle]="{
+        'min-width.px': table.headersMinWidth[11],
+        'max-width.px': table.headersMaxWidth[11]
+      }">
+        {{ item.status == 1 ? 'Pendiente' : item.status == 2 ? 'Asistió' : 'No asistió' }}
+      </td>
+
+      <td class="w-100 text-gray-900 text-center fs-6"
+          [ngStyle]="{
+        'min-width.px': table.headersMinWidth[12],
+        'max-width.px': table.headersMaxWidth[12]
+      }">
+        <ng-container *ngIf="item.status === 1">
+          <button class="btn btn-secondary py-1"
+                  [disabled]="buttonLoading[item.id]"
+                  (click)="confirmAssist(item.id, 2)">
+            <div>
+              <div *ngIf="buttonLoading[item.id]">
+                <span class="spinner-border spinner-border-sm align-middle text-center ms-2"></span>
+              </div>
+              <div *ngIf="!buttonLoading[item.id]">
+                <span>Asistió</span>
+              </div>
+            </div>
+          </button>
+
+          <button class="btn btn-outline-secondary py-1"
+                  [disabled]="buttonLoading[item.id]"
+                  (click)="confirmAssist(item.id, 3)"
+                  style="margin-left: 10px;">
+            <div>
+              <div *ngIf="buttonLoading[item.id]">
+                <span class="spinner-border spinner-border-sm align-middle text-center ms-2"></span>
+              </div>
+              <div *ngIf="!buttonLoading[item.id]">
+                <span>No Asistió</span>
+              </div>
+            </div>
+          </button>
+        </ng-container>
+      </td>
+    </tr>
+  </app-common-table>
+</div>

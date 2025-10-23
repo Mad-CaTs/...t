@@ -1,0 +1,22 @@
+.w-fit {
+	width: fit-content;
+}
+
+.day {
+	color: #969696;
+	transition: all ease-in-out 500ms;
+}
+
+.day__edit {
+	display: none;
+	transition: all ease-in-out 500ms;
+}
+
+.day:hover .day__edit {
+	display: block;
+}
+
+.day:hover {
+	background-color: #adbae8;
+	color: white;
+}

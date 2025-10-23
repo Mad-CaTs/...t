@@ -1,0 +1,47 @@
+<div class="documents-card flex flex-column gap-6 p-6 bg-white w-100">
+	<h4 class="fs-5 text-black fw-medium m-0">Documentos ( MOCK )</h4>
+
+	<div class="toolbar-card">
+
+		<filter-generic
+			[filters]="filters"
+			[values]="filterValues"
+			[columnsDesktop]="3"
+			[showActionButton]="false"
+			[showClearButton]="true"
+			[clearLabel]="'Limpiar'"
+			(valuesChange)="onValuesChange($event)"
+			(search)="onSearch($event)"
+		></filter-generic>
+
+		<ng-container *ngIf="totalFiltered > 0; else emptyState">
+			<app-table-generic
+				[columns]="genericColumns"
+				[keys]="genericKeys"
+				[data]="pagedData"
+				[columnWidths]="genericWidths"
+				[freezeOverflow]="true"
+				[pageIndex]="pageIndex"
+				[pageSize]="pageSize"
+				[showView]="true"
+				[showEdit]="false"
+				[showDelete]="false"
+				[showActions]="true"
+				[onlyViewLabel]="''"
+				(view)="onViewRow($event)"
+			></app-table-generic>
+
+			<app-table-paginator
+				[length]="totalFiltered"
+				[pageSize]="pageSize"
+				[pageIndex]="pageIndex"
+				(pageChange)="onPageChange($event)"
+				(pageSizeChange)="onPageSizeChange($event)"
+			></app-table-paginator>
+		</ng-container>
+		<ng-template #emptyState>
+			<app-empty-state message="No data"></app-empty-state>
+		</ng-template>
+
+	</div>
+</div>

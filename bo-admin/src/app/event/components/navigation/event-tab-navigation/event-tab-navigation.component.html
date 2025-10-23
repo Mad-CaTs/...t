@@ -1,0 +1,13 @@
+<div class="event-tab-wrapper">
+  <div class="event-tab-container" #tabContainer>
+    <a
+      *ngFor="let tab of tabs"
+      [routerLink]="tab.path"
+      [ngClass]="{ active: isActive(tab.path) }"
+      class="event-tab"
+    >
+      {{ tab.label }}
+    </a>
+    <span class="event-tab-indicator" #indicator></span>
+  </div>
+</div>

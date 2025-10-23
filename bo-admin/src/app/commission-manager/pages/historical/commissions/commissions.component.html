@@ -1,0 +1,129 @@
+<div class="d-flex flex-column gap-6 p-6 bg-white w-100">
+	<form [formGroup]="form" class="d-flex w-100 flex-column gap-6">
+		<div class="d-flex align-items-end w-100 gap-6">
+			<app-input
+				iconRigth="bi bi-search"
+				placeholder="Busca por nombre o username"
+				label="Buscar por username"
+				[formGroup]="form"
+				controlName="search"
+				class="w-25"
+			></app-input>
+			<app-month-period-selector
+				[formGroup]="form"
+				controlName="cicles"
+				periodsControlName="periods"
+				[groupedOptions]="monthOptions"
+				[placeholder]="'Selecciona un mes'"
+				[label]="'Ciclos o periodos'"
+				(selectionChange)="onPeriodsSelected($event)"
+				class="w-25"
+			></app-month-period-selector>
+			<app-select
+				label="Tipo de bono"
+				placeholder="Selecciona una opción"
+				[options]="typeBonusOpt"
+				[formGroup]="form"
+				controlName="typeBonus"
+				class="w-25"
+			>
+			</app-select>
+			<div class="w-20 d-flex gap-3">
+				<button type="button" class="btn btn-secondary" (click)="onFilter()">
+					<div class="fixed-width-button">
+						<span>Filtrar</span>
+					</div>
+				</button>
+
+				<button type="button" class="btn btn-outline-secondary" (click)="onClear()">
+					<div class="fixed-width-button">
+						<span>Limpiar</span>
+					</div>
+				</button>
+			</div>
+		</div>
+	</form>
+
+	<div class="d-flex justify-content-between align-items-center mt-4">
+		<div>Página {{ currentPage + 1 }} de {{ totalPages }}</div>
+
+		<div class="d-flex gap-2">
+			<button
+				class="btn btn-sm btn-outline-secondary"
+				[disabled]="currentPage === 0"
+				(click)="goToPage(currentPage - 1)"
+			>
+				Anterior
+			</button>
+
+			<ng-container *ngFor="let page of visiblePages">
+				<button
+					class="btn btn-sm btn-secondary"
+					[class.btn-primary]="currentPage === page"
+					[class.btn-outline-secondary]="currentPage !== page"
+					(click)="goToPage(page)"
+				>
+					{{ page + 1 }}
+				</button>
+			</ng-container>
+
+			<button
+				class="btn btn-sm btn-outline-secondary"
+				[disabled]="currentPage >= totalPages - 1"
+				(click)="goToPage(currentPage + 1)"
+			>
+				Siguiente
+			</button>
+		</div>
+	</div>
+
+	<app-common-table
+		class="w-100 d-block"
+		[headers]="table.headers"
+		[checkedAll]="table.checkedAll"
+		[headersMinWidth]="table.headersMinWidth"
+		[headersMaxWidth]="table.headersMaxWidth"
+		[noCheckboxes]="table.noCheckBoxes"
+		[firstEmpty]="false"
+		(onCheckedAll)="table.changeCheckedAll($event)"
+	>
+		<tr class="w-100 d-flex py-2 align-items-center" *ngFor="let item of table.data; let i = index">
+			<td class="w-100 text-gray-900 text-center fs-6">
+				{{ item.cycleDate }}
+			</td>
+			<td class="w-100 text-gray-900 text-center d-flex justify-content-center fs-6">
+				{{ item.fullnameUser }}
+			</td>
+			<td class="w-100 text-gray-900 text-center d-flex justify-content-center fs-6">
+				{{ item.userNameUser }}
+			</td>
+			<td class="w-100 text-gray-900 text-center d-flex justify-content-center fs-6">
+				{{ item.fullnameSlave }}
+			</td>
+			<td class="w-100 text-gray-900 text-center d-flex justify-content-center fs-6">
+				{{ item.levelSponsor ? item.levelSponsor : '-' }}
+			</td>
+			<td class="w-100 text-gray-900 text-center d-flex justify-content-center fs-6">
+				{{ item.tipoBono }}
+			</td>
+			<td class="w-100 text-gray-900 text-center d-flex justify-content-center fs-6">
+				{{ item.membresia ? item.membresia : '-' }}
+			</td>
+			<td
+				class="w-100 text-center d-flex justify-content-center fs-6"
+				[class.text-danger]="item.percentage < 0"
+			>
+				{{ item.percentage !== null && item.percentage !== undefined ? item.percentage + ' %' : '-' }}
+			</td>
+			<td class="w-100 text-gray-900 text-center d-flex justify-content-center fs-6">
+				{{ item.points ? item.points : '-' }}
+			</td>
+			<td
+				class="w-100 text-center d-flex justify-content-center fs-6"
+				[class.text-danger]="item.amount < 0"
+			>
+				{{ item.amount | currency : 'USD' : 'symbol' : '1.2-2' }}
+			</td>
+		</tr>
+	</app-common-table>
+</div>

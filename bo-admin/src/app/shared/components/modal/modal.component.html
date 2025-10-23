@@ -1,0 +1,29 @@
+<div class="modal-header position-relative p-3 flex-column">
+	<button
+		*ngIf="!hideCloseButton"
+		type="button"
+		class="btn-close position-absolute top-0 end-0 m-3"
+		aria-label="Close"
+		(click)="activeModal.dismiss('Cross click')"
+	></button>
+	<div *ngIf="showIcon" class="d-flex justify-content-start align-items-center mb-3 w-100">
+		<div
+			class="d-flex justify-content-center align-items-center"
+			style="width: 40px; height: 40px; border: 1px solid #ccc; border-radius: 0.5rem"
+		>
+			<i *ngIf="icon && icon.startsWith('bi')" [class]="icon"></i>
+
+			<img *ngIf="icon && icon.endsWith('.svg')" [src]="icon" alt="icon" />
+		</div>
+	</div>
+	<div [ngClass]="{ 'text-center': !showIcon, 'text-start': showIcon }" class="w-100">
+		<h4 class="modal-title text-uppercase mb-1">{{ title }}</h4>
+		<p *ngIf="showIcon && description" class="text-gray-600 fs-6 mb-0">
+			{{ description }}
+		</p>
+	</div>
+</div>
+
+<div class="modal-body p-3">
+	<ng-content></ng-content>
+</div>

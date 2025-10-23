@@ -1,0 +1,30 @@
+<app-modal [title]="title">
+	<form [formGroup]="form" class="d-flex flex-column gap-6 w-100" (submit)="onSubmit()">
+		<app-input
+			class="w-100"
+			type="text"
+			label="Nombre del Landing"
+			placeholder="Ingrese el nombre"
+			[formGroup]="form"
+			controlName="nameLanding"
+		/>
+
+		<app-input
+			class="w-100"
+			type="text"
+			label="URL"
+			placeholder="Ingrese la URL"
+			[formGroup]="form"
+			controlName="landingUrl"
+		/>
+
+        <app-input-file accept=".jpg, .png" label="Seleccione Imagen" [control]="form.controls['imagenLanding']" />
+
+		<div class="d-flex gap-4 justify-content-center align-items-center w-100">
+			<button class="btn btn-outline-secondary" type="button" (click)="instanceModal.close()">
+				Cancelar
+			</button>
+			<button class="btn btn-secondary" type="submit">Guardar</button>
+		</div>
+	</form>
+</app-modal>

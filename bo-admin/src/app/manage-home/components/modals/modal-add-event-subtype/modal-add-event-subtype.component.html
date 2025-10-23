@@ -1,0 +1,68 @@
+<app-modal [title]="title">
+	<form [formGroup]="form" class="d-flex flex-column gap-6 w-100" (submit)="onSubmit()">
+		<app-input
+			class="w-100"
+			type="text"
+			label="Nombre del subtipo"
+			placeholder="Nombre del subtipo"
+			[formGroup]="form"
+			controlName="nameSubtype"
+		/>
+		<app-select
+			class="w-100"
+			label="Tipo de Evento"
+			placeholder="Seleccione un tipo de evento"
+			[formGroup]="form"
+			controlName="eventType"
+			[options]="eventTypeOpt"
+		/>
+
+		<app-select
+			class="w-100"
+			label="Landing"
+			placeholder="Seleccione una landing"
+			[formGroup]="form"
+			controlName="landing"
+			[options]="landingOpt"
+		/>
+
+		<app-switch class="w-100" label="Agregar Filtro" [formGroup]="form" controlName="filterSwitch" />
+
+		<app-select-multiple
+			*ngIf="showAdditionalSelect"
+			class="w-100"
+			label="Filtros"
+			placeholder="Seleccione una opción"
+			[formGroup]="form"
+			controlName="additionalFilter"
+			[options]="additionalFilterOpt"
+		/>
+
+		<app-select
+			*ngIf="showGenderSelect"
+			class="w-100"
+			label="Género"
+			placeholder="Seleccione un género"
+			[formGroup]="form"
+			controlName="gender"
+			[options]="genderOpt"
+		/>
+
+		<app-select-multiple
+			*ngIf="showRangeSelect"
+			class="w-100"
+			label="Rango"
+			placeholder="Seleccione un rango"
+			[formGroup]="form"
+			controlName="range"
+			[options]="rangeOpt"
+		/>
+
+		<div class="d-flex gap-4 justify-content-center align-items-center w-100">
+			<button class="btn btn-outline-secondary" type="button" (click)="instanceModal.close()">
+				Cancelar
+			</button>
+			<button class="btn btn-secondary" type="submit">Guardar</button>
+		</div>
+	</form>
+</app-modal>

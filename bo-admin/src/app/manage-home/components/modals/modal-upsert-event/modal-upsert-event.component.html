@@ -1,0 +1,172 @@
+<app-modal [title]="title">
+	<form [formGroup]="form" class="d-flex flex-column gap-6 w-100" (submit)="onSubmit()">
+		<h1 class="text-secondary m-0 fs-4 fw-semibold">
+			Paso {{ step }} <span class="fs-5 fw-medium">de 2</span>
+		</h1>
+		<ng-container *ngIf="step === 1">
+			<app-input
+				class="w-100"
+				type="text"
+				label="Nombre del evento"
+				placeholder="Nombre del evento"
+				[formGroup]="form"
+				controlName="name"
+			/>
+			<div class="w-100 d-flex gap-5">
+				<app-input-date class="w-100" label="Fecha" [formGroup]="form" controlName="startDate" />
+				<app-input
+					class="w-100"
+					type="time"
+					label="Hora"
+					placeholder="02:00 PM"
+					iconRigth="bi bi-calendar"
+					[formGroup]="form"
+					controlName="time"
+				/>
+				<app-input
+					class="w-100"
+					type="text"
+					label="Duración"
+					placeholder="3h 45m"
+					[formGroup]="form"
+					controlName="duration"
+					[pattern]="durationRegex"
+				/>
+			</div>
+			<span class="text-muted fs-7 fw-medium">
+				{{ helperDuration }}
+			</span>
+			<app-select
+				class="w-100"
+				label="Agregar presentador"
+				placeholder="Ingrese presentador"
+				[formGroup]="form"
+				controlName="presenter"
+				[options]="[{ id: '1', text: 'Omar Urteaga' }]"
+			/>
+			<div class="w-100 d-flex gap-5">
+				<app-select
+					class="w-100"
+					label="Ubicación del evento"
+					placeholder="Elegir lugar"
+					[formGroup]="form"
+					controlName="location"
+					[options]="[{ id: '1', text: 'Ribera del Rio' }]"
+				/>
+				<app-input
+					class="w-100"
+					type="text"
+					label="Link del evento"
+					placeholder="Agregar link"
+					[formGroup]="form"
+					controlName="linkEvent"
+				/>
+			</div>
+			<div class="w-100 d-flex gap-5">
+				<app-switch
+					class="w-100"
+					label="Enviar por correo"
+					[formGroup]="form"
+					controlName="sendByEmail"
+				/>
+				<app-select
+					class="w-100"
+					label="Fijar recordatorio"
+					placeholder="Elegir recordatorio"
+					[formGroup]="form"
+					controlName="remember"
+					[options]="[{ id: '1', text: '1 hora antes del evento' }]"
+				/>
+			</div>
+			<app-textarea
+				class="w-100"
+				label="Descripción del evento"
+				placeholder="Ingresar Descripción"
+				[formGroup]="form"
+				controlName="description"
+			/>
+			<app-input-file accept="image/*" [control]="getControl('flyer')" />
+			<div class="d-flex gap-4 justify-content-center align-items-center w-100">
+				<button class="btn btn-outline-secondary" type="button" (click)="instanceModal.close()">
+					Cerrar
+				</button>
+				<button class="btn btn-secondary" type="submit" [disabled]="invalidForm">Continuar</button>
+			</div>
+		</ng-container>
+		<ng-container *ngIf="step === 2">
+			<app-select
+				class="w-100"
+				label="Tipo de entrada"
+				placeholder="Escoja el tipo de entrada"
+				[formGroup]="form"
+				controlName="inputType"
+				[options]="[
+					{ id: '1', text: 'Gratuito' },
+					{ id: '2', text: 'De paga' }
+				]"
+			/>
+			<ng-container *ngIf="getControl('inputType').value === '2'">
+				<div class="d-flex gap-3 w-100" *ngFor="let group of inputTypes.controls">
+					<app-input
+						class="w-100"
+						type="text"
+						label="Zonas"
+						placeholder="Nombre de la zona"
+						[formGroup]="group"
+						controlName="zone"
+					/>
+					<app-input
+						class="numeric-input w-100"
+						type="number"
+						label="Precio"
+						placeholder="00.00"
+						[formGroup]="group"
+						controlName="price"
+					/>
+					<app-input
+						class="numeric-input w-100"
+						type="number"
+						label="Aforo"
+						placeholder="Aforo"
+						[formGroup]="group"
+						controlName="capacity"
+					/>
+					<app-input
+						class="numeric-input w-100"
+						type="number"
+						label="Asientos"
+						placeholder="Asientos"
+						[formGroup]="group"
+						controlName="seats"
+					/>
+					<app-select
+						class="w-100"
+						label="Tipo de asiento"
+						placeholder="Escoja tipo de asiento"
+						[formGroup]="group"
+						controlName="seatType"
+						[options]="[
+							{ id: '1', text: 'Númerico' },
+							{ id: '2', text: 'No númerico' }
+						]"
+					/>
+				</div>
+			</ng-container>
+			<span
+				class="text-gray-300 d-flex align-items-center gap-3 cursor-pointer"
+				style="width: fit-content"
+				(click)="onAddNew()"
+				*ngIf="getControl('inputType').value === '2'"
+			>
+				<i class="bi bi-plus-circle fs-2"></i>
+				<span class="fs-6 fw-medium text-gray-400">Agregar nueva zona</span>
+			</span>
+			<div class="d-flex gap-4 justify-content-center align-items-center w-100">
+				<button class="btn btn-outline-secondary" type="button" (click)="instanceModal.close()">
+					Cerrar
+				</button>
+				<button class="btn btn-secondary" type="submit" [disabled]="invalidForm">Continuar</button>
+			</div>
+		</ng-container>
+	</form>
+</app-modal>

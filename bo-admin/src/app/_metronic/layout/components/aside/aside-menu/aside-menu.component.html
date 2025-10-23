@@ -1,0 +1,68 @@
+<!-- Dashboard -->
+<div class="menu-item">
+	<a class="menu-link without-sub" routerLink="/metronic-view/dashboard" routerLinkActive="active"><span
+			class="menu-icon">
+			<span [inlineSVG]="'./assets/media/icons/duotune/art/art002.svg'" class="svg-icon svg-icon-2"></span>
+		</span>
+		<span class="menu-title">Solicitudes</span></a>
+</div>
+
+<!-- Layout builder -->
+<div class="menu-item">
+	<a class="menu-link without-sub" routerLink="/metronic-view/builder" routerLinkActive="active"><span
+			class="menu-icon">
+			<span [inlineSVG]="'./assets/media/icons/duotune/general/gen019.svg'" class="svg-icon svg-icon-2"></span>
+		</span><span class="menu-title">Pagos iniciales</span></a>
+</div>
+<!-- Separator -->
+<div class="menu-item">
+	<div class="menu-content pt-8 pb-2">
+		<span class="menu-section text-muted text-uppercase fs-8 ls-1">Acciones</span>
+	</div>
+</div>
+
+<!--Items-->
+<div *ngFor="let menuItem of MENU_ITEMS" class="menu-item menu-accordion"
+	[attr.data-kt-menu-trigger]="menuItem.link ? 'click' : null" [class.disabled]="menuItem.link === 'null'"
+	routerLinkActive="here show">
+	<span class="menu-link" [class.disabled]="menuItem.link === 'null'"
+		[attr.tabindex]="menuItem.link === null ? '-1' : '0'">
+		<span class="menu-icon">
+			<span class="svg-icon svg-icon-2" [inlineSVG]="menuItem.icon"></span>
+		</span>
+		<span class="menu-title" [attr.data-link]="menuItem.link">{{ menuItem.title }}</span>
+		<span class="menu-arrow" *ngIf="menuItem.subMenu"></span>
+	</span>
+	<div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
+		<ng-container *ngFor="let subMenuItem of menuItem.subMenu">
+			<div *ngIf="!subMenuItem.subMenu || subMenuItem.subMenu.length === 0" class="menu-item">
+				<a class="menu-link without-sub" routerLinkActive="active" [routerLink]="subMenuItem.link"
+					[class.disabled]="subMenuItem.link === null"
+					[attr.tabindex]="subMenuItem.link === null ? '-1' : '0'">
+					<span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
+					<span class="menu-title">{{ subMenuItem.title }}</span>
+				</a>
+			</div>
+
+			<div *ngIf="subMenuItem.subMenu && subMenuItem.subMenu.length > 0" class="menu-item menu-accordion"
+				routerLinkActive="here show" [attr.data-kt-menu-trigger]="subMenuItem.link ? 'click' : null">
+				<span class="menu-link" [class.disabled]="subMenuItem.link === null"
+					[attr.tabindex]="subMenuItem.link === null ? '-1' : '0'">
+					<span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
+					<span class="menu-title" [attr.data-link]="subMenuItem.link">{{ subMenuItem.title }}</span>
+					<span class="menu-arrow"></span>
+				</span>
+
+				<div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
+					<div class="menu-item" *ngFor="let child of subMenuItem.subMenu">
+						<a class="menu-link without-sub" routerLinkActive="active" [routerLink]="child.link"
+							[class.disabled]="child.link === null" [attr.tabindex]="child.link === null ? '-1' : '0'">
+							<span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
+							<span class="menu-title">{{ child.title }}</span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</ng-container>
+	</div>
+</div>

@@ -1,0 +1,55 @@
+.member-modal {
+  position: relative;
+  padding: 16px 16px 24px;
+  background: #fff;
+}
+
+.mm-icon {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  background: #eef6ff;
+  display: flex; align-items: center; justify-content: center;
+}
+.mm-icon-glyph { font-size: 22px; line-height: 1; }
+
+.mm-titles .mm-title {
+  margin: 0; font-weight: 600; font-size: 18px; color: #1a1a1a;
+}
+.mm-titles .mm-subtitle {
+  margin: 2px 0 0; font-size: 12px; color: #7a7a7a;
+}
+
+.mm-close {
+  position: absolute; right: 0; top: -4px;
+  border: 0; background: transparent;
+  font-size: 24px; line-height: 1; color: #9aa0a6; cursor: pointer;
+}
+
+.mm-section { margin-top: 16px; }
+.mm-section-title {
+  font-weight: 600; font-size: 13px; color: #5f6368; margin-bottom: 10px;
+}
+
+.kv-card {
+  border: 1px solid #eef0f2; border-radius: 12px; overflow: hidden;
+  background: #fcfcfd;
+}
+.kv-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 10px 14px; border-top: 1px solid #eef0f2;
+}
+.kv-row:first-child { border-top: 0; }
+.kv-key  { color: #6b7280; font-size: 13px; }
+.kv-value{ color: #111827; font-weight: 500; font-size: 13px; }
+
+.badge {
+  display: inline-block;
+  padding: 4px 10px; border-radius: 8px;
+  font-size: 12px; line-height: 1; font-weight: 600;
+  background: #f2f4f7; color: #334155; border: 1px solid transparent;
+}
+.badge--success { background:#e8f6ee; color:#2e7d32; border-color:#ccebd9; }
+.badge--warning { background:#fff3e0; color:#ef6c00; border-color:#ffe0b2; }
+.badge--danger  { background:#fdecea; color:#c62828; border-color:#f8d0cd; }
+.badge--muted   { background:#f1f5f9; color:#475569; border-color:#e2e8f0; }
+

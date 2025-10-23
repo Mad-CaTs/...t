@@ -1,0 +1,86 @@
+<div class="d-flex flex-column w-100 gap-6">
+	<!--List | Filter-->
+	<h4 class="fs-5 text-black fw-medium m-0">Links</h4>
+	<div class="w-100 d-flex">
+		<app-input
+			class="w-50"
+			placeholder="Buscar link"
+			name="search"
+			type="search"
+			controlName="search"
+			[formGroup]="form"
+			iconLeft="bi bi-search"
+		/>
+	</div>
+	<div class="w-100 d-flex justify-content-end align-items-center gap-4">
+		<button class="btn btn-outline-secondary" type="button" (click)="onSearch()">Buscar</button>
+	</div>
+	<!--Table | Pagination-->
+	<div class="position-relative w-100">
+		<table-pagination [noTextBtn]="true" class="w-100 mt-20 mt-md-2 d-block" />
+		<div class="d-flex gap-4 position-absolute top-0 start-0">
+			<button class="btn btn-secondary" (click)="onCreateLink()">Agregar Link</button>
+			<button class="btn btn-outline-secondary">Actualizar</button>
+		</div>
+	</div>
+	<!--Table | Table-->
+	<app-common-table
+		class="w-100 d-block mt-4"
+		[headers]="table.headers"
+		[checkedAll]="table.checkedAll"
+		[headersMinWidth]="table.headersMinWidth"
+		[headersMaxWidth]="table.headersMaxWidth"
+		[noCheckboxes]="table.noCheckBoxes"
+		[firstEmpty]="true"
+		(onCheckedAll)="table.changeCheckedAll($event)"
+	>
+		<tr class="w-100 d-flex py-2 align-items-center" *ngFor="let item of table.data">
+			<td class="d-flex justify-content-center">
+				<div class="form-check-sm form-check-custom form-check-solid">
+					<input
+						class="form-check-input cursor-pointer"
+						type="radio"
+						name="link-item-radio"
+						[value]="item.id"
+						[(ngModel)]="selectedRowId"
+					/>
+				</div>
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[0],
+					'max-width.px': table.headersMaxWidth[0]
+				}"
+			>
+				{{ item.link }}
+			</td>
+			<td
+				class="w-100 d-flex justify-content-center"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[1],
+					'max-width.px': table.headersMaxWidth[1]
+				}"
+			>
+				{{ item.status === 1 ? 'Activo' : 'Inactivo' }}
+			</td>
+
+			<td
+				class="w-100 d-flex justify-content-center"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[2],
+					'max-width.px': table.headersMaxWidth[2]
+				}"
+			>
+				<button
+					class="btn btn-sm"
+					style="padding-left: 20px"
+					[disabled]="selectedRowId !== item.id"
+					(click)="onEditLink()"
+				>
+					<i class="fas fa-pencil-alt"></i>
+				</button>
+			</td>
+		</tr>
+	</app-common-table>
+</div>

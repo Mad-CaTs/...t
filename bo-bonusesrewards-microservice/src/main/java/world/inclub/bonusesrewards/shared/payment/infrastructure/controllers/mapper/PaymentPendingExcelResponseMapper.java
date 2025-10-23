@@ -16,7 +16,7 @@ public class PaymentPendingExcelResponseMapper {
     public PaymentPendingExcelResponse toExcelResponse(PaymentListView payment) {
         if (payment == null) return null;
 
-        String installmentInfo = buildInstallmentInfo(payment.installmentNum(), payment.isInitial());
+        String installmentInfo = buildInstallmentInfo(payment.installmentNum());
         String formattedDate = formatDate(payment.paymentDate());
 
         return PaymentPendingExcelResponse.builder()
@@ -31,11 +31,11 @@ public class PaymentPendingExcelResponseMapper {
                 .build();
     }
 
-    private String buildInstallmentInfo(Integer installmentNum, Boolean isInitial) {
+    private String buildInstallmentInfo(Integer installmentNum) {
         if (installmentNum == null) {
             return "";
         }
-        return "Inicial Fraccionada " + installmentNum;
+        return "Cuota " + installmentNum;
     }
 
     private String formatDate(LocalDateTime dateTime) {
@@ -45,3 +45,5 @@ public class PaymentPendingExcelResponseMapper {
         return dateTime.format(DATE_FORMATTER);
     }
 }
+
+

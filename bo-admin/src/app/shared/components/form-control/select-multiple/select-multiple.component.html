@@ -1,0 +1,54 @@
+<label class="fs-6 text-muted fw-bold" *ngIf="label">
+	{{ label }}
+
+	<i
+		class="bi bi-info-square cursor-pointer ms-2"
+		placement="top"
+		[ngbTooltip]="tooltipContent"
+		*ngIf="tooltipContent"
+	></i>
+</label>
+
+<div
+	class="input-group input-group-solid border cursor-pointer position-relative"
+	[class.border-danger]="existErrors"
+	[class.bg-light-danger]="existErrors"
+	(click)="openMenu = !openMenu"
+	(keydown.enter)="openMenu = !openMenu"
+	tabindex="0"
+	#input
+>
+	<span class="input-group-text ps-2 pe-2" [class.bg-light-danger]="existErrors">
+		<span class="badge bg-primary fw-bolder">{{ values.length }}</span>
+	</span>
+
+	<div class="d-flex flex-wrap gap-2 form-control">
+		<div
+			class="badge bg-light-primary shadow-sm d-flex flex-row gap-2 align-items-center scale-0-to-1"
+			(click)="stopPropagation($event)"
+			*ngFor="let val of values"
+		>
+			<span class="text-primary fs-7">{{ val.text }}</span>
+			<i class="bi bi-x text-primary cursor-pointer" (click)="onRemoveOption(val.id, $event)"></i>
+		</div>
+
+		<span class="text-muted" *ngIf="values.length === 0">{{ placeholder }}</span>
+	</div>
+
+	<span class="input-group-text ps-0" style="border: none" [class.bg-light-danger]="existErrors">
+		<i
+			class="bi bi-caret-down all-transitions-1000"
+			[class.rotation-180]="openMenu"
+			style="font-size: 1.5rem"
+		></i>
+	</span>
+
+	<app-select-multiple-dropdown
+		*ngIf="openMenu"
+		[formGroup]="formGroup"
+		[controlName]="controlName"
+		(onClose)="openMenu = false"
+		[options]="options"
+		[input]="input"
+	></app-select-multiple-dropdown>
+</div>

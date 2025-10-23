@@ -1,0 +1,23 @@
+<div class="bc-page">
+	<!-- Cards -->
+	<section class="bc-cards" aria-label="Accesos rápidos Bono Auto">
+		<div class="bc-grid">
+			<article class="bc-card" *ngFor="let c of cards; index as i; trackBy: trackByIndex">
+				<div class="bc-card-body">
+					<div class="bc-icon">
+						<i class="bi" [ngClass]="c.icon"></i>
+					</div>
+					<h3 class="bc-title">{{ c.title }}</h3>
+					<p class="bc-desc">{{ c.description }}</p>
+				</div>
+
+				<ng-container *ngIf="!c.disabled && c.path; else disabledBtn">
+					<a class="bc-btn" [routerLink]="c.path">Elegir</a>
+				</ng-container>
+				<ng-template #disabledBtn>
+					<button class="bc-btn" disabled aria-disabled="true">Elegir</button>
+				</ng-template>
+			</article>
+		</div>
+	</section>
+</div>

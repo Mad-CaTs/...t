@@ -3,6 +3,7 @@ package world.inclub.bonusesrewards.shared.payment.application.dto;
 import lombok.Builder;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -12,12 +13,16 @@ public record PaymentListView(
         String username,
         String memberFullName,
         String nrodocument,
-        LocalDateTime paymentDate,
         String operationNumber,
         Long bonusTypeId,
         String bonusTypeName,
         Integer installmentNum,
-        Boolean isInitial,
+        BigDecimal subTotalAmount,
+        BigDecimal commissionAmount,
+        BigDecimal rateAmount,
+        BigDecimal totalAmount,
+        LocalDate dueDate,
+        LocalDateTime paymentDate,
         String voucherImageUrl,
         Long paymentStatusId,
         String paymentStatusName

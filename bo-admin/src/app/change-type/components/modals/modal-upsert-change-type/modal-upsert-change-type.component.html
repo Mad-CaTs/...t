@@ -1,0 +1,37 @@
+<app-modal [title]="title">
+	<form [formGroup]="form" class="d-flex flex-column gap-6 w-100" (submit)="onSubmit()">
+		<app-select
+			class="w-100"
+			label="Seleccionar país"
+			placeholder="Seleccionar país"
+			[formGroup]="form"
+			controlName="country"
+			[options]="[{ id: '1', text: 'Peru' }]"
+		/>
+		<div class="d-flex gap-3">
+			<app-input
+				class="w-100"
+				type="number"
+				label="Venta"
+				placeholder="0.00"
+				[formGroup]="form"
+				controlName="sale"
+			/>
+			<app-input
+				class="w-100"
+				type="number"
+				label="Compra"
+				placeholder="0.00"
+				[formGroup]="form"
+				controlName="buy"
+			/>
+		</div>
+		<!--<app-input-date label="Ingresar  fecha" class="w-100" [formGroup]="form" controlName="date" disabled/>-->
+		<div class="w-100 d-flex justify-content-center align-items-center gap-4">
+			<button class="btn btn-outline-secondary" type="button" (click)="instanceModal.close()">
+				Cerrar
+			</button>
+			<button class="btn btn-secondary" type="submit" [disabled]="form.invalid">Guardar</button>
+		</div>
+	</form>
+</app-modal>

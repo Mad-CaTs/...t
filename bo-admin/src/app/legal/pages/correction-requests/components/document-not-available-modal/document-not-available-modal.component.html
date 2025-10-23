@@ -1,0 +1,17 @@
+<div class="modal-content">
+    <div class="modal-header border-0 justify-content-end">
+        <button type="button" class="btn-close" (click)="activeModal.dismiss()"></button>
+    </div>
+    <div class="modal-body text-center pb-0">
+        <span class="svg-icon svg-icon-5x text-warning mb-4">
+            <span [inlineSVG]="'assets/Alert.svg'"></span>
+        </span>
+        <h4 class="modal-title mb-3">{{ title }}</h4>
+        <p class="text-muted mb-4">{{ message }}</p>
+    </div>
+    <div class="modal-footer border-0 justify-content-center pb-4">
+        <button type="button" class="btn btn-orange" (click)="activeModal.close()">
+            Aceptar
+        </button>
+    </div>
+</div>

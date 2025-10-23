@@ -1,0 +1,23 @@
+<div class="preview-card">
+  <div class="tag">
+    {{ eventTypeName || 'Tipo de evento' }}
+  </div>
+  <h3>{{ event.name || 'Nombre del evento' }}</h3>
+  <p class="date">
+    {{ formattedDate }},
+    {{ timeDisplay }}
+  </p>
+  <div class="entry">
+    {{ entryTypeName || 'Tipo de entrada' }}
+  </div>
+  <div style="position: relative; display: inline-block;">
+    <button type="button" (click)="showReferentialMsg()">Comprar</button>
+    <ng-container *ngFor="let toast of referentialToasts">
+      <div class="referential-toast">
+        Solo referencial
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+

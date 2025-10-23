@@ -1,0 +1,79 @@
+<div class="detail-partner-rating-card flex flex-column gap-6 p-6 bg-white w-100">
+  <h4 class="fs-5 text-black fw-medium m-0">
+    Detalle - {{ form.value.fullName }} ( MOCK )
+  </h4>
+
+  <div class="toolbar-card">
+    <div class="layout-2col">
+      <!-- Columna izquierda -->
+      <div class="left-col">
+        <form [formGroup]="form" class="info-form">
+          <!-- Fila 1 -->
+          <div class="field col-12">
+            <label class="label">Nombres y Apellidos</label>
+            <input type="text" class="control" formControlName="fullName" readonly />
+          </div>
+
+          <!-- Fila 2 -->
+          <div class="field">
+            <label class="label">Usuario</label>
+            <input type="text" class="control" formControlName="usuario" readonly />
+          </div>
+          <div class="field">
+            <label class="label">Dni</label>
+            <input type="text" class="control" formControlName="dni" readonly />
+          </div>
+
+          <!-- Fila 3 -->
+          <div class="field">
+            <label class="label">Rango</label>
+            <input type="text" class="control" formControlName="rango" readonly />
+          </div>
+          <div class="field">
+            <label class="label">País</label>
+            <input type="text" class="control" formControlName="pais" readonly />
+          </div>
+
+          <!-- Fila 4 -->
+          <div class="field">
+            <label class="label">Puntos alcanzados</label>
+            <input type="text" class="control"
+                   [class.ok]="achievedOk" [class.bad]="!achievedOk"
+                   formControlName="puntosAlcanzados" readonly />
+          </div>
+          <div class="field">
+            <label class="label">Puntos Meta</label>
+            <input type="text" class="control" formControlName="puntosMeta" readonly />
+          </div>
+
+          <!-- Fila 5 -->
+          <div class="field">
+            <label class="label">Nº Ciclos Recalificados</label>
+            <input type="text" class="control" formControlName="ciclosRecalificados" readonly />
+          </div>
+          <div class="field">
+            <label class="label">Fecha de cierre</label>
+            <input type="date" class="control" formControlName="fechaCierre" readonly/>
+          </div>
+        </form>
+
+        <!-- Botones -->
+        <div class="form-actions">
+          <button type="button" class="btn ghost" (click)="onBack()">
+            Atrás
+          </button>
+          <button type="button" class="btn primary" (click)="onSave()">
+            Guardar
+          </button>
+        </div>
+      </div>
+
+      <!-- Columna derecha -->
+      <div class="pdf-panel">
+        <div class="pdf-container" *ngIf="pdfUrl">
+          <iframe title="Documento PDF" [src]="pdfUrl" class="pdf-frame"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,76 @@
+.modal-header {
+    border: none;
+    align-items: start !important;
+    padding-bottom: 0px !important;
+}
+
+.title {
+    font-family: 'Poppins';
+    font-weight: 600;
+    font-style: SemiBold;
+    font-size: 18px;
+    leading-trim: NONE;
+    line-height: 28px;
+    letter-spacing: 0%;
+    color: #181D27;
+}
+
+p {
+    padding: 0;
+    margin: 0;
+}
+
+.modal-body {
+    justify-content: center;
+    display: flex;
+}
+
+.volver {
+    width: 170px;
+    height: 44px;
+    font-family: 'Product Sans';
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 16px;
+    leading-trim: NONE;
+    line-height: 24px;
+    letter-spacing: 0%;
+    color: #414651;
+    box-shadow: 0px 1px 2px 0px #0A0D120D;
+    background: #FFFFFF;
+    border: 1px solid #D5D7DA;
+    gap: 8px;
+    angle: 0 deg;
+    opacity: 1;
+    padding-top: 10px;
+    padding-right: 18px;
+    padding-bottom: 10px;
+    padding-left: 18px;
+    border-radius: 24px;
+    border-width: 1px;
+
+}
+
+.confirmar {
+    width: 170px;
+    height: 44px;
+    gap: 8px;
+    angle: 0 deg;
+    opacity: 1;
+    padding-top: 10px;
+    padding-right: 18px;
+    padding-bottom: 10px;
+    padding-left: 18px;
+    border-radius: 24px;
+    background: #FE7C04;
+    box-shadow: 0px 1px 2px 0px #0A0D120D;
+    font-family: 'Product Sans';
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 16px;
+    leading-trim: NONE;
+    line-height: 24px;
+    letter-spacing: 0%;
+    color: #FFFFFF;
+    border: solid 1px #FE7C04;
+}

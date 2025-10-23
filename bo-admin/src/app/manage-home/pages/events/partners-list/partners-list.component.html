@@ -1,0 +1,194 @@
+<div class="d-flex flex-column w-100 gap-6">
+	<!--List | Filter-->
+
+	<h4 class="fs-5 text-black fw-medium m-0">Lista de Socios</h4>
+
+	<div class="d-flex flex-row" [ngStyle]="{ gap: showDate ? '1rem' : '2rem' }">
+		<app-input
+			class="w-75"
+			label="Buscar Socio"
+			placeholder="Buscar socio"
+			name="search"
+			type="search"
+			controlName="search"
+			[formGroup]="form"
+			iconLeft="bi bi-search"
+		></app-input>
+
+		<app-switch class="w-25" label="Filtrar por fecha" [formGroup]="form" controlName="dateSwitch" />
+		<app-input-date
+			*ngIf="showDate"
+			label="Fecha de Inicio"
+			class="w-50"
+			[formGroup]="form"
+			controlName="startDate"
+		/>
+		<app-input-date
+			*ngIf="showDate"
+			label="Fecha de Fin"
+			class="w-50"
+			[formGroup]="form"
+			controlName="endDate"
+		/>
+	</div>
+
+	<div class="d-flex flex-row gap-6">
+		<app-select
+			label="Socios:"
+			placeholder="Selecciona una opción"
+			[options]="partnersOpt"
+			[formGroup]="form"
+			controlName="partners"
+			class="w-100"
+		></app-select>
+		<app-select
+			label="Tipos:"
+			placeholder="Selecciona una opción"
+			[options]="typesOpt"
+			[formGroup]="form"
+			controlName="type"
+			class="w-100"
+		></app-select>
+		<app-select
+			label="Subtipos:"
+			placeholder="Selecciona una opción"
+			[options]="subtypeOpt"
+			[formGroup]="form"
+			controlName="subtype"
+			class="w-100"
+		></app-select>
+		<app-select
+			label="Países:"
+			placeholder="Selecciona una opción"
+			[options]="countryOpt"
+			[formGroup]="form"
+			controlName="country"
+			class="w-100"
+		></app-select>
+		<div class="d-flex justify-content-end mt-6">
+			<button class="btn btn-outline-secondary" type="button" (click)="onSearch()">Buscar</button>
+		</div>
+	</div>
+
+	<!--Table | Pagination-->
+	<div class="position-relative w-100">
+		<table-pagination [noTextBtn]="true" class="w-100 mt-20 mt-md-2 d-block" />
+		<div class="d-flex gap-4 position-absolute top-0 start-0">
+			<button class="btn btn-secondary" (click)="onExport()">Exportar</button>
+			<button class="btn btn-outline-secondary">Actualizar</button>
+		</div>
+	</div>
+	<!--Table | Table-->
+	<app-common-table
+		[headers]="table.headers"
+		[checkedAll]="table.checkedAll"
+		[headersMinWidth]="table.headersMinWidth"
+		[headersMaxWidth]="table.headersMaxWidth"
+		[noCheckboxes]="table.noCheckBoxes"
+		[firstEmpty]="false"
+		(onCheckedAll)="table.changeCheckedAll($event)"
+	>
+		<tr class="w-100 d-flex py-2 align-items-center" *ngFor="let item of table.data">
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[0],
+					'max-width.px': table.headersMaxWidth[0]
+				}"
+			>
+				{{ item.dateRegister }}
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[1],
+					'max-width.px': table.headersMaxWidth[1]
+				}"
+			>
+				{{ item.eventSubtype }}
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[2],
+					'max-width.px': table.headersMaxWidth[2]
+				}"
+			>
+				{{ item.fullname }}
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[3],
+					'max-width.px': table.headersMaxWidth[3]
+				}"
+			>
+				{{ item.ipDetected }}
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[4],
+					'max-width.px': table.headersMaxWidth[4]
+				}"
+			>
+				{{ item.email }}
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[5],
+					'max-width.px': table.headersMaxWidth[5]
+				}"
+			>
+				{{ item.countryDetected }}
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[6],
+					'max-width.px': table.headersMaxWidth[6]
+				}"
+			>
+				{{ item.cityDetected }}
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[7],
+					'max-width.px': table.headersMaxWidth[7]
+				}"
+			>
+				{{ item.typeSelected }}
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[8],
+					'max-width.px': table.headersMaxWidth[8]
+				}"
+			>
+				{{ item.subtypeSelected }}
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[9],
+					'max-width.px': table.headersMaxWidth[9]
+				}"
+				style="word-break: break-all;"
+			>
+				{{ item.username }}
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[10],
+					'max-width.px': table.headersMaxWidth[10]
+				}"
+			>
+				{{ item.sponsor }}
+			</td>
+		</tr>
+	</app-common-table>
+</div>

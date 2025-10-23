@@ -1,0 +1,52 @@
+<form [formGroup]="form" class="card card-xxl-stretch mb-5 mb-xl-8 p-5">
+
+  <div class="row align-items-center justify-content-between g-3 mb-3">
+    <div class="col">
+      <h1 class="m-0">Administrador de Beneficios</h1>
+    </div>
+  </div>
+<div class="w-100 d-flex gap-4">
+		<app-select
+			class="w-100"
+			label="Buscar por portafolio"
+			placeholder="Buscar por"
+			[options]="familyPackageOptions"
+			name="family"
+			controlName="family"
+			[formGroup]="form"
+		/>
+        <app-select
+			class="w-100"
+			label="Paquete"
+			placeholder="Buscar por"
+			[options]="packageOptions"
+			controlName="idPackage"
+			[formGroup]="form"
+		/>
+        <app-select 
+        class="w-100" 
+        label="Rango" 
+        placeholder="Selecciona uno"
+        [formGroup]="form" 
+        [options]="optRangos" 
+        controlName="rangos"
+        />
+		<app-select
+			class="w-100"
+			label="Versión"
+			placeholder="Numero de version"
+			[options]="versionOptions"
+			name="version"
+			controlName="version"
+			[formGroup]="form"
+		/>
+	</div>
+	<br>
+	<app-table-administrator-beneficiaries
+		class="mt-4"
+        [rows]="rows"
+        [loading]="loading"
+        (saveBeneficiaries)="onSaveBeneficiaries($event)">
+
+	</app-table-administrator-beneficiaries>
+</form>

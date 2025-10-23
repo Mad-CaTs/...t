@@ -1,0 +1,35 @@
+<label class="fs-6 text-muted fw-bold" *ngIf="label">{{ label }}</label>
+<div
+	class="border border-dotted border-2 border-gray-300 rounded p-6 d-flex gap-3 align-items-center justify-content-center mt-4"
+	*ngIf="!file"
+>
+	<i class="bi bi-cloud-upload fa-3x"></i>
+	<div class="d-flex flex-column gap-1">
+		<span class="text-gray-800 fs-7 fw-medium">{{ titleBox }}</span>
+		<span class="text-muted fs-7 fw-normal">{{ placeholder }}</span>
+	</div>
+	<button class="btn btn-outline-secondary" type="button" (click)="onClickUpload()">Seleccionar</button>
+</div>
+
+<div
+	class="border border-2 border-gray-300 rounded p-6 d-flex flex-column gap-2 align-items-center mt-4 position-relative bg-image-cover"
+	[style]="'background-image: url(' + imageUrl + '); '"
+	*ngIf="file"
+>
+	<div class="cursor-pointer position-absolute top-0 end-0 me-2 mt-2" (click)="control.setValue(null)">
+		<i class="bi bi-x text-black fa-2x"></i>
+	</div>
+
+	<ng-container *ngIf="imageUrl === ''">
+		<i class="bi bi-file-earmark-medical text-black fa-2x"></i>
+		<span class="text-black fw-bold text-center" style="width: 200px">
+			{{ name }}
+		</span>
+	</ng-container>
+</div>
+
+
+<div class="d-flex align-items-center w-100 gap-2 px-2 mt-2" *ngIf="helper">
+	<i class="w-20px text-gray-800" [inlineSVG]="'/assets/media/icons/duotune/general/gen045.svg'" style="filter: invert(1) hue-rotate(180deg);" ></i>
+	<span class=" fw-normal fs-8 text-gray-600" style="padding-top: 1.5px;">{{ helper }}</span>
+</div>

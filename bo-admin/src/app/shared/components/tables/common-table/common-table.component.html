@@ -1,0 +1,36 @@
+<div class="overflow-x-auto w-100">
+	<table class="w-100 d-flex flex-column" [style]="{ minWidth: 'max-content' }">
+		<thead class="d-block w-100 bg-gray-200 rounded-top border-top border-start border-end border-gray-300">
+			<tr class="w-100 d-flex align-items-center p-4">
+				<th class="d-flex justify-content-center align-items-center"
+					[ngStyle]="{ 'min-width.px': firstEmpty ? 24.7 : null }">
+					<div class="form-check form-check-sm form-check-custom form-check-solid"
+						*ngIf="!firstEmpty && !noCheckboxes">
+						<input class="form-check-input" type="checkbox" [checked]="checkedAll"
+							(change)="onChangeGroupCheckbox($event)" data-kt-check="true"
+							data-kt-check-target=".widget-9-check" />
+					</div>
+				</th>
+
+				<th class="w-100 fs-6 text-gray-800 text-center fw-normal" *ngFor="let item of headers; index as i"
+					[ngStyle]="{
+						'min-width': getMinWidthHeader(i),
+						'max-width': getMaxWidthHeader(i)
+					}">
+					<span>{{ item }}</span>
+					<i class="w-20px text-gray-800 cursor-pointer ms-2"
+						[inlineSVG]="'/assets/media/icons/duotune/arrows/arr066.svg'" *ngIf="headersArrows[i]"></i>
+				</th>
+			</tr>
+		</thead>
+		<div class="overflow-y-auto" [ngStyle]="{
+				'max-height.px': maxHeight > 0 ? maxHeight : null
+			}">
+			<tbody class="w-100 bg-white d-block p-4">
+				<ng-content></ng-content>
+			</tbody>
+		</div>
+		<tfoot class="w-100 bg-gray-200 rounded-bottom border-bottom border-start border-end border-gray-300 h-55px">
+		</tfoot>
+	</table>
+</div>

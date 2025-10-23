@@ -1,0 +1,74 @@
+<div class="type-seat-card d-flex flex-column gap-6 p-6 bg-white w-100">
+  <h2 class="title">Tipos de asientos</h2>
+
+  <div class="toolbar-card">
+    <app-list-toolbar
+      placeholder="Ingrese lo que necesita buscar..."
+      actionText="Agregar tipo"
+      [clearMessage]="clearCountdownText"
+      (search)="onSearch($event)"
+      (action)="onAdd()"
+    ></app-list-toolbar>
+
+    <ng-container *ngIf="!loading; else loadingTemplate">
+      <ng-container *ngIf="seatTypes.length > 0; else empty">
+        <app-table-generic
+          [columns]="['Item', 'Nombre del tipo', 'Status']"
+          [keys]="['item', 'seatTypeName', 'status']"
+          [data]="pagedData"
+          [columnWidths]="['15%', '55%', '24%']"
+          [pageIndex]="pageIndex"
+          [pageSize]="pageSize"
+          (edit)="onEdit($event)"
+          (delete)="onDelete($event)"
+        ></app-table-generic>
+      </ng-container>
+
+      <app-table-paginator
+        *ngIf="seatTypes.length > 0"
+        [length]="seatTypes.length"
+        [pageSize]="pageSize"
+        [pageIndex]="pageIndex"
+        (pageChange)="onPageChange($event)"
+        (pageSizeChange)="onPageSizeChange($event)"
+      ></app-table-paginator>
+    </ng-container>
+
+    <ng-template #loadingTemplate>
+      <div class="d-flex justify-content-center align-items-center py-5">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Cargando...</span>
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template #empty>
+      <app-empty-state message="No data"></app-empty-state>
+    </ng-template>
+  </div>
+</div>
+
+<app-modal-type-form
+  *ngIf="showModal"
+  [title]="editMode ? 'Editar tipo' : 'Agregar tipo'"
+  [label]="'Tipo de asiento'"
+  [initialData]="editMode ? { name: selectedToEdit!.seatTypeName, status: selectedToEdit!.status } : undefined"
+  (save)="onSaveModal($event)"
+  (close)="onCloseModal()"
+></app-modal-type-form>
+
+<app-modal-notify
+  *ngIf="showNotify"
+  [title]="notifyTitle"
+  [message]="notifyMessage"
+  [iconType]="notifyType"
+  (closed)="onNotifyClose()"
+></app-modal-notify>
+
+<app-modal-confirm-delete
+  *ngIf="showDeleteModal"
+  [title]="'¿Eliminar tipo de asiento?'"
+  [message]="'¿Estás seguro que deseas eliminar el tipo: ' + selectedToDelete?.seatTypeName + '?'"
+  (confirm)="onConfirmDelete()"
+  (cancel)="onCancelDelete()"
+></app-modal-confirm-delete>

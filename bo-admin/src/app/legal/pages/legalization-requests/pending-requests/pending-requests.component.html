@@ -1,0 +1,747 @@
+<div class="d-flex flex-column gap-6 p-6 bg-white w-100">
+	<h4 class="fs-4 text-black fw-medium m-0">Solicitudes de vouchers pendientes</h4>
+
+	<!-- Sub-pestañas -->
+	<ul
+		ngbNav
+		#subNav="ngbNav"
+		[activeId]="activeSubTab"
+		(activeIdChange)="onSubTabChange($event)"
+		class="nav nav-tabs mb-4"
+	>
+		<li [ngbNavItem]="'certificados'">
+			<a ngbNavLink>Certificados</a>
+			<ng-template ngbNavContent>
+				<!-- Buscador  -->
+				<div class="filters mb-6 mt-4">
+					<div class="row g-3 align-items-end">
+						<div class="col-md-10">
+							<label class="form-label">Buscador</label>
+							<input
+								type="text"
+								class="form-control"
+								placeholder="Buscar por username, solicitante, dni o código de operación"
+								[(ngModel)]="searchTerm"
+								(input)="onFiltersChange()"
+							/>
+						</div>
+						<!-- Botón para limpiar el buscador -->
+						<div class="d-grid col-2 mx-auto">
+							<button class="btn btn-secondary w-100" (click)="clearFilters()">Limpiar</button>
+						</div>
+					</div>
+				</div>
+				<!-- Contenido Certificados -->
+				<div>
+					<!-- Filtros -->
+					<div class="mb-3 row g-2 align-items-end">
+						<div class="col-md-3">
+							<label for="fecha" class="form-label">Fecha de Solicitud</label>
+							<input
+								type="date"
+								id="fecha"
+								class="form-control"
+								[(ngModel)]="filtroFecha"
+								(change)="applyFilter()"
+							/>
+						</div>
+
+						<div class="col-md-3">
+							<label for="legalizacion" class="form-label">Tipo de Legalización</label>
+							<select
+								id="legalizacion"
+								class="form-select"
+								[(ngModel)]="filtroLegalizacion"
+								(change)="applyFilter()"
+							>
+								<option value="">Seleccione el tipo</option>
+								<option value="Express">Express</option>
+								<option value="Regular">Regular</option>
+							</select>
+						</div>
+
+						<div class="col-md-3">
+							<label for="solicitadoEn" class="form-label">Solicitado en</label>
+							<select
+								id="solicitadoEn"
+								class="form-select"
+								[(ngModel)]="filtroSolicitadoEn"
+								(change)="applyFilter()"
+							>
+								<option value="">Seleccione uno</option>
+								<option value="Perú - Lima">Perú - Lima</option>
+								<option value="Provincia">Provincia</option>
+								<option value="Extranjero">Extranjero</option>
+							</select>
+						</div>
+
+						<div class="col-md-3">
+							<button class="btn btn-outline-secondary" (click)="refreshData()">
+								Refrescar
+							</button>
+
+              <button class="btn btn-outline-success ms-2" (click)="downloadConformity()">
+								Descargar Excel
+							</button>
+						</div>
+
+						<div class="col-md-3 d-none">
+							<button class="btn btn-secondary text-white fw-bold">Exportar data</button>
+						</div>
+					</div>
+					<!-- Tabla -->
+					<app-common-table
+						class="w-100"
+						[headers]="table.headers"
+						[checkedAll]="table.checkedAll"
+						[headersMinWidth]="table.headersMinWidth"
+						[noCheckboxes]="table.noCheckBoxes"
+						[noCheckboxes]="true"
+						(onCheckedAll)="table.changeCheckedAll($event)"
+					>
+						<!-- <tr *ngFor="let item of table.data" class="w-100 d-flex py-2 align-items-center"> -->
+						<tr
+							*ngFor="let item of table.data; let i = index"
+							class="w-100 d-flex py-2 align-items-center"
+							[title]="'Documento: ' + item.documentKey"
+						>
+							<!-- <td class="w-100 text-center">{{ item.id }}</td> -->
+							<td class="w-100 text-center">{{ i + 1 }}</td>
+							<td class="w-100 text-center">
+								{{ item.username && item.username.trim() !== '' ? item.username : '—' }}
+							</td>
+							<td class="w-100 text-center">{{ item.userRealName }}</td>
+							<td class="w-100 text-center">{{ item.userDni }}</td>
+							<td class="w-100 text-center">{{ item.userDate | date : 'yyyy-MM-dd' }}</td>
+							<!-- <td class="w-100 text-center">{{ item.documentVoucherKey }}</td> -->
+							<td class="w-100 text-center">
+								<ng-container *ngIf="hasOperationNumber(item); else noOperation">
+									<span *ngFor="let voucher of item.listaVouches; let i = index">
+										<ng-container *ngIf="voucher.operationNumber">
+											<ng-container *ngIf="i !== 0"> - </ng-container
+											>{{ voucher.operationNumber }}
+										</ng-container>
+									</span>
+								</ng-container>
+								<ng-template #noOperation>
+									<span>Número no especificado</span>
+								</ng-template>
+							</td>
+							<!-- <td class="w-100 d-flex flex-column align-items-center">
+								<span *ngFor="let voucher of item.listaVouches">
+									{{ voucher.paymentMethod || 'Método no especificado' }}
+								</span>
+							</td> -->
+							<td class="w-100 text-center">
+								<ng-container *ngIf="hasPaymentMethod(item); else noMethod">
+									<span *ngFor="let voucher of item.listaVouches; let i = index">
+										<ng-container *ngIf="voucher.paymentMethod">
+											<ng-container *ngIf="i !== 0"> - </ng-container
+											>{{ voucher.paymentMethod }}
+										</ng-container>
+									</span>
+								</ng-container>
+								<ng-template #noMethod>
+									<span>Método no especificado</span>
+								</ng-template>
+							</td>
+							<td class="w-100 text-center">
+								{{
+									item.userLocalUbic === 1
+										? 'Perú - Lima'
+										: item.userLocalUbic === 2
+										? 'Provincia'
+										: 'Extranjero'
+								}}
+							</td>
+							<td class="w-100 text-center">
+								<ng-container
+									*ngIf="
+										item?.userLocalUbic === 2 || item?.userLocalUbic === 3;
+										else normal
+									"
+								>
+									<button class="btn btn-link p-0" (click)="openDetailModal(item)">
+										{{ item | userAddress }}
+									</button>
+								</ng-container>
+
+								<ng-template #normal>
+									{{ item | userAddress }}
+								</ng-template>
+							</td>
+							<!-- 							<td class="w-100 text-center">{{ item | userAddress }}</td>
+ -->
+							<td class="w-100 text-center">
+								{{
+									item.familyPackageName && item.familyPackageName.trim() !== ''
+										? item.familyPackageName
+										: '—'
+								}}
+							</td>
+							<td class="w-100 text-center">
+								{{
+									item.nameSuscription && item.nameSuscription.trim() !== ''
+										? item.nameSuscription
+										: '—'
+								}}
+							</td>
+							<!-- <td class="w-100 text-center">{{ item.portfolioName }}</td> -->
+							<td class="w-100 text-center">
+								{{
+									item.legalizationType === 1
+										? 'Regular'
+										: item.legalizationType === 2
+										? 'Express'
+										: 'No hay data'
+								}}
+							</td>
+
+							<td class="w-100 text-center">
+								<ng-container *ngIf="item.hasAuthorizedPerson; else noPerson">
+									<button
+										class="btn btn-link p-0"
+										(click)="
+											openAuthorizedPerson(authorizedPersonModal, item.authorizedPerson)
+										"
+									>
+										Ver persona autorizada
+									</button>
+								</ng-container>
+								<ng-template #noPerson> No </ng-template>
+							</td>
+
+							<td class="w-100 text-center">
+								<button
+									class="btn btn-link p-0"
+									(click)="
+										openDisponibilidad(
+											disponibilidadModal,
+											item.userLocalUbic === 1
+												? item.legalizationMethodId
+												: item.disponibilidadTramiteId,
+											item.userLocalUbic
+										)
+									"
+								>
+									Ver detalle
+								</button>
+							</td>
+
+							<td class="w-100 d-flex justify-content-center">
+								<ng-container *ngIf="item.imageUrl; else noImage">
+                  <!-- Si es PDF -->
+                  <ng-container *ngIf="isPdf(item.imageUrl); else showImage">
+                    <a
+                      [href]="item.imageUrl"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title="Abrir documento PDF"
+                    >
+                      <img
+                        src="assets/images/pdf-image.png"
+                        width="25"
+                        height="25"
+                        alt="PDF"
+                        role="button"
+                        style="cursor: pointer"
+                      />
+                    </a>
+                  </ng-container>
+
+                  <!-- Si es imagen -->
+                  <ng-template #showImage>
+                    <img
+                      [src]="item.imageUrl"
+                      width="25"
+                      height="25"
+                      alt="img"
+                      role="button"
+                      style="cursor: pointer"
+                      (click)="openImagePreview(item.imageUrl)"
+                      (error)="onImageError($event)"
+                    />
+                  </ng-template>
+                </ng-container>
+							</td>
+
+							<td class="w-100 text-center">{{ item.price }}</td>
+
+							<td class="w-100 d-flex justify-content-center gap-2">
+								<img
+									*ngFor="let voucher of item.listaVouches"
+									[src]="voucher.voucherUrl"
+									width="25"
+									height="25"
+									alt="img"
+									role="button"
+									style="cursor: pointer"
+									(click)="voucher.voucherUrl && openImagePreview(voucher.voucherUrl)"
+								/>
+							</td>
+
+							<!-- (click)="item.imagenUrl && openImagePreview(item.imagenUrl)" -->
+							<!-- (click)="item.imagenUrl && abrirImagen(item.imagenUrl)" -->
+
+							<td class="w-100 d-flex flex-column align-items-center gap-2">
+								<button
+									class="btn btn-primary btn-sm"
+									(click)="confirmAprobadoModal(item.documentKey)"
+								>
+									Aceptar
+								</button>
+								<button
+									class="btn btn-danger btn-sm"
+									(click)="openRechazoModal(rechazoModal, item)"
+								>
+									Rechazar
+								</button>
+							</td>
+						</tr>
+						<tr *ngIf="table.data.length === 0">
+							<td colspan="8" class="text-center text-gray-500 py-3">
+								No se encontraron datos con los filtros aplicados
+							</td>
+						</tr>
+					</app-common-table>
+				</div>
+			</ng-template>
+		</li>
+
+		<li [ngbNavItem]="'contratos'">
+			<a ngbNavLink>Contratos</a>
+			<ng-template ngbNavContent>
+				<!-- Contenido Contratos -->
+				<div>
+					<!-- Buscador  -->
+					<div class="filters mb-6 mt-4">
+						<div class="row g-3 align-items-end">
+							<div class="col-md-10">
+								<label class="form-label">Buscador</label>
+								<input
+									type="text"
+									class="form-control"
+									placeholder="Buscar por username, solicitante, dni o código de operación"
+									[(ngModel)]="searchTerm"
+									(input)="onFiltersChange()"
+								/>
+							</div>
+							<!-- Botón para limpiar el buscador -->
+							<div class="d-grid col-2 mx-auto">
+								<button class="btn btn-secondary w-100" (click)="clearFilters()">
+									Limpiar
+								</button>
+							</div>
+						</div>
+					</div>
+					<!-- Filtros -->
+					<div class="mb-3 row g-2 align-items-end">
+						<div class="col-md-3">
+							<label for="fecha" class="form-label">Fecha de Solicitud</label>
+							<input
+								type="date"
+								id="fecha"
+								class="form-control"
+								[(ngModel)]="filtroFecha"
+								(change)="applyFilter()"
+							/>
+						</div>
+
+						<div class="col-md-3">
+							<label for="filtroLegalizacion" class="form-label">Tipo de Legalización</label>
+							<select
+								id="filtroLegalizacion"
+								class="form-select"
+								[(ngModel)]="filtroLegalizacion"
+								(change)="applyFilter()"
+							>
+								<option value="">Seleccione el tipo</option>
+								<option value="Express">Express</option>
+								<option value="Regular">Regular</option>
+							</select>
+						</div>
+
+						<div class="col-md-3">
+							<label for="filtroSolicitadoEn" class="form-label">Solicitado en</label>
+							<select
+								id="filtroSolicitadoEn"
+								class="form-select"
+								[(ngModel)]="filtroSolicitadoEn"
+								(change)="applyFilter()"
+							>
+								<option value="">Seleccione uno</option>
+								<option value="Perú - Lima">Perú - Lima</option>
+								<option value="Provincia">Provincia</option>
+								<option value="Extranjero">Extranjero</option>
+							</select>
+						</div>
+
+						<div class="col-md-3">
+							<button class="btn btn-outline-secondary" (click)="refreshData()">
+								Refrescar
+							</button>
+
+              <button class="btn btn-outline-success ms-2" (click)="downloadConformity()">
+								Descargar Excel
+							</button>
+						</div>
+
+						<div class="col-md-3 d-none">
+							<button class="btn btn-secondary text-white fw-bold">Exportar data</button>
+						</div>
+					</div>
+
+					<!-- Tabla -->
+					<app-common-table
+						class="w-100"
+						[headers]="table.headers"
+						[checkedAll]="table.checkedAll"
+						[headersMinWidth]="table.headersMinWidth"
+						[noCheckboxes]="table.noCheckBoxes"
+						[noCheckboxes]="true"
+						(onCheckedAll)="table.changeCheckedAll($event)"
+					>
+						<tr
+							*ngFor="let item of table.data; let i = index"
+							class="w-100 d-flex py-2 align-items-center"
+							[title]="'Documento: ' + item.documentKey"
+						>
+							<!-- <tr *ngFor="let item of table.data" class="w-100 d-flex py-2 align-items-center"> -->
+							<!-- <td class="w-100 text-center">{{ item.id }}</td> -->
+							<td class="w-100 text-center">{{ i + 1 }}</td>
+							<td class="w-100 text-center">
+								{{ item.username && item.username.trim() !== '' ? item.username : '—' }}
+							</td>
+							<td class="w-100 text-center">{{ item.userRealName }}</td>
+							<td class="w-100 text-center">{{ item.userDni }}</td>
+							<td class="w-100 text-center">{{ item.userDate | date : 'yyyy-MM-dd' }}</td>
+							<!-- <td class="w-100 text-center">{{ item.documentVoucherKey }}</td> -->
+							<td class="w-100 text-center">
+								<ng-container *ngIf="hasOperationNumber(item); else noOperation">
+									<span *ngFor="let voucher of item.listaVouches; let i = index">
+										<ng-container *ngIf="voucher.operationNumber">
+											<ng-container *ngIf="i !== 0"> - </ng-container
+											>{{ voucher.operationNumber }}
+										</ng-container>
+									</span>
+								</ng-container>
+								<ng-template #noOperation>
+									<span>Número no especificado</span>
+								</ng-template>
+							</td>
+							<!-- <td class="w-100 d-flex flex-column align-items-center">
+								<span *ngFor="let voucher of item.listaVouches">
+									{{ voucher.paymentMethod || 'Método no especificado' }}
+								</span>
+							</td> -->
+							<td class="w-100 text-center">
+								<ng-container *ngIf="hasPaymentMethod(item); else noMethod">
+									<span *ngFor="let voucher of item.listaVouches; let i = index">
+										<ng-container *ngIf="voucher.paymentMethod">
+											<ng-container *ngIf="i !== 0"> - </ng-container
+											>{{ voucher.paymentMethod }}
+										</ng-container>
+									</span>
+								</ng-container>
+								<ng-template #noMethod>
+									<span>Método no especificado</span>
+								</ng-template>
+							</td>
+							<td class="w-100 text-center">
+								{{
+									item.userLocalUbic === 1
+										? 'Perú - Lima'
+										: item.userLocalUbic === 2
+										? 'Provincia'
+										: 'Extranjero'
+								}}
+							</td>
+							<td class="w-100 text-center">
+								<ng-container
+									*ngIf="
+										item?.userLocalUbic === 2 || item?.userLocalUbic === 3;
+										else normal
+									"
+								>
+									<button class="btn btn-link p-0" (click)="openDetailModal(item)">
+										{{ item | userAddress }}
+									</button>
+								</ng-container>
+
+								<ng-template #normal>
+									{{ item | userAddress }}
+								</ng-template>
+							</td>
+
+							<td class="w-100 text-center">
+								{{
+									item.familyPackageName && item.familyPackageName.trim() !== ''
+										? item.familyPackageName
+										: '—'
+								}}
+							</td>
+							<td class="w-100 text-center">
+								{{
+									item.nameSuscription && item.nameSuscription.trim() !== ''
+										? item.nameSuscription
+										: '—'
+								}}
+							</td>
+							<!-- <td class="w-100 text-center">{{ item.portfolioName }}</td> -->
+							<td class="w-100 text-center">
+								{{
+									item.legalizationType === 1
+										? 'Regular'
+										: item.legalizationType === 2
+										? 'Express'
+										: 'No hay data'
+								}}
+							</td>
+
+							<!-- <td class="w-100 text-center">
+								<ng-container *ngIf="item.userLocalUbic === 2; else noSerpost">
+									<button
+										class="btn btn-link p-0"
+										(click)="openSerpost(serpostModal, item)"
+									>
+										Ver detalle Serpost
+									</button>
+								</ng-container>
+								<ng-template #noSerpost> - </ng-template>
+							</td> -->
+
+							<!-- <td class="w-100 text-center">
+								{{ item.hasAuthorizedPerson ? 'Sí' : 'No' }}
+							</td> -->
+							<td class="w-100 text-center">
+								<ng-container *ngIf="item.hasAuthorizedPerson; else noPerson">
+									<button
+										class="btn btn-link p-0"
+										(click)="
+											openAuthorizedPerson(authorizedPersonModal, item.authorizedPerson)
+										"
+									>
+										Ver persona autorizada
+									</button>
+								</ng-container>
+								<ng-template #noPerson> No </ng-template>
+							</td>
+
+							<td class="w-100 text-center">
+								<button
+									class="btn btn-link p-0"
+									(click)="
+										openDisponibilidad(
+											disponibilidadModal,
+											item.userLocalUbic === 1
+												? item.legalizationMethodId
+												: item.disponibilidadTramiteId,
+											item.userLocalUbic
+										)
+									"
+								>
+									Ver detalle
+								</button>
+							</td>
+
+							<td class="w-100 d-flex justify-content-center">
+								<ng-container *ngIf="item.imageUrl; else noImage">
+                  <!-- Si es PDF -->
+                  <ng-container *ngIf="isPdf(item.imageUrl); else showImage">
+                    <a
+                      [href]="item.imageUrl"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title="Abrir documento PDF"
+                    >
+                      <img
+                        src="assets/images/pdf-image.png"
+                        width="25"
+                        height="25"
+                        alt="PDF"
+                        role="button"
+                        style="cursor: pointer"
+                      />
+                    </a>
+                  </ng-container>
+
+                  <!-- Si es imagen -->
+                  <ng-template #showImage>
+                    <img
+                      [src]="item.imageUrl"
+                      width="25"
+                      height="25"
+                      alt="img"
+                      role="button"
+                      style="cursor: pointer"
+                      (click)="openImagePreview(item.imageUrl)"
+                      (error)="onImageError($event)"
+                    />
+                  </ng-template>
+                </ng-container>
+							</td>
+							<td class="w-100 text-center">{{ item.price }}</td>
+							<td class="w-100 d-flex justify-content-center gap-2">
+								<img
+									*ngFor="let voucher of item.listaVouches"
+									[src]="voucher.voucherUrl"
+									width="25"
+									height="25"
+									alt="img"
+									role="button"
+									style="cursor: pointer"
+									(click)="voucher.voucherUrl && openImagePreview(voucher.voucherUrl)"
+								/>
+							</td>
+							<!-- (click)="item.imagenUrl && openImagePreview(item.imagenUrl)" -->
+							<!-- (click)="item.imagenUrl && abrirImagen(item.imagenUrl)" -->
+
+							<td class="w-100 d-flex flex-column align-items-center gap-2">
+								<button
+									class="btn btn-primary btn-sm"
+									(click)="confirmAprobadoModal(item.documentKey)"
+								>
+									Aceptar
+								</button>
+								<button
+									class="btn btn-danger btn-sm"
+									(click)="openRechazoModal(rechazoModal, item)"
+								>
+									Rechazar
+								</button>
+							</td>
+						</tr>
+						<tr *ngIf="table.data.length === 0">
+							<td colspan="8" class="text-center text-gray-500 py-3">
+								No se encontraron datos con los filtros aplicados
+							</td>
+						</tr>
+					</app-common-table>
+				</div>
+			</ng-template>
+		</li>
+	</ul>
+
+	<ng-template #imageModal let-modal>
+		<div class="modal-header">
+			<h4 class="modal-title">Vista previa de la imagen</h4>
+			<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+		</div>
+		<div class="modal-body text-center">
+			<img [src]="selectedImageUrl" alt="Vista previa" class="img-fluid rounded shadow" />
+		</div>
+	</ng-template>
+
+	<!-- Modal Aprobado -->
+	<ng-template #aprobadoModal let-modal>
+		<div class="modal-header">
+			<h4 class="modal-title">Registro exitoso</h4>
+			<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+		</div>
+		<div class="modal-body">
+			<p>Tu solicitud ha sido aprobada.</p>
+		</div>
+	</ng-template>
+
+	<!-- Modal Rechazo -->
+	<ng-template #rechazoModal let-modal>
+		<div class="modal-header">
+			<h4 class="modal-title">Rechazar Pago</h4>
+			<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+		</div>
+		<div class="modal-body d-flex flex-column gap-3">
+			<p>Al rechazar el pago deberá indicar un motivo.</p>
+
+			<div>
+				<label class="form-label fw-bold">Motivo</label>
+				<select class="form-select" [(ngModel)]="motivoSeleccionado">
+					<option [ngValue]="null" disabled selected>Seleccione uno</option>
+					<option *ngFor="let motivo of motivos" [ngValue]="motivo">
+						{{ motivo.text }}
+					</option>
+				</select>
+			</div>
+
+			<div>
+				<label class="form-label fw-bold">Mensaje adicional o solución alternativa</label>
+				<textarea class="form-control" rows="3" [(ngModel)]="mensajeAdicional"></textarea>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button class="btn btn-secondary" (click)="modal.dismiss()">Cancelar</button>
+			<button class="btn btn-danger" [disabled]="!motivoSeleccionado" (click)="confirmarRechazo()">
+				Rechazar
+			</button>
+		</div>
+	</ng-template>
+
+	<!-- Modal Confirmación de Rechazo -->
+	<ng-template #rechazoConfirmadoModal let-modal>
+		<div class="modal-header">
+			<h4 class="modal-title">Pago rechazado</h4>
+			<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+		</div>
+		<div class="modal-body">
+			<p>Enviaremos el mensaje por correo al usuario.</p>
+		</div>
+	</ng-template>
+
+	<!-- Modal para ver Firma en notaria -->
+	<ng-template #disponibilidadModal let-modal>
+		<div class="modal-header">
+			<h5 class="modal-title">Detalle de Disponibilidad</h5>
+			<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+		</div>
+		<div class="modal-body">
+			<p>{{ textoSeleccionado }}</p>
+		</div>
+	</ng-template>
+
+	<ng-template #authorizedPersonModal let-modal>
+		<div class="modal-header">
+			<h5 class="modal-title">Detalle de Persona Autorizada</h5>
+			<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+		</div>
+		<div class="modal-body">
+			<p>
+				<strong>Nombre:</strong> {{ selectedAuthorizedPerson?.firstName }}
+				{{ selectedAuthorizedPerson?.lastName }}
+			</p>
+			<p>
+				<strong>Documento:</strong> {{ selectedAuthorizedPerson?.documentType }} -
+				{{ selectedAuthorizedPerson?.documentNumber }}
+			</p>
+			<p><strong>Fecha de nacimiento:</strong> {{ selectedAuthorizedPerson?.birthDate }}</p>
+			<p>
+				<strong>Carta poder:</strong>
+				<a [href]="selectedAuthorizedPerson?.powerLetterUrl" target="_blank"> Ver documento </a>
+			</p>
+		</div>
+	</ng-template>
+
+	<ng-template #serpostModal let-modal>
+		<div class="modal-header">
+			<h5 class="modal-title">Detalle de Envío Serpost</h5>
+			<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+		</div>
+		<div class="modal-body">
+			<!-- <p><strong>Número de Tracking:</strong> {{ selectedSerpost?.trackingCode }}</p> -->
+			<p><strong>Locación Serpost:</strong> {{ selectedSerpost?.serportLocation }}</p>
+			<p><strong>Descripcion de Serpost:</strong> {{ selectedSerpost?.serportDescription }}</p>
+			<!-- <p><strong>Fecha de envío:</strong> {{ selectedSerpost?.serpostDate }}</p> -->
+		</div>
+	</ng-template>
+
+  <!-- Si no hay imagen -->
+  <ng-template #noImage>
+    <img
+      src="assets/images/no-image.png"
+      width="25"
+      height="25"
+      alt="Imagen por defecto"
+    />
+  </ng-template>
+
+	<!-- Outlet de contenido -->
+	<div [ngbNavOutlet]="subNav"></div>
+</div>

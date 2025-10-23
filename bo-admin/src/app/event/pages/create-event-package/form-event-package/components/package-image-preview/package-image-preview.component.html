@@ -1,0 +1,14 @@
+<div class="preview-card-outer">
+  <div class="preview-title">Preview</div>
+
+  <div class="preview-image-wrapper">
+    <div class="preview-image" [class.empty-image]="!flyerUrl">
+      <ng-container *ngIf="flyerUrl; else noImage">
+        <img [src]="flyerUrl" alt="Preview paquete" class="flyer-full" />
+      </ng-container>
+      <ng-template #noImage>
+        <span style="color:#9aa1a9;">Imagen preview</span>
+      </ng-template>
+    </div>
+  </div>
+</div>

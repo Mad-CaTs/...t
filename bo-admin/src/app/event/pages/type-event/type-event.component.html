@@ -1,0 +1,75 @@
+<div class="type-event-card d-flex flex-column gap-6 p-6 bg-white w-100">
+  <h2 class="title">Tipo de eventos</h2>
+
+  <div class="toolbar-card">
+    <app-list-toolbar
+      placeholder="Ingrese lo que necesita buscar..."
+      actionText="Agregar tipo"
+      [clearMessage]="clearCountdownText"
+      (search)="onSearch($event)"
+      (action)="onAdd()"
+    ></app-list-toolbar>
+
+    <ng-container *ngIf="!loading; else loadingTemplate">
+      <ng-container *ngIf="eventTypes.length > 0; else empty">
+        <app-table-generic
+          [columns]="['Item', 'Nombre del tipo', 'Status']"
+          [keys]="['item', 'eventTypeName', 'status']"
+          [data]="pagedData"
+          [showCheckboxes]="false"
+          [columnWidths]="['15%', '55%', '24%']"
+          [pageIndex]="pageIndex"
+          [pageSize]="pageSize"
+          (edit)="onEdit($event)"
+          (delete)="onDelete($event)"
+        ></app-table-generic>
+      </ng-container>
+
+      <app-table-paginator
+        *ngIf="eventTypes.length > 0"
+        [length]="eventTypes.length"
+        [pageSize]="pageSize"
+        [pageIndex]="pageIndex"
+        (pageChange)="onPageChange($event)"
+        (pageSizeChange)="onPageSizeChange($event)"
+      ></app-table-paginator>
+    </ng-container>
+
+    <ng-template #loadingTemplate>
+      <div class="d-flex justify-content-center align-items-center py-5">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Cargando...</span>
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template #empty>
+      <app-empty-state message="No data"></app-empty-state>
+    </ng-template>
+  </div>
+</div>
+
+<app-modal-type-form
+  *ngIf="showModal"
+  [title]="editMode ? 'Editar tipo' : 'Agregar tipo'"
+  [label]="'Tipo de evento'"
+  [initialData]="editMode ? { name: selectedToEdit!.eventTypeName, status: selectedToEdit!.status } : undefined"
+  (save)="onSaveModal($event)"
+  (close)="onCloseModal()"
+></app-modal-type-form>
+
+<app-modal-notify
+  *ngIf="showNotify"
+  [title]="notifyTitle"
+  [message]="notifyMessage"
+  [iconType]="notifyType"
+  (closed)="onNotifyClose()"
+></app-modal-notify>
+
+<app-modal-confirm-delete
+  *ngIf="showDeleteModal"
+  [title]="'¿Eliminar tipo de evento?'"
+  [message]="'¿Estás seguro que deseas eliminar el tipo: ' + selectedToDelete?.eventTypeName + '?'"
+  (confirm)="onConfirmDelete()"
+  (cancel)="onCancelDelete()"
+></app-modal-confirm-delete>

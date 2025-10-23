@@ -1,0 +1,243 @@
+.modal-header {
+    border: none;
+    align-items: start !important;
+    padding-bottom: 0px !important;
+}
+
+.title {
+    font-family: 'Poppins';
+    font-weight: 600;
+    font-style: SemiBold;
+    font-size: 18px;
+    leading-trim: NONE;
+    line-height: 28px;
+    letter-spacing: 0%;
+    color: #181D27;
+    padding-top: 10px;
+    margin: 0;
+}
+
+.subTitle {
+    font-family: 'Poppins';
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 14px;
+    leading-trim: NONE;
+    line-height: 20px;
+    letter-spacing: 0%;
+    color: #535862;
+}
+
+.close-button {
+    cursor: pointer;
+    border: none;
+    background: none;
+    width: 40px;
+    height: 40px;
+
+    img,
+    svg {
+        width: 30px;
+        height: 30px;
+        vertical-align: middle;
+    }
+
+    &:hover {
+        color: #495057;
+    }
+}
+
+.content {
+    background: #F9F9F9;
+    padding: 24px;
+    border-radius: 8px;
+
+}
+
+.modal-body {
+    opacity: 1;
+    gap: 16px;
+    margin: 0;
+    padding-top: 0px !important;
+    padding: var(--bs-modal-padding);
+
+}
+
+.linea-separation {
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #E9EAEB;
+}
+
+.retiro-bancario {
+    font-family: "Poppins";
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 14px;
+    leading-trim: NONE;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #1E1E1E;
+}
+
+.retiro-bancario-2 {
+    font-family: "Poppins";
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 16px;
+    leading-trim: NONE;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #1E1E1E;
+}
+
+.num-operacion {
+    font-family: "Poppins";
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 14px;
+    leading-trim: NONE;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #1E1E1E;
+}
+
+.numero {
+    color: #363A3E;
+}
+
+.content-1 {
+    justify-content: space-between;
+    display: flex;
+}
+
+.validado {
+    opacity: 1;
+    border-radius: 16px;
+    gap: 8px;
+    padding-top: 2px;
+    padding-right: 8px;
+    padding-bottom: 2px;
+    padding-left: 8px;
+    background: #396DBB33;
+    font-family: "Poppins";
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 14px;
+    leading-trim: NONE;
+    line-height: 16px;
+    letter-spacing: 0%;
+    text-align: center;
+    vertical-align: middle;
+    color: #396DBB;
+    border: 1px solid #16A34A33;
+}
+
+.rechazado {
+    opacity: 1;
+    border-radius: 16px;
+    gap: 8px;
+    padding-top: 2px;
+    padding-right: 8px;
+    padding-bottom: 2px;
+    padding-left: 8px;
+    background: #FC555533;
+    font-family: "Poppins";
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 14px;
+    leading-trim: NONE;
+    line-height: 16px;
+    letter-spacing: 0%;
+    text-align: center;
+    vertical-align: middle;
+    color: #FC5555;
+    border: 1px solid white;
+}
+
+.demo-container {
+    max-width: 500px;
+    margin: 2rem auto;
+
+    .readonly-field {
+        position: relative;
+        margin-bottom: 1.5rem;
+    }
+
+    .readonly-field .field-label {
+        display: block;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #374151;
+        margin-bottom: 0.5rem;
+    }
+
+    .readonly-field .field-container {
+        position: relative;
+        border: 2px none #e5e7eb;
+        border-radius: 0.5rem;
+        background-color: #fef7ed;
+        padding: 1rem;
+        transition: all 0.2s ease;
+    }
+
+    .readonly-field .field-container:hover {
+        border-color: #d1d5db;
+        background-color: #fef3e2;
+    }
+
+    .readonly-field .field-container.with-edit-button {
+        padding-right: 3rem;
+    }
+
+    .readonly-field .field-input {
+        width: 100%;
+        border: none;
+        outline: none;
+        background: transparent;
+        color: #1f2937;
+        font-size: 0.875rem;
+        font-weight: 500;
+        resize: none;
+        font-family: inherit;
+    }
+
+    .readonly-field .field-input::placeholder {
+        color: #9ca3af;
+    }
+
+    .readonly-field .edit-button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 1rem;
+        border-radius: 0.25rem;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .readonly-field .edit-button i {
+        font-size: 1rem;
+    }
+
+}
+.acctions-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 0 auto;
+}
+
+.badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 9999px;
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: center;
+    white-space: nowrap;
+  }

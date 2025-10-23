@@ -35,7 +35,8 @@ public class MakePaymentRequest {
     private CurrencyType currencyType;
 
     @NotNull
-    @Positive
+    @Positive(message = "Total amount must be higher than 0.")
+    @Digits(integer = 10, fraction = 2, message = "Total amount must have a maximum of 2 decimal.")
     private BigDecimal totalAmount;
 
     private Voucher voucher;

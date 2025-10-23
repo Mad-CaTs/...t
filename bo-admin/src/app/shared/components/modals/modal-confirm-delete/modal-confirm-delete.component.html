@@ -1,0 +1,21 @@
+<div class="modal-backdrop">
+	<div class="modal-box">
+		<header class="modal-header">
+			<div class="modal-header-content">
+				<div class="modal-icon danger">
+					<i class="bi bi-trash"></i>
+				</div>
+				<h3 class="modal-title">{{ title }}</h3>
+			</div>
+		</header>
+
+		<p class="modal-message">{{ message }}</p>
+
+		<hr class="modal-divider" />
+
+		<footer class="modal-footer">
+			<button class="btn btn-outline" (click)="onCancel()">Cancelar</button>
+			<button class="btn btn-primary" (click)="onConfirm()">Eliminar</button>
+		</footer>
+	</div>
+</div>

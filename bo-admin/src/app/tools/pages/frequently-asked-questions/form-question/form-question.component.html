@@ -1,0 +1,56 @@
+<form
+	[formGroup]="questionForm"
+	(ngSubmit)="onSubmit()"
+	(keydown.enter)="onEnterKey($event)"
+	class="form-question-card flex flex-column gap-6 p-6 bg-white w-100"
+>
+	<div class="form-header flex items-center gap-2">
+		<button type="button" class="btn-back" (click)="onCancel()">
+			<i class="bi bi-arrow-left"></i>
+		</button>
+		<h2>{{ editMode ? 'Editar pregunta' : 'Agregar pregunta' }}</h2>
+	</div>
+	<div class="toolbar-card">
+		<div class="content-wrapper">
+			<!-- Columna izquierda -->
+			<div class="form-column">
+				<app-question-form
+					[formGroup]="questionForm"
+					[imageurl]="imageUrl"
+					#questionFormComponent
+				></app-question-form>
+			</div>
+
+			<!-- Columna derecha 
+            <div class="preview-column">
+                <div class="preview-card-outer">
+                    <div class="preview-title">Preview</div>
+                    <app-question-image-preview
+                        [image]="questionForm.get('imageFile')?.value"
+                    ></app-question-image-preview>
+                    <app-question-summary-card
+                        [question]="questionForm.value"
+                    ></app-question-summary-card>
+                </div>
+            </div>-->
+		</div>
+
+		<!-- Botones de acción -->
+		<div class="form-actions">
+			<button type="button" class="btn-cancel" (click)="onCancel()">Cancelar</button>
+			<button type="submit" class="btn-submit">
+				{{ editMode ? 'Guardar cambios' : 'Guardar pregunta' }}
+			</button>
+		</div>
+	</div>
+</form>
+
+<!-- Modal de notificación -->
+<div class="notify-wrapper" *ngIf="showNotify">
+	<app-modal-notify
+		[title]="notifyTitle"
+		[message]="notifyMessage"
+		[iconType]="notifyType"
+		(closed)="onNotifyClose()"
+	></app-modal-notify>
+</div>

@@ -1,0 +1,83 @@
+.btn-compuesto {
+	background-color: #008080;
+	color: #ffffff;
+	border-color: #008080;
+}
+
+.btn-residual {
+	background-color: #0099cc;
+	color: #ffffff;
+	border-color: #0099cc;
+}
+
+.btn-pagar-bonus {
+	background-color: #00ace6;
+	color: #ffffff;
+	border-color: #00ace6;
+}
+
+.btn-pagar-bonus-pendientes {
+	background-color: #ff9933;
+	color: #ffffff;
+	border-color: #ff9933;
+}
+
+.btn-regularizar-pagos {
+	background-color: #004d4d;
+	color: #ffffff;
+	border-color: #004d4d;
+}
+
+.fixed-width-button {
+	width: 110px;
+}
+
+.w-5 {
+	width: 30px !important;
+}
+
+.action-buttons {
+	display: flex;
+	gap: 1px;
+	align-items: center;
+	justify-content: center;
+}
+
+.btn-outline-secondary,
+.btn-secondary {
+	text-align: center;
+}
+
+.table-scrollable {
+	overflow-x: auto;
+	width: 100%;
+}
+
+.fixed-width-table {
+	width: 100%;
+	table-layout: fixed;
+}
+
+.fixed-width-column {
+	width: 150px;
+	/* Adjust this to match your preferred width */
+	text-align: center;
+	padding: 8px;
+}
+
+.action-buttons {
+	display: flex;
+	gap: 8px;
+	justify-content: center;
+	flex-wrap: nowrap;
+}
+
+.btn {
+	white-space: nowrap;
+}
+
+.btn-pagar-bonus,
+.btn-pagar-bonus-pendientes,
+.btn-regularizar-pagos {
+	padding: 4px 8px;
+}

@@ -1,0 +1,71 @@
+<div
+	tabindex="0"
+	class="position-absolute d-flex shadow flex-column gap-6 card p-4 pos-dropdowns end-0"
+	#menu
+>
+	<div class="d-flex flex-row justify-content-center gap-4">
+		<button
+			class="btn btn-light-primary"
+			[class.btn-primary]="type === 'AM'"
+			[class.btn-light-primary]="type !== 'AM'"
+			(click)="onChangeType('AM')"
+			type="button"
+		>
+			AM</button
+		><button
+			type="button"
+			class="btn"
+			[class.btn-primary]="type === 'PM'"
+			[class.btn-light-primary]="type !== 'PM'"
+			(click)="onChangeType('PM')"
+		>
+			PM
+		</button>
+	</div>
+	<div class="d-flex flex-row justify-content-center align-items-center gap-4">
+		<div class="d-flex flex-column gap-2 align-items-center">
+			<i
+				class="bi bi-caret-up fa-2x cursor-pointer"
+				(click)="onModifyHours(hour + 1)"
+				(keydown.enter)="onModifyHours(hour + 1)"
+				tabindex="0"
+			></i>
+			<span
+				class="fs-4"
+				contenteditable
+				tabindex="0"
+				(focusout)="onChange($event, 'HOURS')"
+				[textContent]="hour"
+				style="outline: none"
+			></span>
+			<i
+				class="bi bi-caret-down fa-2x cursor-pointer"
+				(click)="onModifyHours(hour - 1)"
+				(keydown.enter)="onModifyHours(hour - 1)"
+				tabindex="0"
+			></i>
+		</div>
+		<span class="fs-4">:</span>
+		<div class="d-flex flex-column gap-2 align-items-center">
+			<i
+				class="bi bi-caret-up fa-2x cursor-pointer"
+				(click)="onModifyMinutes(minutes + 1)"
+				(keydown.enter)="onModifyMinutes(minutes + 1)"
+				tabindex="0"
+			></i>
+			<span
+				class="fs-4"
+				contenteditable
+				(focusout)="onChange($event, 'MINUTES')"
+				style="outline: none"
+				[textContent]="minutesFormated"
+			></span>
+			<i
+				class="bi bi-caret-down fa-2x cursor-pointer"
+				(click)="onModifyMinutes(minutes - 1)"
+				(keydown.enter)="onModifyMinutes(minutes - 1)"
+				tabindex="0"
+			></i>
+		</div>
+	</div>
+</div>

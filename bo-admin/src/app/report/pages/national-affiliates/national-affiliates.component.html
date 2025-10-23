@@ -1,0 +1,36 @@
+  <!-- === CARDS DE AFILIADOS PERUANOS & INTERNACIONALES === -->
+  <div class="region-cards">
+    <div class="region-card region-peru">
+      <div class="card-header">
+        <h5>Afiliados peruanos</h5>
+        <app-select
+          label="Estado:"
+          [options]="statusOpt"
+          [formGroup]="form"
+          controlName="peruState"
+          class="state-select"
+        ></app-select>
+      </div>
+      <div class="card-body">
+          <i class="bi bi-person-circle user-icon"></i>
+        <div class="total-number">{{ peruvianCount }}</div>
+      </div>
+    </div>
+
+    <div class="region-card region-intl">
+      <div class="card-header">
+        <h5>Afiliados internacionales</h5>
+        <app-select
+          label="Estado:"
+          [options]="statusOpt"
+          [formGroup]="form"
+          controlName="intlState"
+          class="state-select"
+        ></app-select>
+      </div>
+      <div class="card-body">
+          <i class="bi bi-person-circle user-icon"></i>
+        <div class="total-number">{{ internationalCount }}</div>
+      </div>
+    </div>
+  </div>

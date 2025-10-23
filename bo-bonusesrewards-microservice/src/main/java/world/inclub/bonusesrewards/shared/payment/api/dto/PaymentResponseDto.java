@@ -31,5 +31,4 @@ public class PaymentResponseDto {
     private BigDecimal totalAmount;
     private LocalDateTime paymentDate;
     private LocalDateTime createdAt;
-//    private PaymentRejectionResponseDto rejection;
 }

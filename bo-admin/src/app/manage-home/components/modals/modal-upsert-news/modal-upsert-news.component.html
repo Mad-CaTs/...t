@@ -1,0 +1,57 @@
+<app-modal [title]="title">
+	<form [formGroup]="form" (submit)="onSubmit()" class="d-flex w-100 flex-column gap-6">
+		<app-input
+			class="w-100"
+			label="Título"
+			placeholder="Ingrese título"
+			[formGroup]="form"
+			controlName="title"
+		/>
+		<app-input-date class="w-100" label="Fecha" [formGroup]="form" controlName="date" />
+
+		<div class="d-flex w-100 gap-4">
+			<app-input
+				class="w-100"
+				label="Link de imagen"
+				placeholder="Ingrese url de imagen"
+				[formGroup]="form"
+				controlName="imageUrl"
+			/>
+			<app-input
+				class="w-100"
+				label="Link de video (Opcional)"
+				placeholder="Ingrese url de video"
+				[formGroup]="form"
+				controlName="videoUrl"
+			/>
+		</div>
+
+		<app-select
+			class="w-100"
+			label="Estado"
+			placeholder="Seleccionar estado"
+			[formGroup]="form"
+			controlName="status"
+			[options]="[
+				{ id: '1', text: 'Publicado' },
+				{ id: '2', text: 'Inactivo' }
+			]"
+		/>
+		<app-textarea
+			class="w-100"
+			label="Descripción"
+			placeholder="Ingrese descripción"
+			[formGroup]="form"
+			controlName="description"
+		/>
+
+		<div class="w-100 d-flex justify-content-center align-items-center gap-4">
+			<button class="btn btn-outline-secondary" type="button" (click)="instanceModal.close()">
+				Cancelar
+			</button>
+			<button class="btn btn-secondary" type="submit" [disabled]="form.invalid || loading">
+				Guardar cambios
+			</button>
+		</div>
+	</form>
+</app-modal>

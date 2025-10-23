@@ -1,0 +1,79 @@
+<div class="create-event-card flex flex-column gap-6 p-6 bg-white w-100">
+  <h2 class="title">Crear evento</h2>
+
+  <div class="toolbar-card">
+    <app-list-toolbar
+      placeholder="Ingrese lo que necesita buscar..."
+      actionText="Agregar evento"
+      [showTypeFilter]="true"
+      [typeLabel]="'Tipo de eventos'"
+      [typeOptions]="typeOptions"
+      (typeChange)="onFilterByType($event)"
+      (search)="onSearch($event)"
+      (action)="onAdd()"
+    ></app-list-toolbar>
+
+    <p *ngIf="currentType && currentType !== 'Todos'" class="text-sm text-gray-500 mb-2">
+      Mostrando solo eventos de tipo <strong>{{ currentType }}</strong>.
+    </p>
+
+    <ng-container *ngIf="!loading; else loadingTemplate">
+      <ng-container *ngIf="events.length > 0; else empty">
+        <app-table-generic
+          [columns]="visibleColumns"
+          [keys]="visibleKeys"
+          [data]="pagedData"
+          [columnWidths]="visibleWidths"
+          [pageIndex]="pageIndex"
+          [pageSize]="pageSize"
+          [showView]="true"
+          [imageKeys]="['flyerUrl']"
+          [statusKey]="'isMainEventText'"
+          (view)="onView($event)"
+          (edit)="onEdit($event)"
+          (delete)="onDelete($event)"
+        ></app-table-generic>
+
+        <app-table-paginator
+          [length]="events.length"
+          [pageSize]="pageSize"
+          [pageIndex]="pageIndex"
+          (pageChange)="onPageChange($event)"
+          (pageSizeChange)="onPageSizeChange($event)"
+        ></app-table-paginator>
+      </ng-container>
+    </ng-container>
+
+    <ng-template #empty>
+      <app-empty-state message="No data"></app-empty-state>
+    </ng-template>
+
+    <ng-template #loadingTemplate>
+      <div class="d-flex justify-content-center align-items-center py-5">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Cargando...</span>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+
+  <!-- Modal eliminar -->
+  <app-modal-confirm-delete
+    *ngIf="showDeleteModal"
+    [title]="'¿Eliminar evento?'"
+    [message]="'¿Estás seguro de eliminar el evento: ' + selectedToDelete?.eventName + '?'"
+    (confirm)="onConfirmDelete()"
+    (cancel)="onCancelDelete()"
+  ></app-modal-confirm-delete>
+
+  <!-- Notificación modal -->
+  <app-modal-notify
+    *ngIf="showNotify"
+    [title]="notifyTitle"
+    [message]="notifyMessage"
+    [iconType]="notifyType"
+    (closed)="onNotifyClose()"
+  ></app-modal-notify>
+
+  <!-- El formulario ya no va aquí, solo en la ruta de edición -->
+</div>

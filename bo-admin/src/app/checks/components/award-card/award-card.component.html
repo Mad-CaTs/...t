@@ -1,0 +1,45 @@
+<div class="award-container">
+	<div class="header-card" [ngClass]="headerClass">
+		<div class="logo-bar">
+			<div class="logo-wrapper">
+				<img
+					src="assets/media/svg/logos/inclub_white.png"
+					alt="Inclub Logo"
+					crossorigin="anonymous"
+				/>
+			</div>
+			<div class="logo-divider"></div>
+			<div class="logo-wrapper">
+				<img src="assets/media/svg/logos/keola_white.png" alt="Keola Logo" crossorigin="anonymous" />
+			</div>
+			<div class="logo-divider"></div>
+			<div class="logo-wrapper">
+				<img
+					src="assets/media/svg/logos/inresort_white.png"
+					alt="Inresorts Logo"
+					crossorigin="anonymous"
+				/>
+			</div>
+		</div>
+	</div>
+
+	<div class="content">
+		<div class="left-column">
+			<div class="name-label">A NOMBRE DE:</div>
+			<div class="name">{{ name }}</div>
+			<div class="lastname">{{ lastname }}</div>
+		</div>
+		<div class="right-column">
+			<div class="amount" [ngClass]="textColorClass">S/. {{ amount | number : '1.0-0' }}</div>
+			<div class="amount-text">
+				<div class="amount-text-line">
+					{{ amount | numberToText | splitMillionsThousands }}
+				</div>
+				<div class="amount-text-line">
+					{{ amount | numberToText | splitHundredsUnits }}
+				</div>
+			</div>
+			<div class="club" [ngClass]="textColorClass">{{ clubName.toUpperCase() }}</div>
+		</div>
+	</div>
+</div>

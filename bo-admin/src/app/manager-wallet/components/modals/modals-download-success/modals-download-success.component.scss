@@ -1,0 +1,32 @@
+::ng-deep .custom-blue app-loading .lds-spinner div:after {
+  background: #1C64F2 !important;
+}
+
+.mt-custom {
+  margin-top: 4rem;
+  text-align: center;
+}
+
+.container-modal {
+  min-width: 320px;
+}
+
+.pl-custom {
+  left: 1.2rem;
+}
+
+.center-element {
+  margin: 0 auto;
+}
+
+.custom-light-blue {
+  background-color: #E9F6FF;
+  border-radius: 8px;
+  color: #546E7A;
+}
+
+.container-image {
+    position: absolute;
+    top: -20px;
+    left: 20px;
+}

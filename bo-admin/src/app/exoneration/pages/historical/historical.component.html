@@ -1,0 +1,38 @@
+<div class="d-flex flex-column gap-6 p-6 bg-white w-100">
+	<h1 class="fs-1 text-black fw-medium m-0">Histórico de exoneraciones</h1>
+
+	<form [formGroup]="form" class="d-flex w-100 flex-column gap-6">
+		<h4 class="fs-5 text-black fw-normal m-0">Buscador</h4>
+		<div class="d-flex flex-column flex-md-row gap-6">
+			<app-input class="w-100" label="Ingrese campo de búsqueda:" placeholder="Buscar por" type="search"
+				[formGroup]="form" controlName="username" />
+			<div class="w-100 d-flex flex-column gap-2">
+				<span class="fs-6 text-black fw-normal">Buscar como:</span>
+				<div class="d-flex align-items-center gap-3 px-4 py-2">
+					<input class="form-check-input cursor-pointer" type="radio" id="searchAsUser"
+						formControlName="typeUser" [value]="1" />
+					<label class="fs-6 fw-normal text-black" for="searchAsUser">Usuario</label>
+					<input class="form-check-input cursor-pointer" type="radio" id="searchAsPartner"
+						formControlName="typeUser" [value]="2" />
+					<label class="fs-6 fw-normal text-black" for="searchAsPartner">Patrocinador</label>
+				</div>
+			</div>
+		</div>
+
+		<div class="d-flex justify-content-end">
+			<button class="btn btn-secondary" type="submit" [disabled]="form.invalid || buttonLoading"
+				(click)="onSearch()">
+				<div style="width: 90px;">
+					<div *ngIf="buttonLoading">
+						<span class="spinner-border spinner-border-sm align-middle text-center ms-2"></span>
+					</div>
+					<div *ngIf="!buttonLoading">
+						<span>Buscar</span>
+					</div>
+				</div>
+			</button>
+		</div>
+	</form>
+	<app-table-exoneration-historical [tableData]="data" [totalRecords]="totalRecords" [loading]="buttonLoading"
+		[refresh]="refresh" (pageChange)="onPageChange($event)" [disable]="true"></app-table-exoneration-historical>
+</div>

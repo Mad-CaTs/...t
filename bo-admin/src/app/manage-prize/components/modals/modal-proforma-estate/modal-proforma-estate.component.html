@@ -1,0 +1,80 @@
+<app-modal [title]="title">
+	<div *ngFor="let proforma of data.proforma" class="proforma-container mb-5">
+		<div class="row align-items-center mb-3">
+			<div class="col-md-6 align-items-center">
+				<h4>Proforma {{ proforma.idProforma }}</h4>
+			</div>
+
+			<div class="col-md-6 d-flex justify-content-end gap-2">
+				<button
+					class="btn btn-outline-secondary btn-sm d-flex align-items-center"
+					(click)="openPdf(proforma.archive)"
+				>
+					<i class="bi bi-printer-fill me-2"></i>
+					<span>Imprimir</span>
+				</button>
+				<button
+					class="btn btn-outline-secondary btn-sm d-flex align-items-center"
+					(click)="openPdf(proforma.archive)"
+				>
+					<i class="bi bi-cloud-download-fill me-2"></i>
+					<span>Descargar</span>
+				</button>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-6 mb-3">
+				<label class="fw-bold">Provincia</label>
+				<input class="form-control fs-7" type="text" [value]="proforma.province" readonly />
+			</div>
+			<div class="col-md-6 mb-3">
+				<label class="fw-bold">Departamento</label>
+				<input class="form-control fs-7" type="text" [value]="proforma.department" readonly />
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-6 mb-3">
+				<label class="fw-bold">Tipo de Inmueble</label>
+				<input class="form-control fs-7" type="text" [value]="proforma.typeEstate" readonly />
+			</div>
+			<div class="col-md-6 mb-3">
+				<label class="fw-bold">Precio</label>
+				<input
+					class="form-control fs-7"
+					type="text"
+					[value]="proforma.price | currency : 'USD' : 'symbol' : '1.0-0'"
+					readonly
+				/>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-6 mb-3">
+				<label class="fw-bold">Empresa o Institución</label>
+				<input class="form-control fs-7" type="text" [value]="proforma.company" readonly />
+			</div>
+			<div class="col-md-6 mb-3">
+				<label class="fw-bold">Ejecutivo de ventas</label>
+				<input class="form-control fs-7" type="text" [value]="proforma.salesExecutive" readonly />
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-6 mb-3">
+				<label class="fw-bold">Celular</label>
+				<input class="form-control fs-7" type="text" [value]="proforma.phoneNumber" readonly />
+			</div>
+			<div class="col-md-6 mb-3">
+				<label class="fw-bold">Archivo</label>
+				<input
+					class="form-control fs-7"
+					type="text"
+					[value]="getFileName(proforma.archive)"
+					readonly
+				/>
+			</div>
+		</div>
+	</div>
+</app-modal>

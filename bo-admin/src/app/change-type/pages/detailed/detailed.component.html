@@ -1,0 +1,68 @@
+<section class="d-flex gap-5 w-100 flex-column">
+	<!--Filters-->
+	<div class="d-flex gap-5 align-items-end p-4 border border-gray-300 rounded" style="max-width: 652px">
+		<app-select
+			class="w-100"
+			label="Seleccionar país"
+			placeholder="Seleccionar país"
+			[formGroup]="form"
+			controlName="country"
+			[options]="[{ id: '1', text: 'Peru' }]"
+		/>
+		<button class="btn btn-secondary">Aplicar</button>
+	</div>
+	<!--Actions-->
+	<div class="d-flex justify-content-between align-items-center">
+		<div class="d-flex gap-1">
+			<div
+				class="d-flex justify-content-center align-items-center bg-gray-200 px-2 cursor-pointer"
+				(click)="onChangeSelectedMonth(monthSelected - 1)"
+			>
+				<i class="bi bi-caret-left fs-4 text-black"></i>
+			</div>
+
+			<span
+				class="h-25px bg-gray-200 text-black w-150px d-flex justify-content-center align-items-center"
+			>
+				{{ monthName }} {{ yearSelected }}
+			</span>
+			<div
+				class="d-flex justify-content-center align-items-center bg-gray-200 px-2 cursor-pointer"
+				(click)="onChangeSelectedMonth(monthSelected + 1)"
+			>
+				<i class="bi bi-caret-right fs-4 text-black"></i>
+			</div>
+		</div>
+		<button class="btn btn-secondary" (click)="onCreate()">Nuevo</button>
+	</div>
+	<!--Table-->
+	<table-pagination class="w-100 d-block mt-4" *ngIf="country" />
+	<!--Table | Table-->
+	<app-common-table
+		class="w-100 d-block mt-4"
+		[headers]="table.headers"
+		[checkedAll]="table.checkedAll"
+		[headersMinWidth]="table.headersMinWidth"
+		[noCheckboxes]="table.noCheckBoxes"
+		[headersArrows]="table.headersArrows"
+		(onCheckedAll)="table.changeCheckedAll($event)"
+		*ngIf="country"
+	>
+		<tr class="w-100 d-flex py-2 align-items-center" *ngFor="let item of table.data">
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.orderN }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.date }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.pen }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.usd }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6 d-block">{{ item.col }}</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6 d-flex justify-content-center align-items-center position-relative"
+			>
+				{{ item.colones }}
+				<i
+					class="bi bi-pencil-fill fs-4 cursor-pointer d-block position-absolute end-0 text-secondary"
+					(click)="onEdit(item.id)"
+				></i>
+			</td>
+		</tr>
+	</app-common-table>
+</section>

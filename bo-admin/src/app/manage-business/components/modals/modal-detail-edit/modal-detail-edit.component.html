@@ -1,0 +1,182 @@
+<app-modal [title]="title">
+	<form [formGroup]="form" class="d-flex w-100 flex-column gap-6" (submit)="onSubmit()">
+		<div class="d-flex gap-4 w-100">
+			<app-input
+				class="w-100"
+				label="Familia de paquetes"
+				placeholder="Seleccionar familia"
+				[formGroup]="form"
+				controlName="family"
+			/>
+			<app-input
+				class="w-100"
+				label="Paquete"
+				placeholder="Seleccionar paquete"
+				[formGroup]="form"
+				controlName="package"
+			/>
+		</div>
+
+		<div class="d-flex gap-4 w-100">
+			<app-input
+				class="w-100"
+				type="number"
+				label="Versión"
+				placeholder="v1"
+				[formGroup]="form"
+				controlName="lastVersion"
+			/>
+			<app-input
+				class="w-100"
+				type="number"
+				label="Meses de duracion"
+				placeholder="Meses de duracion"
+				[formGroup]="form"
+				controlName="months"
+			/>
+		</div>
+
+		<div class="d-flex gap-4 w-100">
+			<app-input
+				class="w-100"
+				type="number"
+				label="Precio"
+				placeholder="S/. 00.00"
+				[formGroup]="form"
+				controlName="price"
+			/>
+			<app-input
+				class="w-100"
+				type="number"
+				label="Numero de Cuotas"
+				placeholder="Numero de Cuotas"
+				[formGroup]="form"
+				controlName="cuotes"
+			/>
+		</div>
+
+		<div class="d-flex gap-4 w-100">
+			<app-input
+				class="w-100"
+				type="number"
+				label="Precio inicial"
+				placeholder="S/. 00.00"
+				[formGroup]="form"
+				controlName="initialPrice"
+			/>
+			<app-input
+				class="w-100"
+				type="number"
+				label="Precio por cuota"
+				placeholder="S/. 00.00"
+				[formGroup]="form"
+				controlName="cuotePrice"
+			/>
+
+			<!-- 			<span *ngIf="form.get(cuotePrices)?.errors?.min">El monto ingresado debe ser mayor a $1</span>-->
+		</div>
+
+		<div class="d-flex gap-4 w-100">
+			<app-input
+				class="w-100"
+				type="number"
+				label="Volumen"
+				placeholder="Ingresar volumen"
+				[formGroup]="form"
+				controlName="volume"
+			/>
+			<app-input
+				class="w-100"
+				type="number"
+				label="Numero de cuota inicial"
+				placeholder="Numero de cuota inicial"
+				[formGroup]="form"
+				controlName="cuoteN"
+			/>
+		</div>
+
+		<div class="d-flex gap-4 w-100">
+			<app-input
+				class="w-100"
+				type="number"
+				label="Comisión"
+				placeholder="S/. 00.00"
+				[formGroup]="form"
+				controlName="comission"
+			/>
+			<app-input
+				class="w-100"
+				type="number"
+				label="N° Acciones"
+				placeholder="N° Acciones"
+				[formGroup]="form"
+				controlName="accionsN"
+			/>
+		</div>
+
+		<div class="d-flex gap-4 w-100">
+			<div class="d-flex flex-column gap-4 w-100">
+				<label for="freePointStatus" class="fs-6 text-muted fw-bold">¿Liberar puntos?</label>
+				<div class="d-flex gap-3">
+					<input
+						class="form-check-input w-15px h-15px gap-4 w-100"
+						type="radio"
+						formControlName="freePointStatus"
+						name="freePointStatus"
+						aria-describedby="basic-addon1"
+						[value]="true"
+					/>
+
+					<span>Si</span>
+					<input
+						class="form-check-input w-15px h-15px gap-4 w-100"
+						type="radio"
+						formControlName="freePointStatus"
+						name="freePointStatus"
+						aria-describedby="basic-addon1"
+						[value]="false"
+					/>
+					<span>No</span>
+				</div>
+			</div>
+
+			<app-input
+				class="w-100"
+				type="number"
+				label="Cant. de USD rewards*"
+				[formGroup]="form"
+				controlName="points"
+				[textRigth]="'USD'"
+			/>
+		</div>
+
+		<div class="d-flex gap-4 w-100">
+			<app-input
+				class="w-100"
+				type="number"
+				label="Inter. de tiempo*"
+				[formGroup]="form"
+				controlName="interCuote"
+				[textRigth]="'cuotas'"
+			/>
+			<app-input
+				class="w-100"
+				type="number"
+				label="Cant. USD rewards adic.*"
+				placeholder="0"
+				[formGroup]="form"
+				controlName="pointsFree"
+				[textRigth]="'USD'"
+			/>
+		</div>
+
+		<div class="w-100 d-flex justify-content-center align-items-center gap-4">
+			<button class="btn btn-outline-secondary" type="button" (click)="instanceModal.close()">
+				Cancelar
+			</button>
+			<button class="btn btn-secondary" type="submit" [disabled]="form.invalid || loading">
+				Guardar cambio
+			</button>
+		</div>
+	</form>
+</app-modal>

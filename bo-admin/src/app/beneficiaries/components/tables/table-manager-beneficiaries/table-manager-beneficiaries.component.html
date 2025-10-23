@@ -1,0 +1,70 @@
+<app-table class="card card-xxl-stretch mb-5" [noCheckboxes]="true" [customRows]="true" [headers]="headers">
+  <tr *ngFor="let r of dataBody; let i = index;">
+    <td>{{ i + 1 | number:'2.0-0'}}</td>
+    <td>
+      <div class="d-flex flex-column">
+        <span class="fw-bold fs-7">{{ r.creationDate ? (r.creationDate | date:'dd/MM/yyyy') : '—' }}</span>
+      </div>
+    </td>
+    <td>
+      <div class="d-flex flex-column">
+        <span class="fw-bold fs-7">{{ r.name }}</span>
+      </div>
+    </td>
+    <td>
+      <div class="d-flex flex-column">
+        <span class="fw-bold fs-7">{{ r.lastName }}</span>
+      </div>
+    </td>
+    <td>
+      <div class="d-flex flex-column">
+        <span class="fw-bold fs-7">{{ r.nroDocument }}</span>
+      </div>
+    </td>
+    <td>
+      <div class="d-flex flex-column">
+        <span class="fw-bold fs-7">{{ r.ageDate ? (r.ageDate | date:'dd/MM/yyyy') : '—' }}</span>
+      </div>
+    </td>
+    <td>
+      <div class="d-flex flex-column">
+        <span class="fw-bold fs-7">{{ r.email || '—' }}</span>
+      </div>
+    </td>
+    <td>
+      <div class="d-flex flex-column">
+        <span class="fw-bold fs-7">{{ '—' }}</span>
+      </div>
+    </td>
+    <td>
+      <div class="d-flex flex-column">
+        <span class="fw-bold fs-7 text-success">{{ r.creationDate ? (r.creationDate | date:'dd/MM/yyyy') : '—' }}</span>
+      </div>
+    </td>
+    <td class="text-center">
+      <div class="d-flex align-items-center gap-3">
+        <button type="button"
+                class="icon-btn"
+                title="Editar"
+                (click)="edit.emit(r)">
+          <i class="bi bi-pencil fs-3"></i>
+        </button>
+
+        <button type="button"
+                class="icon-btn icon-btn-danger"
+                title="Eliminar">
+          <i class="bi bi-trash fs-3"></i>
+        </button>
+      </div>
+  </td>
+
+  </tr>
+</app-table>
+
+<app-table-paginator *ngIf="length > 0"
+  [length]="length"
+  [pageIndex]="pageIndex"
+  [pageSize]="pageSize"
+  (pageChange)="pageChange.emit($event)"
+  (pageSizeChange)="refresh.emit({ rows: $event })">
+</app-table-paginator>

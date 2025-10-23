@@ -1,0 +1,147 @@
+<div class="d-flex flex-column gap-6 p-6 bg-white w-100">
+	<!--Title-->
+	<h1 class="fs-4 text-black fw-medium m-0">Herramientas</h1>
+	<!--Navigation-->
+	<nav class="d-flex gap-4">
+		<button
+			class="btn radius-none d-flex w-100 justify-content-center align-items-center gap-3 p-4"
+			[ngClass]="{
+				'border-bottom border-secondary': selected === 0,
+				'bg-gray-200': selected !== 0
+			}"
+			(click)="onChangeSelected(0)"
+		>
+			<i
+				class="bi bi-phone fs-4"
+				[class.text-gray-800]="selected !== 0"
+				[class.text-black]="selected === 0"
+			></i>
+			<span
+				class="fs-6 fw-medium"
+				[class.text-gray-800]="selected !== 0"
+				[class.text-black]="selected === 0"
+			>
+				Keola
+			</span>
+		</button>
+		<button
+			class="btn radius-none d-flex w-100 justify-content-center align-items-center gap-3 p-4"
+			[ngClass]="{
+				'border-bottom border-secondary': selected === 1,
+				'bg-gray-200': selected !== 1
+			}"
+			(click)="onChangeSelected(1)"
+		>
+			<i
+				class="bi bi-globe2 fs-4"
+				[class.text-gray-800]="selected !== 1"
+				[class.text-black]="selected === 1"
+			></i>
+			<span
+				class="fs-6 fw-medium"
+				[class.text-gray-800]="selected !== 1"
+				[class.text-black]="selected === 1"
+			>
+				Inresorts
+			</span>
+		</button>
+	</nav>
+	<!--Accordion-->
+	<div ngbAccordion [closeOthers]="true" class="d-flex flex-column w-100 gap-5">
+		<div
+			*ngFor="let section of toolOpts"
+			ngbAccordionItem
+			class="rounded"
+			style="border: solid 1px #d2cece"
+		>
+			<h2 ngbAccordionHeader>
+				<button ngbAccordionButton class="text-black fs-7 fw-medium text-uppercase bg-gray-200">
+					{{ section.text }}
+				</button>
+			</h2>
+			<div ngbAccordionCollapse style="background-color: #f7f7f8">
+				<div ngbAccordionBody>
+					<ng-template>
+						<div class="bg-white w-100 p-3 rounded d-flex flex-column gap-4">
+							<!--Form-->
+							<form
+								[formGroup]="form"
+								(submit)="onCreate(section.id)"
+								class="w-100 d-flex gap-4 align-items-end"
+							>
+								<app-input
+									label="Ingrese título"
+									placeholder="Ingrese título"
+									[formGroup]="form"
+									controlName="title"
+									type="text"
+									class="w-100"
+								/>
+								<app-input
+									label="Ingrese URL"
+									placeholder="Ingrese el link"
+									[formGroup]="form"
+									controlName="url"
+									type="url"
+									class="w-100"
+								/>
+								<button
+									class="btn btn-secondary"
+									type="submit"
+									[disabled]="loading || form.invalid"
+								>
+									Agregar
+								</button>
+								<button
+									class="btn bg-gray-700 text-white rounded"
+									type="button"
+									(click)="form.reset()"
+								>
+									Cancelar
+								</button>
+							</form>
+
+							<!--Loading-->
+							<div class="w-100 d-flex justify-content-center" *ngIf="loading">
+								<app-loading />
+							</div>
+
+							<!--Element-->
+							<ng-container *ngIf="!loading">
+								<div
+									class="bg-gray-200 w-100 py-2 px-5 rounded d-flex align-items-center"
+									*ngFor="let item of filterBySection(section.id)"
+								>
+									<!--Icons-->
+									<i
+										class="bi bi-play-circle-fill text-gray-800 fa-2x"
+										*ngIf="section.id === '3'"
+									></i>
+									<i class="bi bi-image text-gray-800 fa-2x" *ngIf="section.id === '5'"></i>
+									<i
+										class="bi bi-file-earmark text-gray-800 fa-2x"
+										*ngIf="section.id === '1' || section.id === '2'"
+									></i>
+									<!--Info-->
+									<a
+										class="text-decoration-none text-primary fs-7 fw-normal d-block ms-5"
+										[href]="item.fileName"
+										target="_blank"
+									>
+										{{ item.nameDocument }}
+									</a>
+									<button class="btn ms-auto d-block" type="button">
+										<i
+											class="bi bi-trash3-fill text-gray-800 fs-2"
+											(click)="onDelete(item.idEducationalDocument)"
+										></i>
+									</button>
+								</div>
+							</ng-container>
+						</div>
+					</ng-template>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,44 @@
+<div class="d-flex flex-column gap-6 p-6 bg-white w-100">
+	<!--Title-->
+	<h1 class="fs-4 text-black fw-medium m-0">Noticias</h1>
+	<!--List | Filter-->
+	<div class="w-100 d-flex">
+		<app-input
+			class="w-100"
+			placeholder="Buscar por título"
+			name="search"
+			type="search"
+			controlName="search"
+			[formGroup]="form"
+			iconLeft="bi bi-search"
+		/>
+		<div class="w-100"></div>
+	</div>
+	<div class="w-100 d-flex justify-content-end align-items-center gap-4">
+		<button class="btn btn-secondary" type="button" (click)="onCreate()">Agregar noticia</button>
+		<button class="btn btn-outline-secondary" type="button" (click)="onSearch()">Actualizar</button>
+	</div>
+	<!--Table-->
+	<table-pagination class="w-100 d-block mt-4" [count]="table.count" [pageControl]="table.pageControl" />
+	<!--Table | Table-->
+	<app-common-table
+		class="w-100 d-block mt-4"
+		[headers]="table.headers"
+		[checkedAll]="table.checkedAll"
+		[headersMinWidth]="table.headersMinWidth"
+		[noCheckboxes]="table.noCheckBoxes"
+		[headersArrows]="table.headersArrows"
+		(onCheckedAll)="table.changeCheckedAll($event)"
+	>
+		<tr class="w-100 d-flex py-2 align-items-center" *ngFor="let item of table.data">
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.title }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.description }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.date }}</td>
+			<td class="w-100 text-primary fw-medium text-center fs-6">{{ item.status }}</td>
+
+			<td class="w-100 d-flex justify-content-center">
+				<i class="bi bi-pencil-fill fs-4 cursor-pointer" (click)="onEdit(item.id)"></i>
+			</td>
+		</tr>
+	</app-common-table>
+</div>

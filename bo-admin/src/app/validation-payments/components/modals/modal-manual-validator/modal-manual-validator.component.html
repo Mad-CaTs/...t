@@ -1,0 +1,79 @@
+<app-modal [title]="title">
+	<div class="d-flex flex-column align-items-center justify-content-center gap-6" *ngIf="!rejectView">
+		<!--Tabs-->
+		<app-navigation class="w-100" [data]="navData" [noPaths]="true" *ngIf="multiple"></app-navigation>
+		<!--Stats-->
+		<div class="w-100 d-flex flex-column gap-4">
+			<div class="d-flex justify-content-between align-items-center w-100">
+				<div class="d-flex flex-column">
+					<span class="text-gray-900 fw-normal fs-6">Código de Operación</span>
+					<span class="text-black fw-semibold fs-6">12345678</span>
+				</div>
+
+				<i class="bi bi-check-circle-fill fa-2x text-success"></i>
+			</div>
+
+			<div class="d-flex justify-content-between align-items-center w-100">
+				<div class="d-flex flex-column">
+					<span class="text-gray-900 fw-normal fs-6">Monto</span>
+					<span class="text-black fw-semibold fs-6">S/. 500.00</span>
+				</div>
+
+				<i class="bi bi-check-circle-fill fa-2x text-success"></i>
+			</div>
+
+			<div class="d-flex justify-content-between align-items-center w-100">
+				<div class="d-flex flex-column">
+					<span class="text-gray-900 fw-normal fs-6">Comisión</span>
+					<span class="text-black fw-semibold fs-6">S/. 0.00</span>
+				</div>
+
+				<i class="bi bi-check-circle-fill fa-2x text-success"></i>
+			</div>
+		</div>
+		<!--View-->
+		<article class="w-100">
+			<div
+				class="w-100 d-flex align-items-center border border-gray-500 rounded p-4 cursor-pointer"
+				(click)="openVoucher = !openVoucher"
+			>
+				<i class="bi bi-eye-fill fs-2 text-secondary"></i>
+				<span class="fs-5 text-secondary ms-5 d-block fw-medium">Ver Voucher</span>
+				<i class="bi bi-caret-down fs-2 text-secondary d-block ms-auto"></i>
+			</div>
+			<div
+				class="w-100 d-block border border-gray-500 border-top-0 rounded-bottom py-6"
+				*ngIf="openVoucher"
+			>
+				<img class="mx-auto d-block" src="/assets/media/demos/demo14.png" width="180" alt="" />
+			</div>
+		</article>
+		<!--Buttons-->
+		<div class="d-flex w-100 align-items-center justify-content-center gap-4">
+			<button class="btn btn-outline-secondary" (click)="onReject()">Rechazar</button>
+			<button class="btn btn-secondary" (click)="onValidate()">Validar</button>
+		</div>
+	</div>
+	<form
+		[formGroup]="form"
+		(ngSubmit)="onSendReject()"
+		class="d-flex flex-column align-items-center justify-content-center gap-6"
+		*ngIf="rejectView"
+	>
+		<app-select
+			class="w-100"
+			[formGroup]="form"
+			controlName="rejectMotive"
+			placeholder="Seleccionar"
+			label="Motivo de Rechazo *"
+			[options]="motiveOpts"
+		/>
+		<!--Buttons-->
+		<div class="d-flex w-100 align-items-center justify-content-center gap-4">
+			<button class="btn btn-outline-secondary" type="button" (click)="rejectView = false">
+				Cancelar
+			</button>
+			<button class="btn btn-secondary" type="submit" [disabled]="form.invalid">Enviar</button>
+		</div>
+	</form>
+</app-modal>

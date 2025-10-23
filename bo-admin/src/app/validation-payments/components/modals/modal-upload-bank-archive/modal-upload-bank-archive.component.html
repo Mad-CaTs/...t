@@ -1,0 +1,35 @@
+<app-modal title="Cargar Registros">
+	<form
+		[formGroup]="form"
+		(submit)="onSubmit()"
+		class="d-flex flex-column align-items-center justify-content-center gap-6 w-100"
+	>
+		<div class="w-100 d-flex gap-4">
+			<app-select
+				class="w-100"
+				label="Banco:"
+				placeholder="Seleccione banco"
+				[formGroup]="form"
+				[options]="[{ id: '1', text: 'BCP' }]"
+				controlName="bank"
+			/>
+			<app-select
+				class="w-100"
+				label="Tipo de cuenta:"
+				placeholder="Seleccione tipo de cuenta"
+				[formGroup]="form"
+				[options]="[{ id: '1', text: 'Soles' }]"
+				controlName="accountType"
+			/>
+		</div>
+		<app-input-file class="w-100" [formGroup]="form" controlName="file" />
+		<div class="w-100 d-flex gap-4 justify-content-center align-items-center">
+			<button class="btn btn-outline-secondary py-3 px-6" type="button" (click)="instanceModal.close()">
+				Cerrar
+			</button>
+			<button class="btn btn-secondary py-3 px-6" type="submit" [disabled]="!form.invalid">
+				Cargar Registros
+			</button>
+		</div>
+	</form>
+</app-modal>

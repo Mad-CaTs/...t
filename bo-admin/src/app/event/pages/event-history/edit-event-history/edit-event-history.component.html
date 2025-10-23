@@ -1,0 +1,285 @@
+<div class="edit-event-history-card flex flex-column gap-6 p-6 bg-white w-100">
+  <!-- Encabezado -->
+  <div class="edit-header-bar">
+    <div class="left">
+      <button class="back-button" aria-label="Volver" (click)="onBack()">
+        <i class="bi bi-arrow-left"></i>
+      </button>
+      <h1 class="event-title">{{ eventName }}</h1>
+    </div>
+
+    <div class="right">
+      <button class="cancel-button" (click)="onBack()">Cancelar</button>
+      <button class="save-button" (click)="onSave()" [disabled]="isSaveDisabled">Guardar cambios</button>
+    </div>
+  </div>
+
+  <!-- Grid 2 columnas -->
+  <div class="event-grid">
+    <!-- Columna multimedia -->
+    <div class="event-media-section">
+      <div class="media-alert">
+        <i class="bi bi-exclamation-circle"></i>
+        <p>
+          Dado que se trata de un evento ya realizado, es necesario incluir contenido relacionado.
+          <strong>Como mínimo 2 imágenes y 1 video</strong> resumen del evento.
+        </p>
+      </div>
+
+      <div class="media-placeholder">
+        <ng-container *ngIf="imageFile1 || imageUrl; else defaultImg1">
+          <img [src]="imageFile1 ? imagePreview1 : imageUrl" alt="Imagen 1 del evento" />
+        </ng-container>
+        <ng-template #defaultImg1>
+          <i class="bi bi-image"></i>
+        </ng-template>
+      </div>
+      <div class="media-placeholder">
+        <ng-container *ngIf="imageFile2 || secondImageUrl; else defaultImg2">
+          <img [src]="imageFile2 ? imagePreview2 : secondImageUrl" alt="Imagen 2 del evento" />
+        </ng-container>
+        <ng-template #defaultImg2>
+          <i class="bi bi-image"></i>
+        </ng-template>
+      </div>
+      <!-- Miniatura de video -->
+      <div
+        class="media-placeholder video-placeholder"
+        [class.disabled]="!videoUrlValid || videoThumbError"
+        (click)="videoUrlValid && !videoThumbError && onGoToVideo()"
+      >
+        <ng-container *ngIf="videoUrlValid && !videoThumbError; else defaultVideoThumb">
+          <img
+            class="clickable"
+            [src]="videoUrl | youtubeThumb"
+            alt="Miniatura video del evento"
+            (error)="onVideoThumbError()"
+          />
+          <ng-container *ngIf="videoUrlValid">
+            <i class="bi bi-play-circle overlay-icon"></i>
+          </ng-container>
+        </ng-container>
+        <ng-template #defaultVideoThumb>
+          <i class="bi bi-camera-video thumb-placeholder" aria-label="Video placeholder"></i>
+        </ng-template>
+      </div>
+    </div>
+
+    <!-- Columna formulario -->
+    <div class="event-form-section">
+      <form class="form-grid">
+        <!-- Fila 1 -->
+        <div class="form-row">
+          <div class="form-group name-group">
+            <label>Nombre del evento</label>
+            <input type="text" [(ngModel)]="eventName" name="eventName" placeholder="Rellenar nombre del evento" readonly class="disabled-input" />
+          </div>
+
+          <div class="form-group checkbox-group disabled-input" [class.active]="isMainEvent">
+            <label>&nbsp;</label>
+            <label class="checkbox-row pill">
+              <input
+                type="checkbox"
+                name="isMainEvent"
+                [(ngModel)]="isMainEvent"
+                disabled
+                class="disabled-input"
+              />
+              <span class="checkbox-label">Evento principal</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Fila 2 -->
+        <div class="form-row">
+          <div class="form-group">
+            <label>Estado del evento</label>
+            <select [(ngModel)]="statusEvent" name="statusEvent" disabled class="disabled-input">
+              <option [value]="statusEvent">{{ statusEvent }}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Tipo de evento</label>
+            <select [(ngModel)]="eventTypeName" name="eventTypeName" disabled class="disabled-input">
+              <option [value]="eventTypeName">{{ eventTypeName }}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Tipo de entrada</label>
+            <select [(ngModel)]="ticketTypeName" name="ticketTypeName" disabled class="disabled-input">
+              <option [value]="ticketTypeName">{{ ticketTypeName }}</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Fila 3 -->
+        <div class="form-row">
+          <div class="form-group span-2">
+            <label>Fecha</label>
+            <input type="date" [(ngModel)]="eventDate" name="eventDate" readonly class="disabled-input" />
+          </div>
+          <div class="form-group">
+            <label>Hora inicio</label>
+            <input type="time" [(ngModel)]="startDate" name="startDate" readonly class="disabled-input" />
+          </div>
+          <div class="form-group">
+            <label>Hora fin</label>
+            <input type="time" [(ngModel)]="endDate" name="endDate" readonly class="disabled-input" />
+          </div>
+        </div>
+        <!-- Fila 4: Lugar (non-virtual) or URL (virtual) -->
+        <div class="form-row" *ngIf="eventTypeName?.toLowerCase() !== 'virtual'">
+          <div class="form-group">
+            <label>Lugar de eventos</label>
+            <input type="text" [(ngModel)]="nameVenue" name="nameVenue" placeholder="Rellenar lugar del evento" readonly class="disabled-input" />
+          </div>
+        </div>
+        <!-- Fila 5: País, Ciudad, Dirección for non-virtual -->
+        <div class="form-row" *ngIf="eventTypeName?.toLowerCase() !== 'virtual'">
+          <div class="form-group">
+            <label>País</label>
+            <input type="text" [(ngModel)]="country" name="country" placeholder="Rellenar país" readonly class="disabled-input" />
+          </div>
+          <div class="form-group">
+            <label>Ciudad</label>
+            <input type="text" [(ngModel)]="city" name="city" placeholder="Rellenar ciudad" readonly class="disabled-input" />
+          </div>
+          <div class="form-group">
+            <label>Dirección</label>
+            <input type="text" [(ngModel)]="address" name="address" placeholder="Rellenar dirección" readonly class="disabled-input" />
+          </div>
+        </div>
+        <!-- Fila virtual: URL del evento -->
+        <div class="form-row" *ngIf="eventTypeName?.toLowerCase() === 'virtual'">
+          <div class="form-group span-2">
+            <label>URL del evento</label>
+            <input type="text" [(ngModel)]="eventUrl" name="eventUrl" placeholder="https://..." readonly class="disabled-input" />
+          </div>
+        </div>
+
+        <!-- Descripción -->
+        <div class="form-group description-group" [class.error-group]="descriptionError">
+          <label>Descripción del evento</label>
+          <div class="input-with-counter">
+            <textarea
+              #descriptionModel="ngModel"
+              required
+              rows="4"
+              maxlength="1000"
+              [(ngModel)]="description"
+              name="description"
+              placeholder="Rellenar descripción del evento"
+              (keydown)="preventLeadingSpace($event); preventDoubleSpace($event); preventLongSegmentOnType($event)"
+              (paste)="preventLongSegmentOnPaste($event)"
+            ></textarea>
+            <div
+              class="char-counter"
+              [ngClass]="{
+                warning: (description.length || 0) > 800,
+                full:    (description.length || 0) >= 1000
+              }"
+            >
+              {{ description.length || 0 }}/1000
+            </div>
+          </div>
+          <div class="error" *ngIf="descriptionModel.touched && descriptionModel.errors?.['required']">
+            La descripción es obligatoria.
+          </div>
+          <div class="error" *ngIf="descriptionModel.touched && descriptionModel.errors?.['maxlength']">
+            Máximo 1000 caracteres permitidos.
+          </div>
+        </div>
+
+        <!-- Video URL -->
+        <div class="form-group video-group">
+          <label>Video del evento (URL)</label>
+          <input type="text"
+                 [(ngModel)]="videoUrl"
+                 name="videoUrl"
+                 placeholder="www.youtube.com/watch?v=92IyMTGl6kQ&list=RD..."
+                 (input)="videoErrorMsg = null"
+                 (blur)="validateVideoUrl()" />
+          <div class="error" *ngIf="videoErrorMsg">
+            {{ videoErrorMsg }}
+          </div>
+        </div>
+
+        <!-- Contenido -->
+        <div class="form-group content-group" [class.error-group]="contentError">
+          <label>Contenido del evento</label>
+          <div class="file-dropzone"
+               (click)="fileInput.click()"
+               (drop)="onDrop($event)"
+               (dragover)="$event.preventDefault(); onDragOver(true)"
+               (dragleave)="onDragOver(false)"
+               [class.dragover]="dragOver">
+            <span class="file-drop-label">
+              📎 {{ dragOver ? 'Suelta para subir...' : 'Subir imagen' }}
+            </span>
+            <input #fileInput
+                   type="file"
+                   accept=".png,.jpg,.jpeg,.webp"
+                   hidden
+                   (change)="onFileSelected($event)" />
+          </div>
+          <div class="error" *ngIf="errorMsg">{{ errorMsg }}</div>
+        </div>
+
+        <!-- Formato info -->
+        <div class="media-alert info-alert">
+          <i class="bi bi-info-circle"></i>
+          <p>
+            Formatos admitidos: png, jpg, jpeg y webp. Tamaño máximo: 1.2 MB.
+          </p>
+        </div>
+        <!-- Vista previa de imágenes cargadas -->
+        <div class="uploaded-files flex flex-column gap-4">
+          <!-- Card for Imagen 1 always visible -->
+          <div class="file-card flex items-center gap-3 p-3 bg-white rounded shadow">
+            <ng-container *ngIf="imageFile1 || imageUrl; else placeholder1">
+              <img class="thumb w-16 h-16 object-cover rounded" [src]="imageFile1 ? imagePreview1 : imageUrl" alt="Preview imagen 1" />
+            </ng-container>
+            <ng-template #placeholder1>
+              <div class="flex flex-col items-center justify-center w-16 h-16 bg-gray-100 rounded">
+                <i class="bi bi-image text-3xl text-gray-400"></i>
+              </div>
+            </ng-template>
+            <div class="file-info flex flex-column flex-1">
+              <p class="file-name text-sm font-medium">{{ imageFile1 || imageUrl ? 'Imagen 1' : 'Subir imagen 1' }}</p>
+              <p class="file-size text-xs text-gray-500" *ngIf="imageFile1">{{ (imageFile1.size/1024) | number:'1.0-0' }} KB</p>
+            </div>
+            <button class="delete-button text-gray-400 hover:text-gray-600" (click)="removeImage1()">
+              <i class="bi bi-trash"></i>
+            </button>
+          </div>
+          <!-- Card for Imagen 2 always visible -->
+          <div class="file-card flex items-center gap-3 p-3 bg-white rounded shadow">
+            <ng-container *ngIf="imageFile2 || secondImageUrl; else placeholder2">
+              <img class="thumb w-16 h-16 object-cover rounded" [src]="imageFile2 ? imagePreview2 : secondImageUrl" alt="Preview imagen 2" />
+            </ng-container>
+            <ng-template #placeholder2>
+              <div class="flex flex-col items-center justify-center w-16 h-16 bg-gray-100 rounded">
+                <i class="bi bi-image text-3xl text-gray-400"></i>
+              </div>
+            </ng-template>
+            <div class="file-info flex flex-column flex-1">
+              <p class="file-name text-sm font-medium">{{ imageFile2 || secondImageUrl ? 'Imagen 2' : 'Subir imagen 2' }}</p>
+              <p class="file-size text-xs text-gray-500" *ngIf="imageFile2">{{ (imageFile2.size/1024) | number:'1.0-0' }} KB</p>
+            </div>
+            <button class="delete-button text-gray-400 hover:text-gray-600" (click)="removeImage2()">
+              <i class="bi bi-trash"></i>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<app-modal-notify
+  *ngIf="showNotify"
+  [title]="notifyTitle"
+  [message]="notifyMessage"
+  [iconType]="notifyType"
+  (closed)="onNotifyClose()"
+></app-modal-notify>

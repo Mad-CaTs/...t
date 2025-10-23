@@ -1,0 +1,70 @@
+.modal-header {
+  border-bottom: 1px solid #dee2e6;
+  padding: 1rem;
+
+  .modal-title {
+    font-size: 1rem;
+    margin: 0;
+    color: #212529;
+  }
+
+  i {
+    color: #ff6b00;
+    font-size: 1.25rem;
+  }
+}
+
+.modal-body {
+  padding: 1.5rem;
+
+  .form-control {
+    &:read-only {
+      background-color: #f8f9fa;
+    }
+  }
+
+  textarea {
+    resize: none;
+    
+    &:focus {
+      border-color: #ff6b00;
+      box-shadow: 0 0 0 0.2rem rgba(255, 107, 0, 0.25);
+    }
+  }
+
+  .input-group-text {
+    background-color: #f8f9fa;
+    border-left: none;
+    
+    i {
+      color: #6c757d;
+    }
+  }
+}
+
+.modal-footer {
+  border-top: 1px solid #dee2e6;
+  padding: 1rem;
+
+  .btn-primary {
+    background-color: #ff6b00;
+    border-color: #ff6b00;
+    
+    &:hover:not(:disabled) {
+      background-color: darken(#ff6b00, 5%);
+      border-color: darken(#ff6b00, 5%);
+    }
+
+    &:disabled {
+      background-color: lighten(#ff6b00, 20%);
+      border-color: lighten(#ff6b00, 20%);
+    }
+  }
+
+  .btn-outline-secondary {
+    &:hover {
+      background-color: #6c757d;
+      color: white;
+    }
+  }
+}

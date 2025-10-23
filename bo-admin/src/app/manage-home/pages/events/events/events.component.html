@@ -1,0 +1,67 @@
+<div class="d-flex flex-column w-100 gap-6">
+	<!--List | Filter-->
+	<h4 class="fs-5 text-black fw-medium m-0">Listado de eventos</h4>
+	<div class="w-100 d-flex">
+		<app-input
+			class="w-100"
+			placeholder="Buscar evento"
+			name="search"
+			type="search"
+			controlName="search"
+			[formGroup]="form"
+			iconLeft="bi bi-search"
+		/>
+		<div class="w-100"></div>
+	</div>
+	<div class="w-100 d-flex justify-content-end align-items-center gap-4">
+		<button class="btn btn-secondary" type="button" (click)="onCreateEvent()">Agregar Evento</button>
+		<button class="btn btn-outline-secondary" type="button" (click)="onSearch()">Actualizar</button>
+	</div>
+	<!--Table-->
+	<table-pagination class="w-100 d-block mt-4" />
+	<!--Table | Table-->
+	<app-common-table
+		class="w-100 d-block mt-4"
+		[headers]="table.headers"
+		[checkedAll]="table.checkedAll"
+		[headersMinWidth]="table.headersMinWidth"
+		[noCheckboxes]="table.noCheckBoxes"
+		[headersArrows]="table.headersArrows"
+		(onCheckedAll)="table.changeCheckedAll($event)"
+	>
+		<tr class="w-100 d-flex py-2 align-items-center" *ngFor="let item of table.data">
+			<td class="w-40px d-flex justify-content-center">
+				<div class="form-check form-check-sm form-check-custom form-check-solid">
+					<input
+						class="form-check-input"
+						type="checkbox"
+						[checked]="table.getChecked(item.id)"
+						(change)="table.changeCheckId($event, item.id)"
+						data-kt-check="true"
+						data-kt-check-target=".widget-9-check"
+					/>
+				</div>
+			</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.subtypeEvent }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.presenter }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.startDate }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.endDate }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">
+				<img [src]="item.flyerUrl" width="38" alt="Flyer preview" />
+			</td>
+			<td class="w-100 text-gray-900 text-center fs-6 text-break">{{ item.meetUrl }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.inputType }}</td>
+			<td class="w-100 d-flex justify-content-center">
+				<div class="badge badge-success" *ngIf="item.status">Activo</div>
+				<div class="badge badge-danger" *ngIf="!item.status">Inactivo</div>
+			</td>
+
+			<td class="w-100 d-flex justify-content-center">
+				<i class="bi bi-pencil-fill fs-4 cursor-pointer" (click)="onEditEvent(item.id)"></i>
+			</td>
+			<td class="w-100 d-flex justify-content-center">
+				<i class="bi bi-trash3 fs-4 cursor-pointer" (click)="onDeleteEvent(item.id)"></i>
+			</td>
+		</tr>
+	</app-common-table>
+</div>

@@ -1,0 +1,92 @@
+<div class="card card-xxl-stretch mb-5 mb-xl-8 all-transitions-1000">
+  <app-table
+      [customRows]="true"
+      [noCheckboxes]="true"
+      [headers]="['Usuario', 'Suscripción', 'Fecha', 'Acciones']"
+  >
+    <!-- Mostrar mensaje cuando no hay datos -->
+    <tr *ngIf="paginatedData.length === 0">
+      <td colspan="4" class="text-center">
+        <span class="text-muted fw-bold fs-4">Busca un socio y envía un correo de recuerdo.</span>
+      </td>
+    </tr>
+
+    <!-- Mostrar filas de datos cuando existen -->
+    <tr
+        *ngFor="let d of paginatedData; let i = index"
+        [class.row-table-odd]="i % 2 === 1"
+    >
+      <td>
+        <div class="d-flex align-items-center">
+          <div class="symbol symbol-45px me-5">
+            <img src="./assets/media/avatars/blank.png" alt="" />
+          </div>
+          <div class="d-flex justify-content-start flex-column">
+            <span class="text-dark fw-bolder fs-6 text-uppercase" style="word-break: break-all;">
+              {{ d.username }}
+            </span>
+            <span class="text-muted fw-bold text-muted d-block fs-7">
+              {{ d.fullname }}
+            </span>
+            <span class="text-muted fw-bold text-muted d-block fs-7">
+              {{ d.email }}
+            </span>
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class="d-flex flex-column">
+          <span
+              class="fw-bold"
+              [style]="'color: ' + d.date + ' ;'"
+          >{{ d.subscription }}</span>
+        </div>
+      </td>
+      <td>
+        <div class="d-flex flex-column">
+          <span class="link-info link-offset-2 link-underline-opacity-25">
+            {{ d.date }}
+          </span>
+        </div>
+      </td>
+      <td>
+        <div class="d-flex justify-content-start flex-shrink-0">
+          <button
+              class="btn btn-bg-light btn-active-color-dark button-actions me-1"
+              (click)="onEmailing.emit({ id: d.id.toString(), emailingData: d })"
+          >
+            <span
+                [inlineSVG]="'./assets/media/icons/custom/email.svg'"
+                class="svg-icon svg-icon-3 button-actions__icon"
+            ></span>
+            <span class="button-actions__label">Enviar correo</span>
+          </button>
+        </div>
+      </td>
+    </tr>
+  </app-table>
+
+  <!-- Paginación con iconos de texto -->
+  <div class="pagination-panel" *ngIf="paginatedData.length > 0">
+    <div class="pagination-info">
+      Mostrando {{ (currentPage - 1) * itemsPerPage + 1 }} - {{ currentPage * itemsPerPage > totalItems ? totalItems : currentPage * itemsPerPage }} de {{ totalItems }} registros
+    </div>
+    <div class="pagination-controls">
+      <button
+          class="pagination-icon"
+          [disabled]="currentPage === 1"
+          (click)="previousPage()"
+      >
+        ←
+      </button>
+      <span class="pagination-page">Página {{ currentPage }} de {{ totalPages }}</span>
+      <button
+          class="pagination-icon"
+          [disabled]="currentPage === totalPages"
+          (click)="nextPage()"
+      >
+        →
+      </button>
+    </div>
+  </div>
+</div>

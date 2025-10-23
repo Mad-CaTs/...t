@@ -1,0 +1,98 @@
+<app-modal [title]="' '">
+    <div class="member-modal">
+        <div class="d-flex align-items-center gap-3">
+            <div class="mm-icon">
+                <span class="mm-icon-glyph">🧾</span>
+            </div>
+            <div class="mm-titles">
+                <h2 class="mm-title"> Detalle del socio</h2>
+                <p class="mm-subtitle">Información del socio y su historial de afiliados</p>
+            </div>
+        </div>
+
+        <div class="mm-section">
+            <div class="mm-section-title">Datos del registro</div>
+            <div class="kv-card">
+                <div class="kv-row">
+                    <div class="kv-key">Usuario</div>
+                    <div class="kv-value">{{summary?.userName}}</div>
+                </div>
+                <div class="kv-row">
+                    <div class="kv-key">Nombre y Apellido</div>
+                    <div class="kv-value">{{summary?.fullName}}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mm-section">
+            <div class="mm-section-title text-center">
+                <strong>Historial de afiliaciones</strong>
+            </div>
+             <!-- Filtros -->
+            <div class="filters-wrap">
+                <button type="button" class="pill" [class.active]="preset==='lastCycle'" (click)="applyLastCycle()">
+                Último ciclo
+                </button>
+                <button type="button" class="pill" [class.active]="preset==='lastTwoCycles'" (click)="applyLastTwoCycles()">
+                Últimos dos ciclos
+                </button>
+                <button type="button" class="pill" [class.active]="preset==='lastMonth'" (click)="applyLastMonth()">
+                Último mes
+                </button>
+                <button type="button" class="pill" [class.active]="preset==='lastQuarter'" (click)="applyLastQuarter()">
+                Último trimestre
+                </button>
+                <button type="button" class="pill" [class.active]="preset==='lastYear'" (click)="applyLastYear()">
+                Último año
+                </button>
+                <button type="button" class="pill" [class.active]="preset==='allTime'" (click)="applyAllTime()">
+                Todo el tiempo
+                </button>
+
+                <button type="button" class="pill outline" (click)="openCustomRange()">
+                + Rango Personalizado
+                </button>
+            </div>
+
+            <!-- Rango personalizado -->
+            <div *ngIf="showCustom" class="custom-range">
+                <input type="date" class="form-control input-sm" >
+                <span>—</span>
+                <input type="date" class="form-control input-sm" >
+                <button class="btn btn-secondary btn-sm" >Aplicar</button>
+                <button class="btn btn-link btn-sm" (click)="showCustom=false">Cancelar</button>
+            </div>
+            <div style="width: 100%; height: 240px;">
+               <p-chart type="line" [data]="chartData" [options]="chartOptions"></p-chart>
+            </div>
+            <div class="stat-pills">
+                <div class="stat-pill">
+                    <span class="stat-value text-primary">
+                    {{ statsForm.get('totalDirectAffiliates')?.value || 0 }}
+                    </span>
+                    <span class="stat-label">Total afiliaciones</span>
+                </div>
+                <div class="stat-pill">
+                    <span class="stat-value"
+                        [ngClass]="{ 'text-success': (statsForm.get('tendency')?.value || 0) > 0,
+                                    'text-danger': (statsForm.get('tendency')?.value || 0) < 0,
+                                    'text-muted': (statsForm.get('tendency')?.value || 0) === 0 }">
+                    {{ formatTendency(statsForm.get('tendency')?.value) }}
+                    </span>
+                    <span class="stat-label">Tendencia vs periodo anterior</span>
+                </div>
+
+                <div class="stat-pill">
+                    <span class="stat-value text-primary">
+                    {{ statsForm.get('totalAffiliatesThisMonth')?.value || 0 }}
+                    </span>
+                    <span class="stat-label">Afiliados este mes</span>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="d-flex flex-row justify-content-center align-items-center">
+      <button class="btn btn-secondary px-3 fs-12" type="button" style="height: fit-content" (click)="instanceModal.close()">Confirmar</button>
+    </div>
+    </div>
+</app-modal>

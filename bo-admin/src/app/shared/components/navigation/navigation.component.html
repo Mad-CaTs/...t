@@ -1,0 +1,31 @@
+<nav class="event-tab-wrapper" #wrapper>
+	<div class="event-tab-container" #tabContainer role="tablist" aria-label="Navegación">
+		<ng-container *ngFor="let item of data; index as i; trackBy: trackByIndex">
+			<a
+				*ngIf="!noPaths; else noPathsTpl"
+				#tabRef
+				class="event-tab"
+				[routerLink]="item.path"
+				[attr.role]="'tab'"
+				[attr.aria-selected]="i === currentIndex"
+				[class.active]="i === currentIndex"
+			>
+				{{ item.name }}
+			</a>
+			<ng-template #noPathsTpl>
+				<button
+					#tabRef
+					type="button"
+					class="event-tab"
+					[attr.role]="'tab'"
+					[attr.aria-selected]="i === currentIndex"
+					[class.active]="i === currentIndex"
+					(click)="setIndex(i)"
+				>
+					{{ item.name }}
+				</button>
+			</ng-template>
+		</ng-container>
+		<span class="event-tab-indicator" #indicator></span>
+	</div>
+</nav>

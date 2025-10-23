@@ -1,0 +1,53 @@
+<label [for]="controlName" class="fs-6 text-muted fw-bold" *ngIf="label">{{ label }}</label>
+
+<div
+	class="d-flex position-relative align-items-center rounded border border-2 border-gray-300 bg-gray-100"
+	style="width: fit-content"
+	[formGroup]="formGroup"
+>
+	<div
+		class="position-absolute border rounded border-2 border-secondary"
+		style="width: 74px; height: 44px; top: -2px; left: -2px; transition: transform ease-in-out 400ms"
+		[style.transform]="transform"
+	></div>
+	<ng-container *ngIf="!optionText">
+		<span
+			class="w-70px h-40px d-flex justify-content-center align-items-center fw-bold fs-6 cursor-pointer"
+			[class.bg-white]="control.value"
+			[class.text-secondary]="control.value"
+			[class.text-muted]="!control.value"
+			(click)="onChange(true)"
+		>
+			Sí
+		</span>
+		<span
+			class="w-70px h-40px d-flex justify-content-center align-items-center fw-bold fs-6 cursor-pointer"
+			[class.bg-white]="!control.value"
+			[class.text-secondary]="!control.value"
+			[class.text-muted]="control.value"
+			(click)="onChange(false)"
+		>
+			No
+		</span>
+	</ng-container>
+	<ng-container *ngIf="optionText">
+		<span
+			class="w-70px h-40px d-flex justify-content-center align-items-center fw-bold fs-6 cursor-pointer"
+			[class.bg-white]="control.value"
+			[class.text-secondary]="control.value"
+			[class.text-muted]="!control.value"
+			(click)="onChange(true)"
+		>
+			{{ textFirst }}
+		</span>
+		<span
+			class="w-70px h-40px d-flex justify-content-center align-items-center fw-bold fs-6 cursor-pointer"
+			[class.bg-white]="!control.value"
+			[class.text-secondary]="!control.value"
+			[class.text-muted]="control.value"
+			(click)="onChange(false)"
+		>
+			{{ textSecond }}
+		</span>
+	</ng-container>
+</div>

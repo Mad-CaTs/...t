@@ -1,0 +1,118 @@
+<!--begin::Form-->
+<form class="form w-100" [formGroup]="loginForm" novalidate="novalidate" id="kt_login_signin_form"
+	(ngSubmit)="submit()">
+	<!--begin::Heading-->
+	<div class="text-left mb-10">
+		<h1 class="text-dark mb-3">Bienvenido</h1>
+		<p>Registre sus credenciales para ingresar al panel del administrador</p>
+		<div class="text-gray-400 fw-bold fs-4 d-none">
+			¿Nuevo aquí?
+			<a routerLink="/metronic-view/auth/registration" id="kt_login_signup"
+				class="link-primary fw-bolder">Regístrate</a>
+		</div>
+	</div>
+	<!--end::Heading-->
+
+	<!-- begin::Alert error-->
+	<ng-container *ngIf="hasError">
+		<div class="mb-lg-15 alert alert-danger">
+			<div class="alert-text font-weight-bold">La información es incorrecta</div>
+		</div>
+	</ng-container>
+	<!-- end::Alert error-->
+
+	<!--begin::Form group-->
+	<div class="fv-row mb-10">
+		<label class="form-label fs-6 fw-bolder text-dark">Usuario</label>
+		<input class="form-control " type="email" name="email" formControlName="email" autocomplete="off"
+			placeholder="Ingresar usuario" />
+		<ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+				validation: 'required',
+				message: 'El nombre de usuario es requerido',
+				control: loginForm.controls['email']
+			}"></ng-container>
+		<ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+				validation: 'email',
+				message: 'El nombre de usuario es inválido',
+				control: loginForm.controls['email']
+			}"></ng-container>
+		<ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+				validation: 'minLength',
+				message: 'Debe tener al menos 3 caracteres',
+				control: loginForm.controls['email']
+			}"></ng-container>
+		<ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+				validation: 'maxLength',
+				message: 'Debe tener como máximo 360 caracteres',
+				control: loginForm.controls['email']
+			}"></ng-container>
+	</div>
+	<!--end::Form group-->
+
+	<!--begin::Form group-->
+	<div class="fv-row mb-10">
+		<div class="d-flex justify-content-between mt-n5">
+			<div class="d-flex flex-stack mb-2">
+				<label class="form-label fw-bolder text-dark fs-6 mb-0">Contraseña</label>
+			</div>
+		</div>
+		<div class="input-group">
+			<input class="form-control form-control-lg " type="password" name="password" autocomplete="off"
+				formControlName="password" placeholder="Ingresar contraseña"
+				[type]="hidePassword ? 'password' : 'text'" />
+			<span (click)="togglePasswordVisibility()" class="input-group-text">
+				<i [ngClass]="hidePassword ? 'fa fa-eye' : 'fa fa-eye-slash'"></i>
+			</span>
+		</div>
+		<ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+				validation: 'required',
+				message: 'La contraseña es requerida',
+				control: loginForm.controls['password']
+			}"></ng-container>
+		<ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+				validation: 'minlength',
+				message: 'La contraseña debe tener al menos 3 caracteres',
+				control: loginForm.controls['password']
+			}"></ng-container>
+		<ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+				validation: 'maxLength',
+				message: 'La contraseña debe tener como maximo 100 caracteres',
+				control: loginForm.controls['password']
+			}"></ng-container>
+	</div>
+	<!--end::Form group-->
+
+	<div class="form-group">
+		<input class="form-check-input" type="checkbox" id="rememberMeCheckbox" formControlName="remember" />
+		<label class="form-check-label" for="rememberMeCheckbox" style="margin-left: 10px;">Recordar contraseña</label>
+	</div>
+
+	<!--begin::Action-->
+	<div class="text-center mt-5">
+		<button type="submit" id="kt_sign_in_submit" class="btn btn-lg btn-secondary w-50 mb-5"
+			[disabled]="loginForm.invalid">
+			<ng-container *ngIf="isLoading$ | async">
+				<span class="indicator-progress" [style.display]="'block'">
+					Por favor espere...
+					<span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+				</span>
+			</ng-container>
+			<ng-container *ngIf="!(isLoading$ | async)">
+				<span class="indicator-label">Iniciar Sesión</span>
+			</ng-container>
+		</button>
+
+	</div>
+	<!--end::Action-->
+</form>
+<!--end::Form-->
+
+<ng-template #formError let-control="control" let-message="message" let-validation="validation">
+	<ng-container *ngIf="control.hasError(validation) && (control.dirty || control.touched)">
+		<div class="fv-plugins-message-container">
+			<span role="alert">
+				{{ message }}
+			</span>
+		</div>
+	</ng-container>
+</ng-template>

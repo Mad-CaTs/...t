@@ -1,0 +1,375 @@
+<div class="d-flex flex-column gap-6 p-6 bg-white w-100">
+	<ul
+		ngbNav
+		#subNav="ngbNav"
+		[activeId]="activeSubTab"
+		(activeIdChange)="onSubTabChange($event)"
+		class="nav nav-tabs mb-4"
+	>
+		<li [ngbNavItem]="'certificados'">
+			<a ngbNavLink>Certificados y Contratos</a>
+			<ng-template ngbNavContent>
+				<!-- Contenido Certificados -->
+				<div>
+					<!-- Buscador  -->
+					<div class="filters mb-6 mt-4">
+						<div class="row g-3 align-items-end">
+							<div class="col-md-10">
+								<label class="form-label">Buscador</label>
+								<input
+									type="text"
+									class="form-control"
+									placeholder="Buscar por solicitante, dni o portfolio"
+									[(ngModel)]="searchTerm"
+									(input)="onFiltersChange()"
+								/>
+							</div>
+							<!-- Botón para limpiar el buscador -->
+							<div class="d-grid col-2 mx-auto">
+								<button class="btn btn-secondary w-100" (click)="clearFilters()">
+									Limpiar
+								</button>
+							</div>
+						</div>
+					</div>
+					<!-- Filtros -->
+					<div class="mb-3 row g-2 align-items-end">
+						<div class="col-md-3">
+							<label for="fecha" class="form-label">Fecha de Solicitud</label>
+							<input
+								type="date"
+								id="fecha"
+								class="form-control"
+								[(ngModel)]="filtroFecha"
+								(change)="applyFilter()"
+							/>
+						</div>
+
+						<div class="col-md-3">
+							<label for="legalizacion" class="form-label">Tipo de Legalización</label>
+							<select
+								id="legalizacion"
+								class="form-select"
+								[(ngModel)]="filtroLegalizacion"
+								(change)="applyFilter()"
+							>
+								<option value="">Seleccione el tipo</option>
+								<option value="Express">Express</option>
+								<option value="Regular">Regular</option>
+							</select>
+						</div>
+
+						<div class="col-md-3">
+							<label for="filtroSolicitadoEn" class="form-label"
+								>Modificado el lugar de recojo a</label
+							>
+							<select
+								id="solicitadoEn"
+								class="form-select"
+								[(ngModel)]="filtroSolicitadoEn"
+								(change)="applyFilter()"
+							>
+								<option value="">Seleccione uno</option>
+								<option value="Perú - Lima">Perú - Lima</option>
+								<option value="Provincia">Provincia</option>
+								<option value="Extranjero">Extranjero</option>
+							</select>
+							<!-- <select
+								id="filtroSolicitadoEn"
+								class="form-select"
+								[(ngModel)]="filtroSolicitadoEn"
+								(change)="applyFilter()"
+							>
+								<option value="">Seleccione uno</option>
+								<option value="Oficina de Surquillo">Oficina de Surquillo</option>
+								<option value="Club Ribera del Rio">Club Ribera del Rio</option>
+							</select> -->
+						</div>
+
+						<div class="d-grid gap-2 col-2 mx-auto">
+							<button class="btn btn-outline-secondary" (click)="refreshData()">
+								Refrescar
+							</button>
+						</div>
+
+						<div class="col-md-3 d-none">
+							<button class="btn btn-secondary text-white fw-bold">Exportar data</button>
+						</div>
+
+						<!-- <div class="col-md-3">
+							<label for="searchInput" class="form-label">Buscar por Solicitante</label>
+							<input
+								type="text"
+								id="searchInput"
+								class="form-control"
+								[(ngModel)]="searchTerm"
+								(input)="applyFilter()"
+							/>
+						</div> -->
+					</div>
+					<!-- Tabla -->
+					<app-common-table
+						class="w-100"
+						[headers]="table.headers"
+						[checkedAll]="table.checkedAll"
+						[headersMinWidth]="table.headersMinWidth"
+						[noCheckboxes]="table.noCheckBoxes"
+						[noCheckboxes]="true"
+						(onCheckedAll)="table.changeCheckedAll($event)"
+					>
+						<tr
+							*ngFor="let item of table.data; let i = index"
+							class="w-100 d-flex py-2 align-items-center"
+							[title]="'Documento: ' + item.documentKey"
+						>
+							<td class="w-100 text-center">{{ i + 1 }}</td>
+							<td class="w-100 text-center">{{ item.userDate | date : 'yyyy-MM-dd' }}</td>
+							<td class="w-100 text-center">
+								{{ item.userRealName ? item.userRealName : 'No hay data' }}
+							</td>
+							<td class="w-100 text-center">
+								{{ item.userDni ? item.userDni : 'No hay data' }}
+							</td>
+							<td class="w-100 text-center">
+								{{
+									item.legalizationType === 1
+										? 'Regular'
+										: item.legalizationType === 2
+										? 'Express'
+										: 'No hay data'
+								}}
+							</td>
+							<!-- <td class="w-100 text-center">
+								{{ item.portfolioName ? item.portfolioName : 'No hay data' }}
+							</td> -->
+							<td class="w-100 text-center">
+								{{
+									item.userLocalUbic === 1
+										? 'Perú - Lima'
+										: item.userLocalUbic === 2
+										? 'Provincia'
+										: 'Extranjero'
+								}}
+							</td>
+							<td class="w-100 text-center">
+								{{ item.status === 1 ? 'Pendiente' : 'No hay data' }}
+							</td>
+							<td class="w-100 text-center">S/.{{ item.price }}</td>
+							<td class="w-100 d-flex justify-content-center">
+								<img
+									[src]="item.imageUrl"
+									width="25"
+									height="25"
+									alt="img"
+									role="button"
+									style="cursor: pointer"
+									(click)="item.imageUrl && abrirImagen(item.imageUrl)"
+								/>
+							</td>
+
+							<td class="w-100 d-flex flex-column align-items-center gap-2">
+								<button
+									class="btn btn-primary btn-sm"
+									(click)="openAprobadoModalNew(item.documentKey, aprobadoModal)"
+								>
+									Aceptar
+								</button>
+								<button
+									class="btn btn-danger btn-sm"
+									(click)="openRechazoModal(rechazoModal, item)"
+								>
+									Rechazar
+								</button>
+							</td>
+						</tr>
+					</app-common-table>
+				</div>
+			</ng-template>
+		</li>
+
+		<li *ngIf="mostrarContratos" [ngbNavItem]="'contratos'">
+			<a ngbNavLink>Contratos</a>
+			<ng-template ngbNavContent>
+				<!-- Contenido Contratos -->
+				<div>
+					<!-- Filtros -->
+					<div class="mb-3 row g-2 align-items-end">
+						<div class="col-md-3">
+							<label for="filtroFecha" class="form-label">Fecha de Solicitud</label>
+							<input
+								type="date"
+								id="filtroFecha"
+								class="form-control"
+								[(ngModel)]="filtroFecha"
+								(change)="applyFilter()"
+							/>
+						</div>
+
+						<div class="col-md-3">
+							<label for="filtroLegalizacion" class="form-label">Tipo de Legalización</label>
+							<select
+								id="filtroLegalizacion"
+								class="form-select"
+								[(ngModel)]="filtroLegalizacion"
+								(change)="applyFilter()"
+							>
+								<option value="">Seleccione el tipo</option>
+								<option value="Express">Express</option>
+								<option value="Regular">Regular</option>
+							</select>
+						</div>
+
+						<div class="col-md-3">
+							<label for="filtroSolicitadoEn" class="form-label"
+								>Modificado el lugar de recojo a</label
+							>
+							<select
+								id="filtroSolicitadoEn"
+								class="form-select"
+								[(ngModel)]="filtroSolicitadoEn"
+								(change)="applyFilter()"
+							>
+								<option value="">Seleccione uno</option>
+								<option value="Oficina de Surquillo">Oficina de Surquillo</option>
+								<option value="Club Ribera del Rio">Club Ribera del Rio</option>
+							</select>
+						</div>
+
+						<div class="d-grid gap-2 col-2 mx-auto">
+							<button class="btn btn-outline-secondary" (click)="refreshData()">
+								Refrescar
+							</button>
+						</div>
+
+						<div class="col-md-3 d-none">
+							<button class="btn btn-secondary text-white fw-bold">Exportar data</button>
+						</div>
+					</div>
+
+					<!-- Tabla -->
+					<app-common-table
+						class="w-100"
+						[headers]="table.headers"
+						[checkedAll]="table.checkedAll"
+						[headersMinWidth]="table.headersMinWidth"
+						[noCheckboxes]="table.noCheckBoxes"
+						[noCheckboxes]="true"
+						(onCheckedAll)="table.changeCheckedAll($event)"
+					>
+						<tr
+							*ngFor="let item of table.data; let i = index"
+							class="w-100 d-flex py-2 align-items-center"
+							[title]="'Documento: ' + item.documentKey"
+						>
+							<td class="w-100 text-center">{{ i + 1 }}</td>
+							<td class="w-100 text-center">{{ item.userDate | date : 'yyyy-MM-dd' }}</td>
+							<td class="w-100 text-center">{{ item.userRealName }}</td>
+							<td class="w-100 text-center">{{ item.userDni }}</td>
+							<td class="w-100 text-center">DNI</td>
+							<td class="w-100 text-center">{{ item.legalizationType }}</td>
+							<!-- <td class="w-100 text-center">{{ item.portfolioName }}</td> -->
+							<td class="w-100 text-center">{{ item.userLocal }}</td>
+							<td class="w-100 text-center">{{ item.status }}</td>
+							<td class="w-100 text-center">{{ item.price }}</td>
+							<td class="w-100 d-flex justify-content-center">
+								<img
+									[src]="item.imageUrl"
+									width="25"
+									height="25"
+									alt="img"
+									role="button"
+									style="cursor: pointer"
+									(click)="item.imageUrl && openImagePreview(item.imageUrl)"
+								/>
+							</td>
+							<td class="w-100 d-flex flex-column align-items-center gap-2">
+								<button
+									class="btn btn-primary btn-sm"
+									(click)="openAprobadoModal(aprobadoModal)"
+								>
+									Aceptar
+								</button>
+								<button
+									class="btn btn-danger btn-sm"
+									(click)="openRechazoModal(rechazoModal, item)"
+								>
+									Rechazar
+								</button>
+							</td>
+						</tr>
+					</app-common-table>
+				</div>
+			</ng-template>
+		</li>
+	</ul>
+
+	<ng-template #imageModal let-modal>
+		<div class="modal-header">
+			<h4 class="modal-title">Vista previa de la imagen</h4>
+			<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+		</div>
+		<div class="modal-body text-center">
+			<img [src]="selectedImageUrl" alt="Vista previa" class="img-fluid rounded shadow" />
+		</div>
+	</ng-template>
+
+	<!-- Modal Aprobado -->
+	<ng-template #aprobadoModal let-modal>
+		<div class="modal-header">
+			<h4 class="modal-title">Registro exitoso</h4>
+			<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+		</div>
+		<div class="modal-body">
+			<p>Tu solicitud ha sido aprobada.</p>
+		</div>
+	</ng-template>
+
+	<!-- Modal Rechazo -->
+	<ng-template #rechazoModal let-modal>
+		<div class="modal-header">
+			<h4 class="modal-title">Rechazar Pago</h4>
+			<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+		</div>
+		<div class="modal-body d-flex flex-column gap-3">
+			<p>Al rechazar el pago deberá indicar un motivo.</p>
+
+			<div>
+				<label class="form-label fw-bold">Motivo</label>
+				<select class="form-select" [(ngModel)]="motivoSeleccionado">
+					<option [ngValue]="null" disabled selected>Seleccione uno</option>
+					<option *ngFor="let motivo of motivos" [ngValue]="motivo">
+						{{ motivo.text }}
+					</option>
+					<!-- <option *ngFor="let motivo of motivos" [value]="motivo">
+						{{ motivo }}
+					</option> -->
+				</select>
+			</div>
+
+			<div>
+				<label class="form-label fw-bold">Mensaje adicional o solución alternativa</label>
+				<textarea class="form-control" rows="3" [(ngModel)]="mensajeAdicional"></textarea>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button class="btn btn-secondary" (click)="modal.dismiss()">Cancelar</button>
+			<button class="btn btn-danger" [disabled]="!motivoSeleccionado" (click)="confirmarRechazo()">
+				Rechazar
+			</button>
+		</div>
+	</ng-template>
+
+	<!-- Modal Confirmación de Rechazo -->
+	<ng-template #rechazoConfirmadoModal let-modal>
+		<div class="modal-header">
+			<h4 class="modal-title">Pago rechazado</h4>
+			<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+		</div>
+		<div class="modal-body">
+			<p>Enviaremos el mensaje por correo al usuario.</p>
+		</div>
+	</ng-template>
+
+	<!-- Outlet de contenido -->
+	<div [ngbNavOutlet]="subNav"></div>
+</div>

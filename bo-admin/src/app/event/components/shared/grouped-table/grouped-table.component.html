@@ -1,0 +1,61 @@
+<div *ngFor="let group of groupedData; let gi = index" class="zones-table-group">
+  <div class="group-header" [class.expanded]="expanded[gi]">
+    <div class="group-left" (click)="toggleExpandGroup(gi)">
+      <img *ngIf="group.imageUrl" [src]="group.imageUrl" class="group-thumb" alt="" />
+      <span class="group-title">{{ group.title }}</span>
+      <span class="zone-count">{{ group.data.length }}</span>
+    </div>
+    <span class="group-actions">
+      <button *ngIf="showEditGroup" class="icon-btn" (click)="editGroup.emit(group); toggleExpandGroup(gi); $event.stopPropagation()">
+        <i class="bi bi-pencil"></i>
+      </button>
+      <i class="bi" [ngClass]="expanded[gi] ? 'bi-chevron-up' : 'bi-chevron-down'" (click)="toggleExpandGroup(gi); $event.stopPropagation()"></i>
+    </span>
+  </div>
+
+  <table *ngIf="expanded[gi]" class="table-generic">
+    <ng-container *ngIf="hasColumnWidths">
+      <colgroup>
+        <col *ngFor="let w of columnWidths" [style.width]="w" />
+      </colgroup>
+    </ng-container>
+
+    <thead>
+      <tr>
+        <th *ngFor="let col of columns">{{ col }}</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let row of getPagedRows(gi); let i = index"
+          (click)="toggleSelect(gi, i)"
+          [class.selected]="selectedGroupIndex === gi && selectedRowIndex === i">
+        <td *ngFor="let key of keys">
+          <ng-container *ngIf="key === 'item'; else defaultKey">
+            {{ formatItem(gi, i) }}
+          </ng-container>
+          <ng-template #defaultKey>
+            {{ row[key] || '-' }}
+          </ng-template>
+        </td>
+
+        <td class="actions">
+          <div class="action-buttons">
+            <button *ngIf="showEdit" class="icon-btn" (click)="edit.emit(row); $event.stopPropagation()"><i class="bi bi-pencil"></i></button>
+            <button *ngIf="showDelete" class="icon-btn" (click)="delete.emit(row); $event.stopPropagation()"><i class="bi bi-trash"></i></button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <app-table-paginator
+    *ngIf="expanded[gi]"
+    [length]="group.data.length"
+    [pageSize]="groupPageSizes[gi]"
+    [pageIndex]="groupPages[gi]"
+    (pageChange)="onPageChange(gi, $event)"
+    (pageSizeChange)="onPageSizeChange(gi, $event)"
+  ></app-table-paginator>
+</div>

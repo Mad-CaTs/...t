@@ -1,0 +1,51 @@
+/* src/app/shared/components/location-search-bar/location-search-bar.component.scss */
+.loc-search { width: 100%; }
+
+.loc-search__row {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+
+.input-wrap {
+  position: relative;
+  flex: 1 1 auto;
+}
+
+.input-spinner {
+  position: absolute;
+  right: .5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1rem;
+  height: 1rem;
+  pointer-events: none;
+}
+
+.loc-search__options {
+  position: absolute;
+  inset-inline: 0;
+  top: calc(100% + 4px);
+  max-height: 260px;
+  overflow: auto;
+  background: #fff;
+  border: 1px solid #e9ecef;
+  border-radius: .375rem;
+  z-index: 1060;
+  padding: .25rem 0;
+  list-style: none;
+  margin: 0;
+}
+
+.loc-search__options .option {
+  display: flex;
+  align-items: flex-start;
+  gap: .5rem;
+  padding: .5rem .75rem;
+  cursor: pointer;
+  font-size: .925rem;
+  line-height: 1.25rem;
+}
+
+.loc-search__options .option:hover,
+.loc-search__options .option.active { background: #f5f7fb; }

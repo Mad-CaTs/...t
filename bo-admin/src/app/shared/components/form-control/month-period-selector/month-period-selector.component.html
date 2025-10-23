@@ -1,0 +1,68 @@
+<label [for]="controlName" class="fs-6 text-muted fw-bold" *ngIf="label">
+	{{ label }}
+</label>
+
+<div
+	[formGroup]="formGroup"
+	ngbDropdown
+	#d="ngbDropdown"
+	display="dynamic"
+	placement="bottom-start"
+	class="d-block position-relative w-100"
+>
+	<button
+		class="dropdown-toggle form-select form-select-solid text-start text-truncate w-100"
+		ngbDropdownToggle
+		type="button"
+	>
+		{{ selectedPeriodsText || selectedMonthLabel }}
+	</button>
+
+	<div ngbDropdownMenu class="dropdown-menu w-100 mt-1 shadow-sm p-2 rounded">
+		<div class="form-group mb-3">
+			<label class="form-label">Mes</label>
+			<select class="form-select" [formControlName]="controlName" (change)="onMonthChange($event)">
+				<option [ngValue]="null" disabled hidden>
+					{{ placeholder }}
+				</option>
+				<option *ngFor="let m of groupedOptions" [ngValue]="m.value">
+					{{ m.label }}
+				</option>
+			</select>
+		</div>
+
+		<ng-container *ngIf="selectedMonthPeriods.length">
+			<div class="form-check-sm mb-2" *ngFor="let period of selectedMonthPeriods">
+				<input
+					type="checkbox"
+					class="form-check-input"
+					[id]="'period-' + period.id"
+					[checked]="selectedPeriods.has(period.id)"
+					(change)="onCheckboxChange($event, period)"
+				/>
+				<label class="form-check-label ps-2" [for]="'period-' + period.id">
+					{{ period.text }}
+				</label>
+			</div>
+
+			<div class="form-check-sm pt-2 mt-2 border-top">
+				<input
+					type="checkbox"
+					class="form-check-input"
+					[id]="'allPeriods'"
+					[checked]="allSelected"
+					(change)="toggleSelectAll($event)"
+				/>
+				<label class="form-check-label ps-2" for="allPeriods"> Todos los ciclos </label>
+			</div>
+		</ng-container>
+	</div>
+</div>
+
+<div
+	class="text-danger"
+	*ngIf="formGroup.get(periodsControlName) as periodsCtrl"
+	[ngClass]="{ 'mt-1': formGroup.get(periodsControlName)?.errors }"
+>
+	{{ periodsCtrl | inputError }}
+</div>

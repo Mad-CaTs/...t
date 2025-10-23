@@ -1,0 +1,75 @@
+<div class="d-flex flex-column gap-6 p-6 bg-white w-100">
+	<!--Title-->
+	<h1 class="fs-1 text-black fw-medium m-0">Editor de Comisiones</h1>
+	<!--Filters-->
+	<form [formGroup]="form" class="d-flex w-100 flex-column gap-6">
+		<h4 class="fs-5 text-black fw-normal m-0">Buscador</h4>
+		<div class="d-flex flex-column flex-md-row gap-6">
+			<app-input
+				class="w-100"
+				label="Ingrese campo de búsqueda:"
+				placeholder="Buscar por"
+				type="search"
+				[formGroup]="form"
+				controlName="search"
+				helper="Puedes buscarlo por nombre, usuario o número de documento."
+			/>
+			<div class="w-100 d-flex flex-column gap-2">
+				<span class="fs-6 text-black fw-normal">Buscar como:</span>
+				<div class="d-flex align-items-center gap-3 px-4 py-2">
+					<input
+						class="form-check-input cursor-pointer"
+						type="radio"
+						name="searchAs"
+						id="searchAsUser"
+						formControlName="searchAs"
+						value="user"
+					/>
+					<label class="fs-6 fw-normal text-black" for="searchAsUser">Usuario</label>
+					<input
+						class="form-check-input cursor-pointer"
+						type="radio"
+						name="searchAs"
+						formControlName="searchAs"
+						id="searchAsPartner"
+						value="partner"
+					/>
+					<label class="fs-6 fw-normal text-black" for="searchAsPartner">Patrocinador</label>
+				</div>
+			</div>
+		</div>
+		<div class="d-flex justify-content-end">
+			<button class="btn btn-secondary" type="submit" [disabled]="form.invalid">Buscar</button>
+		</div>
+	</form>
+	<!--Table | Pagination-->
+	<table-pagination textBtn="Actualizar" class="w-100" />
+	<!--Table | Table-->
+	<app-common-table
+		class="w-100"
+		[headers]="table.headers"
+		[checkedAll]="table.checkedAll"
+		[headersMinWidth]="table.headersMinWidth"
+		[noCheckboxes]="table.noCheckBoxes"
+		[headersArrows]="table.headersArrows"
+		(onCheckedAll)="table.changeCheckedAll($event)"
+	>
+		<tr class="w-100 d-flex py-2 align-items-center" *ngFor="let item of table.data">
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.spornship }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6" style="word-break: break-all;">{{ item.username }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.partner }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.level }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.bonusType }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.membership }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.percentaje.toFixed(2) }}%</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.points }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">S/. {{ item.amount.toFixed(2) }}</td>
+			<td class="w-100 d-flex justify-content-center">
+				<i
+					class="text-danger w-25px"
+					[inlineSVG]="'/assets/media/icons/duotune/general/gen027.svg'"
+				></i>
+			</td>
+		</tr>
+	</app-common-table>
+</div>

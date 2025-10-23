@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RejectPaymentRequest {
 
-    @NotNull(message = "El ID del motivo del rechazo es obligatorio")
+    @NotNull(message = "Rejection reason ID is required")
     private Long reasonId;
 
-    @Size(max = 250, message = "El detalle del motivo no puede exceder 250 caracteres")
+    @Size(max = 250, message = "Detail of the reason cannot exceed 250 characters")
     private String detail;
 }

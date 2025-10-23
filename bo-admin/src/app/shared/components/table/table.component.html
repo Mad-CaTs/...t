@@ -1,0 +1,202 @@
+<!-- begin::Header -->
+<div
+    class="card-header border-0 pt-5"
+    *ngIf="headerTitle || headerSubText || headerbtn"
+>
+    <h3 class="card-title align-items-start flex-column">
+        <span class="card-label fw-bolder fs-3 mb-1" *ngIf="headerTitle">{{
+            headerTitle
+        }}</span>
+        <span class="text-muted mt-1 fw-bold fs-7" *ngIf="headerSubText">{{
+            headerSubText
+        }}</span>
+    </h3>
+    <div
+        class="card-toolbar"
+        data-bs-toggle="tooltip"
+        data-bs-placement="top"
+        data-bs-trigger="hover"
+        title="Click to add a user"
+        *ngIf="headerbtn"
+    >
+        <button
+            class="btn btn-sm btn-light-primary"
+            (click)="onClickBtn.emit(null)"
+        >
+            <span
+                [inlineSVG]="'./assets/media/icons/duotune/arrows/arr075.svg'"
+                class="svg-icon svg-icon-3"
+            ></span>
+            {{ headerbtn }}
+        </button>
+    </div>
+</div>
+<!-- end::Header -->
+<!-- begin::Body -->
+<div class="card-body py-3">
+    <!-- begin::Table container -->
+    <div class="table-responsive">
+        <!-- begin::Table -->
+        <table
+            class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4"
+        >
+            <!-- begin::Table head -->
+            <thead>
+                <tr class="fw-bolder text-muted">
+                    <th class="w-25px" *ngIf="!noCheckboxes">
+                        <div
+                            class="form-check form-check-sm form-check-custom form-check-solid"
+                        >
+                            <input
+                                class="form-check-input"
+                                type="checkbox"
+                                [checked]="checkedAll"
+                                (change)="onChangeGroupCheckbox($event)"
+                                data-kt-check="true"
+                                data-kt-check-target=".widget-9-check"
+                            />
+                        </div>
+                    </th>
+                    <th
+                        *ngFor="let header of headers; let i = index"
+                        class="min-w-150px"
+                        [class.text-end]="i + 1 === headers.length && header !== 'Acciones'"
+                    >
+                        {{ header }}
+                    </th>
+                </tr>
+                <tr class="fw-bolder text-muted">
+                    <th class="w-25px" *ngIf="!noCheckboxes">
+                        <div
+                            class="form-check form-check-sm form-check-custom form-check-solid"
+                        >
+                            <input
+                                class="form-check-input"
+                                type="checkbox"
+                                [checked]="checkedAll"
+                                (change)="onChangeGroupCheckbox($event)"
+                                data-kt-check="true"
+                                data-kt-check-target=".widget-9-check"
+                            />
+                        </div>
+                    </th>
+                    <th
+                        *ngFor="let header of headersA; let i = index"
+                        class="min-w-150px"
+                        [class.text-end]="i + 1 === headers.length && header !== 'Acciones'"
+                    >
+                        {{ header }}
+                    </th>
+                </tr>
+            </thead>
+            <!-- end::Table head -->
+            <!-- begin::Table body -->
+            <tbody>
+                <ng-content *ngIf="customRows"></ng-content>
+                <ng-container *ngIf="!customRows">
+                    <tr
+                        *ngFor="let d of data; let i = index"
+                        [class.row-table-odd]="i % 2 === 1"
+                    >
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <div class="symbol symbol-45px me-5">
+                                    <img
+                                        src="./assets/media/avatars/blank.png"
+                                        alt=""
+                                    />
+                                </div>
+                                <div
+                                    class="d-flex justify-content-start flex-column"
+                                >
+                                    <span class="text-dark fw-bolder fs-6" style="word-break: break-all;">
+                                        {{ d.username }}
+                                    </span>
+                                    <span
+                                        class="text-muted fw-bold text-muted d-block fs-7"
+                                    >
+                                        {{ d.fullname }} {{ d.lastname }}
+                                    </span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div
+                                class="d-flex flex-row gap-2 align-items-center"
+                            >
+                                <i
+                                    [style.color]="
+                                        d.role === 1 ? '#496b99' : '#56914e'
+                                    "
+                                    style="font-size: 1.5em"
+                                    [class]="
+                                        d.role === 1
+                                            ? 'bi bi-megaphone'
+                                            : 'bi bi-person-fill-up'
+                                    "
+                                ></i>
+                                <span
+                                    class="fw-bold fs-6"
+                                    [style.color]="
+                                        d.role === 1 ? '#496b99' : '#56914e'
+                                    "
+                                >
+                                    {{
+                                        d.role === 1
+                                            ? 'Soporte'
+                                            : 'Tiene todos los accessos'
+                                    }}
+                                </span>
+                            </div>
+                        </td>
+                        <td>
+                            <span
+                                class="text-muted fw-bold text-muted d-block fs-7"
+                            >
+                                {{ d.lastConnection }}
+                            </span>
+                        </td>
+                        <td>
+                            <div
+                                class="d-flex justify-content-end flex-shrink-0"
+                            >
+                                <button
+                                    (click)="onClickBtn.emit(d)"
+                                    class="btn btn-bg-light btn-active-color-dark button-actions me-1"
+                                >
+                                    <span
+                                        [inlineSVG]="
+                                            './assets/media/icons/duotune/art/art005.svg'
+                                        "
+                                        class="svg-icon svg-icon-3 button-actions__icon"
+                                    ></span>
+                                    <span class="button-actions__label"
+                                        >Editar</span
+                                    >
+                                </button>
+                                <button
+                                    (click)="onDeleteBtn.emit(d)"
+                                    class="btn btn-bg-light btn-active-color-dark button-actions"
+                                >
+                                    <span
+                                        [inlineSVG]="
+                                            './assets/media/icons/duotune/general/gen027.svg'
+                                        "
+                                        class="svg-icon svg-icon-3 button-actions__icon"
+                                    ></span>
+                                    <span class="button-actions__label"
+                                        >Eliminar</span
+                                    >
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+            <!-- end::Table body -->
+        </table>
+        <!-- end::Table -->
+    </div>
+    <!-- end::Table container -->
+</div>
+<!-- begin::Body -->

@@ -1,0 +1,150 @@
+<div class="d-flex flex-column justify-content-center gap-6 w-100">
+    <div class="d-flex align-items-center" (click)="navigateToPayments()">
+		<img
+			class="arrow-back-icon"
+			src="./assets/media/icons/custom/arrow.svg"
+		/>
+		<p class="return small-image">Volver</p>
+	</div>
+	<!--Header-->
+	<div class="d-flex w-100 justify-content-between align-items-center">
+	  <h4 class="fs-1 text-black fw-normal m-0">Cronograma de Pagos</h4>
+	  <div class="d-flex align-items-center gap-4">
+		<button class="btn btn-secondary" (click)="refresh()">Refrescar</button>
+	  </div>
+	</div>
+	<p class="align-items-left">Aquí podrás visualizar todos tus registros de pagos</p>
+	<!--Table-->
+	<div class="overflow-x-auto w-100">
+	  <table class="w-100 d-flex flex-column">
+		<thead class="d-block w-100 bg-gray-200 rounded-top border-top border-start border-end border-gray-300">
+		  <tr class="w-100 d-flex align-items-center p-4">
+			<th class="w-40px d-flex justify-content-center" *ngIf="!table.noCheckBoxes">
+			  <!-- <div class="form-check form-check-sm form-check-custom form-check-solid">
+				<input
+				  class="form-check-input"
+				  type="checkbox"
+				  [checked]="table.checkedAll"
+				  data-kt-check="true"
+				  data-kt-check-target=".widget-9-check"
+				/>
+			  </div> -->
+			</th>
+			<th class="w-100 fs-8 text-gray-800 text-center fw-normal" *ngFor="let item of table.headers; index as i">
+			  <span>{{ item }}</span>
+			  <i class="w-20px text-gray-800 cursor-pointer ms-2"></i>
+			</th>
+		  </tr>
+		</thead>
+		<tbody class="w-100 bg-white d-block p-4">
+		  <ng-container *ngFor="let item of table.data; let i = index">
+			<tr class="w-100 d-flex py-2 align-items-center">
+			  <td class="w-100px d-flex justify-content-center">
+				<div class="form-check form-check-sm form-check-custom form-check-solid" [formGroup]="form" *ngIf="item.state === 'Pendiente de validación' && item.numberQuotePay>0">
+				  <input
+					class="form-check-input"
+					type="radio"
+					name="selected"
+					[value]="item.id"
+					formControlName="selected"
+					data-kt-check="true"
+					data-kt-check-target=".widget-9-check"
+				  />
+				</div>
+			  </td>
+			  <td class="w-100 text-gray-900 text-center fs-8">{{ item.description }}</td>
+			  <td class="w-100 text-gray-900 text-center fs-8">{{ item.date }}</td>
+			  <td class="w-100 text-gray-900 text-center fs-8">$ {{ item.capital.toFixed(2) }}</td>
+			  <td class="w-100 text-gray-900 text-center fs-8">$ {{ item.amortization.toFixed(2) }}</td>
+			  <td class="w-100 text-gray-900 text-center fs-8">$ {{ item.interest.toFixed(2) }}</td>
+			  <td class="w-100 text-gray-900 text-center fs-8">$ {{ item.cuota.toFixed(2) }}</td>
+			  <td class="w-100 text-gray-900 text-center fs-8">{{ item.points }}</td>
+			  <td class="w-100 text-gray-900 text-center fs-8">{{ item.state }}</td>
+			  <td class="w-100 text-gray-900 text-center fs-8 small-image custom-text" (click)="toggleRow(i)" *ngIf="item.numberQuotePay > 0">{{ isRowExpanded(i) ? 'OCULTAR' : 'MOSTRAR' }}</td>
+			  <td class="w-100 text-gray-900 text-center fs-8 small-image" *ngIf="!(item.numberQuotePay > 0)">N/A</td>
+			  <td class="w-100 text-gray-900 text-center fs-8" *ngIf="!getIsSelected(item.id)">{{item.observation}}</td>
+			  <div *ngIf="getIsSelected(item.id)">
+				<td class="w-100 text-gray-900 text-center fs-8">
+					<button class="btn btn-primary py-1 px-3 cursor-pointer" (click)="onConfirm(item.idPayment, item.numberQuotePay)">
+				  		Aceptar
+					</button>
+					<button class="btn btn-danger py-1 px-3 cursor-pointer" (click)="onReject(item.idPayment, item.numberQuotePay)">
+				  		Rechazar
+					</button>
+			  	</td>
+			  </div>
+			</tr>
+				<tr *ngIf="isRowExpanded(i)" class="w-100">
+					<td colspan="5" class="p-0">
+					<div class="border-bottom p-4" style="margin-left: 35px;" >
+						<ng-container *ngFor="let code of item.opCode; let index = index">
+						<strong>Voucher {{index+1}}:</strong>
+						<div class="my-3"></div>
+						<div class="d-flex flex-column" >
+							<!-- First Row -->
+							<div class="d-flex flex-row gap-2">
+
+								<div class="info-container" *ngIf="!getIsSelected(item.id)"><strong>Cód. Operación:</strong> {{ code }}</div>
+								<div class="info-container" *ngIf="getIsSelected(item.id)" [formGroup]="form"><strong>Cód. Operación: </strong> 
+									<ng-container >
+										<input
+											class="custom-input"
+											placeholder="Cód. Operación"
+											[formControlName]="'opCode' + index"
+											type="text" 
+										/>
+									</ng-container>
+								</div>
+
+								<div class="info-container"  *ngIf="!getIsSelected(item.id)"><strong>Medio de Pago:</strong> {{ item.paymentChannel[index] }}</div>
+								<div class="info-container"  *ngIf="getIsSelected(item.id)" [formGroup]="form"><strong>Medio de Pago: </strong>
+									<ng-container>
+										<select
+											class="custom-select"
+											placeholder="Medio de pago"
+											[formControlName]="'paymentChannel' + index"
+										>
+										<option class="custom-select" *ngFor="let option of this.paymentTypeOptions" [value]="option.id">{{ option.text }}</option>
+										</select>
+									</ng-container>
+								</div>
+								
+								<div class="info-container"><strong>Nota:</strong> {{ item.nota[index] }}</div>
+								<div class="info-container"><strong>Moneda:</strong> {{ item.currency[index] }}</div>
+							</div>
+							<!-- Second Row  -->
+							<div class="d-flex flex-row gap-1">
+								<div class="info-container"><strong>Subtotal:</strong> $ {{ item.subtotal[index].toFixed(2) }}</div>
+								<div class="info-container"><strong>Comisión:</strong> $ {{ item.comission[index].toFixed(2) }}</div>
+								<div class="info-container"><strong>Mora:</strong> $ {{ item.mora[index].toFixed(2) }}</div>
+								<div class="info-container"><strong>Total:</strong> $ {{ item.total[index].toFixed(2) }}</div>
+								<div class="info-container small-image" (click)="openImageModal(item.imgUrl[index])"><strong>Imagen: </strong> 
+									<img height="11px" width="18px" src="./assets/media/icons/custom/eye.svg" /> 
+									<span class = "image-view"> Click para ver</span>
+								</div>
+								<!--Modal para mostrar la imagen agrandada-->
+								<ng-template #imageModal let-modal>
+									<div class="modal-header">
+										<h4 class="modal-title">Voucher</h4>
+										<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+									</div>
+									<div class="modal-body text-center">
+										<img [src]="selectedImageUrl" class="img-fluid" alt="Image Preview" class="img-fluid"/>
+									</div>
+								</ng-template>
+							</div>
+							<div class="my-3"></div>
+						</div>
+						
+						</ng-container>
+					</div>
+					</td>
+				</tr>
+			
+		  </ng-container>
+		</tbody>
+		<tfoot class="w-100 bg-gray-200 rounded-bottom border-bottom border-start border-end border-gray-300 h-55px"></tfoot>
+	  </table>
+	</div>
+  </div>
+  

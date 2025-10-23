@@ -1,0 +1,29 @@
+<app-modal title="Agregar Familia de paquetes">
+	<form [formGroup]="form" class="d-flex w-100 flex-column gap-6" (submit)="onSubmit()">
+		<app-input
+			label="Nombre"
+			placeholder="Ingrese nombre de familia de paquete"
+			[formGroup]="form"
+			controlName="name"
+		/>
+		<app-textarea
+			label="Descripción"
+			placeholder="Ingrese descripción"
+			[formGroup]="form"
+			controlName="description"
+		/>
+
+		<div class="alert alert-secondary text-center" role="alert">
+			Al crear una nueva Familia de paquetes, esta adquirira automaticamente la versión N°1
+		</div>
+
+		<div class="w-100 d-flex justify-content-center align-items-center gap-4">
+			<button class="btn btn-outline-secondary" type="button" (click)="instanceModal.close()">
+				Cancelar
+			</button>
+			<button class="btn btn-secondary" type="submit" [disabled]="form.invalid || loading">
+				Guardar cambios
+			</button>
+		</div>
+	</form>
+</app-modal>

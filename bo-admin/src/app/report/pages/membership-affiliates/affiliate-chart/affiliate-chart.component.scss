@@ -1,0 +1,33 @@
+/* affiliate-chart.component.scss */
+
+.filters-top {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.chart-wrapper {
+  margin-bottom: 1.5rem;
+}
+
+.export {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1.5rem;
+
+  .btn-export {
+    background-color: #ff7700;
+    border: none;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: #e06600;
+    }
+  }
+}

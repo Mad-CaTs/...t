@@ -1,0 +1,80 @@
+<!-- <app-modal [title]="'Suscripciones'"> -->
+	<div class="d-flex flex-column gap-6">
+		<div class="d-flex align-items-center">
+			<div class="symbol symbol-45px me-5">
+				<img src="./assets/media/avatars/blank.png" alt="" />
+			</div>
+			<div class="d-flex justify-content-start flex-column">
+				<span class="text-dark fw-bolder fs-6 text-uppercase">{{ '@' + userName }}</span>
+
+				<span class="fw-bold text-muted d-block fs-6">
+					{{ fullName }}
+				</span>
+				<span class="text-muted d-block fs-7"> {{ document }} - {{ typeDocument }} </span>
+			</div>
+		</div>
+
+		<app-table
+			[noCheckboxes]="true"
+			[customRows]="true"
+			[headers]="[
+				'Suscripción',
+				'Descripción de cuota pendiente',
+				'Fecha pendiente de cuota',
+				'Fecha de última cuota pagada',
+				'Cuota pendiente',
+				'Estado',
+				'Editar'
+			]"
+		>
+			<tr *ngFor="let d of suscriptions; let i = index" [class.row-table-odd]="i % 2 === 1">
+				<td>
+					<div class="d-flex flex-column">
+						<span class="fw-bolder fs-7" [style]="'color: gold'">{{ d.pack.name }}</span>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex flex-column">
+						<span class="fw-bold fs-7 text-muted">{{ d.pack.description }}</span>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex flex-column">
+						<span class="fw-bold fs-7 text-muted">{{ formatDate(d.datePendingFee) }}</span>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex flex-column">
+						<span class="fw-bold fs-7 text-muted">{{ formatDate(d.lastDatePaidFee) }}</span>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex flex-column">
+						<span class="fw-bold fs-7 text-muted">$ {{ d.pendingFee.toFixed(2) }}</span>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex justify-content-start">
+						<button
+							class="btn p-0 text-start"
+							(click)="onEditStatusSubscriptions(d)"
+						>
+							<span class="fw-bold fs-7 fw-semibold text-primary">{{ d.status }}</span>
+						</button>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex justify-content-end flex-shrink-0">
+						<button class="btn btn-bg-light btn-active-color-dark button-actions" (click)="onEditSubscriptions(d)">
+							<span
+								[inlineSVG]="'./assets/media/icons/duotune/art/art005.svg'"
+								class="svg-icon svg-icon-3 button-actions__icon"
+							></span>
+							<span class="button-actions__label">Editar</span>
+						</button>
+					</div>
+				</td>
+			</tr>
+		</app-table>
+	</div>
+<!-- </app-modal> -->

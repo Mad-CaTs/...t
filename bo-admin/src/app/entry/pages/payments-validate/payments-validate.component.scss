@@ -1,0 +1,196 @@
+
+.payments-validate-card {
+  background-color: #ffffff;
+  padding: 24px 32px;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
+
+  width: 100%;
+  min-height: calc(100vh - 100px);
+
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.toolbar-card {
+  background-color: transparent;
+  box-shadow: none;
+  padding: 24px 32px;
+  margin-top: 16px;
+  flex-grow: 1;
+}
+
+:host-context(.night-mode) {
+  .payments-validate-card {
+    h2.title {
+      color: #ffffff !important;
+    }
+  }
+}
+
+:host ::ng-deep app-table-generic .table-generic .actions .action-buttons {
+  display: flex;
+  gap: 6px;
+  justify-content: flex-start;
+}
+
+:host ::ng-deep app-table-generic .table-generic .actions .action-buttons button {
+  border: none !important;
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+  color: #fff !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: filter 0.15s ease-in-out;
+}
+
+:host ::ng-deep app-table-generic .table-generic .actions .action-buttons button::after {
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+:host ::ng-deep app-table-generic .table-generic .actions .action-buttons button i {
+  display: none;
+}
+
+:host ::ng-deep app-table-generic .table-generic .actions .action-buttons button:first-child {
+  background-color: #2563eb !important;
+}
+:host ::ng-deep app-table-generic .table-generic .actions .action-buttons button:first-child::after {
+  content: ' Aceptar';
+}
+
+:host ::ng-deep app-table-generic .table-generic .actions .action-buttons button:nth-child(2) {
+  background-color: #dc2626 !important;
+}
+:host ::ng-deep app-table-generic .table-generic .actions .action-buttons button:nth-child(2)::after {
+  content: ' Rechazar';
+}
+
+:host ::ng-deep app-table-generic .table-generic .actions .action-buttons button:hover {
+  filter: brightness(0.92);
+}
+
+:host ::ng-deep app-table-generic .table-generic .actions .action-buttons button:has(.bi-pencil) {
+  background-color: #2563eb !important;
+}
+:host ::ng-deep app-table-generic .table-generic .actions .action-buttons button:has(.bi-pencil)::after {
+  content: ' Aceptar';
+}
+:host ::ng-deep app-table-generic .table-generic .actions .action-buttons button:has(.bi-trash) {
+  background-color: #dc2626 !important;
+}
+:host ::ng-deep app-table-generic .table-generic .actions .action-buttons button:has(.bi-trash)::after {
+  content: ' Rechazar';
+}
+
+:host-context(.night-mode) {
+  .payments-validate-card {
+    h2.title {
+      color: #ffffff !important;
+    }
+  }
+  ::ng-deep app-table-generic .table-generic .actions .action-buttons {
+    button:first-child {
+      background-color: #3b82f6 !important;
+    }
+    button:nth-child(2) {
+      background-color: #ef4444 !important;
+    }
+  }
+}
+
+:host ::ng-deep app-table-generic .accordion-toggle {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  line-height: 1;
+}
+:host ::ng-deep app-table-generic .accordion-toggle i {
+  font-size: 16px;
+  color: #6b7280;
+}
+:host ::ng-deep app-table-generic tr.selected .accordion-toggle i {
+  color: #1f2937;
+}
+
+:host ::ng-deep app-table-generic .detail-row td {
+  background: #f9fafb;
+  border-top: 1px solid #e5e7eb;
+  padding: 16px 24px;
+}
+
+:host ::ng-deep app-table-generic .detail-inline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 28px;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+:host ::ng-deep app-table-generic .detail-inline > span {
+  white-space: nowrap;
+}
+
+:host ::ng-deep app-table-generic .chip {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+:host ::ng-deep app-table-generic .chip--warning {
+  background: #fde68a;
+  color: #92400e;
+}
+:host ::ng-deep app-table-generic .detail-row td {
+  background: transparent;
+  border-top: 1px solid #e5e7eb;
+  padding: 16px 24px;
+}
+
+:host ::ng-deep app-table-generic .detail-stack {
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: 10px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+:host ::ng-deep app-table-generic .detail-stack strong {
+  font-weight: 600;
+}
+
+/* Chip de estado (se mantiene tu paleta) */
+:host ::ng-deep app-table-generic .chip {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+:host ::ng-deep app-table-generic .chip--warning {
+  background: #fde68a;
+  color: #92400e;
+}
+
+:host-context(.night-mode) {
+  ::ng-deep app-table-generic .detail-row td {
+    background: transparent;
+    border-top-color: rgba(255, 255, 255, 0.08);
+  }
+}
+
+:host-context(.night-mode) {
+  ::ng-deep app-table-generic .detail-row td {
+    background: rgba(255,255,255,0.04);
+    border-top-color: rgba(255,255,255,0.08);
+  }
+}

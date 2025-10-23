@@ -1,0 +1,39 @@
+<!-- src/app/shared/components/location-search-bar/location-search-bar.component.html -->
+<div class="loc-search">
+  <div class="loc-search__row">
+    <div class="input-wrap">
+      <input
+        type="text"
+        class="form-control"
+        [class.pe-5]="loading"
+        placeholder="Buscar dirección o lugar (mín. 3 caracteres)"
+        [formControl]="searchCtrl"
+        (focus)="openPanel()"
+        (blur)="closePanel(true)"
+        (keydown.arrowdown)="onArrowDown()"
+        (keydown.arrowup)="onArrowUp()"
+        (keydown.enter)="onEnter()"
+        aria-label="Buscar dirección o lugar"
+        autocomplete="off"
+      />
+      <div class="spinner-border spinner-border-sm input-spinner" role="status" *ngIf="loading" aria-label="Buscando...">
+        <span class="visually-hidden">Buscando...</span>
+      </div>
+
+      <ul class="loc-search__options shadow" *ngIf="showPanel && suggestions.length" role="listbox">
+        <li
+          *ngFor="let s of suggestions; index as i; trackBy: trackByIdx"
+          class="option"
+          [class.active]="i === highlighted"
+          role="option"
+          (mousedown)="pick(s)"
+        >
+          <i class="bi bi-geo-alt me-2"></i>
+          <span class="label">{{ s.label }}</span>
+        </li>
+      </ul>
+    </div>
+
+    <button class="btn btn-secondary" type="button" (click)="onSearch()">Buscar</button>
+  </div>
+</div>

@@ -1,0 +1,72 @@
+<div class="partner-documents-card flex flex-column gap-6 p-6 bg-white w-100">
+	<div class="d-flex align-items-center justify-content-between gap-3">
+
+		<h4 class="fs-5 text-black fw-medium m-0">Documentos del socio ( MOCK )</h4>
+        		<button type="button" class="btn btn-outline-secondary btn-sm" (click)="onBack()">
+			<i class="bi bi-arrow-left"></i>
+			<span class="ms-1">Volver</span>
+		</button>
+		
+	</div>
+	<div class="toolbar-card">
+		<filter-generic
+			[filters]="filters"
+			[values]="filterValues"
+			[columnsDesktop]="3"
+			[showActionButton]="false"
+			[showClearButton]="false"
+			[extraButtons]="extraButtons"
+			(extraAction)="onExtraAction($event)"
+		></filter-generic>
+
+		<ng-container *ngIf="totalFiltered > 0; else emptyState">
+			<app-table-generic
+				[columns]="genericColumns"
+				[keys]="genericKeys"
+				[data]="pagedData"
+				[columnWidths]="genericWidths"
+				[freezeOverflow]="true"
+				[pageIndex]="pageIndex"
+				[pageSize]="pageSize"
+				[showActions]="true"
+				[showView]="true"
+				[showEdit]="true"
+				[showDelete]="false"
+				[editFalseIconClass]="'bi bi-download'"
+				[editTrueIconClass]="'bi bi-download'"
+				[editFalseTooltip]="'Descargar'"
+				[editTrueTooltip]="'Descargar'"
+				(view)="onViewRow($event)"
+				(edit)="onEditRow($event)"
+			></app-table-generic>
+
+			<app-table-paginator
+				[length]="totalFiltered"
+				[pageSize]="pageSize"
+				[pageIndex]="pageIndex"
+				(pageChange)="onPageChange($event)"
+				(pageSizeChange)="onPageSizeChange($event)"
+			></app-table-paginator>
+		</ng-container>
+		<ng-template #emptyState>
+			<app-empty-state message="No data"></app-empty-state>
+		</ng-template>
+	</div>
+
+	<modal-document-upload
+		*ngIf="showUpload"
+		[show]="showUpload"
+		[iconClass]="'bi bi-file-earmark-arrow-up'"
+		[title]="'Subir documento'"
+		[subtitle]="'Selecciona el tipo de documento y adjunta un archivo en PDF.'"
+		[docTypes]="uploadDocTypes"
+		[allowedTypes]="['application/pdf']"
+		[acceptExts]="'.pdf'"
+		[maxSizeMB]="5"
+		[submitLabel]="'Subir'"
+		[cancelLabel]="'Cancelar'"
+		[loading]="uploadLoading"
+		(cancel)="onUploadCancel()"
+		(submit)="onUploadSubmit($event)"
+	></modal-document-upload>
+</div>

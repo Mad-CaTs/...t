@@ -2,8 +2,6 @@ package world.inclub.bonusesrewards.shared.payment.infrastructure.persistence.sc
 
 import world.inclub.bonusesrewards.shared.infrastructure.persistence.DataBaseConstants;
 
-import javax.xml.crypto.Data;
-
 public class PaymentSchema {
     public static final String SCHEMA = DataBaseConstants.BONUS_REWARDS_SCHEMA;
 

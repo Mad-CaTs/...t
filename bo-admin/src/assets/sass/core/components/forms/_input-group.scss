@@ -1,0 +1,31 @@
+.input-group {
+	&.input-group-solid {
+		background-color: transparent;
+		border: 1px solid $input-border-color !important;
+		@include border-radius($input-border-radius);
+
+		&:focus-within {
+			border-color: $input-solid-bg-focus !important;
+			box-shadow: 0 0 0 1px $input-solid-bg-focus;
+		}
+
+		&.input-group-sm {
+			@include border-radius($input-border-radius-sm);
+		}
+
+		&.input-group-lg {
+			@include border-radius($input-border-radius-lg);
+		}
+
+		.input-group-text {
+			background-color: transparent;
+			border: none !important;
+		}
+
+		.form-control {
+			background-color: transparent;
+			border: none !important;
+			box-shadow: none;
+		}
+	}
+}

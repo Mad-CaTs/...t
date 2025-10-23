@@ -1,0 +1,44 @@
+<div class="modal-header">
+  <h5 class="modal-title">Seleccionar ubicación en el mapa</h5>
+  <div class="header-buttons">
+    <button
+      type="button"
+      class="btn btn-outline-secondary me-2"
+      (click)="onCenterDefault()"
+      title="Centrar mapa"
+      aria-label="Centrar mapa"
+    >
+      <i class="bi bi-target"></i>
+      Centrar mapa
+    </button>
+    <button type="button" class="btn-close" aria-label="Close" (click)="onCancel()"></button>
+  </div>
+</div>
+
+<div class="modal-subheader">
+  <app-location-search-bar (goTo)="onGoTo($event)"></app-location-search-bar>
+
+  <div class="selection-hint" *ngIf="selectedCoords">
+    <i class="bi bi-geo-alt"></i>
+    <span class="label">
+      {{ selectedAddress || (selectedCoords[1] | number:'1.6-6') + ', ' + (selectedCoords[0] | number:'1.6-6') }}
+    </span>
+  </div>
+</div>
+
+<div class="modal-body">
+  <app-map-component
+    [coordinates]="initialCoordinates || [-77.0428, -12.0464]"
+    [mapType]="mapType"
+    (addressEvent)="onSelect($event)"
+  ></app-map-component>
+</div>
+
+<div class="modal-footer">
+  <small class="text-muted">
+    Busca una dirección o haz clic en el mapa. Luego presiona <strong>Guardar</strong>.
+  </small>
+  <button class="btn ms-auto save-btn" [disabled]="!selectedCoords || saving" (click)="onConfirm()">
+    Guardar
+  </button>
+</div>

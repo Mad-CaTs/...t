@@ -1,0 +1,48 @@
+<div class="flex flex-column gap-6 p-6 bg-white w-100">
+
+	<filter-generic
+		[filters]="genericFilters"
+		[values]="filterValues"
+		[columnsDesktop]="3"
+		[showClearButton]="true"
+		[clearLabel]="'Limpiar'"
+		[showActionButton]="false"
+		[extraButtons]="extraButtons"
+		(valuesChange)="onFiltersChange($event)"
+		(extraAction)="onExtraAction($event)"
+	></filter-generic>
+<div *ngIf="!loading">
+	<ng-container *ngIf="totalFiltered > 0; else emptyState">
+		<app-table-generic
+			[columns]="genericColumns"
+			[keys]="genericKeys"
+			[data]="pagedData"
+			[columnWidths]="genericWidths"
+			[freezeOverflow]="true"
+			[pageIndex]="pageIndex"
+			[pageSize]="pageSize"
+			[showActions]="false"
+		></app-table-generic>
+
+		<app-table-paginator
+			[length]="totalFiltered"
+			[pageSize]="pageSize"
+			[pageIndex]="pageIndex"
+			(pageChange)="onPageChange($event)"
+			(pageSizeChange)="onPageSizeChange($event)"
+		></app-table-paginator>
+	</ng-container>
+	<ng-template #emptyState>
+		<app-empty-state message="No data"></app-empty-state>
+	</ng-template>
+</div>
+</div>
+
+<ng-container *ngIf="loading">
+  <app-logo-spinner
+    [show]="true"
+    [fullscreen]="true"
+    [delay]="0"
+    [minVisible]="800">
+  </app-logo-spinner>
+</ng-container>

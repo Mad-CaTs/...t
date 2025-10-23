@@ -1,0 +1,74 @@
+<div class="d-flex flex-column gap-6 p-6 bg-white w-100">
+  <h1 class="fs-1 text-black fw-medium m-0">Periodo de Pagos</h1>
+  <div class="position-relative w-100">
+    <div class="d-flex justify-content-between mt-5">
+      <table-pagination class="w-100" [count]="totalRecords" [refresh]="refresh" [itemsPerPage]="10"
+        (pageChanged)="onPageChange($event)">
+      </table-pagination>
+    </div>
+    <div class="d-flex gap-4 position-absolute top-0 start-0">
+      <button class="btn btn-outline-secondary mt-4">Actualizar Estado</button>
+    </div>
+  </div>
+  <app-common-table class="w-100 d-block mt-4 table-container" [headers]="table.headers" [checkedAll]="table.checkedAll" [headersMaxWidth]="table.headersMaxWidth"
+    [headersMinWidth]="table.headersMinWidth" [noCheckboxes]="table.noCheckBoxes" [headersArrows]="table.headersArrows" [firstEmpty]="false">
+    <div class="spinner-container" *ngIf="loading">
+      <span class="spinner-border spinner-border-lg align-middle text-center ms-2"></span>
+    </div>
+    <tr class="w-100 d-flex py-2 align-items-center" *ngFor="let item of table.data">
+      <td class="w-100 text-gray-900 text-center fs-6">{{item.initialDate | arrayDate }}</td>
+      <td class="w-100 text-gray-900 text-center fs-6">{{item.endDate | arrayDate}}</td>
+      <td class="w-100 text-gray-900 text-center fs-6">{{item.payDate | arrayDate}}</td>
+      <td class="w-100 text-gray-900 text-center fs-6">{{ item.isActive == 1 ? 'Activo' : item.isActive == 2
+        ?'Procesando' : 'Inactivo' }}</td>
+      <td class="w-100 d-flex justify-content-center">
+        <div *ngIf="item.isActive == 1 && isPastDate(item.initialDate) && !isToday(item.initialDate)">
+          <span>Sin acciones</span>
+        </div>
+        <div class="action-buttons">
+          <button class="btn btn-outline-secondary" type="button" style="width: 125px;"
+            *ngIf="item.isActive == 1 && !isPastDate(item.initialDate)" (click)="deactivate(item.id)">
+            <div>
+              <div *ngIf="loadingButtonDeactiveState[item.id]">
+                <span class="spinner-border spinner-border-sm align-middle text-center ms-2"></span>
+              </div>
+              <div *ngIf="!loadingButtonDeactiveState[item.id]">
+                <span>Desactivar</span>
+              </div>
+            </div>
+          </button>
+          <button class="fixed-width-button btn btn-secondary ms-2" (click)="onModify(item)"
+            *ngIf="!isPastDate(item.initialDate)">
+            <div>
+              <span>Editar</span>
+            </div>
+          </button>
+          <button class="fixed-width-button btn btn-secondary ms-2" type="button" (click)="activate(item)"
+            *ngIf="isToday(item.initialDate)" [disabled]=" item.isActive==2 || loadingButtonActivateState[item.id]">
+            <div>
+              <div *ngIf="loadingButtonActivateState[item.id] || item.isActive==2">
+                <span class="spinner-border spinner-border-sm align-middle text-center ms-2"></span>
+              </div>
+              <div *ngIf="!loadingButtonActivateState[item.id] && item.isActive !== 2">
+                <span>Manual</span>
+              </div>
+            </div>
+          </button>
+        </div>
+      </td>
+      <td class="w-100 d-flex justify-content-center">
+        <button class="fixed-width-button btn btn-pagar-bonus mx-1 px-2" type="button" (click)="payBonus(item)"
+          [disabled]="isPastDate(item.payDate) || isFutureDate(item.endDate) || loadingButtonPayBonus[item.id] || item.status == 2">
+          <div>
+            <div *ngIf="loadingButtonPayBonus[item.id] || item.isActive==2">
+              <span class="spinner-border spinner-border-sm align-middle text-center ms-2"></span>
+            </div>
+            <div *ngIf="!loadingButtonPayBonus[item.id] && item.isActive !== 2">
+              <span>Pagar Bonus</span>
+            </div>
+          </div>
+        </button>
+      </td>
+    </tr>
+  </app-common-table>
+</div>

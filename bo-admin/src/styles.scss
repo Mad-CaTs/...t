@@ -1,0 +1,348 @@
+/* You can add global styles to this file, and also import other style files */
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+@import './assets/sass/style.scss';
+
+// Replace above style with this SCSS file to enable dark mode styles
+//@import "./assets/sass/style.dark";
+
+.row-table-odd {
+	background-color: #f7fcff;
+}
+
+.button-actions {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0;
+	width: fit-content;
+	max-width: 42.94px;
+	height: 42.94px;
+	transition: ease-in-out all 500ms;
+
+	&__icon {
+		position: absolute;
+		left: 0;
+		right: 0;
+		margin: auto;
+		margin-right: 0 !important;
+		transition: all ease-in-out 500ms;
+	}
+
+	&__label {
+		display: block;
+		width: auto;
+		opacity: 0;
+		color: #b5b5c3;
+		transition: ease-in-out all 500ms;
+	}
+
+	&:hover {
+		max-width: 400px;
+		transition-delay: 0.5s;
+	}
+
+	&:hover &__icon {
+		transform: translateX(calc(-100% + (0.68 * 100%))); // 90
+		transition-delay: 0.5s;
+	}
+
+	&:hover &__label {
+		width: auto;
+		opacity: 1;
+		transition-delay: 0.5s;
+		color: black;
+		margin-left: 18px;
+		transition-delay: 0.5s;
+	}
+}
+
+.all-transitions-1000 {
+	transition: all ease-in-out 1000ms;
+}
+
+.rotation-180 {
+	transform: rotate(180deg);
+}
+
+.bg-image-contain {
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.bg-image-cover {
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.no-select {
+	user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+}
+
+.pos-dropdowns {
+	top: 48px;
+	z-index: 1;
+	animation: 300ms ease-in-out spawnDropdown;
+}
+
+.scale-0-to-1 {
+	transform-origin: center left;
+	animation: 300ms ease-in-out Scale0To1;
+}
+
+// For flex wrap
+
+.wrap-2-items-per-col {
+	width: calc(100% / 2 - 7px);
+}
+
+@keyframes spawnDropdown {
+	from {
+		transform: translateY(-10px);
+		opacity: 0;
+	}
+
+	to {
+		transform: translateY(0);
+		opacity: 1;
+	}
+}
+
+@keyframes Scale0To1 {
+	from {
+		transform: scaleX(0);
+	}
+
+	to {
+		transform: scaleX(1);
+	}
+}
+
+/* === Libraries === */
+
+/* === Color Picker === */
+.color-picker {
+	border-radius: 10px;
+	border: hidden !important;
+	-webkit-box-shadow: 8px -1px 116px -24px rgba(0, 0, 0, 0.75);
+	-moz-box-shadow: 8px -1px 116px -24px rgba(0, 0, 0, 0.75);
+	box-shadow: 8px -1px 116px -24px rgba(0, 0, 0, 0.75);
+
+	& .selected-color {
+		top: 0 !important;
+		border: none !important;
+	}
+
+	& .hue-alpha {
+		margin-bottom: 0 !important;
+
+		& .box {
+			padding: 4px 8px 0 8px !important;
+		}
+
+		& .left {
+			padding: 0 8px !important;
+		}
+
+		& .right {
+			padding: 0 8px !important;
+		}
+	}
+
+	& .hex-text .box {
+		padding: 0 8px 8px !important;
+
+		& input {
+			border: none !important;
+			background-color: #edf2f5;
+			border-radius: 4px;
+			outline: none;
+		}
+	}
+}
+
+.saturation-lightness {
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+}
+
+.type-policy {
+	display: none;
+}
+
+input[type='time']::-webkit-calendar-picker-indicator {
+	display: none;
+}
+
+.night-mode {
+	background-color: #121212;
+	color: #e0e0e0;
+
+	.card {
+		background-color: #1e1e1e !important;
+	}
+
+	.bg-white {
+		background-color: #1e1e1e !important;
+		color: #e0e0e0 !important;
+	}
+
+	.text-black {
+		color: #e0e0e0 !important;
+	}
+
+	.border-gray-300 {
+		border-color: #3a3a3a !important;
+	}
+
+	.text-gray-800,
+	.text-gray-900 {
+		color: #e0e0e0 !important;
+	}
+
+	.form-select {
+		background-color: #1e1e1e !important;
+		color: #e0e0e0 !important;
+		border: 1px solid #3a3a3a !important;
+	}
+
+	.form-select option {
+		background-color: #1e1e1e;
+		color: #e0e0e0;
+	}
+
+	.bg-gray-200 {
+		background-color: #1e1e1e !important;
+	}
+
+	.input-group.input-group-solid {
+		background-color: #1e1e1e !important;
+	}
+
+	.toolbar {
+		background-color: #1a1a1a !important;
+		border: none !important;
+	}
+
+	.text-dark,
+	.text-muted {
+		color: #e0e0e0 !important;
+	}
+
+	.aside-footer,
+	.aside-menu,
+	.aside-logo,
+	.content,
+	.header,
+	.footer {
+		background-color: #121212 !important;
+	}
+
+	.menu-state-title-primary .menu-item .menu-link.active .menu-title,
+	.menu-state-title-primary .menu-item.show>.menu-link .menu-title {
+		color: #e0e0e0 !important;
+	}
+
+	.menu-link,
+	.menu-item {
+		background-color: #121212 !important;
+	}
+
+	.modal-title {
+		color: #e0e0e0 !important;
+	}
+
+	.modal-header,
+	.modal-body {
+		color: #e0e0e0 !important;
+		background-color: #1e1e1e !important;
+	}
+
+	.form-control {
+		background-color: #1e1e1e !important;
+		color: #e0e0e0 !important;
+		border: 1px solid #3a3a3a;
+	}
+
+	.fw-bold,
+	.fw-bolder {
+		color: #e0e0e0 !important;
+	}
+
+	.table {
+		background-color: #1e1e1e;
+		color: #e0e0e0;
+	}
+
+	button {
+		background-color: #292929;
+		color: #e0e0e0;
+		border: 1px solid #3a3a3a;
+	}
+
+	button:hover {
+		background-color: #3a3a3a;
+	}
+
+	.row-table-odd {
+		background-color: #1e1e1e !important;
+	}
+
+	
+}
+
+/* ===== Angular Material Custom Styles ===== */
+.mat-mdc-raised-button.mat-primary {
+	--mdc-protected-button-container-color: #ff7700;
+	--mdc-protected-button-label-text-color: white;
+}
+
+.mat-mdc-raised-button.mat-primary:hover {
+	--mdc-protected-button-container-color: #e06600;
+}
+
+.mat-mdc-outlined-button.mat-warn {
+	--mdc-outlined-button-outline-color: #ff7700;
+	--mdc-outlined-button-label-text-color: #ff7700;
+}
+
+.mat-mdc-form-field-focus-overlay {
+	background-color: #ff7700;
+}
+
+.mat-mdc-form-field.mat-focused .mat-mdc-form-field-ripple {
+	background-color: #ff7700;
+}
+
+.mat-datepicker-content .mat-calendar-body-selected {
+	background-color: #ff7700;
+	color: white;
+}
+
+.mat-datepicker-content .mat-calendar-body-today.mat-calendar-body-selected {
+	box-shadow: inset 0 0 0 1px #ff7700;
+}
+
+.mat-mdc-card {
+	--mdc-elevated-card-container-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+:root {
+  --maskbg: rgba(0,0,0,.45);
+}
+
+.p-component-overlay,
+.p-dialog-mask,
+.p-overlay-mask {
+  background: var(--maskbg) !important;
+  backdrop-filter: blur(1.5px);
+}
+
+.p-dialog-mask {
+  z-index: 10000 !important;
+}

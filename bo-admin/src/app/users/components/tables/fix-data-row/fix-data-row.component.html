@@ -1,0 +1,50 @@
+<app-table
+  class="card card-xxl-stretch mb-5 mb-xl-8"
+  [noCheckboxes]="true"
+  [customRows]="true"
+  [headers]="['Usuario', 'Documento', 'Direccion', 'Acciones']"
+>
+  <tr *ngFor="let user of dataBody">
+    <td>
+      <div class="d-flex align-items-center">
+        <div class="symbol symbol-45px me-5">
+          <img src="./assets/media/avatars/blank.png" alt="" />
+        </div>
+        <div class="d-flex justify-content-start flex-column">
+          <span class="text-dark fw-bolder fs-6">{{ user.username }}</span>
+          <span class="text-muted fw-bold text-muted d-block fs-7">
+            {{ user.name }} {{ user.lastName }}
+          </span>
+        </div>
+      </div>
+    </td>
+    <td>
+      <div class="d-flex flex-column">
+        <span class="fw-bold">{{ user.documentNumber }}</span>
+        <span class="text-muted fw-bold">{{ user.docType }}</span>
+      </div>
+    </td>
+    <td>
+      <div class="d-flex flex-column">
+        <span class="fw-bold">{{ user.address }}</span>
+        <span class="text-muted">{{ user.districtAddress }}, {{ user.country | titleCase }}</span>
+      </div>
+    </td>
+    <td>
+      <div class="d-flex justify-content-start flex-shrink-0">
+        <button
+          (click)="onClickEdit.emit(user.username)"
+          class="btn btn-bg-light btn-active-color-dark button-actions me-1"
+        >
+          <span
+            [inlineSVG]="
+              './assets/media/icons/duotune/art/art005.svg'
+            "
+            class="svg-icon svg-icon-3 button-actions__icon"
+          ></span>
+          <span class="button-actions__label">Editar</span>
+        </button>
+      </div>
+    </td>
+  </tr>
+</app-table>

@@ -363,7 +363,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     @Transactional
-    public Mono<PaymentResponseDto> correctRejectedPayment(UUID paymentId, FilePart voucherFile) {
+    public Mono<PaymentResponseDto> correctRejectedPayment(UUID paymentId, FilePart voucherFile, String operationNumber, String note) {
         return paymentRejectionRepositoryPort.findByPaymentId(paymentId)
                 .switchIfEmpty(Mono.error(new NotFoundException("Payment rejection not found for payment: " + paymentId)))
                 .flatMap(rejection ->
@@ -389,11 +389,20 @@ public class PaymentServiceImpl implements PaymentService {
                                                                     .next()
                                                                     .flatMap(existingVoucher -> {
                                                                         existingVoucher.setImageUrl(voucherUrl);
+                                                                        existingVoucher.setOperationNumber(operationNumber);
+                                                                        existingVoucher.setNote(note);
                                                                         existingVoucher.setCreatedAt(now);
                                                                         return paymentVoucherRepositoryPort.save(existingVoucher);
                                                                     })
                                                                     .switchIfEmpty(Mono.defer(() -> {
-                                                                        PaymentVoucher newVoucher = paymentVoucherFactory.createPaymentVoucher(paymentId, voucherUrl);
+                                                                        PaymentVoucher newVoucher = PaymentVoucher.builder()
+                                                                                .id(null)
+                                                                                .paymentId(paymentId)
+                                                                                .operationNumber(operationNumber)
+                                                                                .note(note)
+                                                                                .imageUrl(voucherUrl)
+                                                                                .createdAt(now)
+                                                                                .build();
                                                                         return paymentVoucherRepositoryPort.save(newVoucher);
                                                                     }))
                                                                     .thenReturn(savedPayment);

@@ -1,0 +1,49 @@
+<div class="shadow-box membership-with-tabs">
+  
+  <!-- 2) CONTENIDO DINÁMICO -->
+  <div class="membership-main">
+    <app-affiliate-chart
+      *ngIf="activeSideTab==='Membresías'"
+      [form]="form"
+      [monthOptions]="monthOpt"
+      [statusOptions]="statusOpt"
+      [chartOptions]="membershipChartOptions"
+      exportLabel="Exportar Excel por membresía"
+      [exportFn]="exportExcelSubscribers.bind(this)"
+      [exporting]="exporting"
+      thirdSelectLabel="Membresía"
+      [thirdSelectOptions]="membershipOpt"
+      thirdSelectControlName="membership"
+      fourthSelectLabel="Proyecto"
+      [fourthSelectOptions]="projectOpt"
+      fourthSelectControlName="project"
+    ></app-affiliate-chart>
+
+    <app-affiliate-chart
+      *ngIf="activeSideTab==='Proyectos'"
+      [form]="form"
+      [monthOptions]="monthOpt"
+      [statusOptions]="statusOpt"
+      [chartOptions]="projectChartOptions"
+      exportLabel="Exportar Excel de proyectos"
+      [exportFn]="exportExcelSubscribers.bind(this)"
+      [exporting]="exporting"
+      thirdSelectLabel="Proyecto"
+      [thirdSelectOptions]="projectOpt"
+      thirdSelectControlName="project"
+    ></app-affiliate-chart>
+  </div>
+
+  <!-- 1) PESTAÑAS VERTICALES -->
+  <div class="side-tabs">
+    <div class="tab" [ngClass]="{'tab-active': activeSideTab==='Membresías'}"
+         (click)="selectSideTab('Membresías')">
+      MEMBRESÍAS
+    </div>
+    <div class="tab" [ngClass]="{'tab-active': activeSideTab==='Proyectos'}"
+         (click)="selectSideTab('Proyectos')">
+      PROYECTOS
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,37 @@
+<app-modal 
+  [title]="currentStepIndex ? 'Cargando' : ''" 
+  [hideCloseButton]="currentStepIndex"
+  class="container-modal position-relative">
+  
+  <div 
+    class="d-flex flex-column justify-content-center gap-6 custom-blue"
+    [ngClass]="currentStepIndex ? 'align-items-center' : 'align-items-start'">
+    
+    <ng-container *ngIf="currentStepIndex">
+      <span class="fs-5 text-black text-center fw-normal w-100">
+        Descargando {{ recordCount }} registros, espere un <br> momento por favor...
+      </span>
+      <div class="mt-6">
+        <app-loading />
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="!currentStepIndex">
+      <div>
+        <img src="assets/media/svg/retiro/succefull.svg" alt="Descarga exitosa" class="container-image">
+      </div>
+      <div class="text-start p-3">
+        <h2 class="mb-3">Registros descargados correctamente</h2>
+        <p class="text-muted">Se descargaron {{ recordCount }} <strong>filas</strong> exitosamente.</p>
+      </div>
+
+      <button 
+        class="btn-secondary btn w-100" 
+        type="button"
+        (click)="continuar()">
+        Continuar
+      </button>
+    </ng-container>
+    
+  </div>
+</app-modal>

@@ -1,0 +1,12 @@
+<app-modal [title]="title">
+	<div class="d-flex flex-column align-items-center justify-content-center gap-6">
+		<i class="bi bi-file-earmark-check fs-5x text-success"></i>
+		<span class="fs-5 text-gray-900 fw-normal text-center">
+			Desea validar todos los registros selecionados
+		</span>
+		<div class="w-100 d-flex justify-content-center align-items-center gap-4">
+			<button class="btn btn-outline-secondary" (click)="instanceModal.close()">Salir</button>
+			<button class="btn btn-secondary" (click)="onValidate()">Validar</button>
+		</div>
+	</div>
+</app-modal>

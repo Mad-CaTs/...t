@@ -1,0 +1,187 @@
+<app-modal title="Cronograma de pagos">
+	<div class="d-flex flex-column align-items-center justify-content-center gap-6 w-100">
+		<!--Header-->
+		<div class="d-flex w-100 justify-content-between align-items-center">
+			<h4 class="fs-1 text-black fw-normal m-0">Registros</h4>
+			<div class="d-flex align-items-center gap-4">
+				<button class="btn btn-secondary">Actualizar</button>
+			</div>
+		</div>
+		<!--Table-->
+		<div class="overflow-x-auto w-100">
+		<table class="w-100 d-flex flex-column">
+			<thead
+				class="d-block w-100 bg-gray-200 rounded-top border-top border-start border-end border-gray-300"  [style]="{ minWidth: '1550px' }"
+			>
+				<tr class="w-100 d-flex align-items-center p-4">
+					<th class="w-40px d-flex justify-content-center" *ngIf="!table.noCheckBoxes">
+						<div class="form-check form-check-sm form-check-custom form-check-solid">
+							<input
+								class="form-check-input"
+								type="checkbox"
+								[checked]="table.checkedAll"
+								data-kt-check="true"
+								data-kt-check-target=".widget-9-check"
+							/>
+						</div>
+					</th>
+					<th
+						class="w-100 fs-8 text-gray-800 text-center fw-normal"
+						*ngFor="let item of table.headers; index as i"
+					>
+						<span>{{ item }}</span>
+						<i
+							class="w-20px text-gray-800 cursor-pointer ms-2"
+						></i>
+					</th>
+				</tr>
+			</thead>
+
+			
+			<tbody class="w-100 bg-white d-block p-4">
+				<tr class="w-100 d-flex py-2 align-items-center" *ngFor="let item of table.data">
+					<td class="w-100px d-flex justify-content-center">
+						<div
+							class="form-check form-check-sm form-check-custom form-check-solid"
+							[formGroup]="form"
+						>
+							<input
+								class="form-check-input"
+								type="radio"
+								name="selected"
+								[value]="item.id"
+								formControlName="selected"
+								data-kt-check="true"
+								data-kt-check-target=".widget-9-check"
+							/>
+						</div>
+					</td>
+					<td class="w-100 text-gray-900 text-center fs-8">{{ item.description }}</td>
+					<td class="w-100 text-gray-900 text-center fs-8">{{ item.date }}</td>
+					<td class="w-100 text-gray-900 text-center fs-8">$ {{ item.capital.toFixed(2) }}</td>
+					<td class="w-100 text-gray-900 text-center fs-8">$ {{ item.amortization.toFixed(2) }}</td>
+					<td class="w-100 text-gray-900 text-center fs-8">$ {{ item.interest.toFixed(2) }}</td>
+					<td class="w-100 text-gray-900 text-center fs-8">$ {{ item.cuota.toFixed(2) }}</td>
+					<td class="w-100 text-gray-900 text-center fs-8">{{ item.points }}</td>
+					<td class="w-100 text-gray-900 text-center fs-8" *ngIf="item.opCode.length > 0">{{ item.state }}</td>
+					<!--Operation code-->
+					<td class="w-100 text-gray-900 text-center fs-8" *ngIf="!getIsSelected(item.id)">
+						<ng-container *ngFor="let code of item.opCode">
+							<div class = "spaced-item">{{ code }}</div>
+						</ng-container>
+					</td>
+					<td class="w-100 d-flex flex-column justify-content-center gap-3" *ngIf="getIsSelected(item.id)">
+						<ng-container *ngFor="let code of item.opCode; let i = index">
+							<ng-container [formGroup]="form">
+								<input
+									placeholder="Cód. Operación"
+									[formControlName]="'opCode' + i"
+									type="text" 
+								/>
+							</ng-container>
+						</ng-container>
+					</td>
+					<!--Payment channel-->
+					<td class="w-100 text-gray-900 text-center fs-8" *ngIf="!getIsSelected(item.id)">
+						<ng-container *ngFor="let channel of item.paymentChannel">
+							<div class = "spaced-item">{{ channel }}</div>
+						</ng-container>
+					</td>
+					<td class="w-100 d-flex flex-column justify-content-center gap-3" *ngIf="getIsSelected(item.id)">
+						<ng-container *ngFor="let code of item.paymentChannel; let i = index">
+							<ng-container [formGroup]="form">
+								<select
+									placeholder="Medio de pago"
+									[formControlName]="'paymentChannel' + i"
+									class="form-control"
+								>
+								<option *ngFor="let option of this.paymentTypeOptions" [value]="option.id">{{ option.text }}</option>
+								</select>
+							</ng-container>
+						</ng-container>
+					</td>
+					<!--Note-->
+					<td class="w-100 text-gray-900 text-center fs-8">
+						<ng-container *ngFor="let note of item.nota">
+							<div class = "spaced-item">{{ note }}</div>
+						</ng-container>
+					</td>
+					<!--<td class="w-100 d-flex justify-content-center gap-3" *ngIf="getIsSelected(item.id)">
+						<app-input placeholder="Nota" [formGroup]="form" controlName="note" type="text" />
+					</td>-->
+
+					<td class="w-100 text-gray-900 text-center fs-8">
+						<ng-container *ngFor="let currency of item.currency">
+							<div class = "spaced-item">{{ currency }}</div>
+						</ng-container>
+					</td>
+
+					<td class="w-100 text-gray-900 text-center fs-8">
+						<ng-container *ngFor="let subtotal of item.subtotal">
+							<div class = "spaced-item">$ {{ subtotal.toFixed(2) }}</div>
+						</ng-container>
+					</td>
+
+					<td class="w-100 text-gray-900 text-center fs-8">
+						<ng-container *ngFor="let comission of item.comission">
+							<div class = "spaced-item">$ {{ comission.toFixed(2) }}</div>
+						</ng-container>
+					</td>
+
+					<td class="w-100 text-gray-900 text-center fs-8">
+						<ng-container *ngFor="let mora of item.mora">
+							<div class = "spaced-item">$ {{ mora.toFixed(2) }}</div>
+						</ng-container>
+					</td>
+
+					<td class="w-100 text-gray-900 text-center fs-8">
+						<ng-container *ngFor="let total of item.total">
+							<div class = "spaced-item">$ {{ total.toFixed(2) }}</div>
+						</ng-container>
+					</td>
+
+					<td class="w-100 text-gray-900 text-center fs-8">
+						<ng-container *ngFor="let imgUrl of item.imgUrl">
+							<img class = "spaced-item small-image" [src]="imgUrl" alt="urlPreview" width="70" height="70" (click)="openImageModal(imgUrl)"/>
+						</ng-container>
+					</td>
+
+					<!--Modal para mostrar la imagen agrandada-->
+					<ng-template #imageModal let-modal>
+						<div class="modal-header">
+							<h4 class="modal-title">Voucher maximizado</h4>
+							<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+						</div>
+						<div class="modal-body text-center">
+							<img [src]="selectedImageUrl" class="img-fluid" alt="Image Preview" class="img-fluid"/>
+						</div>
+					</ng-template>
+					
+
+					<!--Obs-->
+					<td
+						class="w-100 d-flex flex-column justify-content-center gap-3"
+						*ngIf="getIsSelected(item.id)"
+					>
+						<button class="btn btn-primary py-2 px-4 cursor-pointer" (click)="onConfirm(item.idPayment)">
+							Aceptar
+						</button>
+						<button class="btn btn-danger py-2 px-4 cursor-pointer" (click)="onReject(item.idPayment)">
+							Rechazar
+						</button>
+					</td>
+					<td class="w-100 text-gray-900 text-center fs-8" *ngIf="!getIsSelected(item.id)">-</td>
+				</tr>
+			</tbody>
+			<tfoot
+				class="w-100 bg-gray-200 rounded-bottom border-bottom border-start border-end border-gray-300 h-55px"
+			></tfoot>
+			
+		</table>
+
+		</div>
+
+
+			
+	</div>
+</app-modal>

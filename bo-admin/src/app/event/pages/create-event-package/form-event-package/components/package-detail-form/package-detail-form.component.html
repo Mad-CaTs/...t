@@ -1,0 +1,249 @@
+<div class="package-detail-form panel">
+	<h2 class="title">Detalle del paquete</h2>
+
+	<!-- Evento / Zona -->
+	<div class="form-row two-cols">
+		<div class="form-group">
+			<label>Evento</label>
+			<select
+				[ngModel]="model.eventId"
+				(ngModelChange)="onEventChange($event)"
+				required
+				#eventCtrl="ngModel"
+				[class.is-invalid]="eventCtrl.invalid && (eventCtrl.touched || eventCtrl.dirty)"
+			>
+				<option value="" >Selecciona uno</option>
+				<option *ngFor="let e of events" [value]="e.id">{{ e.name }}</option>
+			</select>
+			<div class="invalid-feedback" *ngIf="eventCtrl.invalid && (eventCtrl.touched || eventCtrl.dirty)">
+				Este campo es obligatorio
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label>Zona del evento</label>
+			<select
+				[ngModel]="model.zoneId"
+				(ngModelChange)="onZoneChange($event)"
+				required
+				#zoneCtrl="ngModel"
+				[class.is-invalid]="zoneCtrl.invalid && (zoneCtrl.touched || zoneCtrl.dirty)"
+				[disabled]="zones.length === 0"
+			>
+				<option value="" >
+					{{ zones.length ? 'Selecciona uno' : 'Selecciona un evento primero' }}
+				</option>
+				<option *ngFor="let z of zones" [value]="z.id">{{ z.name }}</option>
+			</select>
+			<div class="invalid-feedback" *ngIf="zoneCtrl.invalid && (zoneCtrl.touched || zoneCtrl.dirty)">
+				Este campo es obligatorio
+			</div>
+		</div>
+	</div>
+
+	<!-- Nombre del paquete -->
+	<div class="form-row one-col">
+		<div class="form-group">
+			<label>Nombre del paquete</label>
+			<input
+				type="text"
+				[(ngModel)]="model.packageName"
+				(ngModelChange)="emitNameNormalized()"
+				maxlength="60"
+				required
+				#nameCtrl="ngModel"
+				[class.is-invalid]="nameCtrl.invalid && (nameCtrl.touched || nameCtrl.dirty)"
+				placeholder="Nombre del paquete"
+				(keydown)="preventLeadingSpace($event); preventDoubleSpace($event)"
+				aria-label="Nombre del paquete"
+			/>
+			<div class="invalid-feedback" *ngIf="nameCtrl.invalid && (nameCtrl.touched || nameCtrl.dirty)">
+				El nombre es obligatorio
+			</div>
+		</div>
+	</div>
+
+	<!-- Cantidad -->
+	<div class="form-row one-col">
+		<div class="form-group">
+			<label>Cantidad por paquete</label>
+			<div class="input-counter">
+				<input
+					type="text"
+					inputmode="numeric"
+					pattern="\d*"
+					[ngModel]="model.quantity"
+					(ngModelChange)="onQuantityChange($event)"
+					(keydown)="blockNonInteger($event)"
+					required
+					#qtyCtrl="ngModel"
+					[class.is-invalid]="qtyCtrl.invalid && (qtyCtrl.touched || qtyCtrl.dirty)"
+					placeholder="0 entradas"
+					aria-label="Cantidad por paquete"
+				/>
+				<button
+					type="button"
+					class="circle"
+					aria-label="Incrementar"
+					(click)="increment('quantity')"
+					[disabled]="!canIncQty"
+				>
+					+
+				</button>
+				<button
+					type="button"
+					class="circle"
+					aria-label="Decrementar"
+					(click)="decrement('quantity')"
+					[disabled]="!canDecQty"
+				>
+					−
+				</button>
+			</div>
+			<div class="invalid-feedback" *ngIf="qtyCtrl.invalid && (qtyCtrl.touched || qtyCtrl.dirty)">
+				La cantidad es obligatoria
+			</div>
+		</div>
+	</div>
+
+	<!-- Gratuitas -->
+	<div class="form-row one-col">
+		<div class="form-group">
+			<label>Unidades gratuitas</label>
+			<div class="input-counter">
+				<input
+					type="number"
+					min="0"
+					[ngModel]="model.freeUnits"
+					(ngModelChange)="onFreeUnitsChange($event)"
+					(keydown)="blockNonInteger($event)"
+					placeholder="0 gratuitas"
+					aria-label="Unidades gratuitas"
+					required
+					#freeCtrl="ngModel"
+					[class.is-invalid]="freeCtrl.invalid && (freeCtrl.touched || freeCtrl.dirty)"
+				/>
+				<button
+					type="button"
+					class="circle"
+					aria-label="Incrementar"
+					(click)="increment('freeUnits')"
+					[disabled]="!canIncFreeUnits"
+				>
+					+
+				</button>
+				<button
+					type="button"
+					class="circle"
+					aria-label="Decrementar"
+					(click)="decrement('freeUnits')"
+					[disabled]="!canDecFreeUnits"
+				>
+					−
+				</button>
+			</div>
+			<div
+				class="invalid-feedback"
+				*ngIf="freeCtrl.errors?.['required'] && (freeCtrl.touched || freeCtrl.dirty)"
+			>
+				Este campo es obligatorio
+			</div>
+			<div
+				class="invalid-feedback"
+				*ngIf="freeCtrl.errors?.['min'] && (freeCtrl.touched || freeCtrl.dirty)"
+			>
+				El valor no puede ser menor que 0
+			</div>
+		</div>
+	</div>
+
+	<!-- Descripción -->
+	<div class="form-row one-col">
+		<div class="form-group">
+			<label>Descripción del paquete</label>
+			<div class="with-counter">
+				<textarea
+					[(ngModel)]="model.description"
+					(ngModelChange)="emitNormalized()"
+					rows="4"
+					maxlength="150"
+					required
+					#descCtrl="ngModel"
+					[class.is-invalid]="descCtrl.invalid && (descCtrl.touched || descCtrl.dirty)"
+					placeholder="Escribe tu texto aquí"
+					(keydown)="
+						preventLeadingSpace($event);
+						preventDoubleSpace($event);
+						preventLongSegmentOnType($event)
+					"
+					(paste)="preventLongSegmentOnPaste($event)"
+				></textarea>
+				<div class="char-counter">{{ (model.description || '').length }}/150</div>
+			</div>
+			<div class="invalid-feedback" *ngIf="descCtrl.invalid && (descCtrl.touched || descCtrl.dirty)">
+				La descripción es obligatoria
+			</div>
+		</div>
+	</div>
+
+	<!-- Vigencia -->
+	<div class="form-row one-col">
+		<div class="form-group">
+			<label>Vigencia</label>
+			<input
+				type="date"
+				[(ngModel)]="model.validUntil"
+				required
+				#dateCtrl="ngModel"
+				[class.is-invalid]="dateCtrl.invalid && (dateCtrl.touched || dateCtrl.dirty)"
+			/>
+			<div class="invalid-feedback" *ngIf="dateCtrl.invalid && (dateCtrl.touched || dateCtrl.dirty)">
+				La fecha de vigencia es obligatoria
+			</div>
+		</div>
+	</div>
+
+	<!-- Precios -->
+	<div class="form-row two-cols">
+		<div class="form-group">
+			<label>Precio promo (S/.)</label>
+			<input
+				type="text"
+				inputmode="decimal"
+				[ngModel]="pricePenStr"
+				(ngModelChange)="onPriceInput('promoPricePen', $event)"
+				(keydown)="blockInvalidPriceKeys($event)"
+				(wheel)="$event.preventDefault()"
+				(blur)="onPriceBlur('promoPricePen')"
+				required
+				#penCtrl="ngModel"
+				[class.is-invalid]="penCtrl.invalid && (penCtrl.touched || penCtrl.dirty)"
+				placeholder="S/ 0.00"
+				aria-label="Precio en soles"
+			/>
+			<div class="invalid-feedback" *ngIf="penCtrl.invalid && (penCtrl.touched || penCtrl.dirty)">
+				El precio en soles es obligatorio
+			</div>
+		</div>
+		<div class="form-group">
+			<label>Precio promo (US$)</label>
+			<input
+				type="text"
+				inputmode="decimal"
+				[ngModel]="priceUsdStr"
+				(ngModelChange)="onPriceInput('promoPriceUsd', $event)"
+				(keydown)="blockInvalidPriceKeys($event)"
+				(wheel)="$event.preventDefault()"
+				(blur)="onPriceBlur('promoPriceUsd')"
+				required
+				#usdCtrl="ngModel"
+				[class.is-invalid]="usdCtrl.invalid && (usdCtrl.touched || usdCtrl.dirty)"
+				placeholder="US$ 0.00"
+				aria-label="Precio en dólares"
+			/>
+			<div class="invalid-feedback" *ngIf="usdCtrl.invalid && (usdCtrl.touched || usdCtrl.dirty)">
+				El precio en dólares es obligatorio
+			</div>
+		</div>
+	</div>
+</div>

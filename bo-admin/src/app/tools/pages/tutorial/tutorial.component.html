@@ -1,0 +1,174 @@
+<div class="page-container bg-white p-4 p-lg-5">
+    <h2 class="fw-bold fs-3 m-0 mb-4">Tutoriales</h2>
+
+    <div class="row align-items-center">
+        <!-- BUSCADOR -->
+        <div class="col-md-8 col-sm-12 mb-3 mb-md-0">
+            <label class="form-label fw-semibold mb-1">Buscador</label>
+            <div class="input-group shadow-sm">
+                <input class="form-control" formControlName="search" placeholder="Ingrese lo que necesita buscar..." />
+                <span class="input-group-text"><i class="bi bi-search"></i></span>
+            </div>
+        </div>
+
+        <!-- BOTÓN AGREGAR -->
+        <div class="col-md-4 col-sm-12 text-md-end">
+            <label class="form-label invisible d-block">Agregar</label>
+            <button class="btn btn-tutorial px-4" type="button" (click)="onCreateTutorial()">
+                Agregar tutorial
+            </button>
+        </div>
+    </div>
+
+    <div class="text-center py-5" *ngIf="tutoriales.length === 0">
+        <div class="mb-3">
+            <i class="bi bi-inbox" style="font-size: 64px; color: #adb5bd;"></i>
+        </div>
+        <h4 class="fw-semibold text-muted">No se encontraron tutoriales</h4>
+    </div>
+
+    <!-- LISTADO DE TUTORIALES -->
+    <div class="tutorial-list mt-4" *ngIf="tutoriales.length > 0">
+        <div class="tutorial-card d-flex align-items-center justify-content-between p-3 mb-3 shadow-sm rounded"
+            *ngFor="let t of tutoriales">
+
+            <div class="d-flex align-items-center gap-3">
+                <!-- Imagen -->
+                <img [src]="getThumbnail(t.url)" class="rounded" alt="thumbnail" width="60" height="60" />
+
+                <!-- Texto -->
+                <div>
+                    <h6 class="mb-0 fw-semibold">{{ t.title }}</h6>
+                    <small class="text-muted">{{ getHostName(t.url) }}</small>
+                </div>
+            </div>
+
+            <div class="d-flex align-items-center gap-3">
+                <!-- Duración (puede ser fijo si no tienes el dato real) -->
+                <span class="text-muted small">30:00</span>
+
+                <!-- Botones -->
+                <button class="btn btn-sm btn-light" (click)="verTutorial(t.url)">
+                    <i class="bi bi-eye"></i>
+                </button>
+                <button class="btn btn-sm btn-light text-danger" (click)="openDeleteModal(t)">
+                    <i class="bi bi-trash"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <ng-template #modalContent let-modal>
+        <div class="modal-container">
+            <!-- ICONO ENCABEZADO -->
+            <div class="modal-icon-container">
+                <i class="bi bi-link-45deg modal-icon"></i>
+            </div>
+
+            <div>
+                <h2 class="modal-title-custom">Nuevo tutorial</h2>
+                <p class="modal-subtitle-custom">Agrega el link del video y completa el registro.</p>
+            </div>
+
+            <form [formGroup]="tutorialForm">
+                <!-- TÍTULO -->
+                <div class="mb-3">
+                    <label class="form-label fw-semibold" for="title">Título del tutorial</label>
+                    <input type="text" id="title" class="form-control" formControlName="title"
+                        placeholder="Ingrese el nombre" />
+                </div>
+
+                <!-- Campo URL -->
+                <div class="mb-3">
+                    <label class="form-label fw-semibold" for="url">URL del archivo</label>
+                    <input type="text" id="url" class="form-control" formControlName="url"
+                        placeholder="Pegar el link o URL aquí..." (input)="onUrlChange()" />
+                    <!-- Mensaje de validación -->
+                    <div *ngIf="tutorialForm.get('url')?.invalid && tutorialForm.get('url')?.touched"
+                        class="text-danger mt-1">
+                        El enlace debe comenzar con http:// o https://
+                    </div>
+                </div>
+
+                <!-- PREVIEW DINÁMICO -->
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Vista previa del enlace</label>
+                    <div class="preview-box text-center">
+                        <ng-container *ngIf="previewImage; else genericOrEmpty">
+                            <img [src]="previewImage" class="img-fluid rounded shadow-sm" alt="preview"
+                                style="max-height: 160px;" />
+                        </ng-container>
+
+                        <!-- Si es válido pero no tiene preview -->
+                        <ng-template #genericOrEmpty>
+                            <ng-container *ngIf="isGenericLink; else noPreview">
+                                <div class="preview-placeholder text-center">
+                                    <i class="bi bi-link-45deg fs-1 text-muted"></i>
+                                    <p class="text-muted m-0">Vista previa no disponible para este tipo de enlace</p>
+                                </div>
+                            </ng-container>
+
+                            <!-- Si no se ha ingresado ningún link -->
+                            <ng-template #noPreview>
+                                <div class="preview-placeholder text-center">
+                                    <i class="bi bi-image fs-1 text-muted"></i>
+                                    <p class="text-muted m-0">Introduzca un enlace para generar vista previa</p>
+                                </div>
+                            </ng-template>
+                        </ng-template>
+                    </div>
+                </div>
+            </form>
+
+            <div class="modal-footer-custom">
+                <button type="button" class="btn-cancel" (click)="onCancelTutorial(modal)">Cancelar</button>
+                <button type="button" class="btn-save" [disabled]="tutorialForm.invalid || isSaving"
+                    (click)="saveTutorial(modal)">Guardar</button>
+            </div>
+        </div>
+    </ng-template>
+
+    <!-- MODALES DE ÉXITO Y ERROR ABAJO -->
+    <ng-template #successModal let-modal>
+        <div class="modal-container-success text-center px-4 py-5">
+            <div class="mb-3">
+                <i class="bi bi-check-circle-fill fs-1 text-success"></i>
+            </div>
+            <h4 class="fw-bold">Registro exitoso</h4>
+            <p class="text-muted">El nuevo tutorial se registró exitosamente.</p>
+            <button type="button" class="btn btn-outline-success mt-3" (click)="modal.close()">Aceptar</button>
+        </div>
+    </ng-template>
+
+    <ng-template #errorModal let-modal>
+        <div class="modal-container-error text-center px-4 py-5">
+            <div class="mb-3">
+                <i class="bi bi-info-circle-fill fs-1 text-danger"></i>
+            </div>
+            <h4 class="fw-bold">Lo sentimos, no cargó el archivo</h4>
+            <p class="text-muted">Revise e inténtelo de nuevo.</p>
+            <button type="button" class="btn btn-warning mt-3" (click)="modal.close()">Volver a intentar</button>
+        </div>
+    </ng-template>
+
+    <!-- MODAL CONFIRMACIÓN DE ELIMINACIÓN -->
+    <ng-template #confirmDeleteModal let-modal>
+        <div class="modal-container text-center px-4 py-5">
+            <div class="modal-icon-container">
+                <i class="bi bi-exclamation-circle-fill text-warning fs-1"></i>
+            </div>
+            <h4 class="fw-bold">¿Estás seguro de eliminar?</h4>
+            <p class="text-muted">Esta acción no se puede deshacer.</p>
+
+            <div class="modal-footer-custom justify-content-center mt-4">
+                <button type="button" class="btn-cancel" (click)="modal.dismiss()">Cancelar</button>
+                <button type="button" class="btn-save danger" (click)="confirmDelete(modal)" [disabled]="isDeleting">
+                    {{ isDeleting ? 'Eliminando...' : 'Eliminar' }}
+                </button>
+
+            </div>
+        </div>
+    </ng-template>
+
+</div>

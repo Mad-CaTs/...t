@@ -1,0 +1,35 @@
+<form [formGroup]="form" class="card card-xxl-stretch mb-5 mb-xl-8 d-flex flex-column gap-4 p-8">
+  <h1 class="text-primary text-uppercase">Envio de Correos</h1>
+  <div class="d-flex align-items-center gap-3 position-relative">
+      <div class="input-wrapper position-relative flex-grow-1">
+          <app-input iconRigth="bi bi-search" placeholder="Busca un usuario por username" label="Buscar por username"
+              [formGroup]="form" controlName="search" class="custom-input"
+              (input)="onSearchInput($event)" autocomplete="off"></app-input>
+          <!-- Autocomplete Dropdown -->
+          <div class="autocomplete-dropdown" *ngIf="showDropdown && suggestions.length">
+              <ul class="list-group">
+                  <li class="list-group-item" *ngFor="let suggestion of suggestions"
+                      (click)="selectSuggestion(suggestion.username)">
+                      {{ suggestion.fullname }} ({{ suggestion.username }})
+                  </li>
+              </ul>
+          </div>
+      </div>
+      <div class="mt-7">
+          <button type="button" class="btn btn-outline-secondary" [disabled]="buttonLoading" (click)="onSearch()">
+              <div class="fixed-width-button">
+                  <div *ngIf="buttonLoading">
+                      <span class="spinner-border spinner-border-sm align-middle text-center ms-2"></span>
+                  </div>
+                  <div *ngIf="!buttonLoading">
+                      <span>Buscar</span>
+                  </div>
+              </div>
+          </button>
+      </div>
+  </div>
+  <p class="text-muted m-0 mt-3">Busca un socio y envia un correo de recuerdo</p>
+</form>
+
+<app-emailing-row [dataBody]="dataBody"
+  (onEmailing)="onOpenEmailing($event.id, $event.emailingData)"></app-emailing-row>

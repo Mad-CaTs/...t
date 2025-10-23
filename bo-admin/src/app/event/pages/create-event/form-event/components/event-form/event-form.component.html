@@ -1,0 +1,411 @@
+<div class="form-grid" [formGroup]="formGroup">
+	<!-- 1. Nombre del evento y Evento principal -->
+	<div class="form-row">
+		<div class="form-group">
+			<label>Nombre del evento</label>
+			<div class="input-with-counter">
+				<input
+					type="text"
+					formControlName="name"
+					maxlength="100"
+					placeholder="Ingrese el nombre"
+					(keydown)="
+						preventLeadingSpace($event);
+						preventDoubleSpace($event);
+						preventLongSegmentOnType($event)
+					"
+					(paste)="preventLongSegmentOnPaste($event)"
+				/>
+				<div
+					class="char-counter"
+					[ngClass]="{
+						warning: formGroup.get('name')?.value?.length > 80,
+						full: formGroup.get('name')?.value?.length >= 100
+					}"
+				>
+					{{ formGroup.get('name')?.value?.length || 0 }}/100
+				</div>
+			</div>
+			<div
+				class="error"
+				*ngIf="formGroup.get('name')?.touched && formGroup.get('name')?.errors?.['required']"
+			>
+				Este campo es obligatorio.
+			</div>
+			<div
+				class="error"
+				*ngIf="formGroup.get('name')?.touched && formGroup.get('name')?.errors?.['maxlength']"
+			>
+				Máximo 100 caracteres permitidos.
+			</div>
+		</div>
+		<div class="form-group checkbox-group" [class.active]="formGroup.get('isMain')?.value">
+			<label>&nbsp;</label>
+			<label class="checkbox-row pill">
+				<input type="checkbox" formControlName="isMain" />
+				<span class="checkbox-label">Evento principal</span>
+			</label>
+		</div>
+	</div>
+
+	<!-- 2. Tipo de evento / Tipo de entrada -->
+	<div class="form-row">
+		<div class="form-group">
+			<label>Tipo de evento</label>
+			<select formControlName="eventType">
+				<option value="">Seleccione uno</option>
+				<option *ngFor="let type of eventTypes" [value]="type.eventTypeId">
+					{{ type.eventTypeName }}
+				</option>
+			</select>
+			<div
+				class="error"
+				*ngIf="formGroup.get('eventType')?.touched && formGroup.get('eventType')?.errors?.['required']"
+			>
+				Debe elegir un tipo de evento.
+			</div>
+		</div>
+		<div class="form-group">
+			<label>Tipo de entrada</label>
+			<select formControlName="entryType">
+				<option value="">Seleccione uno</option>
+				<option *ngFor="let type of entryTypes" [value]="type.ticketTypeId">
+					{{ type.ticketTypeName }}
+				</option>
+			</select>
+			<div
+				class="error"
+				*ngIf="formGroup.get('entryType')?.touched && formGroup.get('entryType')?.errors?.['required']"
+			>
+				Debe elegir un tipo de entrada.
+			</div>
+		</div>
+	</div>
+
+	<!-- 3. Fecha + Horas -->
+	<div class="date-row">
+		<div class="form-group span-2">
+			<label>Fecha</label>
+			<input
+				type="date"
+				formControlName="date"
+				min="2020-01-01"
+				max="9999-12-31"
+				onkeydown="return false;"
+			/>
+			<div
+				class="error"
+				*ngIf="formGroup.get('date')?.touched && formGroup.get('date')?.errors?.['required']"
+			>
+				La fecha es obligatoria.
+			</div>
+		</div>
+		<div class="form-group" *ngIf="!formGroup.get('allDay')?.value">
+			<label>Hora inicio</label>
+			<input type="time" formControlName="timeStart" placeholder="00:00" />
+			<div
+				class="error"
+				*ngIf="formGroup.get('timeStart')?.touched && formGroup.get('timeStart')?.errors?.['required']"
+			>
+				La hora de inicio es obligatoria.
+			</div>
+		</div>
+		<div class="form-group" *ngIf="!formGroup.get('allDay')?.value">
+			<label>Hora fin</label>
+			<input type="time" formControlName="timeEnd" placeholder="00:00" />
+			<div
+				class="error"
+				*ngIf="formGroup.get('timeEnd')?.touched && formGroup.get('timeEnd')?.errors?.['required']"
+			>
+				La hora de fin es obligatoria.
+			</div>
+			<div
+				class="error"
+				*ngIf="formGroup.errors?.['timeOrder'] && (formGroup.get('timeEnd')?.touched || formGroup.get('timeStart')?.touched)"
+			>
+				La hora de fin debe ser mayor que la hora de inicio.
+			</div>
+		</div>
+	</div>
+
+	<!-- 4. Todo el día -->
+	<div class="checkbox-row">
+		<input type="checkbox" formControlName="allDay" />
+		<span class="checkbox-label">Todo el día</span>
+	</div>
+
+	<!-- 5. Lugar / Link -->
+	<div class="form-row">
+		<div class="form-group">
+			<label>Lugar del evento</label>
+			<select formControlName="venue">
+				<option value="">Seleccione uno</option>
+				<option *ngFor="let venue of eventVenues" [value]="venue.venueId">
+					{{ venue.nameVenue }}
+				</option>
+			</select>
+			<div
+				class="error"
+				*ngIf="formGroup.get('venue')?.touched && formGroup.get('venue')?.errors?.['required']"
+			>
+				El lugar del evento es obligatorio.
+			</div>
+		</div>
+		<div class="form-group">
+			<label>Link del evento</label>
+			<div class="input-icon">
+				<i class="bi bi-link-45deg"></i>
+				<input
+					type="text"
+					formControlName="eventLink"
+					placeholder="Agregar link"
+					(keydown)="($event)"
+				/>
+			</div>
+			<!-- Placeholder when no error -->
+			<div
+				class="error empty"
+				*ngIf="!(formGroup.get('eventLink')?.touched && formGroup.get('eventLink')?.errors?.['required'])"
+			>
+				&nbsp;
+			</div>
+			<!-- Error for required link when virtual -->
+			<div
+				class="error"
+				*ngIf="formGroup.get('eventLink')?.invalid && formGroup.get('eventLink')?.errors?.['required']"
+			>
+				El link del evento es obligatorio.
+			</div>
+			<!-- Error: no debe tener espacios -->
+			<div
+				class="error"
+				*ngIf="formGroup.get('eventLink')?.invalid && formGroup.get('eventLink')?.errors?.['noSpaces']"
+			>
+				El link no debe contener espacios.
+			</div>
+			<!-- Error: debe tener un punto con mínimo 2 caracteres antes y después -->
+			<div
+				class="error"
+				*ngIf="formGroup.get('eventLink')?.invalid && !formGroup.get('eventLink')?.errors?.['required'] && !formGroup.get('eventLink')?.errors?.['noSpaces'] && formGroup.get('eventLink')?.errors?.['invalidDot']"
+			>
+				El link debe contener un punto (.) con al menos 2 caracteres antes y después para ser un
+				enlace válido.
+			</div>
+		</div>
+	</div>
+
+	<!-- 6. Ciudad / Dirección -->
+	<div class="form-row">
+		<div class="form-group">
+			<label>Ciudad</label>
+			<input
+				type="text"
+				formControlName="city"
+				placeholder="Ciudad asignada por el lugar"
+				(keydown)="preventLeadingSpace($event); preventDoubleSpace($event)"
+				[readonly]="!isVirtualEvent"
+				[class.disabled-input]="!isVirtualEvent"
+			/>
+		</div>
+		<div class="form-group">
+			<label>Dirección</label>
+			<input
+				type="text"
+				formControlName="address"
+				placeholder="Dirección asignada por el lugar"
+				(keydown)="preventLeadingSpace($event); preventDoubleSpace($event)"
+				[readonly]="!isVirtualEvent"
+				[class.disabled-input]="!isVirtualEvent"
+			/>
+		</div>
+	</div>
+
+	<!-- 7. Descripción -->
+	<div class="form-group">
+		<label>Descripción del evento</label>
+		<div class="input-with-counter">
+			<textarea
+				formControlName="description"
+				rows="4"
+				maxlength="1000"
+				placeholder="Ingrese descripción"
+				(keydown)="preventLeadingSpace($event); preventDoubleSpace($event)"
+			></textarea>
+			<div
+				class="char-counter"
+				[ngClass]="{
+					warning: formGroup.get('description')?.value?.length > 800,
+					full: formGroup.get('description')?.value?.length >= 1000
+				}"
+			>
+				{{ formGroup.get('description')?.value?.length || 0 }}/1000
+			</div>
+		</div>
+		<div
+			class="error"
+			*ngIf="formGroup.get('description')?.touched && formGroup.get('description')?.errors?.['required']"
+		>
+			La descripción es obligatoria.
+		</div>
+		<div
+			class="error"
+			*ngIf="formGroup.get('description')?.touched && formGroup.get('description')?.errors?.['maxlength']"
+		>
+			Máximo 1000 caracteres permitidos.
+		</div>
+	</div>
+
+	<!-- 9. Flyer -->
+	<div class="form-group flyer-group">
+		<label>Flyer del evento</label>
+		<div
+			class="flyer-upload-placeholder"
+			(click)="fileInput.click()"
+			(drop)="onDrop($event)"
+			(dragover)="$event.preventDefault(); onFlyerDragOver(true)"
+			(dragleave)="onFlyerDragOver(false)"
+			[class.dragover]="flyerDragOver"
+		>
+			<ng-container *ngIf="formGroup.get('flyer')?.value as flyer; else flyerEmpty">
+				<div class="flyer-upload-success">
+					<div class="flyer-upload-header">
+						<i class="bi bi-image"></i>
+						<span class="flyer-upload-name">
+							{{
+								flyer.name.length > 20
+									? flyer.name.slice(0, 8) + '....' + flyer.name.slice(-4)
+									: flyer.name
+							}}
+						</span>
+						<button
+							type="button"
+							class="flyer-remove"
+							(click)="removeFlyer(); $event.stopPropagation()"
+						>
+							<i class="bi bi-x-lg"></i>
+						</button>
+					</div>
+					<div class="flyer-upload-divider"></div>
+					<button
+						*ngIf="!flyerDragOver"
+						type="button"
+						class="flyer-upload-retry"
+						(click)="fileInput.click(); $event.stopPropagation()"
+					>
+						Volver a subir
+					</button>
+					<span *ngIf="flyerDragOver" class="flyer-upload-dragover-msg"
+						>Suelta aquí para reemplazar</span
+					>
+				</div>
+			</ng-container>
+			<ng-template #flyerEmpty>
+				<span *ngIf="!flyerDragOver">📎 Subir o arrastrar aquí</span>
+				<span *ngIf="flyerDragOver">Suelta aquí</span>
+				<input
+					#fileInput
+					type="file"
+					style="display: none"
+					(change)="onFlyerSelected($event)"
+					accept=".png,.jpg,.jpeg,.webp"
+				/>
+			</ng-template>
+			<input
+				#fileInput
+				type="file"
+				style="display: none"
+				(change)="onFlyerSelected($event)"
+				accept=".png,.jpg,.jpeg,.webp"
+			/>
+		</div>
+		<!-- Error: tipo de archivo inválido -->
+		<div class="error" *ngIf="formGroup.get('flyer')?.errors?.['invalidType']">
+			Formato no válido. Solo png, jpg, jpeg y webp.
+		</div>
+		<!-- Error por tamaño -->
+		<div class="error" *ngIf="invalidFlyer && !formGroup.get('flyer')?.errors?.['invalidType']">
+			El archivo supera el tamaño máximo permitido (1.2 MB).<br />
+			Tamaño subido: {{ invalidFlyer.size / (1024 * 1024) | number : '1.2-2' }} MB.
+		</div>
+		<div
+			class="error"
+			*ngIf="formGroup.get('flyer')?.touched && formGroup.get('flyer')?.errors?.['required']"
+		>
+			El flyer es obligatorio.
+		</div>
+		<small class="flyer-instructions">
+			Formatos admitidos: png, jpg, jpeg y webp. Tamaño máximo: 1.2 MB.
+		</small>
+		<!-- Vista previa del archivo seleccionado o url existente -->
+		<div class="flyer-preview" *ngIf="formGroup.get('flyer')?.value">
+			<img
+				[src]="
+					formGroup.get('flyer')?.value.isUrl ? formGroup.get('flyer')?.value.url : flyerPreviewURL
+				"
+				alt="Flyer preview"
+			/>
+			<div class="flyer-details">
+				<div class="flyer-name">
+					{{ formGroup.get('flyer')?.value.name }}
+				</div>
+				<div class="flyer-size" *ngIf="!formGroup.get('flyer')?.value.isUrl">
+					{{ formGroup.get('flyer')?.value.size / 1024 | number : '1.1-1' }} KB
+				</div>
+			</div>
+			<button type="button" class="flyer-remove" (click)="removeFlyer()">
+				<i class="bi bi-trash"></i>
+			</button>
+		</div>
+
+		<!-- 10. Presentador -->
+		<div class="form-group">
+			<label>Presentador <span class="optional">(opcional)</span></label>
+			<div class="input-with-counter">
+				<input
+					type="text"
+					formControlName="presenter"
+					maxlength="100"
+					placeholder="Nombre del presentador"
+					(keydown)="
+						preventLeadingSpace($event);
+						preventDoubleSpace($event);
+						preventLongSegmentOnType($event)
+					"
+					(paste)="preventLongSegmentOnPaste($event)"
+				/>
+				<div
+					class="char-counter"
+					[ngClass]="{
+						warning: formGroup.get('presenter')?.value?.length > 80,
+						full: formGroup.get('presenter')?.value?.length >= 100
+					}"
+				>
+					{{ formGroup.get('presenter')?.value?.length || 0 }}/100
+				</div>
+			</div>
+			<div
+				class="error"
+				*ngIf="formGroup.get('presenter')?.touched && formGroup.get('presenter')?.errors?.['maxlength']"
+			>
+				Máximo 100 caracteres permitidos.
+			</div>
+		</div>
+
+		<!-- 11. Estado de evento -->
+		<div class="form-group">
+			<label>Estado de evento</label>
+			<select formControlName="eventStatus">
+				<option value="">Seleccione uno</option>
+				<option *ngFor="let status of eventStatusOptions" [value]="status.value">
+					{{ status.label }}
+				</option>
+			</select>
+			<div
+				class="error"
+				*ngIf="formGroup.get('eventStatus')?.touched && formGroup.get('eventStatus')?.errors?.['required']"
+			>
+				Debe elegir un estado de evento.
+			</div>
+		</div>
+	</div>
+</div>

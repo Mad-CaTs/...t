@@ -1,0 +1,110 @@
+<app-modal [title]="title">
+	<form [formGroup]="form" class="d-flex w-100 flex-column gap-6" (submit)="onSubmit()">
+		<div class="d-flex gap-4 w-100">
+			<app-input
+				class="w-100"
+				type="number"
+				label="Última versión"
+				[formGroup]="form"
+				controlName="lastVersion"
+			/>
+			<app-input
+				class="w-100"
+				type="number"
+				label="Meses de duracion"
+				placeholder="Meses de duracion"
+				[formGroup]="form"
+				controlName="months"
+			/>
+		</div>
+
+		<div class="d-flex gap-4 w-100">
+			<app-input
+				class="w-100"
+				type="number"
+				label="Precio"
+				placeholder="S/. 00.00"
+				[formGroup]="form"
+				controlName="price"
+			/>
+			<app-input
+				class="w-100"
+				type="number"
+				label="Numero de Cuotas"
+				placeholder="Numero de Cuotas"
+				[formGroup]="form"
+				controlName="cuotes"
+			/>
+		</div>
+
+		<div class="d-flex gap-4 w-100">
+			<app-input
+				class="w-100"
+				type="number"
+				label="Precio inicial"
+				placeholder="S/. 00.00"
+				[formGroup]="form"
+				controlName="initialPrice"
+			/>
+			<app-input
+				class="w-100"
+				type="number"
+				label="Precio por cuota"
+				placeholder="S/. 00.00"
+				[formGroup]="form"
+				controlName="cuotePrice"
+			/>
+		</div>
+
+		<div class="d-flex gap-4 w-100">
+			<app-input
+				class="w-100"
+				type="number"
+				label="Volumen"
+				placeholder="Ingresar volumen"
+				[formGroup]="form"
+				controlName="volume"
+			/>
+			<app-input
+				class="w-100"
+				type="number"
+				label="Numero de cuota inicial"
+				placeholder="Numero de cuota inicial"
+				[formGroup]="form"
+				controlName="cuoteN"
+			/>
+		</div>
+
+		<div class="d-flex gap-4 w-100">
+			<app-input
+				class="w-100"
+				type="number"
+				label="Comisión"
+				placeholder="S/. 00.00"
+				[formGroup]="form"
+				controlName="comission"
+			/>
+			<app-input
+				class="w-100"
+				type="number"
+				label="N° Acciones"
+				placeholder="N° Acciones"
+				[formGroup]="form"
+				controlName="accionsN"
+			/>
+		</div>
+
+		<div class="alert alert-secondary text-center" role="alert">
+			El nuevo paquete se guardara en la última versión (Versión {{ lastVersion}}), de la familia seleccionada.
+		</div>
+
+		<div class="w-100 d-flex justify-content-center align-items-center gap-4">
+			<button class="btn btn-outline-secondary" type="button" (click)="instanceModal.close()">
+				Cancelar
+			</button>
+			<button class="btn btn-secondary" type="submit" [disabled]="form.invalid">
+				Guardar Cambios
+			</button>
+		</div>
+	</form>
+</app-modal>

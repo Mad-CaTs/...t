@@ -1,0 +1,74 @@
+<app-modal [title]="title">
+	<div class="d-flex flex-column gap-6 mb-5">
+		<div class="d-flex flex-row justify-content-between">
+			<span class="fs-6 fw-bolder">Detalle de Suscripción</span>
+			<span class="fs-6 text-gray-800 fw-bold"> {{ data.description }} </span>
+		</div>
+		<div class="d-flex flex-row justify-content-between">
+			<span class="fs-6 fw-bolder">N° de ciclos calificados</span>
+			<span class="fs-6 text-gray-800 fw-bold"> {{ data.qualificationCycles }} </span>
+		</div>
+		<div class="d-flex flex-row justify-content-between">
+			<span class="fs-6 fw-bolder">Puntaje</span>
+			<span class="fs-6 text-gray-800 fw-bold"> {{ data.score }} pts </span>
+		</div>
+		<div class="d-flex flex-row justify-content-between">
+			<span class="fs-6 fw-bolder">Rango</span>
+			<span class="fs-6 text-gray-800 fw-bold"> {{ data.range.name.toUpperCase() }} </span>
+		</div>
+		<div class="d-flex flex-row justify-content-between">
+			<span class="fs-6 fw-bolder">Bonos usados antes de traspaso</span>
+			<span
+				class="fs-6 fw-bold px-2 py-1 rounded"
+				[class.text-success]="data.used === true"
+				[class.text-primary]="data.used != true"
+				[ngClass]="{
+					'bg-light-success': data.used === true,
+					'bg-light-primary': data.used != true
+				}"
+			>
+				{{ data.used ? 'Usado' : 'No usado' }}
+			</span>
+		</div>
+		<div>
+			<span class="fs-6 fw-bolder">Proforma</span>
+			<form [formGroup]="form">
+				<div class="d-flex gap-6 mt-3 ps-2">
+					<label class="form-check-label d-flex align-items-center" for="proforma1">
+						<input
+							type="radio"
+							id="proforma1"
+							formControlName="selectedProforma"
+							value="proforma1"
+							class="px-2"
+						/>
+						<span class="fs-6 fw-bold px-2">Proforma 1</span>
+					</label>
+					<label class="form-check-label d-flex align-items-center" for="proforma2">
+						<input
+							type="radio"
+							id="proforma2"
+							formControlName="selectedProforma"
+							value="proforma2"
+						/>
+						<span class="fs-6 fw-bold px-2">Proforma 2</span>
+					</label>
+					<label class="form-check-label d-flex align-items-center" for="proforma3">
+						<input
+							type="radio"
+							id="proforma3"
+							formControlName="selectedProforma"
+							value="proforma3"
+						/>
+						<span class="fs-6 fw-bold px-2">Proforma 3</span>
+					</label>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<div class="d-flex gap-4 justify-content-center align-items-center w-100">
+		<button class="btn btn-danger" type="button" (click)="onReject()">Rechazar</button>
+		<button class="btn btn-primary" type="submit" (click)="onSubmit()">Aceptar</button>
+	</div>
+</app-modal>

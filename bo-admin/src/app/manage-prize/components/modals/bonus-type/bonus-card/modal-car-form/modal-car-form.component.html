@@ -1,0 +1,459 @@
+<div class="modal-backdrop" *ngIf="showShell">
+	<div class="modal-container" role="dialog" aria-modal="true">
+		<header class="modal-header">
+			<div class="modal-header-content">
+				<div class="modal-icon"><i class="bi bi-truck-front"></i></div>
+				<div class="modal-titles">
+					<h3 class="modal-title">{{ computedTitle }}</h3>
+					<p class="modal-subtitle">{{ computedSubtitle }}</p>
+				</div>
+			</div>
+			<button type="button" class="close-btn" (click)="onClose()">
+				<i class="bi bi-x-lg"></i>
+			</button>
+		</header>
+
+		<form
+			[formGroup]="form"
+			class="modal-form"
+			(keydown.enter)="$event.preventDefault()"
+			(focusin)="onFormFocus($event)"
+		>
+			<!-- Fila 1 -->
+			<div class="form-row">
+				<!-- MARCA con sugerencias y crear si no existe -->
+				<div class="form-group autocomplete">
+					<label>Marca</label>
+
+					<div class="input-with-toggle">
+						<input
+							#brandInput
+							type="text"
+							formControlName="brand"
+							placeholder="TOYOTA"
+							(focus)="onBrandFocus()"
+							(input)="onBrandInput()"
+							(keydown.escape)="$event.stopPropagation(); brandDropdownOpen = false"
+							(keydown)="preventLeadingSpace($event); brandKeydown($event)"
+							[readonly]="isView"
+							autocomplete="off"
+						/>
+						<button
+							type="button"
+							class="dd-toggle"
+							(mousedown)="$event.preventDefault()"
+							(click)="toggleBrandDropdown()"
+						>
+							<i class="bi bi-chevron-down"></i>
+						</button>
+					</div>
+
+					<!-- Dropdown sugerencias marca -->
+					<div class="dropdown" *ngIf="brandDropdownOpen">
+						<!-- Crear primero para que siempre se vea -->
+						<div class="dropdown-create" *ngIf="!isView && showCreateBrand">
+							<span>No existe esta marca.</span>
+							<button
+								type="button"
+								class="btn-inline"
+								(click)="onCreateBrand()"
+								[disabled]="creatingBrand || !t('brand')?.value?.trim()"
+							>
+								{{
+									creatingBrand
+										? 'Creando…'
+										: 'Crear "' + (t('brand')?.value || '').trim() + '"'
+								}}
+							</button>
+						</div>
+						<button
+							class="dropdown-item"
+							type="button"
+							*ngFor="let b of brandSuggestions; trackBy: trackById; let i = index"
+							(mousedown)="$event.preventDefault()"
+							(click)="onSelectBrand(b)"
+							[ngClass]="{ active: i === brandActiveIndex }"
+						>
+							{{ b.name | lowercase }}
+						</button>
+						<div class="dropdown-empty" *ngIf="brandSuggestions.length === 0 && !showCreateBrand">
+							No hay coincidencias
+						</div>
+					</div>
+
+					<div class="error" *ngIf="t('brand')?.touched && t('brand')?.errors?.['required']">
+						Este campo es obligatorio.
+					</div>
+
+					<!-- hint crear marca -->
+					<div class="field-hint" *ngIf="!isView && showCreateBrand && !brandDropdownOpen">
+						No existe esta marca.
+						<button
+							type="button"
+							class="btn-inline"
+							(click)="onCreateBrand()"
+							[disabled]="creatingBrand || !t('brand')?.value?.trim()"
+						>
+							{{ creatingBrand ? 'Creando…' : 'Crear' }}
+						</button>
+					</div>
+				</div>
+
+				<!-- MODELO con sugerencias y crear si no existe -->
+				<div class="form-group autocomplete">
+					<label>Modelo</label>
+
+					<div class="input-with-toggle">
+						<input
+							#modelInput
+							type="text"
+							formControlName="model"
+							placeholder="Escriba título"
+							maxlength="100"
+							(focus)="onModelFocus()"
+							(input)="onModelInput()"
+							(keydown.escape)="$event.stopPropagation(); modelDropdownOpen = false"
+							(keydown)="preventLeadingSpace($event); modelKeydown($event)"
+							[readonly]="isView"
+							autocomplete="off"
+						/>
+						<button
+							type="button"
+							class="dd-toggle"
+							(mousedown)="$event.preventDefault()"
+							(click)="toggleModelDropdown()"
+						>
+							<i class="bi bi-chevron-down"></i>
+						</button>
+					</div>
+
+					<!-- Dropdown sugerencias modelo -->
+					<div class="dropdown" *ngIf="modelDropdownOpen && !isView && !!selectedBrandId">
+						<button
+							class="dropdown-item"
+							type="button"
+							*ngFor="let m of modelSuggestions; trackBy: trackById; let i = index"
+							(mousedown)="$event.preventDefault()"
+							(click)="onSelectModel(m)"
+							[ngClass]="{ active: i === modelActiveIndex }"
+						>
+							{{ m.name | lowercase }}
+						</button>
+						<div class="dropdown-empty" *ngIf="modelSuggestions.length === 0 && !showCreateModel">
+							No hay coincidencias
+						</div>
+						<div class="dropdown-create" *ngIf="!isView && selectedBrandId && showCreateModel">
+							<span>No existe este modelo.</span>
+							<button
+								type="button"
+								class="btn-inline"
+								(click)="onCreateModel()"
+								[disabled]="creatingModel || !t('model')?.value?.trim()"
+							>
+								{{
+									creatingModel
+										? 'Creando…'
+										: 'Crear "' + (t('model')?.value || '').trim() + '"'
+								}}
+							</button>
+						</div>
+					</div>
+
+					<div class="error" *ngIf="t('model')?.touched && t('model')?.errors?.['required']">
+						Obligatorio.
+					</div>
+					<div class="error" *ngIf="t('model')?.touched && t('model')?.errors?.['maxlength']">
+						Máx. 100 caracteres.
+					</div>
+
+					<div class="field-hint" *ngIf="!isView && !selectedBrandId">
+						Selecciona una marca primero.
+					</div>
+
+					<!-- hint crear modelo -->
+					<div
+						class="field-hint"
+						*ngIf="!isView && selectedBrandId && showCreateModel && !modelDropdownOpen"
+					>
+						No existe este modelo.
+						<button
+							type="button"
+							class="btn-inline"
+							(click)="onCreateModel()"
+							[disabled]="creatingModel || !t('model')?.value?.trim()"
+						>
+							{{ creatingModel ? 'Creando…' : 'Crear' }}
+						</button>
+					</div>
+				</div>
+			</div>
+
+			<!-- Fila 2 -->
+			<div class="form-row">
+				<div class="form-group">
+					<label>Color</label>
+					<input
+						type="text"
+						formControlName="color"
+						placeholder="Rojo"
+						maxlength="30"
+						(keydown)="preventLeadingSpace($event)"
+						[readonly]="isView"
+					/>
+					<div class="error" *ngIf="t('color')?.touched && t('color')?.errors?.['required']">
+						Obligatorio.
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label>Precio (USD)</label>
+					<input
+						type="number"
+						formControlName="price"
+						min="0"
+						step="any"
+						placeholder="0"
+						inputmode="decimal"
+						(keydown)="blockNumberKeys($event, true)"
+						(wheel)="disableWheel($event)"
+						[readonly]="isView"
+					/>
+					<div
+						class="error"
+						*ngIf="t('price')?.touched && (t('price')?.errors?.['required'] || t('price')?.errors?.['min'])"
+					>
+						Debe ser ≥ 0.
+					</div>
+				</div>
+			</div>
+
+			<!-- Fila 3 -->
+			<div class="form-row">
+				<div class="form-group">
+					<label>Tasa de Interés %</label>
+					<input
+						type="number"
+						formControlName="interestRate"
+						min="0"
+						max="100"
+						step="0.01"
+						placeholder="0"
+						inputmode="decimal"
+						(keydown)="blockNumberKeys($event, true)"
+						(wheel)="disableWheel($event)"
+						[readonly]="isView"
+					/>
+					<div
+						class="error"
+						*ngIf="t('interestRate')?.touched && (t('interestRate')?.errors?.['required'] || t('interestRate')?.errors?.['min'] || t('interestRate')?.errors?.['max'])"
+					>
+						0 a 100.
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label>Cantidad de cuotas</label>
+					<input
+						type="number"
+						formControlName="monthlyInstallmentsCount"
+						min="1"
+						step="1"
+						placeholder="0"
+						inputmode="numeric"
+						pattern="[0-9]*"
+						(keydown)="blockNumberKeys($event, false)"
+						(wheel)="disableWheel($event)"
+						[readonly]="isView"
+					/>
+					<div
+						class="error"
+						*ngIf="t('monthlyInstallmentsCount')?.touched && (t('monthlyInstallmentsCount')?.errors?.['required'] || t('monthlyInstallmentsCount')?.errors?.['min'] || t('monthlyInstallmentsCount')?.errors?.['pattern'])"
+					>
+						Debe ser un entero ≥ 1.
+					</div>
+				</div>
+			</div>
+
+			<!-- Fila 4 -->
+			<div class="form-row">
+				<div class="form-group">
+					<label>Monto Inicial Socio (USD)</label>
+					<input
+						type="number"
+						formControlName="partnerInitialAmount"
+						min="0"
+						step="any"
+						placeholder="0"
+						inputmode="decimal"
+						(keydown)="blockNumberKeys($event, true)"
+						(wheel)="disableWheel($event)"
+						[readonly]="isView"
+					/>
+					<div
+						class="error"
+						*ngIf="t('partnerInitialAmount')?.touched && (t('partnerInitialAmount')?.errors?.['required'] || t('partnerInitialAmount')?.errors?.['min'])"
+					>
+						Debe ser ≥ 0.
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label>Cantidad de cuotas (Cuota Inicial)</label>
+					<input
+						type="number"
+						formControlName="initialInstallmentsCount"
+						min="0"
+						step="1"
+						placeholder="0"
+						inputmode="numeric"
+						pattern="[0-9]*"
+						(keydown)="blockNumberKeys($event, false)"
+						(wheel)="disableWheel($event)"
+						[readonly]="isView"
+					/>
+					<div
+						class="error"
+						*ngIf="t('initialInstallmentsCount')?.touched && (t('initialInstallmentsCount')?.errors?.['required'] || t('initialInstallmentsCount')?.errors?.['min'] || t('initialInstallmentsCount')?.errors?.['pattern'])"
+					>
+						Debe ser un entero ≥ 1.
+					</div>
+				</div>
+			</div>
+
+			<!-- Fila 5 -->
+			<div class="form-row">
+				<div class="form-group">
+					<label>Monto Inicial Empresa (USD)</label>
+					<input
+						type="number"
+						formControlName="companyInitialAmount"
+						min="0"
+						step="any"
+						placeholder="0"
+						inputmode="decimal"
+						(keydown)="blockNumberKeys($event, true)"
+						(wheel)="disableWheel($event)"
+						[readonly]="isView"
+					/>
+					<div
+						class="error"
+						*ngIf="t('companyInitialAmount')?.touched && (t('companyInitialAmount')?.errors?.['required'] || t('companyInitialAmount')?.errors?.['min'])"
+					>
+						Debe ser ≥ 0.
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label>Fecha de Pago</label>
+					<input type="date" formControlName="paymentDate" [readonly]="isView" />
+					<div
+						class="error"
+						*ngIf="t('paymentDate')?.touched && t('paymentDate')?.errors?.['required']"
+					>
+						Obligatorio.
+					</div>
+				</div>
+			</div>
+
+			<!-- Solo en VER: Seguro/GPS -->
+			<div class="form-row" *ngIf="showInsuranceGps">
+				<div class="form-group">
+					<label>Seguro Vehicular (opcional)</label>
+					<input
+						type="number"
+						formControlName="vehicleInsurance"
+						min="0"
+						step="any"
+						placeholder="0"
+						[readonly]="true"
+					/>
+				</div>
+				<div class="form-group">
+					<label>Gps (opcional)</label>
+					<input
+						type="number"
+						formControlName="gps"
+						min="0"
+						step="any"
+						placeholder="0"
+						[readonly]="true"
+					/>
+				</div>
+			</div>
+
+			<!-- Uploader -->
+			<div class="form-group full">
+				<label>Imagen o flyer del premio (opcional)</label>
+				<div
+					class="uploader"
+					[class.dragover]="dragOver"
+					(dragover)="onDragOver($event)"
+					(dragleave)="dragOver = false"
+					(drop)="onDrop($event)"
+					(click)="fileInput.click()"
+				>
+					<div class="uploader-inner" *ngIf="!imagePreview; else preview">
+						<i class="bi bi-paperclip"></i>
+						<span>Subir un archivo</span>
+					</div>
+					<ng-template #preview>
+						<div class="uploader-preview">
+							<img [src]="imagePreview" alt="preview" />
+							<div class="uploader-meta">
+								<div class="name">{{ currentFileName }}</div>
+								<div class="size" *ngIf="currentFileSize">{{ currentFileSize }}</div>
+							</div>
+							<button
+								type="button"
+								class="btn-remove"
+								(click)="removeImage(); $event.stopPropagation()"
+							>
+								<i class="bi bi-x-lg"></i>
+							</button>
+						</div>
+					</ng-template>
+					<input
+						#fileInput
+						type="file"
+						accept=".png,.jpg,.jpeg,.webp"
+						(change)="onFileSelected($event)"
+					/>
+				</div>
+				<div class="error" *ngIf="fileError === 'type'">
+					Formato no válido. Solo png, jpg, jpeg y webp.
+				</div>
+				<div class="error" *ngIf="fileError === 'size'">
+					El archivo supera el tamaño máximo permitido (1.5 MB).
+				</div>
+			</div>
+
+			<!-- ID del Socio (memberId) -->
+			<div class="form-row" *ngIf="showPartnerField">
+				<div class="form-group full">
+					<label>{{ isView ? 'Socio Asignado (ID)' : 'ID del Socio (memberId)' }}</label>
+					<input
+						type="number"
+						formControlName="memberId"
+						[readonly]="isView"
+						[placeholder]="isView ? '' : 'Ej: 12'"
+					/>
+					<small class="hint" *ngIf="!isView">Déjalo vacío si no deseas asignar un socio.</small>
+				</div>
+			</div>
+		</form>
+
+		<!-- Footer -->
+		<footer class="modal-footer">
+			<button type="button" class="btn btn-outline" (click)="onClose()">Cancelar</button>
+			<button
+				*ngIf="!isView"
+				type="button"
+				class="btn btn-primary"
+				(click)="onSave()"
+				[disabled]="form.invalid || (mode === 'edit' && !form.dirty)"
+			>
+				{{ primaryButtonLabel }}
+			</button>
+		</footer>
+	</div>
+</div>

@@ -1,0 +1,35 @@
+<form [formGroup]="form" class="card card-xxl-stretch mb-5 mb-xl-8 d-flex flex-column gap-4 p-8">
+	<h1>Lista de Socios</h1>
+	<div class="d-flex align-items-center gap-3">
+		<app-input iconRigth="bi bi-search" placeholder="Nombre, apellido, usuario o número documento"
+			[formGroup]="form" controlName="search" class="flex-grow-1 custom-input"></app-input>
+		<div class="mt-0">
+			<button type="button" class="btn btn-outline-secondary" [disabled]="buttonLoading" (click)="onSearch()">
+				<div class="fixed-width-button">
+					<div *ngIf="buttonLoading">
+						<span class="spinner-border spinner-border-sm align-middle text-center ms-2"></span>
+					</div>
+					<div *ngIf="!buttonLoading">
+						<span>Buscar</span>
+					</div>
+				</div>
+			</button>
+		</div>
+	</div>
+
+
+	<div class="d-flex flex-row gap-6">
+		<app-select label="Buscar como:" placeholder="Selecciona un opción" [options]="asOpt" [formGroup]="form"
+			controlName="as" class="w-100"></app-select>
+		<app-select label="Estado:" placeholder="Selecciona un opción" [options]="statusOpt" [formGroup]="form"
+			controlName="status" class="w-100"></app-select>
+		<app-select label="Paquete de familia:" placeholder="Selecciona un opción" [options]="familyPackageOpt"
+			[formGroup]="form" controlName="familyPackage" class="w-100"></app-select>
+		<app-select label="Paquete:" placeholder="Selecciona un opción" [options]="packageOpt" [formGroup]="form"
+			controlName="package" class="w-100"></app-select>
+	</div>
+	<p class="text-muted">Visualiza a todos los socios registrados en InClub.</p>
+</form>
+
+<app-table-partners-registered [dataBody]="tableData" (onViewSubcription)="onViewSubscriptions($event)"
+	(onDeletePartner)="onDeletePartner($event)" (onViewByPartner)="goToByPartner($event)"></app-table-partners-registered>

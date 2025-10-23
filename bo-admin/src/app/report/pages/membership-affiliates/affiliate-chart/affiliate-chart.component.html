@@ -1,0 +1,62 @@
+<!-- affiliate-chart.component.html -->
+<div class="chart-container">
+  <!-- <h3>{{ chartOptions.title.text }}</h3> -->
+
+  <div class="filters-top">
+    <app-select
+      label="Meses:"
+       [options]="monthOptions"
+      [formGroup]="form"
+      controlName="month"
+      class="w-100"
+    ></app-select>
+
+    <app-select
+      label="Estado:"
+     [options]="statusOptions"
+      [formGroup]="form"
+      controlName="status"
+      class="w-100"
+    ></app-select>
+
+    <!-- Tercer select dinámico -->
+
+    <app-select
+      *ngIf="fourthSelectOptions && fourthSelectControlName"
+      [label]="fourthSelectLabel"
+      [options]="fourthSelectOptions"
+      [formGroup]="form"
+      [controlName]="fourthSelectControlName"
+      class="w-100"
+    ></app-select>
+
+    <app-select
+      [label]="thirdSelectLabel"
+      [options]="thirdSelectOptions"
+      [formGroup]="form"
+      [controlName]="thirdSelectControlName"
+      class="w-100"
+    ></app-select>
+    
+    </div>
+
+  <div class="chart-wrapper">
+    <apx-chart
+      [series]="chartOptions.series"
+      [chart]="chartOptions.chart"
+      [xaxis]="chartOptions.xaxis"
+      [yaxis]="chartOptions.yaxis"
+      [legend]="chartOptions.legend"
+      [tooltip]="chartOptions.tooltip"
+      [dataLabels]="chartOptions.dataLabels"
+      [stroke]="chartOptions.stroke"
+    ></apx-chart>
+  </div>
+
+  <div class="export">
+    <button class="btn-export" [disabled]="exporting" (click)="exportFn()">
+      <span *ngIf="!exporting">{{ exportLabel }}</span>
+      <span *ngIf="exporting">Descargando...</span>
+    </button>
+  </div>
+</div>

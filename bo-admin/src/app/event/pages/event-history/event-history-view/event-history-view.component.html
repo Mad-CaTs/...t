@@ -1,0 +1,149 @@
+<div class="event-history-card d-flex flex-column gap-6 p-6 bg-white w-100">
+
+  <!-- ───── Encabezado con botón volver ───── -->
+  <header class="page-header">
+    <button class="back-btn" aria-label="Volver" (click)="onBack()">
+      <i class="bi bi-arrow-left"></i>
+    </button>
+    <h1 class="page-title">{{ event?.eventName || 'Título del evento' }}</h1>
+  </header>
+
+  <!-- ───── Layout principal (2 columnas) ───── -->
+  <div class="event-history-grid">
+
+    <!-- ◀ Columna izquierda : Preview flyer + alerta -->
+    <section class="preview-section">
+      <h3 class="section-label">Preview del contenido</h3>
+
+      <div class="flyer-wrapper">
+        <img *ngIf="event?.flyerUrl; else noFlyer"
+             [src]="event?.flyerUrl"
+             alt="Flyer del evento" />
+        <ng-template #noFlyer>
+          <div class="flyer-placeholder">
+            <i class="bi bi-image"></i>
+          </div>
+        </ng-template>
+      </div>
+
+      <!-- Alerta sobre contenido obligatorio -->
+      <div class="media-alert">
+        <i class="bi bi-exclamation-circle"></i>
+        <p>
+          Dado que se trata de un evento pasado, es necesario incluir contenido relacionado.
+          <strong>Como mínimo 2 imágenes y 1&nbsp;video</strong> resumen del evento.
+        </p>
+      </div>
+    </section>
+
+    <!-- ▶ Columna derecha : Información del evento -->
+    <section class="info-section">
+
+      <!-- Nombre + badge -->
+      <div class="info-header">
+        <div>
+          <label class="small-label">Nombre del evento</label>
+          <h2 class="event-name">{{ event?.eventName || '-' }}</h2>
+          <p class="event-type">Evento {{ eventTypeName }}</p>
+        </div>
+        <span class="event-badge" *ngIf="event?.isMainEvent">Destacado</span>
+      </div>
+
+      <!-- Grid de datos -->
+      <div class="info-grid">
+
+        <!-- Fila fecha + horario -->
+        <div class="info-block">
+          <label>Fecha del evento</label>
+          <p>{{ event?.eventDate | date:'dd/MM/yyyy' }}</p>
+        </div>
+        <div class="info-block">
+          <label>Horario</label>
+          <p>{{ event?.startDate }} – {{ event?.endDate }}</p>
+        </div>
+
+        <!-- Lugar o URL -->
+        <ng-container *ngIf="eventTypeName?.toLowerCase() !== 'virtual'; else virtualTpl">
+          <div class="info-block full">
+            <label>Lugar evento</label>
+            <p>{{ venueName || '-' }}</p>
+          </div>
+          <div class="info-block">
+            <label>País</label>
+            <p>{{ venueCountry || '-' }}</p>
+          </div>
+          <div class="info-block">
+            <label>Ciudad</label>
+            <p>{{ venueCity || '-' }}</p>
+          </div>
+        </ng-container>
+        <ng-template #virtualTpl>
+          <div class="info-block full">
+            <label>URL del evento</label>
+            <p>
+              <a *ngIf="event?.eventUrl; else dash" [href]="event?.eventUrl" target="_blank">
+                {{ event?.eventUrl }}
+              </a>
+              <ng-template #dash>-</ng-template>
+            </p>
+          </div>
+        </ng-template>
+
+        <!-- Entrada, descripción -->
+        <div class="info-block full">
+          <label>Tipo de entrada</label>
+          <p>{{ ticketTypeName || '-' }}</p>
+        </div>
+
+        <div class="info-block full">
+          <label>Descripción del evento</label>
+          <p>{{ event?.description || '-' }}</p>
+        </div>
+
+        <!-- Contenido multimedia cargado -->
+        <div class="info-block full">
+          <label>Contenido del evento</label>
+          <div class="media-thumbs">
+            <div class="media-thumb">
+              <ng-container *ngIf="event?.media?.imageUrl; else defaultThumb1">
+                <img [src]="event?.media?.imageUrl" alt="Imagen 1" />
+              </ng-container>
+              <ng-template #defaultThumb1>
+                <div class="thumb-placeholder"><i class="bi bi-image"></i></div>
+              </ng-template>
+            </div>
+            <div class="media-thumb">
+              <ng-container *ngIf="event?.media?.secondImageUrl; else defaultThumb2">
+                <img [src]="event?.media?.secondImageUrl" alt="Imagen 2" />
+              </ng-container>
+              <ng-template #defaultThumb2>
+                <div class="thumb-placeholder"><i class="bi bi-image"></i></div>
+              </ng-template>
+            </div>
+            <div class="media-thumb video-thumb">
+              <img *ngIf="event?.media?.videoUrl; else defaultThumbVideo"
+                   class="clickable"
+                   [src]="(event?.media?.videoUrl || '') | youtubeThumb"
+                   alt="Video"
+                   (click)="onGoToVideo()" />
+              <ng-template #defaultThumbVideo>
+                <div class="thumb-placeholder"><i class="bi bi-play-circle"></i></div>
+              </ng-template>
+              <i class="bi bi-play-circle overlay-icon"></i>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<app-modal-notify
+  *ngIf="showNotify"
+  [title]="notifyTitle"
+  [message]="notifyMessage"
+  [iconType]="notifyType"
+  (closed)="onNotifyClose()"
+></app-modal-notify>

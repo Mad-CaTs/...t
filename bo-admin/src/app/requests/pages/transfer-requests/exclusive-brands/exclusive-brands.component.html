@@ -1,0 +1,42 @@
+<div class="d-flex flex-column gap-4 w-100">
+	<!--Table | Pagination-->
+	<table-pagination textBtn="Actualizar" class="w-100" />
+	<!--Table | Table-->
+	<app-common-table
+		class="w-100"
+		[headers]="table.headers"
+		[checkedAll]="table.checkedAll"
+		[headersMinWidth]="table.headersMinWidth"
+		[noCheckboxes]="table.noCheckBoxes"
+		[firstEmpty]="true"
+		(onCheckedAll)="table.changeCheckedAll($event)"
+	>
+		<tr class="w-100 d-flex py-2 align-items-center" *ngFor="let item of table.data">
+			<td class="w-40px d-flex justify-content-center">
+				<div class="form-check-sm form-check-custom form-check-solid">
+					<input
+						class="form-check-input cursor-pointer"
+						type="radio"
+						name="grace-period-item-radio"
+					/>
+				</div>
+			</td>
+
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.orderN }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.date }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.fullname }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.destiny || '-' }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.accountOwner }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6" style="word-break: break-all;">{{ item.username }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6" style="word-break: break-all;">{{ item.link }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.accountType }}</td>
+			<td class="w-100 d-flex justify-content-center flex-column gap-2">
+				<span class="badge bg-primary cursor-pointer">Aceptar</span>
+				<span class="badge bg-danger cursor-pointer">Rechazar</span>
+			</td>
+			<td class="w-100 d-flex justify-content-center">
+				<i class="bi bi-eye-fill text-gray-600 fs-2"></i>
+			</td>
+		</tr>
+	</app-common-table>
+</div>

@@ -1,0 +1,43 @@
+<div class="container-fluid px-4 py-4">
+	<h4 class="mb-4">Tarifario de Legalización</h4>
+
+	<ngb-accordion #outerAcc="ngbAccordion" activeIds="regular">
+		<!-- <ngb-accordion #outerAcc="ngbAccordion" [activeIds]="['regular', 'express']"> -->
+		<ngb-panel id="regular" title="Legalización Regular">
+			<ng-template ngbPanelContent>
+				<ngb-accordion #innerAccR="ngbAccordion">
+					<!-- <ngb-accordion #innerAccR="ngbAccordion" [activeIds]="['contratosR', 'certificadosR']"> -->
+
+					<ngb-panel id="certificadosR" title="Certificados">
+						<ng-template ngbPanelContent>
+							<app-tariff-table-one [data]="regularCertificates"></app-tariff-table-one>
+						</ng-template>
+					</ngb-panel>
+					<ngb-panel id="contratosR" title="Contratos">
+						<ng-template ngbPanelContent>
+							<app-tariff-table-one [data]="regularContracts"></app-tariff-table-one>
+						</ng-template>
+					</ngb-panel>
+				</ngb-accordion>
+			</ng-template>
+		</ngb-panel>
+
+		<ngb-panel id="express" title="Legalización Express">
+			<ng-template ngbPanelContent>
+				<ngb-accordion #innerAccE="ngbAccordion" activeIds="contratosE">
+					<!-- <ngb-accordion #innerAccE="ngbAccordion" [activeIds]="['contratosE', 'certificadosE']"> -->
+					<ngb-panel id="certificadosE" title="Certificados">
+						<ng-template ngbPanelContent>
+							<app-tariff-table-one [data]="expressCertificates"></app-tariff-table-one>
+						</ng-template>
+					</ngb-panel>
+					<ngb-panel id="contratosE" title="Contratos">
+						<ng-template ngbPanelContent>
+							<app-tariff-table-one [data]="expressContracts"></app-tariff-table-one>
+						</ng-template>
+					</ngb-panel>
+				</ngb-accordion>
+			</ng-template>
+		</ngb-panel>
+	</ngb-accordion>
+</div>

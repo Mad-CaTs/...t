@@ -1,0 +1,114 @@
+<div class="payments-validate-card d-flex flex-column gap-6 p-6 bg-white w-100">
+	<h2 class="title">Validar pagos</h2>
+
+	<div class="toolbar-card">
+		<app-list-toolbar
+			placeholder="Ingrese lo que necesita buscar..."
+			actionText="Filtrar"
+			[showDateFilter]="true"
+			[clearMessage]="clearCountdownText"
+			(search)="onSearch($event)"
+			(paymentDateChange)="onFilterByPaymentDate($event)"
+		>
+		</app-list-toolbar>
+
+		<ng-template #paymentDetailTpl let-row>
+			<div class="detail-stack">
+				<div><strong>Tipo de entrada:</strong> {{ row?.detalles?.ticketTypeName || 'N/A' }}</div>
+				<div><strong>Patrocinador:</strong> {{ row?.detalles?.sponsorName || 'N/A' }}</div>
+				<div><strong>Código promocional:</strong> {{ row?.detalles?.promotionalCode || '-' }}</div>
+				<div>
+					<strong>Estado:</strong>
+					<span class="chip chip--warning">{{ row?.detalles?.paymentStatus || 'Pendiente' }}</span>
+				</div>
+				<div><strong>Monto total:</strong> {{ row?.detalles?.totalAmount || '0.00' }}</div>
+				<div><strong>Medio de pago:</strong> {{ row?.detalles?.paymentMethod || 'N/A' }}</div>
+			</div>
+		</ng-template>
+
+		<ng-container *ngIf="!loading; else loadingTemplate">
+			<ng-container *ngIf="paymentsValidate.length > 0; else empty">
+				<app-table-generic
+					[checkboxMode]="'accordion'"
+					[rowDetailTemplate]="paymentDetailTpl"
+					[columns]="[
+						'N°',
+						'Fecha de pago',
+						'Nombre de evento',
+						'Zona',
+						'N° de entradas',
+						'Socio',
+						'Monto',
+						'Imagen'
+					]"
+					[keys]="[
+						'item',
+						'paymentDate',
+						'eventName',
+						'zone',
+						'ticketQuantity',
+						'userName',
+						'totalAmount',
+						'imageUrl'
+					]"
+					[data]="pagedData"
+					[columnWidths]="['5%', '12%', '20%', '10%', '10%', '12%', '8%', '15%']"
+					[pageIndex]="pageIndex"
+					[pageSize]="pageSize"
+					[imageKeys]="['imageUrl']"
+					(edit)="onAccept($event)"
+					(delete)="onDeny($event)"
+				>
+				</app-table-generic>
+			</ng-container>
+
+			<app-table-paginator
+				*ngIf="paymentsValidate.length > 0"
+				[length]="paymentsValidate.length"
+				[pageSize]="pageSize"
+				[pageIndex]="pageIndex"
+				(pageChange)="onPageChange($event)"
+				(pageSizeChange)="onPageSizeChange($event)"
+			>
+			</app-table-paginator>
+		</ng-container>
+
+		<ng-template #loadingTemplate>
+			<div class="d-flex justify-content-center align-items-center py-5">
+				<div class="spinner-border text-primary" role="status">
+					<span class="visually-hidden">Cargando...</span>
+				</div>
+			</div>
+		</ng-template>
+
+		<ng-template #empty>
+			<app-entry-state message="No data"></app-entry-state>
+		</ng-template>
+	</div>
+</div>
+
+<!-- Modales (igual que antes) -->
+<app-modal-accept
+	*ngIf="showModal"
+	[data]="selectedRow"
+	(close)="onCloseModal()"
+	(completed)="onAcceptCompleted($event)"
+>
+</app-modal-accept>
+
+<app-modal-deny
+	*ngIf="showModalDeny"
+	[data]="selectedRow"
+	(close)="onDenyClosed()"
+	(completed)="onDenyCompleted($event)"
+>
+</app-modal-deny>
+
+<app-modal-notify
+	*ngIf="showNotify"
+	[title]="notifyTitle"
+	[message]="notifyMessage"
+	[iconType]="notifyType"
+	(closed)="onNotifyClosed()"
+>
+</app-modal-notify>

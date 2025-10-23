@@ -1,0 +1,74 @@
+<form [formGroup]="form" class="card card-xxl-stretch mb-5 mb-xl-8 d-flex flex-column gap-4 p-8">
+    <div class="d-flex align-items-center gap-3 mb-2">
+        <h1 class="m-0">Gestión de patrocinio</h1>
+    </div>
+    <div class="d-flex align-items-center gap-3">
+            <app-input
+                label="Patrocinador"
+                iconRigth="bi bi-search" 
+                placeholder="Buscar patrocinador"
+                [formGroup]="form" 
+                controlName="search"
+                class="flex-grow-1 custom-input w-70">
+            </app-input>
+            <app-input
+            label="Socios"
+            iconRigth="bi bi-search" 
+            placeholder="Buscar socio"
+			[formGroup]="form" 
+            controlName="search2"
+            class="flex-grow-1 custom-input w-70">
+        </app-input>
+        <app-select
+            label="Rangos" 
+            placeholder="Selecciona uno"   
+            [formGroup]="form" 
+            [options]="rangeOptions"
+            controlName="rangeId" 
+            class="w-70">
+        </app-select>
+        
+        
+        
+    </div>
+    <div class="d-flex align-items-end gap-6">
+        <app-select
+            label="Ciclo"
+            class="w-50"
+            placeholder="Selecciona uno"
+            [formGroup]="form"
+            controlName="ciclos"
+            [options]="optCiclos"
+            >
+
+        </app-select>
+        <div class="mt-0">
+            <button type="button" class="btn btn-outline-secondary" [disabled]="loading || loading " (click)="onExport()">
+                <div class="fixed-width-button d-flex align-items-center gap-2">
+                <span *ngIf="loading " class="spinner-border spinner-border-sm align-middle"></span>
+                <span>{{ loading? 'Exportando...' : 'Exportar' }}</span>
+                </div>
+            </button>
+			<button type="submit" class="btn btn-outline-secondary" [disabled]="loading" (click)="onSearch()">
+                <div class="fixed-width-button d-flex align-items-center gap-2">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm align-middle"></span>
+                <span>{{ loading ? 'Filtrando...' : 'Filtrar' }}</span>
+                </div>
+            </button>
+		</div>
+    </div>
+
+    <app-table-sponsorship-list 
+        [dataBody]="rows"
+        [pageIndex]="page"
+        [pageSize]="size"
+        [length]="total"
+        (pageChange)="onPageChange($event)"
+        (pageSizeChange)="onPageSizeChange($event)"
+        (detail)="onViewDetail($event)" >
+    </app-table-sponsorship-list>
+</form>
+
+
+
+

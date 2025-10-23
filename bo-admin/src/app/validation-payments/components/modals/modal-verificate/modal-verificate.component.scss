@@ -1,0 +1,29 @@
+table {
+    th,
+    td {
+      padding: 2px; 
+      margin: 0;
+    }
+  
+    th {
+      min-width: 80px; 
+    }
+  
+    td {
+      min-width: 80px; 
+    }
+  }
+  
+.spaced-item {
+  margin-bottom: 50px;
+}
+
+.small-image {
+  transition: transform 0.3s ease-in-out;
+}
+
+.small-image:hover {
+  transform: scale(1.1); 
+  cursor: pointer;
+}
+

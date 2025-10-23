@@ -1,0 +1,84 @@
+<app-table
+	class="card card-xxl-stretch mb-5 mb-xl-8"
+	[noCheckboxes]="true"
+	[customRows]="true"
+	[headers]="['Usuario', 'Contacto', 'Documento', 'Patrocinador', 'Estado', 'Acciones']"
+>
+	<tr *ngFor="let d of dataBody; let i = index" [class.row-table-odd]="i % 2 === 1">
+		<td class="w-300px">
+			<div class="d-flex align-items-center">
+				<div class="symbol symbol-35px me-5">
+					<img src="./assets/media/avatars/blank.png" alt="" />
+				</div>
+				<div class="d-flex justify-content-start flex-column">
+					<div class="d-flex flex-row gap-2 align-items-center">
+						<span class="text-dark fw-bolder fs-6" style="word-break: break-all">{{
+							'@' + d.username
+						}}</span>
+
+						<!-- <i
+							class="bi text-black fa-1x"
+							[ngClass]="{
+								'bi-gender-male': d.gender === '1' || d.gender === 'M',
+								'bi-gender-female': d.gender !== '1' && d.gender !== 'M'
+							}"
+						></i> -->
+					</div>
+
+					<span class="fw-bold text-muted d-block fs-6"> {{ d.fullname }} {{ d.lastname }} </span>
+					<span class="text-muted d-block fs-7">{{ formatDate(d.startDate) }} </span>
+				</div>
+			</div>
+		</td>
+		<td>
+			<div class="d-flex flex-column">
+				<span class="fw-bold fs-7">{{ d.email }}</span>
+				<span class="fw-bold fs-7 text-muted">{{ d.phone }}</span>
+			</div>
+		</td>
+		<td>
+			<div class="d-flex flex-column">
+				<span class="fw-bold">{{ d.docNumber }}</span>
+				<span class="text-muted fw-bold">{{ d.docType }}</span>
+			</div>
+		</td>
+		<td>
+			<div class="d-flex flex-column">
+				<span class="text-muted" *ngIf="d.partner === 'No hay sponsor'">
+					{{ d.partner }}
+				</span>
+				<a class="link-info" *ngIf="d.partner !== 'No hay sponsor'">
+					{{ d.partner }}
+				</a>
+			</div>
+		</td>
+		<td class="w-25px">
+			<div class="d-flex flex-row gap-2 align-items-center">
+				<div
+					class="point-table"
+					[class.bg-success]="d.status === 'Activo'"
+					[class.bg-gray-600]="d.status != 'Activo'"
+				></div>
+				<span
+					class="fw-bold"
+					[class.text-success]="d.status === 'Activo'"
+					[class.text-muted]="d.status != 'Activo'"
+				>
+					{{ d.status }}
+				</span>
+			</div>
+		</td>
+		<td>
+			<div class="d-flex justify-content-start flex-shrink-0">
+				<button
+					class="btn btn btn-sm border-1"
+					style="padding-left: 2px; padding-right: 2px; display: flex; align-items: center"
+					(click)="viewSubscription(d)"
+				>
+					<img height="11px" width="18px" src="./assets/media/icons/custom/eye.svg" />
+					<span class="detail-view">Ver detalle</span>
+				</button>
+			</div>
+		</td>
+	</tr>
+</app-table>

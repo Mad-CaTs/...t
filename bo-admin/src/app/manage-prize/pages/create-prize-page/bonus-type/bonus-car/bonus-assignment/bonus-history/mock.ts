@@ -1,0 +1,38 @@
+export const BONUS_HISTORY_MOCK = [
+  {
+    id: 1,
+    rango: 'Diamante',
+    bonoAsignadoMensual: 150,
+    bonoInicial: 7000,
+    precioBono: 30990,
+    fechaEmision: '2025-04-20',
+    fechaVencimiento: '2024-04-20',
+  },
+  {
+    id: 2,
+    rango: 'Diamante',
+    bonoAsignadoMensual: 100,
+    bonoInicial: 7000,
+    precioBono: 90000,
+    fechaEmision: '2025-04-20',
+    fechaVencimiento: '2024-04-20',
+  },
+  {
+    id: 3,
+    rango: 'Doble Diamante Corona',
+    bonoAsignadoMensual: 4000,
+    bonoInicial: 75000,
+    precioBono: 250000,
+    fechaEmision: '2025-04-20',
+    fechaVencimiento: '2025-04-20',
+  },
+  {
+    id: 4,
+    rango: 'Diamante Imperial',
+    bonoAsignadoMensual: 8000,
+    bonoInicial: 190000,
+    precioBono: 550000,
+    fechaEmision: '2025-04-20',
+    fechaVencimiento: '2021-04-20',
+  },
+];

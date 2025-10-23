@@ -1,0 +1,26 @@
+<app-modal [title]="title">
+	<form [formGroup]="form" class="d-flex flex-column gap-6 w-100" (submit)="onSubmit()">
+		<app-input
+			class="w-100"
+			type="text"
+			label="Tipo de Evento"
+			placeholder="Ingrese el tipo de evento"
+			[formGroup]="form"
+			controlName="eventType"
+		/>
+
+		<app-switch
+			class="w-100"
+			label="Activar o desactivar estado"
+			[formGroup]="form"
+			controlName="statusSwitch"
+		/>
+
+		<div class="d-flex gap-4 justify-content-center align-items-center w-100">
+			<button class="btn btn-outline-secondary" type="button" (click)="instanceModal.close()">
+				Cancelar
+			</button>
+			<button class="btn btn-secondary" type="submit">Guardar</button>
+		</div>
+	</form>
+</app-modal>

@@ -1,0 +1,87 @@
+<div class="filter-generic" [ngClass]="{'cols-3': columnsDesktop === 3, 'cols-4': columnsDesktop === 4}">
+  <div class="filters-row">
+    <ng-container *ngFor="let f of ordered; trackBy: trackByKey">
+      <!-- Search -->
+      <div class="field search-wrapper" *ngIf="f.type === 'search'" [ngClass]="f.className">
+        <label class="label">{{ f.label }}</label>
+        <div class="input-icon-wrapper">
+          <input
+            type="text"
+            [(ngModel)]="values[f.key]"
+            [placeholder]="f.placeholder || 'Buscar...'"
+            (keydown)="preventLeadingSpace($event, f)"
+            (ngModelChange)="onFieldChange(f, $event)"
+            (keyup.enter)="onSearchClick()"
+          />
+          <i
+            class="search-icon"
+            [ngClass]="iconOf(f)"
+            role="button"
+            tabindex="0"
+            (click)="onSearchClick()"
+            (keyup.enter)="onSearchClick()"
+          ></i>
+        </div>
+      </div>
+
+      <!-- Date -->
+      <div class="field date-wrapper" *ngIf="f.type === 'date'" [ngClass]="f.className">
+        <label class="label">{{ f.label }}</label>
+        <input
+          type="date"
+          class="control"
+          [placeholder]="f.placeholder || 'dd/mm/aaaa'"
+          [min]="minOf(f)"
+          [max]="maxOf(f)"
+          [(ngModel)]="values[f.key]"
+          (ngModelChange)="onFieldChange(f, $event)"
+        />
+      </div>
+
+      <!-- Select -->
+      <div class="field select-wrapper" *ngIf="f.type === 'select'" [ngClass]="f.className">
+        <label class="label">{{ f.label }}</label>
+        <select
+          class="control"
+          [(ngModel)]="values[f.key]"
+          (ngModelChange)="onFieldChange(f, $event)"
+        >
+          <option *ngIf="f.showAllOption !== false" [ngValue]="''">Todos</option>
+          <option
+            *ngFor="let opt of asOptions(f); trackBy: trackByOpt"
+            [ngValue]="opt.value"
+            [disabled]="opt.disabled === true"
+          >
+            {{ opt.label }}
+          </option>
+        </select>
+      </div>
+    </ng-container>
+
+    <!-- Acciones -->
+    <div class="actions">
+      <button *ngIf="showClearButton" type="button" class="btn ghost" (click)="onClear()">
+        {{ clearLabel }}
+      </button>
+      <button *ngIf="showActionButton" type="button" class="btn primary" (click)="onActionClick()">
+        {{ actionText }}
+      </button>
+
+      <!-- Botones extra -->
+      <ng-container *ngFor="let b of extraButtons">
+        <button
+          *ngIf="b.show !== false"
+          type="button"
+          class="btn"
+          [ngClass]="b.variant || 'secondary'"
+          [title]="b.tooltip || ''"
+          [disabled]="b.disabled === true"
+          (click)="onExtraClick(b)"
+        >
+          <i *ngIf="b.iconClass" [ngClass]="b.iconClass" style="margin-right: 6px"></i>
+          {{ b.label }}
+        </button>
+      </ng-container>
+    </div>
+  </div>
+</div>

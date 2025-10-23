@@ -1,0 +1,51 @@
+// Clase personalizada para color azul
+::ng-deep .custom-blue app-loading .lds-spinner {
+  color: #1C64F2 !important;
+}
+
+::ng-deep .custom-blue app-loading .lds-spinner div:after {
+  background: #1C64F2 !important;
+}
+
+.mt-custom {
+  margin-top: 4rem;
+  text-align: center;
+}
+
+.container-modal {
+  min-width: 320px;
+}
+
+.pl-custom {
+  left: 1.2rem;
+}
+
+.center-element {
+  margin: 0 auto;
+}
+
+.custom-light-blue {
+  background-color: #E9F6FF;
+  border-radius: 8px;
+  color: #546E7A;
+}
+
+.img-custom {
+  filter: invert(32%) sepia(99%) saturate(747%) hue-rotate(180deg) brightness(90%) contrast(90%);
+}
+
+.donwloads-buttons  {
+  margin-right: 1rem;
+  margin-top: 3rem;
+  width: auto;
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  flex-direction: column;
+}
+
+.container-image {
+  position: absolute;
+  top: -3.9rem;
+  left: 1.3rem;
+}

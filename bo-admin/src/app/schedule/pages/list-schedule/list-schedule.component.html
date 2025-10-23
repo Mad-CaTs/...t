@@ -1,0 +1,32 @@
+<form [formGroup]="form" class="card card-xxl-stretch mb-5 mb-xl-8 d-flex flex-column gap-4 p-8">
+	<h1 class="text-primary text-uppercase">Editor de Cronogramas</h1>
+	<div class="d-flex flex-column flex-md-row gap-6">
+		<app-input
+			label="Ingrese campo de búsqueda"
+			iconRigth="bi bi-search"
+			placeholder="Nombre, apellido, usuario o número documento"
+			[formGroup]="form"
+			controlName="search"
+			class="w-100 flex-grow-1 custom-input"
+		></app-input>
+
+		<div class="w-50 d-flex flex-column gap-2">
+			<app-select
+				label="Buscar como:"
+				placeholder="Selecciona un opción"
+				[options]="asOpt"
+				[formGroup]="form"
+				controlName="as"
+				class="w-100"
+			></app-select>
+		</div>
+	</div>
+
+	<div class="d-flex justify-content-end gap-6">
+		<div class="mt-0">
+			<button type="button" class="btn btn-outline-secondary" (click)="onSearch()">Buscar</button>
+		</div>
+	</div>
+</form>
+
+<app-table-partners [dataBody]="tableData"></app-table-partners>

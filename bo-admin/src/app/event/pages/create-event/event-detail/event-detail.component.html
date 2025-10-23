@@ -1,0 +1,84 @@
+<div class="event-detail-card flex flex-column gap-6 p-6 bg-white w-100">
+  <h2 class="title">Detalle del evento</h2>
+  <div class="toolbar-card">
+    <div class="event-detail-layout">
+      <div class="event-image-container">
+        <img
+          class="event-image"
+          [src]="event?.flyerUrl"
+          alt="Flyer del evento"
+          *ngIf="event?.flyerUrl; else noImage"
+        />
+        <ng-template #noImage></ng-template>
+      </div>
+      <div class="event-info-container">
+        <div class="event-info-header">
+          <div class="title-group">
+            <label class="info-label">Nombre del evento</label>
+            <h3 class="event-name">{{ event?.eventName }}</h3>
+            <p class="event-type">Evento {{ eventTypeName }}</p>
+            <p class="event-status">Estado: {{ event?.statusEvent || '-' }}</p>
+          </div>
+          <span class="event-badge">{{ event?.isMainEvent ? 'Destacado' : 'Secundario' }}</span>
+        </div>
+        <div class="event-info-grid">
+          <div class="info-block full-width">
+            <label>Fecha del evento</label>
+            <p>{{ (event?.eventDate | date:'dd/MM/yyyy') || '-' }}</p>
+          </div>
+          <div class="info-block full-width">
+            <label>Horario</label>
+            <p>{{ event?.startDate && event?.endDate ? (event?.startDate + ' – ' + event?.endDate) : '-' }}</p>
+          </div>
+          <ng-container *ngIf="eventTypeName?.toLowerCase() !== 'virtual'">
+            <div class="info-block full-width">
+              <label>Lugar del evento</label>
+              <p>{{ venueName || event?.venueId }}</p>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="eventTypeName?.toLowerCase() === 'virtual'; else nonVirtualFields">
+            <div class="info-block full-width">
+              <label>URL del evento</label>
+              <p>
+                <a *ngIf="event?.eventUrl; else dashUrl" [href]="event?.eventUrl" target="_blank">{{ event?.eventUrl }}</a>
+                <ng-template #dashUrl>-</ng-template>
+              </p>
+            </div>
+          </ng-container>
+          <ng-template #nonVirtualFields>
+            <div class="info-block half-width">
+              <label>País</label>
+              <p>{{ venueCountry || '-' }}</p>
+            </div>
+            <div class="info-block half-width">
+              <label>Ciudad</label>
+              <p>{{ venueCity || '-' }}</p>
+            </div>
+          </ng-template>
+          <div class="info-block full-width">
+            <label>Tipo de entrada</label>
+            <p>{{ ticketTypeName || '-' }}</p>
+          </div>
+          <div class="info-block full-width">
+            <label>Descripción del evento</label>
+            <p>{{ event?.description || '-' }}</p>
+          </div>
+          <div class="info-block full-width">
+            <label>Presentador</label>
+            <p>{{ event?.presenter || '-' }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="detail-actions">
+      <button type="button" class="btn-back" (click)="onBack()">Volver</button>
+    </div>
+  </div>
+  <app-modal-notify
+    *ngIf="showNotify"
+    [title]="notifyTitle"
+    [message]="notifyMessage"
+    [iconType]="notifyType"
+    (closed)="onNotifyClose()"
+  ></app-modal-notify>
+</div>

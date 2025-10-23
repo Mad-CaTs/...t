@@ -1,0 +1,195 @@
+<div class="create-event-card flex flex-column gap-6 p-6 bg-white w-100">
+	<h2 class="title">Control de asistencia</h2>
+	<!--List | Filter-->
+
+	<h4 class="fs-5 text-black fw-medium m-0">Buscador</h4>
+
+	<div class="w-100 d-flex gap-5" [formGroup]="form">	
+		<app-input
+			class="w-100"
+			label="Ingrese campo de búsqueda:"
+			placeholder="Buscar Por"
+			name="search"
+			type="search"
+			controlName="search"
+			[formGroup]="form"
+			iconLeft="bi bi-search"
+			helper="Puedes buscarlo por nombre, usuario o número de documento."
+		/>
+		<div class="w-100 d-flex flex-column gap-3">
+			<span class="text-black fs-6 fw-normal">Buscar como:</span>
+			<div class="d-flex align-items-center w-100 gap-3 ps-3">
+				<div class="d-flex gap-2 align-items-center">
+					<input
+						class="w-25px h-25px"
+						type="radio"
+						name="searchAs"
+						formControlName="searchAs"
+						id="searchAsOpt1"
+						value="partner"
+					/>
+					<label class="text-black fs-6 fw-normal" for="searchAsOpt1">Socio</label>
+				</div>
+				<div class="d-flex gap-2 align-items-center">
+					<input
+						class="w-25px h-25px"
+						type="radio"
+						name="searchAs"
+						formControlName="searchAs"
+						id="searchAsOpt2"
+						value="guest"
+					/>
+					<label class="text-black fs-6 fw-normal" for="searchAsOpt2">Invitado</label>
+				</div>
+				<div class="d-flex gap-2 align-items-center">
+					<input
+						class="w-25px h-25px"
+						type="radio"
+						name="searchAs"
+						formControlName="searchAs"
+						id="searchAsOpt3"
+						value="attendants"
+					/>
+					<label class="text-black fs-6 fw-normal" for="searchAsOpt3">Asistentes</label>
+				</div>
+				<div class="d-flex gap-2 align-items-center">
+					<input
+						class="w-25px h-25px"
+						type="radio"
+						name="searchAs"
+						formControlName="searchAs"
+						id="searchAsOpt4"
+						value="nonAttendees"
+					/>
+					<label class="text-black fs-6 fw-normal" for="searchAsOpt4">No Asistentes</label>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="d-flex justify-content-end gap-3">
+		<button class="btn btn-outline-secondary" (click)="onExport()">Exportar</button>
+		<button class="btn btn-secondary" (click)="onGenerate()">Generar</button>
+	</div>
+	<!--Table | Table-->
+	<app-common-table
+		[headers]="table.headers"
+		[checkedAll]="table.checkedAll"
+		[headersMinWidth]="table.headersMinWidth"
+		[headersMaxWidth]="table.headersMaxWidth"
+		[noCheckboxes]="table.noCheckBoxes"
+		[firstEmpty]="true"
+		(onCheckedAll)="table.changeCheckedAll($event)"
+	>
+		<tr class="w-100 d-flex py-2 align-items-center" *ngFor="let item of table.data; let i = index">
+			<td class="d-flex justify-content-center">
+				<div class="form-check-sm form-check-custom form-check-solid">
+					<input
+						class="form-check-input cursor-pointer"
+						type="radio"
+						name="course-item-radio"
+						[value]="item.id"
+						[(ngModel)]="selectedRowId"
+					/>
+				</div>
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[0],
+					'max-width.px': table.headersMaxWidth[0]
+				}"
+			>
+				{{ i + 1 }}
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[1],
+					'max-width.px': table.headersMaxWidth[1]
+				}"
+			>
+				{{ item.statusAttendance }}
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[2],
+					'max-width.px': table.headersMaxWidth[2]
+				}"
+			>
+				{{ item.guestWhom }}
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[3],
+					'max-width.px': table.headersMaxWidth[3]
+				}"
+			>
+				{{ item.fullname }}
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[4],
+					'max-width.px': table.headersMaxWidth[4]
+				}"
+			>
+				{{ item.bonusType }}
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[5],
+					'max-width.px': table.headersMaxWidth[5]
+				}"
+			>
+				{{ item.prizeDescription }}
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[6],
+					'max-width.px': table.headersMaxWidth[6]
+				}"
+			>
+				<span
+					class="fs-6 fw-bold px-2 py-1 rounded"
+					[class.text-primary]="item.status === 'Validado'"
+					[class.text-danger]="item.status != 'Validado'"
+					[ngClass]="{
+						'bg-light-primary': item.status === 'Validado',
+						'bg-light-danger': item.status != 'Validado'
+					}"
+				>
+					{{ item.status ? 'Validado' : 'No validado' }}
+				</span>
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[7],
+					'max-width.px': table.headersMaxWidth[7]
+				}"
+			>
+				<button
+					class="btn btn-secondary btn-sm border-1 me-2"
+					style="width: 70px; padding-left: 2px; padding-right: 2px"
+					(click)="onAttend()"
+					[disabled]="selectedRowId !== item.id"
+				>
+					<span>Asistió</span>
+				</button>
+				<button
+					class="btn btn-outline-secondary btn-sm border-1"
+					style="width: 70px; padding-left: 2px; padding-right: 2px"
+					(click)="onNotAttend()"
+					[disabled]="selectedRowId !== item.id"
+				>
+					<span>No Asistió</span>
+				</button>
+			</td>
+		</tr>
+	</app-common-table>
+</div>

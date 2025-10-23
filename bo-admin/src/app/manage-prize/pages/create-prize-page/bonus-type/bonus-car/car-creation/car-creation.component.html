@@ -1,0 +1,90 @@
+<div class="create-event-card flex flex-column gap-6 p-6 bg-white w-100">
+	<h4 class="fs-5 text-black fw-medium m-0">Creación de Autos(mock)</h4>
+
+	<div class="toolbar-card">
+		<filter-generic
+			[filters]="genericFilters"
+			[values]="filterValues"
+			[columnsDesktop]="4"
+			[showClearButton]="true"
+			[clearLabel]="'Limpiar'"
+			[showActionButton]="true"
+			[actionText]="'Agregar'"
+			(valuesChange)="onFiltersChange($event)"
+			(action)="onGenerate()"
+		></filter-generic>
+
+		<ng-container *ngIf="totalFiltered > 0; else emptyState">
+			<app-table-generic
+				[columns]="genericColumns"
+				[keys]="genericKeys"
+				[data]="pagedData"
+				[columnWidths]="genericWidths"
+				[actionsWidthPercentOverride]="12"
+				[freezeOverflow]="true"
+				[pageIndex]="pageIndex"
+				[pageSize]="pageSize"
+				[showView]="true"
+				[showEdit]="true"
+				[showDelete]="true"
+				[showActions]="true"
+				[imageKeys]="['image']"
+				[rowEditSwitchKey]="'status'"
+				(edit)="onEditRow($event)"
+				(editAlt)="onEditAsignacion($event)"
+				(delete)="onDeleteRow($event)"
+				(view)="onViewRow($event)"
+			></app-table-generic>
+
+			<app-table-paginator
+				[length]="totalFiltered"
+				[pageSize]="pageSize"
+				[pageIndex]="pageIndex"
+				(pageChange)="onPageChange($event)"
+				(pageSizeChange)="onPageSizeChange($event)"
+			></app-table-paginator>
+		</ng-container>
+		<ng-template #emptyState>
+			<app-empty-state message="No data"></app-empty-state>
+		</ng-template>
+	</div>
+</div>
+
+<ng-container *ngIf="loading">
+	<app-logo-spinner [show]="true" [fullscreen]="true" [delay]="0" [minVisible]="300"> </app-logo-spinner>
+</ng-container>
+
+<app-modal-notify
+	*ngIf="notify.visible"
+	[title]="notify.title"
+	[message]="notify.message"
+	[iconType]="notify.icon"
+	[oneButton]="notify.oneButton"
+	[primaryText]="notify.primaryText"
+	[secondaryText]="notify.secondaryText"
+	(confirmed)="onNotifyConfirmed()"
+	(canceled)="onNotifyCanceled()"
+	(closed)="onNotifyClosed()"
+></app-modal-notify>
+
+<app-modal-confirm-delete
+	*ngIf="showDeleteModal"
+	[title]="'¿Eliminar auto?'"
+	[message]="
+		'¿Estás seguro que deseas eliminar el auto: ' +
+		getBrandName(selectedToDelete?.brandId) +
+		' ' +
+		getModelName(selectedToDelete?.modelId) +
+		' ?'
+	"
+	(confirm)="onConfirmDelete()"
+	(cancel)="onCancelDelete()"
+></app-modal-confirm-delete>
+
+<app-modal-car-form
+	*ngIf="showCarForm"
+	[mode]="formMode"
+	[initialData]="carFormInitialData || undefined"
+	(save)="onSaveCarForm($event)"
+	(close)="onCloseCarForm()"
+></app-modal-car-form>

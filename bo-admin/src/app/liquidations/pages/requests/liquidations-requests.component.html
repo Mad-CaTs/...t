@@ -1,0 +1,170 @@
+<div class="d-flex flex-column gap-6 p-6 bg-white w-100">
+	<!--Title-->
+	<h1 class="fs-1 text-black fw-medium m-0">Solicitudes de liquidación</h1>
+	<!--Header-->
+	<div class="d-flex w-100 justify-content-between align-items-center mb-3 gap-4">
+		<input
+			type="text"
+			class="form-control"
+			placeholder="Buscar por Nombres y Apellidos"
+			[(ngModel)]="searchTerm"
+			(input)="applyFilter()"
+		/>
+		<div class="d-flex align-items-center gap-4">
+			<button class="btn btn-outline-secondary ml-2" (click)="refreshData()">Refrescar</button>
+		</div>
+	</div>
+	<!--Table-->
+	<app-common-table
+		class="w-100"
+		[headers]="table.headers"
+		[checkedAll]="table.checkedAll"
+		[headersMinWidth]="table.headersMinWidth"
+		[headersMaxWidth]="table.headersMaxWidth"
+		[noCheckboxes]="table.noCheckBoxes"
+		[firstEmpty]="true"
+		(onCheckedAll)="table.changeCheckedAll($event)"
+	>
+		<tr class="w-100 d-flex py-2 align-items-center" *ngFor="let item of table.data; let i = index">
+			<td class="d-flex justify-content-center">
+				<div class="form-check-sm form-check-custom form-check-solid">
+					<input
+						class="form-check-input cursor-pointer"
+						type="radio"
+						name="liquidation-item-radio"
+						[value]="item.id"
+						[(ngModel)]="selectedRowId"
+					/>
+				</div>
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[0],
+					'max-width.px': table.headersMaxWidth[0]
+				}"
+			>
+				{{ i + 1 }}
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[1],
+					'max-width.px': table.headersMaxWidth[1]
+				}"
+			>
+				{{ item.dateRequest }}
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				style="word-break: break-all"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[2],
+					'max-width.px': table.headersMaxWidth[2]
+				}"
+			>
+				{{ item.username }}
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				style="word-break: break-all"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[3],
+					'max-width.px': table.headersMaxWidth[3]
+				}"
+			>
+				{{ item.username }}
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[4],
+					'max-width.px': table.headersMaxWidth[4]
+				}"
+			>
+				{{ item.fullname }}
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[5],
+					'max-width.px': table.headersMaxWidth[5]
+				}"
+			>
+				{{ item.membership[0].familyPackageName }}
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[6],
+					'max-width.px': table.headersMaxWidth[6]
+				}"
+			>
+				{{ item.membership[0].packageName }}
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[7],
+					'max-width.px': table.headersMaxWidth[7]
+				}"
+			>
+				{{ item.reason }}
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[8],
+					'max-width.px': table.headersMaxWidth[8]
+				}"
+			>
+				<button
+					class="btn btn-secondary btn-sm rounded-pill py-2"
+					style="width: 95px; padding-left: 2px; padding-right: 2px; border: none; outline: none"
+					(click)="onView(item.id, item)"
+					[disabled]="selectedRowId !== item.id"
+				>
+					<img
+						height="10px"
+						width="14px"
+						class="img-light-orange"
+						src="./assets/media/icons/custom/eye.svg"
+					/>
+					<span>Ver detalle</span>
+				</button>
+			</td>
+			<!--td
+				class="w-100 text-gray-900 text-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[9],
+					'max-width.px': table.headersMaxWidth[9]
+				}"
+			>
+				<div class="d-flex flex-column m-2">
+					<button
+						class="btn btn-primary py-1 cursor-pointer rounded-pill mr-2 mb-2"
+						(click)="
+							openConfirmationModal(
+								item.fullname,
+								item.dateRequest,
+								item.briefcase,
+								item.membership[0].name,
+								item.reason
+							)
+						"
+						[disabled]="selectedRowId !== item.id"
+					>
+						Aceptar
+					</button>
+					<button
+						class="btn btn-danger py-1 cursor-pointer rounded-pill"
+						(click)="onReject(item.id)"
+						[disabled]="selectedRowId !== item.id"
+					>
+						Rechazar
+					</button>
+				</div>
+			</td-->
+		</tr>
+	</app-common-table>
+</div>

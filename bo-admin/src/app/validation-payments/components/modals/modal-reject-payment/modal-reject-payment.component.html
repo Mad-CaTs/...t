@@ -1,0 +1,32 @@
+<app-modal [title]="title">
+	<form
+		[formGroup]="form"
+		(submit)="onSubmit()"
+		class="d-flex flex-column align-items-center justify-content-center gap-6"
+		*ngIf="step === 1"
+	>
+		<app-select
+			class="w-100"
+			label="Seleccione motivo del rechazo"
+			placeholder="Seleccione motivo"
+			[formGroup]="form"
+			controlName="motive"
+			[options]="MotiveOpt"
+		/>
+		<app-input
+			class="w-100"
+			label="Detalle del motivo"
+			type="text"
+			placeholder="Detalle adicional"
+			[formGroup]="form"
+			controlName="detail"
+		/>
+		<button type="submit" class="btn btn-secondary" [disabled]="form.invalid">Confirmar</button>
+	</form>
+	<div class="d-flex flex-column align-items-center justify-content-center gap-6" *ngIf="step === 2">
+		<i class="d-block text-primary w-85px" [inlineSVG]="'/assets/media/icons/custom/info.svg'"></i>
+		<span class="fs-5 text-black text-center fw-normal w-100">
+			La solicitud del pago ha sido rechazada. Le enviaremos un correo para más detalle
+		</span>
+	</div>
+</app-modal>

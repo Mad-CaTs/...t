@@ -1,0 +1,28 @@
+/* ---------- Gráfico de rangos ---------- */
+.rangos-container h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+/* ---------- Exportar botón ---------- */
+.export {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1.5rem;
+
+  .btn-export {
+    background-color: #ff7700;
+    border: none;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: #e06600;
+    }
+  }
+}

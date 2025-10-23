@@ -1,0 +1,213 @@
+<div class="d-flex flex-column">
+    <div class="d-flex flex-column gap-3 mb-4" *ngIf="formData">
+        <!-- Documento Adjunto -->
+        <div *ngFor="let file of getCorrectionFiles()" class="d-flex gap-2">
+            <button class="btn btn-document d-inline-flex align-items-center" (click)="viewFile(file)">
+                <span class="button-text">Ver documento adjunto</span>
+                <span [inlineSVG]="'assets/money-3.svg'" class="svg-icon svg-icon-2 me-2"></span>
+            </button>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body p-6">
+                    <div class="d-flex align-items-center mb-2">
+                        <i class="fas fa-arrow-left text-gray-500 cursor-pointer me-3" (click)="navigateBack()"></i>
+                        <h2 class="subtitle">Generar Certificado</h2>
+                    </div>
+                    <p class="description">
+                        Valida y rellene todos los campos antes de Generar el Certificado
+                    </p>
+
+                    <form>
+                        <div class="mb-4">
+                            <label class="form-label">Portafolio</label>
+                            <input type="text" class="form-control" [(ngModel)]="formData.portfolioId"
+                                (ngModelChange)="onFieldChange('portfolioId', $event)" name="portfolioId" />
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">Nombre de Socio*</label>
+                            <input type="text" class="form-control" [(ngModel)]="formData.nombreSocio"
+                                (ngModelChange)="onFieldChange('nombreSocio', $event)" name="nombreSocio" />
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">Nacionalidad</label>
+                            <input type="text" class="form-control" [(ngModel)]="formData.nacionalidad"
+                                (ngModelChange)="onFieldChange('nacionalidad', $event)" name="nacionalidad" />
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label">Tip. de Documento*</label>
+                                <input type="text" class="form-control" [(ngModel)]="formData.tipoDocumento"
+                                    (ngModelChange)="onFieldChange('tipoDocumento', $event)" name="tipoDocumento" />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">N° de Documento</label>
+                                <input type="text" class="form-control" [(ngModel)]="formData.numeroDocumento"
+                                    (ngModelChange)="onFieldChange('numeroDocumento', $event)" name="numeroDocumento" />
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label">País de Residencia</label>
+                                <input type="text" class="form-control" [(ngModel)]="formData.paisResidencia"
+                                    (ngModelChange)="onFieldChange('paisResidencia', $event)" name="paisResidencia" />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Departamento</label>
+                                <input type="text" class="form-control" [(ngModel)]="formData.departamento"
+                                    (ngModelChange)="onFieldChange('departamento', $event)" name="departamento" />
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">Escala de Totalidad de Membresía*</label>
+                            <input type="text" class="form-control" [(ngModel)]="formData.escalaTotalidad"
+                                (ngModelChange)="onFieldChange('escalaTotalidad', $event)" name="escalaTotalidad"
+                                required />
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">Nombre de Paquete</label>
+                            <input type="text" class="form-control" [(ngModel)]="formData.nombrePaquete"
+                                (ngModelChange)="onFieldChange('nombrePaquete', $event)" name="nombrePaquete" />
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label">Número total de Acciones</label>
+                                <input type="text" class="form-control" [(ngModel)]="formData.numeroAcciones"
+                                    (ngModelChange)="onFieldChange('numeroAcciones', $event)" name="numeroAcciones" />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Clase</label>
+                                <input type="text" class="form-control" [(ngModel)]="formData.clase"
+                                    (ngModelChange)="onFieldChange('clase', $event)" name="clase" />
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label">Fecha</label>
+                                <input type="text" class="form-control" [(ngModel)]="formData.fecha"
+                                    (ngModelChange)="onFieldChange('fecha', $event)" name="fecha" />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">{{ formData.isContrato ? 'Cod de Contrato' : 'Cod de
+                                    Certificado' }}</label>
+                                <input type="text" class="form-control" [(ngModel)]="formData.codigoCertificado"
+                                    name="codigoCertificado" />
+                            </div>
+                        </div>
+
+                        <!-- Campos adicionales para contratos -->
+                        <ng-container *ngIf="formData.isContrato">
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <label class="form-label">Precio del Paquete USD*</label>
+                                    <input type="text" class="form-control" [(ngModel)]="formData.precioPaqueteUSD"
+                                        name="precioPaqueteUSD" />
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Mantenimiento USD*</label>
+                                    <input type="text" class="form-control" [(ngModel)]="formData.mantenimientoUSD"
+                                        name="mantenimientoUSD" />
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label">Programa de Beneficios*</label>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <span class="input-group-text">Hijos menores</span>
+                                            <input type="text" class="form-control"
+                                                [ngModel]="formData.programaBeneficios?.hijosMenores || ''" readonly
+                                                name="hijosMenores" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <span class="input-group-text">Beneficiarios</span>
+                                            <input type="text" class="form-control"
+                                                [ngModel]="formData.programaBeneficios?.beneficiarios || ''" readonly
+                                                name="beneficiarios" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label">Número de Invitados*</label>
+                                <input type="text" class="form-control" [(ngModel)]="formData.numeroInvitados" readonly
+                                    name="numeroInvitados" />
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label">Cantidad de suscripciones por familia</label>
+                                <input type="text" class="form-control" [(ngModel)]="formData.countSuscriptionByFamily"
+                                    (ngModelChange)="onFieldChange('countSuscriptionByFamily', $event)"
+                                    name="countSuscriptionByFamily" />
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label">Membresías (seleccione hasta 5)*</label>
+                                <div class="select-container">
+                                    <div class="membership-list"
+                                        style="width: 100%; min-height: 200px; border-radius: 8px; background-color: white; font-family: 'Poppins', sans-serif; overflow-y: auto;">
+                                        <div *ngFor="let membership of availableMemberships" class="membership-option"
+                                            [class.selected]="formData.memberships?.includes(membership)"
+                                            (click)="toggleMembership(membership)"
+                                            style="padding: 12px 15px; margin: 4px 0; cursor: pointer; border-radius: 4px; display: flex; align-items: center;">
+                                            <span class="check-icon"
+                                                *ngIf="formData.memberships?.includes(membership)">✓</span>
+                                            <span class="membership-text">{{ membership }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-2">
+                                    <small [class]="showError ? 'text-danger' : 'text-muted'" class="d-block">
+                                        {{ showError ? 'Solo puede seleccionar hasta 5 membresías' : 'Seleccionados: ' +
+                                        (formData.memberships?.length || 0) + '/5' }}
+                                    </small>
+                                </div>
+                            </div>
+                            <label class="form-label">Numero de Cuota</label>
+                            <input type="text" class="form-control" [(ngModel)]="formData.numberQuote"
+                                (ngModelChange)="onFieldChange('numberQuote', $event)" name="numberQuote" />
+                            <label class="form-label">Numero de cuotas de membresias</label>
+                            <input type="text" class="form-control" [(ngModel)]="formData.membershipNumberQuotas"
+                                (ngModelChange)="onFieldChange('membershipNumberQuotas', $event)"
+                                name="membershipNumberQuotas" />
+                        </ng-container>
+
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-outline-orange" (click)="cancel()">
+                                Cancelar
+                            </button>
+                            <button type="button" class="btn btn-orange" (click)="save()">
+                                Guardar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body p-0">
+                    <iframe [src]="pdfUrl | safe : 'resourceUrl'" class="pdf-frame" frameborder="0"
+                        *ngIf="pdfUrl"></iframe>
+                    <div *ngIf="!pdfUrl" class="p-4 text-center text-muted">
+                        No hay documento principal para mostrar
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

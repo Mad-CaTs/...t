@@ -1,0 +1,50 @@
+<ng-container *ngIf="title$ | async as title">
+  <!-- ───────── Fila 1 – Título ───────── -->
+  <ng-container *ngIf="showTitle">
+    <h1 class="page-title-heading">
+      {{ title }}
+    </h1>
+  </ng-container>
+
+  <!-- ───────── Fila 2 – Breadcrumb ───────── -->
+  <ng-container *ngIf="showBC">
+    <ng-container *ngIf="bc$ | async as _bc">
+      <ng-container *ngIf="_bc.length > 0">
+        <nav class="breadcrumb" aria-label="breadcrumb">
+          <!-- Inicio fijo -->
+          <a
+            [routerLink]="['/metronic-view/dashboard']"
+            class="breadcrumb-home"
+            title="Inicio"
+          >
+            <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
+              <path
+                d="M8 .96 1 6v8.04h4.5V10h5v4.04H15V6L8 .96Z"
+                fill="currentColor"
+              />
+            </svg>
+          </a>
+
+          <!-- Padres (se ignoran los elementos separator) -->
+          <ng-container *ngFor="let bc of _bc">
+            <ng-container *ngIf="!bc.isSeparator">
+              <span class="breadcrumb-separator">›</span>
+              <a
+                [routerLink]="bc.path"
+                class="breadcrumb-link"
+              >
+                {{ bc.title }}
+              </a>
+            </ng-container>
+          </ng-container>
+
+          <!-- Página actual -->
+          <span class="breadcrumb-separator">›</span>
+          <span class="breadcrumb-active">
+            {{ title }}
+          </span>
+        </nav>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+</ng-container>

@@ -1,0 +1,64 @@
+<div class="d-flex flex-column gap-6 p-6 bg-white w-100">
+	<!--Back btn-->
+	<a
+		routerLink="/dashboard/payment-validate/bank-movement"
+		class="d-flex gap-3 align-items-center cursor-pointer"
+	>
+		<i class="bi bi-arrow-left fs-2 text-secondary"></i>
+		<span class="text-secondary fs-5 fw-medium">Volver a la carga de Archivo</span>
+	</a>
+	<!--Title-->
+	<div class="d-flex w-100 align-items-center justify-content-between">
+		<h1 class="fs-1 text-black fw-medium m-0">Carga de Registros</h1>
+		<button class="btn btn-secondary py-3 px-4">Actualizar</button>
+	</div>
+	<!--Table | Pagination-->
+	<table-pagination class="w-100" />
+	<!--Table | Table-->
+	<app-common-table
+		class="w-100"
+		[headers]="table.headers"
+		[checkedAll]="table.checkedAll"
+		[headersMinWidth]="table.headersMinWidth"
+		[noCheckboxes]="table.noCheckBoxes"
+		[headersArrows]="table.headersArrows"
+		(onCheckedAll)="table.changeCheckedAll($event)"
+	>
+		<tr class="w-100 d-flex py-5 align-items-center" *ngFor="let item of table.data">
+			<td class="w-40px d-flex justify-content-center">
+				<div class="form-check form-check-sm form-check-custom form-check-solid">
+					<input
+						class="form-check-input"
+						type="checkbox"
+						[checked]="table.getChecked(item.id)"
+						(change)="table.changeCheckId($event, item.id)"
+						data-kt-check="true"
+						data-kt-check-target=".widget-9-check"
+					/>
+				</div>
+			</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.opDate }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.processDate }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.opNumber }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.movement }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.description }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.canal }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.charge || '-' }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">$ {{ item.bonus.toFixed(2) }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">
+				<span
+					class="bg-gray-200 px-3 py-2 text-gray-700 fw-bold rounded"
+					*ngIf="item.state === 'pending'"
+				>
+					Pendiente
+				</span>
+				<span
+					class="bg-light-success px-3 py-2 text-success fw-bold rounded"
+					*ngIf="item.state === 'payed'"
+				>
+					Pagado
+				</span>
+			</td>
+		</tr>
+	</app-common-table>
+</div>

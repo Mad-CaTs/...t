@@ -1,0 +1,28 @@
+<app-modal title="Editar periodo de gracía">
+    <form class="d-flex flex-column gap-6 w-100" [formGroup]="form">
+        <app-input placeholder="Ingrese el periodo de gracía" label="Días" controlName="valueDays" [formGroup]="form"
+            class="w-100 mb-5" type="number" [minLength]="1">
+        </app-input>
+        <div class="form-check-custom">
+            <input class="form-check-input" style="margin-left: 2px;" type="checkbox" value="" formControlName="status"
+                [checked]="form.get('status')?.value === 1" (change)="onStatusChange($event)">
+            Activar periodo de gracía
+        </div>
+        <div class="d-flex flex-row gap-6 justify-content-center mt-5">
+            <button class="btn btn-outline-secondary" type="button" (click)="instanceModal.close()">
+                Cancelar
+            </button>
+            <button class="btn btn-secondary" type="button" (click)="onSubmit()"
+                [disabled]="form.invalid || buttonLoading">
+                <div class="fixed-width-button">
+                    <div *ngIf="buttonLoading">
+                        <span class="spinner-border spinner-border-lg align-middle text-center ms-2"></span>
+                    </div>
+                    <div *ngIf="!buttonLoading">
+                        <span>Guardar</span>
+                    </div>
+                </div>
+            </button>
+        </div>
+    </form>
+</app-modal>

@@ -1,0 +1,58 @@
+<div class="d-flex flex-column gap-5 p-4 bg-white w-100">
+	<h2 class="mb-4">Visualiza y valida los documentos</h2>
+
+	<div class="row g-4">
+		<div class="col-md-5">
+			<div class="list-group">
+				<label
+					*ngFor="let doc of documents"
+					class="list-group-item d-flex flex-column gap-3 mb-3 p-3 rounded"
+					[ngStyle]="doc.key === selectedDocKey ? { border: '2px solid #0090BC' } : {}"
+				>
+					<div class="mb-2">
+						<input
+							class="form-check-input me-2"
+							type="radio"
+							name="docOption"
+							[checked]="doc.key === selectedDocKey"
+							(change)="selectDocument(doc.key)"
+						/>
+						<span class="fw-semibold">{{ doc.label }}</span>
+					</div>
+
+					<div
+						class="d-flex align-items-center gap-2 rounded p-3 bg-light"
+						style="border: 2px dashed"
+					>
+						<i class="bi bi-file-earmark-text fs-5"></i>
+						<span>{{ doc.filename }}</span>
+						<button class="btn btn-link ms-auto p-0">Descargar</button>
+					</div>
+				</label>
+			</div>
+		</div>
+
+		<div class="col-md-7">
+			<div class="d-flex flex-column gap-3">
+				<ng-container *ngFor="let file of previewFiles">
+					<ng-container *ngIf="file.toLowerCase().endsWith('.pdf'); else imageTemplate">
+						<iframe
+							[src]="file | safeUrl"
+							width="100%"
+							height="500px"
+							class="border rounded"
+						></iframe>
+					</ng-container>
+
+					<ng-template #imageTemplate>
+						<img [src]="file" class="img-fluid rounded" />
+					</ng-template>
+				</ng-container>
+			</div>
+		</div>
+	</div>
+	<div class="w-100 d-flex flex-column flex-md-row gap-3 mt-4">
+		<button class="btn btn-outline-secondary w-100" type="button" (click)="goBack()">Volver</button>
+		<button class="btn btn-secondary w-100" (click)="onConfirmaObservado()">Observar</button>
+	</div>
+</div>

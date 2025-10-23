@@ -1,0 +1,102 @@
+<div class="card card-xxl-stretch mb-5 mb-xl-8 d-flex flex-column gap-4 p-8">
+	<h1 class="text-primary text-uppercase">Generador de Cheques</h1>
+
+	<app-input-file
+		label="Subir archivo con el reporte de usuarios:"
+		placeholder=".xlsx, .xls no mayor a 10MB"
+		(fileChange)="onFileChange($event)"
+		accept=".xlsx,.xls"
+		class="w-100"
+	/>
+	<div class="d-flex flex-row gap-6 align-items-end">
+		<app-select
+			label="Elegir Club:"
+			placeholder="Selecciona un club"
+			[options]="clubOpt"
+			controlName="club"
+			[formGroup]="form"
+			class="w-100"
+		></app-select>
+
+		<div class="mt-0">
+			<button
+				type="button"
+				class="btn btn-outline-secondary"
+				[disabled]="buttonLoading || !form.get('club')?.value || form.get('club')?.value === '0'"
+				(click)="onSearch()"
+			>
+				<div class="fixed-width-button">
+					<div *ngIf="buttonLoading">
+						<span class="spinner-border spinner-border-sm align-middle text-center ms-2"></span>
+					</div>
+					<div *ngIf="!buttonLoading">
+						<span>Buscar</span>
+					</div>
+				</div>
+			</button>
+		</div>
+	</div>
+</div>
+
+<div class="card card-xxl-stretch mb-5 mb-xl-8 d-flex flex-column gap-4 p-8">
+	<div class="d-flex justify-content-between align-items-center mb-4">
+		<button
+			type="button"
+			class="btn btn-primary"
+			[disabled]="!table.data.length || buttonDowloadLoading"
+			(click)="downloadAllChecks()"
+		>
+			<span
+				*ngIf="buttonDowloadLoading"
+				class="spinner-border spinner-border-sm align-middle me-2"
+			></span>
+			{{
+				buttonDowloadLoading ? 'Generando cheques...' : 'Descargar todos (' + table.data.length + ')'
+			}}
+		</button>
+
+		<div *ngIf="buttonDowloadLoading" class="text-muted">
+			Progreso: {{ processedCheques }}/{{ totalChequesToProcess }}
+		</div>
+	</div>
+
+	<app-common-table
+		[headers]="table.headers"
+		[checkedAll]="table.checkedAll"
+		[headersMinWidth]="table.headersMinWidth"
+		[headersMaxWidth]="table.headersMaxWidth"
+		[noCheckboxes]="table.noCheckBoxes"
+		(onCheckedAll)="table.changeCheckedAll($event)"
+		[firstEmpty]="false"
+	>
+		<tr class="w-100 d-flex py-2 align-items-center" *ngFor="let item of table.data; let i = index">
+			<td
+				class="w-100 text-gray-900 text-center fs-6 px-3"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[0],
+					'max-width.px': table.headersMaxWidth[0]
+				}"
+			>
+				{{ i + 1 }}
+			</td>
+			<!-- <td class="w-100 text-gray-900 text-center fs-6">
+				{{ item.username }}
+			</td> -->
+			<td class="w-100 text-gray-900 text-center fs-6">
+				{{ item.name }}
+			</td>
+			<td class="w-100 text-gray-900 text-center fs-6">
+				{{ item.lastname }}
+			</td>
+			<td class="w-100 text-gray-900 text-center fs-6">S/. {{ item.total | number : '1.2-2' }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">
+				{{ item.club }}
+			</td>
+			<!-- <td class="w-100 text-gray-900 text-center fs-6">
+				<button class="btn btn-sm btn-primary" (click)="openCheckModal(item.cheque)">
+					Ver Cheque
+				</button>
+			</td> -->
+		</tr>
+	</app-common-table>
+</div>

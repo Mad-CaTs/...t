@@ -1,0 +1,38 @@
+<label [for]="controlName" class="fs-6 text-muted fw-bold" *ngIf="label">{{ label }}</label>
+
+<div
+	class="input-group input-group-solid border cursor-pointer"
+	#inputGroup
+	[formGroup]="formGroup"
+	[class.border-danger]="existErrors"
+	[class.bg-light-danger]="existErrors"
+	[colorPicker]="formValue.value"
+	[cpIgnoredElements]="[inputGroup]"
+	[(cpToggle)]="openPicker"
+	[cpAlphaChannel]="'disabled'"
+	[cpOutputFormat]="'hex'"
+	(colorPickerChange)="formValue.setValue($event)"
+>
+	<span class="input-group-text ps-2 pe-2 pb-0 pt-0" (click)="openPicker = !openPicker">
+		<div class="rounded" style="width: 20px; height: 20px" [style.background]="formValue.value"></div>
+	</span>
+
+	<input
+		type="text"
+		class="form-control"
+		[placeholder]="placeholder"
+		[attr.aria-label]="label"
+		[formControlName]="controlName"
+		[name]="controlName"
+		(blur)="onBlurInput($event)"
+		[class.text-danger]="existErrors"
+		aria-describedby="basic-addon1"
+		maxlength="7"
+	/>
+
+	<span class="input-group-text" (click)="openPicker = !openPicker" [class.bg-light-danger]="existErrors">
+		<i class="bi bi-eyedropper" [class.text-danger]="existErrors"></i>
+	</span>
+</div>
+
+<div class="text-danger" *ngIf="existErrors">{{ formValue | inputError }}</div>

@@ -1,0 +1,71 @@
+<div class="backdrop" *ngIf="show" (click)="onBackdropClick()">
+  <div class="box" role="dialog" aria-modal="true" (click)="$event.stopPropagation()">
+    <!-- Header -->
+    <header class="head">
+      <div class="badge"><i [class]="iconClass"></i></div>
+      <button class="close" type="button" (click)="onCancel()" aria-label="Cerrar">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </header>
+
+    <h3 class="title">{{ title }}</h3>
+    <p class="subtitle" *ngIf="subtitle">{{ subtitle }}</p>
+
+    <!-- Upload area -->
+    <div class="dropzone" [class.dragover]="dragOver"
+         (dragover)="onDragOver($event,true)" (dragleave)="onDragOver($event,false)" (drop)="onDrop($event)"
+         (click)="onPickClick($event)">
+
+      <ng-container *ngIf="!fileCtrl.value; else hasFile">
+        <div class="dz-empty">
+          <i class="bi bi-plus-lg"></i>
+          <span class="dz-title">Subir un archivo</span>
+          <div class="dz-divider"><span>o</span></div>
+          <span class="dz-help">Arrástralo aquí</span>
+        </div>
+      </ng-container>
+
+      <ng-template #hasFile>
+        <div class="dz-file">
+          <i class="bi bi-file-earmark-pdf"></i>
+          <div class="name" [title]="fileCtrl.value?.name">{{ fileCtrl.value?.name }}</div>
+          <button type="button" class="remove" (click)="removeFile($event)" aria-label="Quitar">
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
+      </ng-template>
+
+      <input #fileInput type="file" class="sr-only" [accept]="acceptExts" (change)="onSelected($event)" />
+    </div>
+
+    <!-- errores -->
+    <div class="error" *ngIf="fileCtrl.errors?.['invalidType']">Formato no válido. Permitidos: {{ allowedExtsText }}.</div>
+    <div class="error" *ngIf="fileCtrl.errors?.['maxSize']">El archivo supera el tamaño máximo ({{ maxSizeMB }} MB).</div>
+    <div class="error" *ngIf="fileCtrl.touched && fileCtrl.errors?.['required']">Este campo es obligatorio.</div>
+
+    <small class="hint">Formatos admitidos: {{ allowedExtsText }}. Tamaño máximo del archivo: {{ maxSizeMB }}MB.</small>
+
+    <!-- Select tipo -->
+    <div class="field">
+      <label class="label">{{ docTypeLabel }}</label>
+      <div class="select">
+        <select [formControl]="docTypeCtrl">
+          <option [ngValue]="null" disabled>Selecciona uno</option>
+          <option *ngFor="let t of docTypes" [ngValue]="t.value" [disabled]="t.disabled">{{ t.label }}</option>
+        </select>
+        <i class="bi bi-chevron-down"></i>
+      </div>
+      <div class="error" *ngIf="docTypeCtrl.touched && docTypeCtrl.invalid">Obligatorio.</div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="foot">
+      <button type="button" class="btn outline" (click)="onCancel()" [disabled]="loading">{{ cancelLabel }}</button>
+      <button type="button" class="btn primary" (click)="onSubmit()"
+              [disabled]="loading || form.invalid">
+        <ng-container *ngIf="!loading; else spinner">{{ submitLabel }}</ng-container>
+      </button>
+      <ng-template #spinner><span class="spinner"></span></ng-template>
+    </footer>
+  </div>
+</div>

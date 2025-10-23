@@ -1,0 +1,95 @@
+<div class="dashboard-columns">
+  <!-- Columna izquierda: gráfico histórico -->
+  <div class="col-left">
+    <div class="shadow-box">
+      <!-- Tabs -->
+      <div class="tabs">
+        <div class="tab" [ngClass]="{ 'tab-active': activeTab === 'meses' }" (click)="setActiveTab('meses')">MESES</div>
+        <div class="tab" [ngClass]="{ 'tab-active': activeTab === 'años' }" (click)="setActiveTab('años')">AÑOS</div>
+        <div class="tab" [ngClass]="{ 'tab-active': activeTab === 'trimestres' }" (click)="setActiveTab('trimestres')">
+          TRIMESTRES</div>
+
+      </div>
+
+      <!-- Filtros -->
+      <div class="filters-top">
+        <app-select label="Estado:" [options]="statusOpt" [formGroup]="form" controlName="status"
+          class="w-100"></app-select>
+        <app-select *ngIf="activeTab === 'meses'" label="Meses:" placeholder="Selecciona un mes" [options]="monthOpt"
+          [formGroup]="form" controlName="month" class="w-100"></app-select>
+        <ng-container *ngIf="activeTab === 'años'">
+          <app-select label="Año Base:" placeholder="Año" [options]="yearOpt" [formGroup]="form" controlName="year1"
+            class="w-100"></app-select>
+          <div class="vs-label">vs</div>
+          <app-select label="Año Comparado:" placeholder="Año" [options]="yearOpt" [formGroup]="form"
+            controlName="year2" class="w-100"></app-select>
+        </ng-container>
+      </div>
+
+      <!-- Gráfico -->
+      <div class="chart-wrapper">
+        <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart" [xaxis]="chartOptions.xaxis"
+          [yaxis]="chartOptions.yaxis" [title]="chartOptions.title" [legend]="chartOptions.legend"
+          [tooltip]="chartOptions.tooltip" [dataLabels]="chartOptions.dataLabels"
+          [stroke]="chartOptions.stroke"></apx-chart>
+      </div>
+
+       <!-- Botón exportar -->
+      <div class="export">
+        <button class="btn-export" [disabled]="exporting" (click)="exportExcel()">
+          <span *ngIf="!exporting">
+            Exportar Excel por {{ activeTab === 'meses' ? 'mes' : activeTab === 'años' ? 'años' : 'trimestres' }}
+          </span>
+          <span *ngIf="exporting">Descargando...</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Columna derecha: países y rangos -->
+  <div class="col-right">
+    <div class="block-paises shadow-box">
+      <div class="top-controls">
+        <app-input placeholder="Buscar" iconRigth="bi bi-search" label="Buscar" [formGroup]="form" controlName="search"
+          class="search-input"></app-input>
+        <app-select label="Año:" placeholder="Selecciona un año" [options]="yearOpt" [formGroup]="form"
+          controlName="year" class="year-select"></app-select>
+      </div>
+
+      <div class="tabla-wrapper">
+        <table class="tabla-paises">
+          <thead>
+            <tr>
+              <th class="table-header">Países</th>
+              <th class="table-header">Afiliados</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let country of filteredCountries">
+              <td>
+                <input type="checkbox" [checked]="country.checked" (change)="onSingleCountryCheck(country)" />
+                {{ country.name }}
+              </td>
+              <td>
+                <span class="bar" [ngStyle]="{ 'background-color': country.color }"></span>
+                {{ country.count | number }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <table class="tabla-paises">
+        <tfoot>
+          <tr>
+            <td><strong>Total general</strong></td>
+            <td class="total">{{ totalAfiliados | number }}</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <div class="shadow-box">
+      <app-range-affiliates></app-range-affiliates>
+    </div>
+  </div>
+</div>

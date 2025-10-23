@@ -1,0 +1,22 @@
+::ng-deep ngb-typeahead-window {
+	width: 100%;
+	box-sizing: border-box;
+}
+
+::ng-deep {
+	.typeahead-input {
+		position: relative;
+	}
+
+	.icon-wrapper {
+		position: absolute;
+		top: 67%;
+		right: 1rem;
+		transform: translateY(-50%);
+		pointer-events: none;
+	}
+
+	.no-arrow {
+		background-image: none !important;
+	}
+}

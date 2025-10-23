@@ -1,0 +1,76 @@
+<div class="proformas-view-card flex flex-column gap-6 p-6 bg-white w-100">
+	<h1 class="title">Kennedy - Proformas (Mock)</h1>
+	<p class="socio-id">id: {{ proformaId }}</p>
+
+	<div class="cards">
+		<div class="card" *ngFor="let p of proformas; let i = index">
+			<div class="card-header">Proforma {{ i + 1 }}</div>
+
+			<div class="kv-grid">
+				<div class="kv">
+					<span class="label">Marca:</span>
+					<span class="value">{{ p.marca }}</span>
+				</div>
+				<div class="kv">
+					<span class="label">Modelo:</span>
+					<span class="value">{{ p.modelo }}</span>
+				</div>
+				<div class="kv">
+					<span class="label">Color:</span>
+					<span class="value">{{ p.color }}</span>
+				</div>
+				<div class="kv">
+					<span class="label">Precio:</span>
+					<span class="value">{{ p.precio | currency : 'USD' : 'symbol' : '1.2-2' }}</span>
+				</div>
+				<div class="kv">
+					<span class="label">Concesionaria:</span>
+					<span class="value">{{ p.concesionaria }}</span>
+				</div>
+				<div class="kv">
+					<span class="label">Ejecutivo de Ventas:</span>
+					<span class="value">{{ p.ejecutivoVentas }}</span>
+				</div>
+			</div>
+
+			<div class="contact-row">
+				<span class="phone-text">{{ p.telefono }}</span>
+				<a class="phone-link" [href]="getWhatsappLink(p.telefono)" target="_blank">
+					<i class="bi bi-telephone-fill"></i>
+				</a>
+			</div>
+
+			<div class="actions">
+				<button class="btn btn-outline" type="button" (click)="viewPdf(p.pdfUrl)">
+					Ver Proforma
+				</button>
+				<button class="btn btn-primary" type="button" (click)="chooseProforma(i)">
+					Elegir proforma
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<app-modal-notify
+	*ngIf="showConfirmModal"
+	[title]="'Recuerda'"
+	[message]="'Si estás seguro de aceptar la proforma, confirma la acción; de lo contrario, cancela.'"
+	[iconType]="'warning'"
+	[oneButton]="false"
+	[primaryText]="'Aceptar'"
+	[secondaryText]="'Cancelar'"
+	(confirmed)="onConfirmChoose()"
+	(canceled)="onCancelChoose()"
+	(closed)="onCancelChoose()"
+></app-modal-notify>
+
+<app-modal-notify
+	*ngIf="showSuccessModal"
+	[title]="'Proforma elegida'"
+	[message]="'La proforma ha sido elegida y se ha notificado al usuario exitosamente.'"
+	[iconType]="'success'"
+	[oneButton]="true"
+	[primaryText]="'Entendido'"
+	(closed)="onSuccessClosed()"
+></app-modal-notify>

@@ -1,0 +1,34 @@
+<app-common-table [headers]="table.headers" [checkedAll]="table.checkedAll" [noCheckboxes]="table.noCheckBoxes"
+	[headersArrows]="table.headersArrows" [headersMinWidth]="table.headersMinWidth" [firstEmpty]="true"
+	(onCheckedAll)="table.changeCheckedAll($event)">
+	<div *ngIf="!loading">
+		<tr class="d-flex py-2 align-items-center" *ngFor="let item of table.data">
+			<td class="w-100 text-gray-900 text-center fs-6" style="word-break: break-all;">{{ item.rentExemptionId }}
+			</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.date }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.name }} {{item.lastName}}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.username }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.year }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.number }}</td>
+			<td class="w-100 d-flex justify-content-center">
+				<span class="w-100 text-gray-900 text-center fs-6">{{ item.nroDocument }}</span>
+			</td>
+			<td class="w-100 text-gray-900 text-center fs-6">
+				<button class="btn btn-outline-secondary btn-sm border-1" (click)="approveExoneration(item)"
+					style="width: 100px; padding-left: 3px; padding-right: 3px">
+					<img height="14px" width="20px" class="img-light-orange"
+						src="./assets/media/icons/custom/eye.svg" />
+					<span>Ver detalle</span>
+				</button>
+			</td>
+		</tr>
+	</div>
+	<div class="d-flex flex-row gap-6 justify-content-center" *ngIf="loading">
+		<span class="spinner-border spinner-border-lg align-middle text-center ms-2"></span>
+	</div>
+</app-common-table>
+<div class="d-flex justify-content-between mt-5">
+	<table-pagination class="w-100" [count]="totalRecords" [refresh]="refresh" [itemsPerPage]="10"
+		(pageChanged)="onPageChange($event)">
+	</table-pagination>
+</div>

@@ -1,0 +1,167 @@
+:host { display: block; }
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+
+  .modal-container {
+    width: 100%;
+    max-width: 640px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    padding: 24px 24px 16px;
+
+    .modal-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 8px;
+
+      .modal-header-content { display: flex; gap: 12px; align-items: center; }
+      .modal-icon {
+        width: 44px; height: 44px; border-radius: 10px; border: 1px solid #e5e7eb;
+        display: grid; place-items: center;
+        i { color: #6c757d; font-size: 20px; }
+      }
+      .modal-titles { display: flex; flex-direction: column; gap: 2px; }
+      .modal-title { margin: 0; font-weight: 600; color: #1f2937; }
+      .modal-subtitle { margin: 0; color: #6b7280; font-size: .95rem; }
+      .close-btn { border: none; background: transparent; color: #6c757d; font-size: 1.1rem; cursor: pointer; }
+    }
+
+    .modal-form {
+      margin-top: 12px;
+
+      .form-group { margin-bottom: 12px; }
+
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-bottom: 12px;
+
+        .form-group { margin-bottom: 0; }
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        min-width: 0;
+
+        &.full { grid-column: span 2; }
+
+        label { font-size: .9rem; color: #3f4c5c; margin-bottom: 6px; }
+
+        input[type='text'],
+        input[type='number'],
+        input[type='date'],
+        select {
+          width: 100%;
+          box-sizing: border-box;
+          height: 40px;
+          border: 1px solid #d1d5db;
+          border-radius: 8px;
+          padding: 10px 12px;
+          font-size: .95rem;
+          outline: none;
+          background: #fff;
+
+          &:focus {
+            border-color: #9ecaff;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.12);
+          }
+        }
+
+        input:disabled,
+        select:disabled,
+        input[readonly],
+        select[readonly] {
+          background: #f5f6f8;
+          color: #6b7280;
+          cursor: not-allowed;
+        }
+
+        input[type='number'] {
+          appearance: textfield;
+          -moz-appearance: textfield;
+          &::-webkit-outer-spin-button,
+          &::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        }
+
+        .select {
+          position: relative;
+          width: 100%;
+
+          select {
+            appearance: none;
+            background: #fff;
+            color: #111827;
+            padding-right: 36px;
+            width: 100%;
+          }
+
+          select:disabled {
+            background: #f5f6f8 !important;
+            color: #6b7280;
+            cursor: not-allowed;
+          }
+
+          .chevron {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            font-size: 14px;
+            color: #6b7280;
+          }
+          select:disabled ~ .chevron { opacity: .35; }
+        }
+
+        .error { margin-top: 4px; font-size: .75rem; color: #d9534f; }
+      }
+    }
+
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 8px;
+
+      .btn {
+        padding: .6rem 1.1rem;
+        border-radius: 8px;
+        border: 1px solid transparent;
+        cursor: pointer;
+
+        &.btn-outline { background: transparent; border-color: #ff8800; color: #ff8800; }
+        &.btn-primary { background: #ff8800; border-color: #ff8800; color: #fff; }
+
+        &:disabled { opacity: .6; cursor: not-allowed; }
+      }
+    }
+  }
+}
+
+@media (max-width: 640px) {
+  .modal-backdrop .modal-container {
+    padding: 16px;
+    .modal-form .form-row { grid-template-columns: 1fr; }
+    .modal-form .form-group.full { grid-column: auto; }
+  }
+}
+:host-context(.night-mode) .modal-header,
+.modal-body {
+	background-color: #ffffff !important;
+	.modal-title {
+		color: rgba(0, 0, 0, 0.7) !important;
+	}
+}

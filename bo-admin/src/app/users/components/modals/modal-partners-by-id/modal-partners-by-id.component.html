@@ -1,0 +1,124 @@
+<app-modal [title]="' '">
+  <div class="member-modal">
+
+    <!-- Encabezado -->
+    <div class="d-flex align-items-center gap-3">
+      <div class="mm-icon">
+        <span class="mm-icon-glyph">🧾</span>
+      </div>
+      <div class="mm-titles">
+        <h2 class="mm-title">Detalle del socio</h2>
+        <p class="mm-subtitle">Información completa del socio registrado</p>
+      </div>
+      <!-- <button class="mm-close" type="button" (click)="instanceModal.close()">×</button> -->
+    </div>
+
+    <!-- Sección: Datos del registro -->
+    <div class="mm-section">
+      <div class="mm-section-title">Datos del registro</div>
+
+      <div class="kv-card" *ngIf="!loading">
+        <div class="kv-row">
+          <div class="kv-key">Usuario</div>
+          <div class="kv-value">{{ vm.username || '—' }}</div>
+        </div>
+        <div class="kv-row">
+          <div class="kv-key">Nombre y Apellido</div>
+          <div class="kv-value">{{ vm.fullname || '—' }}</div>
+        </div>
+        <div class="kv-row">
+          <div class="kv-key">Fecha de registro</div>
+          <div class="kv-value">{{ vm.date ? (vm.date | date:'dd/MM/yyyy') : '—' }}</div>
+        </div>
+
+        <div class="kv-row">
+          <div class="kv-key">Estado</div>
+          <div class="kv-value">
+            <span class="badge"
+              [ngClass]="{
+                'badge--success': (vm.state || '').toLowerCase().includes('activo'),
+                'badge--danger':  (vm.state || '').toLowerCase().includes('inactivo') || (vm.state || '').toLowerCase().includes('error'),
+                'badge--warning': (vm.state || '').toLowerCase().includes('rechazo') || (vm.state || '').toLowerCase().includes('pend') || (vm.state || '').toLowerCase().includes('migra'),
+                'badge--muted':   !(vm.state)
+              }">
+              {{ vm.state || '-' }}
+            </span>
+          </div>
+        </div>
+
+        <div class="kv-row">
+          <div class="kv-key">Nivel patrocinio</div>
+          <div class="kv-value">{{ vm.nivelPatrocinio || 1 }}</div>
+        </div>
+        <div class="kv-row">
+          <div class="kv-key">Nivel residual</div>
+          <div class="kv-value">{{ vm.nivelResidual || 0 }}</div>
+        </div>
+        <div class="kv-row">
+          <div class="kv-key">Rama</div>
+          <div class="kv-value">{{ vm.branch || 'Sin posicionar' }}</div>
+        </div>
+        <div class="kv-row">
+          <div class="kv-key">Patrocinador</div>
+          <div class="kv-value">{{ vm.sponsorName || '-' }}</div>
+        </div>
+        <div class="kv-row">
+          <div class="kv-key">Puntaje equipo</div>
+          <div class="kv-value">{{ vm.puntajeEquipo || 0 }}</div>
+        </div>
+        <div class="kv-row">
+          <div class="kv-key">Puntaje individual</div>
+          <div class="kv-value">{{ vm.puntajeIndividual || 0 }}</div>
+        </div>
+        <div class="kv-row">
+          <div class="kv-key">Activo hasta</div>
+          <div class="kv-value"></div>
+        </div>
+        <div class="kv-row">
+          <div class="kv-key">Fecha de último pago</div>
+          <div class="kv-value">{{ vm.lastPaymentDate ? (vm.lastPaymentDate | date:'dd/MM/yyyy') : '—' }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sección: Detalles de Membresías -->
+    <br>
+    <h2 class="mm-section-title text-center">Detalles del Membresias</h2>
+    <app-table
+			[noCheckboxes]="true"
+			[customRows]="true"
+			[headers]="['Membresia','Fecha de registro','Estado','Próxima fecha a vencer','Tipo de pago','Puntaje','Monto']">
+      <tr *ngFor="let m of vm.memberships">
+        <td>
+          <div class="d-flex flex-column">
+            <span class="fw-bolder fs-7">{{ m.membresia || '—' }}</span>
+          </div>
+        </td>
+
+        <td><span class="fw-bold fs-7">{{ vm.date ? (vm.date | date:'dd/MM/yyyy') : '—' }}</span></td> <!-- si no tienes fecha en payload -->
+
+        <td>
+          <span class="badge"
+                [ngClass]="{
+                  'badge--success': (m.estado || '').toLowerCase().includes('activo'),
+                  'badge--danger':  (m.estado || '').toLowerCase().includes('inactivo') || (m.estado || '').toLowerCase().includes('error'),
+                  'badge--warning': (m.estado || '').toLowerCase().includes('rechazo') || (m.estado || '').toLowerCase().includes('pend') || (m.estado || '').toLowerCase().includes('migra'),
+                  'badge--muted':   !(m.estado)
+                }">
+                {{ m.estado || '-' }}
+              </span>
+        </td>
+        <td><span class="fw-bold fs-7">{{ m.nextPaymentDate ? (m.nextPaymentDate | date:'dd/MM/yyyy') : '—' }}</span></td>
+        <td><span class="fw-bold fs-7">{{ (m.pay === 1) ? 'Inicial' : 'Cuota' }}</span></td>
+        <td><span class="fw-bold fs-7">{{ m.puntaje }}</span></td>
+        <td><span class="fw-bold fs-7">$ {{ m.cuota }}</span></td>
+      </tr>
+		</app-table>
+
+    <br>
+    <div class="d-flex flex-row justify-content-center align-items-center">
+      <button class="btn btn-secondary px-3 fs-12" type="button" style="height: fit-content" (click)="instanceModal.close()">Confirmar</button>
+    </div>
+
+  </div>
+</app-modal>

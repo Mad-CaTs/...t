@@ -1,0 +1,63 @@
+<div class="d-flex flex-column gap-6 p-6 bg-white w-100">
+	<!-- Navigation -->
+	<nav class="w-100 overflow-x-auto position-relative" #container>
+		<ul class="nav-list">
+			<li class="nav-item">
+				<a href="javascript:void(0)" class="nav-link" (click)="$event.preventDefault()">
+					Documentos de Identidad
+				</a>
+			</li>
+		</ul>
+	</nav>
+
+	<!-- Table | Pagination -->
+	<div class="d-flex justify-content-between">
+		<table-pagination [noTextBtn]="true" class="w-100" />
+	</div>
+	<!--Table | Table-->
+	<span class="text-center fw-medium">Información actualizada al {{ getCurrentDate() }}</span>
+
+	<app-common-table
+		[headers]="table.headers"
+		[checkedAll]="table.checkedAll"
+		[headersMinWidth]="table.headersMinWidth"
+		[headersMaxWidth]="table.headersMaxWidth"
+		[noCheckboxes]="table.noCheckBoxes"
+		[firstEmpty]="true"
+		(onCheckedAll)="table.changeCheckedAll($event)"
+	>
+		<tr class="d-flex py-2 align-items-center" *ngFor="let item of table.data; let i = index">
+			<td class="d-flex justify-content-center">
+				<div class="form-check-sm form-check-custom form-check-solid">
+					<input
+						class="form-check-input cursor-pointer"
+						type="radio"
+						name="placement-item-radio"
+						[value]="item.id"
+						[(ngModel)]="selectedRowId"
+					/>
+				</div>
+			</td>
+
+			<td class="w-100 text-gray-900 text-center fs-6">
+				{{ item.registerNumber }}
+			</td>
+
+			<td class="w-100 text-gray-900 text-center fs-6" style="word-break: break-all;">
+				{{ item.userName }}
+			</td>
+
+			<td class="w-100 text-gray-900 text-center fs-6">
+				{{ item.fullName }}
+			</td>
+
+			<td class="w-100 text-gray-900 text-center fs-6">
+				{{ item.dni }}
+			</td>
+
+			<td class="w-100 text-gray-900 text-center fs-6">
+				{{ item.verify }}
+			</td>
+		</tr>
+	</app-common-table>
+</div>

@@ -1,0 +1,73 @@
+<div class="form-event-package-card">
+  <!-- Header -->
+  <div class="form-header-bar">
+    <div class="left">
+      <button class="back-button" aria-label="Volver" (click)="onBack()">
+        <i class="bi bi-arrow-left"></i>
+      </button>
+      <h1 class="form-title">
+        {{ mode === 'create' ? 'Nueva promoción' : 'Editar promoción' }}
+      </h1>
+    </div>
+
+    <div class="right">
+      <button class="cancel-button" (click)="onBack()">Cancelar</button>
+      <button class="save-button" [disabled]="isSaveDisabled" (click)="onSave()">
+        {{ mode === 'create' ? 'Agregar paquete' : 'Guardar cambios' }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Grid 50/50 -->
+  <div class="form-grid">
+    <!-- Izquierda -->
+    <div class="left-col">
+      <app-package-detail-form
+        [value]="formData"
+        [events]="events"
+        [zones]="zonesForSelected"
+        (formChange)="onFormChange($event)">
+      </app-package-detail-form>
+
+      <app-package-event-info
+        class="mt-16"
+        [info]="eventInfo">
+      </app-package-event-info>
+    </div>
+
+    <!-- Derecha -->
+    <div class="right-col preview-column">
+      <app-package-image-preview [flyer]="flyerPreview"></app-package-image-preview>
+
+      <app-package-summary-card
+        [eventName]="formData.eventName"
+        [zoneName]="formData.zoneName"
+        [quantity]="formData.quantity"
+        [freeUnits]="formData.freeUnits"
+        [price]="formData.promoPricePen || 0"
+        [fromPrice]="lowestPricePen ?? 0"
+        [description]="formData.description"
+        [packageName]="formData.packageName">
+      </app-package-summary-card>
+    </div>
+  </div>
+</div>
+
+<!-- Spinner fullscreen (montaje/desmontaje desde el padre) -->
+<ng-container *ngIf="loading">
+  <app-logo-spinner
+    [show]="true"
+    [fullscreen]="true"
+    [delay]="0"
+    [minVisible]="800">
+  </app-logo-spinner>
+</ng-container>
+
+<!-- Notificación de error/info -->
+<app-modal-notify
+  *ngIf="showNotify"
+  [title]="notifyTitle"
+  [message]="notifyMessage"
+  [iconType]="notifyType"
+  (closed)="onNotifyClose()">
+</app-modal-notify>

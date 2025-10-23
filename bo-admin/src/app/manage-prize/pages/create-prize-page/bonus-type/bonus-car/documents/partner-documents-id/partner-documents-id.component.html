@@ -1,0 +1,14 @@
+<div class="partner-documents-card flex flex-column gap-6 p-6 bg-white w-100">
+	<div class="d-flex align-items-center justify-content-between gap-3">
+		<h4 class="fs-5 text-black fw-medium m-0">Documento id ( MOCK )</h4>
+		<button type="button" class="btn btn-outline-secondary btn-sm" (click)="onBack()">
+			<i class="bi bi-arrow-left"></i>
+			<span class="ms-1">Volver</span>
+		</button>
+	</div>
+	<div class="toolbar-card">
+		<div class="pdf-container" *ngIf="pdfUrl">
+			<iframe title="Documento PDF" [src]="pdfUrl" class="pdf-frame"></iframe>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,26 @@
+<app-modal [title]="title">
+	<form [formGroup]="form" class="d-flex flex-column gap-6 w-100" (submit)="onSubmit()">
+		<app-input
+			class="w-100"
+			type="text"
+			label="Destino"
+			placeholder="Ingrese el destino"
+			[formGroup]="form"
+			controlName="destiny"
+		/>
+        <app-input-date
+				label="Fecha"
+				[formGroup]="form"
+				controlName="dateTravel"
+				class="w-100"
+			/>
+		
+		<app-input-file label="Seleccione Imagen" accept=".jpg, .png" [control]="form.controls['flyer']" helper="Para mejores resultados, utiliza una imagen de 900x400 píxeles."/>
+		<div class="d-flex gap-4 justify-content-center align-items-center w-100">
+			<button class="btn btn-outline-secondary" type="button" (click)="instanceModal.close()">
+				Cancelar
+			</button>
+			<button class="btn btn-secondary" type="submit">Guardar</button>
+		</div>
+	</form>
+</app-modal>

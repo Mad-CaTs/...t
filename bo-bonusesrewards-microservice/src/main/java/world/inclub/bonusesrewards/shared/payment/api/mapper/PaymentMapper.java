@@ -24,7 +24,6 @@ public class PaymentMapper {
                 .totalAmount(payment.getTotalAmount())
                 .paymentDate(payment.getPaymentDate())
                 .createdAt(payment.getCreatedAt())
-//                .rejection(null)
                 .build();
     }
 }

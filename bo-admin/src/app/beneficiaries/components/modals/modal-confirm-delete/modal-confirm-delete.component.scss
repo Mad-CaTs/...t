@@ -1,0 +1,16 @@
+.confirm-modal {
+  padding: 16px;
+}
+
+.cm-icon {
+  width: 40px; height: 40px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: #fff1f0; color: #d9363e; 
+  margin-bottom: 8px;
+}
+.cm-title { margin: 0 0 8px; font-weight: 600; }
+.cm-text  { margin: 0 0 16px; color: #6b7280; }
+
+.cm-actions {
+  display: flex; gap: 12px; justify-content: flex-end;
+}

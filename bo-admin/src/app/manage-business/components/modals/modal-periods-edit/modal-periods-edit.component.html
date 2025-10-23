@@ -1,0 +1,23 @@
+<app-modal [title]="title">
+    <form class="d-flex flex-column gap-6 w-100" [formGroup]="form">
+        <app-input-date label="Fecha de Fin" class="w-100" [formGroup]="form" controlName="initialDate" />
+        <app-input-date label="Fecha de Fin" class="w-100" [formGroup]="form" controlName="endDate" />
+        <app-input-date label="Fecha de Fin" class="w-100" [formGroup]="form" controlName="payDate" />
+        <div class="d-flex flex-row gap-6 justify-content-center mt-5">
+            <button class="btn btn-outline-secondary" type="button" (click)="instanceModal.close()">
+                Cancelar
+            </button>
+            <button class="btn btn-secondary" type="button" (click)="onSubmit()"
+                [disabled]="form.invalid || buttonLoading">
+                <div class="fixed-width-button">
+                    <div *ngIf="buttonLoading">
+                        <span class="spinner-border spinner-border-lg align-middle text-center ms-2"></span>
+                    </div>
+                    <div *ngIf="!buttonLoading">
+                        <span>Guardar</span>
+                    </div>
+                </div>
+            </button>
+        </div>
+    </form>
+</app-modal>

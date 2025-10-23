@@ -1,0 +1,457 @@
+<app-modal [title]="'Ver detalle Cronograma'">
+	<div class="d-flex justify-content-between">
+		
+	</div>
+
+	<div class="card d-flex flex-column p-9">
+		<!--<div class="d-flex justify-content-between align-items-center w-75 gap-6 pb-9">-->
+			<!--<div class="d-flex justify-content-between align-items-center w-50 gap-6">
+				<span class="fs-5 fw-bold">Suscripción actual:</span>
+				<span class="fs-5 fw-bolder">Gold</span>
+			</div>-->
+			<!-- <div class="d-flex justify-content-start align-items-center w-100 gap-4">
+				<span class="fs-5 fw-bold">Migrar a:</span>
+				<app-select
+					placeholder="Seleccione una opción"
+					[options]="packageOpt"
+					controlName="package"
+					[formGroup]="form"
+					class="w-50 fs-5"
+				></app-select>
+			</div> -->
+		<!--</div>-->
+
+		<div class="row w-full pb-5">
+			
+		</div>
+
+		<div>
+			<table class="table-schedule" style="display: block; overflow-x: auto">
+				<thead class="table-headsch">
+				
+					<tr style="text-align: center" class="tr-adjust border-bottom-1">
+						<th>IdMeship Detail</th>
+						<th>Quote Description</th>
+						<th>Next Expiration</th>
+						<th>Dollar Exchange</th>
+						<th>Quote Usd</th>
+						<th>Amortization</th>
+						<!--<th style="background: #beceab">
+							<input
+								type="checkbox"
+								(change)="handleCheck($event)"
+								[checked]="calculateCheck"
+							/>
+						</th>-->
+						<th style="background: #beceab">Capital Balance</th>
+						<th style="background: #beceab">Porcentaje</th>
+						<th>Interested</th>
+						<th class="d-flex border-0">
+							<tr class="theadvoucher">
+								<th>Código de foto</th>
+								<th>N° de Operación</th>
+								<th>Código de op.empresa</th>
+								<th>Método Pago</th>
+								<th>Nota</th>
+							</tr>
+						</th>
+						<th>Verif</th>
+						<th>isQuote Initial</th>
+						<th>Observación</th>
+						<th>Pay Date</th>
+						<th>Pts.</th>
+						<th></th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody *ngIf="!loading && !noData">
+					<tr
+						*ngFor="let item of registers; let idx = index"
+						class="tr-adjust"
+						style="border-bottom: 1px solid rgba(231, 226, 226, 0.9)"
+					>
+						<td>
+							<input
+								class="form-control"
+								style="font-size: 10px; width: 55px; padding-left: 10px"
+								[(ngModel)]="item.positionOnSchedule"
+								(ngModelChange)="handleItem($event, 'positionOnSchedule', idx)"
+                                disabled                       
+
+							/>
+						</td>
+						<td>
+							<input
+								class="form-control"
+								style="font-size: 10px; width: 120px"
+								[(ngModel)]="item.quoteDescription"
+								(ngModelChange)="handleItem($event, 'quoteDescription', idx)"
+								(blur)="onBlurDes($event, 'quoteDescription', idx)"
+                                disabled
+							/>
+						</td>
+						<td>
+							<input
+								class="form-control"
+								style="font-size: 10px; width: 120px"
+								[(ngModel)]="item.nextExpiration"
+								(ngModelChange)="handleItem($event, 'nextExpiration', idx)"
+								(blur)="handleItemNext($event, 'nextExpiration', idx)"
+                                disabled
+							/>
+						</td>
+						<td>
+							<input
+								class="form-control"
+								style="font-size: 10px; width: 70px"
+								[(ngModel)]="item.dollarExchange"
+								(ngModelChange)="handleItemExchange($event, 'dollarExchange', idx)"
+                                disabled
+							/>
+						</td>
+						<td>
+							<input
+								class="form-control"
+								style="font-size: 10px; width: 70px"
+								[(ngModel)]="item.quoteUsd"
+								(ngModelChange)="handleItemQuoteUsd($event, 'quoteUsd', idx)"
+                                disabled
+							/>
+						</td>
+						<td>
+							<input
+								class="form-control"
+								style="font-size: 10px; width: 70px"
+								[(ngModel)]="item.amortization"
+								(ngModelChange)="handleItem($event, 'amortization', idx)"
+                                disabled
+							/>
+						</td>
+						<!--<td>
+							<input
+								type="checkbox"
+								(change)="handleCheckItem($event, idx)"
+								[checked]="checkCalculateState[idx]"
+							/>
+						</td>-->
+						<td>
+							<input
+								class="form-control"
+								style="font-size: 10px; width: 70px"
+								[(ngModel)]="item.capitalBalance"
+								(ngModelChange)="handleItem($event, 'capitalBalance', idx)"
+                                disabled
+							/>
+						</td>
+						<td>
+							<input
+								class="form-control"
+								style="font-size: 10px; width: 70px"
+								[(ngModel)]="item.percentage"
+								(ngModelChange)="handleItem($event, 'percentage', idx)"
+                                disabled
+							/>
+						</td>
+						<td>
+							<input class="form-control" style="font-size: 10px; width: 70px" disabled/>
+							<!-- [(ngModel)]="item.interested"
+								(ngModelChange)="handleItem($event, 'interested', idx)" -->
+						</td>
+
+						<td class="td-adjust">
+							<ng-container
+								*ngIf="
+									item.paymentVouchers && item.paymentVouchers.length > 0;
+									else emptyVoucher
+								"
+							>
+								<ng-container *ngFor="let voucher of item.paymentVouchers; let idv = index">
+									<tr>
+										<td>
+											<!-- <input
+												class="form-control input-width-adjusted"
+												[(ngModel)]="voucher.namePicture"
+												(ngModelChange)="handleItemV($event, 'namePicture', idx, idv)"
+												style="width: 100px"
+											/> -->
+											<button
+												class="btn btn-light btn-sm border-1"
+												style="width: 100px; padding-left: 2px; padding-right: 2px"
+												(click)="openImageModal(voucher.pathPicture)"
+											>
+												<img
+													height="11px"
+													width="18px"
+													src="./assets/media/icons/custom/eye.svg"
+												/>
+												<span class="image-view">Ver Imagen</span>
+											</button>
+											<ng-template #imageModal let-modal>
+												<div class="modal-header">
+													<h4 class="modal-title">Voucher</h4>
+													<button
+														type="button"
+														class="btn-close"
+														aria-label="Close"
+														(click)="modal.dismiss('Cross click')"
+													></button>
+												</div>
+												<div class="modal-body text-center">
+													<img
+														[src]="selectedImageUrl"
+														class="img-fluid"
+														alt="Image Preview"
+														class="img-fluid"
+													/>
+												</div>
+											</ng-template>
+										</td>
+
+										<td>
+											<input
+												class="form-control input-width-adjusted"
+												[(ngModel)]="voucher.operationNumber"
+												(ngModelChange)="
+													handleItemV($event, 'operationNumber', idx, idv)
+												"
+												style="font-size: 10px; width: 100px"
+                                                disabled
+											/>
+										</td>
+										<td>
+											<input
+												class="form-control input-width-adjusted"
+												[(ngModel)]="voucher.companyOperationNumber"
+												(ngModelChange)="
+													handleItemV($event, 'companyOperationNumber', idx, idv)
+												"
+												style="font-size: 10px; width: 100px"
+                                                disabled
+											/>
+										</td>
+										<td>
+											<input
+												class="form-control input-width-adjusted"
+												[(ngModel)]="voucher.methodPaymentSubTypeId"
+												(ngModelChange)="
+													handleItemV($event, 'methodPaymentSubTypeId', idx, idv)
+												"
+												style="font-size: 10px; width: 100px"
+                                                disabled
+											/>
+										</td>
+										<td>
+											<input
+												class="form-control input-width-adjusted"
+												[(ngModel)]="voucher.note"
+												(ngModelChange)="handleItemV($event, 'note', idx, idv)"
+												style="font-size: 10px; width: 100px"
+                                                disabled
+											/>
+										</td>
+										<!-- <td>
+											<button
+												class="btn btn-sm"
+												style="padding-left: 20px"
+												(click)="ShowModaldeleteItemV($event, voucher)"
+											>
+												<i class="fas fa-trash-alt"></i>
+											</button>
+										</td>-->
+										<td>
+											<select
+												id="sel-{{ idx }}-{{ idv }}"
+												class="form-select select-title-editor-schedule"
+												(change)="handleSelectCuota($event)"
+												style="width: 70px"
+											>
+												<option value="d"></option>
+												<option *ngFor="let item of listwithvoucher" [value]="item">
+													{{ item }}
+												</option>
+											</select>
+										</td>
+										<td>
+											<!-- <button
+												class="btn btn-dark btn-sm"
+												style="padding-left: 20px"
+												(click)="moveVoucher($event, voucher, idx, idv)"
+											>
+												<i class="fas fa-exchange-alt"></i>
+											</button>-->
+										</td>
+										<td>
+											<!--<button
+												class="btn btn-dark btn-sm"
+												style="padding-left: 20px"
+												(click)="copyVoucher($event, voucher, idx, idv)"
+											>
+												<i class="fas fa-copy"></i>
+											</button>-->
+										</td>
+										<td>
+											<!--<button
+												class="btn btn-warning btn-sm"
+												style="padding-left: 20px"
+												(click)="UpdateVoucher($event, voucher)"
+											>
+												<i class="fas fa-sync"></i>
+											</button>-->
+										</td>
+									</tr>
+								</ng-container>
+							</ng-container>
+							<ng-template #emptyVoucher>
+								<tr>
+									<td>
+										<button
+											class="btn btn-light btn-sm"
+											style="width: 100px; padding-left: 2px; padding-right: 2px"
+											[disabled]="true"
+										>
+											<span class="image-view">No hay imagen</span>
+										</button>
+									</td>
+									<td>
+										<input
+											class="form-control input-width-adjusted"
+											style="font-size: 10px; width: 100px"
+										/>
+									</td>
+									<td>
+										<input
+											class="form-control input-width-adjusted"
+											style="font-size: 10px; width: 100px"
+										/>
+									</td>
+									<td>
+										<input
+											class="form-control input-width-adjusted"
+											style="font-size: 10px; width: 100px"
+										/>
+									</td>
+									<td>
+										<input
+											class="form-control input-width-adjusted"
+											style="font-size: 10px; width: 100px"
+										/>
+									</td>
+									<!-- <td>
+										<button class="btn btn-sm" style="padding-left: 20px">
+											<i class="fas fa-trash-alt"></i>
+										</button>
+									</td>-->
+									<td>
+										<select
+											id="sel-{{ idx }}"
+											class="form-select select-title-editor-schedule"
+											style="width: 70px"
+                                            disabled
+										>
+											<option value="d"></option>
+											<option *ngFor="let item of listwithvoucher" [value]="item">
+												{{ item }}
+											</option>
+										</select>
+									</td>
+									<td>
+                                        <!-- <button class="btn btn-dark btn-sm" style="padding-left: 20px">
+											<i class="fas fa-exchange-alt"></i>
+										</button>-->
+									</td>
+									<td>
+										<!-- <button class="btn btn-dark btn-sm" style="padding-left: 20px">
+											<i class="fas fa-copy"></i>
+										</button>-->
+									</td>
+									<td>
+										<!-- <button class="btn btn-warning btn-sm" style="padding-left: 20px">
+											<i class="fas fa-sync"></i>
+										</button>-->
+									</td>
+								</tr>
+							</ng-template>
+						</td>
+
+						<td>
+							<input class="form-control" style="font-size: 10px; width: 55px" [(ngModel)]="item.statePaymentId" disabled />
+							<!-- 
+								(ngModelChange)="handleItem($event, 'interested', idx)" -->
+						</td>
+						<td>
+							<input
+								class="form-control"
+								style="font-size: 10px; width: 55px"
+								[(ngModel)]="item.isQuoteInitial"
+								(ngModelChange)="handleItem($event, 'isQuoteInitial', idx)"
+                                disabled
+							/>
+						</td>
+						<td>
+							<input
+								class="form-control"
+								style="font-size: 10px; width: 100px"
+								[(ngModel)]="item.obs"
+								(ngModelChange)="handleItem($event, 'obs', idx)"
+                                disabled
+							/>
+						</td>
+						<td>
+							<input
+								class="form-control"
+								style="font-size: 10px; width: 100px"
+								[(ngModel)]="item.payDate"
+								(ngModelChange)="handleItem($event, 'payDate', idx)"
+                                disabled
+							/>
+						</td>
+						<td>
+							<input
+								class="form-control"
+								style="font-size: 10px; width: 55px"
+								[(ngModel)]="item.pts"
+								(ngModelChange)="handleItem($event, 'pts', idx)"
+                                disabled
+							/>
+						</td>
+						<td>
+							<!--<button
+								class="btn btn-sm"
+								style="padding-left: 20px"
+								(click)="deleteItem($event, idx, item)"
+							>
+								<i class="fas fa-trash-alt"></i>
+							</button>-->
+						</td>
+						<td>
+							<!--<button
+								class="btn btn-primary btn-sm"
+								style="padding-left: 20px"
+								(click)="deleteItem($event, idx, item)"
+							>
+								<i class="fas fa-upload"></i>
+							</button>-->
+						</td>
+					</tr>
+				</tbody>
+				<tbody *ngIf="loading">
+					<tr>
+						<td colspan="100%" class="text-center py-5">
+							<div class="spinner-border" role="status">
+								<span class="sr-only">Loading...</span>
+							</div>
+							<p>Cargando...</p>
+						</td>
+					</tr>
+				</tbody>
+				<tbody *ngIf="!loading && noData">
+					<tr>
+						<td colspan="100%" class="text-center">
+							<p>{{ noDataMessage }}</p>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</app-modal>

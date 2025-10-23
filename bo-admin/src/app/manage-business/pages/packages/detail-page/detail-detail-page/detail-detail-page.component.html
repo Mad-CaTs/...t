@@ -1,0 +1,273 @@
+<div class="position-relative">
+	<div *ngIf="loading" class="loading-overlay d-flex justify-content-center align-items-center">
+		<div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem">
+			<span class="visually-hidden">Cargando...</span>
+		</div>
+	</div>
+	<form
+		[formGroup]="form"
+		class="d-flex flex-column form-content-detail"
+		(submit)="onSubmit()"
+		[class.opacity-50]="loading"
+		[style.pointer-events]="loading ? 'none' : 'auto'"
+	>
+		<!-- Sección 1: Nombre y duración -->
+		<div class="card-detail-rewards">
+			<div class="card-detail-rewards__title">
+				<img src="./assets/media/icons/custom/box_gray_600.svg" alt="box_gray_600" /> Nombre y
+				duración
+			</div>
+			<div class="row g-4">
+				<div class="col-md-6">
+					<app-select
+						label="Familia de paquetes*"
+						placeholder="Seleccionar familia"
+						[formGroup]="form"
+						controlName="idFamilyPackage"
+						[options]="familyPackageOptions"
+					/>
+				</div>
+				<div class="col-md-6">
+					<app-select
+						label="Paquetes*"
+						placeholder="Seleccionar paquete"
+						[formGroup]="form"
+						controlName="idPackage"
+						[options]="packageOptions"
+					/>
+				</div>
+				<div class="col-md-6">
+					<app-input
+						type="number"
+						label="Versión*"
+						[formGroup]="form"
+						controlName="idMembershipVersion"
+					/>
+				</div>
+				<div class="col-md-6">
+					<app-input
+						type="number"
+						label="Duración*"
+						placeholder="0 meses"
+						[formGroup]="form"
+						controlName="monthsDuration"
+					/>
+				</div>
+			</div>
+		</div>
+
+		<!-- Sección 2: Precio y comisión -->
+		<div class="card-detail-rewards">
+			<div class="card-detail-rewards__title">
+				<img src="./assets/media/icons/custom/coins_gray_600.svg" alt="box_gray_600" /> Precio y
+				comisión
+			</div>
+
+			<!-- Fila 1: 2 columnas -->
+			<div class="row g-4">
+				<div class="col-md-6">
+					<app-input
+						type="number"
+						label="Precio*"
+						placeholder="S/. 00.00"
+						[formGroup]="form"
+						controlName="price"
+					/>
+				</div>
+				<div class="col-md-6">
+					<app-input
+						type="number"
+						label="N° de cuotas*"
+						placeholder="Número de cuotas"
+						[formGroup]="form"
+						controlName="numberQuotas"
+					/>
+				</div>
+			</div>
+
+			<!-- Fila 2: 3 columnas -->
+			<div class="row g-4">
+				<div class="col-md-4">
+					<app-input
+						type="number"
+						label="Precio inicial*"
+						placeholder="S/. 00.00"
+						[formGroup]="form"
+						controlName="initialPrice"
+					/>
+				</div>
+				<div class="col-md-4">
+					<app-input
+						type="number"
+						label="Precio por cuota*"
+						placeholder="S/. 00.00"
+						[formGroup]="form"
+						controlName="quotaPrice"
+					/>
+				</div>
+				<div class="col-md-2">
+					<app-input
+						type="number"
+						label="Volumen por inicial*"
+						placeholder="Ingresar volumen"
+						[formGroup]="form"
+						controlName="volume"
+					/>
+				</div>
+				<div class="col-md-2">
+					<app-input
+						type="number"
+						label="Volumen por cuota*"
+						placeholder="Ingresar volumen por cuota"
+						[formGroup]="form"
+						controlName="volumeByFee"
+					/>
+				</div>
+				<div class="col-md-4">
+					<app-input
+						type="number"
+						label="N° de cuota inicial*"
+						placeholder="Número de cuota inicial"
+						[formGroup]="form"
+						controlName="numberInitialQuote"
+					/>
+				</div>
+				<div class="col-md-4">
+					<app-input
+						type="number"
+						label="Comisión*"
+						placeholder="S/. 00.00"
+						[formGroup]="form"
+						controlName="comission"
+					/>
+				</div>
+				<div class="col-md-4">
+					<app-input
+						type="number"
+						label="N° Acciones*"
+						placeholder="Número de acciones"
+						[formGroup]="form"
+						controlName="numberShares"
+					/>
+				</div>
+			</div>
+		</div>
+
+		<!-- Sección 3: Rewards y canjes -->
+		<div class="card-detail-rewards">
+			<div class="card-detail-rewards__title">
+				<img src="./assets/media/icons/custom/convert-3d-cube_gray_600.svg" alt="box_gray_600" />
+				Rewards y canjes
+			</div>
+
+			<div class="row g-4">
+				<div class="col-md-4">
+					<app-input
+						type="number"
+						label="Total rewards a usar*"
+						placeholder="0"
+						[formGroup]="form"
+						controlName="totalRewardsToUse"
+						[textRigth]="'USD'"
+					/>
+				</div>
+				<div class="col-md-4">
+					<app-input
+						type="number"
+						label="Rewards adicionales*"
+						placeholder="0"
+						[formGroup]="form"
+						controlName="extraRewards"
+						[textRigth]="'USD'"
+					/>
+				</div>
+				<div class="col-md-4">
+					<app-input
+						type="text"
+						label="Intervalo de tiempo*"
+						placeholder="0"
+						[formGroup]="form"
+						controlName="timeInterval"
+					/>
+				</div>
+				<div class="col-md-4">
+					<app-input
+						type="number"
+						label="% Total hotel propio*"
+						placeholder="0%"
+						[formGroup]="form"
+						controlName="ownHotelTotalPercentage"
+						[textRigth]="'%'"
+					/>
+				</div>
+				<div class="col-md-4">
+					<app-input
+						type="number"
+						label="% Fines de semana hotel propio*"
+						placeholder="0%"
+						[formGroup]="form"
+						controlName="ownHotelWeekendPercentage"
+						[textRigth]="'%'"
+					/>
+				</div>
+				<div class="col-md-4">
+					<app-input
+						type="number"
+						label="% Días de semana hotel propio*"
+						placeholder="0%"
+						[formGroup]="form"
+						controlName="ownHotelWeekDayPercentage"
+						[textRigth]="'%'"
+					/>
+				</div>
+				<div class="col-md-4">
+					<app-input
+						type="number"
+						label="% Total hotel asociado*"
+						placeholder="0%"
+						[formGroup]="form"
+						controlName="otherHotelTotalPercentage"
+						[textRigth]="'%'"
+					/>
+				</div>
+				<div class="col-md-4">
+					<app-input
+						type="number"
+						label="% Fines de semana hotel asociado*"
+						placeholder="0%"
+						[formGroup]="form"
+						controlName="otherHotelWeekendPercentage"
+						[textRigth]="'%'"
+					/>
+				</div>
+				<div class="col-md-4">
+					<app-input
+						type="number"
+						label="% Días de semana hotel asociado*"
+						placeholder="0%"
+						[formGroup]="form"
+						controlName="otherHotelWeekDayPercentage"
+						[textRigth]="'%'"
+					/>
+				</div>
+			</div>
+
+			<div class="info-rewards">
+				<div>ℹ️ <span>Información importante sobre el uso de USD rewards:</span></div>
+
+				<ul class="mb-0">
+					<li>Paquete Básico: límite de uso de hasta USD $200.</li>
+					<li>Paquete Intermedio: límite de uso de hasta USD $400.</li>
+					<li>Paquete Top: límite de uso de hasta USD $800.</li>
+				</ul>
+			</div>
+		</div>
+		<!-- Botones -->
+		<div class="w-100 d-flex justify-content-end align-items-center gap-4 mt-4">
+			<button class="btn btn-outline-secondary" type="button" (click)="closeDetail()">Cancelar</button>
+			<button class="btn btn-secondary" type="submit" [disabled]="form.invalid || loading">
+				Guardar
+			</button>
+		</div>
+	</form>
+</div>

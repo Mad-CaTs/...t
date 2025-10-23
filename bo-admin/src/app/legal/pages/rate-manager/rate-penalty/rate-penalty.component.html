@@ -1,0 +1,162 @@
+<div class="container-fluid px-4 py-3">
+	<!-- Titulo y busqueda -->
+	<div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+		<h4 class="mb-0">Penalidades</h4>
+		<div class="input-group w-auto">
+			<span class="input-group-text bg-white">
+				<svg src="assets/icons/search.svg" width="16" height="16"></svg>
+			</span>
+			<input
+				type="text"
+				class="form-control"
+				placeholder="Buscar"
+				[(ngModel)]="searchTerm"
+				(ngModelChange)="applyFilters()"
+			/>
+		</div>
+	</div>
+
+	<!-- Filtros -->
+	<div class="d-flex flex-wrap align-items-center gap-3 mb-3">
+		<div>
+			<label class="form-label mb-1 fw-semibold">Tipo de documento</label>
+			<select
+				class="form-select form-select-sm"
+				[(ngModel)]="selectedTypeDoc"
+				(change)="applyFilters()"
+			>
+				<option value="">Todos</option>
+				<option value="Contrato">Contrato</option>
+				<option value="Certificado">Certificado</option>
+			</select>
+		</div>
+
+		<div>
+			<label class="form-label mb-1 fw-semibold">Solicitado en</label>
+			<select
+				class="form-select form-select-sm"
+				[(ngModel)]="selectedSolicitado"
+				(change)="applyFilters()"
+			>
+				<option value="">Todos</option>
+				<option value="Lima">Lima</option>
+				<option value="Provincia">Provincia</option>
+				<option value="Extranjero">Extranjero</option>
+			</select>
+		</div>
+
+		<button class="btn btn-outline-secondary btn-sm align-self-end mt-3" (click)="refreshFilters()">
+			Refrescar
+		</button>
+
+		<button
+			class="btn btn-secondary btn-sm align-self-end mt-3"
+			(click)="openAddTariffModal(addTariffModal)"
+		>
+			Agregar Tarifa
+		</button>
+	</div>
+
+	<!-- Tabla con app-common-table -->
+	<app-common-table
+		class="w-100"
+		[headers]="table.headers"
+		[checkedAll]="table.checkedAll"
+		[headersMinWidth]="table.headersMinWidth"
+		[noCheckboxes]="table.noCheckBoxes"
+		[noCheckboxes]="true"
+		(onCheckedAll)="table.changeCheckedAll($event)"
+	>
+		<tr *ngFor="let item of table.data" class="w-100 d-flex py-2 align-items-center">
+			<td class="w-100 text-center fs-6">{{ item.id }}</td>
+			<td class="w-100 text-center fs-6">{{ item.typeDoc }}</td>
+			<td class="w-100 text-center">{{ item.solicitado }}</td>
+			<td class="w-100 text-center">
+				<span
+					class="px-3 py-1 rounded-pill fw-semibold"
+					[ngClass]="{
+						'bg-light text-muted border': item.status === 'Sin Legalizar',
+						'bg-success text-white': item.status === 'Legalizado'
+					}"
+				>
+					{{ item.status }}
+				</span>
+			</td>
+			<td class="w-100 text-center">S/ {{ item.precio }}</td>
+			<td class="w-100 text-center">
+				<button class="btn btn-sm btn-link p-0">
+					<i class="bi bi-trash fs-3"></i>
+				</button>
+				<button class="btn btn-sm btn-link p-0">
+					<i class="bi bi-pencil fs-3"></i>
+				</button>
+			</td>
+		</tr>
+	</app-common-table>
+
+	<!-- Modal agregar tarifa  -->
+	<ng-template #addTariffModal let-modal>
+		<div class="modal-header">
+			<h5 class="modal-title">Agregar nueva tarifa</h5>
+			<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+		</div>
+
+		<div class="modal-body">
+			<form>
+				<div class="mb-3">
+					<label class="form-label">Tipo de documento</label>
+					<select class="form-select" [(ngModel)]="newTariff.typeDoc" name="typeDoc">
+						<option value="Contrato">Contrato</option>
+						<option value="Certificado">Certificado</option>
+					</select>
+				</div>
+
+				<div class="mb-3">
+					<label class="form-label">Solicitado en</label>
+					<select class="form-select" [(ngModel)]="newTariff.solicitado" name="solicitado">
+						<option value="Lima">Lima</option>
+						<option value="Provincia">Provincia</option>
+						<option value="Extranjero">Extranjero</option>
+					</select>
+				</div>
+
+				<div class="mb-3">
+					<label class="form-label">Status</label>
+					<select class="form-select" [(ngModel)]="newTariff.status" name="status">
+						<option value="Sin Legalizar">Sin Legalizar</option>
+						<option value="Legalizado">Legalizado</option>
+					</select>
+				</div>
+
+				<div class="mb-3">
+					<label class="form-label">Precio penalidad (S/)</label>
+					<input type="number" class="form-control" [(ngModel)]="newTariff.precio" name="precio" />
+				</div>
+			</form>
+		</div>
+
+		<div class="modal-footer">
+			<button class="btn btn-outline-secondary" (click)="modal.dismiss()">Cancelar</button>
+			<button class="btn btn-primary" (click)="saveTariff(modal)">Guardar</button>
+		</div>
+	</ng-template>
+
+	<!-- Modal confirmar tarifa  -->
+	<!-- <ng-template #successModal let-modal>
+		<div class="modal-body text-center py-5">
+			<h5 class="fw-bold mb-3">Tarifa agregada con éxito</h5>
+			<button class="btn btn-success" (click)="modal.close()">Aceptar</button>
+		</div>
+	</ng-template> -->
+
+	<!-- Modal Aprobado -->
+	<ng-template #successModal let-modal>
+		<div class="modal-header">
+			<h4 class="modal-title">Registro exitoso</h4>
+			<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+		</div>
+		<div class="modal-body">
+			<p>Tarifa agregada con éxito.</p>
+		</div>
+	</ng-template>
+</div>

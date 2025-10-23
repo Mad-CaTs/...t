@@ -1,0 +1,51 @@
+<div class="modal-header">
+    <h5 class="modal-title">
+        <img src="assets/Featured icon.svg" class="featured-icon" alt="icon">
+        Generar {{ documentType }}
+    </h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
+</div>
+<div class="modal-body">
+    <p class="text-muted">Por favor, valide e ingrese los datos del socio para generar el {{ documentType.toLowerCase()
+        }}.</p>
+
+    <div class="form-group">
+        <label class="form-label">Socio</label>
+        <div class="position-relative">
+            <input type="text" class="form-control" placeholder="Buscar socio" [(ngModel)]="searchTerm"
+                (input)="onSearch($event)" />
+            <i class="fas fa-search search-icon"></i>
+        </div>
+        <div class="search-results" *ngIf="users.length > 0 && showResults">
+            <div class="search-result-item" *ngFor="let user of users" (click)="selectUser(user)">
+                <div class="user-info">
+                    <span class="username">{{user.username}}</span>
+                    <span class="name">{{user.name}} {{user.lastName}}</span>
+                </div>
+                <small class="document">{{user.documentNumber}}</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="form-label">Cod. Usuario</label>
+        <input type="text" class="form-control" [value]="selectedUser?.username || ''" readonly />
+    </div>
+
+    <div class="form-group">
+        <label class="form-label">Portafolio</label>
+        <select class="form-select" [(ngModel)]="selectedPortfolio" [disabled]="!selectedUser"
+            (ngModelChange)="onPortfolioSelect($event)">
+            <option value="">Seleccione uno</option>
+            <option *ngFor="let portfolio of portfolios" [value]="portfolio.id">
+                {{ portfolio?.pack?.name }} - {{ portfolio?.pack?.description || 'Sin descripción' }}
+            </option>
+        </select>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-light" (click)="activeModal.dismiss()">Cancelar</button>
+    <button class="btn btn-primary" [disabled]="!isFormValid" (click)="onGenerate()">
+        Generar
+    </button>
+</div>

@@ -1,0 +1,40 @@
+.panel {
+	background: #fff;
+	border: 1px solid #ececec;
+	border-radius: 16px;
+	padding: 18px 16px;
+}
+
+.title {
+	font-size: 20px;
+	font-weight: 700;
+	margin: 0 0 12px;
+	color: #1d1d1f;
+}
+
+.info-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 12px;
+
+	@media (max-width: 640px) {
+		grid-template-columns: 1fr;
+	}
+}
+
+.info-item {
+	background: #f7f8fa;
+	border: 1px solid #eef0f2;
+	border-radius: 12px;
+	padding: 12px 14px;
+
+	.label {
+		font-size: 12px;
+		color: #8b97a4;
+		margin-bottom: 6px;
+	}
+	.value {
+		font-weight: 600;
+		color: #222;
+	}
+}

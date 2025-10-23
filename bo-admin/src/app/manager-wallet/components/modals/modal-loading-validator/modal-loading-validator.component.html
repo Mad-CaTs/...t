@@ -1,0 +1,58 @@
+<app-modal [title]="currentStepIndex == 0 ? 'Cargando' : ''" [hideCloseButton]="currentStepIndex == 0"
+    class="container-modal position-relative">
+    <div class="d-flex flex-column align-items-center justify-content-center gap-6 custom-blue p-4">
+
+        <span *ngIf="currentStepIndex == 0" class="fs-5 text-black text-center fw-normal w-100 position-absolute top-0">
+            Validando {{ totalWithdrawals }} registros espere un momento por favor...
+        </span>
+        <div *ngIf="currentStepIndex == 0" class="mt-10">
+            <app-loading />
+        </div>
+
+        <ng-container *ngIf="currentStepIndex == 1">
+            <div class="container-image">
+                <img src="assets/media/svg/retiro/final-process.svg">
+            </div>
+            <div class="text-start p-3 pl-custom position-absolute top-0 w-100">
+                <h2>Proceso finalizado</h2>
+                <p>Detalles de los registros procesados</p>
+            </div>
+            <div class="mt-custom">
+                <div class="d-flex flex-row align-items-end justify-content-between">
+                    <p>Retiros procesados</p>
+                    <p>{{ data?.totalRegistros }}</p>
+                </div>
+                <div class="mb-8">
+                    <div class="d-flex flex-row align-items-center justify-content-between mb-4">
+                        <div class="d-flex flex-row align-items-center gap-2">
+                            <img height="20px" width="20px" class="img-contain"
+                                src="assets/media/svg/retiro/check-basic.svg">
+                            <p class="mb-0">Retiros Pre-aprobado</p>
+                        </div>
+                        <p class="mb-0">{{data?.cantidadCorrectos}}</p>
+                    </div>
+                    <div class="d-flex flex-row align-items-center justify-content-between">
+                        <div class="d-flex flex-row align-items-center gap-2">
+                            <img height="20px" width="20px" src="assets/media/svg/retiro/delete-basic.svg">
+                            <p class="mb-0">Retiros Pre-rechazado</p>
+                        </div>
+                        <p class="mb-0">{{data?.cantidadIncorrectos}}</p>
+                    </div>
+                </div>
+
+                <div
+                    class="d-flex flex-row align-items-start justify-content-center gap-3 mt-4 mb-8 p-2 custom-light-blue">
+                    <img height="35px" width="35px" class="img-custom" src="./assets/media/icons/custom/info.svg" />
+                    <p class="text-start">
+                        Los retiros Pre-aprobados se movieron a la pestaña "Aprobados para envío".<br>
+                        Los Pre-rechazados permanecen aquí para que los revises y procedas a notificarlos.
+                    </p>
+                </div>
+
+                <button class="btn-secondary btn w-50 center-element" type="button" (click)="continuar()">
+                    Continuar
+                </button>
+            </div>
+        </ng-container>
+    </div>
+</app-modal>

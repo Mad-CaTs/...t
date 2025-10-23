@@ -1,0 +1,441 @@
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.invalid-feedback {
+  color: #dc3545;
+  font-size: 0.85em;
+  margin-top: 2px;
+  display: block;
+}
+
+input.is-invalid,
+select.is-invalid {
+  border-color: #dc3545 !important;
+  background-color: #fff0f3;
+  box-sizing: border-box;
+}
+
+.modal-container {
+  background: #ffffff;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 600px;
+  padding: 32px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+  overflow: hidden;
+
+.modal-body {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+
+  .modal-header-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .modal-icon {
+    width: 48px;
+    height: 48px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    i {
+      font-size: 20px;
+      color: #6c757d;
+    }
+  }
+
+  .modal-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0;
+    color: #1f2937;
+  }
+
+  .close-btn {
+    background: none;
+    border: none;
+    font-size: 1.25rem;
+    cursor: pointer;
+    color: #6c757d;
+  }
+}
+
+.modal-subtitle {
+  font-size: 1rem;
+  color: #6b7280;
+  margin: 0 0 24px;
+}
+
+.modal-form {
+  .select-wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+  .select-wrapper select {
+    padding-right: 36px;
+    &:focus {
+      outline: none;
+      border-color: #d1d5db;
+      box-shadow: none;
+    }
+  }
+  .select-icon {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    font-size: 1.2rem;
+    color: #6b7280;
+  }
+  .wide-select {
+    min-width: 180px;
+    width: 100%;
+  }
+  select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    height: 40px;
+    appearance: none;
+    background: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: none;
+    &:focus {
+      outline: none;
+      border-color: #d1d5db;
+      box-shadow: none;
+    }
+  }
+
+  .form-group {
+    margin-bottom: 8px;
+
+    label {
+      display: block;
+      font-size: 0.875rem;
+      margin-bottom: 6px;
+      color: #3f4c5c;
+    }
+
+    input[type='text'],
+    input[type='number'] {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      height: 40px;
+    }
+  }
+
+  .form-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 8px;
+
+    &.two-cols > div {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+
+      input[type='text'],
+      input[type='number'],
+      select {
+        width: 100%;
+        padding: 12px 16px;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        height: 40px;
+        box-sizing: border-box;
+      }
+    }
+  }
+
+  .price-wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    transition: box-shadow 0.2s;
+    box-sizing: border-box;
+  }
+  .select-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    font-size: 1rem;
+    color: #6b7280;
+    transition: color 0.2s;
+  }
+  .select-wrapper:hover .select-icon {
+    color: #006fd3;
+  }
+  .input-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+  .currency-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6b7280;
+    font-size: 0.9rem;
+    pointer-events: none;
+  }
+  .input-icon input[type='number'] {
+    width: 100% !important;
+    padding: 12px 16px 12px 2.5rem !important;
+    height: 40px !important;
+    box-sizing: border-box !important;
+  }
+  .input-icon input[type='number']::placeholder {
+    color: #6b7280;
+    opacity: 1;
+  }
+
+  input[type='number'] {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    height: 40px;
+    box-sizing: border-box;
+    appearance: auto;
+    -webkit-appearance: auto;
+    -moz-appearance: auto;
+  }
+  input.is-invalid,
+  select.is-invalid {
+    border-color: #dc3545 !important;
+    box-shadow: 0 0 0 0.2rem rgba(220,53,69,0.25) !important;
+    outline: none;
+  }
+  input[type='text'],
+  select {
+    &:focus {
+      outline: none;
+      border-color: #d1d5db;
+      box-shadow: none;
+    }
+  }
+}
+
+.zona-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 10px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+  .zona-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+
+    strong {
+      font-size: 1rem;
+      color: #111827;
+    }
+
+    .zona-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      .toggle-btn {
+        background: none;
+        border: none;
+        padding: 4px;
+        color: #6b7280;
+        cursor: pointer;
+        i {
+          font-size: 1rem;
+        }
+        &:hover {
+          background: #e5e7eb;
+          color: #111827;
+          border-radius: 4px;
+        }
+      }
+
+      .remove-btn {
+        background: #ffffff;
+        border: none;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        color: #6b7280;
+        cursor: pointer;
+        &:hover {
+          background: #e5e7eb;
+          color: #111827;
+        }
+        i {
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+
+  .zona-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    padding-left: 8px;
+  }
+}
+
+.add-zona-btn {
+  display: block;
+  margin: 16px 0;
+
+    button {
+      background: none;
+      border: 2px dashed #ff7a00;
+    color: #ff7a00; 
+    width: 100%;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    i {
+      font-size: 1rem;
+      color: #ff7a00;
+    }
+
+    &:hover {
+      background-color: #fff7ed;
+    }
+  }
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 10px;
+
+  .btn {
+    min-width: 120px;
+    height: 40px;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  .btn-outline {
+    background: #ffffff;
+    border: 1px solid #d1d5db;
+    color: #6b7280;
+    transition: background 0.2s;
+
+    &:hover {
+      background: #f3f4f6;
+    }
+  }
+
+  .btn-primary {
+    background: #ff7a00;
+    border: none;
+    color: #ffffff;
+    transition: background 0.2s;
+
+    &:hover {
+      background: #0084ff;
+    }
+
+    &:active {
+      background: #006fd3;
+    }
+  }
+}
+
+:host-context(.night-mode) {
+  .modal-header {
+    background-color: #ffffff !important;
+    .modal-title {
+      color: rgba(0, 0, 0, 0.7) !important;
+    }
+  }
+  .modal-container {
+    background: #ffffff !important;
+  }
+  .modal-form label {
+    color: #3f4c5c !important;
+  }
+  .modal-form input,
+  .modal-form select {
+    background: #ffffff !important;
+    color: #111827 !important;
+    border: 1px solid #d1d5db !important;
+  }
+  .zona-card {
+    background: #ffffff !important;
+    color: #111827 !important;
+    border: 1px solid #e5e7eb !important;
+  }
+  .zona-card label,
+  .zona-card strong {
+    color: #111827 !important;
+  }
+  .add-zona-btn button {
+    background: #fff8f0 !important;
+    color: #ff7a00 !important;
+    border: 2px dashed #ff7a00 !important;
+  }
+  .modal-body {
+    background: #ffffff !important;
+  }
+}

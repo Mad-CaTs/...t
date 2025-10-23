@@ -1,0 +1,64 @@
+<form [formGroup]="form" class="card card-xxl-stretch mb-5 mb-xl-8 p-5">
+
+  <div class="row align-items-center justify-content-between g-3 mb-3">
+    <div class="col">
+      <h1 class="m-0">Gestor de beneficiarios</h1>
+    </div>
+    <div class="col-auto">
+      <button type="button" class="btn btn-warning px-4" (click)="openCreateBeneficiary()" [disabled]="!currentUserId">
+        Agregar beneficiario
+      </button>
+    </div>
+  </div>
+
+  <div class="row g-3 align-items-end position-relative">
+    <div class="col-12 col-lg-6 position-relative">
+      <app-input
+        label="Buscar usuario"
+        iconRigth="bi bi-search"
+        placeholder="Ingrese su nombre o usuario"
+        [formGroup]="form"
+        controlName="search">
+      </app-input>
+
+      <ul *ngIf="showSuggestions" class="list-group suggestions-dropdown">
+        <li *ngFor="let u of suggestions"
+            class="list-group-item list-group-item-action"
+            (click)="selectUser(u)">
+          {{ u?.fullName ?? (u?.name + ' ' + (u?.lastName ?? '')) }} — @{{ u?.username ?? u?.userName }}
+        </li>
+      </ul>
+    </div>
+
+    <div class="col-12 col-lg-4">
+      <app-select
+        label="Membresía"
+        placeholder="Selecciona"
+        [formGroup]="form"
+        controlName="membresias"
+        [options]="optMemberships">
+      </app-select>
+    </div>
+
+    <div class="col-12 col-lg-auto">
+      <button class="btn btn-outline-warning px-4" type="button"
+              [disabled]="buttonLoading"
+              (click)="onSearch()">
+        <i *ngIf="buttonLoading" class="bi bi-arrow-repeat me-2"></i>
+        Buscar
+      </button>
+    </div>
+  </div>
+
+  <app-table-manager-beneficiaries
+    class="mt-4"
+    [dataBody]="beneficiaries"
+    [pageIndex]="page"
+    [pageSize]="size"
+    [length]="totalRecords"
+    (pageChange)="onPageChange($event)"
+    (refresh)="onRefresh($event)"
+    (edit)="onEdit($event)"
+    (remove)="onRemove($event)">
+</app-table-manager-beneficiaries>
+</form>

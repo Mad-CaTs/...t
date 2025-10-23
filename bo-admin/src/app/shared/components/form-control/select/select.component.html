@@ -1,0 +1,22 @@
+<label [for]="controlName" class="fs-6 text-muted fw-bold" *ngIf="label">{{ label }}</label>
+<!-- 		
+				[ngClass]="{ 'form-select-solid': useSolidBg }"
+
+ -->
+<div [formGroup]="formGroup">
+	<select
+		[id]="controlName"
+		[attr.aria-label]="label"
+		class="form-select"
+		[ngClass]="customClass"
+		[formControlName]="controlName"
+		[name]="controlName"
+		(change)="onSelectionChange($event)"
+	>
+		<option *ngIf="placeholder" [ngValue]="null" disabled selected hidden>{{ placeholder }}</option>
+		<option *ngFor="let opt of options" [ngValue]="opt.id">
+			{{ opt.text }}
+		</option>
+	</select>
+</div>
+<div class="text-danger" *ngIf="existErrors">{{ formValue | inputError }}</div>

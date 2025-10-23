@@ -1,0 +1,103 @@
+<app-modal [title]="title" *ngIf="!rejectionFlag">
+    <form class="d-flex flex-column gap-6 w-100" [formGroup]="form">
+        <div class="d-flex flex-column flex-md-row gap-2 gap-md-4 w-100">
+            <div class="d-flex flex-column w-50">
+                <app-input-date class="w-100" label="Fecha de operación *" [formGroup]="form" controlName="date"
+                    placeholder="DD/MM/YYYY">
+                </app-input-date>
+            </div>
+            <div class="d-flex flex-column w-50">
+                <app-input [formGroup]="form" controlName="number" label="Número de operación *" type="text"
+                    placeholder="00000000" buttons="true" class="w-100"></app-input>
+            </div>
+        </div>
+
+        <div class="d-flex flex-column flex-md-row gap-2 gap-md-4 w-100">
+            <div class="d-flex flex-column w-50">
+                <app-input [formGroup]="form" controlName="amount" label="Monto a percibir *" type="dollar"
+                    placeholder="S/. 0" buttons="true" class="w-100"></app-input>
+            </div>
+            <div class="d-flex flex-column w-50">
+                <app-input [formGroup]="form" controlName="currency" label="Moneda *" type="text" placeholder="Moneda"
+                    buttons="true" class="w-100"></app-input>
+            </div>
+        </div>
+        <app-input [formGroup]="form" controlName="documentType" label="Tipo de documento *" type="text"
+            placeholder="Documento" buttons="true" class="w-100"></app-input>
+        <app-textarea [formGroup]="form" controlName="noteAditional" label="Nota adicional *"
+            placeholder="Ingresar el mensaje" class="w-100"></app-textarea>
+
+        <app-textarea *ngIf="this.conciliation?.statusId === 4 || this.conciliation?.conciliationStateId === 4"
+            [formGroup]="conciliationRejectionForm" controlName="rentExemptionReasonDetail" label="Razón del rechazo *"
+            placeholder="Ingresar el mensaje" class="w-100"></app-textarea>
+
+        <label class="fs-6 text-muted fw-bold">
+            Archivo del comprobante *
+        </label>
+
+        <div class="file-preview-container mb-4">
+            <div *ngIf="isImageFile; else nonImageFile">
+                <div class="file-item">
+                    <img [src]="fileUrl" alt="Preview" class="file-icon img-fluid">
+                    <div *ngFor="let item of conciliation.statementFiles">
+                        <a (click)="openTab(item)" class="file-link">
+                            Descargar archivo
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <ng-template #nonImageFile>
+                <div *ngFor="let item of conciliation.statementFiles" class="file-item">
+                    <img src="../../../../../assets/media/svg/files/folder-document.svg" alt="File Icon"
+                        class="file-icon img-fluid" />
+                    <a (click)="openTab(item)" class="file-link">
+                        Descargar archivo
+                    </a>
+                </div>
+            </ng-template>
+        </div>
+
+        <div class="d-flex flex-row gap-6 justify-content-center mt-5" *ngIf="!disable">
+            <button class="btn btn-outline-secondary" type="button" (click)="onInvalidate()">
+                Rechazar
+            </button>
+            <button class="btn btn-secondary" type="button" (click)="onValidate()"
+                [disabled]="form.invalid || buttonApproveLoading">
+                <div class="fixed-width-button">
+                    <div *ngIf="buttonApproveLoading">
+                        <span class="spinner-border spinner-border-sm align-middle text-center ms-2"></span>
+                    </div>
+                    <div *ngIf="!buttonApproveLoading">
+                        <span>Aceptar</span>
+                    </div>
+                </div>
+            </button>
+        </div>
+    </form>
+</app-modal>
+
+<app-modal [title]="title" *ngIf="rejectionFlag">
+    <form class="d-flex flex-column gap-6 w-100" [formGroup]="conciliationRejectionForm">
+        <select class="form-select form-select-solid" formControlName="statementReasonId">
+            <option value="">Seleccione una opción</option>
+            <option *ngFor="let opt of motives" [value]="opt.id">
+                {{ opt.description }}
+            </option>
+        </select>
+        <app-textarea [formGroup]="conciliationRejectionForm " controlName="rentExemptionReasonDetail"
+            label="Detalle del motivo *" placeholder="Detalle adicional" class="w-100"></app-textarea>
+        <div class="d-flex flex-row gap-6 justify-content-center mt-5">
+            <button class="btn btn-secondary" type="button" (click)="onRejection()"
+                [disabled]="conciliationRejectionForm.invalid || buttonRejectionLoading">
+                <div class="fixed-width-button">
+                    <div *ngIf="buttonRejectionLoading">
+                        <span class="spinner-border spinner-border-sm align-middle text-center ms-2"></span>
+                    </div>
+                    <div *ngIf="!buttonRejectionLoading">
+                        <span>Confirmar</span>
+                    </div>
+                </div>
+            </button>
+        </div>
+    </form>
+</app-modal>

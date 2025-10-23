@@ -48,7 +48,9 @@ public class PaymentController {
                 HttpStatus.OK,
                 paymentService.correctRejectedPayment(
                         paymentId,
-                        request.getVoucherFile()
+                        request.getVoucherFile(),
+                        request.getOperationNumber(),
+                        request.getNote()
                 ),
                 true
         );

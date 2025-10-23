@@ -1,0 +1,12 @@
+<app-modal [title]="title">
+    <div class="d-flex flex-column w-full gap-6 align-items-center">
+        <span class="text-black fw-medium fs-7 text-center w-100">{{ description }}</span>
+
+        <img *ngIf="showImage && voucherUrl" [src]="voucherUrl" class="w-100" alt="Payment photo" />
+
+        <div class="d-flex gap-3 w-100 justify-content-center">
+            <button class="btn btn-outline-secondary" type="button" (click)="modal.dismiss()">Volver</button>
+            <button class="btn btn-secondary" type="button" (click)="onConfirm.emit()">Confirmar</button>
+        </div>
+    </div>
+</app-modal>

@@ -1,0 +1,35 @@
+<app-modal [title]="''">
+  <div class="mm-titles">
+    <p class="mm-subtitle">Fecha</p>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="apply()">
+    <div class="form-row" style="display:flex; gap:12px;">
+      <div class="form-group" style="flex:1;">
+        <label class="small">Fecha de inicio</label>
+        <input type="date"
+               class="form-control"
+               formControlName="start"
+               [class.is-invalid]="start.touched && start.invalid">
+      </div>
+
+      <div class="form-group" style="flex:1;">
+        <label class="small">Fecha de fin</label>
+        <input type="date"
+               class="form-control"
+               formControlName="end"
+               [class.is-invalid]="(end.touched && end.invalid) || hasOrderError">
+        <div *ngIf="hasOrderError" class="invalid-feedback" style="display:block">
+          La fecha fin debe ser mayor o igual a la fecha inicio.
+        </div>
+      </div>
+    </div>
+
+    <div class="actions" style="display:flex; justify-content:flex-end; gap:8px; margin-top:12px;">
+      <button type="button" class="btn btn-default" (click)="cancel()">Cancelar</button>
+      <button type="submit" class="btn btn-default btn-sm" [disabled]="form.invalid || hasOrderError">
+        Aplicar Rango
+      </button>
+    </div>
+  </form>
+</app-modal>

@@ -1,0 +1,32 @@
+.spinner-container {
+	align-items: center;
+	justify-content: center;
+
+	&.d-inline-flex {
+		display: inline-flex !important;
+	}
+
+	.spinner-text {
+		font-size: 0.875rem;
+		font-weight: 500;
+	}
+}
+
+.spinner-border-lg {
+	width: 2.5rem;
+	height: 2.5rem;
+}
+
+// Animación personalizada para suavizar el spinner
+.spinner-border {
+	animation: spinner-border 1s linear infinite;
+}
+
+@keyframes spinner-border {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}

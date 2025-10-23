@@ -1,0 +1,54 @@
+<form
+	[formGroup]="eventForm"
+	(ngSubmit)="onSubmit()"
+	(keydown.enter)="onEnterKey($event)"
+	class="form-event-card flex flex-column gap-6 p-6 bg-white w-100"
+>
+	<h2>{{ editMode ? 'Editar evento' : 'Agregar evento' }}</h2>
+	<div class="toolbar-card">
+		<div class="content-wrapper">
+			<!-- Columna izquierda -->
+			<div class="form-column">
+				<app-event-form
+					[formGroup]="eventForm"
+					[flyerUrl]="flyerUrl"
+					#eventFormComponent
+				></app-event-form>
+			</div>
+
+			<!-- Columna derecha -->
+			<div class="preview-column">
+				<div class="preview-card-outer">
+					<div class="preview-title">Preview</div>
+					<app-event-image-preview
+						[flyer]="eventForm.get('flyer')?.value"
+						[isMainEvent]="eventForm.get('isMain')?.value"
+					></app-event-image-preview>
+					<app-event-summary-card
+						[event]="eventForm.value"
+						[eventTypeName]="eventTypeName"
+						[entryTypeName]="entryTypeName"
+					></app-event-summary-card>
+				</div>
+			</div>
+		</div>
+
+		<!-- Botones de acción -->
+		<div class="form-actions">
+			<button type="button" class="btn-cancel" (click)="onCancel()">Cancelar</button>
+			<button type="submit" class="btn-submit">
+				{{ editMode ? 'Guardar cambios' : 'Guardar evento' }}
+			</button>
+		</div>
+	</div>
+</form>
+
+<!-- Modal de notificación -->
+<div class="notify-wrapper" *ngIf="showNotify">
+	<app-modal-notify
+		[title]="notifyTitle"
+		[message]="notifyMessage"
+		[iconType]="notifyType"
+		(closed)="onNotifyClose()"
+	></app-modal-notify>
+</div>

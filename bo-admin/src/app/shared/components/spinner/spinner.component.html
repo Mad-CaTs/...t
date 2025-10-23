@@ -1,0 +1,5 @@
+<div class="spinner-container" [class.d-inline-flex]="inline" [class.d-flex]="!inline">
+	<div [class]="spinnerClasses" role="status" aria-hidden="true"></div>
+	<span *ngIf="showText && text" class="spinner-text ms-2">{{ text }}</span>
+	<span *ngIf="showText && !text" class="spinner-text ms-2">Cargando...</span>
+</div>

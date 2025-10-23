@@ -1,0 +1,44 @@
+<app-modal [title]="title">
+	<div *ngIf="data as d; else noData">
+		<!-- Caso 2: Provincia (Perú) -->
+		<ng-container *ngIf="d.userLocalUbic === 2">
+			<p class="d-flex gap-2">
+				<strong>Departamento:</strong>
+				<span>{{ d.direccionOtroDepartamento || '-' }}</span>
+			</p>
+			<p class="d-flex gap-2">
+				<strong>Provincia:</strong>
+				<span>{{ d.direccionOtroProvincia || '-' }}</span>
+			</p>
+			<p class="d-flex gap-2">
+				<strong>Distrito:</strong>
+				<span>{{ d.direccionOtroDistrito || '-' }}</span>
+			</p>
+			<p class="d-flex gap-2">
+				<strong>Dirección:</strong>
+				<span>{{ d.direccionOtroDetalle || '-' }}</span>
+			</p>
+			<p class="d-flex gap-2">
+				<strong>País:</strong>
+				<span>{{ d.direccionOtroPaisText || '-' }}</span>
+			</p>
+		</ng-container>
+
+		<!-- Caso 3: Extranjero -->
+		<ng-container *ngIf="d.userLocalUbic === 3">
+			<p class="d-flex gap-2">
+				<strong>País:</strong>
+				<span>{{ d.direccionOtroPaisText || '-' }}</span>
+			</p>
+
+			<p class="d-flex gap-2">
+				<strong>Dirección :</strong>
+				<span>{{ d.userLocal || '-' }}</span>
+			</p>
+		</ng-container>
+	</div>
+
+	<ng-template #noData>
+		<p>No hay datos disponibles.</p>
+	</ng-template>
+</app-modal>

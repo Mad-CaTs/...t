@@ -1,0 +1,71 @@
+<div class="create-event-card flex flex-column gap-6 p-6 bg-white w-100">
+  <h2 class="title">Crear zonas y tarifas</h2>
+
+  <!-- Notification on error -->
+  <app-modal-notify
+    *ngIf="showNotify"
+    [title]="notifyTitle"
+    [message]="notifyMessage"
+    [iconType]="notifyType"
+    (closed)="showNotify = false"
+  ></app-modal-notify>
+  <!-- Loading indicator replaced with template -->
+
+  <div class="toolbar-card">
+    <app-list-toolbar
+      placeholder="Ingrese lo que necesita buscar..."
+      actionText="Agregar zonas y tarifas"
+      [typeLabel]="'Tipo de zona'"
+      (search)="onSearch($event)"
+      (action)="onAdd()"
+    ></app-list-toolbar>
+
+    <!-- Mostrar mensaje de countdown si está activo -->
+    <div *ngIf="isCountdownActive" class="text-muted mt-2">
+      {{ clearCountdownText }}
+    </div>
+
+    <!-- Table or empty state rendered when not loading; else show spinner -->
+    <ng-container *ngIf="!loading; else loadingTemplate">
+      <ng-container *ngIf="filteredZones.length > 0; else emptyTemplate">
+        <app-grouped-table
+          [columns]="['Item', 'Nombre del evento', 'Zona', 'Capacidad', 'PrecioUSD', 'PrecioSoles']"
+          [keys]="['item', 'eventName', 'zoneName', 'capacity', 'price', 'priceSoles']"
+          [groupedData]="filteredZones"
+          [columnWidths]="columnWidths"
+          [showEdit]="false"
+          (editGroup)="onEdit($event)"
+          (delete)="onDelete($event)"
+        ></app-grouped-table>
+      </ng-container>
+      <ng-template #emptyTemplate>
+        <app-empty-state message="No data"></app-empty-state>
+      </ng-template>
+    </ng-container>
+  </div>
+    <!-- Spinner template -->
+    <ng-template #loadingTemplate>
+      <div class="d-flex justify-content-center align-items-center py-5">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Cargando zonas...</span>
+        </div>
+      </div>
+    </ng-template>
+
+  <app-modal-zone-form
+    *ngIf="showModal"
+    [eventos]="modalEvents"
+    [tiposEntrada]="tiposEntrada"
+    [tiposAsiento]="tiposAsiento"
+    (close)="onModalClose()"
+    (save)="onModalSave($event)"
+  ></app-modal-zone-form>
+
+  <app-modal-confirm-delete
+    *ngIf="showDeleteModal"
+    [title]="'¿Eliminar zona?'"
+    [message]="'¿Estás seguro que deseas eliminar la zona: ' + selectedToDelete?.zoneName + '?'"
+    (confirm)="onConfirmDelete()"
+    (cancel)="onCancelDelete()"
+  ></app-modal-confirm-delete>
+</div>

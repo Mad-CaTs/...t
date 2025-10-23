@@ -1,0 +1,162 @@
+<div class="modal-backdrop" *ngIf="show">
+	<div class="modal-container" role="dialog" aria-modal="true" (click)="$event.stopPropagation()">
+		<!-- Header -->
+		<header class="modal-header">
+			<div class="modal-header-content">
+				<div class="modal-icon" *ngIf="icon">
+					<i [class]="icon"></i>
+				</div>
+				<div class="modal-titles">
+					<h3 class="modal-title">{{ title }}</h3>
+					<p class="modal-subtitle" *ngIf="subtitle">{{ subtitle }}</p>
+				</div>
+			</div>
+			<button type="button" class="close-btn" (click)="onClose()" aria-label="Cerrar">
+				<i class="bi bi-x-lg"></i>
+			</button>
+		</header>
+
+		<!-- Body -->
+		<div class="modal-body">
+			<!-- Left: lista de pares clave-valor -->
+			<section
+				class="modal-info"
+				[class.lined]="appearance === 'lines'"
+				[style.--info-columns]="columns"
+			>
+				<div
+					class="info-item"
+					*ngFor="let it of items; let i = index; trackBy: trackByIndex"
+					[class.with-hint]="!!it.hint"
+				>
+					<div class="row">
+						<div class="label">{{ it.label }}</div>
+
+						<!-- Si hay badge -->
+						<div class="value" *ngIf="it.badge; else notBadge">
+							<span class="badge" [ngClass]="it.badge">{{ formatValue(it.value) }}</span>
+						</div>
+
+						<!-- Valor normal -->
+						<ng-template #notBadge>
+							<div class="value" [ngSwitch]="appearance">
+								<!-- Apariencia en LÍNEAS -->
+								<ng-container *ngSwitchCase="'lines'">
+									<span class="text-value">{{ formatValue(it.value) }}</span>
+									<span class="copy-wrapper" *ngIf="it.copy">
+										<button
+											type="button"
+											class="copy-btn"
+											(click)="onCopyIndex(i, formatValue(it.value))"
+											[attr.aria-label]="'Copiar ' + it.label"
+											title="Copiar"
+										>
+											<i class="bi bi-clipboard"></i>
+										</button>
+										<div class="copy-pop" *ngIf="copyNoticeIndex === i">
+											Copiado en el portapapeles
+										</div>
+									</span>
+								</ng-container>
+
+								<!-- Apariencia en PÍLDORAS -->
+								<ng-container *ngSwitchDefault>
+									<span class="pill" [class.tight]="tightValues">{{
+										formatValue(it.value)
+									}}</span>
+									<span class="copy-wrapper" *ngIf="it.copy">
+										<button
+											type="button"
+											class="copy-btn"
+											(click)="onCopyIndex(i, formatValue(it.value))"
+											[attr.aria-label]="'Copiar ' + it.label"
+											title="Copiar"
+										>
+											<i class="bi bi-clipboard"></i>
+										</button>
+										<div class="copy-pop" *ngIf="copyNoticeIndex === i">
+											Copiado en el portapapeles
+										</div>
+									</span>
+								</ng-container>
+							</div>
+						</ng-template>
+					</div>
+
+					<div class="hint" *ngIf="it.hint">{{ it.hint }}</div>
+				</div>
+			</section>
+
+			<!-- Right: preview -->
+			<aside class="modal-preview" *ngIf="showPreview">
+				<p class="preview-title" *ngIf="previewTitle">{{ previewTitle }}</p>
+
+				<div class="preview-box">
+					<div class="preview-toolbar" *ngIf="previewSrc">
+						<button (click)="zoomOut()" [disabled]="zoom <= 1">
+							<i class="bi bi-dash"></i>
+						</button>
+						<span>{{ zoom * 100 | number : '1.0-0' }}%</span>
+						<button (click)="zoomIn()" [disabled]="zoom >= 2">
+							<i class="bi bi-plus"></i>
+						</button>
+					</div>
+
+					<div
+						#canvas
+						class="preview-canvas"
+						(mousedown)="startPan($event)"
+						(mousemove)="onPan($event)"
+						(mouseup)="endPan()"
+						(mouseleave)="endPan()"
+					>
+						<img
+							#imgEl
+							*ngIf="previewSrc; else emptyPreview"
+							[src]="previewSrc!"
+							[alt]="previewAlt"
+							draggable="false"
+							(load)="onImgLoad()"
+							[style.transform]="
+								'scale(' + zoom + ') translate(' + translateX + 'px,' + translateY + 'px)'
+							"
+							[style.cursor]="zoom > 1 ? (isPanning ? 'grabbing' : 'grab') : 'default'"
+						/>
+						<ng-template #emptyPreview>
+							<div class="preview-empty">{{ previewEmptyText }}</div>
+						</ng-template>
+					</div>
+				</div>
+			</aside>
+		</div>
+
+		<!-- Footer -->
+		<footer class="modal-footer">
+			<button
+				*ngIf="secondaryLabel"
+				type="button"
+				class="btn btn-outline"
+				(click)="onSecondary()"
+				[disabled]="secondaryDisabled"
+			>
+				{{ secondaryLabel }}
+			</button>
+
+			<button
+				*ngIf="primaryLabel"
+				type="button"
+				class="btn btn-primary"
+				(click)="onPrimary()"
+				[disabled]="primaryDisabled || primaryLoading"
+			>
+				<ng-container *ngIf="!primaryLoading; else loadingTpl">
+					{{ primaryLabel }}
+				</ng-container>
+			</button>
+
+			<ng-template #loadingTpl>
+				<span class="spinner"></span>
+			</ng-template>
+		</footer>
+	</div>
+</div>

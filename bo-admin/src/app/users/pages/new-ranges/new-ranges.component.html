@@ -1,0 +1,142 @@
+<div class="d-flex flex-column gap-6 p-6 bg-white w-100">
+	<h1 class="fs-1 text-black fw-medium m-0">Reportes de Nuevos Rangos</h1>
+	<form [formGroup]="form" class="d-flex w-100 flex-column gap-6">
+		<h4 class="fs-5 text-black fw-normal m-0">Buscador</h4>
+		<div class="d-flex w-100 gap-6">
+			<div class="w-20">
+				<app-select
+					label="Fecha de ciclo:"
+					placeholder="dd/mm/yyyy al dd/mm/yyyy"
+					[options]="fechacOpt"
+					[formGroup]="form"
+					controlName="cicles"
+					class="w-100 select-fecha"
+				>
+				</app-select>
+			</div>
+			<div class="w-20">
+				<app-select
+					label="Tipos:"
+					placeholder="Selecciona una opción"
+					[options]="typesOpt"
+					[formGroup]="form"
+					controlName="type"
+					class="w-100"
+					(change)="onTypeChange($event)"
+				>
+				</app-select>
+			</div>
+		</div>
+	</form>
+
+	<div class="position-relative w-100">
+		<div class="d-flex justify-content-between mt-5">
+			<table-pagination
+				class="w-100"
+				[count]="totalRecords"
+				[refresh]="refresh"
+				[itemsPerPage]="10"
+				(pageChanged)="onPageChange($event)"
+			>
+			</table-pagination>
+		</div>
+
+		<div class="d-flex gap-4 position-absolute top-0 start-0">
+			<div>
+				<select
+					[disabled]="!table.data.length"
+					class="form-select"
+					(change)="onOptionChange($event)"
+					[ngClass]="{ 'cursor-pointer': isButtonEnabled() }"
+					style="border: 1px solid orange"
+				>
+					<option value="" selected disabled class="text-orange">Exportar data</option>
+					<option value="compuesto">Nuevo rango compuesto</option>
+					<option value="residual">Nuevo rango residual</option>
+				</select>
+			</div>
+		</div>
+	</div>
+	<app-common-table
+		class="w-100"
+		[headers]="table.headers"
+		[checkedAll]="table.checkedAll"
+		[headersMinWidth]="table.headersMinWidth"
+		[headersMaxWidth]="table.headersMaxWidth"
+		[firstEmpty]="true"
+		[noCheckboxes]="table.noCheckBoxes"
+		(onCheckedAll)="table.changeCheckedAll($event)"
+	>
+		<div *ngIf="!loading">
+			<tr class="w-100 d-flex py-2 align-items-center" *ngFor="let item of table.data; let i = index">
+				<td
+					class="w-100 text-gray-900 text-center fs-6"
+					[ngStyle]="{
+						'min-width.px': table.headersMinWidth[0],
+						'max-width.px': table.headersMaxWidth[0]
+					}"
+				>
+					{{ i + 1 }}
+				</td>
+				<td
+					class="w-100 text-gray-900 text-center fs-6"
+					[ngStyle]="{
+						'min-width.px': table.headersMinWidth[1],
+						'max-width.px': table.headersMaxWidth[1]
+					}"
+				>
+					{{ item.name }}
+				</td>
+				<td
+					class="w-100 text-gray-900 text-center fs-6"
+					[ngStyle]="{
+						'min-width.px': table.headersMinWidth[2],
+						'max-width.px': table.headersMaxWidth[2]
+					}"
+					style="overflow-wrap: break-word; word-break: normal; white-space: normal"
+				>
+					{{ item.lastName }}
+				</td>
+				<td
+					class="w-100 text-gray-900 text-center fs-6"
+					[ngStyle]="{
+						'min-width.px': table.headersMinWidth[3],
+						'max-width.px': table.headersMaxWidth[3]
+					}"
+					style="overflow-wrap: break-word; word-break: normal; white-space: normal"
+				>
+					{{ item.phoneNumber }}
+				</td>
+				<td
+					class="w-100 text-gray-900 text-center fs-6"
+					[ngStyle]="{
+						'min-width.px': table.headersMinWidth[4],
+						'max-width.px': table.headersMaxWidth[4]
+					}"
+					style="overflow-wrap: break-word; word-break: normal; white-space: normal"
+				>
+					{{ item.rangeName }}
+				</td>
+				<td
+					class="w-100 text-gray-900 text-center fs-6"
+					[ngStyle]="{
+						'min-width.px': table.headersMinWidth[5],
+						'max-width.px': table.headersMaxWidth[5]
+					}"
+					style="overflow-wrap: break-word; word-break: normal; white-space: normal"
+				>
+					{{ item.isActive == 1 ? 'Activo' : item.isActive == 2 ? 'Procesando' : 'Inactivo' }}
+				</td>
+			</tr>
+		</div>
+		<tr *ngIf="!loading && table.data.length === 0">
+			<td colspan="6" class="text-center text-gray-500 py-3">
+				No se encontraron datos con los filtros aplicados
+			</td>
+		</tr>
+
+		<div class="d-flex flex-row gap-6 justify-content-center" *ngIf="loading">
+			<span class="spinner-border spinner-border-lg align-middle text-center ms-2"></span>
+		</div>
+	</app-common-table>
+</div>

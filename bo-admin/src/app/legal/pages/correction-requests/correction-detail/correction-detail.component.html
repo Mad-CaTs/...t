@@ -1,0 +1,207 @@
+<div class="d-flex flex-column">
+    <div class="d-flex gap-3 mb-4">
+        <button class="btn btn-document d-inline-flex align-items-center" (click)="viewDocument()">
+            <span class="button-text">Ver documento adjunto</span>
+            <span [inlineSVG]="'assets/money-3.svg'" class="svg-icon svg-icon-2 me-2"></span>
+        </button>
+        <ng-container *ngIf="!isFromHistory">
+            <button class="btn btn-warning d-inline-flex align-items-center" (click)="correctDocument()">
+                <span class="button-text">Corregir</span>
+                <span [inlineSVG]="'assets/Alert.svg'" class="svg-icon svg-icon-2 me-2"></span>
+            </button>
+        </ng-container>
+        <ng-container *ngIf="isFromHistory">
+            <button class="btn btn-success d-inline-flex align-items-center" (click)="acceptCorrection()">
+                <span class="button-text">Aceptar</span>
+                <span [inlineSVG]="'assets/check-icon.svg'" class="svg-icon svg-icon-2 me-2"></span>
+            </button>
+            <button class="btn btn-danger d-inline-flex align-items-center" (click)="rejectCorrection()">
+                <span class="button-text">Rechazar</span>
+                <span [inlineSVG]="'./assets/icons/close.svg'" class="svg-icon svg-icon-2 me-2"></span>
+            </button>
+        </ng-container>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body p-6">
+                    <div class="d-flex align-items-center mb-2">
+                        <i class="fas fa-arrow-left text-gray-500 cursor-pointer me-3" (click)="goBack()"></i>
+                        <h2 class="subtitle">Detalles de Corrección</h2>
+                    </div>
+                    <p class="description">Se detalla el contenido de la solicitud.</p>
+
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="symbol symbol-35px me-3">
+                            <span [inlineSVG]="'assets/user.svg'" class="svg-icon svg-icon-2"></span>
+                        </div>
+                        <div>
+                            <div class="user-name">{{ requestData.partnerName }}</div>
+                            <div class="date">
+                                {{ requestData.requestDate | date : 'dd/MM/yyyy - hh:mm a' }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="status-label">Status:</label>
+                        <span class="badge-correction" [ngClass]="getStatusBadgeClass(requestData.status)">
+                            {{ getStatusText(requestData.status) }}
+                        </span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label">Campo de texto</label>
+                        <div class="text-box">
+                            {{ requestData.requestMessage }}
+                        </div>
+                    </div>
+
+                    <div *ngIf="getAdditionalFiles().length > 0" class="mb-4">
+                        <label class="evidence-label">Documentos adjuntos:</label>
+                        <div *ngFor="let file of getAdditionalFiles(); let last = last" class="evidence-box"
+                            [class.mb-2]="!last" (click)="viewFile(file)">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center">
+                                    <i [class]="getFileIcon(file.fileName)" class="text-success"></i>
+                                    <div class="ms-3">
+                                        <div>{{ file.fileName }}</div>
+                                        <small class="text-muted">Documento adicional</small>
+                                    </div>
+                                </div>
+                                <span class="text-muted">Ver documento</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body p-0">
+                    <iframe *ngIf="mainDocumentUrl" [src]="mainDocumentUrl | safe : 'resourceUrl'" class="pdf-frame"
+                        frameborder="0"></iframe>
+                    <div *ngIf="!mainDocumentUrl" class="p-4 text-center text-muted">
+                        No hay documento principal para mostrar
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #documentModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Documento de Identidad</h4>
+        <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
+    </div>
+    <div class="modal-body">
+        <p class="text-muted mb-4">
+            Revise y valide el documento de identidad que el socio ha subido.
+        </p>
+
+        <div class="mb-4">
+            <label class="form-label">Nombres</label>
+            <input type="text" class="form-control" [value]="requestData.partnerName || ''" readonly />
+        </div>
+
+        <div class="mb-4">
+            <label class="form-label">Apellidos</label>
+            <input type="text" class="form-control" [value]="requestData.username || ''" readonly />
+        </div>
+
+        <div class="mb-4">
+            <label class="form-label">Tipo de documento</label>
+            <input type="text" class="form-control" [value]="requestData.identityDocument || ''" readonly />
+        </div>
+
+        <div class="mb-4">
+            <label class="form-label">Número de documento</label>
+            <input type="text" class="form-control" [value]="requestData.documentNumber || ''" readonly />
+        </div>
+
+        <div class="text-center">
+            <img [src]="mainDocumentUrl" class="img-fluid" alt="Documento de identidad" />
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Volver')">Volver</button>
+        <button type="button" class="btn btn-primary" (click)="modal.close('Observar')">
+            Observar
+        </button>
+    </div>
+</ng-template>
+
+<ng-template #observationModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">{{ modal.componentInstance?.title || 'Observar Documento' }}</h4>
+        <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
+    </div>
+    <div class="modal-body">
+        <p class="text-muted mb-4">
+            {{
+            modal.componentInstance?.message ||
+            'Por favor, indique las observaciones del documento.'
+            }}
+        </p>
+
+        <div class="mb-4">
+            <label class="form-label">{{
+                modal.componentInstance?.observationLabel || 'Observaciones'
+                }}</label>
+            <textarea class="form-control" rows="4" [(ngModel)]="observationText" [placeholder]="
+							modal.componentInstance?.placeholder || 'Ingrese sus observaciones aquí...'
+						"></textarea>
+        </div>
+
+        <div *ngIf="requestData.requestMessage" class="mb-4">
+            <label class="form-label">Mensaje original</label>
+            <div class="text-box">
+                {{ requestData.requestMessage }}
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Volver')">Volver</button>
+        <button type="button" [class]="'btn ' + (modal.componentInstance?.confirmButtonClass || 'btn-warning')"
+            (click)="modal.close('Confirmar')">
+            {{ modal.componentInstance?.confirmButtonText || 'Confirmar' }}
+        </button>
+    </div>
+</ng-template>
+
+<ng-template #successModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Éxito</h4>
+        <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
+    </div>
+    <div class="modal-body text-center">
+        <span [inlineSVG]="'./assets/icons/check.svg'" class="svg-icon svg-icon-5x text-success mb-4"></span>
+        <p class="text-muted">
+            {{ modal.componentInstance?.message || 'El documento ha sido observado exitosamente.' }}
+        </p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="modal.close()">Aceptar</button>
+    </div>
+</ng-template>
+
+<ng-template #errorModal let-modal>
+    <div class="modal-header align-items-center">
+        <h4 class="modal-title d-flex align-items-center gap-2">
+            <span [inlineSVG]="'assets/Alert.svg'" class="svg-icon svg-icon-2 text-warning"></span>
+            <span>Atención</span>
+        </h4>
+        <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
+    </div>
+    <div class="modal-body">
+        <p class="text-muted mb-4">
+            {{ errorMessage }}
+        </p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-warning" (click)="modal.close()">Aceptar</button>
+    </div>
+</ng-template>

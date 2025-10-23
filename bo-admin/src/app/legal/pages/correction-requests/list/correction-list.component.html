@@ -1,0 +1,123 @@
+<div class="d-flex flex-column">
+    <div class="row g-4 mb-4">
+        <div class="col-md-4">
+            <label class="form-label fw-bold mb-2">Buscador</label>
+            <div class="position-relative">
+                <input type="text" class="form-control" placeholder="Que buscas..." [(ngModel)]="searchTerm"
+                    (input)="onFiltersChange()" />
+                <span class="position-absolute top-50 end-0 translate-middle-y pe-3">
+                    <i class="fas fa-search search-icon"></i>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <label class="form-label fw-bold mb-2">Portafolio</label>
+            <select class="form-select" [(ngModel)]="selectedPortfolio" (change)="applyFilter()">
+                <option value="">Seleccione</option>
+                <option *ngFor="let portfolio of portfolios" [value]="portfolio">{{portfolio}}</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label class="form-label fw-bold mb-2">Fecha de solicitud</label>
+            <input type="date" class="form-control" [(ngModel)]="selectedDate" (change)="applyFilter()" />
+        </div>
+        <div class="col-md-2">
+            <label class="form-label mb-2">&nbsp;</label>
+            <button class="btn btn-outline-custom-orange w-100" (click)="onFiltersChange()">
+                Buscar
+            </button>
+        </div>
+    </div>
+    <div class="d-flex gap-3 mb-4">
+        <button class="btn btn-custom-orange" (click)="newRequest()">
+            Nuevo {{ type === 'certificates' ? 'certificado' : 'contrato' }}
+        </button>
+        <button class="btn btn-outline-custom-orange" (click)="reset()">
+            Actualizar
+        </button>
+    </div>
+    <div class="table-container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Usern. Socio</th>
+                    <th>Socio</th>
+                    <th>Portafolio</th>
+                    <th>Tipo de documento</th>
+                    <th>N° de documento</th>
+                    <th>Fec. de solic.</th>
+                    <th>Status</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngIf="loading">
+                    <td colspan="8" class="text-center py-5">
+                        <div class="spinner-border text-orange" role="status">
+                            <span class="visually-hidden">Cargando...</span>
+                        </div>
+                        <p class="mt-2 text-muted">Cargando datos...</p>
+                    </td>
+                </tr>
+                <tr *ngFor="let request of requests; let i = index">
+                    <td>{{request?.username}}</td>
+                    <td>{{request?.partnerName}}</td>
+                    <td>{{request?.portfolio}}</td>
+                    <td>{{request?.documentType}}</td>
+                    <td>{{request?.documentNumber}}</td>
+                    <td>{{request?.requestDate | date:'dd/MM/yyyy'}}</td>
+                    <td class="text-center">
+                        <span class="badge-correction" [ngClass]="getStatusClass(request?.status)">
+                            {{getStatusText(request?.status)}}
+                        </span>
+                    </td>
+                    <td>
+                        <div class="d-flex gap-2 justify-content-center">
+                            <button type="button" class="action-btn" title="Ver detalle" (click)="viewDetail(request)">
+                                <span [inlineSVG]="'./assets/media/icons/custom/eye-on.svg'"
+                                    class="svg-icon svg-icon-3"></span>
+                            </button>
+                            <button type="button" class="action-btn" title="Notificaciones">
+                                <span [inlineSVG]="'./assets/media/icons/custom/notification_on_16px.svg'"
+                                    class="svg-icon svg-icon-3"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                <tr *ngIf="!loading && requests.length === 0">
+                    <td colspan="8" class="text-center">
+                        No se encontraron datos con los filtros aplicados
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="d-flex justify-content-between align-items-center mt-4">
+        <select class="page-rows-select" [(ngModel)]="pageSize" (change)="onPageSizeChange()">
+            <option [value]="4">04 filas</option>
+            <option [value]="10">10 filas</option>
+            <option [value]="20">20 filas</option>
+            <option [value]="50">50 filas</option>
+        </select>
+        <nav>
+            <ul class="pagination mb-0">
+                <li class="page-item" [class.disabled]="currentPage === 1">
+                    <a class="page-link" (click)="previousPage()">
+                        <i class="fas fa-chevron-left"></i>
+                    </a>
+                </li>
+                <li class="page-item" *ngFor="let page of getPageNumbers()" [class.active]="page === currentPage">
+                    <a class="page-link" (click)="goToPage(page)">{{page}}</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" (click)="nextPage()">
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="pagination-info">
+            {{getPageRangeText()}}
+        </div>
+    </div>
+</div>

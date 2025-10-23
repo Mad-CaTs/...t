@@ -1,0 +1,58 @@
+<!--Filters-->
+<form [formGroup]="form" class="d-flex w-100 flex-column gap-6">
+	<h4 class="fs-5 text-black fw-normal m-0">Buscador</h4>
+	<div class="d-flex flex-column flex-md-row gap-6">
+		<app-input class="w-100" label="Ingrese campo de búsqueda:" placeholder="Buscar por" type="search"
+			[formGroup]="form" controlName="search"
+			helper="Puedes buscarlo por nombre, usuario o número de documento." />
+		<div class="w-100 d-flex flex-column gap-2">
+			<span class="fs-6 text-black fw-normal">Buscar como:</span>
+			<div class="d-flex align-items-center gap-3 px-4 py-2">
+				<input class="form-check-input cursor-pointer" type="radio" name="searchAs" id="searchAsUser"
+					formControlName="searchAs" value="1" />
+				<label class="fs-6 fw-normal text-black" for="searchAsUser">Usuario</label>
+				<input class="form-check-input cursor-pointer" type="radio" name="searchAs" formControlName="searchAs"
+					id="searchAsPartner" value="2" />
+				<label class="fs-6 fw-normal text-black" for="searchAsPartner">Patrocinador</label>
+			</div>
+		</div>
+	</div>
+	<div class="d-flex justify-content-end">
+		<button class="btn btn-secondary" type="submit" [disabled]="form.invalid || isLoading" (click)="onSearch()">
+			<div class="fixed-width-button">
+				<div *ngIf="isLoading">
+					<span class="spinner-border spinner-border-sm align-middle text-center ms-2"></span>
+				</div>
+				<div *ngIf="!isLoading">
+					<span>Buscar</span>
+				</div>
+			</div>
+		</button>
+	</div>
+</form>
+<!--Table | Pagination-->
+<!-- <table-pagination textBtn="Cargar Archivo" (clickBtn)="onUpload()" class="w-100 d-block mt-4" /> -->
+<!--Table | Table-->
+<app-common-table class="w-100 d-block mt-4" [headers]="table.headers" [checkedAll]="table.checkedAll"
+	[headersMinWidth]="table.headersMinWidth" [noCheckboxes]="table.noCheckBoxes" [headersArrows]="table.headersArrows"
+	(onCheckedAll)="table.changeCheckedAll($event)">
+	<tr class="w-100 d-flex py-2 align-items-center" *ngFor="let item of table.data">
+		<!-- <td class="w-40px d-flex justify-content-center">
+			<div class="form-check form-check-sm form-check-custom form-check-solid">
+				<input class="form-check-input" type="checkbox" [checked]="table.getChecked(item.id)"
+					(change)="table.changeCheckId($event, item.id)" data-kt-check="true"
+					data-kt-check-target=".widget-9-check" />
+			</div>
+		</td> -->
+		<td class="w-100 text-gray-900 text-center fs-6">{{ item.idUser }}</td>
+		<td class="w-100 text-gray-900 text-center fs-6">{{ item.creationDate | arrayDate }}</td>
+		<td class="w-100 text-gray-900 text-center fs-6" style="word-break: break-all;">{{ item.username }}</td>
+		<td class="w-100 text-gray-900 text-center fs-6">{{ item.name }}</td>
+		<td class="w-100 text-gray-900 text-center fs-6">{{ item.lastName }}</td>
+		<td class="w-100 text-gray-900 text-center fs-6">{{ item.documentNumber }}</td>
+		<td class="w-100 text-gray-900 text-center fs-6">{{ item.email }}</td>
+		<td class="w-100 d-flex justify-content-center">
+			<button class="btn btn-secondary" (click)="onModify(item.idUser)">Modificar</button>
+		</td>
+	</tr>
+</app-common-table>

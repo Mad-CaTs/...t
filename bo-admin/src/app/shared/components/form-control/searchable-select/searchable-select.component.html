@@ -1,0 +1,28 @@
+<label [for]="controlName" class="fs-6 text-muted fw-bold" *ngIf="label">
+	{{ label }}
+</label>
+
+<div [formGroup]="formGroup">
+	<input
+		[id]="controlName"
+		type="text"
+		class="form-select form-select-solid typeahead-input pe-10"
+		[ngClass]="{ 'no-arrow': isLoading }"
+		[ngbTypeahead]="search"
+		[resultFormatter]="formatter"
+		[inputFormatter]="formatter"
+		[placeholder]="placeholder"
+		autocomplete="off"
+		[attr.aria-label]="label"
+		[name]="controlName"
+		[formControlName]="controlName"
+		(selectItem)="onItemSelected($event)"
+	/>
+	<div class="icon-wrapper" *ngIf="isLoading">
+		<div class="spinner-border spinner-border-sm text-warning"></div>
+	</div>
+</div>
+
+<div class="text-danger" *ngIf="existErrors">
+	{{ formValue | inputError }}
+</div>

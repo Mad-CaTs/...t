@@ -1,0 +1,105 @@
+<app-modal [title]="'Agregar Premio'">
+	<form [formGroup]="form" class="d-flex w-100 flex-column gap-6">
+		<app-select
+			placeholder="Seleccione una opción"
+			label="Rango"
+			[options]="rangeOpt"
+			controlName="range"
+			[formGroup]="form"
+			class="w-100"
+		></app-select>
+
+		<div class="d-flex flex-row w-full gap-6">
+			<app-input-date
+				class="w-100"
+				label="Fecha de Inicio"
+				[formGroup]="form"
+				controlName="startDate"
+			/>
+			<app-input-date class="w-100" label="Fecha Límite" [formGroup]="form" controlName="limitDate" />
+		</div>
+
+		<app-input
+			class="w-100"
+			type="text"
+			label="Destino"
+			placeholder="Máximo 30 caracteres"
+			[formGroup]="form"
+			controlName="destiny"
+		/>
+
+		<app-input
+			class="w-100"
+			label="Valor del bono"
+			placeholder="0.00"
+			[formGroup]="form"
+			controlName="bonus"
+			[isCurrency]="true"
+		/>
+
+		<div *ngIf="!form.get('emailSwitch')?.value" class="d-flex flex-row w-full gap-6">
+			<app-switch label="Enviar por correo" [formGroup]="form" controlName="emailSwitch" />
+
+			<app-input
+				class="w-100"
+				type="text"
+				label="Link del Grupo"
+				placeholder="Link de whatsapp"
+				[formGroup]="form"
+				controlName="link"
+				iconRigth="bi bi-link"
+			/>
+		</div>
+
+		<div *ngIf="form.get('emailSwitch')?.value" class="d-flex flex-column gap-6">
+			<div class="d-flex flex-row w-full gap-6">
+				<app-switch
+					class="w-50"
+					label="Enviar por correo"
+					[formGroup]="form"
+					controlName="emailSwitch"
+				/>
+
+				<app-switch
+					class="w-50"
+					label="Notificación al"
+					[formGroup]="form"
+					controlName="emailTypeSwitch"
+					[optionText]="true"
+					textFirst="Gmail"
+					textSecond="Outlook"
+				></app-switch>
+			</div>
+
+			<div class="d-flex flex-column">
+				<app-input
+					class="w-100"
+					type="text"
+					label="Link del Grupo"
+					placeholder="Link de whatsapp"
+					[formGroup]="form"
+					controlName="link"
+					iconRigth="bi bi-link"
+				/>
+			</div>
+		</div>
+
+		<app-input-file label="Seleccione Imagen" accept=".jpg, .png" [control]="form.controls['flyer']" />
+
+		<app-switch
+			class="w-100"
+			label="Estado"
+			[formGroup]="form"
+			controlName="statusSwitch"
+			[optionText]="true"
+			textFirst="Activo"
+			textSecond="Inactivo"
+		/>
+		<div class="w-100 d-flex justify-content-center align-items-center gap-4">
+			<button class="btn btn-secondary" type="submit" (click)="onSubmit()">Guardar</button>
+			<button class="btn btn-outline-secondary" type="button" (click)="instanceModal.close()">
+				Cancelar
+			</button>
+		</div>
+	</form>
+</app-modal>

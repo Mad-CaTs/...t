@@ -1,0 +1,11 @@
+.select-multiple-list {
+	list-style: none;
+
+	&__item {
+		transition: background-color ease-in-out 500ms;
+
+		&:hover {
+			background-color: white;
+		}
+	}
+}

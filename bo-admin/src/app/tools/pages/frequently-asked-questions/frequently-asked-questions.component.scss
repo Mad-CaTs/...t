@@ -1,0 +1,89 @@
+//tab
+.navigation-tabs {
+	display: flex;
+	border-bottom: 1px solid #e0e0e0;
+	margin-bottom: 20px;
+
+	.tab {
+		width: 50%;
+		padding: 12px 24px;
+		cursor: pointer;
+		font-weight: 500;
+		color: #666;
+		position: relative;
+		transition: all 0.3s ease;
+
+		&:hover {
+			color: #333;
+			background-color: #f5f5f5;
+		}
+
+		&.active {
+			color: #fe7c04;
+			font-weight: 600;
+
+			&::after {
+				content: '';
+				position: absolute;
+				bottom: -1px;
+				left: 0;
+				right: 0;
+				height: 2px;
+				background-color: #fe7c04;
+			}
+		}
+
+		&:not(:last-child) {
+			margin-right: 8px;
+		}
+	}
+}
+
+:host ::ng-deep app-table-generic .table-generic .actions .action-buttons button:has(.bi-check),
+:host ::ng-deep app-table-generic .table-generic .actions .action-buttons button:has(.bi-x) {
+	border: none !important;
+	border-radius: 999px;
+	padding: 2px 10px;
+	font-size: 0.7rem;
+	font-weight: 600;
+	line-height: 1.2;
+	cursor: pointer;
+	color: #fff !important;
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	transition: filter 0.15s ease-in-out, background-color 0.15s ease-in-out;
+}
+
+:host ::ng-deep app-table-generic .table-generic .actions .action-buttons button:has(.bi-check) i,
+:host ::ng-deep app-table-generic .table-generic .actions .action-buttons button:has(.bi-x) i {
+	display: none;
+}
+
+:host ::ng-deep app-table-generic .table-generic .actions .action-buttons button:has(.bi-check) {
+	background-color: #2563eb !important;
+}
+:host ::ng-deep app-table-generic .table-generic .actions .action-buttons button:has(.bi-check)::after {
+	content: ' Aceptar';
+	font-size: 0.7rem;
+}
+
+:host ::ng-deep app-table-generic .table-generic .actions .action-buttons button:has(.bi-x) {
+	background-color: #dc2626 !important;
+}
+:host ::ng-deep app-table-generic .table-generic .actions .action-buttons button:has(.bi-x)::after {
+	content: ' Rechazar';
+	font-size: 0.7rem;
+}
+
+:host ::ng-deep app-table-generic .table-generic .actions .action-buttons button:has(.bi-check):hover,
+:host ::ng-deep app-table-generic .table-generic .actions .action-buttons button:has(.bi-x):hover {
+	filter: brightness(0.92);
+}
+
+:host-context(.night-mode) ::ng-deep app-table-generic .table-generic .actions .action-buttons button:has(.bi-check) {
+	background-color: #3b82f6 !important;
+}
+:host-context(.night-mode) ::ng-deep app-table-generic .table-generic .actions .action-buttons button:has(.bi-x) {
+	background-color: #ef4444 !important;
+}

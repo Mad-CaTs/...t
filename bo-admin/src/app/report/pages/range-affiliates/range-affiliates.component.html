@@ -1,0 +1,22 @@
+<div class="rangos-container">
+  <h3>Rangos de Afiliados</h3>
+
+  <ng-container *ngIf="donutSeries.length > 0; else sinDatos">
+    <apx-chart [series]="donutSeries" [chart]="donutChart.chart" [labels]="donutLabels" [legend]="donutChart.legend"
+      [tooltip]="donutChart.tooltip" [dataLabels]="donutChart.dataLabels"></apx-chart>
+  </ng-container>
+
+  <ng-template #sinDatos>
+    <p class="text-muted">No hay datos disponibles para mostrar.</p>
+  </ng-template>
+
+  <div class="export text-end mt-3">
+    <button class="btn-export" [disabled]="exporting" (click)="exportarRangos()">
+      <span *ngIf="!exporting">
+        Exportar Excel de rangos
+      </span>
+      <span *ngIf="exporting">Descargando...</span>
+    </button>
+  </div>
+  
+</div>

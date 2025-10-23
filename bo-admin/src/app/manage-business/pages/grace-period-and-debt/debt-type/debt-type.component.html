@@ -1,0 +1,26 @@
+<div class="d-flex flex-column gap-6 p-6 bg-white w-100">
+    <!--Title
+    <div class="d-flex w-100 align-items-center justify-content-between">
+		<h1 class="fs-1 text-black fw-medium m-0">Tipos de porcentaje de mora </h1>
+	</div>-->
+    <!--Table | Pagination
+    <table-pagination class="w-100" />-->
+    <!--Table | Table-->
+    <app-common-table class="w-100 table-container" [headers]="table.headers" [checkedAll]="table.checkedAll"
+        [headersMinWidth]="table.headersMinWidth" [noCheckboxes]="table.noCheckBoxes"
+        [headersArrows]="table.headersArrows">
+        <div class="spinner-container" *ngIf="loading">
+            <span class="spinner-border spinner-border-lg align-middle text-center ms-2"></span>
+        </div>
+        <tr class="w-100 d-flex py-5 align-items-center" *ngFor="let item of table.data">
+            <td class="w-100 text-gray-900 text-center fs-6">{{ item.idPercentOverdueType }}</td>
+            <td class="w-100 text-gray-900 text-center fs-6">{{ item.names }}</td>
+            <td class="w-100 text-gray-900 text-center fs-6">
+                {{ item.descriptions && item.descriptions.trim() ? item.descriptions : '-' }}
+            </td>
+            <td class="w-100 text-gray-900 text-center fs-6">{{ item.status == 1?'Activo':'Inactivo'  }}</td>
+            <td class="w-100 text-gray-900 text-center fs-6">{{ item.creationDate }}</td>
+            <td class="w-100 text-gray-900 text-center fs-6">{{ item.modificationDate }}</td>
+        </tr>
+    </app-common-table>
+</div>

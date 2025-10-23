@@ -1,0 +1,84 @@
+<div class="flex flex-column gap-6 p-6 bg-white w-100">
+	<filter-generic
+		[filters]="filters"
+		[values]="filterValues"
+		[columnsDesktop]="3"
+		[showActionButton]="false"
+		[showClearButton]="true"
+		[clearLabel]="'Limpiar'"
+		[extraButtons]="extraButtons"
+		(valuesChange)="onValuesChange($event)"
+		(extraAction)="onExtraAction($event)"
+	></filter-generic>
+
+	<ng-container *ngIf="totalFiltered > 0; else emptyState">
+		<app-table-generic
+			[columns]="columns"
+			[keys]="keys"
+			[data]="pagedData"
+			[columnWidths]="widths"
+			[imageKeys]="imageKeys"
+			[freezeOverflow]="true"
+			[pageIndex]="pageIndex"
+			[pageSize]="pageSize"
+			[showActions]="true"
+			[showView]="false"
+			[showEdit]="false"
+			[showDelete]="false"
+			[showDeny]="true"
+			[showAccept]="true"
+			(deny)="onDeny($event)"
+			(accept)="onAccept($event)"
+		></app-table-generic>
+
+		<app-table-paginator
+			[length]="totalFiltered"
+			[pageSize]="pageSize"
+			[pageIndex]="pageIndex"
+			(pageChange)="onPageChange($event)"
+			(pageSizeChange)="onPageSizeChange($event)"
+		></app-table-paginator>
+	</ng-container>
+
+	<ng-template #emptyState>
+		<app-empty-state message="No data"></app-empty-state>
+	</ng-template>
+</div>
+
+<app-modal-detail-preview
+	[show]="showDetailModal"
+	[icon]="'bi bi-receipt'"
+	[title]="modalTitle"
+	[subtitle]="modalSubtitle"
+	[items]="detailItems"
+	[appearance]="'lines'"
+	[showPreview]="true"
+	[previewSrc]="detailPreviewSrc"
+	[primaryLabel]="'Confirmar'"
+	[secondaryLabel]="'Rechazar'"
+	(primary)="onModalPrimary()"
+	(secondary)="onModalSecondary()"
+	(close)="onModalClose()"
+/>
+
+<app-modal-notify
+	*ngIf="showNotify"
+	[title]="notifyTitle"
+	[message]="notifyMessage"
+	[iconType]="notifyIconType"
+	[oneButton]="true"
+	(closed)="showNotify = false"
+/>
+
+<app-modal-reject
+	*ngIf="showReject"
+	[show]="showReject"
+	[icon]="'bi bi-trash3'"
+	[title]="'Rechazar pago'"
+	[subtitle]="'Al rechazar el pago deberás indicar el motivo.'"
+	[reasons]="rejectionReasons"
+	[maxLength]="250"
+	(close)="onRejectClose()"
+	(reject)="onReject($event)"
+>
+</app-modal-reject>

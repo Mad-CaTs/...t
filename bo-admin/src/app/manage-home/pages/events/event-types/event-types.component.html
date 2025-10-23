@@ -1,0 +1,54 @@
+<div class="d-flex flex-column w-100 gap-6">
+	<!--List | Filter-->
+	<h4 class="fs-5 text-black fw-medium m-0">Tipo de Eventos</h4>
+
+	<!--Table | Pagination-->
+	<div class="position-relative w-100">
+		<table-pagination [noTextBtn]="true" class="w-100 mt-20 mt-md-2 d-block" />
+		<div class="d-flex gap-4 position-absolute top-0 start-0">
+			<button class="btn btn-secondary" (click)="onCreateEventType()">Agregar Nuevo Tipo</button>
+			<button class="btn btn-outline-secondary">Actualizar</button>
+		</div>
+	</div>
+	<!--Table | Table-->
+	<app-common-table
+		class="w-100 d-block mt-4"
+		[headers]="table.headers"
+		[checkedAll]="table.checkedAll"
+		[headersMinWidth]="table.headersMinWidth"
+		[noCheckboxes]="table.noCheckBoxes"
+		[firstEmpty]="true"
+		(onCheckedAll)="table.changeCheckedAll($event)"
+	>
+		<tr class="w-100 d-flex py-2 align-items-center" *ngFor="let item of table.data">
+			<td class="d-flex justify-content-center">
+				<div class="form-check-sm form-check-custom form-check-solid">
+					<input
+						class="form-check-input cursor-pointer"
+						type="radio"
+						name="event-types-item-radio"
+						[value]="item.id"
+						[(ngModel)]="selectedRowId"
+					/>
+				</div>
+			</td>
+			<td class="w-100 text-gray-900 text-center fs-6 text-break">{{ item.idType }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.description }}</td>
+			<td class="w-100 d-flex justify-content-center">
+				<div class="badge badge-success" *ngIf="item.status === 1">Activo</div>
+				<div class="badge badge-danger" *ngIf="item.status === 2">Inactivo</div>
+			</td>
+
+			<td class="w-100 d-flex justify-content-center">
+				<button
+					class="btn btn-sm"
+					style="padding-left: 20px"
+					[disabled]="selectedRowId !== item.id"
+					(click)="onEditEventType()"
+				>
+					<i class="fas fa-pencil-alt"></i>
+				</button>
+			</td>
+		</tr>
+	</app-common-table>
+</div>

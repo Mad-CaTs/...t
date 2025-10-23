@@ -1,0 +1,48 @@
+modal-header {
+    border: none;
+    align-items: start !important;
+    padding-bottom: 0px !important;
+}
+
+.title {
+    font-family: 'Poppins';
+    font-weight: 600;
+    font-style: SemiBold;
+    font-size: 18px;
+    leading-trim: NONE;
+    line-height: 28px;
+    letter-spacing: 0%;
+    color: #181D27;
+    padding-top: 10px;
+    margin: 0;
+}
+
+.subTitle {
+    font-family: 'Poppins';
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 14px;
+    leading-trim: NONE;
+    line-height: 20px;
+    letter-spacing: 0%;
+    color: #535862;
+}
+
+.close-button {
+    cursor: pointer;
+    border: none;
+    background: none;
+    width: 40px;
+    height: 40px;
+
+    img,
+    svg {
+        width: 30px;
+        height: 30px;
+        vertical-align: middle;
+    }
+
+    &:hover {
+        color: #495057;
+    }
+}

@@ -1,0 +1,83 @@
+<div class="event-history-card d-flex flex-column gap-6 p-6 bg-white w-100">
+	<h2 class="title">Histórico de eventos</h2>
+
+	<div class="toolbar-card">
+		<app-list-toolbar
+			placeholder="Ingrese lo que necesita buscar..."
+			[showTypeFilter]="true"
+			[typeLabel]="'Estado de evento'"
+			[typeOptions]="typeOptions"
+			[selectedType]="currentType"
+			(typeChange)="onFilterByType($event)"
+			(search)="onSearch($event)"
+			[actionText]="'Exportar a Excel'"
+			[showActionButton]="true"
+			(action)="onAdd()"
+		></app-list-toolbar>
+
+		<p *ngIf="currentType && currentType !== 'Todos'" class="text-sm text-gray-500 mb-2">
+			Mostrando solo eventos de tipo <strong>{{ currentType }}</strong
+			>.
+		</p>
+		<div *ngIf="clearCountdownText" class="text-danger text-sm mb-2" style="margin-top: -8px">
+			{{ clearCountdownText }}
+		</div>
+
+		<ng-container *ngIf="!loading; else loadingTemplate">
+			<ng-container *ngIf="events.length > 0; else empty">
+				<app-table-generic
+					[columns]="visibleColumns"
+					[keys]="visibleKeys"
+					[data]="pagedData"
+					[columnWidths]="visibleWidths"
+					[pageIndex]="pageIndex"
+					[pageSize]="pageSize"
+					[showView]="currentType === 'Pasado'"
+					[showEdit]="currentType === 'Pasado'"
+					[showDelete]="true"
+					[imageKeys]="['flyerUrl']"
+					[statusKey]="'isMainEventText'"
+					(view)="onView($event)"
+					(edit)="onEdit($event)"
+					(delete)="onDelete($event)"
+				></app-table-generic>
+
+				<app-table-paginator
+					[length]="events.length"
+					[pageSize]="pageSize"
+					[pageIndex]="pageIndex"
+					(pageChange)="onPageChange($event)"
+					(pageSizeChange)="onPageSizeChange($event)"
+				></app-table-paginator>
+
+			</ng-container>
+		</ng-container>
+
+		<ng-template #empty>
+			<app-empty-state message="No data"></app-empty-state>
+		</ng-template>
+
+		<ng-template #loadingTemplate>
+			<div class="d-flex justify-content-center align-items-center py-5">
+				<div class="spinner-border text-primary" role="status">
+					<span class="visually-hidden">Cargando...</span>
+				</div>
+			</div>
+		</ng-template>
+	</div>
+</div>
+
+<app-modal-confirm-delete
+	*ngIf="showDeleteModal"
+	[message]="'¿Eliminar el evento ' + (selectedToDelete?.eventName || '') + '?'"
+	(confirm)="onConfirmDelete()"
+	(cancel)="onCancelDelete()"
+></app-modal-confirm-delete>
+
+<app-modal-notify
+	*ngIf="showNotify"
+	[title]="notifyTitle"
+	[message]="notifyMessage"
+	[iconType]="notifyType"
+	(closed)="showNotify = false"
+></app-modal-notify>

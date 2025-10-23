@@ -1,0 +1,54 @@
+<form [formGroup]="form" class="card card-xxl-stretch mb-5 mb-xl-8 d-flex flex-column gap-4 p-8">
+  <div class="d-flex align-items-center gap-3 mb-2">
+    <button type="button" class="btn btn-light btn-sm" aria-label="Volver" (click)="onBack()">
+      <i class="bi bi-arrow-left"></i>
+      <span class="d-none d-sm-inline ms-1"></span>
+    </button>
+    <h1 class="m-0">Lista de socios de {{partnerName}}</h1>
+  </div>
+  <div class="d-flex align-items-center gap-3">
+		<app-input 
+      iconRigth="bi bi-search" 
+      placeholder="Buscar por username o usuario"
+			[formGroup]="form" 
+      controlName="search" 
+      class="flex-grow-1 custom-input">
+    </app-input>
+		<div class="mt-0">
+			<button type="submit" class="btn btn-outline-secondary" [disabled]="loading" (click)="onSearch()">
+        <div class="fixed-width-button d-flex align-items-center gap-2">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm align-middle"></span>
+          <span>{{ loading ? 'Filtrando...' : 'Filtrar' }}</span>
+        </div>
+      </button>
+      <button type="submit" class="btn btn-outline-secondary" [disabled]="loading  || !idUser" (click)="onExport()">
+        <div class="fixed-width-button d-flex align-items-center gap-2">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm align-middle"></span>
+            <span>{{ loading ? 'Exportando...' : 'Exportar' }}</span>
+        </div>
+      </button>
+		</div>
+	</div>
+
+  <div class="d-flex flex-row gap-6">
+    <app-select class="w-100" label="Estados" [options]="optStates" placeholder="Selecciona uno" [formGroup]="form" controlName="idState" ></app-select>
+    <app-select label="Rangos" placeholder="Selecciona uno" [options]="rangeOptions"  [formGroup]="form" controlName="rangeId" class="w-100"></app-select>
+    <app-select label="Rama" [options]="optBranch"   placeholder="Selecciona una opción" [formGroup]="form" controlName="branch"  class="w-100"></app-select>
+  </div>
+
+  <app-table-partners-by-id 
+  [dataBody]="rows"
+  [pageIndex]="page"
+  [pageSize]="size"
+  [length]="total"
+  (pageChange)="onPageChange($event)"
+  (pageSizeChange)="onPageSizeChange($event)"
+  (detail)="onViewDetail($event)">
+</app-table-partners-by-id>
+
+
+</form>
+
+
+
+

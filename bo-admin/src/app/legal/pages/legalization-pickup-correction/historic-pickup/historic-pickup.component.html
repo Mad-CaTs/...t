@@ -1,0 +1,367 @@
+<div class="d-flex flex-column gap-6 p-6 bg-white w-100">
+	<ul
+		ngbNav
+		#subNav="ngbNav"
+		[activeId]="activeSubTab"
+		(activeIdChange)="onSubTabChange($event)"
+		class="nav nav-tabs mb-4"
+	>
+		<li [ngbNavItem]="'certificados'">
+			<a ngbNavLink>Certificados y Contratos</a>
+			<ng-template ngbNavContent>
+				<!-- Contenido Certificados -->
+				<div>
+					<!-- Buscador  -->
+					<div class="filters mb-6 mt-4">
+						<div class="row g-3 align-items-end">
+							<div class="col-md-10">
+								<label class="form-label">Buscador</label>
+								<input
+									type="text"
+									class="form-control"
+									placeholder="Buscar por solicitante, dni o portfolio"
+									[(ngModel)]="searchTerm"
+									(input)="onFiltersChange()"
+								/>
+							</div>
+							<!-- Botón para limpiar el buscador -->
+							<div class="d-grid col-2 mx-auto">
+								<button class="btn btn-secondary w-100" (click)="clearFilters()">
+									Limpiar
+								</button>
+							</div>
+						</div>
+					</div>
+					<!-- Filtros -->
+					<div class="mb-3 row g-2 align-items-end">
+						<div class="col-md-2">
+							<label for="filtroFecha" class="form-label">Fecha de Solicitud</label>
+							<input
+								type="date"
+								id="filtroFecha"
+								class="form-control"
+								[(ngModel)]="filtroFecha"
+								(change)="applyFilter()"
+							/>
+						</div>
+
+						<div class="col-md-2">
+							<label for="filtroLegalizacion" class="form-label">Tipo de Legalización</label>
+							<select
+								id="filtroLegalizacion"
+								class="form-select"
+								[(ngModel)]="filtroLegalizacion"
+								(change)="applyFilter()"
+							>
+								<option value="">Seleccione el tipo</option>
+								<option value="Express">Express</option>
+								<option value="Regular">Regular</option>
+							</select>
+						</div>
+
+						<div class="col-md-3">
+							<label for="filtroSolicitadoEn" class="form-label"
+								>Modificado el lugar de recojo a</label
+							>
+							<select
+								id="filtroSolicitadoEn"
+								class="form-select"
+								[(ngModel)]="filtroSolicitadoEn"
+								(change)="applyFilter()"
+							>
+								<option value="">Seleccione uno</option>
+								<option value="Oficina de Surquillo">Oficina de Surquillo</option>
+								<option value="Club Ribera del Rio">Club Ribera del Rio</option>
+							</select>
+						</div>
+
+						<div class="col-md-2">
+							<label for="statusFinal" class="form-label">Estado Final</label>
+							<select
+								id="statusFinal"
+								class="form-select"
+								[(ngModel)]="filtroStatus"
+								(change)="applyFilter()"
+							>
+								<option value="">Seleccione uno</option>
+								<option value="Validado">Validado</option>
+								<option value="Rechazado">Rechazado</option>
+							</select>
+						</div>
+
+						<div class="d-grid gap-2 col-2 mx-auto">
+							<button class="btn btn-outline-secondary" (click)="refreshData()">
+								Refrescar
+							</button>
+						</div>
+
+						<div class="col-md-3 d-none">
+							<button class="btn btn-secondary text-white fw-bold">Enviar Correo</button>
+						</div>
+					</div>
+					<!-- Tabla -->
+					<app-common-table
+						class="w-100"
+						[headers]="table.headers"
+						[checkedAll]="table.checkedAll"
+						[headersMinWidth]="table.headersMinWidth"
+						[noCheckboxes]="table.noCheckBoxes"
+						[noCheckboxes]="true"
+						(onCheckedAll)="table.changeCheckedAll($event)"
+					>
+						<tr
+							*ngFor="let item of table.data; let i = index"
+							class="w-100 d-flex py-2 align-items-center"
+							[title]="'Documento: ' + item.documentKey"
+						>
+							<td class="w-100 text-center">{{ i + 1 }}</td>
+							<td class="w-100 text-center">{{ item.userDate | date : 'yyyy-MM-dd' }}</td>
+							<td class="w-100 text-center">
+								{{ item.userRealName ? item.userRealName : 'No hay data' }}
+							</td>
+							<td class="w-100 text-center">
+								{{ item.userDni ? item.userDni : 'No hay data' }}
+							</td>
+							<td class="w-100 text-center">
+								{{
+									item.legalizationType === 1
+										? 'Regular'
+										: item.legalizationType === 2
+										? 'Express'
+										: 'No hay data'
+								}}
+							</td>
+							<!-- <td class="w-100 text-center">
+								{{ item.portfolioName ? item.portfolioName : 'No hay data' }}
+							</td> -->
+							<td class="w-100 text-center">
+								{{
+									item.userLocalUbic === 1
+										? 'Perú - Lima'
+										: item.userLocalUbic === 2
+										? 'Provincia'
+										: 'Extranjero'
+								}}
+							</td>
+							<td class="w-100 text-center">No hay data</td>
+							<td class="w-100 text-center">S/.{{ item.price }}</td>
+							<td class="w-100 d-flex justify-content-center">
+								<img
+									[src]="item.imageUrl"
+									width="25"
+									height="25"
+									alt="img"
+									role="button"
+									style="cursor: pointer"
+									(click)="item.imageUrl && openImagePreview(item.imageUrl)"
+								/>
+							</td>
+
+							<td class="w-100 d-flex justify-content-center">
+								<span
+									class="bg-success fs-7 text-white border-radius-64 py-2 px-4 cursor-pointer"
+									[ngClass]="{
+										'bg-info': item.status === 2,
+										'bg-danger': item.status === 3
+									}"
+								>
+									{{
+										item.status === 2
+											? 'Validado'
+											: item.status === 3
+											? 'Rechazado'
+											: 'Desconocido'
+									}}
+								</span>
+							</td>
+						</tr>
+					</app-common-table>
+				</div>
+			</ng-template>
+		</li>
+
+		<li *ngIf="mostrarContratos" [ngbNavItem]="'contratos'">
+			<a ngbNavLink>Contratos</a>
+			<ng-template ngbNavContent>
+				<!-- Contenido Contratos -->
+				<div>
+					<!-- Filtros -->
+					<div class="mb-3 row g-2 align-items-end">
+						<div class="col-md-2">
+							<label for="filtroFecha" class="form-label">Fecha de Solicitud</label>
+							<input
+								type="date"
+								id="filtroFecha"
+								class="form-control"
+								[(ngModel)]="filtroFecha"
+								(change)="applyFilter()"
+							/>
+						</div>
+
+						<div class="col-md-2">
+							<label for="filtroLegalizacion" class="form-label">Tipo de Legalización</label>
+							<select
+								id="filtroLegalizacion"
+								class="form-select"
+								[(ngModel)]="filtroLegalizacion"
+								(change)="applyFilter()"
+							>
+								<option value="">Seleccione el tipo</option>
+								<option value="Express">Express</option>
+								<option value="Regular">Regular</option>
+							</select>
+						</div>
+
+						<div class="col-md-3">
+							<label for="filtroSolicitadoEn" class="form-label"
+								>Modificado el lugar de recojo a</label
+							>
+							<select
+								id="filtroSolicitadoEn"
+								class="form-select"
+								[(ngModel)]="filtroSolicitadoEn"
+								(change)="applyFilter()"
+							>
+								<option value="">Seleccione uno</option>
+								<option value="Oficina de Surquillo">Oficina de Surquillo</option>
+								<option value="Club Ribera del Rio">Club Ribera del Rio</option>
+								<option value="Oficina de Surquillo">Oficina de Surquillo</option>
+								<option value="Club Ribera del Rio">Club Ribera del Rio</option>
+							</select>
+						</div>
+
+						<div class="col-md-2">
+							<label for="filtroStatusFinal" class="form-label">Estado Final</label>
+							<select
+								id="filtroStatusFinal"
+								class="form-select"
+								[(ngModel)]="filtroStatusFinal"
+								(change)="applyFilter()"
+							>
+								<option value="">Seleccione uno</option>
+								<option value="Validado">Validado</option>
+								<option value="Rechazado">Rechazado</option>
+							</select>
+						</div>
+
+						<div class="d-grid gap-2 col-2 mx-auto">
+							<button class="btn btn-outline-secondary" (click)="refreshData()">
+								Refrescar
+							</button>
+						</div>
+
+						<div class="col-md-3 d-none">
+							<button class="btn btn-secondary text-white fw-bold">Enviar Correo</button>
+						</div>
+					</div>
+
+					<!-- Tabla -->
+					<app-common-table
+						class="w-100"
+						[headers]="table.headers"
+						[checkedAll]="table.checkedAll"
+						[headersMinWidth]="table.headersMinWidth"
+						[noCheckboxes]="table.noCheckBoxes"
+						[noCheckboxes]="true"
+						(onCheckedAll)="table.changeCheckedAll($event)"
+					>
+						<tr *ngFor="let item of table.data" class="w-100 d-flex py-2 align-items-center">
+							<!-- <td class="w-40px d-flex justify-content-center">
+								<input
+									type="checkbox"
+									class="form-check-input"
+									[checked]="table.getChecked(item.id)"
+									(change)="table.changeCheckId($event, item.id)"
+								/>
+							</td> -->
+							<td class="w-100 text-center">{{ item.id }}</td>
+							<td class="w-100 text-center">{{ item.userDate | date : 'yyyy-MM-dd' }}</td>
+							<td class="w-100 text-center">
+								{{ item.userRealName ? item.userRealName : 'No hay data' }}
+							</td>
+							<td class="w-100 text-center">
+								{{ item.userDni ? item.userDni : 'No hay data' }}
+							</td>
+							<!-- <td class="w-100 text-center">{{ item.tipoDocumento }}</td> -->
+							<td class="w-100 text-center">No hay data</td>
+							<td class="w-100 text-center">
+								{{
+									item.legalizationType === 1
+										? 'Regular'
+										: item.legalizationType === 2
+										? 'Express'
+										: 'No hay data'
+								}}
+							</td>
+							<!-- <td class="w-100 text-center">
+								{{ item.portfolioName ? item.portfolioName : 'No hay data' }}
+							</td> -->
+							<td class="w-100 text-center">
+								{{
+									item.userLocalUbic === 1
+										? 'Perú - Lima'
+										: item.userLocalUbic === 2
+										? 'Provincia'
+										: 'Extranjero'
+								}}
+							</td>
+
+							<!-- <td class="w-100 text-center">{{ item.estadoLegalizacion }}</td> -->
+							<td class="w-100 text-center">No hay data</td>
+							<td class="w-100 text-center">{{ item.price }}</td>
+							<td class="w-100 d-flex justify-content-center">
+								<img
+									[src]="item.imageUrl"
+									width="25"
+									height="25"
+									alt="img"
+									role="button"
+									style="cursor: pointer"
+									(click)="item.imageUrl && openImagePreview(item.imageUrl)"
+								/>
+							</td>
+							<td class="w-100 d-flex justify-content-center">
+								<span
+									class="bg-success fs-7 text-white border-radius-64 py-2 px-4 cursor-pointer"
+									[ngClass]="{
+										'bg-info': item.status === 2,
+										'bg-danger': item.status === 3
+									}"
+								>
+									{{
+										item.status === 2
+											? 'Validado'
+											: item.status === 3
+											? 'Rechazado'
+											: 'Desconocido'
+									}}
+								</span>
+							</td>
+						</tr>
+					</app-common-table>
+				</div>
+			</ng-template>
+		</li>
+	</ul>
+
+	<!-- Modal IMG -->
+
+	<ng-template #imageModal let-modal>
+		<div class="modal-header">
+			<h4 class="modal-title">Vista previa de la imagen</h4>
+			<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+		</div>
+		<div class="modal-body text-center">
+			<img [src]="selectedImageUrl" alt="Vista previa" class="img-fluid rounded shadow" />
+		</div>
+	</ng-template>
+
+	<!-- Modal Aprobado -->
+
+	<!-- Modal Rechazo -->
+
+	<!-- Modal Confirmación de Rechazo -->
+
+	<!-- Outlet de contenido -->
+	<div [ngbNavOutlet]="subNav"></div>
+</div>

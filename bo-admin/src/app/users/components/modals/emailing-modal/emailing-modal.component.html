@@ -1,0 +1,265 @@
+<app-modal [title]="'Enviar correo a @' + emailingData.username">
+	<div class="d-flex flex-column gap-6 w-100">
+		<div class="d-flex flex-row gap-6 w-100">
+			<div class="d-flex align-items-center w-50">
+				<div class="symbol symbol-45px me-5">
+					<img src="./assets/media/avatars/blank.png" alt="" />
+				</div>
+				<div class="d-flex justify-content-start flex-column">
+					<span class="text-dark fw-bolder fs-6 text-uppercase" style="word-break: break-all;"
+						>{{emailingData.username}}</span
+					>
+					<span class="text-muted fw-bold text-muted d-block fs-7">
+						{{emailingData.fullname}}
+					</span>
+					<span class="text-muted fw-bold text-muted d-block fs-7">
+						{{emailingData.email}}
+					</span>
+				</div>
+			</div>
+
+			<div class="d-flex flex-column gap-2 w-50">
+				<h5 class="text-primary fw-bold text-uppercase">Suscripción</h5>
+				<div
+					class="d-flex flex-row justify-content-between align-items-center border border-primary rounded p-4 border-2 w-100"
+				>
+					<div class="d-flex align-items-center">
+						<div class="symbol symbol-45px me-5">
+							<img src="./assets/media/misc/tier.png" alt="" />
+						</div>
+						<div class="d-flex justify-content-start flex-column">
+							<span
+								class="text-primary fw-bolder fs-6 text-uppercase"
+								>{{ emailingData.subscription }}</span
+							>
+							<span class="text-primary fw-bold d-block fs-7">
+								{{emailingData.email}}
+							</span>
+							<span
+								class="text-muted fw-bold text-muted d-block fs-7"
+							>
+								Desde {{ emailingData.date }}
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="d-flex flex-column">
+			<h2 class="fs-1x">Qué tipo de correo desea enviar?</h2>
+			<p class="text-muted mb-0">
+				Enviar correos al usuario ayudará a un mejor feedback del
+				servicio.
+			</p>
+		</div>
+
+		<div class="d-flex flex-row gap-4 flex-wrap">
+			<div
+				class="d-flex flex-row gap-4 border rounded p-4 border-2 cursor-pointer all-transitions-1000 option-email"
+				*ngFor="let option of emailingTypes"
+				[class.border-muted]="selectedOption !== option.id"
+				[class.border-primary]="selectedOption === option.id"
+				(click)="selectedOption = option.id"
+			>
+				<i
+					[class]="option.icon + ' fa-2x mt-2 all-transitions-1000'"
+					[class.text-muted]="selectedOption !== option.id"
+					[class.text-primary]="selectedOption === option.id"
+				></i>
+				<div class="d-flex flex-column">
+					<h4
+						class="fw-bold mb-0 all-transitions-1000"
+						[class.text-black]="selectedOption !== option.id"
+						[class.text-primary]="selectedOption === option.id"
+					>
+						{{ option.title }}
+					</h4>
+					<p class="text-muted mb-0">
+						{{ option.helper }}
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="d-flex flex-column">
+			<p class="text-muted mb-0">
+				¿Deseas enviar el correo con copia a alguien?
+			</p>
+		</div>
+
+		<div class="d-flex flex-column gap-6 w-100">
+			<div class="d-flex flex-column gap-2 w-100">
+				<div
+					class="d-flex align-items-center border border-muted rounded p-4 border-2 w-100"
+				>
+					<div class="d-flex flex-column w-100">
+						<div
+							class="d-flex flex-row align-items-center gap-2 mb-2"
+						>
+							<div
+								class="form-check form-check-sm form-check-custom form-check-solid"
+							>
+								<input
+									class="form-check-input"
+									type="checkbox"
+									data-kt-check="true"
+									data-kt-check-target=".widget-9-check"
+									[checked]="sendToPartner"
+									(change)="sendToPartner = !sendToPartner"
+								/>
+							</div>
+							<h5 class="text-muted fw-bold m-0">Patrocinador</h5>
+						</div>
+						<div class="d-flex align-items-center">
+							<div class="symbol symbol-45px me-5">
+								<img src="./assets/media/avatars/blank.png" alt="" />
+							</div>
+							<div class="d-flex justify-content-start flex-column">
+								<span class="text-dark fw-bolder fs-8 text-uppercase"
+									>{{ emailingData.sponsorName }}</span
+								>
+								<span
+									class="text-muted fw-bold text-muted d-block fs-7"
+								>
+									{{ emailingData.sponsorFullName }}
+								</span>
+								<span
+									class="text-muted fw-bold text-muted d-block fs-7"
+								>
+									{{ emailingData.sponsorEmail }}
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="d-flex flex-row gap-6 w-100">
+				<div class="d-flex flex-column gap-2 w-50">
+					<div
+						class="d-flex align-items-center border border-muted rounded p-4 border-2 w-100"
+					>
+						<div class="d-flex flex-column w-100">
+							<div
+								class="d-flex flex-row align-items-center gap-2 mb-2"
+							>
+								<div
+									class="form-check form-check-sm form-check-custom form-check-solid"
+								>
+									<input
+										#masterCheckbox1
+										class="form-check-input"
+										type="checkbox"
+										data-kt-check="true"
+										data-kt-check-target=".widget-9-check"
+										[checked]="sendToMaster"
+										(change)="sendToMaster = !sendToMaster; masterEmail1.disabled = !sendToMaster; validateEmails()"
+									/>
+								</div>
+								<h5 class="text-muted fw-bold m-0">Reenviar a</h5>
+							</div>
+							<div class="d-flex align-items-center">
+								<div class="symbol symbol-45px me-5">
+									<img src="./assets/media/avatars/blank.png" alt="" />
+								</div>
+								<div class="d-flex justify-content-start flex-column">
+									<span class="text-muted fw-bold text-muted d-block fs-7">
+										Correo electrónico
+									</span>
+									<input
+										#masterEmail1
+										type="text"
+										class="form-control"
+										placeholder="example@inclub.com"
+										[disabled]="!sendToMaster"
+										(input)="validateEmails()"
+										[ngClass]="{'is-invalid': sendToMaster && (masterEmail1.value === '' || !isValidEmail(masterEmail1.value))}"
+									/>
+									<div *ngIf="sendToMaster && masterEmail1.value === ''" class="invalid-feedback">
+										Este campo es requerido.
+									</div>
+									<div *ngIf="sendToMaster && masterEmail1.value !== '' && !isValidEmail(masterEmail1.value)" class="invalid-feedback">
+										El formato del correo electrónico es inválido.
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="d-flex flex-column gap-2 w-50">
+					<div
+						class="d-flex align-items-center border border-muted rounded p-4 border-2 w-100"
+					>
+						<div class="d-flex flex-column w-100">
+							<div
+								class="d-flex flex-row align-items-center gap-2 mb-2"
+							>
+								<div
+									class="form-check form-check-sm form-check-custom form-check-solid"
+								>
+									<input
+										#masterCheckbox2
+										class="form-check-input"
+										type="checkbox"
+										data-kt-check="true"
+										data-kt-check-target=".widget-9-check"
+										[checked]="sendToMaster2"
+										(change)="sendToMaster2 = !sendToMaster2; masterEmail2.disabled = !sendToMaster2; validateEmails()"
+									/>
+								</div>
+								<h5 class="text-muted fw-bold m-0">Reenviar a</h5>
+							</div>
+							<div class="d-flex align-items-center">
+								<div class="symbol symbol-45px me-5">
+									<img src="./assets/media/avatars/blank.png" alt="" />
+								</div>
+								<div class="d-flex justify-content-start flex-column">
+									<span class="text-muted fw-bold text-muted d-block fs-7">
+										Correo electrónico
+									</span>
+									<input
+										#masterEmail2
+										type="text"
+										class="form-control"
+										placeholder="example@inclub.com"
+										[disabled]="!sendToMaster2"
+										(input)="validateEmails()"
+										[ngClass]="{'is-invalid': sendToMaster2 && (masterEmail2.value === '' || !isValidEmail(masterEmail2.value))}"
+									/>
+									<div *ngIf="sendToMaster2 && masterEmail2.value === ''" class="invalid-feedback">
+										Este campo es requerido.
+									</div>
+									<div *ngIf="sendToMaster2 && masterEmail2.value !== '' && !isValidEmail(masterEmail2.value)" class="invalid-feedback">
+										El formato del correo electrónico es inválido.
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="alert alert-warning d-flex align-items-center p-5">
+			<i
+				class="bi bi-exclamation-circle text-warning me-4 mr-6 fa-2x"
+			></i>
+			<span class="text-warning fw-bold"
+				>Evite enviar demasiados correos para minimizar el riesgo de que sean identificados como spam</span
+			>
+		</div>
+
+		<div class="d-flex flex-row justify-content-center gap-4">
+			<button class="btn btn-light-info" (click)="instanceModal.close()">
+				Cancelar
+			</button>
+			<button
+				class="btn btn-primary"
+				(click)="onSendEmail()"
+				[disabled]="selectedOption === '' || !isFormValid"
+			>
+				Enviar
+			</button>
+		</div>
+	</div>
+</app-modal>

@@ -1,0 +1,45 @@
+<div class="filters mb-4 mt-6">
+	<div class="row g-3 align-items-end">
+		<div class="col-md-4">
+			<label class="form-label">Buscador</label>
+			<input
+				type="text"
+				class="form-control"
+				placeholder="Buscar por número, socio, solicitante o DNI"
+				[(ngModel)]="searchTerm"
+				(input)="onFiltersChange()"
+			/>
+		</div>
+
+		<div class="col-md-3">
+			<label class="form-label">Tipo de Legalización</label>
+			<select class="form-select" [(ngModel)]="selectedLegalizacion" (change)="onFiltersChange()">
+				<option value="">Todas las Legalizaciones</option>
+				<option *ngFor="let option of legalizacionOptions" [value]="option">
+					{{ option }}
+				</option>
+			</select>
+		</div>
+
+		<div class="col-md-3">
+			<label class="form-label">Solicitado En</label>
+			<select class="form-select" [(ngModel)]="selectedSolicitadoEn" (change)="onFiltersChange()">
+				<option value="">Todos los Solicitado En</option>
+				<option *ngFor="let option of solicitadoEnOptions" [value]="option">
+					{{ option }}
+				</option>
+			</select>
+		</div>
+
+		<div class="d-grid gap-2 col-2 mx-auto">
+			<button class="btn btn-secondary w-100" (click)="clearFilters()">Limpiar</button>
+		</div>
+	</div> 
+
+	<div class="col-md-3 mt-4">
+		<label class="form-label">Fecha</label>
+		<input type="date" class="form-control" [(ngModel)]="selectedDate" (change)="onFiltersChange()" />
+	</div>
+</div>
+
+<app-contract-table [data]="filteredData" (actualizarTabla)="loadData()"></app-contract-table>

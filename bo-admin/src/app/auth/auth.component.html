@@ -1,0 +1,28 @@
+<div
+	class="d-flex flex-column flex-column-fluid bgi-position-y-bottom position-x-center bgi-no-repeat bgi-size-contain bgi-attachment-fixed"
+	style="background-color: #fcf9f9;"
+>
+	<!--begin::Content-->
+	<div class="d-flex flex-center flex-column flex-column-fluid p-10 pb-lg-20">
+		<a routerLink="/metronic-view/" class="mb-12 position-absolute top-0 start-0 ms-5 mt-5"
+			><img alt="Logo" src="/assets/media/logos/logocolors.png" class="h-60px"
+		/></a>
+
+		<!--begin::Content body-->
+		<div class="w-lg-500px bg-white rounded shadow-sm p-10 p-lg-15 mx-auto mt-20">
+			<router-outlet></router-outlet>
+		</div>
+		<!--end::Content body-->
+	</div>
+	<!--end::Content-->
+
+	<!-- begin::Footer -->
+	<div class="d-flex flex-center flex-column-auto p-10">
+		<div class="d-flex align-items-center fw-bold fs-6">
+			<a class="text-muted text-hover-primary px-2 cursor-pointer">Sobre nosotros</a
+			><a class="text-muted text-hover-primary px-2 cursor-pointer">Contacto</a
+			><a class="text-muted text-hover-primary px-2 cursor-pointer">Contactanos</a>
+		</div>
+	</div>
+	<!-- end::Footer -->
+</div>

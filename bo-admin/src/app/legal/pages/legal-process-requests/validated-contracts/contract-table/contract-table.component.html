@@ -1,0 +1,232 @@
+<app-common-table
+	class="w-100"
+	[headers]="table.headers"
+	[checkedAll]="table.checkedAll"
+	[headersMinWidth]="table.headersMinWidth"
+	[noCheckboxes]="table.noCheckBoxes"
+	[noCheckboxes]="true"
+	(onCheckedAll)="table.changeCheckedAll($event)"
+>
+	<tr
+		class="w-100 d-flex py-2 align-items-center"
+		*ngFor="let item of data"
+		[title]="'Documento: ' + item.documentKey"
+	>
+		<td class="w-100 text-gray-900 text-center fs-6">
+			{{ item.userDate | date : 'yyyy-MM-dd' : 'UTC' }}
+		</td>
+		<td class="w-100 text-gray-900 text-center fs-6">
+			{{ item.userLocalUbic === 1 ? item.userLocalTypeDescription || '-' : '-' }}
+		</td>
+
+		<!-- 	<td class="w-100 text-gray-900 text-center fs-6" [ngSwitch]="item.userLocalUbic">
+			<span *ngSwitchCase="3">{{ item.userLocal || '-' }}</span>
+			<span *ngSwitchCase="1">{{ item.userLocalTypeDescription || '-' }}</span>
+			<span *ngSwitchCase="2">{{ item.direccionOtroDetalle || '-' }}</span>
+			<span *ngSwitchDefault>-</span>
+		</td> -->
+
+		<td class="w-100 text-gray-900 text-center fs-6">{{ item.userRealName }}</td>
+		<td class="w-100 text-gray-900 text-center fs-6">
+			<button
+				class="btn btn-link p-0"
+				(click)="
+					openDisponibilidad(
+						disponibilidadModal,
+						item.userLocalUbic === 1 ? item.legalizationMethodId : item.disponibilidadTramiteId,
+						item.userLocalUbic
+					)
+				"
+			>
+				Ver detalle
+			</button>
+		</td>
+		<!-- <td class="w-100 text-gray-900 text-center fs-6">{{ item.documentTypeName }}</td> -->
+		<td class="w-100 text-gray-900 text-center fs-6">{{ item.userDni }}</td>
+
+		<td class="w-100 text-gray-900 text-center fs-6">
+			{{
+				item.legalizationType === 1
+					? 'Regular'
+					: item.legalizationType === 2
+					? 'Express'
+					: 'No hay data'
+			}}
+		</td>
+		<td class="w-100 text-gray-900 text-center fs-6">
+			{{
+				item.userLocalUbic === 1
+					? 'Perú - Lima'
+					: item.userLocalUbic === 2
+					? 'Provincia'
+					: 'Extranjero'
+			}}
+		</td>
+		<td class="w-100 text-gray-900 text-center fs-6">
+			<ng-container *ngIf="item?.userLocalUbic === 2 || item?.userLocalUbic === 3; else normal">
+				<button class="btn btn-link p-0" (click)="openDetailModal(item)">
+					{{ item | userAddress }}
+				</button>
+			</ng-container>
+
+			<ng-template #normal>
+				{{ item | userAddress }}
+			</ng-template>
+		</td>
+		<!-- <td class="w-100 text-gray-900 text-center fs-6">S/.{{ item.price }}</td> -->
+		<!-- <td class="w-100 text-gray-900 text-center fs-6">{{ item.statusName }}</td> -->
+		<td class="w-100 text-gray-900 text-center fs-6">
+			<ng-container *ngIf="item.userLocalUbic === 2; else noSerpost">
+				<button class="btn btn-link p-0" (click)="openSerpost(serpostModal, item)">
+					Ver detalle Serpost
+				</button>
+			</ng-container>
+			<ng-template #noSerpost> - </ng-template>
+		</td>
+		<td class="w-100 text-gray-900 text-center fs-6">
+			<ng-container *ngIf="item.hasAuthorizedPerson; else noPerson">
+				<button
+					class="btn btn-link p-0"
+					(click)="openAuthorizedPerson(authorizedPersonModal, item.authorizedPerson)"
+				>
+					Ver persona autorizada
+				</button>
+			</ng-container>
+			<ng-template #noPerson> No </ng-template>
+		</td>
+		<td class="w-100 text-gray-900 text-center fs-6">
+			<span class="badge-etiqueta" [ngStyle]="getBadgeStyles(item.statusColor)">
+				{{ item.statusName }}
+			</span>
+		</td>
+
+		<td class="w-100 d-flex justify-content-center">
+			<button class="btn btn-outline-secondary btn-sm" (click)="abrirModalNotificar(item)">
+				Notificar
+			</button>
+		</td>
+
+		<td class="w-100 d-flex justify-content-center">
+			<i
+				*ngIf="item.documentUrl"
+				class="bi bi-file-pdf text-success"
+				role="button"
+				style="font-size: 1.2rem; cursor: pointer"
+				(click)="abrirImagen(item.documentUrl)"
+			>
+			</i>
+		</td>
+	</tr>
+
+	<tr *ngIf="data.length === 0">
+		<td colspan="8" class="text-center text-gray-500 py-3">
+			No se encontraron datos con los filtros aplicados
+		</td>
+	</tr>
+</app-common-table>
+
+<!-- Modal Notificar -->
+<ng-template #modalNotificar let-modal>
+	<div class="modal-header">
+		<h5 class="modal-title">Notificar</h5>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+	</div>
+	<div class="modal-body">
+		<p>Indica el status y observación del documento.</p>
+
+		<!-- <div class="mb-3">
+			<label class="form-label">Status*</label>
+			<select class="form-select" [(ngModel)]="form.status" required>
+				<option value="">Selecciona uno</option>
+				<option value="en_proceso">En proceso</option>
+				<option value="completado">Completado</option>
+				<option value="observado">Observado</option>
+			</select>
+		</div> -->
+
+		<div class="mb-3">
+			<label class="form-label">Status*</label>
+			<select
+				class="form-select"
+				[(ngModel)]="form.status"
+				(ngModelChange)="onStatusChange($event)"
+				required
+			>
+				<option value="">Selecciona uno</option>
+				<option *ngFor="let status of statusList" [value]="status.statusCode">
+					{{ status.name }}
+				</option>
+			</select>
+		</div>
+
+		<div class="mb-3">
+			<label class="form-label">Observación*</label>
+			<textarea
+				class="form-control"
+				rows="5"
+				[(ngModel)]="form.observacion"
+				maxlength="1000"
+				placeholder="e.j. La solicitud enviada y pagada por el socio se encuentra aún en proceso de elaboración..."
+				required
+			></textarea>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-outline-warning" (click)="modal.dismiss()">Cancelar</button>
+		<button class="btn btn-warning" [disabled]="!form.status" (click)="notificar()">Notificar</button>
+	</div>
+</ng-template>
+
+<!-- Modal Notificar Confirmacion -->
+<ng-template #modalConfirmacion let-modal>
+	<div class="modal-body text-center py-5">
+		<h5 class="text-success mb-3">¡Notificación enviada!</h5>
+		<p class="text-muted">La notificación se ha enviado correctamente.</p>
+		<button class="btn btn-success mt-3 px-4" (click)="modal.close()">Aceptar</button>
+	</div>
+</ng-template>
+
+<ng-template #serpostModal let-modal>
+	<div class="modal-header">
+		<h5 class="modal-title">Detalle de Envío Serpost</h5>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+	</div>
+	<div class="modal-body">
+		<!-- <p><strong>Número de Tracking:</strong> {{ selectedSerpost?.trackingCode }}</p> -->
+		<p><strong>Locación Serpost:</strong> {{ selectedSerpost?.serportLocation }}</p>
+		<p><strong>Descripcion de Serpost:</strong> {{ selectedSerpost?.serportDescription }}</p>
+		<!-- <p><strong>Fecha de envío:</strong> {{ selectedSerpost?.serpostDate }}</p> -->
+	</div>
+</ng-template>
+
+<ng-template #disponibilidadModal let-modal>
+	<div class="modal-header">
+		<h5 class="modal-title">Detalle de Disponibilidad</h5>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+	</div>
+	<div class="modal-body">
+		<p>{{ textoSeleccionado }}</p>
+	</div>
+</ng-template>
+
+<ng-template #authorizedPersonModal let-modal>
+	<div class="modal-header">
+		<h5 class="modal-title">Detalle de Persona Autorizada</h5>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+	</div>
+	<div class="modal-body">
+		<p>
+			<strong>Nombre:</strong> {{ selectedAuthorizedPerson?.firstName }}
+			{{ selectedAuthorizedPerson?.lastName }}
+		</p>
+		<p>
+			<strong>Documento:</strong> {{ selectedAuthorizedPerson?.documentType }} -
+			{{ selectedAuthorizedPerson?.documentNumber }}
+		</p>
+		<p><strong>Fecha de nacimiento:</strong> {{ selectedAuthorizedPerson?.birthDate }}</p>
+		<p>
+			<strong>Carta poder:</strong>
+			<a [href]="selectedAuthorizedPerson?.powerLetterUrl" target="_blank"> Ver documento </a>
+		</p>
+	</div>
+</ng-template>

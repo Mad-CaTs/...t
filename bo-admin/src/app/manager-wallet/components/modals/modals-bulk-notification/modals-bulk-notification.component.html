@@ -1,0 +1,24 @@
+<app-modal [title]="''" [hideCloseButton]="true" class="p-10 position-relative">
+    <img src="assets/media/svg/retiro/warrinng.svg" alt="remember" class="custom-position">
+    <div class="d-flex flex-column align-items-center justify-content-center gap-6 p-1 position-relative">
+        
+        <div class="text-start w-100">
+            <h2 class="mt-4">Recuerda</h2>
+        </div>
+        <div class="text-center w-100">
+            <p class="text-start">
+                Al aceptar notificar, se informará a todos los usuarios el resultado. Si ya validaste la<br>
+                información, puedes continuar; de lo contrario, se recomienda validarla previamente.
+            </p>
+            <div class="button-actions">
+                <button class="btn-outline-secondary btn rounded-5" type="button" (click)="closeModal()">
+                    Cancelar
+                </button>
+                <button class="btn-secondary btn rounded-5" type="button" (click)="notify()">
+                    Notificar
+                </button>
+            </div>
+        </div>
+
+    </div>
+</app-modal>

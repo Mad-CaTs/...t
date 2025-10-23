@@ -1,0 +1,67 @@
+<div class="reject-backdrop" *ngIf="show" (click)="onBackdropClick()">
+  <div class="reject-box" role="dialog" aria-modal="true" (click)="$event.stopPropagation()">
+    <!-- Header -->
+    <header class="reject-header">
+      <div class="reject-badge" aria-hidden="true">
+        <i [class]="icon"></i>
+      </div>
+      <button type="button" class="reject-close" (click)="onClose()" aria-label="Cerrar">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </header>
+
+    <!-- Titles -->
+    <h3 class="reject-title">{{ title }}</h3>
+    <p class="reject-subtitle" *ngIf="subtitle">{{ subtitle }}</p>
+
+    <!-- Form -->
+    <div class="reject-form">
+      <label class="reject-label" for="reasonSelect">Motivo*</label>
+
+      <div class="reject-select">
+        <select
+          id="reasonSelect"
+          [(ngModel)]="selectedReasonId"
+          [ngModelOptions]="{ standalone: true }"
+          required
+        >
+          <option [ngValue]="null" disabled selected>Selecciona uno</option>
+          <option *ngFor="let r of reasons; trackBy: trackByReason" [ngValue]="r.id">
+            {{ r.label }}
+          </option>
+        </select>
+        <i class="bi bi-chevron-down"></i>
+      </div>
+
+      <div class="reject-textarea">
+        <textarea
+          [(ngModel)]="detail"
+          [attr.maxlength]="maxLength"
+          rows="4"
+          [placeholder]="placeholder"
+        ></textarea>
+        <div class="reject-counter">{{ counter }}</div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="reject-footer">
+      <button type="button" class="btn btn-outline" (click)="onClose()" [disabled]="loading">
+        {{ cancelLabel }}
+      </button>
+
+      <button
+        type="button"
+        class="btn btn-primary"
+        (click)="onConfirm()"
+        [disabled]="!canSubmit"
+      >
+        <ng-container *ngIf="!loading; else spinnerTpl">{{ confirmLabel }}</ng-container>
+      </button>
+
+      <ng-template #spinnerTpl>
+        <span class="spinner"></span>
+      </ng-template>
+    </footer>
+  </div>
+</div>

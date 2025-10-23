@@ -1,0 +1,80 @@
+<div class="modal-backdrop">
+	<div class="modal-container">
+		<header class="modal-header">
+			<div class="modal-header-content">
+				<div class="modal-icon">
+					<i class="bi bi-card-list"></i>
+				</div>
+				<h3 class="modal-title">{{ title }}</h3>
+			</div>
+			<button type="button" class="close-btn" (click)="onCloseClick()">
+				<i class="bi bi-x-lg"></i>
+			</button>
+		</header>
+
+		<p class="modal-subtitle">Completa el formulario para {{ isEdit ? 'editar' : 'un nuevo' }} tipo.</p>
+
+		<form [formGroup]="form" class="modal-form">
+			<div class="form-group">
+				<label for="name">{{ label }}</label>
+				<input
+					id="name"
+					type="text"
+					maxlength="100"
+					formControlName="name"
+					placeholder="Ingrese el nombre del tipo"
+					(keydown)="preventLeadingSpace($event)"
+				/>
+
+				<div
+					class="error"
+					*ngIf="form.get('name')?.touched && form.get('name')?.errors?.['required']"
+				>
+					Este campo es obligatorio.
+				</div>
+				<div
+					class="error"
+					*ngIf="form.get('name')?.touched && form.get('name')?.errors?.['maxlength']"
+				>
+					Máximo 100 caracteres permitidos.
+				</div>
+
+				<div
+					class="char-counter"
+					[ngClass]="{
+						warning: form.get('name')?.value?.length > 90,
+						full: form.get('name')?.value?.length >= 100
+					}"
+				>
+					{{ form.get('name')?.value?.length || 0 }}/100
+				</div>
+			</div>
+
+			<div class="form-group status-group">
+				<label class="status-label">Estado</label>
+				<div class="status-options">
+					<label>
+						<input type="radio" formControlName="status" [value]="true" />
+						<span>Activo</span>
+					</label>
+					<label>
+						<input type="radio" formControlName="status" [value]="false" />
+						<span>Inactivo</span>
+					</label>
+				</div>
+			</div>
+		</form>
+
+		<footer class="modal-footer">
+			<button type="button" class="btn btn-outline" (click)="onCloseClick()">Cancelar</button>
+			<button
+				type="button"
+				class="btn btn-primary"
+				(click)="onSave()"
+				[disabled]="form.invalid || (isEdit && !hasChanges)"
+			>
+				{{ isEdit ? 'Actualizar' : 'Guardar' }}
+			</button>
+		</footer>
+	</div>
+</div>

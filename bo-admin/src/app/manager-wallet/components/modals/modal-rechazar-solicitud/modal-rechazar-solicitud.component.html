@@ -1,0 +1,33 @@
+<div class="modal-container">
+    <div class="modal-header align-items-start">
+        <div>
+            <img src="assets/media/svg/retiro/rechase.svg" alt="modal-icon" class="header-icon">
+            <p class="title">Modificar motivo</p>
+            <p class="subTitle">En caso de fallo en el retiro, la notificación deberá incluir el motivo.</p>
+        </div>
+        <button class="close-button" aria-label="Cerrar modal" (click)="instanceModal.dismiss()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                <path
+                    d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+            </svg>
+        </button>
+    </div>
+
+    <div class="container-body">
+        <app-select placeholder="Selecciona uno" [options]="motivoSelect || []" label="motivo*" controlName="motivo"
+            [formGroup]="form" class="w-100"></app-select>
+        <div class="mt-3">
+            <app-textarea [formGroup]="form" controlName="msg" [label]="descriptionLabel"
+                placeholder="e.j. : El socio proporcionó información incorrecta." class="w-100"
+                (input)="contarCaracteres()" maxlength="250"></app-textarea>
+            <small class="descripcion-caracter">{{ texto.length }} / 250 caracteres</small>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <div class="d-flex">
+            <button class="cancelar" style="margin-right: 4px;" (click)="cancelUpdateNotification()">Cancelar</button>
+            <button class="rechazar" style="margin-left: 4px;" (click)="rechazar()">Guardar</button>
+        </div>
+    </div>
+</div>

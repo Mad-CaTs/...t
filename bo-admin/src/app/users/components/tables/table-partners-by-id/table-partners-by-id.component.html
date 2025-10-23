@@ -1,0 +1,106 @@
+<app-table
+  class="card card-xxl-stretch mb-5"
+  [noCheckboxes]="true"
+  [customRows]="true"
+  [headers]="[
+    'N°',
+    'Username',
+    'Socio',
+    'Estado',
+    'Rango',
+    'Patrocinador',
+    'Nivel de patrocinio',
+    'Rama',
+    'Acciones'
+  ]"
+>
+  <colgroup>
+    <col style="width:20px">     
+    <col style="width:100px">    
+    <col>                        
+    <col style="width:120px">    
+    <col style="width:100px">    
+    <col style="width:180px">    
+    <col style="width:60px">    
+    <col style="width:80px">    
+    <col style="width:50px">    
+  </colgroup>
+
+  <tr *ngFor="let r of dataBody; let i = index; trackBy: trackRow" [class.row-table-odd]="i % 2 === 1">
+    <!-- 1 -->
+    <td>{{ r.num }}</td>
+
+    <!-- 2 -->
+    <td>
+      <div class="d-flex flex-column">
+        <span class="fw-bold fs-7">{{ r.userName }}</span>
+      </div>
+    </td>
+    <td>
+      <div class="d-flex flex-column">
+        <span class="fw-bold fs-7">{{ r.fullName }}</span>
+      </div>
+    </td>
+
+    <!-- 4 -->
+    <!-- <td>
+      <div class="d-flex flex-row gap-2 align-items-center">
+        <div class="point-table" [class.bg-success]="r.status === 'Activo'" [class.bg-gray-600]="r.status !== 'Activo'"></div>
+        <span class="fw-bold" [class.text-success]="r.status === 'Activo'" [class.text-muted]="r.status !== 'Activo'">
+          {{ r.status }}
+        </span>
+      </div>
+    </td> -->
+    <td>
+      <div class="w-auto text-success rounded py-1 px-3" [ngStyle]="{'background-color': getTransparentColor(r.colorRGB),}"> 
+        <span [ngStyle]="{color: getSolidColor(r.colorRGB)}">{{r.status}}</span>
+      </div>
+    </td>
+
+    <!-- 5 -->
+    <td>
+      <div class="d-flex flex-column">
+        <span class="fw-bold">{{ r.rangeName }}</span>
+      </div>
+    </td>
+
+    <!-- 6 -->
+    <td>
+      <div class="d-flex flex-column">
+        <span class="fw-bold">{{ r.sponsorName || '—' }}</span>
+      </div>
+    </td>
+
+    <!-- 7 -->
+    <td>
+      <div class="d-flex flex-column">
+        <span class="fw-bold">{{ r.sponsorLevel || r.sponsorshipLevel }}</span>
+      </div>
+    </td>
+
+    <!-- 8 -->
+    <td>
+      <div class="d-flex flex-column">
+        <span class="fw-bold">{{ r.branchName }}</span>
+      </div>
+    </td>
+
+    <!-- 9 -->
+    <td>
+        <button type="button" class="btn btn-link detail-link" (click)="viewByPartner(r)">
+        <svg class="icon" viewBox="0 0 24 24">
+          <path d="M12 5c5.5 0 9.7 4.5 10.9 6-1.2 1.5-5.4 6-10.9 6S2.3 12.5 1.1 11C2.3 9.5 6.5 5 12 5zm0 3.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9zm0 2a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5z"/>
+        </svg>
+        Ver detalle
+      </button>
+    </td>
+  </tr>
+</app-table>
+
+<app-table-paginator *ngIf="length > 0"
+        [length]="length"
+        [pageIndex]="pageIndex"
+        [pageSize]="pageSize"
+        (pageChange)="onPageChange($event)"
+        (pageSizeChange)="onPageSizeChange($event)">
+</app-table-paginator>

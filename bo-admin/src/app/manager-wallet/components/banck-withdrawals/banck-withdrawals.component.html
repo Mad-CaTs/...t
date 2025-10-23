@@ -1,0 +1,392 @@
+<div class="navigation-tabs">
+    <div class="tab" [class.active]="activeTab === 'rvalidar'" (click)="setActiveTab('rvalidar')">
+        Retiros por validar
+    </div>
+    <div class="tab" [class.active]="activeTab === 'renvio'" (click)="setActiveTab('renvio')">
+        Aprovados por envio
+    </div>
+    <div class="tab" [class.active]="activeTab === 'rbanco'" (click)="setActiveTab('rbanco')">
+        Respuesta del banco
+    </div>
+    <div class="tab" [class.active]="activeTab === 'rprocesados'" (click)="setActiveTab('rprocesados')">
+        Retiros procesados
+    </div>
+</div>
+
+<div class="content">
+    <div *ngIf="activeTab === 'rvalidar'">
+        <div>
+            <div class="filters-container">
+                <div class="filters-grid">
+                    <div>
+                        <app-input class="w-100" label="Ingrese campo de búsqueda:" placeholder="Buscar por"
+                            type="search" [formGroup]="form" controlName="search" />
+                    </div>
+                    <div>
+                        <app-select label="Estado:" placeholder="Selecciona un opción" [options]="statusOpt"
+                            [formGroup]="form" controlName="status" class="w-100"></app-select>
+                    </div>
+                    <div>
+                        <label for="fecha" class="form-label fs-6 text-muted fw-bold">Fecha de Solicitud</label>
+                        <input type="date" id="fecha" class="form-control w-100" (change)="onDateChange($event)" />
+                    </div>
+                </div>
+                <div class="filters-grid">
+                    <div class="flex-fill">
+                        <app-select label="Tipo de moneda" placeholder="Selecciona un opción" [options]="currencyOpt"
+                            [formGroup]="form" controlName="currency" class="w-100"></app-select>
+                    </div>
+                    <div class="flex-fill period-selector-wrapper">
+                        <app-month-period-selector [formGroup]="form" controlName="cicles" periodsControlName="periods"
+                            [groupedOptions]="monthOptions" [placeholder]="'Selecciona un mes'"
+                            [label]="'Ciclos o periodos'" (selectionChange)="onPeriodsSelected($event)"
+                            class="w-25"></app-month-period-selector>
+                    </div>
+                    <div class="flex-fill">
+                        <app-select label="Estado de Revisión" placeholder="Selecciona un opción"
+                            [options]="reviewStatus" [formGroup]="form" controlName="reviewStatus"
+                            class="w-100"></app-select>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mt-6 gap-3">
+                <div class="d-flex flex-row gap-4">
+                    <button class="btn btn-secondary button-pre" type="submit" (click)="loadingPrevValidator()"
+                        [disabled]="total == 0 ? true : false">
+                        <div class="fixed-width-button">
+                            <div *ngIf="isLoading">
+                                <span class="spinner-border spinner-border-sm align-ms-2"></span>
+                            </div>
+                            <div *ngIf="!isLoading">
+                                <span>Pre validar</span>
+                            </div>
+                        </div>
+                    </button>
+                    <button class="btn btn-secondary button-pre" type="submit" (click)="sendBulkNotification()"
+                        [disabled]="isLoading || !isValid">
+                        <div class="fixed-width-button">
+                            <div *ngIf="isLoading">
+                                <span class="spinner-border spinner-border-sm align-ms-2"></span>
+                            </div>
+                            <div *ngIf="!isLoading">
+                                <span>Notificar y rechazar</span>
+                            </div>
+                        </div>
+                    </button>
+                </div>
+                <div class="d-flex flex-row align-items-end gap-4">
+                    <a class="text-secondary d-flex justify-content-center align-items-start gap-1"
+                        *ngIf="form.get('currency')?.value !== '2'">
+                        ({{ totalItems.dol }}) Solicitudes en Dólares
+                        <img src="assets/media/svg/retiro/currency-request.svg">
+                    </a>
+                    <a class="text-secondary d-flex justify-content-center align-items-start gap-1"
+                        *ngIf="form.get('currency')?.value !== '1'">
+                        ({{ totalItems.sol }}) Solicitudes en Soles
+                        <img src="assets/media/svg/retiro/currency-request.svg">
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <ng-container *ngIf="!loading; else loadingTemplate">
+            <ng-container *ngIf="table.length > 0; else empty">
+                <div class="table-wrapper">
+                    <table class="table-generic">
+                        <thead>
+                            <tr>
+                                <th style="width: 5%;">N°</th>
+                                <th>Fecha de registro</th>
+                                <th style="width: 10%;">N° de operación</th>
+                                <th>Nombres</th>
+                                <th style="width: 8%;">N° de doc.</th>
+                                <th style="width: 11%;">Monto enviado</th>
+                                <th>Cuenta destino</th>
+                                <th>Estado</th>
+                                <th>Estado de Revisión</th>
+                                <th style="width: 7%;">Detalle</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let row of table; let i = index ">
+                                <td>{{ i + 1 }}</td>
+                                <td>{{formatDate(row.fechSolicitud)}}</td>
+                                <td>{{row.idsolicitudebank}}</td>
+                                <td>{{row.nameHolder}} {{row.lastNameHolder}}</td>
+                                <td>{{row.numDocument}}</td>
+                                <td>${{row.money.toFixed(2)}}</td>
+                                <td>{{row.numberAccount}}</td>
+                                <td class="text-center">
+                                    <div [style.color]="getBorderColor(row.idBankStatus).color"
+                                        [style.background]="getBorderColor(row.idBankStatus).background" class="badge">
+                                        {{getNameOfStates(row.idBankStatus)}}
+                                    </div>
+                                </td>
+                                <td>{{row.reviewStatusDescription}}</td>
+                                <td class="actions">
+                                    <div class="content-eye">
+                                        <button class="btn-eye" (click)="viewDetail(row)">
+                                            <i class="bi bi-eye"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <ng-container *ngIf="table.length > 0;">
+                    <app-table-paginator [length]="total" [pageSize]="pageSize" [pageIndex]="pageIndex"
+                        (pageChange)="onPageChange($event)" (pageSizeChange)="onPageSizeChange($event)">
+                    </app-table-paginator>
+                </ng-container>
+            </ng-container>
+        </ng-container>
+        <ng-template #loadingTemplate>
+            <div class="d-flex py-8 justify-content-center align-items-center ">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Cargando...</span>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template #empty>
+            <app-empty-state message="No data"></app-empty-state>
+        </ng-template>
+    </div>
+    <div *ngIf="activeTab === 'renvio'">
+        <div>
+            <div>
+                <div class="filters-container">
+                    <div class="filters-grid">
+                        <div>
+                            <app-input class="w-100" label="Ingrese campo de búsqueda:" placeholder="Buscar por"
+                                type="search" [formGroup]="form" controlName="search" />
+                        </div>
+                        <div>
+                            <app-select label="Estado:" placeholder="Selecciona un opción" [options]="statusOpt"
+                                [formGroup]="form" controlName="status" class="w-100"></app-select>
+                        </div>
+                        <div>
+                            <label for="fecha" class="form-label fs-6 text-muted fw-bold">Fecha de Solicitud</label>
+                            <input type="date" id="fecha" class="form-control w-100" (change)="onDateChange($event)" />
+                        </div>
+                    </div>
+                    <div class="filters-grid">
+                        <div class="flex-fill">
+                            <app-select label="Tipo de moneda" placeholder="Selecciona un opción"
+                                [options]="currencyOpt" [formGroup]="form" controlName="currency"
+                                class="w-100"></app-select>
+                        </div>
+                        <div class="flex-fill period-selector-wrapper">
+                            <app-month-period-selector [formGroup]="form" controlName="cicles"
+                                periodsControlName="periods" [groupedOptions]="monthOptions"
+                                [placeholder]="'Selecciona un mes'" [label]="'Ciclos o periodos'"
+                                (selectionChange)="onPeriodsSelected($event)" class="w-25"></app-month-period-selector>
+                        </div>
+                        <div class="flex-fill">
+                            <app-select label="Estado de revisión" placeholder="Selecciona un opción"
+                                [options]="reviewStatus" [formGroup]="form" controlName="reviewStatus"
+                                class="w-100"></app-select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex flex-wrap gap-3 my-4">
+                <button class="btn btn-secondary" type="button"
+                    [disabled]="buttonLoadingTxt || loading || !table || table.length === 0"
+                    (click)="downloadTxtFile()">
+                    <div class="fixed-width-button">
+                        <div *ngIf="buttonLoadingTxt">
+                            <span class="spinner-border spinner-border-sm align-ms-2"></span>
+                        </div>
+                        <div *ngIf="!buttonLoadingTxt">
+                            <span>Archivo TXT</span>
+                        </div>
+                    </div>
+                </button>
+
+                <button class="btn btn-secondary" type="button"
+                    [disabled]="buttonLoadingExcel || loading || !table || table.length === 0"
+                    (click)="downloadExcelFile()">
+                    <div class="fixed-width-button">
+                        <div *ngIf="buttonLoadingExcel">
+                            <span class="spinner-border spinner-border-sm align-ms-2"></span>
+                        </div>
+                        <div *ngIf="!buttonLoadingExcel">
+                            <span>Archivo XLSX</span>
+                        </div>
+                    </div>
+                </button>
+            </div>
+        </div>
+        <ng-container *ngIf="!loading; else loadingTemplate">
+            <ng-container *ngIf="table.length > 0; else empty">
+                <div class="table-wrapper">
+                    <table class="table-generic">
+                        <thead>
+                            <tr>
+                                <th>N°</th>
+                                <th>Fecha de registro</th>
+                                <th>N° de operación</th>
+                                <th>Nombres</th>
+                                <th>N° de doc.</th>
+                                <th>Monto enviado</th>
+                                <th>Cuenta destino</th>
+                                <th>Estado</th>
+                                <th>Estado Revisión</th>
+                                <th>Detalle</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let row of table; let i = index ">
+                                <td>{{ i + 1 }}</td>
+                                <td>{{formatDate(row.fechSolicitud)}}</td>
+                                <td>{{row.idsolicitudebank}}</td>
+                                <td>{{row.nameHolder}} {{row.lastNameHolder}}</td>
+                                <td>{{row.numDocument}}</td>
+                                <td>${{row.money.toFixed(2)}}</td>
+                                <td>{{row.numberAccount}}</td>
+                                <td class="text-center">
+                                    <div [style.color]="getBorderColor(row?.idBankStatus).color"
+                                        [style.background]="getBorderColor(row?.idBankStatus).background" class="badge">
+                                        {{getNameOfStates(row?.idBankStatus)}}
+                                    </div>
+                                </td>
+                                <td>{{row.reviewStatusDescription}}</td>
+                                <td class="actions">
+                                    <div class="content-eye">
+                                        <button class="btn-eye" (click)="viewDetail(row)">
+                                            <i class="bi bi-eye"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <ng-container *ngIf="table.length > 0;">
+                    <app-table-paginator [length]="total" [pageSize]="pageSize" [pageIndex]="pageIndex"
+                        (pageChange)="onPageChange($event)" (pageSizeChange)="onPageSizeChange($event)">
+                    </app-table-paginator>
+                </ng-container>
+            </ng-container>
+        </ng-container>
+        <ng-template #loadingTemplate>
+            <div class="d-flex py-8 justify-content-center align-items-center">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Cargando...</span>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template #empty>
+            <app-empty-state message="No data"></app-empty-state>
+        </ng-template>
+    </div>
+    <div *ngIf="activeTab === 'rbanco'">
+        <app-bank-response-table [table]="table" [form]="form" [loading]="loading" [visiblePages]="pages"
+            [statusOpt]="statusOpt" [formatDate]="formatDate" [viewDetail]="viewDetailBound" [pageIndex]="pageIndex"
+            [prevPage]="prevPage" [nextPage]="nextPage" [goToPage]="goToPage" [totalPages]="this.totalPages"
+            (searchTriggered)="onSearchAutomatic()" (dataImported)="onDataImported()" [onPageChange]="onPageChangeBound"
+            [onPageSizeChange]="onPageSizeChangeBound" [total]="total" [pageSize]="pageSize"
+            [allBankStatuses]="allBankStatuses">
+        </app-bank-response-table>
+    </div>
+    <div *ngIf="activeTab === 'rprocesados'">
+        <div class="row">
+            <div class="filters-container">
+                <div class="filters-grid">
+                    <div>
+                        <app-input class="w-100" label="Ingrese campo de búsqueda:" placeholder="Buscar por"
+                            type="search" [formGroup]="form" controlName="search" />
+                    </div>
+                    <div>
+                        <app-select label="Estado:" placeholder="Selecciona un opción" [options]="statusOpt"
+                            [formGroup]="form" controlName="status" class="w-100"></app-select>
+                    </div>
+                    <div>
+                        <label for="fecha" class="form-label fs-6 text-muted fw-bold">Fecha de Solicitud</label>
+                        <input type="date" id="fecha" class="form-control w-100" (change)="onDateChange($event)" />
+                    </div>
+                </div>
+                <div class="filters-grid">
+                    <div class="flex-fill">
+                        <app-select label="Tipo de moneda" placeholder="Selecciona un opción" [options]="currencyOpt"
+                            [formGroup]="form" controlName="currency" class="w-100"></app-select>
+                    </div>
+                    <div class="flex-fill period-selector-wrapper">
+                        <app-month-period-selector [formGroup]="form" controlName="cicles" periodsControlName="periods"
+                            [groupedOptions]="monthOptions" [placeholder]="'Selecciona un mes'"
+                            [label]="'Ciclos o periodos'"
+                            (selectionChange)="onPeriodsSelected($event)"></app-month-period-selector>
+                    </div>
+                    <div class="flex-fill">
+                        <app-select label="Estado de revisión" placeholder="Selecciona un opción"
+                            [options]="reviewStatus" [formGroup]="form" controlName="reviewStatus"
+                            class="w-100"></app-select>
+                    </div>
+                </div>
+            </div>
+            <ng-container *ngIf="!loading; else loadingTemplate">
+                <ng-container *ngIf="table.length > 0; else empty">
+                    <div class="table-wrapper">
+                        <table class="table-generic">
+                            <thead>
+                                <tr>
+                                    <th>N°</th>
+                                    <th>Fecha de registro</th>
+                                    <th>N° de operación</th>
+                                    <th>Nombres</th>
+                                    <th>N° de doc.</th>
+                                    <th>Monto enviado</th>
+                                    <th>Cuenta destino</th>
+                                    <th>Estado</th>
+                                    <th>Estado de Revisión</th>
+                                    <th>Detalle</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let row of table; let i = index ">
+                                    <td>{{ i + 1 }}</td>
+                                    <td>{{formatDate(row.fechSolicitud)}}</td>
+                                    <td>{{row.idsolicitudebank}}</td>
+                                    <td>{{row.nameHolder}} {{row.lastNameHolder}}</td>
+                                    <td>{{row.numDocument}}</td>
+                                    <td>${{row.money.toFixed(2)}}</td>
+                                    <td>{{row.numberAccount}}</td>
+                                    <td class="text-center">
+                                        <div [style.color]="getBorderColor(row.idBankStatus).color"
+                                            [style.background]="getBorderColor(row.idBankStatus).background"
+                                            class="badge">
+                                            {{getNameOfStates(row.idBankStatus)}}
+                                        </div>
+                                    </td>
+                                    <td>{{row.reviewStatusDescription}}</td>
+                                    <td class="actions">
+                                        <div class="content-eye">
+                                            <button class="btn-eye" (click)="viewDetail(row)">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <ng-container *ngIf="table.length > 0;">
+                        <app-table-paginator [length]="total" [pageSize]="pageSize" [pageIndex]="pageIndex"
+                            (pageChange)="onPageChange($event)" (pageSizeChange)="onPageSizeChange($event)">
+                        </app-table-paginator>
+                    </ng-container>
+                </ng-container>
+            </ng-container>
+            <ng-template #loadingTemplate>
+                <div class="d-flex py-8 justify-content-center align-items-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Cargando...</span>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template #empty>
+                <app-empty-state message="No data"></app-empty-state>
+            </ng-template>
+        </div>
+    </div>

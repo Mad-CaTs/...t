@@ -1,0 +1,1 @@
+export * from './validate-docs/validate-docs.component'

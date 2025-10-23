@@ -1,0 +1,85 @@
+<div class="d-flex flex-column w-100 gap-6" *ngIf="!openNewDetalle">
+	<!--List | Filter-->
+	<h4 class="fs-5 text-black fw-medium m-0">Buscador</h4>
+	<div class="w-100 d-flex gap-4">
+		<app-select
+			class="w-100"
+			label="Familia de paquetes:"
+			placeholder="Buscar por"
+			[options]="familyPackageOptions"
+			name="family"
+			controlName="family"
+			[formGroup]="form"
+		/>
+		<app-select
+			class="w-100"
+			label="Version:"
+			placeholder="Numero de version"
+			[options]="versionOptions"
+			name="version"
+			controlName="version"
+			[formGroup]="form"
+		/>
+	</div>
+	<div class="w-100 d-flex justify-content-end align-items-center gap-4">
+		<button class="btn btn-secondary" type="button" (click)="onSearch()">Buscar</button>
+	</div>
+	<!--Table-->
+	<table-pagination
+		class="w-100 d-block mt-4"
+		[count]="table.data.length"
+		[refresh]="refresh"
+		[itemsPerPage]="5"
+		[hasChildren]="true"
+		(pageChanged)="onPageChange($event)"
+	>
+		<button class="btn btn-secondary" type="button" (click)="onCreate()">Agregar detalle</button>
+		<button class="btn btn-secondary" type="button" (click)="onRefresh()">Actualizar</button>
+	</table-pagination>
+	<!--Table | Table-->
+	<app-common-table
+		class="w-100 d-block mt-4"
+		[headers]="table.headers"
+		[checkedAll]="table.checkedAll"
+		[headersMinWidth]="table.headersMinWidth"
+		[noCheckboxes]="table.noCheckBoxes"
+		[headersArrows]="table.headersArrows"
+		(onCheckedAll)="table.changeCheckedAll($event)"
+	>
+		<tr
+			class="w-100 d-flex align-items-center row-tr row-tr__{{ i }} "
+			*ngFor="let item of pagedData; let i = index"
+		>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.name }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.code }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.months }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">$. {{ item.price.toFixed(2) }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.cuotes }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">$. {{ item.initialPrice.toFixed(2) }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">$. {{ item.cuotePrice.toFixed(2) }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.volume }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.volumeByFee }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.intialCuoteN }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.actionsN }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.pointsFree }} USD</td>
+
+			<td class="w-100 d-flex justify-content-center">
+				<i class="bi bi-pencil-fill fs-4 cursor-pointer" (click)="onEdit(item.id, item)"></i>
+			</td>
+		</tr>
+	</app-common-table>
+</div>
+
+<div class="d-flex flex-column w-100 gap-6" *ngIf="openNewDetalle">
+	<div class="content-detail-rewards">
+		<span *ngIf="!idEdit || idEdit == 0">Agregar detalle</span>
+		<span *ngIf="idEdit && idEdit > 0">Editar detalle</span>
+		<app-detail-detail-page
+			(closeChange)="closeComponent($event)"
+			[familyPackageOptions]="familyPackageOptionsSend"
+			[id]="idEdit"
+			[currentVersion]="this.form.get('version')?.value"
+		>
+		</app-detail-detail-page>
+	</div>
+</div>

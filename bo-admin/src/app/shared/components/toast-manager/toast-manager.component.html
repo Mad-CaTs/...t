@@ -1,0 +1,49 @@
+<div
+	*ngFor="let toast of toastService.toasts$ | async"
+	class="d-flex flex-row gap-4 w-auto position-relative border p-6 rounded toast"
+	[class.toast--active]="toast.active"
+	[class.toast--deactivate]="!toast.active"
+	[class.border-success]="toast.kind === 'success'"
+	[class.border-warning]="toast.kind === 'warning'"
+	[class.border-danger]="toast.kind === 'error'"
+	[class.border-primary]="toast.kind === 'info'"
+	[class.toast--success]="toast.kind === 'success'"
+	[class.toast--warning]="toast.kind === 'warning'"
+	[class.toast--error]="toast.kind === 'error'"
+	[class.toast--info]="toast.kind === 'info'"
+>
+	<i
+		class="bi bi-x fa-2x close-icon-toast cursor-pointer"
+		(click)="toastService.closeToast(toast.id)"
+		[class.text-success]="toast.kind === 'success'"
+		[class.text-warning]="toast.kind === 'warning'"
+		[class.text-danger]="toast.kind === 'error'"
+		[class.text-primary]="toast.kind === 'info'"
+	></i>
+	<i
+		class="bi bi-check2-circle"
+		[class.bi-check2-circle]="toast.kind === 'success'"
+		[class.bi-exclamation-triangle]="toast.kind === 'warning'"
+		[class.bi-backspace-reverse]="toast.kind === 'error'"
+		[class.bi-info-circle]="toast.kind === 'info'" 
+		[class.text-success]="toast.kind === 'success'"
+		[class.text-warning]="toast.kind === 'warning'"
+		[class.text-danger]="toast.kind === 'error'"
+		[class.text-primary]="toast.kind === 'info'"
+		style="font-size: 3em"
+	></i>
+	<div class="d-flex flex-column gap-2">
+		<h3
+			class="fs-3 text-uppercase m-0"
+			[class.text-success]="toast.kind === 'success'"
+			[class.text-warning]="toast.kind === 'warning'"
+			[class.text-danger]="toast.kind === 'error'"
+			[class.text-primary]="toast.kind === 'info'"
+		>
+			{{ getTitle(toast.kind) }}
+		</h3>
+		<p class="fs-6 m-0" style="width: 300px">
+			{{ toast.content }}
+		</p>
+	</div>
+</div>

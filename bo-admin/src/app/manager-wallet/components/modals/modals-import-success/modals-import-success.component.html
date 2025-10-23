@@ -1,0 +1,24 @@
+<app-modal 
+  [title]="''" 
+  class="container-modal position-relative">
+  
+  <div 
+    class="d-flex flex-column justify-content-center align-items-start gap-6 custom-blue">
+
+      <div>
+        <img src="assets/media/svg/retiro/succefull.svg" alt="Descarga exitosa" class="container-image">
+      </div>
+      <div class="text-start p-3">
+        <h2 class="mb-3">Importado Correctamente</h2>
+        <p class="text-muted">Se importaron {{ recordCount }}<strong> filas</strong> correctamente.</p>
+      </div>
+
+      <button 
+        class="btn-secondary btn w-100" 
+        type="button"
+        (click)="continuar()">
+        Continuar
+      </button>
+    
+  </div>
+</app-modal>

@@ -1,0 +1,69 @@
+<app-modal
+	[title]="title"
+	[description]="'Revisa la información para validar'"
+	[showIcon]="true"
+	[icon]="'bi bi-eye'">
+	<div class="d-flex flex-column w-full gap-6 align-items-center">
+		<div class="d-flex flex-column align-items-start gap-4 w-100 px-4 border border-3 rounded p-3">
+			<p class="fw-bolder fs-6 mb-0 text-primary">Datos del solicitado</p>
+			<div class="d-flex justify-content-between w-100 bg-light-gray">
+				<span class="text-black fw-bold">Tipo de traspaso</span>
+				<span class="text-black">{{ data.transferTypeName }}</span>
+			</div>
+			<div *ngIf="data.idTransferType !== 4"  class="d-flex justify-content-between w-100 bg-light-gray">
+				<span class="text-black fw-bold">Socio nuevo</span>
+				<span class="text-black">{{ data.user_to_nombre }} {{ data.user_to_apellido }}</span>
+			</div>
+			<div *ngIf="data.idTransferType === 4" class="d-flex justify-content-between w-100 bg-light-gray">
+				<span class="text-black fw-bold">Socio vigente</span>
+				<span class="text-black">Alexandra Nicole Vera Cevero</span>
+			</div>
+			<div *ngIf="data.idTransferType === 4" class="d-flex justify-content-between w-100 bg-light-gray">
+				<span class="text-black fw-bold">Usuario</span>
+				<span class="text-black">VA050498</span>
+			</div>
+
+			<div class="d-flex justify-content-between w-100 bg-light-gray">
+				<span class="text-black fw-bold">Fecha de solicitud</span>
+				<span class="text-black">{{ data.requestDate | date : 'dd/MM/yyyy' }}</span>
+			</div>
+
+			<!-- <div class="d-flex justify-content-between w-100 bg-light-gray">
+				<span class="text-black fw-bold">Motivo</span>
+				<span class="text-black">{{ data.reason }}</span>
+			</div> -->
+		</div>
+
+		<div class="d-flex flex-column align-items-start gap-4 w-100 px-4 border border-3 rounded p-3">
+			<p class="fw-bolder fs-6 mb-0 text-primary">Datos del solicitante</p>
+			<div class="d-flex justify-content-between w-100 bg-light-gray">
+				<span class="text-black fw-bold">Nombres y apellidos</span>
+				<span class="text-black">{{ data.user_from_nombre }} {{ data.user_from_last_name }}</span>
+			</div>
+
+			<div class="d-flex justify-content-between w-100 bg-light-gray">
+				<span class="text-black fw-bold">Patrocinador</span>
+				<span class="text-black">{{ data.sponsor_nombre }} {{ data.sponsor_last_name }}</span>
+			</div>
+
+			<div  class="d-flex justify-content-between w-100 bg-light-gray">
+				<span class="text-black fw-bold">Username</span>
+				<span class="text-black">{{ data.username_from }}</span>
+			</div>
+			<div *ngIf="data.idTransferType === 2" class="d-flex justify-content-between w-100 bg-light-gray">
+				<span class="text-black fw-bold">Perfil a traspasar</span>
+				<span class="text-black"
+					>
+				{{data.usernameChild}}</span
+				>
+			</div> 
+			<div *ngIf="data.idTransferType === 3" class="d-flex justify-content-between w-100 bg-light-gray">
+				<span class="text-black fw-bold">Membresías a traspasar</span>
+				<span class="text-black"> {{data.name_memberhip}}</span>
+			</div>
+		</div>
+		<div class="d-flex gap-4 justify-content-center align-items-center w-100">
+			<button class="btn btn-secondary" type="submit" (click)="submit()">Confirmar solicitud</button>
+		</div>
+	</div>
+</app-modal>

@@ -9,6 +9,7 @@ import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -35,9 +36,6 @@ public class PaymentListViewEntity {
     @Column("nrodocument")
     private String nrodocument;
 
-    @Column("payment_date")
-    private LocalDateTime paymentDate;
-
     @Column("operation_number")
     private String operationNumber;
 
@@ -50,8 +48,23 @@ public class PaymentListViewEntity {
     @Column("installment_num")
     private Integer installmentNum;
 
-    @Column("is_initial")
-    private Boolean isInitial;
+    @Column("sub_total_amount")
+    private BigDecimal subTotalAmount;
+
+    @Column("commission_amount")
+    private BigDecimal commissionAmount;
+
+    @Column("rate_amount")
+    private BigDecimal rateAmount;
+
+    @Column("total_amount")
+    private BigDecimal totalAmount;
+
+    @Column("due_date")
+    private LocalDate dueDate;
+
+    @Column("payment_date")
+    private LocalDateTime paymentDate;
 
     @Column("voucher_image_url")
     private String voucherImageUrl;

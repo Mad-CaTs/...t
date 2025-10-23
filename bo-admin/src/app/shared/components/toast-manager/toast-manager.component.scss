@@ -1,0 +1,50 @@
+.close-icon-toast {
+	position: absolute;
+	top: 4px;
+	right: 4px;
+}
+
+.toast {
+	transition: all ease-in-out 500ms;
+
+	// animation: 5s linear bornToast;
+}
+
+.toast--success {
+	background-color: #f3f8f5;
+}
+.toast--warning {
+	background-color: #f8f7f3;
+}
+.toast--error {
+	background-color: #f8f3f3;
+}
+.toast--info {
+	background-color: #e3f2fd;
+}
+
+.toast--active {
+	transform: translateX(0);
+}
+
+.toast--deactivate {
+	transform: translateX(150%);
+}
+
+@keyframes bornToast {
+	0% {
+		transform: translateX(150%);
+	}
+
+	7% {
+		transform: translateX(0);
+	}
+
+	93% {
+		transform: translateX(0);
+	}
+
+	100% {
+		transform: translateX(150%);
+	}
+}

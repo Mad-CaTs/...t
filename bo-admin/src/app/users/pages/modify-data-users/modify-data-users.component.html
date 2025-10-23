@@ -1,0 +1,22 @@
+<form [formGroup]="form" class="card card-xxl-stretch mb-5 mb-xl-8 d-flex flex-column gap-4 p-8">
+	<h1 class="text-primary text-uppercase">Corregir datos</h1>
+	<div class="d-flex align-items-center gap-3">
+		<app-input iconRigth="bi bi-search" placeholder="Busca un usuario" label="Buscar" [formGroup]="form"
+			controlName="search" class="flex-grow-1 custom-input"></app-input>
+		<div class="mt-7">
+			<button type="button" class="btn btn-outline-secondary" [disabled]="buttonLoading" (click)="onSearch()">
+				<div class="fixed-width-button">
+					<div *ngIf="buttonLoading">
+						<span class="spinner-border spinner-border-sm align-middle text-center ms-2"></span>
+					</div>
+					<div *ngIf="!buttonLoading">
+						<span>Buscar</span>
+					</div>
+				</div>
+			</button>
+		</div>
+	</div>
+	<p class="text-muted">Busca socios y corrige sus datos</p>
+</form>
+
+<app-fix-data-row [dataBody]="tableData" (onClickEdit)="onEdit($event)"></app-fix-data-row>

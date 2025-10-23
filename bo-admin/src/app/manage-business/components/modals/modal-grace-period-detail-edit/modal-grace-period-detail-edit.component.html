@@ -1,0 +1,53 @@
+<app-modal [title]="'Actualización de Cronograma'">
+	<form [formGroup]="form" class="d-flex w-100 flex-column gap-6">
+		<app-select
+			placeholder="Seleccione una opción"
+			label="Aplicar periodo de gracia"
+			[options]="gracePeriodOpt"
+			controlName="gracePeriod"
+			[formGroup]="form"
+			class="w-100"
+		></app-select>
+		<app-input
+			class="w-100"
+			label="Comisión"
+			placeholder="0.00"
+			[formGroup]="form"
+			controlName="commission"
+			[isCurrency]="true"
+		/>
+		<div class="d-flex flex-row w-full gap-6">
+			<app-input-date
+				class="w-100"
+				label="Fecha de Inicio"
+				[formGroup]="form"
+				controlName="startDate"
+			/>
+			<app-input-date class="w-100" label="Fecha Límite" [formGroup]="form" controlName="limitDate" />
+		</div>
+		<app-select
+			placeholder="Seleccione una opción"
+			label="Suscripción Actual"
+			[options]="suscriptionOpt"
+			controlName="suscription"
+			[formGroup]="form"
+			class="w-100"
+		></app-select>
+
+		<app-select
+			placeholder="Seleccione una opción"
+			label="Migrar a"
+			[options]="migrateToOpt"
+			controlName="migrateTo"
+			[formGroup]="form"
+			class="w-100"
+		></app-select>
+
+		<div class="w-100 d-flex justify-content-center align-items-center gap-4">
+			<button class="btn btn-secondary" type="submit">Guardar cambios</button>
+			<button class="btn btn-outline-secondary" type="button" (click)="instanceModal.close()">
+				Descartar cambios
+			</button>
+		</div>
+	</form>
+</app-modal>

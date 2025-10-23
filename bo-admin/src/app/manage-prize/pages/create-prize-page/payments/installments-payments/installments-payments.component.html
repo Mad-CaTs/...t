@@ -1,0 +1,40 @@
+<div class="flex flex-column gap-6 p-6 bg-white w-100">
+
+    <filter-generic
+        [filters]="filters"
+        [values]="values"
+        [columnsDesktop]="4"
+        [showActionButton]="false"
+        [showClearButton]="true"
+        [clearLabel]="'Limpiar'"
+        [extraButtons]="extraButtons"
+        (valuesChange)="onValuesChange($event)"
+        (extraAction)="onExtraAction($event)"
+    ></filter-generic>
+
+    <ng-container *ngIf="totalFiltered > 0; else emptyState">
+        <app-table-generic
+            [columns]="columns"
+            [keys]="keys"
+            [data]="pagedData"
+            [columnWidths]="widths"
+            [freezeOverflow]="true"
+            [pageIndex]="pageIndex"
+            [pageSize]="pageSize"
+            [showActions]="false"
+        ></app-table-generic>
+
+        <app-table-paginator
+            [length]="totalFiltered"
+            [pageSize]="pageSize"
+            [pageIndex]="pageIndex"
+            (pageChange)="onPageChange($event)"
+            (pageSizeChange)="onPageSizeChange($event)"
+        ></app-table-paginator>
+    </ng-container>
+
+    <ng-template #emptyState>
+        <app-empty-state message="No data"></app-empty-state>
+    </ng-template>
+</div>
+

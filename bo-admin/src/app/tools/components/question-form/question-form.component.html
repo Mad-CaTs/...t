@@ -1,0 +1,141 @@
+<div class="form-grid" [formGroup]="formGroup">
+	<div class="form-row">
+		<div class="form-group">
+			<label for="question" class="form-label">Pregunta</label>
+			<input
+				type="text"
+				class="form-input"
+				placeholder="Ingrese la pregunta"
+				formControlName="question"
+				(keydown)="
+					preventLeadingSpace($event); preventDoubleSpace($event); preventLongSegmentOnType($event)
+				"
+				(paste)="preventLongSegmentOnPaste($event)"
+			/>
+			<div
+				class="error"
+				*ngIf="formGroup.get('question')?.touched && formGroup.get('question')?.errors?.['required']"
+			>
+				Este campo es obligatorio.
+			</div>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label>Respuesta</label>
+		<textarea
+			formControlName="description"
+			rows="4"
+			placeholder="Ingrese respuesta"
+			(keydown)="preventLeadingSpace($event); preventDoubleSpace($event)"
+		></textarea>
+		<div
+			class="error"
+			*ngIf="formGroup.get('description')?.touched && formGroup.get('description')?.errors?.['required']"
+		>
+			La respuesta es obligatoria.
+		</div>
+	</div>
+
+	<div class="form-group flyer-group">
+		<label>Imagen de la pregunta</label>
+		<div
+			class="flyer-upload-placeholder"
+			(click)="fileInput.click()"
+			(drop)="onDrop($event)"
+			(dragover)="$event.preventDefault(); onFlyerDragOver(true)"
+			(dragleave)="onFlyerDragOver(false)"
+			[class.dragover]="imageDragOver"
+		>
+			<ng-container *ngIf="formGroup.get('image')?.value as image; else flyerEmpty">
+				<div class="flyer-upload-success">
+					<div class="flyer-upload-header">
+						<i class="bi bi-image"></i>
+						<span class="flyer-upload-name">
+							{{
+								image.name.length > 20
+									? image.name.slice(0, 8) + '....' + image.name.slice(-4)
+									: image.name
+							}}
+						</span>
+						<button
+							type="button"
+							class="flyer-remove"
+							(click)="removeImage(); $event.stopPropagation()"
+						>
+							<i class="bi bi-x-lg"></i>
+						</button>
+					</div>
+					<div class="flyer-upload-divider"></div>
+					<button
+						*ngIf="!imageDragOver"
+						type="button"
+						class="flyer-upload-retry"
+						(click)="fileInput.click(); $event.stopPropagation()"
+					>
+						Volver a subir
+					</button>
+					<span *ngIf="imageDragOver" class="flyer-upload-dragover-msg"
+						>Suelta aquí para reemplazar</span
+					>
+				</div>
+			</ng-container>
+			<ng-template #flyerEmpty>
+				<span *ngIf="!imageDragOver">📎 Subir o arrastrar aquí</span>
+				<span *ngIf="imageDragOver">Suelta aquí</span>
+				<input
+					#fileInput
+					type="file"
+					style="display: none"
+					(change)="onImageSelected($event)"
+					accept=".png,.jpg,.jpeg,.webp"
+				/>
+			</ng-template>
+			<input
+				#fileInput
+				type="file"
+				style="display: none"
+				(change)="onImageSelected($event)"
+				accept=".png,.jpg,.jpeg,.webp"
+			/>
+		</div>
+		<!-- Error: tipo de archivo inválido -->
+		<div class="error" *ngIf="formGroup.get('image')?.errors?.['invalidType']">
+			Formato no válido. Solo png, jpg, jpeg y webp.
+		</div>
+		<!-- Error por tamaño -->
+		<div class="error" *ngIf="invalidImage && !formGroup.get('image')?.errors?.['invalidType']">
+			El archivo supera el tamaño máximo permitido (1.2 MB).<br />
+			Tamaño subido: {{ invalidImage.size / (1024 * 1024) | number : '1.2-2' }} MB.
+		</div>
+		<div
+			class="error"
+			*ngIf="formGroup.get('image')?.touched && formGroup.get('image')?.errors?.['required']"
+		>
+			La imagen es obligatoria.
+		</div>
+		<small class="flyer-instructions">
+			Formatos admitidos: png, jpg, jpeg y webp. Tamaño máximo: 1.2 MB.
+		</small>
+		<!-- Vista previa del archivo seleccionado o url existente -->
+		<div class="flyer-preview" *ngIf="formGroup.get('image')?.value">
+			<img
+				[src]="
+					formGroup.get('image')?.value.isUrl ? formGroup.get('image')?.value.url : imagePreviewURL
+				"
+				alt="Flyer preview"
+			/>
+			<div class="flyer-details">
+				<div class="flyer-name">
+					{{ formGroup.get('image')?.value.name }}
+				</div>
+				<div class="flyer-size" *ngIf="!formGroup.get('image')?.value.isUrl">
+					{{ formGroup.get('image')?.value.size / 1024 | number : '1.1-1' }} KB
+				</div>
+			</div>
+			<button type="button" class="flyer-remove" (click)="removeImage()">
+				<i class="bi bi-trash"></i>
+			</button>
+		</div>
+	</div>
+</div>

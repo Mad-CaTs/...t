@@ -1,0 +1,19 @@
+<!-- src/app/shared/logo-spinner/logo-spinner.component.html -->
+<div
+  class="spinner-wrapper"
+  [class.fullscreen]="fullscreen"
+  [style.width]="!fullscreen ? size : null"
+  [style.height]="!fullscreen ? size : null"
+  tabindex="-1"
+  role="status"
+  aria-live="polite"
+  [attr.aria-busy]="visible"
+  [class.loading]="visible"
+  *ngIf="visible"
+>
+  <!-- Logotipo SVG inyectado; mantiene animaciones .left / .right -->
+  <div [innerHTML]="svgContent"></div>
+
+  <!-- Halo y anillo exterior se dibujan por CSS (::after / ::before) -->
+  <span class="sr-only">Cargando…</span>
+</div>

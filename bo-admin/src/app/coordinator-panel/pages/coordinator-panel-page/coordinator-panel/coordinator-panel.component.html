@@ -1,0 +1,254 @@
+<!--Filters-->
+<form [formGroup]="form" class="d-flex w-100 flex-column gap-6">
+	<h4 class="fs-5 text-black fw-normal m-0">Buscador</h4>
+	<div class="d-flex flex-column flex-md-row gap-6">
+		<app-input
+			class="w-100"
+			label="Ingrese campo de búsqueda:"
+			placeholder="Buscar por"
+			type="search"
+			[formGroup]="form"
+			controlName="search"
+			helper="Puedes buscarlo por nombre, usuario o número de documento."
+		/>
+		<div class="w-100 d-flex flex-column gap-2">
+			<span class="fs-6 text-black fw-normal">Buscar como:</span>
+			<div class="d-flex align-items-center gap-3 px-4 py-2">
+				<input
+					class="form-check-input cursor-pointer"
+					type="radio"
+					name="searchAs"
+					id="searchAsUser"
+					formControlName="searchAs"
+					value="1"
+				/>
+				<label class="fs-6 fw-normal text-black" for="searchAsUser">Usuario</label>
+				<input
+					class="form-check-input cursor-pointer"
+					type="radio"
+					name="searchAs"
+					formControlName="searchAs"
+					id="searchAsPartner"
+					value="2"
+				/>
+				<label class="fs-6 fw-normal text-black" for="searchAsPartner">Patrocinador</label>
+			</div>
+		</div>
+	</div>
+	<div class="d-flex flex-column flex-md-row gap-6">
+		<app-select
+			class="w-100"
+			label="Estado del Ticket"
+			placeholder="Seleccione una opción"
+			[options]="statusTicketOpt"
+			[formGroup]="form"
+			controlName="statusTicket"
+		/>
+		<app-select
+			class="w-100"
+			label="Tipo de Ticket"
+			placeholder="Seleccione una opción"
+			[options]="typeTicketOpt"
+			[formGroup]="form"
+			controlName="typeTicket"
+		/>
+	</div>
+	<div class="d-flex justify-content-end">
+		<button class="btn btn-secondary" type="submit">Buscar</button>
+	</div>
+</form>
+<!--Table | Pagination-->
+<div class="position-relative w-100 d-flex mt-2">
+	<table-pagination [noTextBtn]="true" class="w-100 mt-20 mt-md-2 d-block" />
+	<div class="d-flex gap-4 position-absolute top-0 start-0">
+		<button class="btn btn-danger">Flujo de Ticket</button>
+		<button class="btn btn-primary">Panel de Coordinador</button>
+	</div>
+</div>
+<!--Table | Table-->
+<app-common-table
+	class="w-100 d-block mt-4"
+	[headers]="table.headers"
+	[checkedAll]="table.checkedAll"
+	[headersMinWidth]="table.headersMinWidth"
+	[headersMaxWidth]="table.headersMaxWidth"
+	[noCheckboxes]="table.noCheckBoxes"
+	[firstEmpty]="true"
+	(onCheckedAll)="table.changeCheckedAll($event)"
+>
+	<tr class="w-100 d-flex py-2 align-items-center" *ngFor="let item of table.data; let i = index">
+		<td class="d-flex justify-content-center">
+			<div class="form-check-sm form-check-custom form-check-solid">
+				<input
+					class="form-check-input cursor-pointer"
+					type="radio"
+					name="coordinator-panel-item-radio"
+					[value]="item.id"
+					[(ngModel)]="selectedRowId"
+					(change)="onRowSelect(item.id)"
+				/>
+			</div>
+		</td>
+		<td
+			class="w-100 text-gray-900 text-center fs-6"
+			[ngStyle]="{
+				'min-width.px': table.headersMinWidth[0],
+				'max-width.px': table.headersMaxWidth[0]
+			}"
+		>
+			{{ i + 1 }}
+		</td>
+		<td
+			class="w-100 text-gray-900 text-center fs-6"
+			[ngStyle]="{
+				'min-width.px': table.headersMinWidth[1],
+				'max-width.px': table.headersMaxWidth[1]
+			}"
+		>
+			{{ item.assignmentDate }}
+		</td>
+		<td
+			class="w-100 text-gray-900 text-center fs-6"
+			[ngStyle]="{
+				'min-width.px': table.headersMinWidth[2],
+				'max-width.px': table.headersMaxWidth[2]
+			}"
+		>
+			<a href="">{{ item.ticketNumber }}</a>
+		</td>
+		<td
+			class="w-100 text-gray-900 text-center fs-6"
+			[ngStyle]="{
+				'min-width.px': table.headersMinWidth[3],
+				'max-width.px': table.headersMaxWidth[3],
+				'background-color':
+					item.ticketStatus === 'Active'
+						? '#fff3cd'
+						: item.ticketStatus === 'In Progress'
+						? '#cfe2ff'
+						: item.ticketStatus === 'Inactive'
+						? '#f8d7da'
+						: '#ffffff',
+				color:
+					item.ticketStatus === 'Active'
+						? '#856404'
+						: item.ticketStatus === 'In Progress'
+						? '#084298'
+						: item.ticketStatus === 'Inactive'
+						? '#721c24'
+						: '#000000',
+				'border-radius': '5px',
+				padding: '0.5rem 1rem'
+			}"
+		>
+			{{ item.ticketStatus }}
+		</td>
+		<td
+			class="w-100 text-gray-900 text-center fs-6"
+			[ngStyle]="{
+				'min-width.px': table.headersMinWidth[4],
+				'max-width.px': table.headersMaxWidth[4]
+			}"
+		>
+			{{ item.typology }}
+		</td>
+		<td
+			class="w-100 text-gray-900 text-center fs-6"
+			[ngStyle]="{
+				'min-width.px': table.headersMinWidth[5],
+				'max-width.px': table.headersMaxWidth[5]
+			}"
+		>
+			{{ item.requestedFrom }}
+		</td>
+		<td
+			class="w-100 text-gray-900 text-center fs-6"
+			[ngStyle]="{
+				'min-width.px': table.headersMinWidth[6],
+				'max-width.px': table.headersMaxWidth[6]
+			}"
+		>
+			{{ item.requester }}
+		</td>
+		<td
+			class="w-100 text-gray-900 text-center fs-6"
+			[ngStyle]="{
+				'min-width.px': table.headersMinWidth[7],
+				'max-width.px': table.headersMaxWidth[7]
+			}"
+			style="word-break: break-all;"
+		>
+			{{ item.username }}
+		</td>
+		<td
+			class="w-100 text-gray-900 text-center fs-6"
+			[ngStyle]="{
+				'min-width.px': table.headersMinWidth[8],
+				'max-width.px': table.headersMaxWidth[8]
+			}"
+		>
+			{{ item.fullName }}
+		</td>
+		<td
+			class="w-100 text-gray-900 text-center fs-6"
+			[ngStyle]="{
+				'min-width.px': table.headersMinWidth[9],
+				'max-width.px': table.headersMaxWidth[9]
+			}"
+		>
+			{{ item.dni }}
+		</td>
+		<td
+			class="w-100 text-gray-900 text-center fs-6"
+			[ngStyle]="{
+				'min-width.px': table.headersMinWidth[10],
+				'max-width.px': table.headersMaxWidth[10],
+				'background-color':
+					item.requestStatus === 'Active'
+						? '#fff3cd'
+						: item.requestStatus === 'In Progress'
+						? '#cfe2ff'
+						: item.requestStatus === 'Inactive'
+						? '#f8d7da'
+						: '#ffffff',
+				color:
+					item.requestStatus === 'Active'
+						? '#856404'
+						: item.requestStatus === 'In Progress'
+						? '#084298'
+						: item.requestStatus === 'Inactive'
+						? '#721c24'
+						: '#000000',
+				'border-radius': '5px',
+				padding: '0.5rem 1rem'
+			}"
+		>
+			{{ item.requestStatus }}
+		</td>
+		<td
+			class="w-100 text-gray-900 text-center fs-6 px-3"
+			[ngStyle]="{
+				'min-width.px': table.headersMinWidth[11],
+				'max-width.px': table.headersMaxWidth[11]
+			}"
+		>
+			<app-select
+				class="w-100"
+				[formGroup]="form"
+				placeholder="Seleccione"
+				[options]="assignedToOpt"
+				controlName="assignedTo"
+				[disabled]="selectedRowId !== item.id"
+			/>
+		</td>
+		<td
+			class="w-100 text-gray-900 text-center fs-6"
+			[ngStyle]="{
+				'min-width.px': table.headersMinWidth[12],
+				'max-width.px': table.headersMaxWidth[12]
+			}"
+		>
+			{{ item.obs }}
+		</td>
+	</tr>
+</app-common-table>

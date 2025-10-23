@@ -1,0 +1,22 @@
+<ng-template *ngIf="loading">
+    <div class=" d-flex justify-content-center align-items-center py-5">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Cargando...</span>
+        </div>
+    </div>
+</ng-template>
+<div *ngIf="!loading" class="modal-container">
+    <div class="modal-header">
+        <div>
+            <img *ngIf="icon" [src]="icon" alt="modal-icon" class="header-icon">
+            <p class="title">{{title}}</p>
+            <p class="subtitle">{{subtitle}}</p>
+        </div>
+    </div>
+    <div class="modal-body">
+        <div class="d-flex">
+            <button class="volver" style="margin-right: 4px;" (click)="volver()">Volver</button>
+            <button class="confirmar" style="margin-left: 4px;" (click)="confirmar()">Confirmar</button>
+        </div>
+    </div>
+</div>

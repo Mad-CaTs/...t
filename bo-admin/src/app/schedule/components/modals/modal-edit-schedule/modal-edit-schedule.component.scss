@@ -1,0 +1,63 @@
+// Sobrescribe la variable
+$card-border-enabled: true;
+$card-border-width: 1px;
+$card-border-style: solid;
+$card-border-color: #4e4b4b;
+
+// Aplica el estilo
+.card {
+	@if ($card-border-enabled) {
+		border: $card-border-width $card-border-style $card-border-color;
+	} @else {
+		border: 0;
+	}
+}
+
+.tr-adjust td,
+th {
+	padding-right: 20px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+.td-adjust td,
+tr {
+	padding-right: 20px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+
+.form-control {
+	height: 40px;
+	padding: 10px;
+}
+
+.input-width-adjusted {
+	height: 40px;
+	padding: 5px;
+	width: calc(1.5 * 70px);
+}
+
+.theadvoucher {
+	// width:124px;
+	// padding: 6px 4px 6px 20px;
+	// height: 40px;
+	display: flex;
+	// align-items: center;
+}
+
+.theadvoucher th {
+	width: 100px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 10px;
+	margin-right: 20px;
+	height: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 12px;
+}
+
+.fixed-width-button {
+    width: 80px;
+}

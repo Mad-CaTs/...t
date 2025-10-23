@@ -1,0 +1,97 @@
+<div class="modal-container">
+    <div class="modal-header">
+        <div>
+            <img *ngIf="icon" [src]="icon" alt="modal-icon" class="header-icon">
+            <p class="title">Detalle del retiro</p>
+            <p class="subTitle">Información detallada del retiro.</p>
+        </div>
+        <button class="close-button" aria-label="Cerrar modal" (click)="instanceModal.dismiss()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                <path
+                    d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+            </svg>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="content">
+            <div class="content-1">
+                <span class="retiro-bancario">Retiro a cuenta bancaria</span>
+                <span [style.color]="getColorFont" [style.background]="getColorBackground" class="badge">{{text}}</span>
+            </div>
+            <div>
+                <span class="num-operacion">N° de operación <span
+                        class="numero">{{data['idsolicitudebank']}}</span></span>
+            </div>
+            <div>
+                <span *ngIf="status == 1">{{formatDateArrayToString(data['fechSolicitud'])}}</span>
+                <span *ngIf="status != 1">{{formatDateArrayToString(data['fechProcess'])}}</span>
+
+            </div>
+
+            <div style="padding-top: 10px;">
+                <div class="content-1">
+                    <span class="retiro-bancario">Cuenta de origen:</span>
+                    <span class="retiro-bancario">Wallet</span>
+                </div>
+                <div style="justify-content: end; display: flex;">
+                    <span class="retiro-bancario">{{data['nameOrigen']}} {{data['lastNameOrigen']}}</span>
+                </div>
+                <div style="justify-content: end; display: flex;">
+                    <span class="retiro-bancario">{{data['usernameOrigen']}}</span>
+                </div>
+            </div>
+            <div class="linea-separation"></div>
+            <div class="content-1">
+                <span class="retiro-bancario">Monto enviado:</span>
+                <span class="retiro-bancario">$ {{data['money'].toFixed(2)}}</span>
+            </div>
+            <div class="linea-separation"></div>
+            <div style="padding-top: 2px;">
+                <div class="content-1">
+                    <span class="retiro-bancario">Cuenta destino:</span>
+                    <span class="retiro-bancario-2">{{holder}}</span>
+                </div>
+                <div style="justify-content: end; display: flex;">
+                    <span class="retiro-bancario">{{data['numberAccount']}}</span>
+                </div>
+                <div style="justify-content: end; display: flex;">
+                    <span class="retiro-bancario">{{data['nameBank']}}</span>
+                </div>
+            </div>
+        </div>
+        <ng-container *ngIf="typeOfTab === 'rvalidar' && data['idBankStatus'] == 3">
+            <div class="demo-container">
+                <div class="readonly-field">
+                    <label class="field-label">Motivo encontrado</label>
+                    <div class="d-flex flex-row">
+                        <div class="field-container w-100 with-edit-button">
+                            <input type="text" class="field-input" [value]="tempMotivo" readonly>
+                        </div>
+                        <button type="button" class="edit-button" (click)="openModalNotification(data)">
+                            <i class="bi bi-pencil"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="readonly-field">
+                    <label class="field-label">Mensaje</label>
+                    <div class="field-container with-edit-button">
+                        <textarea class="field-input" rows="3" [value]="tempMensaje"
+                            readonly>El retiro no pudo completarse porque el número de cuenta de destino ingresado está incompleto.</textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="acctions-buttons">
+                <button class="btn btn-outline-secondary" (click)="closeModalDetails()">
+                    Volver
+                </button>
+                <button class="btn btn-secondary" (click)="rechazarYNotificar()">
+                    Rechazar y notificar
+                </button>
+            </div>
+
+        </ng-container>
+    </div>
+
+</div>

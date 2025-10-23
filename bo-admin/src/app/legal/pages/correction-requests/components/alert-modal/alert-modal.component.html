@@ -1,0 +1,13 @@
+<div class="modal-content">
+  <div class="modal-body text-center p-6">
+    <div class="icon-container mb-4">
+      <img *ngIf="type === 'success'" src="assets/check-icon.svg" alt="success" class="modal-icon">
+      <img *ngIf="type === 'warning'" src="assets/error-icon.svg" alt="warning" class="modal-icon">
+    </div>
+    <h2 class="modal-title mb-2">{{title}}</h2>
+    <p class="modal-message mb-4">{{message}}</p>
+    <button type="button" class="btn btn-orange" (click)="activeModal.close(true)">
+      {{buttonText}}
+    </button>
+  </div>
+</div>

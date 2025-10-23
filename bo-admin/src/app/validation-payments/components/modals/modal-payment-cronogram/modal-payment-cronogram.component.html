@@ -1,0 +1,115 @@
+<app-modal title="Cronograma de Pagos">
+	<div class="d-flex flex-column align-items-center justify-content-center gap-6">
+		<div class="w-100"><button class="btn btn-outline-secondary">Refrescar informacion</button></div>
+
+		<!--Table-->
+		<app-common-table
+			class="w-100"
+			[headers]="table.headers"
+			[checkedAll]="table.checkedAll"
+			[headersMinWidth]="table.headersMinWidth"
+			[noCheckboxes]="table.noCheckBoxes"
+			(onCheckedAll)="table.changeCheckedAll($event)"
+		>
+			<tr class="w-100 d-flex py-2 align-items-center" *ngFor="let item of table.data">
+				<td
+					class="w-100 text-gray-900 text-center fs-6"
+					[style.min-width]="table.headersMinWidth[0] + 'px'"
+				>
+					{{ item.description }}
+				</td>
+				<td
+					class="w-100 text-gray-900 text-center fs-6"
+					[style.min-width]="table.headersMinWidth[1] + 'px'"
+				>
+					{{ item.date }}
+				</td>
+				<td
+					class="w-100 text-gray-900 text-center fs-6"
+					[style.min-width]="table.headersMinWidth[2] + 'px'"
+				>
+					$ {{ item.capital.toFixed(2) }}
+				</td>
+				<td
+					class="w-100 text-gray-900 text-center fs-6"
+					[style.min-width]="table.headersMinWidth[3] + 'px'"
+				>
+					$ {{ item.amortization.toFixed(2) }}
+				</td>
+				<td
+					class="w-100 text-gray-900 text-center fs-6"
+					[style.min-width]="table.headersMinWidth[4] + 'px'"
+				>
+					$ {{ item.interest.toFixed(2) }}
+				</td>
+				<td
+					class="w-100 text-gray-900 text-center fs-6"
+					[style.min-width]="table.headersMinWidth[5] + 'px'"
+				>
+					$ {{ item.cuote.toFixed(2) }}
+				</td>
+				<td
+					class="w-100 text-gray-900 text-center fs-6"
+					[style.min-width]="table.headersMinWidth[6] + 'px'"
+				>
+					{{ item.points }}
+				</td>
+				<td
+					class="w-100 text-gray-900 text-center fs-6"
+					[style.min-width]="table.headersMinWidth[7] + 'px'"
+				>
+					{{ item.status }}
+				</td>
+				<td
+					class="w-100 text-gray-900 text-center fs-6"
+					[style.min-width]="table.headersMinWidth[8] + 'px'"
+				>
+					{{ item.opCode }}
+				</td>
+				<td
+					class="w-100 text-gray-900 text-center fs-6"
+					[style.min-width]="table.headersMinWidth[9] + 'px'"
+				>
+					{{ item.opBussinessCode }}
+				</td>
+				<td
+					class="w-100 text-gray-900 text-center fs-6"
+					[style.min-width]="table.headersMinWidth[10] + 'px'"
+				>
+					{{ item.paymentChannel }}
+				</td>
+				<td
+					class="w-100 text-gray-900 text-center fs-6"
+					[style.min-width]="table.headersMinWidth[11] + 'px'"
+				>
+					{{ item.currency }}
+				</td>
+				<td
+					class="w-100 text-gray-900 text-center fs-6"
+					[style.min-width]="table.headersMinWidth[12] + 'px'"
+				>
+					$ {{ item.subtotal.toFixed(2) }}
+				</td>
+				<td
+					class="w-100 text-gray-900 text-center fs-6"
+					[style.min-width]="table.headersMinWidth[13] + 'px'"
+				>
+					$ {{ item.comission.toFixed(2) }}
+				</td>
+				<td
+					class="w-100 text-gray-900 text-center fs-6"
+					[style.min-width]="table.headersMinWidth[14] + 'px'"
+				>
+					$ {{ item.mora.toFixed(2) }}
+				</td>
+				<td
+					class="w-100 text-gray-900 text-center fs-6"
+					[style.min-width]="table.headersMinWidth[15] + 'px'"
+				>
+					$ {{ item.total.toFixed(2) }}
+				</td>
+			</tr>
+		</app-common-table>
+		<button class="btn btn-secondary" (click)="instanceModal.close()">Cerrar</button>
+	</div>
+</app-modal>

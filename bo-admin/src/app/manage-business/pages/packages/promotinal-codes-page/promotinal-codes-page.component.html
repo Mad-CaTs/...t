@@ -1,0 +1,48 @@
+<div class="d-flex flex-column w-100 gap-6">
+	<!--List | Filter-->
+	<h4 class="fs-5 text-black fw-medium m-0">Buscador</h4>
+	<div class="w-100 d-flex">
+		<app-input
+			class="w-100"
+			label="Ingrese campo de búsqueda:"
+			placeholder="Buscar por:"
+			name="search"
+			type="search"
+			controlName="search"
+			[formGroup]="form"
+			iconLeft="bi bi-search"
+		/>
+		<div class="w-100"></div>
+	</div>
+	<div class="w-100 d-flex justify-content-end align-items-center gap-4">
+		<button class="btn btn-secondary" type="button" (click)="onSearch()">Buscar</button>
+	</div>
+	<!--Table-->
+	<table-pagination [hasChildren]="true" class="w-100 d-block mt-4">
+		<button class="btn btn-secondary" type="button" (click)="onAdd()">Agregar código</button>
+		<button class="btn btn-secondary" type="button" (click)="onSearch()">Actualizar</button>
+	</table-pagination>
+	<!--Table | Table-->
+	<app-common-table
+		class="w-100 d-block mt-4"
+		[headers]="table.headers"
+		[checkedAll]="table.checkedAll"
+		[headersMinWidth]="table.headersMinWidth"
+		[noCheckboxes]="table.noCheckBoxes"
+		[headersArrows]="table.headersArrows"
+		(onCheckedAll)="table.changeCheckedAll($event)"
+	>
+		<tr class="w-100 d-flex py-2 align-items-center" *ngFor="let item of table.data">
+			<td class="w-100 text-gray-900 text-center fs-6" style="word-break: break-all;">{{ item.username }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.fullname }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.docNumber }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6" style="word-break: break-all;">{{ item.email }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.phone }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.composeRank || '-' }}</td>
+
+			<td class="w-100 d-flex justify-content-center">
+				<button class="btn btn-outline-secondary" (click)="onViewCode(item.id)">Ver código</button>
+			</td>
+		</tr>
+	</app-common-table>
+</div>

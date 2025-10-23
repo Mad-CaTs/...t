@@ -1,0 +1,19 @@
+<app-modal [title]="'Editar Fecha de Posicionamiento'">
+	<form [formGroup]="form" class="d-flex w-100 flex-column gap-6">
+		<div class="d-flex justify-content-center">
+			<app-input-date
+				label="Ingresa la nueva Fecha"
+				[formGroup]="form"
+				controlName="placementDate"
+				style="width: 365px"
+			/>
+		</div>
+
+		<div class="w-100 d-flex justify-content-center align-items-center gap-4">
+			<button class="btn btn-secondary" type="submit">Guardar cambios</button>
+			<button class="btn btn-outline-secondary" type="button" (click)="instanceModal.close()">
+				Descartar cambios
+			</button>
+		</div>
+	</form>
+</app-modal>

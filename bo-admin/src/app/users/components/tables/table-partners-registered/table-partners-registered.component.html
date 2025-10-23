@@ -1,0 +1,91 @@
+<app-table class="card card-xxl-stretch mb-5 mb-xl-8" [noCheckboxes]="true" [customRows]="true" [headers]="[
+		'Usuario',
+		'Contacto',
+		'Documento',
+		'Patrocinador',
+		'Estado',
+		'Acciones'
+	]">
+	<tr *ngFor="let d of dataBody; let i = index" [class.row-table-odd]="i % 2 === 1">
+		<td>
+			<div class="d-flex align-items-center">
+				<div class="symbol symbol-45px me-5">
+					<img src="./assets/media/avatars/blank.png" alt="" />
+				</div>
+				<div class="d-flex justify-content-start flex-column">
+					<div class="d-flex flex-row gap-2 align-items-center">
+						<span class="text-dark fw-bolder fs-6">{{ '@' + d.username }}</span>
+
+						<i class="bi text-black fa-1x" [ngClass]="{
+								'bi-gender-male': d.gender === '1' || d.gender === 'M',
+								'bi-gender-female': d.gender !== '1' && d.gender !== 'M'
+							}"></i>
+					</div>
+
+					<span class="fw-bold text-muted d-block fs-6">
+						{{ d.fullname }} {{ d.lastname }}
+					</span>
+					<span class="text-muted d-block fs-7">
+						desde el {{ formatDate(d.startDate) }}
+					</span>
+				</div>
+			</div>
+		</td>
+		<td>
+			<div class="d-flex flex-column">
+				<span class="fw-bold fs-7">{{ d.email }}</span>
+				<span class="fw-bold fs-7 text-muted">{{ d.phone }}</span>
+			</div>
+		</td>
+		<td>
+			<div class="d-flex flex-column">
+				<span class="fw-bold">{{ d.docNumber }}</span>
+				<span class="text-muted fw-bold">{{ d.docType }}</span>
+			</div>
+		</td>
+		<td>
+			<div class="d-flex flex-column">
+				<span class="text-muted" *ngIf="d.partner === 'No hay sponsor'">
+					{{ d.partner }}
+				</span>
+				<a class="link-info" *ngIf="d.partner !== 'No hay sponsor'">
+					{{ d.partner }}
+				</a>
+			</div>
+		</td>
+		<td>
+			<div class="d-flex flex-row gap-2 align-items-center">
+				<div class="point-table" [class.bg-success]="d.status === 'Activo'"
+					[class.bg-gray-600]="d.status != 'Activo'"></div>
+				<span class="fw-bold" [class.text-success]="d.status === 'Activo'"
+					[class.text-muted]="d.status != 'Activo'">
+					{{ d.status }}
+				</span>
+			</div>
+		</td>
+		<td>
+			<div class="d-flex justify-content-start flex-shrink-0">
+				<button class="btn btn-bg-primary btn-active-color-white button-actions me-1"
+					(click)="viewSubscription(d)">
+					<span [inlineSVG]="
+							'./assets/media/icons/duotune/art/view.svg'
+						" class="svg-icon svg-icon-3 button-actions__icon"></span>
+					<span class="button-actions__label text-white">Ver</span>
+				</button>
+				<button class="btn btn-bg-light btn-active-color-dark button-actions"
+					(click)="deletePartner(d)">
+					<span [inlineSVG]="
+							'./assets/media/icons/duotune/general/gen027.svg'
+						" class="svg-icon svg-icon-3 button-actions__icon"></span>
+					<span class="button-actions__label">Eliminar</span>
+				</button>
+				<button type="button" class="btn btn-link detail-link" (click)="viewByPartner(d)">
+					<svg class="icon" viewBox="0 0 24 24">
+					<path d="M12 5c5.5 0 9.7 4.5 10.9 6-1.2 1.5-5.4 6-10.9 6S2.3 12.5 1.1 11C2.3 9.5 6.5 5 12 5zm0 3.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9zm0 2a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5z"/>
+					</svg>
+					Listar socios
+				</button>
+			</div>
+		</td>
+	</tr>
+</app-table>

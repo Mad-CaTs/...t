@@ -1,0 +1,148 @@
+<div *ngIf="loading" class="spinner-overlay">
+  <div class="spinner"></div>
+</div>
+
+<form [formGroup]="form" [class.form-disabled]="loading">
+  <div class="form-zones-card flex flex-column gap-6 p-6 bg-white w-100">
+  <!-- Header con título y acciones -->
+  <div class="header-bar">
+    <h2 class="title">{{ eventNameSelected }}</h2>
+    <div class="actions">
+      <button class="btn btn-outline" (click)="cancelar()">Cancelar</button>
+  <button class="btn btn-primary" (click)="guardarCambios()" [disabled]="saveDisabled">Guardar cambios</button>
+    </div>
+  </div>
+
+  <!-- Fila con evento y tipo de entrada -->
+  <div class="form-row two-cols">
+    <div>
+      <label>Evento</label>
+      <div class="select-wrapper disabled">
+        <select disabled>
+          <option>{{ eventNameSelected }}</option>
+        </select>
+        <i class="bi bi-chevron-down select-icon"></i>
+      </div>
+    </div>
+
+    <div>
+      <label>Tipo de entrada</label>
+      <div class="select-wrapper">
+        <select formControlName="tipoEntradaId">
+          <option *ngFor="let tipo of tiposEntrada" [value]="tipo.id">{{ tipo.label }}</option>
+        </select>
+        <i class="bi bi-chevron-down select-icon"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- Grid de zonas -->
+  <div class="zonas-grid" formArrayName="zonas">
+    <!-- Zona individual -->
+    <div class="zona-card" *ngFor="let zona of zonas.controls; let i = index" [formGroupName]="i">
+      <div class="zona-header">
+        <strong>{{ zona.value.nombre || 'Zona ' + (i + 1) }}</strong>
+        <div class="zona-actions">
+          <button class="remove-btn" (click)="removeZona(i)">
+            <i class="bi bi-trash3"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="zona-body">
+        <div class="form-row two-cols">
+          <div>
+            <label>Tipo de asiento</label>
+            <select formControlName="tipoAsientoId"
+              [class.is-invalid]="zona.get('tipoAsientoId')?.invalid && (zona.get('tipoAsientoId')?.touched || zona.get('tipoAsientoId')?.dirty)">
+              <option [ngValue]="null">Selecciona</option>
+              <option *ngFor="let st of seatTypes" [ngValue]="st.seatTypeId">{{ st.seatTypeName }}</option>
+            </select>
+            <div class="invalid-feedback" *ngIf="zona.get('tipoAsientoId')?.invalid && (zona.get('tipoAsientoId')?.touched || zona.get('tipoAsientoId')?.dirty || submitted)">
+              Este campo es obligatorio
+            </div>
+          </div>
+          <div>
+            <label>Nombre de la zona</label>
+            <input type="text" placeholder="Ej. VIP, General..." formControlName="nombre"
+              (keydown)="preventLeadingSpace($event)"
+              (blur)="onZoneNameBlur(i)"
+              [class.is-invalid]="zona.get('nombre')?.invalid && (zona.get('nombre')?.touched || zona.get('nombre')?.dirty)" />
+            <div class="invalid-feedback" *ngIf="zona.get('nombre')?.invalid && (zona.get('nombre')?.touched || zona.get('nombre')?.dirty || submitted)">
+              Este campo es obligatorio
+            </div>
+            <div class="invalid-feedback" *ngIf="isZoneNameDuplicated(i) && (zona.get('nombre')?.touched || zona.get('nombre')?.dirty || submitted)">
+              El nombre de la zona está duplicado
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row two-cols">
+          <div class="price-wrapper">
+            <label>Precio (S/)</label>
+            <div class="input-icon input-column">
+              <span class="currency-icon">S/</span>
+              <input type="number" placeholder="00.00" formControlName="precio" step="0.01" min="0" (blur)="formatDecimal($event, i, 'precio')"
+                [class.is-invalid]="zona.get('precio')?.invalid && (zona.get('precio')?.touched || zona.get('precio')?.dirty)" />
+            </div>
+            <div class="invalid-feedback" *ngIf="zona.get('precio')?.invalid && (zona.get('precio')?.touched || zona.get('precio')?.dirty || submitted)">
+              Este campo es obligatorio
+            </div>
+          </div>
+          <div class="price-wrapper">
+            <label>Precio (USD)</label>
+            <div class="input-icon input-column">
+              <span class="currency-icon">$</span>
+              <input type="number" placeholder="00.00" formControlName="precioUsd" step="0.01" min="0" (blur)="formatDecimal($event, i, 'precioUsd')"
+                [class.is-invalid]="zona.get('precioUsd')?.invalid && (zona.get('precioUsd')?.touched || zona.get('precioUsd')?.dirty)" />
+            </div>
+            <div class="invalid-feedback" *ngIf="zona.get('precioUsd')?.invalid && (zona.get('precioUsd')?.touched || zona.get('precioUsd')?.dirty || submitted)">
+              Este campo es obligatorio
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row two-cols">
+          <div>
+            <label>Aforo</label>
+            <input type="number" placeholder="0" formControlName="aforo"
+              min="0" step="1"
+              (keydown)="blockDot($event)"
+              (paste)="blockPasteDot($event)"
+              [class.is-invalid]="zona.get('aforo')?.invalid && (zona.get('aforo')?.touched || zona.get('aforo')?.dirty)" />
+            <div class="invalid-feedback" *ngIf="zona.get('aforo')?.invalid && (zona.get('aforo')?.touched || zona.get('aforo')?.dirty || submitted)">
+              Este campo es obligatorio
+            </div>
+          </div>
+          <div>
+            <label>Asientos</label>
+            <input type="number" placeholder="0" formControlName="asientos"
+              min="0" step="1"
+              (keydown)="blockDot($event)"
+              (paste)="blockPasteDot($event)"
+              [class.is-invalid]="zona.get('asientos')?.invalid && (zona.get('asientos')?.touched || zona.get('asientos')?.dirty)" />
+            <div class="invalid-feedback" *ngIf="zona.get('asientos')?.invalid && (zona.get('asientos')?.touched || zona.get('asientos')?.dirty || submitted)">
+              Este campo es obligatorio
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botón agregar zona -->
+    <div class="add-zona-btn">
+      <button type="button" (click)="addZona()">
+        <i class="bi bi-plus-circle icon-orange"></i> Agregar zona
+      </button>
+    </div>
+  </div>
+  </div>
+</form>
+
+<app-modal-notify
+  *ngIf="showNotify"
+  [title]="notifyTitle"
+  [message]="notifyMessage"
+  [iconType]="notifyType"
+  (closed)="onNotifyClose()"
+></app-modal-notify>

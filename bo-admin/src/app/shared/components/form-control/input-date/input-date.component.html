@@ -1,0 +1,23 @@
+<label class="fs-6 text-muted fw-bold">{{ label }}</label>
+
+<div class="input-group input-group-solid border position-relative" [class.border-danger]="existErrors"
+	[class.bg-light-danger]="existErrors" #input>
+	<span class="form-control pe-0" [class.text-danger]="existErrors"><span>{{ date | date: 'dd/MM/yyyy' }}</span>
+		<span *ngIf="!date" class="text-muted">dd/mm/aaaa</span>
+		<span *ngIf="hasTime && date" class="fs-7"> {{ date | date : 'shortTime' }}</span>
+	</span>
+
+	<i class="bi bi-calendar cursor-pointer me-4 mt-auto mb-auto" [class.text-muted]="!existErrors"
+		(click)="openMenu = !openMenu; openTime = false; formValue.markAsTouched()"
+		(keydown.enter)="openMenu = !openMenu; openTime = false; formValue.markAsTouched()"
+		[class.text-danger]="existErrors" tabindex="0"></i>
+	<i *ngIf="hasTime" class="bi bi-clock cursor-pointer me-4 mt-auto mb-auto" [class.text-muted]="!existErrors"
+		[class.text-danger]="existErrors" (click)="openTime = !openTime; openMenu = false; formValue.markAsTouched()"
+		(keydown.enter)="openTime = !openTime; openMenu = false; formValue.markAsTouched()" tabindex="0"></i>
+	<app-input-date-calendar-dropdown *ngIf="openMenu" [formGroup]="formGroup" [controlName]="controlName"
+		(onClose)="openMenu = false" [input]="input"></app-input-date-calendar-dropdown>
+	<app-input-date-time-dropdown *ngIf="openTime && hasTime" [formGroup]="formGroup" [controlName]="controlName"
+		(onClose)="openTime = false" [input]="input"></app-input-date-time-dropdown>
+</div>
+
+<div class="text-danger" *ngIf="existErrors">{{ this.formValue | inputError }}</div>

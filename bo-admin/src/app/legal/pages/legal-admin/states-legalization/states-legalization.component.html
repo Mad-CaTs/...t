@@ -1,0 +1,308 @@
+<!-- <p>states-legalization works!</p> -->
+<div>
+	<div class="filters mb-4 mt-6">
+		<div class="row g-3 align-items-end">
+			<div class="col-md-7">
+				<label class="form-label">Buscador</label>
+				<input
+					type="text"
+					class="form-control"
+					placeholder="Buscar por nombre, etiqueta o descripción"
+					[(ngModel)]="searchTerm"
+					(input)="onFiltersChange()"
+				/>
+			</div>
+
+			<!-- Botón para limpiar el buscador -->
+			<div class="d-grid col-2 mx-auto">
+				<button class="btn btn-secondary w-100" (click)="clearFilters()">Limpiar</button>
+			</div>
+
+			<!-- Botón para agregar estados -->
+			<div class="d-grid col-3 mx-auto">
+				<button class="btn btn-outline-primary" (click)="openAddStatusModal(addStatusModal)">
+					Agregar Status
+				</button>
+			</div>
+		</div>
+
+		<div class="mb-4 mt-4">
+			<button class="btn btn-outline-secondary" (click)="refreshData()">Refrescar</button>
+		</div>
+	</div>
+
+	<!-- Tabla -->
+	<app-common-table
+		class="w-100"
+		[headers]="table.headers"
+		[checkedAll]="table.checkedAll"
+		[headersMinWidth]="table.headersMinWidth"
+		[noCheckboxes]="table.noCheckBoxes"
+		[noCheckboxes]="true"
+		(onCheckedAll)="table.changeCheckedAll($event)"
+	>
+		<tr *ngFor="let item of table.data; let i = index" class="w-100 d-flex py-2 align-items-center">
+			<td class="w-100 text-center fs-6">{{ i + 1 }}</td>
+			<td class="w-100 text-center fs-6">
+				{{ item.name ? item.name : 'No hay data' }}
+			</td>
+
+			<td class="w-100 text-center">
+				<span class="badge-etiqueta" [ngStyle]="getBadgeStyles(item.color)">
+					{{ item.name }}
+				</span>
+			</td>
+			<td class="w-100 text-center fs-6">{{ item.detail.trim() ? item.detail : '-' }}</td>
+
+			<td class="w-100 text-center">
+				<span
+					class="px-3 py-1 rounded-pill fw-semibold"
+					[ngClass]="{
+						'bg-success text-white': item.active === 1,
+						'bg-light text-muted border': item.active === 0
+					}"
+				>
+					{{ item.active === 1 ? 'Activado' : item.active === 0 ? 'Desactivado' : 'No hay data' }}
+				</span>
+			</td>
+
+			<td class="w-100 d-flex justify-content-center gap-2">
+				<!-- btn de edicion siempre visible -->
+				<button class="btn btn-sm btn-link p-0" (click)="openEditStatusModal(editStatusModal, item)">
+					<i class="bi bi-pencil fs-3"></i>
+				</button>
+				<!-- mostrar solo si se puede eliminar -->
+				<button
+					class="btn btn-sm btn-link p-0"
+					*ngIf="item.isDeleteable !== 0"
+					(click)="openDeleteModal(item)"
+				>
+					<i class="bi bi-trash fs-3 text-danger"></i>
+				</button>
+			</td>
+		</tr>
+	</app-common-table>
+
+	<!-- Add Status Modal Template -->
+	<!-- Modal Template -->
+	<ng-template #addStatusModalOld let-modal>
+		<div class="modal-header">
+			<h5 class="modal-title">Agregar status</h5>
+			<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+		</div>
+
+		<div class="modal-body">
+			<p>Completa todos los campos para los diferentes estados.</p>
+
+			<div *ngFor="let item of statusList; let i = index" class="d-flex align-items-center gap-2 mb-2">
+				<input
+					type="color"
+					[(ngModel)]="item.color"
+					class="form-control form-control-color"
+					title="Escoge un color"
+				/>
+				<input type="text" class="form-control" placeholder="Status" [(ngModel)]="item.value" />
+
+				<!-- Botón para eliminar el estado -->
+				<button type="button" class="btn btn-sm btn-danger" (click)="removeStatus(i)">
+					<i class="bi bi-trash"></i>
+					<!-- Ícono de basura -->
+				</button>
+			</div>
+
+			<a
+				*ngIf="statusList.length < 5"
+				class="text-orange d-block mt-3"
+				href="#"
+				(click)="addEmptyStatus($event)"
+			>
+				+ Agregar estados de legalización
+			</a>
+		</div>
+
+		<div class="modal-footer">
+			<button class="btn btn-outline-secondary" (click)="modal.dismiss()">Cancelar</button>
+			<button class="btn btn-primary" (click)="addStatus(modal)" [disabled]="!isFormValid()">
+				<!--se deshabilita -->
+				Agregar
+			</button>
+		</div>
+	</ng-template>
+
+	<!-- New Modal Add Status -->
+	<ng-template #addStatusModal let-modal>
+		<div class="modal-header">
+			<h5 class="modal-title">Agregar status</h5>
+			<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+		</div>
+
+		<div class="modal-body">
+			<p>Completa todos los campos para agregar un nuevo estado de legalización.</p>
+
+			<!-- Color y Descripción en una sola fila -->
+			<div class="d-flex align-items-center gap-2">
+				<!-- Campo color -->
+				<input
+					type="color"
+					class="form-control form-control-color"
+					[(ngModel)]="newStatus.color"
+					title="Escoge un color"
+				/>
+
+				<!-- Campo nombre del estado -->
+				<input
+					type="text"
+					class="form-control"
+					placeholder="Nombre del estado"
+					[(ngModel)]="newStatus.name"
+				/>
+			</div>
+		</div>
+
+		<div class="modal-footer">
+			<button class="btn btn-outline-secondary" (click)="modal.dismiss()">Cancelar</button>
+			<button class="btn btn-primary" (click)="addStatus(modal)" [disabled]="!isFormValid()">
+				Agregar
+			</button>
+		</div>
+	</ng-template>
+
+	<!-- Modal de confirmación -->
+	<ng-template #confirmationModal let-modal>
+		<div class="modal-header">
+			<h5 class="modal-title">Estado Agregado</h5>
+			<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+		</div>
+		<div class="modal-body">
+			<p>El estado se ha agregado correctamente.</p>
+		</div>
+		<div class="modal-footer">
+			<button class="btn btn-outline-secondary" (click)="modal.dismiss()">Cerrar</button>
+		</div>
+	</ng-template>
+
+	<!-- Modal de editar status -->
+	<ng-template #editStatusModal let-modal>
+		<div class="modal-header">
+			<h5 class="modal-title">Editar Status</h5>
+			<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+		</div>
+
+		<div class="modal-body">
+			<h6>Detalles de status</h6>
+
+			<div class="mb-3 row">
+				<!-- Campo Nombre -->
+				<div class="col-md-10">
+					<label class="form-label">Nombre</label>
+					<input type="text" class="form-control" [(ngModel)]="editedName" />
+				</div>
+
+				<!-- Campo Color -->
+				<div class="col-md-2">
+					<label class="form-label">Color</label>
+					<input
+						type="color"
+						[(ngModel)]="editedColor"
+						class="form-control form-control-color"
+						title="Escoge un color"
+					/>
+				</div>
+			</div>
+
+			<!-- <div class="mb-3">
+				<label class="form-label">Nombre</label>
+				<input
+					type="text"
+					class="form-control"
+					[(ngModel)]="editedName"
+					placeholder="Nombre del estado"
+				/>
+			</div>
+			<div class="mb-3">
+				<label class="form-label">Color</label>
+				<input
+					type="color"
+					[(ngModel)]="editedColor"
+					class="form-control form-control-color"
+					title="Escoge un color"
+				/>
+			</div> -->
+
+			<!-- Campo Descripcion -->
+			<div class="mb-3">
+				<label class="form-label">Descripción</label>
+				<textarea class="form-control" [(ngModel)]="editedDescription"></textarea>
+			</div>
+
+			<!-- Campo Estado -->
+
+			<!-- 	<div class="mb-3">
+				<label class="form-label">Estado</label>
+				<select class="form-select" [(ngModel)]="editedEstado">
+					<option value="Activado">Activado</option>
+					<option value="Desactivado">Desactivado</option>
+				</select>
+			</div> -->
+			<!-- Campo Estado -->
+			<div class="mb-3">
+				<label class="form-label">Estado</label>
+				<select
+					class="form-select"
+					[(ngModel)]="editedEstado"
+					[disabled]="selectedStatus?.isDeleteable === 0 || selectedStatus?.isDeleteable === 1"
+				>
+					<option value="1">Activado</option>
+					<option value="0">Desactivado</option>
+				</select>
+			</div>
+
+			<!-- Campo Estado (solo si es eliminable) -->
+			<!-- <div class="mb-3" *ngIf="selectedStatus?.isDeleteable !== 0">
+				<label class="form-label">Estado</label>
+				<select class="form-select" [(ngModel)]="editedEstado">
+					<option [value]="1">Activado</option>
+					<option [value]="0">Desactivado</option>
+				</select>
+			</div> -->
+		</div>
+
+		<div class="modal-footer">
+			<button class="btn btn-outline-secondary" (click)="modal.dismiss()">Cancelar</button>
+			<button class="btn btn-primary" (click)="saveEditedStatus(modal)">Guardar</button>
+		</div>
+	</ng-template>
+
+	<!-- Modal de confirmacion editar status -->
+	<ng-template #confirmEdit let-modal>
+		<div class="modal-header">
+			<h5 class="modal-title">Confirmar Edición</h5>
+			<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+		</div>
+		<div class="modal-body">
+			<p>¿Estás segura de que deseas guardar los cambios realizados en el status?</p>
+		</div>
+		<div class="modal-footer">
+			<button class="btn btn-outline-secondary" (click)="modal.dismiss()">Cancelar</button>
+			<button class="btn btn-primary" (click)="confirmEditM(modal)">ConfirmarX</button>
+		</div>
+	</ng-template>
+
+	<!-- Modal de eliminar status -->
+	<ng-template #deleteConfirmationModal let-modal>
+		<div class="modal-header">
+			<h5 class="modal-title">Confirmar eliminación</h5>
+			<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+		</div>
+		<div class="modal-body">
+			<p>
+				¿Estás segura de que quieres eliminar el estado <strong>{{ selectedToDelete?.name }}</strong
+				>?
+			</p>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Cancelar</button>
+			<button type="button" class="btn btn-danger" (click)="confirmDelete(modal)">Eliminar</button>
+		</div>
+	</ng-template>
+</div>

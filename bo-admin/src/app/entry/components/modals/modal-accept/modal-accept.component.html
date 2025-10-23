@@ -1,0 +1,82 @@
+<div class="modal-backdrop">
+  <div class="modal-container">
+    <!-- Encabezado -->
+    <header class="modal-header">
+      <div class="modal-header-content">
+        <div class="modal-icon">
+          <i class="bi bi-card-list"></i>
+        </div>
+        <h3 class="modal-title">{{ title }}</h3>
+      </div>
+      <button type="button" class="close-btn" (click)="onCloseClick()">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </header>
+
+    <p class="modal-subtitle">
+      Visualizarás información detallada del pago para validar.
+    </p>
+
+    <!-- Contenido principal -->
+    <div class="modal-body">
+      <div class="modal-info">
+        <div class="info-row">
+          <strong>Fecha de pago:</strong>
+          {{ data?.paymentDate ? (data.paymentDate | date:'dd/MM/yyyy') : 'N/A' }}
+        </div>
+        <div class="info-row">
+          <strong>Nombre de evento:</strong> {{ data?.eventName || '-' }}
+        </div>
+        <div class="info-row">
+          <strong>Zona:</strong> {{ data?.zone || '-' }}
+        </div>
+        <div class="info-row">
+          <strong>N° de entradas:</strong>{{ data?.ticketQuantity || 'N/A' }}
+        </div>
+        <div class="info-row">
+          <strong>Tipo de Usuario:</strong> {{ data?.userType || 'N/A' }}
+        </div>
+        <div class="info-row">
+          <strong>Socio:</strong> {{ data?.userName || 'N/A' }}
+        </div>
+        <div class="info-row">
+          <strong>Patrocinador:</strong> {{ data?.sponsorName || 'N/A' }}
+        </div>
+        <div class="info-row">
+          <strong>Tipo de entrada:</strong> {{ data?.ticketTypeName || 'N/A' }}
+        </div>
+        <div class="info-row">
+          <strong>Medio de pago:</strong> {{ data?.paymentMethod || 'N/A' }}
+        </div>
+        <div class="info-row">
+          <strong>Número de operación del voucher:</strong> {{ data?.voucherOperationNumber || '-' }}
+        </div>
+        <div class="info-row">
+          <strong>Código promocional:</strong> {{ data?.promotionalCode || '-' }}
+        </div>
+        <div class="info-row">
+          <strong>Estado:</strong>
+          <span class="badge bg-warning">{{ data?.paymentStatus || 'Pendiente' }}</span>
+        </div>
+        <div class="info-row">
+          <strong>Monto total:</strong> {{ data?.totalAmount || '0.00' }}
+        </div>
+      </div>
+
+      <!-- Imagen voucher -->
+      <div class="modal-voucher">
+        <p class="voucher-hint">Imagen del voucher o evidencia bancaria</p>
+        <div class="voucher-frame">
+          <img [src]="data?.imageUrl || ''" alt="Voucher" class="voucher-img">
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="modal-footer">
+      <button type="button" class="btn btn-outline" (click)="onCloseClick()">Cancelar</button>
+      <button type="button" class="btn btn-primary" (click)="validatePayment()" [disabled]="loading">Validar
+        entradas</button>
+    </footer>
+  </div>
+</div>

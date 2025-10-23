@@ -1,0 +1,21 @@
+<app-modal [title]="'¿Deseas eliminar a @' + username" icon="bi bi-exclamation-triangle-fill text-danger">
+  <div class="body">
+    <i class="bi bi-exclamation-triangle-fill text-danger"></i>
+    <p>{{body}}</p>
+    <div class="w-100 d-flex justify-content-center align-items-center gap-4">
+      <button class="btn btn-secondary" type="button" (click)="instanceModal.close()">
+        Cancelar
+      </button>
+      <button class="btn btn-danger" type="button" (click)="onConfirmDelete()" [disabled]="loading">
+        <div class="fixed-width-button">
+          <div *ngIf="loading">
+            <span class="spinner-border spinner-border-sm align-middle text-center ms-2"></span>
+          </div>
+          <div *ngIf="!loading">
+            <span>Eliminar</span>
+          </div>
+        </div>
+      </button>
+    </div>
+  </div>
+</app-modal>

@@ -1,0 +1,143 @@
+<div class="d-flex flex-column w-100 gap-6">
+	<!--List | Filter-->
+
+	<h4 class="fs-5 text-black fw-medium m-0">Ciclos de premios</h4>
+
+	<div class="d-flex flex-row gap-6">
+		<app-input-date label="Fecha de Inicio" class="w-50" [formGroup]="form" controlName="startDate" />
+		<app-input-date label="Fecha de Fin" class="w-50" [formGroup]="form" controlName="limitDate" />
+		<app-select-multiple
+			class="w-50"
+			label="Rangos"
+			placeholder="Seleccione una opción"
+			[formGroup]="form"
+			controlName="range"
+			[options]="rangeOpt"
+		/>
+	</div>
+
+	<div class="d-flex justify-content-end gap-3">
+		<button class="btn btn-outline-secondary" (click)="onExport()">Exportar</button>
+		<button class="btn btn-secondary" (click)="onGenerate()">Generar</button>
+	</div>
+	<!--Table | Table-->
+	<app-common-table
+		[headers]="table.headers"
+		[checkedAll]="table.checkedAll"
+		[headersMinWidth]="table.headersMinWidth"
+		[headersMaxWidth]="table.headersMaxWidth"
+		[noCheckboxes]="table.noCheckBoxes"
+		[firstEmpty]="true"
+		(onCheckedAll)="table.changeCheckedAll($event)"
+	>
+		<tr class="w-100 d-flex py-2 align-items-center" *ngFor="let item of table.data; let i = index">
+			<td class="d-flex justify-content-center">
+				<div class="form-check-sm form-check-custom form-check-solid">
+					<input
+						class="form-check-input cursor-pointer"
+						type="radio"
+						name="course-item-radio"
+						[value]="item.id"
+						[(ngModel)]="selectedRowId"
+					/>
+				</div>
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[0],
+					'max-width.px': table.headersMaxWidth[0]
+				}"
+			>
+				{{ i + 1 }}
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[1],
+					'max-width.px': table.headersMaxWidth[1]
+				}"
+			>
+				{{ item.fullname }}
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[2],
+					'max-width.px': table.headersMaxWidth[2]
+				}"
+			>
+				{{ item.startDate }}
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[3],
+					'max-width.px': table.headersMaxWidth[3]
+				}"
+			>
+				{{ item.limitDate }}
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[4],
+					'max-width.px': table.headersMaxWidth[4]
+				}"
+			>
+				{{ item.range.name }}
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[5],
+					'max-width.px': table.headersMaxWidth[5]
+				}"
+			>
+				{{ item.qualificationCycles }}
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[6],
+					'max-width.px': table.headersMaxWidth[6]
+				}"
+			>
+				{{ item.reclassification }}
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[7],
+					'max-width.px': table.headersMaxWidth[7]
+				}"
+			>
+				<button
+					class="btn btn-outline-secondary btn-sm border-1"
+					style="width: 100px; padding-left: 3px; padding-right: 3px"
+					(click)="onView()"
+                    [disabled]="selectedRowId !== item.id"
+				>
+					<img height="11px" width="18px" class="img-light-orange" src="./assets/media/icons/custom/eye.svg" />
+					<span>Ver detalle</span>
+				</button>
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[8],
+					'max-width.px': table.headersMaxWidth[8]
+				}"
+			>
+				<button
+					class="btn btn-sm"
+					style="padding-left: 20px"
+					[disabled]="selectedRowId !== item.id"
+					(click)="onEditCourse()"
+				>
+					<i class="fas fa-pencil-alt"></i>
+				</button>
+			</td>
+		</tr>
+	</app-common-table>
+</div>

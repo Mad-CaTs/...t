@@ -1,0 +1,65 @@
+<div class="create-event-package-card d-flex flex-column gap-6 p-6 bg-white w-100">
+	<h2 class="title">Crear paquete de eventos</h2>
+
+	<div class="toolbar-card">
+		<app-list-toolbar
+			placeholder="Ingrese lo que necesita buscar..."
+			actionText="Agregar paquete"
+			(search)="onSearch($event)"
+			(action)="onAdd()"
+		></app-list-toolbar>
+
+		<div *ngIf="isCountdownActive" class="text-muted mt-2">
+			{{ clearCountdownText }}
+		</div>
+
+		<ng-container *ngIf="!loading; else loadingTemplate">
+			<ng-container *ngIf="filteredGroups.length > 0; else emptyTpl">
+				<app-grouped-table
+					[columns]="columns"
+					[keys]="keys"
+					[groupedData]="filteredGroups"
+					[columnWidths]="columnWidths"
+					[showEdit]="true"
+					[showDelete]="true"
+					[showEditGroup]="false"
+					(edit)="onEdit($event)"
+					(delete)="onDelete($event)"
+				></app-grouped-table>
+			</ng-container>
+
+			<ng-template #emptyTpl>
+				<app-empty-state message="No data"></app-empty-state>
+			</ng-template>
+		</ng-container>
+
+		<ng-template #loadingTemplate>
+			<div class="d-flex justify-content-center align-items-center py-5">
+				<div class="spinner-border text-primary" role="status">
+					<span class="visually-hidden">Cargando...</span>
+				</div>
+			</div>
+		</ng-template>
+	</div>
+
+	<!-- Confirmación de borrado -->
+	<app-modal-confirm-delete
+		*ngIf="showDeleteModal"
+		[title]="'¿Eliminar paquete?'"
+		[message]="
+			'¿Estás seguro que deseas eliminar el paquete: ' +
+			(selectedToDelete?.packageName || 'ID ' + selectedToDelete?.id) +
+			'?'
+		"
+		(confirm)="onConfirmDelete()"
+		(cancel)="onCancelDelete()"
+	></app-modal-confirm-delete>
+</div>
+<!-- Notification on error/success -->
+<app-modal-notify
+	*ngIf="showNotify"
+	[title]="notifyTitle"
+	[message]="notifyMessage"
+	[iconType]="notifyType"
+	(closed)="showNotify = false"
+></app-modal-notify>

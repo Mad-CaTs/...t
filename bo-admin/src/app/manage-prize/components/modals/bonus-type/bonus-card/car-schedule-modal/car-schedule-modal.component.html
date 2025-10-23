@@ -1,0 +1,221 @@
+<div class="modal-backdrop" *ngIf="showShell">
+  <div class="modal-container" role="dialog" aria-modal="true">
+    <!-- Header -->
+    <header class="modal-header">
+      <div class="modal-header-content">
+        <div class="modal-icon"><i class="bi bi-calendar-check"></i></div>
+        <div class="modal-titles">
+          <h3 class="modal-title">Actualizar Cronograma</h3>
+          <p class="modal-subtitle">Completa los campos y actualiza el cronograma.</p>
+        </div>
+      </div>
+      <button type="button" class="close-btn" (click)="onClose()" aria-label="Cerrar">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </header>
+
+    <form
+      [formGroup]="form"
+      class="modal-form"
+      (keydown.enter)="$event.preventDefault()"
+      (focusin)="onFormFocus($event)"
+    >
+      <!-- SOCIO (autocomplete) -->
+      <div class="form-group full autocomplete">
+        <label>Socio</label>
+        <div class="input-with-toggle">
+          <input
+            type="text"
+            formControlName="partnerName"
+            placeholder="Juan Aníbal Ramírez Dorado"
+            autocomplete="off"
+            (focus)="onPartnerFocus()"
+            (input)="onPartnerInput()"
+            (keydown.escape)="$event.stopPropagation(); partnerDropdownOpen = false"
+            (keydown)="partnerKeydown($event)"
+          />
+          <button
+            type="button"
+            class="dd-toggle"
+            (mousedown)="$event.preventDefault()"
+            (click)="togglePartnerDropdown()"
+            aria-label="Mostrar opciones de socio"
+          >
+            <i class="bi bi-chevron-down"></i>
+          </button>
+        </div>
+
+        <!-- Dropdown Socio -->
+        <div class="dropdown" *ngIf="partnerDropdownOpen">
+          <button
+            class="dropdown-item"
+            type="button"
+            *ngFor="let p of partnerSuggestions; trackBy: trackById; let i = index"
+            (mousedown)="$event.preventDefault()"
+            (click)="onSelectPartner(p)"
+            [ngClass]="{ active: i === partnerActiveIndex }"
+          >
+            {{ p.fullName }}
+          </button>
+          <div class="dropdown-empty" *ngIf="partnerSuggestions.length === 0">
+            No hay coincidencias
+          </div>
+        </div>
+
+        <div class="error" *ngIf="t('partnerName')?.touched && t('partnerName')?.errors?.['required']">
+          Obligatorio.
+        </div>
+      </div>
+
+      <!-- AUTO (autocomplete) + Precio -->
+      <div class="form-row">
+        <div class="form-group autocomplete">
+          <label>Auto</label>
+          <div class="input-with-toggle">
+            <input
+              type="text"
+              formControlName="carTitle"
+              placeholder="CHERY/TIGGO 2 PRO 1.5 CVT"
+              autocomplete="off"
+              (focus)="onCarFocus()"
+              (input)="onCarInput()"
+              (keydown.escape)="$event.stopPropagation(); carDropdownOpen = false"
+              (keydown)="carKeydown($event)"
+            />
+            <button
+              type="button"
+              class="dd-toggle"
+              (mousedown)="$event.preventDefault()"
+              (click)="toggleCarDropdown()"
+              aria-label="Mostrar opciones de auto"
+            >
+              <i class="bi bi-chevron-down"></i>
+            </button>
+          </div>
+
+          <!-- Dropdown Auto -->
+          <div class="dropdown" *ngIf="carDropdownOpen">
+            <button
+              class="dropdown-item"
+              type="button"
+              *ngFor="let c of carSuggestions; trackBy: trackById; let i = index"
+              (mousedown)="$event.preventDefault()"
+              (click)="onSelectCar(c)"
+              [ngClass]="{ active: i === carActiveIndex }"
+            >
+              {{ c.title }}
+            </button>
+            <div class="dropdown-empty" *ngIf="carSuggestions.length === 0">
+              No hay coincidencias
+            </div>
+          </div>
+
+          <div class="error" *ngIf="t('carTitle')?.touched && t('carTitle')?.errors?.['required']">
+            Obligatorio.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Precio (USD)</label>
+          <input type="number" formControlName="priceUsd" placeholder="0" inputmode="decimal" [readonly]="true" />
+        </div>
+      </div>
+
+      <!-- Fila 2 -->
+      <div class="form-row">
+        <div class="form-group">
+          <label>Bono asignado mensual (USD)</label>
+          <input
+            type="number"
+            formControlName="monthlyBonusUsd"
+            placeholder="0"
+            min="0"
+            step="any"
+            inputmode="decimal"
+            (keydown)="blockNumberKeys($event, true)"
+            (wheel)="disableWheel($event)"
+          />
+          <div class="error" *ngIf="t('monthlyBonusUsd')?.touched && t('monthlyBonusUsd')?.errors?.['min']">
+            Debe ser ≥ 0.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Cantidad de cuotas</label>
+          <input
+            type="number"
+            formControlName="installments"
+            placeholder="0"
+            min="1"
+            step="1"
+            inputmode="numeric"
+            pattern="[0-9]*"
+            (keydown)="blockNumberKeys($event, false)"
+            (wheel)="disableWheel($event)"
+          />
+          <div class="error" *ngIf="t('installments')?.touched && (t('installments')?.errors?.['min'] || t('installments')?.errors?.['pattern'])">
+            Debe ser un entero ≥ 1.
+          </div>
+        </div>
+      </div>
+
+      <!-- Fila 3: GPS + Seguro + SOAT -->
+      <div class="form-row three">
+        <div class="form-group">
+          <label>GPS (USD)</label>
+          <input
+            type="number"
+            formControlName="gpsUsd"
+            placeholder="0.00"
+            min="0"
+            step="any"
+            inputmode="decimal"
+            (keydown)="blockNumberKeys($event, true)"
+            (wheel)="disableWheel($event)"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Seguro Vehicular (USD)</label>
+          <input
+            type="number"
+            formControlName="insuranceUsd"
+            placeholder="0.00"
+            min="0"
+            step="any"
+            inputmode="decimal"
+            (keydown)="blockNumberKeys($event, true)"
+            (wheel)="disableWheel($event)"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>SOAT</label>
+          <input
+            type="number"
+            formControlName="soatUsd"
+            placeholder="0.00"
+            min="0"
+            step="any"
+            inputmode="decimal"
+            (keydown)="blockNumberKeys($event, true)"
+            (wheel)="disableWheel($event)"
+          />
+        </div>
+      </div>
+    </form>
+
+    <!-- Footer -->
+    <footer class="modal-footer">
+      <button type="button" class="btn btn-outline" (click)="onClose()">Cancelar</button>
+      <button
+        type="button"
+        class="btn btn-primary"
+        (click)="onSave()"
+        [disabled]="form.invalid || !form.dirty"
+      >
+        Actualizar cronograma
+      </button>
+    </footer>
+  </div>
+</div>

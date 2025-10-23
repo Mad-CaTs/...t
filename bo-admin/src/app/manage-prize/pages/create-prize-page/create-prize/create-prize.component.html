@@ -1,0 +1,177 @@
+<div class="create-event-card flex flex-column gap-6 p-6 bg-white w-100">
+	<h2 class="title">Creación de Premios</h2>
+
+	<!--List | Filter-->
+
+	<!--Table | Pagination-->
+	<div class="position-relative w-100">
+		<table-pagination [noTextBtn]="true" class="w-100 mt-20 mt-md-2 d-block" />
+		<div class="d-flex gap-4 position-absolute top-0 start-0">
+			<button class="btn btn-secondary" (click)="onCreatePrize()">Nuevo Premio</button>
+		</div>
+	</div>
+	<!--Table | Table-->
+	<app-common-table
+		[headers]="table.headers"
+		[checkedAll]="table.checkedAll"
+		[headersMinWidth]="table.headersMinWidth"
+		[headersMaxWidth]="table.headersMaxWidth"
+		[noCheckboxes]="table.noCheckBoxes"
+		[firstEmpty]="true"
+		(onCheckedAll)="table.changeCheckedAll($event)"
+	>
+		<tr class="w-100 d-flex py-2 align-items-center" *ngFor="let item of table.data; let i = index">
+			<td class="d-flex justify-content-center">
+				<div class="form-check-sm form-check-custom form-check-solid">
+					<input
+						class="form-check-input cursor-pointer"
+						type="radio"
+						name="prize-item-radio"
+						[value]="item.id"
+						[(ngModel)]="selectedRowId"
+					/>
+				</div>
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6 px-3"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[0],
+					'max-width.px': table.headersMaxWidth[0]
+				}"
+			>
+				{{ i + 1 }}
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6 px-3"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[1],
+					'max-width.px': table.headersMaxWidth[1]
+				}"
+			>
+				{{ getRangeDisplay(item.range) }}
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[2],
+					'max-width.px': table.headersMaxWidth[2]
+				}"
+			>
+				{{ item.startDate }}
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6 px-2"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[3],
+					'max-width.px': table.headersMaxWidth[3]
+				}"
+			>
+				{{ item.endDate }}
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6 px-4"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[4],
+					'max-width.px': table.headersMaxWidth[4],
+				}"
+			>
+				{{ item.destiny }}
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[5],
+					'max-width.px': table.headersMaxWidth[5]
+				}"
+			>
+				{{ item.bonusValue | currency : 'USD' : 'symbol' : '1.2-2' }}
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[6],
+					'max-width.px': table.headersMaxWidth[6],
+					'word-wrap': 'break-word',
+					'white-space': 'normal',
+					'padding-left': '5px',
+					'padding-right': '5px'
+				}"
+			>
+				{{ item.link.length > 0 ? item.link : '-' }}
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[7],
+					'max-width.px': table.headersMaxWidth[7],
+					
+				}"
+			>
+				<img
+					[src]="item.flyer"
+					width="50"
+					(click)="openImageModal(item.flyer, item.destiny)"
+					alt="Flyer preview"
+					style="cursor: pointer"
+				/>
+
+				<!--Modal para mostrar la imagen agrandada-->
+				<ng-template #imageModal let-modal>
+					<div class="modal-header">
+						<h4 class="modal-title">{{ selectedImageName }}</h4>
+						<button
+							type="button"
+							class="btn-close"
+							aria-label="Close"
+							(click)="modal.dismiss('Cross click')"
+						></button>
+					</div>
+					<div class="modal-body text-center">
+						<img
+							[src]="selectedImageUrl"
+							class="img-fluid"
+							alt="Image Preview"
+							class="img-fluid"
+						/>
+					</div>
+				</ng-template>
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				[ngStyle]="{
+                'min-width.px': table.headersMinWidth[8],
+                'max-width.px': table.headersMaxWidth[8],
+            }"
+			>
+				<div
+					class="point-table"
+					[class.bg-success]="item.status === 'Activo'"
+					[class.bg-gray-600]="item.status != 'Activo'"
+				></div>
+				<span
+					class="fw-bold"
+					[class.text-success]="item.status === 'Activo'"
+					[class.text-muted]="item.status != 'Activo'"
+				>
+					{{ item.status }}
+				</span>
+			</td>
+			<td
+				class="w-100 d-flex justify-content-center"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[9],
+					'max-width.px': table.headersMaxWidth[9]
+				}"
+			>
+				<button
+					class="btn btn-sm"
+					style="padding-left: 20px"
+					[disabled]="selectedRowId !== item.id"
+					(click)="onEditPrize()"
+				>
+					<i class="fas fa-pencil-alt"></i>
+				</button>
+			</td>
+		</tr>
+	</app-common-table>
+</div>

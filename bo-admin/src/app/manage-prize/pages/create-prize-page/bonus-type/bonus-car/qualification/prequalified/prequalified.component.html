@@ -1,0 +1,72 @@
+<div class="flex flex-column gap-6 p-6 bg-white w-100">
+	<filter-generic
+		[filters]="filters"
+		[values]="filterValues"
+		[columnsDesktop]="3"
+		[showActionButton]="false"
+		[showClearButton]="true"
+		[clearLabel]="'Limpiar'"
+		[extraButtons]="extraButtons"
+		(valuesChange)="onValuesChange($event)"
+		(search)="onSearch($event)"
+		(extraAction)="onExtraAction($event)"
+	></filter-generic>
+
+	<ng-container *ngIf="totalFiltered > 0; else emptyState">
+		<app-table-generic
+			[columns]="genericColumns"
+			[keys]="genericKeys"
+			[data]="pagedData"
+			[columnWidths]="genericWidths"
+			[actionsWidthPercentOverride]="12"
+			[freezeOverflow]="true"
+			[pageIndex]="pageIndex"
+			[pageSize]="pageSize"
+			[showView]="true"
+			[showEdit]="true"
+			[showDelete]="true"
+			[showActions]="true"
+			[showCheckboxes]="true"
+			[checkboxMode]="'select'"
+			(view)="onViewRow($event)"
+			(edit)="onEditRow($event)"
+			(delete)="onDeleteRow($event)"
+		></app-table-generic>
+
+		<app-table-paginator
+			[length]="totalFiltered"
+			[pageSize]="pageSize"
+			[pageIndex]="pageIndex"
+			(pageChange)="onPageChange($event)"
+			(pageSizeChange)="onPageSizeChange($event)"
+		></app-table-paginator>
+	</ng-container>
+
+	<ng-template #emptyState>
+		<app-empty-state message="No data"></app-empty-state>
+	</ng-template>
+</div>
+
+<app-modal-notify
+	*ngIf="modalOpen && modalConfig && !modalConfig.oneButton && (modalConfig.type === 'notify-confirm' || modalConfig.type === 'qualify-confirm')"
+	[title]="modalConfig.title || ''"
+	[message]="modalConfig.message || ''"
+	[iconType]="getModalIcon()"
+	[oneButton]="false"
+	[closeOnConfirm]="modalConfig.closeOnConfirm !== false"
+	[primaryText]="modalConfig.primaryText || ''"
+	[secondaryText]="modalConfig.secondaryText || ''"
+	(confirmed)="onModalConfirm()"
+	(canceled)="onModalCancel()"
+	(closed)="onModalClose()"
+></app-modal-notify>
+
+<app-modal-notify
+	*ngIf="modalOpen && modalConfig && modalConfig.oneButton"
+	[title]="modalConfig.title || ''"
+	[message]="modalConfig.message || ''"
+	[iconType]="getModalIcon()"
+	[oneButton]="true"
+	[primaryText]="modalConfig.primaryText || ''"
+	(closed)="onModalClose()"
+></app-modal-notify>

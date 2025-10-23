@@ -1,0 +1,148 @@
+<div class="table-responsive">
+	<!-- <table class="table table-bordered table-striped"> -->
+	<table class="table table-bordered table-hover align-middle text-center mb-0">
+		<thead class="table-light">
+			<tr>
+				<th>Item</th>
+				<th>Tipo de legalización</th>
+				<th>Ubicación</th>
+				<th>Moneda</th>
+				<th>Costo</th>
+				<th>Estado</th>
+				<th>Acciones</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let item of data">
+				<td>{{ item.id }}</td>
+				<td>{{ item.legalName }}</td>
+				<td>{{ item.localName }}</td>
+				<td>{{ item.currency }}</td>
+				<td>{{ item.price }}</td>
+				<td>
+					<span
+						class="badge"
+						[ngClass]="{
+							'bg-success': item.status === 1,
+							'bg-secondary': item.status === 2
+						}"
+					>
+						{{ item.status === 1 ? 'Activo' : 'Inactivo' }}
+					</span>
+				</td>
+				<td>
+					<!-- <button class="btn btn-sm btn-outline-primary">Editar</button> -->
+					<button class="btn btn-sm btn-outline-primary" (click)="openEditModal(item)">
+						Editar
+					</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<!-- New modal edicion -->
+<!-- Modal de Edición -->
+<ng-template #editModal let-modal>
+	<div class="modal-header">
+		<h5 class="modal-title">Editar tarifa de legalización</h5>
+		<p>Complete todos los campos del formulario.</p>
+		<button type="button" class="btn-close" (click)="modal.dismiss()"></button>
+	</div>
+	<div class="modal-body" *ngIf="editItem">
+		<form (ngSubmit)="saveChanges()">
+			<div class="mb-3">
+				<label for="moneda" class="form-label">Moneda</label>
+				<select
+					class="form-select"
+					id="moneda"
+					[(ngModel)]="editItem.localType"
+					name="moneda"
+					disabled
+				>
+					<option *ngFor="let option of localOptions" [value]="option.id">
+						{{ option.name }}
+					</option>
+				</select>
+			</div>
+
+			<div class="mb-3">
+				<label for="costo" class="form-label">Precio</label>
+				<input
+					type="number"
+					class="form-control"
+					id="costo"
+					[(ngModel)]="editItem.price"
+					name="costo"
+					required
+				/>
+			</div>
+
+			<div class="mb-3">
+				<input
+					type="checkbox"
+					class="form-check-input"
+					id="estado"
+					[checked]="editItem.status === 1"
+					(change)="onStatusChange($event)"
+				/>
+				<label class="form-check-label" for="estado">
+					{{ editItem.status === 1 ? 'Activado' : 'Inactivo' }}
+				</label>
+			</div>
+		</form>
+	</div>
+	<div class="modal-footer" *ngIf="editItem">
+		<button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Cancelar</button>
+		<button type="button" class="btn btn-primary" (click)="saveChanges()">Guardar</button>
+	</div>
+</ng-template>
+
+<!-- Modal de Edicion -->
+<ng-template #editModalOld let-modal>
+	<div class="modal-header">
+		<h5 class="modal-title">Editar tarifa de legalización</h5>
+		<p>Complete todos los campos del formulario.</p>
+		<button type="button" class="btn-close" (click)="modal.dismiss()"></button>
+	</div>
+	<div class="modal-body">
+		<form (ngSubmit)="saveChanges()">
+			<div class="mb-3">
+				<label for="moneda" class="form-label">Moneda</label>
+				<select class="form-select" id="moneda" [(ngModel)]="editItemX.localName" name="moneda">
+					<option value="PEN">Soles PEN</option>
+					<option value="USD">Dolares USD</option>
+				</select>
+			</div>
+
+			<div class="mb-3">
+				<label for="costo" class="form-label">Precio</label>
+				<input
+					type="number"
+					class="form-control"
+					id="costo"
+					[(ngModel)]="editItemX.price"
+					name="costo"
+				/>
+			</div>
+
+			<div class="mb-3">
+				<!-- <div class="mb-3 form-check"> -->
+				<input
+					type="checkbox"
+					class="form-check-input"
+					id="estado"
+					[(ngModel)]="editItemX.status"
+					name="estado"
+				/>
+				<label class="form-check-label" for="estado">
+					{{ editItemX.status === 1 ? 'Activado' : 'Inactivo' }}
+				</label>
+			</div>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Cancelar</button>
+		<button type="button" class="btn btn-primary" (click)="saveChanges()">Guardar</button>
+	</div>
+</ng-template>

@@ -1,0 +1,104 @@
+<div class="d-flex flex-column gap-6 p-6 bg-white w-100">
+	<!--Title-->
+	<h1 class="fs-1 text-black fw-medium m-0">Periodo de Gracia</h1>
+	<!--Filters-->
+	<form [formGroup]="form" class="d-flex w-100 flex-column gap-6">
+		<h4 class="fs-5 text-black fw-normal m-0">Buscador</h4>
+		<div class="d-flex flex-column flex-md-row gap-6">
+			<app-input
+				class="w-100"
+				label="Ingrese campo de búsqueda:"
+				placeholder="Buscar por"
+				type="search"
+				[formGroup]="form"
+				controlName="search"
+			/>
+			<div class="w-100 d-flex flex-column gap-2">
+				<span class="fs-6 text-black fw-normal">Buscar como:</span>
+				<div class="d-flex align-items-center gap-3 px-4 py-2">
+					<input
+						class="form-check-input cursor-pointer"
+						type="radio"
+						name="searchAs"
+						id="searchAsUser"
+						formControlName="searchAs"
+						value="1"
+					/>
+					<label class="fs-6 fw-normal text-black" for="searchAsUser">Usuario</label>
+					<input
+						class="form-check-input cursor-pointer"
+						type="radio"
+						name="searchAs"
+						formControlName="searchAs"
+						id="searchAsPartner"
+						value="2"
+					/>
+					<label class="fs-6 fw-normal text-black" for="searchAsPartner">Patrocinador</label>
+				</div>
+			</div>
+		</div>
+		<div class="d-flex justify-content-end">
+			<button class="btn btn-secondary" type="submit" [disabled]="form.invalid" (click)="onSearch()">
+				Buscar
+			</button>
+		</div>
+	</form>
+	<!--Table | Pagination-->
+	<div class="d-flex justify-content-between">
+		<table-pagination [noTextBtn]="true" class="w-100" />
+	</div>
+	<!--Table | Table-->
+	<app-common-table
+		[headers]="table.headers"
+		[checkedAll]="table.checkedAll"
+		[noCheckboxes]="table.noCheckBoxes"
+		[firstEmpty]="true"
+		(onCheckedAll)="table.changeCheckedAll($event)"
+	>
+		<tr class="d-flex py-2 align-items-center" *ngFor="let item of table.data">
+			<td class="d-flex justify-content-center">
+				<!-- Para seleccionar la suscripción  de la que se desea visualizar el detalle -->
+				<div class="form-check-sm form-check-custom form-check-solid">
+					<input
+						class="form-check-input cursor-pointer"
+						type="radio"
+						name="grace-period-item-radio"
+						[value]="item.id"
+						[(ngModel)]="selectedRowId"
+					/>
+				</div>
+			</td>
+
+			<td class="w-100 text-gray-900 text-center fs-6" style="word-break: break-all;">{{ item.username }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.dni }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.fullname }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.gender }}</td>
+			<td
+				class="text-gray-900 text-center fs-6"
+				style="max-width: 122px; word-wrap: break-word; white-space: normal"
+			>
+				{{ item.email }}
+			</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.phone }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.partner }}</td>
+			<td class="w-100 d-flex justify-content-center">
+				<span class="w-100 text-gray-900 text-center fs-6">{{ item.state }}</span>
+			</td>
+			<td class="text-center fs-6" style="max-width: 122px; word-wrap: break-word; white-space: normal">
+				<button
+					class="btn text-warning"
+					(click)="onViewSubscriptions(item)"
+					[disabled]="selectedRowId !== item.id"
+				>
+					<span>
+						{{
+							item.membership == '1'
+								? item.membership + ' suscripción'
+								: item.membership + ' suscripciones'
+						}}
+					</span>
+				</button>
+			</td>
+		</tr>
+	</app-common-table>
+</div>

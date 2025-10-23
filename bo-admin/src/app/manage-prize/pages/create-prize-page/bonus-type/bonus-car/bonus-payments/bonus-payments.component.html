@@ -1,0 +1,72 @@
+<div class="bonus-payments-card flex flex-column gap-6 p-6 bg-white w-100">
+	<h4 class="fs-5 text-black fw-medium m-0">Pagos de bono ( MOCK )</h4>
+	<div class="toolbar-card">
+		<filter-generic
+			[filters]="filters"
+			[values]="filterValues"
+			[columnsDesktop]="3"
+			[showActionButton]="false"
+			[showClearButton]="true"
+			[clearLabel]="'Limpiar'"
+			[extraButtons]="extraButtons"
+			(valuesChange)="onValuesChange($event)"
+			(search)="onSearch($event)"
+			(extraAction)="onExtraAction($event)"
+		></filter-generic>
+
+		<ng-container *ngIf="(filteredRows?.length ?? 0) > 0; else emptyState">
+			<app-table-generic
+				[columns]="genericColumns"
+				[keys]="genericKeys"
+				[data]="pagedData"
+				[columnWidths]="genericWidths"
+				[actionsWidthPercentOverride]="0"
+				[freezeOverflow]="true"
+				[pageIndex]="pageIndex"
+				[pageSize]="pageSize"
+				[showView]="false"
+				[showEdit]="false"
+				[showDelete]="false"
+				[showActions]="false"
+				[showCheckboxes]="true"
+				[checkboxMode]="'select'"
+			></app-table-generic>
+
+			<app-table-paginator
+				[length]="filteredRows.length"
+				[pageSize]="pageSize"
+				[pageIndex]="pageIndex"
+				(pageChange)="onPageChange($event)"
+				(pageSizeChange)="onPageSizeChange($event)"
+			></app-table-paginator>
+		</ng-container>
+
+		<ng-template #emptyState>
+			<app-empty-state message="No data"></app-empty-state>
+		</ng-template>
+	</div>
+</div>
+
+<app-modal-notify
+	*ngIf="modalOpen && modalConfig && !modalConfig.oneButton && modalConfig.type === 'pay-confirm'"
+	[title]="modalConfig.title || ''"
+	[message]="modalConfig.message || ''"
+	[iconType]="getModalIcon()"
+	[oneButton]="false"
+	[closeOnConfirm]="modalConfig.closeOnConfirm !== false"
+	[primaryText]="modalConfig.primaryText || ''"
+	[secondaryText]="modalConfig.secondaryText || ''"
+	(confirmed)="onModalConfirm()"
+	(canceled)="onModalCancel()"
+	(closed)="onModalClose()"
+></app-modal-notify>
+
+<app-modal-notify
+	*ngIf="modalOpen && modalConfig && modalConfig.oneButton"
+	[title]="modalConfig.title || ''"
+	[message]="modalConfig.message || ''"
+	[iconType]="getModalIcon()"
+	[oneButton]="true"
+	[primaryText]="modalConfig.primaryText || ''"
+	(closed)="onModalClose()"
+></app-modal-notify>

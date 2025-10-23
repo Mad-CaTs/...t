@@ -1,0 +1,230 @@
+<div class="page-container bg-white p-4 p-lg-5 d-flex flex-column gap-5">
+  <h2 class="fw-bold fs-3 m-0">Cupones socios</h2>
+
+  <!-- Filtros -->
+  <div class="row gy-3 gx-4 align-items-end">
+    <div class="col-md-3">
+      <label class="form-label fw-semibold mb-1">Buscador</label>
+      <input class="form-control" [(ngModel)]="searchText" placeholder="Ingrese lo que necesita buscar..." />
+    </div>
+    <div class="col-md-3">
+      <label class="form-label fw-semibold mb-1">Empresa</label>
+      <select class="form-select" [(ngModel)]="selectedCompany">
+        <option value="">Todas las empresas</option>
+        <option value="1">Inclub</option>
+      </select>
+    </div>
+    <div class="col-md-3">
+      <label class="form-label fw-semibold mb-1">Rango salarial</label>
+      <select class="form-select" [(ngModel)]="selectedRange">
+        <option value="">Todos los rangos</option>
+        <option value="1">S/ 0.00 - S/ 0.00</option>
+      </select>
+    </div>
+    <div class="col-md-3">
+      <button class="btn btn-primary w-100" (click)="search()" style="margin-top: 1.5rem;">
+        <i class="fas fa-search me-2"></i>Buscar
+      </button>
+    </div>
+  </div>
+
+  <!-- Botón Agregar -->
+  <div class="d-flex justify-content-start">
+    <button class="btn" style="background-color: #ff9800; color: #fff;" (click)="addCoupon()">
+      Agregar cupón
+    </button>
+  </div>
+
+  <div class="table-container">
+    <ng-container *ngIf="!loading; else spinner">
+      <div class="overflow-x-auto">
+        <table class="coupon-table">
+          <thead>
+            <tr>
+              <th>N°</th>
+              <th>Cupones</th>
+              <th>% descto.</th>
+              <th>Empresa</th>
+              <th>Fecha de vigencia</th>
+              <th>Estado</th>
+              <th class="text-center">Editar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of paginatedCoupons; let i = index">
+              <td>{{ (currentApiPage * itemsPerPage) + i + 1 }}</td>
+              <td class="fw-semibold">{{ item.coupon_code || item.name }}</td>
+              <td>{{ item.discount_percentage || item.percent }}%</td>
+              <td>Inclub</td>
+              <td>
+                {{ parseDate(item.date_start || item.startDate) | date:'dd/MM/yyyy' }} - 
+                {{ parseDate(item.date_end || item.endDate) ? (parseDate(item.date_end || item.endDate) | date:'dd/MM/yyyy') : '05/06/2026' }}
+              </td>
+              <td>
+                <span class="badge badge-light-success">Activo</span>
+              </td>
+              <td>
+                <div class="action-buttons">
+                  <button type="button" (click)="onEdit(item)" title="Editar" class="btn-action edit">
+                    <i class="bi bi-pencil-square"></i>
+                  </button>
+                  <button type="button" (click)="onDelete(item)" title="Eliminar" class="btn-action delete">
+                    <i class="bi bi-trash-fill"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div *ngIf="table.data?.length === 0" class="text-center text-secondary py-5">
+        No se encontraron cupones.
+      </div>
+    </ng-container>
+
+    <div *ngIf="totalPages > 0 && !loading" class="pagination-container">
+      <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1" class="page-btn arrow">
+        <i class="bi bi-chevron-left"></i>
+      </button>
+      <button *ngFor="let page of getPages()" (click)="goToPage(page)" class="page-btn number"
+        [class.active]="currentPage === page">
+        {{ page }}
+      </button>
+      <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages" class="page-btn arrow">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </div>
+
+  <ng-template #spinner>
+    <div class="d-flex justify-content-center py-5">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  </ng-template>
+
+<ng-template #modalContent let-modal>
+  <div class="modal-container">
+  
+    <button (click)="modal.dismiss('Cross click')" class="btn-close"></button>
+
+    <div class="modal-header-custom">
+      <div class="icon-container">
+      <svg fill="#000000" height="800px" width="800px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+        viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
+      <path d="M256,243.2c141.4,0,256-47.8,256-106.7c0-58.9-114.6-106.7-256-106.7S0,77.6,0,136.5C0,195.4,114.6,243.2,256,243.2z
+        M256,413.8c-97.7,0-184.1-23.5-238.6-59.8C6.3,366,0,378.9,0,392.5c0,58.9,114.6,106.7,256,106.7s256-47.8,256-106.7
+        c0-13.6-6.3-26.5-17.4-38.4C440.1,390.3,353.7,413.8,256,413.8z M256,285.8c-97.7,0-184.1-23.5-238.6-59.8C6.3,238,0,250.9,0,264.5
+        c0,58.9,114.6,106.7,256,106.7s256-47.8,256-106.7c0-13.6-6.3-26.5-17.4-38.4C440.1,262.3,353.7,285.8,256,285.8z"/>
+      </svg>
+      </div>
+      <div>
+        <h2 class="modal-title-custom">{{ editingCoupon ? 'Editar Cupón' : 'Agregar Cupón' }}</h2>
+        <p class="modal-subtitle-custom">Completa los campos para agregar un nuevo cupón.</p>
+      </div>
+    </div>
+
+    <form [formGroup]="couponForm">
+  <div class="form-columns">
+
+    <div class="form-column-left">
+      <label class="form-label fw-semibold">Rango salarial</label>
+      <div class="salary-radio-group">
+        <ng-container *ngFor="let r of salaryRanges; let i = index">
+          <div class="salary-radio-option">
+            <input type="radio" formControlName="salaryRangeIndex" [value]="i" id="salary-range-{{i}}">
+            <label for="salary-range-{{i}}">{{ r.label }}</label>
+          </div>
+        </ng-container>
+      </div>
+      <div *ngIf="couponForm.get('salaryRangeIndex')?.invalid && couponForm.get('salaryRangeIndex')?.touched"
+        class="invalid-feedback d-block">
+        Rango salarial es requerido.
+      </div>
+    </div>
+
+    <div class="form-column-right">
+      <div>
+        <label class="form-label fw-semibold" for="companyId">Empresa</label>
+        <select id="companyId" class="form-select" formControlName="companyId">
+          <option [ngValue]="null" disabled>Seleccione una empresa</option>
+          <option *ngFor="let c of companies" [value]="c.key">{{ c.text }}</option>
+        </select>
+        <div *ngIf="couponForm.get('companyId')?.invalid && couponForm.get('companyId')?.touched" class="invalid-feedback">
+          Empresa es requerida.
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div>
+          <label class="form-label fw-semibold" for="code">Cupón</label>
+          <input type="text" id="code" class="form-control" formControlName="code" placeholder="Nombre del cupón" />
+          <div *ngIf="couponForm.get('code')?.invalid && couponForm.get('code')?.touched" class="invalid-feedback">
+            Nombre del cupón es requerido.
+          </div>
+        </div>
+        <div>
+          <label class="form-label fw-semibold" for="discount">Descuento</label>
+          <div class="input-group-percent">
+            <input type="number" id="discount" class="form-control" formControlName="discount" placeholder="0" min="0" max="100"
+                   step="1" pattern="^\d+$" inputmode="numeric" (keydown)="blockInvalidKeys($event)"
+                   (paste)="blockPaste($event)" />
+            <span class="input-group-text-percent">%</span>
+          </div>
+          <div *ngIf="couponForm.get('discount')?.invalid && couponForm.get('discount')?.touched" class="invalid-feedback">
+            Descuento es requerido y debe ser un número entero.
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="date-range-container">
+          <label class="form-label fw-semibold">Fecha de vigencia</label>
+          <div class="d-flex gap-2">
+            <div class="input-group-date">
+              <input type="date" class="form-control" formControlName="startDate" placeholder="Inicio" />
+            </div>
+            <div class="input-group-date">
+              <input type="date" class="form-control" formControlName="endDate" placeholder="Fin" />
+            </div>
+          </div>
+           <div *ngIf="(couponForm.get('startDate')?.invalid || couponForm.get('endDate')?.invalid) && (couponForm.get('startDate')?.touched || couponForm.get('endDate')?.touched)" class="invalid-feedback d-block">
+            Fechas de vigencia requeridas.
+          </div>
+        </div>
+        <div class="status-container">
+          <label class="form-label fw-semibold">Estado</label>
+          <label class="status-toggle">
+            <input type="checkbox" formControlName="active">
+            <span class="slider"></span>
+            </label>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</form>
+
+    <div class="modal-footer-custom">
+      <button type="button" class="btn btn-cancel" (click)="modal.dismiss('cancel')">Cancelar</button>
+      <button type="button" class="btn-save" [disabled]="couponForm.invalid" (click)="saveCoupon()">Guardar</button>
+    </div>
+  </div>
+</ng-template>
+
+
+  <ng-template #confirmDeleteModal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">Confirmar eliminación</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+    </div>
+    <div class="modal-body">
+      <p>¿Estás seguro de que deseas eliminar este cupón?</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Cancelar</button>
+      <button type="button" class="btn btn-danger" (click)="confirmDelete(modal)">Sí, eliminar</button>
+    </div>
+  </ng-template>

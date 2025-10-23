@@ -1,0 +1,31 @@
+.suggestions-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  width: 100%;
+  z-index: 20;
+}
+
+
+.btn-outline-warning {
+  border-width: 2px;
+}
+
+.card-xxl-stretch {
+  border-radius: 16px;
+}
+
+.p-dialog-mask.p-component-overlay {
+  background: rgba(0,0,0,.45) !important;
+  backdrop-filter: blur(1.5px); /* opcional */
+}
+
+.p-overlay-mask {
+  background: rgba(0,0,0,.45) !important;
+  backdrop-filter: blur(1.5px);
+}
+
+.p-dialog-mask {
+  z-index: 1105 !important;
+}
+

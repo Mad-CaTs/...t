@@ -1,0 +1,57 @@
+<app-modal [title]="title">
+	<form [formGroup]="form" class="d-flex w-100 flex-column gap-6">
+		<app-input label="Nombres" placeholder="Ingrese sus nombres" [formGroup]="form" controlName="names" />
+		<app-input
+			label="Apellidos"
+			placeholder="Ingrese sus apellidos"
+			[formGroup]="form"
+			controlName="lastnames"
+		/>
+		<app-input
+			type="email"
+			placeholder="Correo electrónico"
+			label="Correo electrónico"
+			controlName="email"
+			[formGroup]="form"
+			iconLeft="bi bi-envelope-at-fill"
+			(input)="removeSpaces($event)"
+		></app-input>
+		<app-input
+			type="number"
+			label="Telefono"
+			placeholder="Ingrese N° de Telefono"
+			[formGroup]="form"
+			controlName="phoneNumber"
+		/>
+		<app-input
+			label="Usuario"
+			placeholder="Ingrese el usuario"
+			[formGroup]="form"
+			controlName="username"
+		/>
+
+		<app-password-field
+			label="Contraseña"
+			placeholder="Ingresa contraseña"
+			[formGroup]="form"
+			controlName="password"
+			(input)="trimPassword()"
+		/>
+		<app-select
+			label="Rol:"
+			placeholder="Seleccionar rol"
+			[formGroup]="form"
+			controlName="role"
+			[options]="roles"
+		/>
+
+		<div class="w-100 d-flex justify-content-center align-items-center gap-4">
+			<button class="btn btn-outline-secondary" type="button" (click)="instanceModal.close()">
+				Cancelar
+			</button>
+			<button class="btn btn-secondary" type="submit" [disabled]="form.invalid" (click)="onSave()">
+				Guardar cambios
+			</button>
+		</div>
+	</form>
+</app-modal>

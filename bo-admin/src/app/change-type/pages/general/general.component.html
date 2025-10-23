@@ -1,0 +1,111 @@
+<section class="d-flex gap-5 w-100 flex-column">
+	<!--Filters-->
+	<!--<form [formGroup]="form" class="d-flex gap-5 align-items-end p-4 border border-gray-300 rounded">
+		<app-select
+			class="w-100"
+			label="Seleccionar país"
+			placeholder="Seleccionar país"
+			[formGroup]="form"
+			controlName="country"
+			[options]="[{ id: '1', text: 'Peru' }]"
+		/>
+		<app-select
+			class="w-100"
+			label="Seleccionar Moneda"
+			placeholder="Seleccionar Moneda"
+			[formGroup]="form"
+			controlName="currency"
+			[options]="[{ id: '1', text: 'Dolares' }]"
+		/>
+		<app-input
+			class="w-100"
+			type="number"
+			label="Tipo de Cambio"
+			placeholder="3.25"
+			[formGroup]="form"
+			controlName="changeType"
+		/>
+		<button class="btn btn-secondary" type="submit" [disabled]="form.invalid">Aplicar</button>
+		<button class="btn btn-outline-secondary" type="button" (click)="onReset()">Limpiar</button>
+	</form>-->
+	<!--Actions-->
+	<div class="d-flex justify-content-between align-items-center">
+		<div class="d-flex gap-1">
+			<div
+				class="d-flex justify-content-center align-items-center bg-gray-200 px-2 cursor-pointer"
+				(click)="onChangeSelectedMonth(monthSelected - 1)"
+			>
+				<i class="bi bi-caret-left fs-4 text-black"></i>
+			</div>
+
+			<span
+				class="h-25px bg-gray-200 text-black w-150px d-flex justify-content-center align-items-center"
+			>
+				{{ monthName }} {{ yearSelected }}
+			</span>
+			<div
+				class="d-flex justify-content-center align-items-center bg-gray-200 px-2 cursor-pointer"
+				(click)="onChangeSelectedMonth(monthSelected + 1)"
+			>
+				<i class="bi bi-caret-right fs-4 text-black"></i>
+			</div>
+		</div>
+		<button class="btn btn-outline-secondary" type="button" (click)="onCreate()">Nuevo</button>
+	</div>
+	<!--Calendar-->
+	<div class="d-flex flex-column" *ngIf="!loading">
+		{{result.length}}
+		<ul class="d-flex flex-row align-items-center p-0 m-0" style="list-style: none">
+			<li
+				class="fw-medium fs-6 text-gray-400 p-3 w-100 border-gray-300 border no-select"
+				*ngFor="let day of weekDays"
+			>
+				{{ day }}
+			</li>
+		</ul>
+
+		<ul
+			class="d-flex flex-row align-items-center p-0 m-0"
+			style="list-style: none"
+			*ngFor="let day of days; let i = index"
+		>
+			<li
+				*ngFor="let number of day"
+				class="cursor-pointer p-3 fw-semibold fs-6 border border-gray-300 no-select w-100 position-relative day"
+				[class.bg-light-primary]="isToday(number)"
+				[class.text-primary]="isToday(number)"
+				[class.bg-gray-200]="isMuted(number, i)"
+				[class.text-gray-300]="isMuted(number, i)"
+				tabindex="0"
+				style="height: 192px"
+			>
+				{{ number }}
+				<div
+					class="d-flex flex-column gap-2 w-fit w-100 p-2 bottom-0 start-0 position-absolute"
+					*ngIf="!isMuted(number, i)"
+				>
+					<span class="badge bg-light-primary text-primary w-fit" >
+						Compra: <strong>{{ getExchangeRate(number)?.buys }}</strong>
+					</span>
+					<span class="badge bg-light-success text-success w-fit">
+						Venta: <strong>{{ getExchangeRate(number)?.sale }}</strong>
+					</span>
+					<!--<button
+						class="fs-8 btn btn-secondary w-60px px-0 py-2 day__edit"
+						*ngIf="number < 20"
+						(click)="onEdit(1)"
+					>
+						Editar
+					</button>-->
+					<!-- <button
+						class="fs-8 btn btn-secondary w-60px px-0 py-2 day__edit"
+						*ngIf="number > 20"
+						(click)="onCreate()"
+					>
+						Nuevo
+					</button> -->
+				</div>
+			</li>
+		</ul>
+	</div>
+</section>

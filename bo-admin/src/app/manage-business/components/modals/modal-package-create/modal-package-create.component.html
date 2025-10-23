@@ -1,0 +1,63 @@
+<app-modal [title]="title">
+	<form [formGroup]="form" class="d-flex w-100 flex-column gap-6" (submit)="onSubmit()">
+		<app-select
+			class="w-100"
+			label="Familia de paquetes"
+			placeholder="Seleccionar familia"
+			[formGroup]="form"
+			controlName="family"
+			[options]="options"
+		/>
+		<div class="d-flex gap-4 w-100">
+			<app-input
+				class="w-100"
+				label="Nombre"
+				placeholder="Ingrese nombre de familia de paquete"
+				[formGroup]="form"
+				controlName="name"
+			/>
+			<app-input
+				class="w-100"
+				label="Membresía de código"
+				placeholder="Ingrese código"
+				[formGroup]="form"
+				controlName="code"
+			/>
+		</div>
+		<app-textarea
+			class="w-100"
+			label="Descripción"
+			placeholder="Ingrese descripción"
+			[formGroup]="form"
+			controlName="description"
+		/>
+
+		<div class="d-flex flex-column gap-1">
+			<label for="status" class="fs-6 text-muted fw-bold">Estado</label>
+			<div class="d-flex gap-3 align-items-center">
+				<input
+					class="w-15px h-15px cursor-pointer"
+					type="checkbox"
+					formControlName="status"
+					name="status"
+					aria-describedby="basic-addon1"
+				/>
+				<span>Activo</span>
+			</div>
+		</div>
+
+		<div class="alert alert-secondary text-center" role="alert">
+			Al crear un nuevo paquete, este siempre se creará en la última versión de la familia de paquetes a
+			la cual pertenece.
+		</div>
+
+		<div class="w-100 d-flex justify-content-center align-items-center gap-4">
+			<button class="btn btn-outline-secondary" type="button" (click)="instanceModal.close()">
+				Cancelar
+			</button>
+			<button class="btn btn-secondary" type="submit" [disabled]="form.invalid || loading">
+				Continuar
+			</button>
+		</div>
+	</form>
+</app-modal>

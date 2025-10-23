@@ -1,0 +1,72 @@
+<div class="download-card shadow-box">
+	<!-- Icono de la esquina superior izquierda -->
+	<div class="card-icon-corner">
+		<mat-icon class="corner-icon">{{ card.icon }}</mat-icon>
+	</div>
+	
+	<!-- Contenido principal -->
+	<div class="card-main-content">
+		<h3 class="card-title">{{ card.title }}</h3>
+		<p class="card-description">{{ card.description }}</p>
+		
+		<!-- Solo mostrar filtro de fecha si no es filterType 'none' -->
+		<ng-container *ngIf="card.filterType !== 'none'">
+			<p class="filter-label">Filtro por fecha</p>
+			
+			<!-- Campos de rango de fecha -->
+			<div class="date-filter-section">
+				<div class="date-range-row">
+					<mat-form-field appearance="outline" class="date-input">
+						<mat-label>Fecha inicial</mat-label>
+						<input matInput 
+							   [matDatepicker]="startPicker" 
+							   placeholder="DD/MM/YYYY"
+							   [(ngModel)]="card.startDate"
+							   [max]="card.endDate">
+						<mat-datepicker-toggle matIconSuffix [for]="startPicker">
+							<mat-icon matDatepickerToggleIcon>event</mat-icon>
+						</mat-datepicker-toggle>
+						<mat-datepicker #startPicker></mat-datepicker>
+					</mat-form-field>
+
+					<mat-form-field appearance="outline" class="date-input">
+						<mat-label>Fecha final</mat-label>
+						<input matInput 
+							   [matDatepicker]="endPicker" 
+							   placeholder="DD/MM/YYYY"
+							   [(ngModel)]="card.endDate"
+							   [min]="card.startDate">
+						<mat-datepicker-toggle matIconSuffix [for]="endPicker">
+							<mat-icon matDatepickerToggleIcon>event</mat-icon>
+						</mat-datepicker-toggle>
+						<mat-datepicker #endPicker></mat-datepicker>
+					</mat-form-field>
+				</div>
+			</div>
+		</ng-container>
+		
+		<!-- Mensaje informativo para descargas sin filtro -->
+		<ng-container *ngIf="card.filterType === 'none'">
+			<p class="no-filter-message">Se descargarán todos los registros disponibles</p>
+		</ng-container>
+	</div>
+	
+	<!-- Botón de descarga -->
+	<div class="card-actions">
+		<button mat-raised-button 
+				color="primary" 
+				[disabled]="card.isDownloading"
+				(click)="onDownload()" 
+				class="btn-download">
+			<span *ngIf="!card.isDownloading">Descargar</span>
+			<span *ngIf="card.isDownloading" class="d-flex align-items-center">
+				<app-spinner 
+					size="sm" 
+					color="light" 
+					text="Descargando..." 
+					[inline]="true">
+				</app-spinner>
+			</span>
+		</button>
+	</div>
+</div>

@@ -1,0 +1,37 @@
+<div class="deny-backdrop">
+  <div class="deny-box" role="dialog" aria-modal="true" aria-labelledby="denyTitle">
+    <header class="deny-header">
+      <div class="deny-badge">
+        <i class="bi bi-info-lg"></i>
+      </div>
+      <button type="button" class="deny-close" (click)="onCloseClick()">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </header>
+
+    <h3 id="denyTitle" class="deny-title">{{title}}</h3>
+    <p class="deny-subtitle">Complete el formulario para notificar al usuario.</p>
+
+    <div class="deny-form">
+      <label class="deny-label" for="reasonSelect">Motivo del rechazo</label>
+      <div class="deny-select">
+        <select id="reasonSelect" name="reasonSelect" [(ngModel)]="selectedReasonId"
+          [ngModelOptions]="{ standalone: true }" required>
+          <option [ngValue]="null" disabled>Selecciona uno</option>
+          <option *ngFor="let r of reasons$ | async; trackBy: trackById" [ngValue]="r.id">
+            {{ r.reason }}
+          </option>
+        </select>
+        <i class="bi bi-chevron-down"></i>
+      </div>
+
+      <textarea [(ngModel)]="detail" maxlength="250" rows="3" placeholder="Describe algo breve."></textarea>
+      <div class="deny-counter">{{ (detail.length || 0) }}/250</div>
+    </div>
+    <footer class="deny-footer">
+      <button type="button" class="btn btn-outline" (click)="onCloseClick()">Cancelar</button>
+      <button type="button" class="btn btn-primary" (click)="onRejectClick()">Sí, rechazar</button>
+
+    </footer>
+  </div>
+</div>

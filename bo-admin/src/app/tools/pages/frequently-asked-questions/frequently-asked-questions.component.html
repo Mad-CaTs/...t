@@ -1,0 +1,130 @@
+<div class="d-flex flex-column gap-6 p-6 bg-white w-100">
+	<h1 class="fs-1 text-black fw-medium m-0">Preguntas Frecuentes</h1>
+
+	<div class="navigation-tabs">
+		<div class="tab" [class.active]="activeTab === 'crear'" (click)="setActiveTab('crear')">
+			Crear preguntas
+		</div>
+		<div class="tab" [class.active]="activeTab === 'sugeridas'" (click)="setActiveTab('sugeridas')">
+			Preguntas sugeridas
+		</div>
+	</div>
+
+	<div class="content">
+		<div *ngIf="activeTab === 'crear'">
+			<app-list-toolbar
+				placeholder="Ingrese lo que necesita buscar..."
+				actionText="Agregar pregunta"
+				(search)="onSearchQuestions($event)"
+				(action)="onAdd()"
+			></app-list-toolbar>
+
+			<ng-container *ngIf="!loading; else loadingTemplate">
+				<ng-container *ngIf="filteredQuestions.length > 0; else empty">
+					<app-table-generic
+						[columns]="visibleColumnsQuestions"
+						[keys]="visibleKeysQuestions"
+						[data]="pagedDataQuestions"
+						[columnWidths]="['30%','30%','20%']"
+						[pageIndex]="pageIndexQuestions"
+						[pageSize]="pageSizeQuestions"
+						[imageKeys]="['imageurl']"
+						(edit)="onEdit($event)"
+						(delete)="onDelete($event)"
+					></app-table-generic>
+
+					<app-table-paginator
+						[length]="filteredQuestions.length"
+						[pageSize]="pageSizeQuestions"
+						[pageIndex]="pageIndexQuestions"
+						(pageChange)="onPageChangeQuestions($event)"
+						(pageSizeChange)="onPageSizeChangeQuestions($event)"
+					></app-table-paginator>
+				</ng-container>
+			</ng-container>
+		</div>
+		<div *ngIf="activeTab === 'sugeridas'">
+			<app-list-toolbar
+				placeholder="Ingrese lo que necesita buscar..."
+				[showActionButton]="false"
+				(search)="onSearchSuggested($event)"
+			></app-list-toolbar>
+
+			<ng-container *ngIf="!loading; else loadingTemplate">
+				<ng-container *ngIf="filteredSuggestedQuestions.length > 0; else empty">
+					<app-table-generic
+						[columns]="visibleColumnsSuggested"
+						[keys]="visibleKeysSuggested"
+						[data]="pagedDataSuggested"
+						[columnWidths]="['35%','30%']"
+						[pageIndex]="pageIndexSuggested"
+						[pageSize]="pageSizeSuggested"
+						[showView]="false"
+						[showEdit]="false"
+						[showDelete]="false"
+						[showAccept]="true"
+						[showDeny]="true"
+						[imageKeys]="['imageurl']"
+						(accept)="onAccept($event)"
+						(deny)="onDeny($event)"
+					></app-table-generic>
+
+					<app-table-paginator
+						[length]="filteredSuggestedQuestions.length"
+						[pageSize]="pageSizeSuggested"
+						[pageIndex]="pageIndexSuggested"
+						(pageChange)="onPageChangeSuggested($event)"
+						(pageSizeChange)="onPageSizeChangeSuggested($event)"
+					></app-table-paginator>
+				</ng-container>
+			</ng-container>
+		</div>
+	</div>
+
+	<ng-template #empty>
+		<app-empty-state message="No data"></app-empty-state>
+	</ng-template>
+
+	<ng-template #loadingTemplate>
+		<div class="d-flex justify-content-center align-items-center py-5">
+			<div class="spinner-border text-primary" role="status">
+				<span class="visually-hidden">Cargando...</span>
+			</div>
+		</div>
+	</ng-template>
+
+	<!-- Modal eliminar -->
+	<app-modal-confirm-delete
+		*ngIf="showDeleteModal"
+		[title]="'Eliminar pregunta'"
+		[message]="'¿Estás seguro de eliminar la pregunta: ' + selectedToDelete?.question + '?'"
+		(confirm)="onConfirmDelete()"
+		(cancel)="onCancelDelete()"
+	></app-modal-confirm-delete>
+
+	<!-- Modal eliminar -->
+	<app-modal-confirm-delete
+		*ngIf="showDenyModal"
+		[title]="'Eliminar pregunta sugerida'"
+		[message]="'¿Estás seguro de rechazar la pregunta sugerida: ' + selectedToDeny?.question + '?'"
+		(confirm)="onConfirmDeny()"
+		(cancel)="onCancelDeny()"
+	></app-modal-confirm-delete>
+
+	<app-modal-confirm-accepted
+		*ngIf="showAcceptModal"
+		[title]="'Aceptar pregunta sugerida'"
+		[message]="'Pregunta por aceptar: ' + selectedToAccept?.question + '?'"
+		(confirm)="onConfirmAccept()"
+		(cancel)="onCancelAccept()"
+	></app-modal-confirm-accepted>
+
+	<!-- Notificación modal -->
+	<app-modal-notify
+		*ngIf="showNotify"
+		[title]="notifyTitle"
+		[message]="notifyMessage"
+		[iconType]="notifyType"
+		(closed)="onNotifyClose()"
+	></app-modal-notify>
+</div>

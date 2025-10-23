@@ -1,0 +1,199 @@
+<div class="navigation-tabs">
+    <div class="tab" [class.active]="activeTab === 'solicitudes'" (click)="setActiveTab('solicitudes')">
+        Solicitudes
+    </div>
+    <div class="tab" [class.active]="activeTab === 'retiros'" (click)="setActiveTab('retiros')">
+        Retiros verificados
+    </div>
+</div>
+
+<div class="content">
+    <div *ngIf="activeTab === 'solicitudes'">
+        <div class="row">
+            <div class="col-12 col-md-10 col-lg-10 col-xl-10">
+                <app-input class="w-100" label="Ingrese campo de búsqueda:" placeholder="Buscar por" type="search"
+                    [formGroup]="form" controlName="search"
+                    helper="Puedes buscarlo por fecha de registro ,N° de operación, nombre, N° de doc., Monto, Cuenta Destino." />
+
+            </div>
+            <div class="col-12 col-md-2 col-lg-2 col-xl-2 btn-search">
+                <button class="btn btn-secondary w-100" type="submit" [class.invalid-field]="form.invalid"
+                    [disabled]="form.invalid || isLoading" (click)="onSearch()">
+                    <div class="fixed-width-button">
+                        <div *ngIf="isLoading">
+                            <span class="spinner-border spinner-border-sm align-middle text-center ms-2"></span>
+                        </div>
+                        <div *ngIf="!isLoading">
+                            <span>Buscar</span>
+                        </div>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <ng-container *ngIf="!loading; else loadingTemplate">
+            <ng-container *ngIf="table.length > 0; else empty">
+                <table class="table-generic">
+                    <thead>
+                        <tr>
+                            <th style="width: 5%;">N°</th>
+                            <th>Fecha de registro</th>
+                            <th style="width: 10%;">N° de operación</th>
+                            <th>Nombres</th>
+                            <th style="width: 8%;">N° de doc.</th>
+                            <th style="width: 11%;">Monto enviado</th>
+                            <th>Cuenta destino</th>
+                            <th style="width: 7%;">Detalle</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let row of table; let i = index ">
+                            <td>{{ i + 1 }}</td>
+                            <td>{{formatDate(row.fechSolicitud)}}</td>
+                            <td>{{row.idsolicitudebank}}</td>
+                            <td>{{row.nameHolder}} {{row.lastNameHolder}}</td>
+                            <td>{{row.numDocument}}</td>
+                            <td>{{row.money.toFixed(2)}}</td>
+                            <td>{{row.numberAccount}}</td>
+                            <td class="actions">
+                                <div class="content-eye">
+                                    <button class="btn-eye" (click)="viewDetail(row)">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                </div>
+                            </td>
+                            <td class="actions">
+                                <div class="action-buttons">
+                                    <button style="width: 45px; height: 45px;" (click)="viewModelSolicitud('confirmar',row)">
+                                        <img src="assets/media/svg/retiro/check-true.svg">
+                                    </button>
+                                    <button style="width: 45px; height: 45px;" (click)="viewModelSolicitud('rechazar',row)">
+                                        <img src="assets/media/svg/retiro/delete.svg">
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </ng-container>
+            <ng-container *ngIf="table.length > 0;">
+                <div class="paginator">
+                    <div class="center">
+                        <button class="nav-btn" (click)="prevPage()" [disabled]="pageIndex === 1">
+                            <span>‹</span>
+                        </button>
+
+                        <button *ngFor="let page of visiblePages" class="nav-btn" [class.active]="page === pageIndex"
+                            (click)="goToPage(page)">
+                            <span>{{ page }}</span>
+                        </button>
+
+                        <button class="nav-btn" (click)="nextPage()" [disabled]="pageIndex === totalPages">
+                            <span>›</span>
+                        </button>
+
+                    </div>
+                </div>
+            </ng-container>
+        </ng-container>
+        <ng-template #loadingTemplate>
+            <div class=" d-flex justify-content-center align-items-center py-5">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Cargando...</span>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template #empty>
+            <app-empty-state message="No data"></app-empty-state>
+        </ng-template>
+    </div>
+    <div *ngIf="activeTab === 'retiros'">
+        <div class="row">
+            <div class="col-12 col-md-10 col-lg-10 col-xl-10">
+                <app-input class="w-100" label="Ingrese campo de búsqueda:" placeholder="Buscar por" type="search"
+                    [formGroup]="form" controlName="search"
+                    helper="Puedes buscarlo por fecha de registro ,N° de operación, nombre, N° de doc., Monto, Cuenta Destino." />
+
+            </div>
+            <div class="col-12 col-md-2 col-lg-2 col-xl-2 btn-search">
+                <button class="btn btn-secondary w-100" type="submit" [class.invalid-field]="form.invalid"
+                    [disabled]="form.invalid || isLoading" (click)="onSearch()">
+                    <div class="fixed-width-button">
+                        <div *ngIf="isLoading">
+                            <span class="spinner-border spinner-border-sm align-middle text-center ms-2"></span>
+                        </div>
+                        <div *ngIf="!isLoading">
+                            <span>Buscar</span>
+                        </div>
+                    </div>
+                </button>
+            </div>
+        </div>
+        <ng-container *ngIf="!loading; else loadingTemplate">
+            <ng-container *ngIf="table.length > 0; else empty">
+                <table class="table-generic">
+                    <thead>
+                        <tr>
+                            <th>N°</th>
+                            <th>Fecha de registro</th>
+                            <th>N° de operación</th>
+                            <th>Nombres</th>
+                            <th>N° de doc.</th>
+                            <th>Monto enviado</th>
+                            <th>Cuenta destino</th>
+                            <th>Detalle</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let row of table; let i = index ">
+                            <td>{{ i + 1 }}</td>
+                            <td>{{formatDate(row.fechSolicitud)}}</td>
+                            <td>{{row.idsolicitudebank}}</td>
+                            <td>{{row.nameHolder}} {{row.lastNameHolder}}</td>
+                            <td>{{row.numDocument}}</td>
+                            <td>{{row.money.toFixed(2)}}</td>
+                            <td>{{row.numberAccount}}</td>
+                            <td class="actions">
+                                <div class="content-eye">
+                                    <button class="btn-eye" (click)="viewDetail(row)">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </ng-container>
+        </ng-container>
+        <ng-container *ngIf="table.length > 0;">
+            <div class="paginator">
+                <div class="center">
+                    <button class="nav-btn" (click)="prevPage()" [disabled]="pageIndex === 1">
+                        <span>‹</span>
+                    </button>
+
+                    <button *ngFor="let page of visiblePages" class="nav-btn" [class.active]="page === pageIndex"
+                        (click)="goToPage(page)">
+                        <span>{{ page }}</span>
+                    </button>
+
+                    <button class="nav-btn" (click)="nextPage()" [disabled]="pageIndex === totalPages">
+                        <span>›</span>
+                    </button>
+
+                </div>
+            </div>
+        </ng-container>
+        <ng-template #loadingTemplate>
+            <div class="d-flex justify-content-center align-items-center py-5">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Cargando...</span>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template #empty>
+            <app-empty-state message="No data"></app-empty-state>
+        </ng-template>
+    </div>
+</div>

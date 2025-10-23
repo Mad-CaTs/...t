@@ -1,0 +1,34 @@
+.car-assignment-card {
+	background: #fff;
+	padding: 24px 32px;
+	border-radius: 12px;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+	width: 100%;
+	min-height: calc(100vh - 100px);
+	display: flex;
+	flex-direction: column;
+	box-sizing: border-box;
+}
+.toolbar-card {
+	background-color: transparent;
+	box-shadow: none;
+	padding: 24px 32px;
+	margin-top: 16px;
+	flex-grow: 1;
+}
+
+:host ::ng-deep .table-generic .actions .action-buttons button i.edit-icon-calendar {
+	background-image: url('/assets/media/icons/custom/calendar-lock.svg');
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain !important;
+	display: inline-flex !important;
+	align-items: center;
+	justify-content: center;
+	width: 20px !important;
+	height: 20px !important;
+	color: transparent !important;
+	font-size: 0 !important;
+	line-height: 0 !important;
+	vertical-align: middle;
+}

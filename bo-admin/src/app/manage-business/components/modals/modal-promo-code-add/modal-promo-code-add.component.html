@@ -1,0 +1,39 @@
+<app-modal [title]="title">
+	<form [formGroup]="form" class="d-flex w-100 flex-column gap-6">
+		<app-select
+			class="w-100"
+			label="Usuario"
+			placeholder="Seleccionar usuario"
+			[formGroup]="form"
+			controlName="user"
+			[options]="[{ id: '1', text: 'Omar Urteaga' }]"
+		/>
+		<app-select
+			class="w-100"
+			label="Familia de paquetes"
+			placeholder="Seleccionar familia"
+			[formGroup]="form"
+			controlName="family"
+			[options]="[{ id: '1', text: 'Keola' }]"
+		/>
+		<app-select
+			class="w-100"
+			label="Version"
+			placeholder="Seleccionar version de familia"
+			[formGroup]="form"
+			controlName="version"
+			[options]="[{ id: '1', text: 'Keola v1' }]"
+		/>
+
+		<div class="alert alert-secondary text-center" role="alert">
+			Al crear un nuevo código promocional, este tendra la duración de 1 mes.
+		</div>
+
+		<div class="w-100 d-flex justify-content-center align-items-center gap-4">
+			<button class="btn btn-outline-secondary" type="button" (click)="instanceModal.close()">
+				Cancelar
+			</button>
+			<button class="btn btn-secondary" type="submit" [disabled]="form.invalid">Guardar cambios</button>
+		</div>
+	</form>
+</app-modal>

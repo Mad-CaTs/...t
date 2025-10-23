@@ -1,0 +1,23 @@
+<div class="preview-card">
+  <div class="tag">{{ zoneName || 'Zona del evento' }}</div>
+  <h3>{{ eventName || 'Nombre del evento' }}</h3>
+
+  <div class="grey-box">
+    <span class="muted">{{ packageName || 'Pack de entradas:' }}</span>
+    <strong class="ml-4">{{ quantity || 0 }} entradas</strong>
+    <span *ngIf="freeUnits" class="ml-4">· {{ freeUnits }} gratis</span>
+  </div>
+
+  <div class="desc">
+    {{ description || 'Descripción breve...' }}
+  </div>
+
+  <div class="price">Desde S/{{ (fromPrice || price) | number:'1.2-2' }}</div>
+
+  <div class="buy-wrap">
+    <button type="button" (click)="showReferentialMsg()">Comprar</button>
+    <ng-container *ngFor="let toast of referentialToasts">
+      <div class="referential-toast">Solo referencial</div>
+    </ng-container>
+  </div>
+</div>

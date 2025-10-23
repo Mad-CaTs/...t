@@ -1,0 +1,97 @@
+<div class="modal-backdrop" *ngIf="showShell">
+  <div class="modal-container" role="dialog" aria-modal="true">
+    <!-- Header -->
+    <header class="modal-header">
+      <div class="modal-header-content">
+        <div class="modal-icon"><i class="bi bi-plus-circle"></i></div>
+        <div class="modal-titles">
+          <h3 class="modal-title">{{ computedTitle }}</h3>
+          <p class="modal-subtitle">{{ computedSubtitle }}</p>
+        </div>
+      </div>
+      <button type="button" class="close-btn" (click)="onClose()" aria-label="Cerrar">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </header>
+
+    <!-- Form -->
+    <form [formGroup]="form" class="modal-form" (keydown.enter)="$event.preventDefault()">
+      <!-- RANGO -->
+      <div class="form-group full">
+        <label for="rankId">Rango</label>
+        <div class="select">
+          <select id="rankId" formControlName="rankId">
+            <option [ngValue]="null" disabled>Elija un rango</option>
+            <option *ngFor="let r of rankOptions" [ngValue]="r.id">{{ r.name }}</option>
+          </select>
+          <i class="bi bi-chevron-down chevron" aria-hidden="true"></i>
+        </div>
+        <div class="error" *ngIf="t('rankId')?.touched && t('rankId')?.invalid">Obligatorio.</div>
+      </div>
+
+      <!-- Fila 1 -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="monthlyAssignedUsd">Bono Asignado Mensual (USD)</label>
+          <input id="monthlyAssignedUsd" type="number" formControlName="monthlyAssignedUsd"
+                 placeholder="0" min="0" step="any" inputmode="decimal"
+                 (wheel)="disableWheel($event)" (keydown)="blockNumberKeys($event,true)"/>
+          <div class="error" *ngIf="t('monthlyAssignedUsd')?.touched && t('monthlyAssignedUsd')?.invalid">
+            Debe ser ≥ 0.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="bonusPriceUsd">Precio del Bono (USD)</label>
+          <input id="bonusPriceUsd" type="number" formControlName="bonusPriceUsd"
+                 placeholder="0" min="0" step="any" inputmode="decimal"
+                 (wheel)="disableWheel($event)" (keydown)="blockNumberKeys($event,true)"/>
+          <div class="error" *ngIf="t('bonusPriceUsd')?.touched && t('bonusPriceUsd')?.invalid">
+            Debe ser ≥ 0.
+          </div>
+        </div>
+      </div>
+
+      <!-- Inicial asignado -->
+      <div class="form-group full">
+        <label for="initialAssignedUsd">Bono de Inicial asignado (USD)</label>
+        <input id="initialAssignedUsd" type="number" formControlName="initialAssignedUsd"
+               placeholder="0" min="0" step="any" inputmode="decimal"
+               (wheel)="disableWheel($event)" (keydown)="blockNumberKeys($event,true)"/>
+        <div class="error" *ngIf="t('initialAssignedUsd')?.touched && t('initialAssignedUsd')?.invalid">
+          Debe ser ≥ 0.
+        </div>
+      </div>
+
+      <!-- Fila 2 -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="issueDate">Fecha de emisión</label>
+          <input id="issueDate" type="date" formControlName="issueDate" />
+          <div class="error" *ngIf="t('issueDate')?.touched && t('issueDate')?.invalid">Obligatorio.</div>
+        </div>
+
+        <div class="form-group">
+          <label for="dueDate">Fecha de vencimiento</label>
+          <input id="dueDate" type="date" formControlName="dueDate" />
+          <div class="error"
+               *ngIf="t('dueDate')?.touched && (t('dueDate')?.errors?.['required'] || t('dueDate')?.errors?.['dateOrder'])">
+            {{ t('dueDate')?.errors?.['dateOrder'] ? 'Debe ser posterior a la fecha de emisión.' : 'Obligatorio.' }}
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <!-- Footer -->
+    <footer class="modal-footer">
+      <button type="button" class="btn btn-outline" (click)="onClose()">Cancelar</button>
+      <button
+        type="button"
+        class="btn btn-primary"
+        (click)="onSave()"
+        [disabled]="isView || form.invalid || (mode === 'edit' && !form.dirty)">
+        {{ primaryButtonLabel }}
+      </button>
+    </footer>
+  </div>
+</div>

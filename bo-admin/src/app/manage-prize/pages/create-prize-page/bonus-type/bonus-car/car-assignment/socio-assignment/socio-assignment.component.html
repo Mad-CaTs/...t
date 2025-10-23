@@ -1,0 +1,68 @@
+<div class="socio-assignment-card flex flex-column gap-6 p-6 bg-white w-100">
+	<div class="d-flex justify-content-between align-items-center">
+		<div>
+			<h4 class="fs-5 text-black fw-medium m-0">Asignación de Autos(cronograma)</h4>
+			<div class="text-muted">
+				ID socio: <strong>{{ socioId }}</strong>
+			</div>
+		</div>
+		<div>
+			<button class="btn btn-sm btn-secondary" type="button" (click)="back()">Volver</button>
+		</div>
+	</div>
+
+	<div class="toolbar-card">
+
+		<div class="socio-grid">
+
+			<div class="info-card">
+				<h6 class="title">Datos del socio</h6>
+				<p><strong>Nombre:</strong> Juan Aníbal Ramírez Dorado</p>
+				<p><strong>Rango:</strong> Esmeralda</p>
+				<p><strong>Entrega en:</strong> ENCUMBRA ELEVATE OCTUBRE 2025</p>
+			</div>
+
+			<div class="info-card">
+				<h6 class="title">Asignado</h6>
+				<p><strong>Modelo de carro/marca:</strong> CHERY / TIGGO 2 PRO 1.5 CVT</p>
+				<p><strong>Precio del auto:</strong> 14,200 USD</p>
+				<p><strong>Bono asignado mensual:</strong> 250 USD</p>
+			</div>
+
+			<div class="info-card">
+				<h6 class="title">Contabilizador</h6>
+				<p><strong>Cuotas Pagadas:</strong> 11 - 6,063.42 USD</p>
+				<p><strong>Cuotas Restantes:</strong> 49 - 12,309.78 USD</p>
+				<p><strong>Cuotas Totales:</strong> 60 - 14,200 USD</p>
+			</div>
+
+			<div class="info-card">
+				<h6 class="title">Fecha - Interés</h6>
+				<p><strong>Inicio de Pago:</strong> 05-04-2025</p>
+				<p><strong>Fin de Pago:</strong> 05-05-2030</p>
+				<p><strong>% de Interés:</strong> 13,99</p>
+			</div>
+		</div>
+
+		<filter-generic
+			[filters]="genericFilters"
+			[values]="filterValues"
+			[columnsDesktop]="3"
+			[showActionButton]="false"
+			[clearLabel]="'limpiar'"
+			[extraButtons]="extraButtons"
+			(extraAction)="onExtraAction($event)"
+		></filter-generic>
+
+		<app-table-generic
+			[columns]="pagosColumns"
+			[keys]="pagosKeys"
+			[data]="pagosData"
+			[columnWidths]="pagosColumnWidths"
+			[showView]="false"
+			[showEdit]="false"
+			[showDelete]="false"
+			[showActions]="false"
+		></app-table-generic>
+	</div>
+</div>

@@ -1,0 +1,92 @@
+<div
+	class="position-absolute start-0 d-flex shadow flex-column gap-6 card w-100 p-4 pos-dropdowns"
+	tabindex="0"
+	#menu
+	style="min-width: 280px"
+>
+	<div class="d-flex flex-row w-100 justify-content-between align-items-center">
+		<i
+			class="bi bi-caret-left-fill cursor-pointer"
+			tabindex="0"
+			(click)="onChangeSelectedMonth(monthSelected - 1)"
+			(keydown.enter)="onChangeSelectedMonth(monthSelected - 1)"
+		></i>
+		<h5 class="fw-bold text-uppercase m-0 cursor-pointer no-select">
+			<span (click)="onOpenMonth()" (keydown.enter)="onOpenMonth()" tabindex="0">{{ monthName }}</span
+			><span>, </span
+			><span (click)="onOpenYear()" (keydown.enter)="onOpenYear()" tabindex="0">{{
+				yearSelected
+			}}</span>
+		</h5>
+		<i
+			class="bi bi-caret-right-fill cursor-pointer"
+			tabindex="0"
+			(click)="onChangeSelectedMonth(monthSelected + 1)"
+			(keydown.enter)="onChangeSelectedMonth(monthSelected + 1)"
+		></i>
+	</div>
+
+	<div class="d-flex flex-column gap-4" *ngIf="show === 1">
+		<ul class="d-flex flex-row justify-content-between align-items-center p-0" style="list-style: none">
+			<li
+				class="fw-bold d-flex justify-content-center align-items-center no-select"
+				style="width: 24px; height: 24px"
+				*ngFor="let day of weekDays"
+			>
+				{{ day }}
+			</li>
+		</ul>
+
+		<ul
+			class="d-flex flex-row justify-content-between align-items-center p-0"
+			style="list-style: none"
+			*ngFor="let day of days; let i = index"
+		>
+			<li
+				*ngFor="let number of day"
+				class="rounded d-flex justify-content-center align-items-center cursor-pointer no-select"
+				[class.text-muted]="isMuted(number, i)"
+				[class.border]="isToday(number) && !isSelected(number)"
+				[class.border-info]="isToday(number) && !isSelected(number)"
+				[class.text-info]="isToday(number) && !isSelected(number)"
+				[class.bg-primary]="isSelected(number) && !isMuted(number, i)"
+				[class.text-white]="isSelected(number) && !isMuted(number, i)"
+				(click)="onSelectDate(number)"
+				(keydown.enter)="onSelectDate(number)"
+				tabindex="0"
+				style="width: 24px; height: 24px"
+			>
+				{{ number }}
+			</li>
+		</ul>
+	</div>
+
+	<div class="d-flex flex-wrap gap-4" *ngIf="show === 2">
+		<button
+			*ngFor="let month of monthNames; let i = index"
+			class="btn fs-7"
+			[class.btn-light-primary]="i !== monthSelected"
+			[class.btn-primary]="i === monthSelected"
+			style="width: calc(100% / 2 - 10px)"
+			type="button"
+			(click)="onChangeSelectedMonth(i)"
+			(keydown.enter)="onChangeSelectedMonth(i)"
+		>
+			{{ month }}
+		</button>
+	</div>
+
+	<div class="d-flex flex-column gap-4" *ngIf="show === 3">
+		<button
+			*ngFor="let year of years; let i = index"
+			class="btn w-100"
+			[class.btn-light-primary]="year !== yearSelected"
+			[class.btn-primary]="year === yearSelected"
+			type="button"
+			(click)="yearSelected = year"
+			(keydown.enter)="yearSelected = year"
+		>
+			{{ year }}
+		</button>
+	</div>
+</div>

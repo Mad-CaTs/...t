@@ -1,0 +1,40 @@
+<div class="paginator">
+	<div class="left">
+		<select
+			[value]="pageSize"
+			(change)="onPageSizeChange($event)"
+			[disabled]="availablePageSizes.length === 1"
+		>
+			<option *ngFor="let size of availablePageSizes" [value]="size">{{ size }} filas</option>
+		</select>
+	</div>
+
+	<div class="center">
+		<button class="nav-btn" (click)="prevPage()" [disabled]="pageIndex === 1">
+			<span>&lt;</span>
+		</button>
+		<span class="current">{{ pageIndex }}</span>
+		<button class="nav-btn" (click)="nextPage()" [disabled]="pageIndex === totalPages">
+			<span>&gt;</span>
+		</button>
+	</div>
+
+	<div class="right">
+		<input
+			type="number"
+			class="page-input"
+			[value]="inputValue"
+			(input)="onInputValueChange($event)"
+			(focus)="onInputFocus()"
+			(blur)="onInputBlur()"
+			[min]="1"
+			[max]="totalPages"
+			[disabled]="totalPages === 1"
+		/>
+		<span class="total">/ {{ totalPages }}</span>
+	</div>
+</div>
+
+<div class="paginator-info" *ngIf="length > 0">
+	{{ visibleRangeLabel }}
+</div>

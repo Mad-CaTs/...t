@@ -1,0 +1,27 @@
+<app-modal title="Modificar Wallet">
+	<form class="d-flex flex-column gap-6 w-100">
+		<app-select placeholder="Selecciona tipo de operación" label="Tipo de operación" [options]="operationOpt"
+			controlName="opType" [formGroup]="form" class="w-100"></app-select>
+
+		<app-input type="number" placeholder="Monto de operación" label="Monto" controlName="amount" [formGroup]="form"
+			class="w-100" iconLeft="bi bi-currency-dollar"></app-input>
+
+		<app-input placeholder="Algo que describa esta transacción" [label]="descriptionLabel" controlName="description"
+			[formGroup]="form" class="w-100"></app-input>
+
+		<div class="d-flex flex-row gap-6 justify-content-center">
+			<button class="btn btn-outline-secondary" type="button" (click)="instanceModal.close()">Cancelar</button>
+			<button class="btn btn-secondary" type="button" (click)="onSubmit()"
+				[disabled]="form.invalid || isLoading || this.form.get('description')?.value == ''">
+				<div class="fixed-width-button">
+					<div *ngIf="isLoading">
+						<span class="spinner-border spinner-border-sm align-middle text-center ms-2"></span>
+					</div>
+					<div *ngIf="!isLoading">
+						<span>Guardar</span>
+					</div>
+				</div>
+			</button>
+		</div>
+	</form>
+</app-modal>

@@ -1,0 +1,239 @@
+<div class="d-flex flex-column gap-6 p-6 bg-white w-100">
+	<!--Title-->
+	<h1 class="fs-4 text-black fw-medium m-0">Tipo de comisiones</h1>
+
+	<div class="d-flex">
+		<div class="d-flex align-items-end w-75 gap-3">
+			<app-searchable-select
+				[formGroup]="form"
+				controlName="userId"
+				[options]="users"
+				[searchFn]="userSearchFn"
+				label="Buscar socio"
+				placeholder="Selecciona uno"
+				class="w-100"
+				(loading)="searchLoading = $event"
+				style="position: relative"
+				[isLoading]="searchLoading"
+			></app-searchable-select>
+
+			<app-select
+				label="Tipo de bono"
+				placeholder="Selecciona un bono"
+				[options]="typeBonusOpt"
+				[formGroup]="form"
+				controlName="typeBonus"
+				class="w-100"
+				(selectionChange)="onTypeBonusChange($event)"
+			></app-select>
+
+			<app-select
+				label="Membresía"
+				placeholder="Selecciona una"
+				[options]="membershipOpt"
+				[formGroup]="form"
+				controlName="membership"
+				class="w-100"
+				[ngClass]="{ 'opacity-50': form.get('membership')?.disabled }"
+			></app-select>
+
+			<div class="mt-0 justify-content-end">
+				<button
+					type="button"
+					class="btn btn-outline-secondary"
+					[disabled]="buttonLoading || !form.value.userId || !form.value.typeBonus"
+					(click)="onSearch()"
+				>
+					<div class="fixed-width-button">
+						<div *ngIf="buttonLoading">
+							<span
+								class="spinner-border spinner-border-sm align-middle text-center ms-2"
+							></span>
+						</div>
+						<div *ngIf="!buttonLoading">
+							<span>Buscar</span>
+						</div>
+					</div>
+				</button>
+			</div>
+		</div>
+
+		<div class="d-flex align-items-end justify-content-end w-25 gap-3">
+			<div class="mt-0">
+				<button
+					type="button"
+					class="btn btn-secondary"
+					[disabled]="
+						buttonGenerateLoading ||
+						!form.value.userId ||
+						!form.value.typeBonus ||
+						!canGenerateCommission
+					"
+					(click)="onGenerateCommission()"
+				>
+					<div class="fixed-width-button">
+						<div *ngIf="buttonGenerateLoading">
+							<span
+								class="spinner-border spinner-border-sm align-middle text-center ms-2"
+							></span>
+						</div>
+						<div *ngIf="!buttonGenerateLoading">
+							<span>Generar comisión</span>
+						</div>
+					</div>
+				</button>
+			</div>
+		</div>
+	</div>
+	<div class="d-flex">
+		<p class="text-muted">
+			Ingrese el usuario y seleccione la opción correspondiente de la lista desplegable.
+		</p>
+	</div>
+
+	<app-common-table
+		class="w-100 d-block"
+		[headers]="table.headers"
+		[checkedAll]="table.checkedAll"
+		[headersMinWidth]="table.headersMinWidth"
+		[headersMaxWidth]="table.headersMaxWidth"
+		[noCheckboxes]="table.noCheckBoxes"
+		[firstEmpty]="true"
+		(onCheckedAll)="table.changeCheckedAll($event)"
+	>
+		<tr class="w-100 d-flex py-2 align-items-center" *ngFor="let item of table.data; let i = index">
+			<td class="w-40px d-flex justify-content-center">
+				<div class="form-check-sm form-check-custom form-check-solid">
+					<input
+						class="form-check-input cursor-pointer"
+						type="radio"
+						name="file-upload-item-radio"
+						[value]="item.id"
+						[(ngModel)]="selectedRowId"
+						(click)="onRowSelect(item)"
+					/>
+				</div>
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[0],
+					'max-width.px': table.headersMaxWidth[0]
+				}"
+			>
+				{{ item.levelSponsor }}
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center d-flex justify-content-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[1],
+					'max-width.px': table.headersMaxWidth[1]
+				}"
+			>
+				<input
+					*ngIf="selectedRowId === item.id"
+					class="form-control"
+					style="text-align: end"
+					[(ngModel)]="item.amount"
+					readonly
+				/>
+				<span *ngIf="selectedRowId !== item.id">{{
+					item.amount | currency : 'USD' : 'symbol' : '1.2-2'
+				}}</span>
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center d-flex justify-content-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[2],
+					'max-width.px': table.headersMaxWidth[2]
+				}"
+			>
+				<input
+					*ngIf="selectedRowId === item.id"
+					class="form-control no-spinners"
+					style="text-align: end"
+					type="number"
+					[(ngModel)]="item.percentage"
+					[max]="30"
+					[min]="0"
+					step="0.1"
+					(keydown)="validatePercentInput($event)"
+					(blur)="onPercentChange(item)"
+					(ngModelChange)="calculateAmount(item)"
+				/>
+				<span *ngIf="selectedRowId !== item.id">{{ item.percentage }} %</span>
+			</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.description }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.membership }}</td>
+			<td class="w-100 text-center fs-6">
+				<ng-container *ngIf="selectedRowId === item.id; else readOnlyLevel">
+					<div class="form-switch d-flex justify-content-center">
+						<input
+							class="form-check-input"
+							type="checkbox"
+							[(ngModel)]="item.isLevelQualified"
+							name="levelSwitch-{{ item.id }}"
+						/>
+					</div>
+				</ng-container>
+				<ng-template #readOnlyLevel>
+					<span
+						[class.text-success]="item.isLevelQualified"
+						[class.text-muted]="!item.isLevelQualified"
+					>
+						{{ item.isLevelQualified ? 'Sí' : 'No' }}
+					</span>
+				</ng-template>
+			</td>
+			<td class="w-100 text-center fs-6">
+				<ng-container *ngIf="selectedRowId === item.id; else readOnlyCondition">
+					<div class="form-switch d-flex justify-content-center">
+						<input
+							class="form-check-input"
+							type="checkbox"
+							[(ngModel)]="item.isConditionQualified"
+							name="conditionSwitch-{{ item.id }}"
+						/>
+					</div>
+				</ng-container>
+				<ng-template #readOnlyCondition>
+					<span
+						[class.text-success]="item.isConditionQualified"
+						[class.text-muted]="!item.isConditionQualified"
+					>
+						{{ item.isConditionQualified ? 'Sí' : 'No' }}
+					</span>
+				</ng-template>
+			</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.createDate }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.period }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.username }}</td>
+			<td class="w-100 text-gray-900 text-center fs-6">{{ item.fullnameSponsor }}</td>
+			<td class="w-100 d-flex justify-content-center">
+				<button
+					class="btn btn-sm p-2"
+					[ngbTooltip]="selectedRowId === item.id ? 'Guardar cambios' : 'Editar bono'"
+					[disabled]="selectedRowId !== item.id"
+					(click)="onEditBonus()"
+				>
+					<i
+						[ngClass]="{
+							'fas fa-pencil-alt fs-3': selectedRowId !== item.id,
+							'far fa-save fs-3 text-secondary': selectedRowId === item.id
+						}"
+					></i>
+				</button>
+				<!-- <button
+					class="btn btn-sm p-2"
+					ngbTooltip="Enviar correo"
+					[disabled]="selectedRowId !== item.id"
+				>
+					<i
+						class="fas fa-paper-plane fs-3"
+						[ngClass]="{ 'text-secondary': selectedRowId === item.id }"
+					></i>
+				</button> -->
+			</td>
+		</tr>
+	</app-common-table>
+</div>

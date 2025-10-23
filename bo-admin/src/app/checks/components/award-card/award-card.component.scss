@@ -1,0 +1,196 @@
+.award-container {
+	width: 800px;
+	height: 320px;
+	padding-bottom: 2rem;
+	padding-right: 2rem;
+	background-color: white;
+	font-family: 'Arial', sans-serif;
+	position: relative;
+	overflow: hidden;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.award-container::before {
+	content: '';
+	position: absolute;
+	top: 10px;
+	right: -195px;
+	width: 89%;
+	height: 95%;
+	background: url('/assets/media/svg/logos/isotipo_gris.png') no-repeat center;
+	background-size: contain;
+	pointer-events: none;
+	z-index: 0;
+}
+
+.header-card {
+	background-color: #0076c0;
+	padding: 1rem;
+	width: 50%;
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 40px;
+	border-top-right-radius: 40px;
+	border-bottom-right-radius: 0;
+	position: relative;
+	z-index: 1;
+}
+
+.logo-bar {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	justify-content: space-around;
+}
+
+.logo-wrapper {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 80px;
+	height: 40px;
+}
+
+.logo-wrapper img {
+	height: 30px;
+	width: 80px;
+	object-fit: contain;
+}
+
+.logo-divider {
+	width: 1px;
+	background: #fff;
+	height: 30px;
+}
+
+.content {
+	display: grid;
+	grid-template-columns: 1fr 1.2fr;
+	position: relative;
+	z-index: 1;
+	align-items: center;
+	padding: 0;
+	overflow: visible;
+}
+
+.left-column {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	padding-left: 1rem;
+	position: relative;
+	z-index: 2;
+	overflow: visible;
+}
+
+.right-column {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	justify-content: flex-start;
+}
+
+.amount {
+	font-size: 4.5rem;
+	font-weight: 800;
+	color: #0077c8;
+	width: 100%;
+	display: flex;
+	align-items: flex-end;
+	justify-content: flex-end;
+	line-height: 5.5rem;
+}
+
+.amount-text {
+	font-style: italic;
+	font-size: 1.2rem;
+	font-weight: 800;
+	color: black;
+	width: 80%;
+	text-align: right;
+	line-height: 1.5rem;
+}
+
+.amount-text-line {
+	text-align: right;
+}
+
+.name-label {
+	font-style: italic;
+	font-weight: 500;
+	color: #555;
+	font-size: 1.2rem;
+	margin-bottom: 0.5rem;
+}
+
+.name {
+	font-weight: 800;
+	color: black;
+	font-size: 3rem;
+	line-height: 3rem;
+	text-align: left;
+}
+
+.lastname {
+	font-weight: 700;
+	color: black;
+	font-size: 3rem;
+	line-height: 3rem;
+	text-align: left;
+	white-space: nowrap;
+	overflow: visible;
+	text-overflow: unset;
+	max-width: none;
+}
+
+.club {
+	font-size: 3rem;
+	padding-top: 6rem;
+	font-weight: 800;
+	color: #0077c8;
+}
+
+/* Colores de background */
+.club-1m-bg {
+	background-color: #0070c0;
+}
+.club-500k-bg {
+	background-color: #00b0f0;
+}
+.club-250k-bg {
+	background-color: #00b050;
+}
+.club-100k-bg {
+	background-color: #92d050;
+}
+.club-50k-bg {
+	background-color: #ffff00;
+}
+.club-25k-bg {
+	background-color: #ffc000;
+}
+.club-10k-bg {
+	background-color: #d9d9d9;
+}
+
+/* Colores de texto */
+.club-1m-color {
+	color: #0070c0;
+}
+.club-500k-color {
+	color: #00b0f0;
+}
+.club-250k-color {
+	color: #00b050;
+}
+.club-100k-color {
+	color: #92d050;
+}
+.club-50k-color {
+	color: #ffff00;
+}
+.club-25k-color {
+	color: #ffc000;
+}
+.club-10k-color {
+	color: #d9d9d9;
+}

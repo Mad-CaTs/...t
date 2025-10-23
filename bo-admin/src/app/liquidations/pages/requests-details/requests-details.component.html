@@ -1,0 +1,160 @@
+<div class="d-flex flex-column justify-content-center bg-white p-6 gap-6 w-100">
+	<div class="d-flex align-items-center return" (click)="navigateGoBack()">
+		<img class="arrow-back-icon" src="./assets/media/icons/custom/arrow.svg" />
+		<p class="return small-image">Volver</p>
+	</div>
+
+	<div class="d-flex flex-row gap-6 w-75 mt-4">
+		<div class="d-flex flex-column gap-2 w-50 p-3 rounded border border-gray-300">
+			<div class="d-flex flex-column">
+				<h4 class="m-0 fs-6 fw-bolder text-black">Detalle del cronograma</h4>
+				<span class="fs-6 cl-muted fw-medium">Resumen</span>
+			</div>
+			<div class="d-flex flex-row gap-4 justify-content-around align-items-center">
+				<div class="d-flex flex-column justify-content-center align-items-center pb-2">
+					<span class="fs-4 m-0 fw-bolder text-black">{{data.membership[0].familyPackageName}}</span>
+					<span class="text-primary fw-medium text-center">Portafolio</span>
+				</div>
+				<div class="d-flex flex-column justify-content-center align-items-center pb-2">
+					<span class="fs-4 m-0 fw-bolder text-black">{{data.membership[0].packageName}}</span>
+					<span class="text-primary fw-medium text-center">Tipo de membresía</span>
+				</div>
+			</div>
+		</div>
+		<div class="d-flex flex-column gap-2 w-50 p-3 rounded border border-gray-300">
+			<div class="d-flex flex-column">
+				<h4 class="m-0 fs-6 fw-bolder text-black">Detalle de liquidación</h4>
+				<span class="fs-6 cl-muted fw-normal">Resumen</span>
+			</div>
+			<div class="d-flex flex-row gap-4 justify-content-around align-items-center">
+				<div class="d-flex flex-column justify-content-center align-items-center pb-2">
+					<span class="fs-4 m-0 fw-medium text-black">$ {{data.amountPayment}}</span>
+					<span class="text-primary-500 fw-medium text-center">Monto</span>
+				</div>
+				<div class="d-flex flex-column justify-content-center align-items-center pb-2">
+					<span class="fs-4 m-0 fw-medium text-black">$ {{data.amountPenality}}</span>
+					<span class="text-primary fw-medium text-center">Penalidad</span>
+				</div>
+				<div class="d-flex flex-column justify-content-center align-items-center pb-2">
+					<span class="fs-4 m-0 fw-medium text-black">$ {{data.amountFavour}}</span>
+					<span class="text-primary fw-medium text-center">Saldo a favor</span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--Table | Pagination-->
+	<div class="position-relative w-100 d-flex mt-2">
+		<table-pagination [noTextBtn]="true" class="w-100 mt-20 mt-md-2 d-block" />
+		<div class="d-flex gap-4 position-absolute top-0 start-0">
+			<button class="btn btn-primary" (click)="openConfirmationModal(data)">Aprobar y generar vale</button>
+			<button class="btn btn-danger" (click)="onReject(data)">Rechazar</button>
+		</div>
+	</div>
+
+	<!--Table | Table-->
+	<app-common-table
+		[headers]="table.headers"
+		[checkedAll]="table.checkedAll"
+		[headersMinWidth]="table.headersMinWidth"
+		[headersMaxWidth]="table.headersMaxWidth"
+		[noCheckboxes]="table.noCheckBoxes"
+		[firstEmpty]="true"
+		(onCheckedAll)="table.changeCheckedAll($event)"
+	>
+		<tr class="w-100 d-flex py-2 align-items-center" *ngFor="let item of table.data; let i = index">
+			<td class="d-flex justify-content-center">
+				<div class="form-check-sm form-check-custom form-check-solid">
+					<input
+						class="form-check-input cursor-pointer"
+						type="radio"
+						name="request-details-item-radio"
+						[value]="item.id"
+						[(ngModel)]="selectedRowId"
+					/>
+				</div>
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[0],
+					'max-width.px': table.headersMaxWidth[0]
+				}"
+			>
+				{{ item.quoteDescription }}
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[1],
+					'max-width.px': table.headersMaxWidth[1]
+				}"
+			>
+				{{ item.nextExpiration }}
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[2],
+					'max-width.px': table.headersMaxWidth[2]
+				}"
+			>
+				{{ item.capitalBalanceUsd }} USD
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[3],
+					'max-width.px': table.headersMaxWidth[3]
+				}"
+			>
+				{{ item.amortizationUsd }} USD
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[4],
+					'max-width.px': table.headersMaxWidth[4]
+				}"
+			>
+				{{ item.interest }} USD
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[5],
+					'max-width.px': table.headersMaxWidth[5]
+				}"
+			>
+				{{ item.totalOverdue }} USD
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[6],
+					'max-width.px': table.headersMaxWidth[6]
+				}"
+			>
+				{{ item.quotaUsd }} USD
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[7],
+					'max-width.px': table.headersMaxWidth[7]
+				}"
+			>
+				{{ item.sumTotalUsd }} USD
+			</td>
+			<td
+				class="w-100 text-gray-900 text-center fs-6"
+				[ngStyle]="{
+					'min-width.px': table.headersMinWidth[7],
+					'max-width.px': table.headersMaxWidth[7]
+				}"
+			>
+				{{ item.payDate }}
+			</td>
+		</tr>
+	</app-common-table>
+</div>

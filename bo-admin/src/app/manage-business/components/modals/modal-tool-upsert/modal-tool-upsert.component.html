@@ -1,0 +1,67 @@
+<app-modal [title]="title">
+	<!--Is a tutorial-->
+	<form
+		[formGroup]="formTutorial"
+		(submit)="onSubmit()"
+		class="d-flex w-100 flex-column gap-6"
+		*ngIf="formType === 'tutorial'"
+	>
+		<app-input
+			class="w=100"
+			label="Título"
+			placeholder="Ingrese título"
+			[formGroup]="formTutorial"
+			controlName="title"
+		/>
+
+		<app-input
+			class="w=100"
+			label="Video link del tutorial"
+			placeholder="https://youtube.com/va11123asv"
+			[formGroup]="formTutorial"
+			controlName="url"
+		/>
+
+		<div class="w-100 d-flex justify-content-center align-items-center gap-4">
+			<button class="btn btn-outline-secondary" type="button" (click)="instanceModal.close()">
+				Cancelar
+			</button>
+			<button class="btn btn-secondary" type="submit" [disabled]="formTutorial.invalid || loading">
+				Guardar herramienta
+			</button>
+		</div>
+	</form>
+	<!--Is a document-->
+	<form
+		[formGroup]="formDocument"
+		(submit)="onSubmit()"
+		class="d-flex w-100 flex-column gap-6"
+		*ngIf="formType !== 'tutorial'"
+	>
+		<app-input
+			class="w-100"
+			label="Título"
+			placeholder="Ingrese título"
+			[formGroup]="formDocument"
+			controlName="title"
+		/>
+
+		<app-input-file
+			class="w-100"
+			label="Documento"
+			titleBox="Seleccionar o arrastrar archivo"
+			[formGroup]="formDocument"
+			controlName="file"
+			accept="image/*"
+		/>
+
+		<div class="w-100 d-flex justify-content-center align-items-center gap-4">
+			<button class="btn btn-outline-secondary" type="button" (click)="instanceModal.close()">
+				Cancelar
+			</button>
+			<button class="btn btn-secondary" type="submit" [disabled]="formDocument.invalid || loading">
+				Guardar herramienta
+			</button>
+		</div>
+	</form>
+</app-modal>

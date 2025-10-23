@@ -1,0 +1,91 @@
+.calendar-wrapper {
+	padding: 1rem;
+
+	.fc {
+		font-family: 'Inter', sans-serif;
+	}
+
+	.fc-toolbar-title {
+		font-size: 1.5rem;
+		font-weight: 600;
+	}
+
+	.fc-daygrid-event {
+		background-color: #f3f4f6;
+		border: 1px solid #d1d5db;
+		color: #111827;
+		padding: 2px 4px;
+		border-radius: 6px;
+		font-size: 0.8rem;
+	}
+
+	.fc-daygrid-event:hover {
+		background-color: #e0e7ff;
+	}
+}
+
+//
+.custom-event {
+	background: #f1f5f9;
+	border-left: 4px solid #3b82f6;
+	padding: 6px 8px;
+	border-radius: 6px;
+	font-size: 12px;
+	line-height: 1.4;
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+
+	.title {
+		font-weight: 600;
+		color: #111827;
+	}
+
+	.time,
+	.location {
+		font-size: 11px;
+		color: #374151;
+	}
+
+	.edit-btn {
+		align-self: start;
+		background: transparent;
+		border: 1px solid #3b82f6;
+		color: #3b82f6;
+		border-radius: 4px;
+		padding: 2px 6px;
+		font-size: 10px;
+		cursor: pointer;
+	}
+
+	//.edit-btn:hover {
+	//	background: #3b82f6;
+	//	color: white;
+	//}
+}
+//
+
+::ng-deep .fc .custom-event {
+	padding: 4px;
+	font-size: 13px;
+	line-height: 1.4;
+}
+
+::ng-deep .custom-event .edit-btn {
+	background-color: #007bff;
+	border: none;
+	color: white;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+//
+::ng-deep .modal-body .form-group {
+	margin-bottom: 1rem;
+}
+
+::ng-deep .custom-event {
+	font-size: 12px;
+	line-height: 1.4;
+	padding: 4px 6px;
+}

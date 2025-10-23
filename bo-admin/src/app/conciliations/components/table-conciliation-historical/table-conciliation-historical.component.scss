@@ -1,0 +1,23 @@
+.point-table {
+	border-radius: 100%;
+	width: 8px;
+	height: 8px;
+}
+
+.img-light-orange {
+	filter: invert(75%) sepia(88%) saturate(1231%) hue-rotate(0deg) brightness(100%) contrast(101%);
+	padding-bottom: 0.7px;
+	margin-right: 2px;
+}
+
+button:hover .img-light-orange,
+button:focus .img-light-orange,
+button:active .img-light-orange {
+	filter: invert(10%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(180%) contrast(170%);
+}
+
+.img-orange {
+	filter: invert(10%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(180%) contrast(170%);
+	padding-bottom: 0.7px;
+	margin-right: 2px;
+}

@@ -1,0 +1,76 @@
+.upload-container {
+    border: 2px dashed #d1d5db;
+    border-radius: 12px;
+    padding: 2.5rem 1.5rem;
+    transition: all 0.3s ease;
+    text-align: center;
+    margin: 1rem 0;
+    position: relative;
+    
+    &.cursor-pointer {
+        cursor: pointer;
+    }
+}
+
+.upload-success {
+    width: 100%;
+    border: 2px solid #4CAF50;
+    border-radius: 12px;
+    
+    &.success-state {
+        background-color: #E8F5E9;
+        border: 2px solid #4CAF50;
+    }
+    
+    &.error-state {
+        background-color: #FFEBEE;
+        border: 2px solid #F44336;
+    }
+}
+
+// NUEVO: botón cerrar
+.btn-close-custom {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    
+    &:hover {
+        opacity: 0.7;
+    }
+}
+
+// Tus estilos existentes se mantienen...
+.divider-container {
+    display: flex;
+    align-items: center;
+    width: 16%;
+    margin: 1.5rem 0 1rem 0;
+    
+    .divider-line {
+        flex: 1;
+        height: 2px;
+        background-color: #c8ccd1;
+    }
+    
+    .divider-circle {
+        width: 10px;
+        height: 10px;
+        border: 2px solid #c8ccd1;
+        border-radius: 50%;
+        background-color: #fafafa;
+        margin: 0 1rem;
+        flex-shrink: 0;
+    }
+}
+
+.drag-text {
+    font-size: 1rem;
+    color: #9ca3af;
+    text-align: center;
+}
+
+.helper-text-inside {
+    margin-top: 1rem;
+    text-align: center;
+}

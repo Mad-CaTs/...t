@@ -1,0 +1,123 @@
+.shadow-box {
+  background: white;
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.5rem;
+}
+
+
+.membership-with-tabs {
+  display: flex;
+  align-items: stretch;   
+  gap: 1rem;
+}
+
+.membership-main {
+  flex: 1;
+}
+
+/* ---------- Filtros arriba ---------- */
+.filters-top {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-bottom: 1rem;
+
+  .filter-field {
+    min-width: 160px;
+  }
+}
+
+/* ---------- Título ---------- */
+.page-title {
+  margin: 0 0 0.75rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+/* ---------- Tabs ---------- */
+.tabs {
+  display: flex;
+  margin-bottom: 1rem;
+
+  .tab {
+    padding: 0.75rem 1.25rem;
+    font-weight: 600;
+    color: #444;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: background-color 0.25s, color 0.25s;
+
+    &.tab-active {
+      background: #ff7700;
+      color: #fff;
+      border-radius: 10px 10px 0 0;
+    }
+  }
+}
+
+
+/* Pestañas verticales a la derecha */
+.side-tabs {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  border: 1px solid #ddd;
+  border-radius: 0 10px 10px 0;
+  overflow: hidden;
+}
+
+.side-tabs .tab {
+  flex: 1;
+  padding: 1.25rem;
+  background: #fff;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+  transition: background-color .25s, color .25s;
+
+  /* centrado y estilo tipográfico */
+  display: flex;              
+  align-items: center;         /* centra vertical */
+  justify-content: center;     /* centra horizontal */
+  text-align: center;          
+  font-weight: 700;            /* negrita */
+  font-size: 1.1rem;           
+  letter-spacing: 0.02em;      
+}
+
+.side-tabs .tab:last-child {
+  border-bottom: none;
+}
+
+.side-tabs .tab.tab-active {
+  background: #009CD8;
+  color: #fff;
+}
+
+/* ---------- Gráfico de barras ---------- */
+.chart-wrapper {
+  margin-bottom: 1.5rem;
+}
+
+/* ---------- Exportar botón ---------- */
+.export {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1.5rem;
+
+  .btn-export {
+    background-color: #ff7700;
+    border: none;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: #e06600;
+    }
+  }
+}

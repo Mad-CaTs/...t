@@ -1,0 +1,13 @@
+<app-modal [title]="title">
+	<div class="d-flex flex-column w-full gap-6 align-items-center">
+		<i [class]="icon + ' fa-5x'"></i>
+		<p class="text-center text-black text-center w-100 fs-5">
+			{{ body }}
+		</p>
+		<div class="d-flex align-items-center justify-content-center gap-3 w-100" *ngIf="buttons.length > 0">
+			<button *ngFor="let btn of buttons" [class]="btn.className" (click)="handleButtonClick(btn)">
+				<span>{{ btn.text }}</span>
+			</button>
+		</div>
+	</div>
+</app-modal>

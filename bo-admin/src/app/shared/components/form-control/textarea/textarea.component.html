@@ -1,0 +1,48 @@
+<label [for]="controlName" class="fs-6 text-muted fw-bold" *ngIf="label">
+	{{ label }}
+
+	<i
+		class="bi bi-info-square cursor-pointer ms-2"
+		placement="top"
+		[ngbTooltip]="tooltipContent"
+		*ngIf="tooltipContent"
+	></i>
+</label>
+
+<div
+	class="input-group input-group-solid border"
+	[class.border-danger]="existErrors"
+	[class.bg-light-danger]="existErrors"
+	[formGroup]="formGroup"
+>
+	<span class="input-group-text" [class.bg-light-danger]="existErrors" *ngIf="iconLeft || textLeft">
+		<span *ngIf="textLeft" [class.text-danger]="existErrors" [class.text-muted]="!existErrors">
+			{{ textLeft }}
+		</span>
+		<i [class]="iconLeft" [class.text-danger]="existErrors" *ngIf="iconLeft"></i>
+	</span>
+
+	<textarea
+		[class]="'form-control ' + classInput"
+		[placeholder]="placeholder"
+		[formControlName]="controlName"
+		[name]="controlName"
+		[class.text-danger]="existErrors"
+		aria-describedby="basic-addon1"
+	></textarea>
+
+	<span class="input-group-text" *ngIf="iconRigth || textRigth" [class.bg-light-danger]="existErrors">
+		<span *ngIf="textRigth" [class.text-danger]="existErrors" [class.text-muted]="!existErrors">
+			{{ textRigth }}
+		</span>
+		<i [class]="iconRigth" [class.text-danger]="existErrors" *ngIf="iconRigth"></i>
+	</span>
+</div>
+
+<div class="text-danger" *ngIf="existErrors">{{ formValue | inputError }}</div>
+
+<!--Helper-->
+<div class="d-flex align-items-center w-100 gap-2 px-2 mt-2" *ngIf="helper">
+	<i class="w-20px text-gray-800" [inlineSVG]="'/assets/media/icons/duotune/general/gen045.svg'"></i>
+	<span class="text-gray-800 fw-normal fs-8">{{ helper }}</span>
+</div>

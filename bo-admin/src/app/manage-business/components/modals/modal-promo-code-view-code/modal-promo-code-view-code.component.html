@@ -1,0 +1,23 @@
+<app-modal title="Ver código promocional de Omar Fernando">
+	<div class="w-100 d-flex flex-column gap-6">
+		<table-pagination class="w-100 d-block mt-4" />
+		<!--Table | Table-->
+		<app-common-table
+			class="w-100 d-block mt-4"
+			[headers]="table.headers"
+			[checkedAll]="table.checkedAll"
+			[headersMinWidth]="table.headersMinWidth"
+			[noCheckboxes]="table.noCheckBoxes"
+			[headersArrows]="table.headersArrows"
+			(onCheckedAll)="table.changeCheckedAll($event)"
+		>
+			<tr class="w-100 d-flex py-2 align-items-center" *ngFor="let item of table.data">
+				<td class="w-100 text-gray-900 text-center fs-6">{{ item.code }}</td>
+				<td class="w-100 text-gray-900 text-center fs-6">{{ item.createdDate }}</td>
+				<td class="w-100 text-gray-900 text-center fs-6">{{ item.expirateDate }}</td>
+				<td class="w-100 text-gray-900 text-center fs-6">{{ item.family }}</td>
+				<td class="w-100 text-gray-900 text-center fs-6">{{ item.version }}</td>
+			</tr>
+		</app-common-table>
+	</div>
+</app-modal>

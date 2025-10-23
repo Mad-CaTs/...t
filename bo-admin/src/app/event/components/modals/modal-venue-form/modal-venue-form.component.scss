@@ -1,0 +1,127 @@
+//src/app/event/components/modal-venue-form/modal-venue-form.component.scss
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-container {
+  background: #ffffff;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 600px;
+  padding: 32px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+
+  .modal-header-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .modal-icon {
+    width: 48px;
+    height: 48px;
+    background: #ffffff;
+    border: 1px solid #E5E7EB;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    i { font-size: 20px; color: #6C757D; }
+  }
+
+  .modal-title { font-size: 1.25rem; font-weight: 600; margin: 0; color: #1F2937; }
+  .close-btn { background: none; border: none; font-size: 1.25rem; cursor: pointer; color: #6C757D; }
+}
+
+.modal-subtitle { font-size: 1rem; color: #6B7280; margin: 0 0 24px; }
+
+.modal-form {
+  .coordinate-group { display: flex; gap: 8px; width: 100%; }
+  .coordinate-input { flex: 1; display: flex; flex-direction: column; }
+  display: flex; flex-wrap: wrap; gap: 0 16px;
+
+  .form-group {
+    width: 100%; margin-bottom: 0;
+
+    label { display: block; font-size: 0.875rem; margin-bottom: 6px; color: #3F4C5C; }
+
+    input[type='text'], input[type='number'] {
+      width: 100%; padding: 12px 16px; border: 1px solid #D1D5DB; border-radius: 8px; font-size: 0.9rem; height: 40px;
+    }
+
+    .error { margin-top: 4px; font-size: 0.75rem; color: #D9534F; }
+
+    .char-counter {
+      text-align: right; font-size: 0.75rem; margin-top: 4px; color: #6B7280;
+      &.warning { color: #e0a800; }
+      &.full { color: #d9534f; }
+    }
+
+    .btn-map {
+      margin-top: 8px; display: flex; align-items: center; gap: 8px;
+      background: #0084FF; color: #fff; border: none; border-radius: 8px; padding: 8px 16px;
+      font-size: 0.95rem; font-weight: 500; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.07); transition: background 0.2s;
+      i { font-size: 1.2rem; color: #fff; }
+      &:hover { background: #005fa3; }
+      &:active { background: #003e6b; }
+    }
+  }
+
+  .form-group:nth-child(1),
+  .form-group:nth-child(2) { width: calc(50% - 8px); }
+
+  .status-group { display: flex; flex-direction: column; align-items: flex-start; }
+  .status-label { font-size: 0.875rem; color: #3F4C5C; margin-bottom: 6px; }
+  .status-options {
+    display: flex; gap: 24px;
+    label { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; color: #3F4C5C;
+      input[type='radio'] { margin: 0; }
+    }
+  }
+}
+
+/* ---- Country dropdown ---- */
+.selectable-input { position: relative; }
+.selectable-input .input-wrapper { position: relative; display: flex; align-items: center; }
+.selectable-input .flag {
+  width: 18px; height: 12px; object-fit: cover; border: 1px solid #e5e7eb; border-radius: 3px; margin-right: 8px;
+}
+.selectable-input input { padding-right: 36px; }
+.selectable-input .caret {
+  position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+  border: none; background: transparent; cursor: pointer; color: #6b7280; padding: 4px;
+}
+.selectable-input.open .caret i { transform: rotate(180deg); }
+.selectable-input .dropdown {
+  position: absolute; z-index: 20; left: 0; right: 0; margin-top: 6px; max-height: 260px; overflow: auto;
+  background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 8px 24px rgba(0,0,0,.08); padding: 6px 0;
+}
+.selectable-input .dropdown-item {
+  display: flex; align-items: center; gap: 8px; padding: 8px 12px; cursor: pointer; font-size: .92rem;
+}
+.selectable-input .dropdown-item .name { color: #1f2937; }
+.selectable-input .dropdown-item .courtesy { color: #6b7280; font-size: .86rem; }
+.selectable-input .dropdown-item:hover,
+.selectable-input .dropdown-item.active { background: #f3f4f6; }
+.selectable-input .no-results { padding: 10px 12px; color: #6b7280; font-size: .9rem; }
+
+:host-context(.night-mode) {
+  .modal-header { background-color: #ffffff !important; .modal-title { color: rgba(0, 0, 0, 0.7) !important; } }
+}

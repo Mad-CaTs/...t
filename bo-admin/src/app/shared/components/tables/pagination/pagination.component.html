@@ -1,0 +1,24 @@
+<div class="w-100 d-flex align-items-center"
+	[ngClass]="{ 'justify-content-between': !noTextBtn, 'justify-content-end': noTextBtn }">
+
+	<div *ngIf="hasChildren" class="d-flex gap-4 align-items-center">
+		<ng-content></ng-content>
+	</div>
+
+	<div *ngIf="!noTextBtn">
+		<button class="btn btn-secondary" type="button" (click)="clickBtn.emit()" [class.opacity-0]="!textBtn"
+			*ngIf="!hasChildren">
+			{{ textBtn }}
+		</button>
+	</div>
+
+	<div class="d-flex align-items-center gap-3 justify-content-end">
+		<span class="text-black fw-semibold fs-7">Page</span>
+
+		<select class="px-4 py-2 rounded bg-white border border-gray-400 outline-none" [formControl]="pageControl"
+			(change)="onPageChange(pageControl.value)">
+			<option *ngFor="let page of pages" [value]="page">{{ page }}</option>
+		</select>
+		<span class="text-black fw-semibold fs-7">of {{ totalPages > 0 ? totalPages : '0' }}</span>
+	</div>
+</div>

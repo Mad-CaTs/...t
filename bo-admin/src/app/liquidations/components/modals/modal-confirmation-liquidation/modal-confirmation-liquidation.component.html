@@ -1,0 +1,38 @@
+<app-modal [title]="title">
+	<div class="d-flex flex-column w-full gap-6 align-items-center">
+		<div class="d-flex flex-column align-items-start gap-4 w-100 px-4">
+			<p class="fw-bolder fs-6 mb-0">Resumen de la solicitud:</p>
+
+			<div class="d-flex justify-content-between w-100">
+				<span class="text-black fw-bold">Nombres y apellidos</span>
+				<span class="text-black">{{ fullname }}</span>
+			</div>
+
+			<div class="d-flex justify-content-between w-100">
+				<span class="text-black fw-bold">Fecha de solicitud</span>
+				<span class="text-black">{{ dateRequest }}</span>
+			</div>
+
+			<div class="d-flex justify-content-between w-100">
+				<span class="text-black fw-bold">Paquete</span>
+				<span class="text-black">{{ briefcase }}</span>
+			</div>
+
+			<div class="d-flex justify-content-between w-100">
+				<span class="text-black fw-bold">Tipo de Membresía</span>
+				<span class="text-black">{{ membershiptype }}</span>
+			</div>
+
+			<div class="d-flex justify-content-between w-100">
+				<span class="text-black fw-bold">Motivo</span>
+				<span class="text-black">{{ reason }}</span>
+			</div>
+		</div>
+		<div class="d-flex gap-4 justify-content-center align-items-center w-100">
+			<button class="btn btn-outline-secondary" type="button" (click)="instanceModal.close()">
+				Cancelar
+			</button>
+			<button class="btn btn-secondary" type="submit" (click)="onSubmit()">Confirmar</button>
+		</div>
+	</div>
+</app-modal>

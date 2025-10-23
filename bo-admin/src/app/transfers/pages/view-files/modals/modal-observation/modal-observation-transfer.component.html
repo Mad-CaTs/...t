@@ -1,0 +1,32 @@
+<app-modal
+	[title]="title"
+	[description]="'Por favor, ingrese los detalles de observación '"
+	[showIcon]="true"
+	[icon]="'bi bi-trash-fill text-danger'"
+	><form
+		[formGroup]="form"
+		(submit)="onSubmit()"
+		class="d-flex flex-column align-items-center justify-content-center gap-6"
+		*ngIf="step === 1"
+	>
+		<app-select
+			class="w-100"
+			label="Motivo*"
+			placeholder="Selecciona uno"
+			[formGroup]="form"
+			controlName="motive"
+			[options]="MotiveOpt"
+			customClass="form-control"
+		/>
+		   <app-textarea [formGroup]="form" controlName="detail" label="Mensaje adicional o solución alternativa*"
+            placeholder="e.j. : El socio proporcionó información incorrecta." class="w-100"></app-textarea>
+	
+		<button type="submit" class="btn btn-secondary" [disabled]="form.invalid">Confirmar</button>
+	</form>
+	<div class="d-flex flex-column align-items-center justify-content-center gap-6" *ngIf="step === 2">
+		<i class="d-block text-primary w-85px" [inlineSVG]="'/assets/media/icons/custom/info.svg'"></i>
+		<span class="fs-5 text-black text-center fw-normal w-100">
+		La notificación al socio se realizó con éxito, incluyendo el motivo y el detalle de la observación.
+		</span>
+	</div>
+</app-modal>

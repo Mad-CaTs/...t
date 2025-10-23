@@ -1,0 +1,36 @@
+<app-modal title="Nuevo Periodo">
+	<form [formGroup]="form" class="d-flex w-100 flex-column gap-6">
+		<app-input-date
+			label="Fecha de Inicio"
+			placeholder="dd/mm/yyyy"
+			class="w-100"
+			[formGroup]="form"
+			controlName="startDate"
+		/>
+
+		<app-input-date
+			label="Fecha de Fin"
+			placeholder="dd/mm/yyyy"
+			class="w-100"
+			[formGroup]="form"
+			controlName="endDate"
+		/>
+
+		<app-input-date
+			label="Fecha de Pago"
+			placeholder="dd/mm/yyyy"
+			class="w-100"
+			[formGroup]="form"
+			controlName="payDate"
+		/>
+
+		<div class="w-100 d-flex justify-content-center align-items-center gap-4">
+			<button class="btn btn-outline-secondary" type="button" (click)="instanceModal.close()">
+				Cancelar
+			</button>
+			<button class="btn btn-secondary" type="submit" [disabled]="form.invalid || loading">
+				Guardar cambios
+			</button>
+		</div>
+	</form>
+</app-modal>

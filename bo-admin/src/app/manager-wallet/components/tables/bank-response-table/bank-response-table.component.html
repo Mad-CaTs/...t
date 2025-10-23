@@ -1,0 +1,108 @@
+<div class="row">
+  <div class="d-flex flex-column gap-6 w-100">
+    <app-input-filedrawal #fileInput label="Formatos admitidos: csv. Tamaño máximo de archivo: 1.2mb."
+      titleBox="Subir un archivo" placeholder="" accept=".xlsx,.xls,.csv" class="w-100"
+      (fileChange)="onFileSelected($event)" (fileRemoved)="onFileRemoved()" />
+  </div>
+
+  <div class="search-filter-container">
+    <app-input class="search-input" label="Ingrese campo de búsqueda:" placeholder="Buscar por" type="search"
+      [formGroup]="form" controlName="search" />
+
+    <app-select class="filter-select" label="Estado:" placeholder="Selecciona un opción" [options]="statusOpt"
+      [formGroup]="form" controlName="status">
+    </app-select>
+
+    <button class="btn btn-secondary btn-import" type="button"
+      [disabled]="!selectedFile || buttonLoadingImport || loading" (click)="uploadExcelOfBcp()">
+      <div class="fixed-width-button">
+        <div *ngIf="buttonLoadingImport">
+          <span class="spinner-border spinner-border-sm"></span>
+          <span class="ms-2">Importando...</span>
+        </div>
+        <div *ngIf="!buttonLoadingImport">
+          <span>Importar data</span>
+        </div>
+      </div>
+    </button>
+
+    <button class="btn btn-secondary btn-notify" type="submit" [class.invalid-field]="form.invalid"
+      [disabled]="form.invalid || loading || total <= 0" (click)="updateBankWithdrawalAll()">
+      <div class="fixed-width-button">
+        <div *ngIf="loading">
+          <span class="spinner-border spinner-border-sm"></span>
+        </div>
+        <div *ngIf="!loading">
+          <span>Notificar</span>
+        </div>
+      </div>
+    </button>
+  </div>
+</div>
+
+<!-- Table section -->
+<ng-container *ngIf="!loading; else loadingTemplate">
+  <ng-container *ngIf="table.length > 0; else empty">
+    <div class="table-wrapper">
+      <table class="table-generic">
+        <thead>
+          <tr>
+            <th>N°</th>
+            <th>Fecha de registro</th>
+            <th>N° de operación</th>
+            <th>Nombres</th>
+            <th>N° de doc.</th>
+            <th>Monto enviado</th>
+            <th>Cuenta destino</th>
+            <th>Estado</th>
+            <th>Estado de revision</th>
+            <th>Detalle</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of table; let i = index">
+            <td data-label="N°">{{ i + 1 }}</td>
+            <td data-label="Fecha de registro">{{formatDate(row.fechSolicitud)}}</td>
+            <td data-label="N° de operación">{{row.idsolicitudebank}}</td>
+            <td data-label="Nombres">{{row.nameHolder}} {{row.lastNameHolder}}</td>
+            <td data-label="N° de doc.">{{row.numDocument}}</td>
+            <td data-label="Monto enviado">{{row.money.toFixed(2)}}</td>
+            <td data-label="Cuenta destino">{{row.numberAccount}}</td>
+            <td data-label="Estado" class="text-center">
+              <div [style.color]="getBorderColor(row.idBankStatus).color"
+                [style.background]="getBorderColor(row.idBankStatus).background" class="badge">
+                {{getNameOfStates(row.idBankStatus)}}
+              </div>
+            </td>
+            <td data-label="Estado de revision">{{row.reviewStatusDescription}}</td>
+            <td data-label="Detalle" class="actions">
+              <div class="content-eye">
+                <button class="btn-eye" (click)="viewDetail(row)">
+                  <i class="bi bi-eye"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="table.length > 0;">
+    <app-table-paginator [length]="total" [pageSize]="pageSize" [pageIndex]="pageIndex"
+      (pageChange)="onPageChange($event)" (pageSizeChange)="onPageSizeChange($event)">
+    </app-table-paginator>
+  </ng-container>
+</ng-container>
+
+<ng-template #loadingTemplate>
+  <div class="d-flex justify-content-center align-items-center py-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Cargando...</span>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #empty>
+  <app-empty-state message="No data"></app-empty-state>
+</ng-template>

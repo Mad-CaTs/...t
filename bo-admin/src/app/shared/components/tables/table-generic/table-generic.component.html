@@ -1,0 +1,182 @@
+<div #tableWrapper class="table-generic-wrapper" [class.scrollable]="isScrollable">
+	<table
+		class="table-generic"
+		[style.width.%]="!freezeOverflow ? tableWidthPercent : null"
+		[style.width.px]="freezeOverflow && isScrollable ? frozenWidthPx : null"
+		[class.auto-layout]="hasColumnWidths && totalPercentIncludingActions <= 100"
+	>
+		<ng-container *ngIf="hasColumnWidths">
+			<colgroup>
+				<col *ngIf="effectiveCheckboxMode !== 'none'" style="width: 40px" />
+				<col *ngFor="let width of columnWidths" [style.width]="width" />
+			</colgroup>
+		</ng-container>
+
+		<thead>
+			<tr>
+				<!-- Columna de control (select/accordion) -->
+				<th *ngIf="effectiveCheckboxMode !== 'none'">
+					<!-- SELECT: master checkbox -->
+					<ng-container *ngIf="effectiveCheckboxMode === 'select'; else noHeaderControl">
+						<input
+							type="checkbox"
+							[(ngModel)]="selectAll"
+							[indeterminate]="isIndeterminate"
+							(change)="toggleSelectAll()"
+							aria-label="Seleccionar todo"
+						/>
+					</ng-container>
+					<ng-template #noHeaderControl><!-- (accordion) header vacío --></ng-template>
+				</th>
+
+				<th *ngFor="let col of columns">{{ col }}</th>
+
+				<th *ngIf="showActions" [style.width]="actionsColumnWidth">Acciones</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			<ng-container *ngFor="let row of data; let i = index">
+				<tr [class.selected]="selectedIndex === i" (click)="toggleSelect(i)">
+					<!-- Control por fila -->
+					<td *ngIf="effectiveCheckboxMode !== 'none'">
+						<ng-container [ngSwitch]="effectiveCheckboxMode">
+							<!-- SELECT -->
+							<ng-container *ngSwitchCase="'select'">
+								<input
+									type="checkbox"
+									[(ngModel)]="row.selected"
+									(ngModelChange)="onRowSelect(row)"
+									(click)="$event.stopPropagation()"
+									aria-label="Seleccionar fila"
+								/>
+							</ng-container>
+
+							<!-- ACCORDION: botón con chevron -->
+							<ng-container *ngSwitchCase="'accordion'">
+								<button
+									type="button"
+									class="accordion-toggle"
+									[attr.aria-expanded]="expandedRowIndex === i"
+									(click)="
+										$event.stopPropagation(); toggleExpand(i, expandedRowIndex !== i)
+									"
+									aria-label="Mostrar/ocultar detalle"
+								>
+									<i
+										class="bi"
+										[ngClass]="
+											expandedRowIndex === i ? 'bi-chevron-down' : 'bi-chevron-right'
+										"
+									>
+									</i>
+								</button>
+							</ng-container>
+						</ng-container>
+					</td>
+
+					<!-- Columnas dinámicas -->
+					<td *ngFor="let key of keys">
+						<ng-container [ngSwitch]="key">
+							<ng-container *ngSwitchCase="'item'">
+								{{ (pageIndex - 1) * pageSize + i + 1 }}
+							</ng-container>
+
+							<ng-container *ngSwitchCase="'id'">
+								{{ row.id | number : '2.0' }}
+							</ng-container>
+
+							<ng-container *ngSwitchCase="statusKey">
+								<ng-container [ngSwitch]="row[statusKey]">
+									<span *ngSwitchCase="true" class="badge activo">Activo</span>
+									<span *ngSwitchCase="false" class="badge inactivo">Inactivo</span>
+									<span *ngSwitchCase="'Destacado'" class="badge destacado">Destacado</span>
+									<span *ngSwitchCase="'Secundario'" class="badge secundario"
+										>Secundario</span
+									>
+									<span *ngSwitchDefault class="badge desconocido">
+										{{ row[statusKey] != null ? row[statusKey] : 'Desconocido' }}
+									</span>
+								</ng-container>
+							</ng-container>
+
+							<ng-container *ngSwitchDefault>
+								<ng-container *ngIf="imageKeys.includes(key); else plainText">
+									<img *ngIf="row[key]" [src]="row[key]" alt="Imagen" class="cell-image" />
+								</ng-container>
+								<ng-template #plainText>
+									<ng-container
+										*ngIf="
+											key.toLowerCase().includes('date') &&
+												!key.toLowerCase().includes('display');
+											else normalText
+										"
+									>
+										{{ toDate(row[key]) | date : 'dd/MM/yyyy' }}
+									</ng-container>
+									<ng-template #normalText>
+										{{ row[key] != null ? row[key] : '-' }}
+									</ng-template>
+								</ng-template>
+							</ng-container>
+						</ng-container>
+					</td>
+
+					<!-- Acciones -->
+					<td class="actions" *ngIf="showActions">
+						<div
+							class="action-buttons"
+							[ngClass]="{ 'only-view': showView && !showEdit && !showDelete }"
+						>
+							<ng-container *ngIf="showView && !showEdit && !showDelete; else defaultActions">
+								<button class="only-view-btn" (click)="view.emit(row)">
+									<i class="bi bi-eye"></i>
+									<span class="only-view-label" *ngIf="onlyViewLabel">{{
+										onlyViewLabel
+									}}</span>
+								</button>
+							</ng-container>
+
+							<ng-template #defaultActions>
+								<button *ngIf="showView" (click)="view.emit(row)" title="Ver">
+									<i class="bi bi-eye"></i>
+								</button>
+
+								<button
+									*ngIf="showEdit"
+									(click)="onEditClick(row)"
+									[title]="editTooltip(row)"
+								>
+									<i [ngClass]="editIcon(row)"></i>
+								</button>
+
+								<button *ngIf="showDelete" (click)="delete.emit(row)" title="Eliminar">
+									<i class="bi bi-trash"></i>
+								</button>
+								<button *ngIf="showDeny" (click)="deny.emit(row)" title="Denegar">
+									<i class="bi bi-x"></i>
+								</button>
+								<button *ngIf="showAccept" (click)="accept.emit(row)" title="Aceptar">
+									<i class="bi bi-check"></i>
+								</button>
+								<button (click)="download.emit(row)" title="Descargar">
+									<i class="bi bi-download"></i>
+								</button>
+							</ng-template>
+						</div>
+					</td>
+				</tr>
+
+				<!-- Fila acordeón por template -->
+				<tr *ngIf="rowDetailTemplate && expandedRowIndex === i" class="detail-row">
+					<td [attr.colspan]="columns.length + (showActions ? 1 : 0)">
+						<div class="accordion-detail">
+							<ng-container *ngTemplateOutlet="rowDetailTemplate; context: { $implicit: row }">
+							</ng-container>
+						</div>
+					</td>
+				</tr>
+			</ng-container>
+		</tbody>
+	</table>
+</div>

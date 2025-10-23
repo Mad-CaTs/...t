@@ -1,0 +1,501 @@
+<div class="bg-white">
+	<div class="card d-flex flex-column p-9">
+		<div class="d-flex justify-content-between align-items-center pb-1">
+			<h2>Cronograma de pagos</h2>
+			<div class="d-flex align-items-center">
+				<button class="btn p-0 text-start" (click)="onBack()">
+					<span class="fw-bold fs-5 fw-semibold text-primary pe-2">Volver</span>
+				</button>
+			</div>
+		</div>
+		<div class="card-filters rounded-2 d-flex flex-row justify-content-center gap-3 p-4">
+			<div class="d-flex mt-0 flex-column w-100 justify-content-end">
+				<h6>Suscripción actual</h6>
+				<span class="bg-light-primary p-3 rounded-2 text-primary fs-6 fw-bolder">
+					{{ subscriptionName }}
+				</span>
+			</div>
+
+			<app-select
+				label="Portafolio:"
+				placeholder="Selecciona un opción"
+				[options]="packageOpt"
+				[formGroup]="form"
+				controlName="package"
+				class="w-100"
+				[disabled]="true"
+				[ngClass]="{ 'disabled-opacity': true }"
+			></app-select>
+			<app-select
+				label="Versión:"
+				placeholder="Selecciona un opción"
+				[options]="versionOpt"
+				[formGroup]="form"
+				controlName="version"
+				class="w-100"
+				[disabled]="true"
+				[ngClass]="{ 'disabled-opacity': true }"
+			></app-select>
+			<app-select
+				label="Migrar a:"
+				placeholder="Selecciona un opción"
+				[options]="familyMigrateOpt"
+				[formGroup]="form"
+				controlName="familyMigrate"
+				class="w-100"
+				[disabled]="true"
+				[ngClass]="{ 'disabled-opacity': true }"
+			></app-select>
+
+			<div class="d-flex mt-0 flex-column justify-content-end">
+				<button
+					type="button"
+					class="btn btn-outline-secondary"
+					[disabled]="true"
+					(click)="onMigrate()"
+				>
+					<!-- [disabled]="buttonLoading" -->
+					<div class="fixed-width-button">
+						<div *ngIf="buttonLoading">
+							<span
+								class="spinner-border spinner-border-sm align-middle text-center ms-2"
+							></span>
+						</div>
+						<div *ngIf="!buttonLoading">
+							<span>Migrar</span>
+						</div>
+					</div>
+				</button>
+			</div>
+		</div>
+
+		<div class="d-flex justify-content-between pt-2">
+			<button class="btn">
+				<span>Reordenar</span>
+			</button>
+			<button class="btn" (click)="onUpdate(idUser)">
+				<span>Actualizar Estado</span>
+			</button>
+		</div>
+
+		<div class="row w-full pb-0">
+			<div class="col">
+				<button class="btn" (click)="onCommission(idUser)">
+					<span>Ingresar comisión</span>
+				</button>
+			</div>
+			<div class="col d-flex justify-content-end">
+				<button class="btn" (click)="addNewRow()">
+					<span>+</span>
+				</button>
+			</div>
+		</div>
+
+		<div>
+			<table class="table-schedule" style="display: block; overflow-x: auto">
+				<thead class="table-headsch">
+					<tr>
+						<th></th>
+						<th style="text-align: center; border-bottom: 1px solid rgba(231, 226, 226, 0.7)">
+							<input
+								type="checkbox"
+								(change)="handleCascade($event, 'editCascade')"
+								[checked]="editCascade"
+							/>
+							Editar en cascada
+						</th>
+						<th style="text-align: center; border-bottom: 1px solid rgba(231, 226, 226, 0.7)">
+							<input
+								type="checkbox"
+								(change)="handleCascade($event, 'editCasNextExp')"
+								[checked]="editCasNextExp"
+							/>
+							Editar en cascada
+						</th>
+						<th style="text-align: center; border-bottom: 1px solid rgba(231, 226, 226, 0.7)">
+							<input
+								type="checkbox"
+								(change)="handleCascade($event, 'editCasExchange')"
+								[checked]="editCasExchange"
+							/>
+							Editar en cascada
+						</th>
+						<th style="text-align: center; border-bottom: 1px solid rgba(231, 226, 226, 0.7)">
+							<input
+								type="checkbox"
+								(change)="handleCascade($event, 'editCasQuoteUsd')"
+								[checked]="editCasQuoteUsd"
+							/>
+							Editar en cascada
+						</th>
+						<th
+							style="text-align: center; border-bottom: 1px solid rgba(231, 226, 226, 0.7)"
+						></th>
+						<th
+							style="text-align: center; border-bottom: 1px solid rgba(231, 226, 226, 0.7)"
+						></th>
+						<th
+							colspan="3"
+							style="text-align: center; border-bottom: 1px solid rgba(231, 226, 226, 0.7)"
+						>
+							<button (click)="calculate()" class="btn btn-secondary btn-sm">Calcular</button>
+						</th>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th></th>
+					</tr>
+					<tr style="text-align: center" class="tr-adjust border-bottom-1">
+						<th>N°</th>
+						<th>Descripción</th>
+						<th>Fecha de vencimiento</th>
+						<th>Tipo de cambio</th>
+						<th>Quote Usd</th>
+						<th>Amortización</th>
+						<th style="background: #beceab">
+							<input
+								type="checkbox"
+								(change)="handleCheck($event)"
+								[checked]="calculateCheck"
+							/>
+						</th>
+						<th style="background: #beceab">Capital Balance</th>
+						<th style="background: #beceab">%</th>
+						<th>Interested</th>
+						<th class="d-flex border-0">
+							<tr class="theadvoucher">
+								<th>Foto</th>
+								<th>N° de Operación</th>
+								<th>Código de op.empresa</th>
+								<th>Método Pago</th>
+								<th>Nota</th>
+							</tr>
+						</th>
+						<th>Verif</th>
+						<th>isQuote Initial</th>
+						<th>Observación</th>
+						<th>Pay Date</th>
+						<th>Pts.</th>
+						<th></th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody *ngIf="!loading && !noData">
+					<tr
+						*ngFor="let item of registers; let idx = index"
+						class="tr-adjust"
+						style="border-bottom: 1px solid rgba(231, 226, 226, 0.9)"
+					>
+						<td>
+							<input
+								class="form-control"
+								style="font-size: 10px; width: 45px; padding-left: 10px"
+								[(ngModel)]="item.positionOnSchedule"
+								(ngModelChange)="handleItem($event, 'positionOnSchedule', idx)"
+							/>
+						</td>
+						<td>
+							<input
+								class="form-control"
+								style="font-size: 10px; width: 100px"
+								[(ngModel)]="item.quoteDescription"
+								(ngModelChange)="handleItemQuotes($event, 'quoteDescription', idx)"
+								(blur)="handleItemNext($event, 'quoteDescription', idx)"
+							/>
+						</td>
+						<td>
+							<input
+								class="form-control"
+								style="font-size: 10px; width: 100px"
+								[(ngModel)]="item.nextExpiration"
+								(ngModelChange)="handleItem($event, 'nextExpiration', idx)"
+								(blur)="handleItemNext($event, 'nextExpiration', idx)"
+							/>
+						</td>
+						<td>
+							<input
+								class="form-control"
+								style="font-size: 10px; width: 100px"
+								[(ngModel)]="item.dollarExchange"
+								(ngModelChange)="handleItemExchange($event, 'dollarExchange', idx)"
+							/>
+						</td>
+						<td>
+							<input
+								class="form-control"
+								style="font-size: 10px; width: 100px"
+								[(ngModel)]="item.quoteUsd"
+								(ngModelChange)="handleItemQuoteUsd($event, 'quoteUsd', idx)"
+							/>
+						</td>
+						<td>
+							<input
+								class="form-control"
+								style="font-size: 10px; width: 70px"
+								[(ngModel)]="item.amortization"
+								(ngModelChange)="handleItem($event, 'amortization', idx)"
+							/>
+						</td>
+						<td>
+							<input
+								type="checkbox"
+								(change)="handleCheckItem($event, idx)"
+								[checked]="checkCalculateState[idx]"
+							/>
+						</td>
+						<td>
+							<input
+								class="form-control"
+								style="font-size: 10px; width: 70px"
+								[(ngModel)]="item.capitalBalance"
+								(ngModelChange)="handleItem($event, 'capitalBalance', idx)"
+							/>
+						</td>
+						<td>
+							<input
+								class="form-control"
+								style="font-size: 10px; width: 70px"
+								[(ngModel)]="item.percentage"
+								(ngModelChange)="handleItem($event, 'percentage', idx)"
+							/>
+						</td>
+						<td>
+							<input class="form-control" style="font-size: 10px; width: 70px" />
+						</td>
+
+						<td class="td-adjust">
+							<ng-container
+								*ngFor="
+									let row of getVoucherRows(item);
+									let idv = index;
+									trackBy: trackByVoucherRow
+								"
+							>
+								<tr>
+									<td>
+										<button
+											class="btn btn-light btn-sm border-1"
+											style="width: 100px; padding-left: 2px; padding-right: 2px"
+											[disabled]="!row.voucher?.pathPicture"
+											(click)="onOpenImage(row.voucher)"
+										>
+											<img
+												*ngIf="row.voucher?.pathPicture"
+												height="11px"
+												width="18px"
+												src="./assets/media/icons/custom/eye.svg"
+											/>
+											<span class="image-view">{{
+												row.voucher?.pathPicture ? 'Ver Imagen' : 'No hay imagen'
+											}}</span>
+										</button>
+										<ng-template #imageModal let-modal>
+											<div class="modal-header">
+												<h4 class="modal-title">Voucher</h4>
+												<button
+													type="button"
+													class="btn-close"
+													aria-label="Close"
+													(click)="modal.dismiss('Cross click')"
+												></button>
+											</div>
+											<div class="modal-body text-center">
+												<img
+													[src]="selectedImageUrl"
+													class="img-fluid"
+													alt="Image Preview"
+												/>
+											</div>
+										</ng-template>
+									</td>
+									<td>
+										<input
+											class="form-control input-width-adjusted"
+											[ngModel]="row.voucher?.operationNumber || ''"
+											(ngModelChange)="
+												row.voucher &&
+													handleItemV($event, 'companyOperationNumber', idx, idv)
+											"
+											[disabled]="!row.voucher"
+											style="font-size: 10px; width: 100px"
+										/>
+									</td>
+									<td>
+										<input
+											class="form-control input-width-adjusted"
+											[ngModel]="row.voucher?.companyOperationNumber ?? ''"
+											(ngModelChange)="
+												row.voucher &&
+													handleItemV($event, 'companyOperationNumber', idx, idv)
+											"
+											[disabled]="!row.voucher"
+											style="font-size: 10px; width: 100px"
+										/>
+									</td>
+									<td>
+										<input
+											class="form-control input-width-adjusted"
+											[ngModel]="row.voucher?.methodPaymentSubTypeId || ''"
+											(ngModelChange)="
+												row.voucher &&
+													handleItemV($event, 'methodPaymentSubTypeId', idx, idv)
+											"
+											[disabled]="!row.voucher"
+											style="font-size: 10px; width: 100px"
+										/>
+									</td>
+									<td>
+										<input
+											class="form-control input-width-adjusted"
+											[ngModel]="row.voucher?.note || ''"
+											(ngModelChange)="
+												row.voucher && handleItemV($event, 'note', idx, idv)
+											"
+											[disabled]="!row.voucher"
+											style="font-size: 10px; width: 100px"
+										/>
+									</td>
+									<td>
+										<button
+											class="btn btn-sm"
+											style="padding-left: 20px"
+											[disabled]="!row.voucher"
+											(click)="row.voucher && showModaldeleteItemV($event, row.voucher)"
+										>
+											<i class="fas fa-trash-alt"></i>
+										</button>
+									</td>
+									<td>
+										<select
+											id="sel-{{ idx }}-{{ idv }}"
+											class="form-select select-title-editor-schedule"
+											[ngModel]="selectedSource[getSelectKey(idx, idv)] ?? null"
+											(ngModelChange)="onSelectChange(idx, idv, $event)"
+											[ngModelOptions]="{ standalone: true }"
+											style="width: 70px"
+										>
+											<option [ngValue]="null">--</option>
+											<option
+												*ngFor="let opt of selectOptions"
+												[ngValue]="{
+													paymentId: opt.vouchers[0].paymentId,
+													voucherId: opt.vouchers[0].idPaymentVoucher
+												}"
+											>
+												{{ opt.name }}
+											</option>
+										</select>
+									</td>
+									<td>
+										<button
+											class="btn btn-dark btn-sm"
+											style="padding-left: 20px"
+											[disabled]="!isTargetChosen(idx, idv) || !hasTargetPayment(idx)"
+											(click)="moveVoucher(idx, idv)"
+										>
+											<i class="fas fa-exchange-alt"></i>
+										</button>
+									</td>
+									<td>
+										<button
+											class="btn btn-dark btn-sm"
+											style="padding-left: 20px"
+											[disabled]="!isTargetChosen(idx, idv) || !hasTargetPayment(idx)"
+											(click)="copyVoucher(idx, idv)"
+										>
+											<i class="fas fa-copy"></i>
+										</button>
+									</td>
+								</tr>
+							</ng-container>
+						</td>
+						<td>
+							<input
+								class="form-control"
+								style="font-size: 10px; width: 55px"
+								[(ngModel)]="item.statePaymentId"
+							/>
+						</td>
+						<td>
+							<input
+								class="form-control"
+								style="font-size: 10px; width: 55px"
+								[(ngModel)]="item.isQuoteInitial"
+								(ngModelChange)="handleItem($event, 'isQuoteInitial', idx)"
+							/>
+						</td>
+						<td>
+							<input
+								class="form-control"
+								style="font-size: 10px; width: 100px"
+								[(ngModel)]="item.obs"
+								(ngModelChange)="handleItem($event, 'obs', idx)"
+							/>
+						</td>
+						<td>
+							<input
+								class="form-control"
+								style="font-size: 10px; width: 100px"
+								[(ngModel)]="item.payDate"
+								(ngModelChange)="handleItem($event, 'payDate', idx)"
+							/>
+						</td>
+						<td>
+							<input
+								class="form-control"
+								style="font-size: 10px; width: 55px"
+								[(ngModel)]="item.pts"
+								(ngModelChange)="handleItem($event, 'pts', idx)"
+							/>
+						</td>
+						<td>
+							<button
+								class="btn btn-sm"
+								style="padding-left: 20px"
+								(click)="deleteItem($event, idx, item)"
+							>
+								<i class="fas fa-trash-alt"></i>
+							</button>
+						</td>
+					</tr>
+				</tbody>
+				<tbody *ngIf="loading">
+					<tr>
+						<td colspan="100%" class="text-center py-5">
+							<div class="spinner-border" role="status">
+								<span class="sr-only">Loading...</span>
+							</div>
+							<p>Cargando...</p>
+						</td>
+					</tr>
+				</tbody>
+				<tbody *ngIf="!loading && noData">
+					<tr>
+						<td colspan="100%" class="text-center">
+							<p>{{ noDataMessage }}</p>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<div class="text-end mt-3">
+				<button class="btn btn-dark" [disabled]="buttonLoading" (click)="save()">
+					<div class="fixed-width-button">
+						<div *ngIf="buttonLoading">
+							<span
+								class="spinner-border spinner-border-sm align-middle text-center ms-2"
+							></span>
+						</div>
+						<div *ngIf="!buttonLoading">
+							<span>Guardar</span>
+						</div>
+					</div>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

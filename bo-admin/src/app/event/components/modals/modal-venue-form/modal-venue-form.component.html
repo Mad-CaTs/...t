@@ -1,0 +1,135 @@
+<!--src/app/event/components/modal-venue-form/modal-venue-form.component.html-->
+<div class="modal-backdrop">
+  <div class="modal-container">
+    <header class="modal-header">
+      <div class="modal-header-content">
+        <div class="modal-icon">
+          <i class="bi bi-building"></i>
+        </div>
+        <h3 class="modal-title">{{ title }}</h3>
+      </div>
+      <button type="button" class="close-btn" (click)="onCloseClick()">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </header>
+
+    <p class="modal-subtitle">Completa los campos para {{ isEdit ? 'editar' : 'crear' }} un lugar.</p>
+
+    <form [formGroup]="form" class="modal-form">
+      <!-- País con búsqueda -->
+      <div class="form-group">
+        <label for="country">País</label>
+        <div class="selectable-input" #countryBox [class.open]="countryOpen">
+          <div class="input-wrapper">
+            <img *ngIf="selectedCountry as sc" [src]="sc.icon" alt="" class="flag" />
+            <input
+              id="country"
+              type="text"
+              formControlName="country"
+              placeholder="Selecciona la nacionalidad"
+              maxlength="100"
+              autocomplete="off"
+              (input)="onCountryInput($event)"
+              (focus)="openCountry()"
+              (keydown)="onCountryKeydown($event)"
+            />
+            <button type="button" class="caret" (click)="toggleCountry()" aria-label="abrir opciones">
+              <i class="bi bi-chevron-down"></i>
+            </button>
+          </div>
+
+          <ul class="dropdown" *ngIf="countryOpen">
+            <li
+              *ngFor="let c of filteredCountries; let i = index"
+              (click)="selectCountry(c)"
+              [class.active]="i === highlightedIndex"
+              class="dropdown-item"
+            >
+              <img [src]="c.icon" alt="" class="flag" />
+              <span class="name">{{ c.nicename }}</span>
+              <span class="courtesy" *ngIf="c.courtesy">· {{ c.courtesy | titlecase }}</span>
+            </li>
+            <li class="no-results" *ngIf="filteredCountries.length === 0">Sin resultados</li>
+          </ul>
+        </div>
+        <div class="error" *ngIf="form.get('country')?.touched && form.get('country')?.errors?.required">
+          Este campo es obligatorio.
+        </div>
+        <div class="error" *ngIf="form.get('country')?.touched && form.get('country')?.errors?.maxlength">
+          Máximo 100 caracteres permitidos.
+        </div>
+        <div class="char-counter" [ngClass]="{ warning: form.get('country')?.value?.length > 90, full: form.get('country')?.value?.length >= 100 }">
+          {{ form.get('country')?.value?.length || 0 }}/100
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="city">Ciudad</label>
+        <input id="city" type="text" formControlName="city" placeholder="Ingrese ciudad" maxlength="100" (keydown)="preventLeadingSpace($event)" />
+        <div class="error" *ngIf="form.get('city')?.touched && form.get('city')?.errors?.required">Este campo es obligatorio.</div>
+        <div class="error" *ngIf="form.get('city')?.touched && form.get('city')?.errors?.maxlength">Máximo 100 caracteres permitidos.</div>
+        <div class="char-counter" [ngClass]="{ warning: form.get('city')?.value?.length > 90, full: form.get('city')?.value?.length >= 100 }">
+          {{ form.get('city')?.value?.length || 0 }}/100
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="nameVenue">Lugar</label>
+        <input id="nameVenue" type="text" maxlength="100" formControlName="nameVenue" placeholder="Ingrese nombre del lugar" (keydown)="preventLeadingSpace($event)" />
+        <div class="error" *ngIf="form.get('nameVenue')?.touched && form.get('nameVenue')?.errors?.required">Este campo es obligatorio.</div>
+        <div class="error" *ngIf="form.get('nameVenue')?.touched && form.get('nameVenue')?.errors?.maxlength">Máximo 100 caracteres permitidos.</div>
+        <div class="char-counter" [ngClass]="{ warning: form.get('nameVenue')?.value?.length > 90, full: form.get('nameVenue')?.value?.length >= 100 }">
+          {{ form.get('nameVenue')?.value?.length || 0 }}/100
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="address">Dirección</label>
+        <input id="address" type="text" formControlName="address" placeholder="Ingrese dirección" maxlength="100" (keydown)="preventLeadingSpace($event)" />
+        <div class="error" *ngIf="form.get('address')?.touched && form.get('address')?.errors?.required">Este campo es obligatorio.</div>
+        <div class="error" *ngIf="form.get('address')?.touched && form.get('address')?.errors?.maxlength">Máximo 100 caracteres permitidos.</div>
+        <div class="char-counter" [ngClass]="{ warning: form.get('address')?.value?.length > 90, full: form.get('address')?.value?.length >= 100 }">
+          {{ form.get('address')?.value?.length || 0 }}/100
+        </div>
+      </div>
+
+      <!-- Coordenadas -->
+      <div class="form-group">
+        <label>Ubicación geográfica</label>
+        <div class="coordinate-group">
+          <div class="coordinate-input">
+            <input type="number" formControlName="latitude" placeholder="Latitud" min="-90" max="90" step="any" />
+            <div class="error" *ngIf="form.get('latitude')?.touched && form.get('latitude')?.errors?.required">La latitud es obligatoria.</div>
+            <div class="error" *ngIf="form.get('latitude')?.touched && form.get('latitude')?.errors?.min">La latitud debe ser ≥ -90.</div>
+            <div class="error" *ngIf="form.get('latitude')?.touched && form.get('latitude')?.errors?.max">La latitud debe ser ≤ 90.</div>
+          </div>
+          <div class="coordinate-input">
+            <input type="number" formControlName="longitude" placeholder="Longitud" min="-180" max="180" step="any" />
+            <div class="error" *ngIf="form.get('longitude')?.touched && form.get('longitude')?.errors?.required">La longitud es obligatoria.</div>
+            <div class="error" *ngIf="form.get('longitude')?.touched && form.get('longitude')?.errors?.min">La longitud debe ser ≥ -180.</div>
+            <div class="error" *ngIf="form.get('longitude')?.touched && form.get('longitude')?.errors?.max">La longitud debe ser ≤ 180.</div>
+          </div>
+        </div>
+        <button type="button" class="btn-map" (click)="onOpenMapPicker()">
+          <i class="bi bi-geo-alt"></i>
+          Seleccionar ubicación en el mapa
+        </button>
+      </div>
+
+      <div class="form-group status-group">
+        <label class="status-label">Estado</label>
+        <div class="status-options">
+          <label><input type="radio" formControlName="status" [value]="true" /><span>Activo</span></label>
+          <label><input type="radio" formControlName="status" [value]="false" /><span>Inactivo</span></label>
+        </div>
+      </div>
+    </form>
+
+    <footer class="modal-footer">
+      <button type="button" class="btn btn-outline" (click)="onCloseClick()">Cancelar</button>
+      <button type="button" class="btn btn-primary" (click)="onSave()" [disabled]="form.invalid || (isEdit && !form.dirty)">
+        {{ isEdit ? 'Actualizar' : 'Guardar' }}
+      </button>
+    </footer>
+  </div>
+</div>
