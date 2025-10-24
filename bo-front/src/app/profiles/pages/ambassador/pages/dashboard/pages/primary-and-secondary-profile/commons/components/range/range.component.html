@@ -1,0 +1,95 @@
+<div class="card border-0 rounded bg-white" [class.p-lg-4]="!withoutBox" [class.card]="!withoutBox">
+	<div class="d-flex flex-column justify-content-between align-items-center" *ngIf="!withoutTitle">
+		<h4 class="cl-muted m-0 fs-6 fw-normal">Rango</h4>
+		<span class="text-secondary fs-6 fw-medium">{{ tipo }}</span>
+	</div>
+	<div class="d-flex flex-column gap-3" [class.mt-2]="!withoutTitle" [class.mt-lg-4]="!withoutTitle">
+		<div class="p-3 border w-100 rounded d-flex flex-row justify-content-between align-items-center">
+			<div class="d-flex flex-row gap-2">
+				<div *ngIf="isLoading" class="d-flex justify-content-center align-items-center ps-4">
+					<p-progressSpinner [style]="{ width: '2.2rem', height: '2.2rem' }"></p-progressSpinner>
+				</div>
+				<ng-container *ngIf="!isLoading">
+					<img
+						[src]="
+							'https://s3.us-east-2.amazonaws.com/backoffice.documents/Ranges/' +
+							imageMaxRange +
+							'.png'
+						"
+						alt="Máximo Logro"
+						style="width: 36px; height: 36px"
+					/>
+					<div class="d-flex flex-column">
+						<h5 class="fs-6 text-black fw-medium m-0">Máximo Logro</h5>
+						<span class="cl-muted fs-12 fw-normal">{{
+							tipo === 'Compuesto' ? 'Rango ' + maxRange : 'Rango ' + maxRange
+						}}</span>
+					</div>
+				</ng-container>
+			</div>
+			<mat-icon svgIcon="award" class="text-secondary" *ngIf="!noIndicators"></mat-icon>
+		</div>
+
+		<div class="p-3 border w-100 rounded d-flex flex-row justify-content-between align-items-center">
+			<div class="d-flex flex-row gap-2">
+				<div *ngIf="isLoading" class="d-flex justify-content-center align-items-center ps-4">
+					<p-progressSpinner [style]="{ width: '2.2rem', height: '2.2rem' }"></p-progressSpinner>
+				</div>
+				<ng-container *ngIf="!isLoading">
+					<img
+						[src]="
+							'https://s3.us-east-2.amazonaws.com/backoffice.documents/Ranges/' +
+							imageRange +
+							'.png'
+						"
+						alt="Rango Actual"
+						style="width: 36px; height: 36px"
+					/>
+					<div class="d-flex flex-column">
+						<h5 class="fs-6 text-black fw-medium m-0">Rango Actual</h5>
+						<span class="cl-muted fs-12 fw-normal">{{
+							tipo === 'Compuesto' ? 'Rango ' + range : 'Rango ' + range
+						}}</span>
+					</div>
+				</ng-container>
+			</div>
+			<button class="btn btn-secondary pe-none">Hoy</button>
+		</div>
+
+		<div class="p-3 border w-100 rounded d-flex flex-row justify-content-between align-items-center">
+			<div class="d-flex flex-row gap-2">
+				<div *ngIf="isLoading" class="d-flex justify-content-center align-items-center ps-4">
+					<p-progressSpinner [style]="{ width: '2.2rem', height: '2.2rem' }"></p-progressSpinner>
+				</div>
+				<ng-container *ngIf="!isLoading">
+					<img
+						[src]="
+							'https://s3.us-east-2.amazonaws.com/backoffice.documents/Ranges/' +
+							nextRangeImage +
+							'.png'
+						"
+						alt="Próximo Logro"
+						style="width: 36px; height: 36px"
+					/>
+					<div class="d-flex flex-column">
+						<h5 class="fs-6 text-black fw-medium m-0">Próximo Logro</h5>
+						<span class="cl-muted fs-12 fw-normal">{{
+							tipo === 'Compuesto' ? 'Rango ' + nextRange : 'Rango ' + nextRange
+						}}</span>
+					</div>
+				</ng-container>
+			</div>
+
+			<div class="percentage-icon-container" *ngIf="averagePercentage !== null && !noIndicators">
+				<app-progress-icon
+					[percentage]="averagePercentage"
+					style="width: 40px; height: 40px"
+				></app-progress-icon>
+			</div>
+
+			<!--  <div class="percentage-icon-container" *ngIf="averagePercentage !== null && !noIndicators">
+        <app-progress-icon [percentage]="averagePercentage" style="width: 40px; height: 40px;"></app-progress-icon>
+      </div> -->
+		</div>
+	</div>
+</div>

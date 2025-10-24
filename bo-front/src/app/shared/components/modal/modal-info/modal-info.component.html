@@ -1,0 +1,17 @@
+<div class="modal-info">
+    <div
+        class="icon-container"
+        [style.--bg-color]="getIconData().bgColor"
+        [style.--border-color]="getIconData().borderColor"
+    >
+        <i
+            [class]="getIconData().name"
+            [style.color]="'rgb(' + getIconData().color + ')'"
+        ></i>
+    </div>
+
+    <div>
+        <h2 class="title">{{ data.title }}</h2>
+        <p class="description" [innerHTML]="data.message"></p>
+    </div>
+</div>

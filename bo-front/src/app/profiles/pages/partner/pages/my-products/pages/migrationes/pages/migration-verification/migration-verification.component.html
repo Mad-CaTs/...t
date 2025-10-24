@@ -1,0 +1,384 @@
+<div class="p-4 card px-3 px-md-4 card-border-none">
+	<app-navigation
+		[data]="tabs"
+		[selected]="currentTab"
+		[useNewDesign]="true"
+		(changeSelected)="setTab($event)"
+	></app-navigation>
+
+	<div *ngIf="isLoading" class="d-flex justify-content-center align-items-center" style="min-height: 100vh">
+		<div class="d-flex flex-column align-items-center">
+			<div class="spinner-border text-orange" role="status" style="width: 5rem; height: 5rem"></div>
+		</div>
+	</div>
+	<!-- *ngIf=" !isLoading && pkgDetail &&  migrationDetalle " -->
+
+	<ng-container [formGroup]="form">
+		<div class="d-flex flex-column w-100 gap-4">
+			<div [ngClass]="{ 'd-block': currentTab === currentTab, 'd-none': currentTab !== currentTab }">
+				<div class="row mb-3">
+					<div class="col">
+						<h4>{{ title }}</h4>
+						<p>{{ subtitle }}</p>
+					</div>
+				</div>
+				<div *ngIf="!pkgDetail?.isSpecialFractional">
+					<h4 class="m-0 fs-6 fw-medium text-center">Paquete Seleccionado</h4>
+					<div class="d-flex flex-column gap-4 w-100">
+						<div class="d-flex flex-row justify-content-between w-100">
+							<span class="fs-6">Descripción: </span>
+							<span class="fs-6 fw-medium">{{ deteilMigration?.name }}</span>
+						</div>
+						<div class="d-flex flex-row justify-content-between w-100">
+							<span class="fs-6">Precio Total: </span>
+							<span class="fs-6 fw-medium">$ {{ pkgDetail?.price }}</span>
+						</div>
+						<div class="d-flex flex-row justify-content-between w-100">
+							<span class="fs-6">Inicial: </span>
+							<span class="fs-6 fw-medium">$ {{ pkgDetail?.initialPrice }}</span>
+						</div>
+						<div class="d-flex flex-row justify-content-between w-100">
+							<span class="fs-6">Nro. de cuotas: </span>
+							<span class="fs-6 fw-medium">{{ pkgDetail?.numberQuotas }}</span>
+						</div>
+						<div class="line bg-black opacity-25 w-100"></div>
+						<h4 class="m-0 fs-6 fw-medium">Detalle</h4>
+						<div class="d-flex flex-row justify-content-between w-100">
+							<span class="fs-6"> {{ selectPackageData?.quoteDescription }} </span>
+						</div>
+						<div class="d-flex flex-row w-100 justify-content-between align-items-center">
+							<span>Cuota </span>
+							<span class="text-black">$ {{ selectPackageData?.quoteUsd }}</span>
+						</div>
+						<div class="line bg-black opacity-25 w-100"></div>
+						<div class="p-3 d-flex flex-row justify-content-between w-100">
+							<span class="fs-6">Total: </span>
+							<span class="fs-6 fw-medium">$ {{ getTotalAmountPaid }}</span>
+						</div>
+					</div>
+
+					<h4 class="m-0 fs-6 fw-medium">Seleccione un medio de pago</h4>
+					<div class="p-3 d-flex flex-wrap gap-4 align-items-center">
+						<button
+							*ngFor="let payment of paymentTypeListaFiltered"
+							class="d-flex flex-row gap-2 align-items-center px-4 py-1 rounded"
+							type="button"
+							style="height: 55px"
+							[disabled]="diablePaymentMethods"
+							[class.border]="methodSelected !== 'bcp'"
+							[style.background-color]="methodSelected === 'bcp' ? '#EBF3FF' : 'transparent'"
+							(click)="onMedioPago(payment)"
+						>
+							<img
+								[src]="payment.pathPicture"
+								style="width: 92px"
+								alt="Pay Method"
+								(click)="(onPaypal)"
+							/>
+						</button>
+					</div>
+				</div>
+
+				<div *ngIf="pkgDetail?.isSpecialFractional" class="container mt-4">
+					<div class="row">
+						<div class="col-md-8">
+							<div>
+								<ng-container *ngIf="!showPaymentMethods; else paymentMethods">
+									<p-table [value]="[packageData?.packageDetail]" class="mt-3">
+										<ng-template pTemplate="header">
+											<tr>
+												<th class="text-center">Descripción</th>
+												<th class="text-center">Duración</th>
+												<th class="text-center">Precio Total</th>
+												<th class="text-center">Inicial</th>
+												<th class="text-center">N° de cuotas</th>
+											</tr>
+										</ng-template>
+										<ng-template pTemplate="body" let-paquete>
+											<tr>
+												<td class="text-center">{{ packageData?.description }}</td>
+												<td class="text-center">
+													{{ pkgDetail?.monthsDuration }} meses
+												</td>
+												<td class="text-center">${{ pkgDetail?.price }}</td>
+												<td class="text-center">${{ pkgDetail?.initialPrice }}</td>
+												<td class="text-center">{{ pkgDetail?.numberQuotas }}</td>
+											</tr>
+										</ng-template>
+									</p-table>
+
+									<hr />
+									<div class="mt-3">
+										<h6>¿Cómo lo quiere pagar?</h6>
+										<p-messages severity="info">
+											<ng-template pTemplate>
+												<mat-icon fontIcon="visibility"></mat-icon>
+												<div class="ms-2 cl-gray-700">
+													El fraccionamiento especial aplica solo para membresía
+													VITALICIA y VITALICIA PREMIUM
+												</div>
+											</ng-template>
+										</p-messages>
+
+										<div class="my-4" *ngIf="!showPaymentMethods; else voucherTable">
+											<app-radios
+												label=""
+												[options]="payTypeList"
+												class="w-100"
+												[form]="form"
+												verticalLayout="true"
+												(changeSelection)="onChangeSelectionPayType($event)"
+												controlName="payType"
+											>
+											</app-radios>
+										</div>
+
+										<div class="row">
+											<div class="col-12 col-md-5 mb-3 mb-md-0">
+												<app-select
+													class="w-100"
+													[label]="
+														'¿Cuántas cuotas? (Máx. ' +
+														pkgDetail.numberInitialQuote +
+														')'
+													"
+													placeholder="Selecciona una opción"
+													[form]="form"
+													[options]="quotesOptions"
+													(onChangeSelection)="changeSelectionNumberQuotes($event)"
+													controlName="numberPaymentInitials"
+												></app-select>
+											</div>
+											<div class="col-12 col-md-7">
+												<label class="fs-6 mb-2 cl-muted">Monto de las cuotas</label>
+												<div class="row">
+													<div class="col">
+														<p-inputNumber
+															[showButtons]="true"
+															inputId="stacked"
+															mode="currency"
+															[formControl]="form.get('amount1')"
+															currencyDisplay="symbol"
+															currency="USD"
+															locale="en-US"
+														/>
+													</div>
+													<div class="col g-0">
+														<p-inputNumber
+															[showButtons]="true"
+															inputId="stacked2"
+															mode="currency"
+															[formControl]="form.get('amount2')"
+															currency="USD"
+															locale="en-US"
+														/>
+													</div>
+													<div class="col">
+														<p-inputNumber
+															[showButtons]="true"
+															inputId="stacked3"
+															mode="currency"
+															[formControl]="form.get('amount3')"
+															currency="USD"
+															locale="en-US"
+														/>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</ng-container>
+								<ng-template #paymentMethods>
+									<h4 class="m-0 fs-6 fw-medium text-center">
+										Seleccione el método de pago
+									</h4>
+									<div class="p-3 row row-cols-1 row-cols-md-2 g-3">
+										<div *ngFor="let payment of paymentTypeListaFiltered" class="col">
+											<label
+												class="form-check-label d-flex align-items-center justify-content-between bg-white p-3 w-100 rounded-3 shadow-sm"
+												[ngClass]="{
+													'border border-primary':
+														form.get('payType')?.value === payment.value
+												}"
+												style="
+													cursor: pointer;
+													transition: box-shadow 0.3s;
+													box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+													min-height: 50px;
+												"
+											>
+												<app-radios
+													class="me-3"
+													[form]="form"
+													controlName="payType1"
+													[verticalLayout]="true"
+													[horizontalLayout]="true"
+													[options]="[{ value: payment.idPaymentType }]"
+													(changeSelection)="onMedioPago(payment)"
+												>
+												</app-radios>
+												<div class="d-flex flex-column align-items-center">
+													<img
+														[src]="payment.pathPicture"
+														class="img-fluid mb-2"
+														style="width: 92px"
+														alt="Pay Method"
+													/>
+													<span class="fw-bold">{{ payment.name }}</span>
+												</div>
+											</label>
+										</div>
+									</div>
+								</ng-template>
+							</div>
+						</div>
+
+						<div *ngIf="!isLoading && migrationDetalle" class="col-md-4">
+							<div class="card p-3">
+								<h5 class="mb-3">Paquete</h5>
+								<p class="fw-semibold text-primary fs-4 mb-0">
+									<strong>{{ migrationDetalle?.packageName }}</strong>
+								</p>
+
+								<!--               <p class="text-primary"><strong>{{ migrationDetalle?.packageName }}</strong></p>
+ -->
+								<div class="d-flex flex-row w-100 justify-content-between align-items-center">
+									<span>Duración del paquete </span>
+									<span class="text-black">
+										{{ migrationDetalle?.durationMonths }}
+										{{ migrationDetalle?.durationMonths > 1 ? 'meses' : 'mes' }}
+									</span>
+								</div>
+								<div class="d-flex flex-row w-100 justify-content-between align-items-center">
+									<span> Monto restante de la cuota inicial: </span>
+
+									<span class="text-black">$ {{ migrationDetalle?.initialAmountNew }}</span>
+								</div>
+
+								<hr />
+								<h6>Detalle del pago</h6>
+
+								<div class="d-flex flex-row w-100 justify-content-between align-items-center">
+									<span>Cuota</span>
+									<span class="text-black">$ {{ migrationDetalle?.quoteUsd }}</span>
+								</div>
+
+								<div class="d-flex flex-row w-100 justify-content-between align-items-center">
+									<span>Pago con derecho </span>
+									<span class="text-black">$ {{ migrationDetalle?.migrationPrice }}</span>
+								</div>
+
+								<div class="d-flex flex-row w-100 justify-content-between align-items-center">
+									<span> Pago inicial: </span>
+									<span class="text-black">$ {{ remainingInitialAmount }}</span>
+								</div>
+
+								<div class="d-flex flex-row w-100 justify-content-between align-items-center">
+									<span>Cuotas a pagar</span>
+									<input
+										type="number"
+										id="tentacles"
+										name="tentacles"
+										formControlName="totalNumberPaymentPaid"
+										[min]="migrationDetalle?.initialAmountNew === 0 ? 1 : 0"
+										[max]="migrationDetalle?.durationMonths"
+									/>
+									<span class="text-black">$ {{ amountPaid }}</span>
+								</div>
+
+								<div class="d-flex flex-row w-100 justify-content-between align-items-center">
+									<span>Descuento </span>
+									<span class="text-black">$ {{ migrationDetalle?.discount }}</span>
+								</div>
+								<hr />
+								<div
+									class="fw-medium d-flex flex-row w-100 justify-content-between align-items-center"
+								>
+									<span>Total</span>
+									<span class="text-black">$ {{ getTotalAmountPaid }}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="w-100 overflow-x-auto">
+			<div *ngIf="!pkgDetail?.isSpecialFractional || showPaymentMethods">
+				<p-table [value]="dataTableToShow" [tableStyle]="{ 'min-width': '50rem' }">
+					<ng-template pTemplate="header" #voucherTable>
+						<tr>
+							<th class="text-center">Banco</th>
+							<th class="text-center">Operación</th>
+							<th class="text-center">Código</th>
+							<th class="text-center">Nota</th>
+							<th class="text-center">Archivo</th>
+							<th class="text-center">Moneda</th>
+							<th class="text-center">Comisión</th>
+							<th class="text-center">Monto</th>
+							<th class="text-center">Acciones</th>
+						</tr>
+					</ng-template>
+					<ng-template pTemplate="body" let-voucher let-i="rowIndex">
+						<tr>
+							<td class="debug text-center">
+								{{ voucher.paymentMethod === 'wallet' ? 'Wallet' : voucher.bankName }}
+							</td>
+							<td class="debug text-center">{{ voucher.operationDescription || '-' }}</td>
+							<td class="text-center">{{ voucher.operationNumber || '-' }}</td>
+							<td class="debug text-center">{{ voucher.note }}</td>
+							<td class="debug text-center" *ngIf="voucher.img">
+								<span *ngIf="voucher.img === '-'">{{ voucher.img }}</span>
+								<span *ngIf="voucher.img !== '-'">
+									{{ voucher.img.name }}.{{ voucher.img.extension }} ({{
+										voucher.img.size.toFixed(2)
+									}}
+									MB)</span
+								>
+							</td>
+							<td class="debug text-center">{{ voucher.currencyDescription }}</td>
+							<td class="debug text-center">{{ voucher.comision }}</td>
+							<td class="debug text-center">{{ voucher.totalAmount }}</td>
+							<td class="debug text-center">
+								<div>
+									<mat-icon
+										class="cursor-pointer me-2 text-secondary"
+										fontIcon="edit"
+										(click)="editPayItem(i, voucher)"
+									></mat-icon>
+									<mat-icon
+										class="cursor-pointer text-secondary"
+										fontIcon="delete"
+										(click)="deletePayItem(i, voucher)"
+									></mat-icon>
+								</div>
+							</td>
+						</tr>
+					</ng-template>
+				</p-table>
+			</div>
+		</div>
+
+		<div class="d-flex flex-column flex-md-row justify-content-center p-4 gap-2">
+			<button class="btn btn-outline-secondary custom-button" type="button" (click)="goBack()">
+				Atrás
+			</button>
+			<button
+				class="btn btn-secondary"
+				type="button"
+				[disabled]="isButtonLoading"
+				(click)="onNextClick()"
+			>
+				<span
+					*ngIf="isButtonLoading"
+					class="spinner-border spinner-border-sm"
+					role="status"
+					aria-hidden="true"
+				>
+				</span>
+				{{ showPaymentMethods || !pkgDetail?.isSpecialFractional ? 'Registrar' : 'Siguiente' }}
+			</button>
+		</div>
+	</ng-container>
+	<!-- fileInput -->
+</div>

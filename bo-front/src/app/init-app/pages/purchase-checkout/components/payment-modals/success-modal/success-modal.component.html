@@ -1,0 +1,18 @@
+<!-- Modal de Éxito Reutilizable -->
+<div class="modal-overlay success-overlay" *ngIf="isOpen" (click)="onClose()">
+  <div class="modal-content success-modal" (click)="$event.stopPropagation()">
+    <div class="success-header">
+      <button class="close-button" (click)="onClose()">×</button>
+    </div>
+    
+    <div class="success-content">
+      <div class="success-icon">
+        <div class="check-circle" [style.background-color]="iconColor">{{ icon }}</div>
+      </div>
+      <h5>{{ title }}</h5>
+      <p class="success-message">
+        {{ message }}
+      </p>
+    </div>
+  </div>
+</div>

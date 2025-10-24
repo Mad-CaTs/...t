@@ -1,0 +1,22 @@
+<div class="card text-center shadow-sm p-3 rounded" style="width: 14rem">
+	<div class="d-flex justify-content-end">
+		<a href="#" class="text-orange fw-semibold small text-decoration-none">{{ helpText }}</a>
+	</div>
+
+	<div class="my-3">
+		<i class="bi" [ngClass]="icon" style="font-size: 2rem"></i>
+	</div>
+
+	<h5 class="fw-bold">{{ title }}</h5>
+	<p class="text-muted mb-4">{{ description }}</p>
+	<div class="d-flex justify-content-center mt-3" style="flex-shrink: 0">
+		<button
+			class="btn btn-secondary d-flex align-items-center"
+			pButton
+			type="button"
+			(click)="onViewClick()"
+		>
+			<mat-icon class="text-white me-2" aria-hidden="true">visibility</mat-icon> Ver premio
+		</button>
+	</div>
+</div>

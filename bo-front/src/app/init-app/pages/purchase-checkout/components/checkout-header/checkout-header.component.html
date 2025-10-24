@@ -1,0 +1,37 @@
+<header class="topbar">
+  <div class="topbar__left">
+    <a routerLink="/home" class="brand">
+      <img src="assets/images/Inclub.svg" alt="Inclub" />
+    </a>
+  </div>
+
+  <div class="topbar__right">
+    <div class="user">
+      <button
+        class="user__trigger"
+        type="button"
+        aria-label="Abrir menú de usuario"
+        [attr.aria-expanded]="showMenu"
+        (click)="toggleMenu($event)"
+      >
+        <div class="user__avatar">{{ initials }}</div>
+        <div class="user__meta">
+          <div class="user__name">{{ userName }}</div>
+          <div class="user__doc" *ngIf="userDoc">
+            <ng-container *ngIf="isGuest; else memberDoc">Doc: {{ userDoc }}</ng-container>
+            <ng-template #memberDoc>{{ userDoc }}</ng-template>
+          </div>
+        </div>
+        <span class="user__chevron" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24">
+            <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" />
+          </svg>
+        </span>
+      </button>
+
+      <div class="user__menu" *ngIf="showMenu">
+        <button class="menu__item" (click)="onLogoutClick()">Cerrar sesión</button>
+      </div>
+    </div>
+  </div>
+</header>

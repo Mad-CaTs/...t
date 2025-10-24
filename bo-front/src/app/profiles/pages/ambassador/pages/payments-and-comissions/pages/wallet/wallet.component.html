@@ -1,0 +1,163 @@
+<div class="d-flex flex-column gap-4 card p-lg-4 border-0">
+  <h1 class="m-0 fs-4 text-black fw-medium">Pagos y comisiones</h1>
+  <!--Global Navigation-->
+  <app-navigation
+    [data]="navigation"
+    [selected]="currentTab"
+    (changeSelected)="onNavigateWallet($event)"
+    class="navigation"
+  ></app-navigation>
+  <!--Detail-->
+  <div>
+    <div
+      *ngIf="isLoading"
+      class="d-flex justify-content-center align-items-center"
+      style="min-height: 150px"
+    >
+      <p-progressSpinner
+        [style]="{ width: '2rem', height: '2rem' }"
+        strokeWidth="3"
+        fill="var(--surface-ground)"
+        animationDuration=".7s"
+      ></p-progressSpinner>
+      <span class="ms-2">Actualizando...</span>
+    </div>
+    <div *ngIf="!isLoading" class="d-flex flex-column gap-3" style="min-height: 150px">
+      <!-- Balances Section -->
+      <div class="d-flex flex-row justify-content-between gap-4 w-100" style="flex-wrap: wrap;">
+        <!-- Al día de hoy tienes -->
+        <div class="flex-fill" style="flex: 1 1 50%; min-width: 0; max-width: 50%;">
+          <div class="border rounded p-3" style="height: 100%;">
+            <div class="d-flex flex-column gap-2">
+              <span class="fw-medium text-black fs-5">Al día de hoy tienes:</span>
+              <div class="d-flex justify-content-between gap-4">
+                <div class="d-flex flex-column align-items-center" style="margin-left: 40px;">
+                  <div class="d-flex flex-column gap-1" style="margin-left: 50px; padding: 5px 10px;">
+                    <div style="height: 8px;"></div> <!-- Spacer to align vertically -->
+                    <div class="d-flex align-items-center gap-1">
+                      <i class="pi pi-wallet" style="color: #19809f;"></i>
+                      <span class="fw-small" style="color: #19809f; margin-top: 5px;">Saldo disponible</span>
+                    </div>
+                    <div style="height: 8px;"></div> <!-- Spacer to align vertically -->
+                  </div>
+                  <span class="fw-medium fs-4 mt-1" style="margin-left: 40px;" [ngStyle]="{'color': calculateBalances().availableBalance < 0 ? '#dc3545' : '#333333'}">$ {{ calculateBalances().availableBalance.toFixed(2) }}</span>
+                </div>
+                <div class="d-flex flex-column align-items-center" style="margin-right: 50px;">
+                  <div class="d-flex flex-column gap-1" style="margin-right: 60px; padding: 5px 10px;">
+                    <div style="height: 8px;"></div> <!-- Spacer to align vertically -->
+                    <div class="d-flex align-items-center gap-1">
+                      <i class="pi pi-wallet" style="color: #19809f;"></i>
+                      <span class="fw-small" style="color: #19809f; margin-top: 5px;">Saldo contable</span>
+                    </div>
+                    <div style="height: 8px;"></div> <!-- Spacer to align vertically -->
+                  </div>
+                  <span class="fw-medium fs-4 mt-1" style="margin-right: 50px;" [ngStyle]="{'color': calculateBalances().accountingBalance < 0 ? '#dc3545' : '#333333'}">$ {{ calculateBalances().accountingBalance.toFixed(2) }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Resumen -->
+        <div class="flex-fill" style="flex: 1 1 50%; min-width: 0; max-width: 50%;">
+          <div class="border rounded p-3" style="height: 100%;">
+            <div class="d-flex flex-column gap-2">
+              <span class="fw-medium text-black fs-5">Resumen:</span>
+              <div class="d-flex justify-content-between gap-4">
+                <div class="d-flex flex-column align-items-center" style="margin-left: 40px;">
+                  <div class="d-flex flex-column gap-1" style="margin-left: 50px; padding: 5px 10px;">
+                    <div class="d-flex align-items-center gap-1">
+                      <i class="pi pi-wallet" style="color: #19809f;"></i>
+                      <span class="fw-small" style="color: #19809f;">Saldo disponible</span>
+                    </div>
+                    <span class="fw-small" style="color: #19809f; margin-left: 24px;">marcas exclusivas</span>
+                  </div>
+                  <span class="fw-medium text-black fs-4 mt-1" style="margin-left: 40px;">$ {{ dataWallet?.availableBrandExclusive || 0 | number : '1.2-2' }}</span>
+                </div>
+                <div class="d-flex flex-column align-items-center" style="margin-right: 40px;">
+                  <div class="d-flex flex-column gap-1" style="margin-right: 60px; padding: 5px 10px;">
+                    <div class="d-flex align-items-center gap-1">
+                      <i class="pi pi-wallet" style="color: #19809f;"></i>
+                      <span class="fw-small" style="color: #19809f;">Saldo contable</span>
+                    </div>
+                    <span class="fw-small" style="color: #19809f; margin-left: 24px;">marcas exclusivas</span>
+                  </div>
+                  <span class="fw-medium text-black fs-4 mt-1" style="margin-right: 40px;">$ {{ dataWallet?.accountingBrandExclusive || 0 | number : '1.2-2' }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Note -->
+      <div class="alert alert-info d-flex flex-row gap-2 align-items-center mb-0 w-100" role="alert">
+        <mat-icon fontIcon="info"></mat-icon>
+        <span class="fw-normal">Nota: Los montos están en dólares.</span>
+      </div>
+
+      <!-- Footer with Buttons -->
+      <div
+        class="d-flex flex-row justify-content-between align-items-center w-100"
+        style="max-width: 100%"
+      >
+        <div class="mb-3 mb-md-0"></div>
+        <div
+          class="d-flex gap-3 justify-content-end align-items-center mb-3 mb-md-0"
+          style="margin-right: 10px;"
+        >
+          <button
+            [disabled]="disabledUser"
+            type="button"
+            (click)="onUpdateBalance()"
+            class="d-flex align-items-center text-muted"
+            style="background: none; border: none; padding: 0; font-size: 1rem;"
+          >
+            <span class="me-1" style="font-size: 1.2rem;">↻</span>Actualizar
+          </button>
+          <span class="text-muted" style="font-size: 1rem;">|</span>
+          <button
+            [disabled]="disabledUser"
+            type="button"
+            (click)="onReportProblem()"
+            class="d-flex align-items-center text-muted"
+            style="background: none; border: none; padding: 0; font-size: 1rem;"
+          >
+            <span class="me-1" style="font-size: 1.2rem;">⚠</span>Reportar un problema
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--Local Navigation-->
+  <app-navigation
+    [data]="walletNavigation"
+    [selected]="currentWalletNavigation"
+    (changeSelected)="currentWalletNavigation = $event"
+    [isDisabled]="isDisabled"
+  ></app-navigation>
+  <!--All submodules-->
+  <app-wallet-transactions
+    *ngIf="currentWalletNavigation === 1"
+    [IdWallet]="IdWallet"
+    [walletBlock]="walletBlock"
+    (transactionData)="updateTransactionData($event)"
+  ></app-wallet-transactions>
+  <app-wallet-transfer
+    *ngIf="currentWalletNavigation === 2"
+    [walletBlock]="walletBlock"
+    [transferData]="preloadedTransferData"
+  ></app-wallet-transfer>
+  <app-wallet-history-transfer
+    *ngIf="currentWalletNavigation === 3"
+    [walletBlock]="walletBlock"
+  ></app-wallet-history-transfer>
+  <app-wallet-history-transfer-bank
+    *ngIf="currentWalletNavigation === 4"
+    [walletBlock]="walletBlock"
+  ></app-wallet-history-transfer-bank>
+  <app-wallet-transfer-exclusive-brands
+    *ngIf="currentWalletNavigation === 5"
+    [walletBlock]="walletBlock"
+  ></app-wallet-transfer-exclusive-brands>
+</div>

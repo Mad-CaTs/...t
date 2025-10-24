@@ -1,0 +1,49 @@
+<section class="left-wrap">
+  <p class="step">Paso 2 de 3</p>
+  <h2 class="title">Elige una opción de compra</h2>
+
+  <!-- Opción REEMBOLSABLE -->
+  <button
+    type="button"
+    class="option"
+    [class.active]="selection.refundable"
+    (click)="pick(true)"
+  >
+    <div class="option__top">
+      <div class="check" [class.on]="selection.refundable"></div>
+      <div class="label">Compra reembolsable</div>
+      <div class="fee">S/ {{ feePerTicket | number:'1.2-2' }} por entrada</div>
+    </div>
+
+    <div class="option__info">
+      <div class="pill">
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+          <path d="M12 2l3 7 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z" fill="none" stroke="currentColor" stroke-width="2"/>
+        </svg>
+        Devolución al 100% de tu compra
+      </div>
+      <a class="link">Términos y condiciones</a>
+    </div>
+
+    <ul class="option__list">
+      <li>Enfermedad, accidente, cirugía.</li>
+      <li>Inconvenientes con transporte público o vehículo.</li>
+      <li>Condiciones médicas preexistentes.</li>
+      <li>Clima adverso.</li>
+      <li>Emergencia en el hogar.</li>
+    </ul>
+  </button>
+
+  <!-- Opción NO REEMBOLSABLE -->
+  <button
+    type="button"
+    class="option ghost"
+    [class.active]="!selection.refundable"
+    (click)="pick(false)"
+  >
+    <div class="option__top">
+      <div class="check" [class.on]="!selection.refundable"></div>
+      <div class="label">Compra no reembolsable</div>
+    </div>
+  </button>
+</section>

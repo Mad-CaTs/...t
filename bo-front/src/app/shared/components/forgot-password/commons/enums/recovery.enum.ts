@@ -1,0 +1,18 @@
+export enum RecoveryMethod {
+	USER = 'USER',
+	MULTICODE = 'MULTICODE'
+}
+
+export enum TokenGenerationStatus {
+	ALLOWED = 'ALLOWED',
+	ERROR_TOO_SOON = 'ERROR_TOO_SOON',
+	ERROR_COOLDOWN_EXCEEDED = 'ERROR_COOLDOWN_EXCEEDED'
+}
+
+export enum AttemptResult {
+	SUCCESS = 'SUCCESS',
+	FAILURE = 'FAILURE',
+	EXPIRED = 'EXPIRED',
+	TOO_MANY_ATTEMPTS = 'TOO_MANY_ATTEMPTS',
+	ALREADY_USED = 'ALREADY_USED'
+}

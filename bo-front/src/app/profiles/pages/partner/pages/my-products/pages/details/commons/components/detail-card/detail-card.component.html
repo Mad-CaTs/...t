@@ -1,0 +1,19 @@
+<div class="card w-100 h-100 d-flex flex-column">
+  <div class="card-body d-flex flex-column">
+    <h4 class="m-0 fs-6 fw-bold">{{ title }}</h4>
+    <span class="fs-6 text-muted fw-normal">{{ subtitle }}</span>
+    <div class="d-flex flex-row flex-wrap justify-content-center gap-3 mt-4">
+      <div *ngFor="let item of items" class="d-flex flex-column align-items-center">
+        <div class="d-flex flex-row gap-1 align-items-start">
+          <ng-container *ngIf="item.icon">
+            <i [class]="item.icon" style="font-size: 24px; width: 24px; height: 24px;"></i>
+          </ng-container>
+          <span class="text-black fs-4 fw-medium">
+            {{ item.isDate ? (item.value | date: 'dd/MM/yyyy') : item.value }}
+          </span>
+        </div>
+        <span class="text-primary review-state__helper fw-medium text-center">{{ item.label }}</span>
+      </div>
+    </div>
+  </div>
+</div>

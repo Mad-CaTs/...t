@@ -1,0 +1,19 @@
+<label [for]="name" class="fs-6 mb-2 cl-muted" *ngIf="label">{{ label }}</label>
+<p-dropdown [placeholder]="placeholder" [options]="options" [formControl]="form.get(this.controlName)"
+	optionLabel="content" optionValue="value" [showClear]="true" [filter]="filter" [appendTo]="appendToBody ? 'body' : ''"
+	(onChange)="changeSelection($event)" [style]="{ width: width }">
+	<ng-template *ngIf="showImg" pTemplate="selectedItem">
+		<div class="d-flex align-items-center" *ngIf="selectedItem">
+			<img class="me-2" *ngIf="selectedItem.icon" [src]="selectedItem.icon" style="width: 18px" />
+			<div>{{ selectedItem.content }}</div>
+		</div>
+	</ng-template>
+	<ng-template *ngIf="showImg" let-item pTemplate="item">
+		<div class="d-flex align-items-center">
+			<img class="me-2" *ngIf="item.icon" [src]="item.icon" style="width: 18px" />
+			<div>{{ item.content }}</div>
+		</div>
+	</ng-template>
+</p-dropdown>
+
+<app-control-error [form]="form" [controlName]="controlName"></app-control-error>

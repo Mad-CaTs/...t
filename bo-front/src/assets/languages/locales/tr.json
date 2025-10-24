@@ -1,0 +1,564 @@
+{
+	"header": {
+		"slogan": "Yatırım Kulübü",
+		"menuItems": [
+			{
+				"label": "Başlangıç"
+			},
+			{
+				"label": "Ürünler",
+				"subItems": [
+					{
+						"label": "Emlak"
+					},
+					{
+						"label": "Teknolojik"
+					},
+					{
+						"label": "Diğer projeler"
+					}
+				]
+			},
+			{
+				"label": "Şans"
+			},
+			{
+				"label": "Toplum"
+			},
+			{
+				"label": "Güncellemeler"
+			},
+			{
+				"label": "Takvim"
+			},
+			{
+				"label": "Olaylar"
+			}
+		],
+		"languageTitle": "Diller",
+		"languageInputPlaceholder": "Dili bulun",
+		"languageInputLabel": "Arayıcı",
+		"languages": [
+			"Arap ",
+			"Almanca ",
+			"Bengalce ",
+			"Bulgarca ",
+			"Çek ",
+			"Çin ",
+			"İspanyol ",
+			"Fransızca ",
+			"Portekizce ",
+			"İngilizce ",
+			"Yunan ",
+			"Guarani ",
+			"Hintçe ",
+			"Macarca ",
+			"Endonezya dili ",
+			"İtalyan ",
+			"Japonca ",
+			"Koreli ",
+			"Flemenkçe ",
+			"Lehçe ",
+			"Rusça ",
+			"Telugu dili ",
+			"Tay dili ",
+			"Tagalogca ",
+			"Türkçe ",
+			"Ukrayna ",
+			"Vietnam ",
+			"Romen "
+		]
+	},
+	"footer": {
+		"contactInformation": {
+			"phone": "(01) 618 5118",
+			"email": "example@inclub.com.pe"
+		},
+		"sections": [
+			"Çözümler",
+			"InResorts Ribera del Rio",
+			"Resorts La Joya'da",
+			"KeOla",
+			"İkinci el satışlar",
+			"Biz",
+			"Blog",
+			"Sık sorulan sorular",
+			"Müşteri erişimi",
+			"Sürdürülebilirlik",
+			"Temas etmek",
+			"Yasal",
+			"Gizlilik politikaları",
+			"Şartlar ve koşullar",
+			"Şikayet kitabı"
+		]
+	},
+	"home": {
+		"carousel": {
+			"carouselEntry": "KATILMAYA HAZIRIZ",
+			"carouselTitle": "EVREN INCLUB?",
+			"carouselText": "Herkes hoş karşılanır. ",
+			"carouselBtn1": "Şimdi Katıl!",
+			"carouselBtn2": "Erişim"
+		},
+		"keola": {
+			"cta": "Puan kazanmak için “UNETEKEOLA” kodunu kullanın.",
+			"btn": "Google Oyun",
+			"titles": ["Keola uygulamasını indirin", "En yeni", "Davet et ve kazan"]
+		},
+		"lastUpdates": {
+			"title": "En son güncellemeler",
+			"description": "Başarılı olmanızı ve işinizi büyütmenizi, bildiğimiz başarılı öncü olmanızı istiyoruz! ",
+			"button": "Güncelleme!"
+		},
+		"howWorks": {
+			"title": "O nasıl çalışır",
+			"subtitle": "3 Basit Adımda Başlayın",
+			"steps": [
+				{
+					"title": "Üye olmak",
+					"description": "Sponsorunuzu girin ve bilgilerinizi tamamlayıp şifrenizi oluşturun."
+				},
+				{
+					"title": "Ürünleri Keşfedin",
+					"description": "Inclub portalımızdaki ürünleri keşfedin. "
+				},
+				{
+					"title": "Kazanç",
+					"description": "Hazır! "
+				}
+			]
+		},
+		"cards": [
+			{
+				"title": "İş çantası",
+				"description": "Gayrimenkullerimizin, teknolojik projelerimizin ve çok daha fazlasının bir parçası olun.",
+				"button": "Daha fazlasını keşfedin"
+			},
+			{
+				"title": "Toplum",
+				"description": "Büyük kazanç potansiyeline sahip harika ürünlere dalın.",
+				"button": "Daha fazlasını keşfedin"
+			},
+			{
+				"title": "Şans",
+				"description": "Eğer çalışmaya istekliyseniz InClub sizi gitmek istediğiniz yere götürecek araçtır.",
+				"button": "Daha fazlasını keşfedin"
+			}
+		],
+		"testimonialsSection": {
+			"cardPrefix": "Den beri üye",
+			"heading": "Hayatınızın iş fırsatına bağlanmak için tek ihtiyacınız olan şey elinizde bir telefon.",
+			"button": "Şimdi üye Ol",
+			"testimonials": [
+				{
+					"text": "Çok çaba harcarsan ve özenle çalışırsan, Inclub hayatını değiştirecek ve tüm hayallerini gerçekleştirecek.",
+					"name": "Elias Vargas",
+					"since": "2020"
+				},
+				{
+					"text": "Mutlu olmak için bu dünyada sadece 3 şeye ihtiyacın var: Allah'a inanç, kendine inanç ve hayallerine inanç.",
+					"name": "Paul Villacorta",
+					"since": "2020"
+				},
+				{
+					"text": "Fakir olmak kötü değil, kötü olan hiç denememiş olmaktır. Fakir ve hayalsiz ölmek için hiçbir zaman geç değildir. Başlamak için asla geç değildir.",
+					"name": "Mery Livias",
+					"since": "2021"
+				},
+				{
+					"text": "En iyi konuşmayı hayatınla yapabilirsin, sözlerinle değil.",
+					"name": "Abel Meza",
+					"since": "2020"
+				}
+			]
+		}
+	},
+	"products": {
+		"navigation": ["Emlak", "Teknoloji", "Sonraki projeler"],
+		"items": [
+			{
+				"title": "Inresorts Ribera del Rio",
+				"description": "Hotel Club Resort'umuzun avantajlarından yararlanın ve üye olun. ",
+				"buttonText": "Daha fazla bilgi"
+			},
+			{
+				"title": "Resorts La Joya",
+				"description": "Aile eğlencesi, doğa ve yaşam boyu kazanç. ",
+				"buttonText": "Daha fazla bilgi"
+			},
+			{
+				"title": "Keola Ağları",
+				"description": "Davet edin ve kazanın, uygulamanın avantajlarını keşfedin. ",
+				"buttonText": "Daha fazla bilgi"
+			}
+		],
+		"nextProjects": {
+			"title": "Biz çalışıyoruz",
+			"description": "Şu anda Inclub ekibi gelecek projeleri göstermek için yaratıcı süreçtedir. ",
+			"buttonText": "Güncelleme!"
+		}
+	},
+	"productDetail": {
+		"aboutUsTitle": "Hakkımızda",
+		"aboutBtnText": "daha fazla bilmek istiyorum",
+		"products": [
+			{
+				"aboutTitle": "nehir kenarı",
+				"aboutDescription": "Cieneguilla'da, Lima'ya 45 dakika uzaklıkta bulunan bir Club Resort'uz. ",
+				"perkPreTitle": "Avantajlarımızdan yararlanın",
+				"perktitle": "Unutulmaz deneyimler",
+				"perkDescription": "Eşsiz bir kaçamak ve macera deneyimi arayanlar için mükemmel bir dinlenme yeri. ",
+				"cards": [
+					{
+						"title": "Oteller",
+						"description": "Ribera del Río'nun her odası sevdiklerinizle paylaşmak üzere tasarlanmıştır; "
+					},
+					{
+						"title": "Deneyimler",
+						"description": "Sizi kesinlikle büyüleyecek çok çeşitli eğlence ve eğlence deneyimleri sunuyoruz. "
+					},
+					{
+						"title": "Restoranlar",
+						"description": "Kendinizi şımartmak her zaman iyidir ve bunun için 'Ribera del Río Restoranımız' sizleri çeşitli tipik ulusal, bölgesel ve Creole yemeklerinin tadını çıkarmaya davet ediyor."
+					}
+				]
+			},
+			{
+				"aboutTitle": "Mücevher",
+				"aboutDescription": "Arequipa'da, Arequipa şehrine sadece 45 dakika uzaklıkta bulunan bir Club Resort'uz. ",
+				"perkPreTitle": "Avantajlarımızdan yararlanın",
+				"perktitle": "Unutulmaz deneyimler",
+				"perkDescription": "Eşsiz bir kaçamak ve macera deneyimi arayanlar için mükemmel bir dinlenme yeri. ",
+				"cards": [
+					{
+						"title": "Yüzme havuzları",
+						"description": "La Joya'daki her havuz sevdiklerinizle paylaşmak için tasarlandı; "
+					},
+					{
+						"title": "Deneyimler",
+						"description": "Sizi kesinlikle büyüleyecek çok çeşitli eğlence ve eğlence deneyimleri sunuyoruz. "
+					},
+					{
+						"title": "Tatil Köyü Parkı",
+						"description": "Renkli kaydıraklarla güzel su parkı; "
+					}
+				]
+			},
+			{
+				"aboutTitle": "Keola",
+				"aboutDescription": "Tüm favori ürünlerinizi tek bir yerde bulmanızı sağlayan mükemmel uygulama Keola'ya hoş geldiniz! ",
+				"perkPreTitle": "Avantajlarımızdan yararlanın",
+				"perktitle": "Keola'nın Faydaları",
+				"perkDescription": "Davet edin ve kazanın, uygulamanın faydalarını keşfedin. ",
+				"cards": [
+					{
+						"title": "Ürünler",
+						"description": "Çeşitli ürün ve kategorileri keşfedin. "
+					},
+					{
+						"title": "Mağazalar",
+						"description": "Kaliteli ve verimli bir teslimat hizmeti sağlayarak mağazanızı yönetin ve ürünlerinizi yönetin."
+					},
+					{
+						"title": "Teslimat",
+						"description": "Yiyeceğe, ilaca ihtiyacınız var mı? "
+					}
+				]
+			}
+		]
+	},
+	"oportunity": {
+		"title": "Şans",
+		"description": "Deneyimi, konumu veya koşulları ne olursa olsun herkese açıktır.",
+		"sections": [
+			{
+				"pre": "Etkinizle kazanın",
+				"title": "Herkes mikro düzeyde etkilenmiştir",
+				"content": "Herkes bir mikro-influencerdır. "
+			},
+			{
+				"pre": "Kaliteli ürünler tavsiye ederim",
+				"title": "Sektöre yön veren son teknoloji ürünler",
+				"content": "Her gün arkadaşlarımıza ve ailemize ürün ve hizmetler öneriyoruz. "
+			},
+			{
+				"pre": "Akranlarınızdan öğrenin",
+				"title": "Başarılı olmak için ihtiyacınız olan her şey",
+				"content": "Ağ oluşturmayı herkes için daha karlı hale getirme ve bağlı kuruluşların nasıl varlık yaratacaklarını öğrenme arzusundan ilham alarak uzmanlarımızdan bilgi paylaşıyoruz."
+			},
+			{
+				"pre": "Tazminat planı",
+				"title": "Ücret Planımız sektördeki en güçlü plandır",
+				"content": "İnsanların akıllı bir yatırım portföyü oluşturmalarına ve başka hiçbir yatırım kulübünün yapamayacağı kadar çok çeşitli avantajlarla uzun zamandır beklenen finansal özgürlüğe ulaşmalarına yardımcı oluyoruz."
+			}
+		],
+		"testimonials": {
+			"pre": "Görüşler",
+			"title": "Başarı Öyküleri",
+			"items": [
+				{
+					"text": "Geçmişte yaşayan bir kişi, hele gelecekte asla başarılı olamayacaksa",
+					"name": "Elias Vargas",
+					"since": "2020"
+				},
+				{
+					"text": "Mutlu olmak için bu dünyada sadece 3 şeye ihtiyacınız var: Allah'a İman, Kendinize İman ve Hayallerinize İman",
+					"name": "Paul Villacorta",
+					"since": "2020"
+				},
+				{
+					"text": "Fakir olmak kötü değil, kötü olan hiç denememiş olmaktır, Fakir ve Hayalsiz Ölmek, Başlamak için asla geç değildir.",
+					"name": "Mery Livias",
+					"since": "2021"
+				},
+				{
+					"text": "En güzel konuşmayı sözlerinizle değil, hayatınızla yapabilirsiniz.",
+					"name": "Habil Meza",
+					"since": "2020"
+				}
+			]
+		}
+	},
+	"comunity": {
+		"title": "Bizim topluluğumuz",
+		"description": "Başarı paylaşıldıkça güzeldir. ",
+		"sections": [
+			{
+				"pre": "BİZİMLE BÜYÜYÜN VE GELİŞİN",
+				"title": "Dünya çapındaki bağlı kuruluşlar",
+				"content": "Bugün Latin Amerika'daki en büyük ve en güçlü ortaklık ağı şüphesiz Inclub'dur. "
+			},
+			{
+				"pre": "Tanıma ve olaylar",
+				"title": "Milyonlarca insan başarınızı kutlayacak.",
+				"content": "Her girişimcinin işine kattığı sıkı çalışma ve özveriyle inanılmaz derecede gurur duyuyoruz. "
+			},
+			{
+				"pre": "EĞİTİM VE ÖĞRENME ARAÇLARI",
+				"title": "Başarılı olmak için ihtiyacınız olan her şey.",
+				"content": "İnsanların akıllı bir yatırım portföyü oluşturmalarına ve uzun zamandır beklenen finansal özgürlüğe ulaşmalarına yardımcı oluyoruz. "
+			}
+		],
+		"inspiration": {
+			"title": "Esin",
+			"subtitle": "Topluluk Sesleri",
+			"testimonials": [
+				{
+					"text": "Inclub benim hayatım ve bu yüzden onu çok ciddiye alıyorum.",
+					"name": "Elias Vargas",
+					"since": "2020"
+				},
+				{
+					"text": "Inclub insanların hayatlarını değiştirmek için burada.",
+					"name": "Paul Villacorta",
+					"since": "2020"
+				},
+				{
+					"text": "Inclub bize başkalarının da hayatlarını değiştirme fırsatı verdi.",
+					"name": "Mery Livias",
+					"since": "2021"
+				},
+				{
+					"text": "İştirakler, kullanıcı kitlesi sayesinde başarılarından dolayı ödüllendirilir.",
+					"name": "Habil Meza",
+					"since": "2020"
+				}
+			]
+		}
+	},
+	"news": {
+		"noticeLabel": "Haberler",
+		"titleMain": "YENİLİK",
+		"descriptionMain": "Aileniz ve arkadaşlarınızla eğlenebileceğiniz mükemmel bir sığınak",
+		"commonEventsCountry": "Lima, Peru",
+		"commonEventsBtn": "daha fazla gör",
+		"content": [
+			{
+				"date": "14 EYLÜL 2023",
+				"title": "Başarılı iletişim kurun, dil ve iş iletişimi atölyesi"
+			},
+			{
+				"title": "Çevrimiçi alışveriş adresiniz",
+				"description": "Davet edin ve kazanın, uygulamanın avantajlarını keşfedin. "
+			},
+			{
+				"title": "Gayrimenkul projesi",
+				"description": "Inclub liderleri Cieneguilla'daki Ribera del Rio emlak projesinin inanılmaz lansmanından keyif aldılar."
+			},
+			{
+				"title": "Encumbra Lansmanı",
+				"description": "Inclub liderleri, üyelerimizi çevrimiçi ağ endüstrisinde lider olmaları için güçlendirir."
+			},
+			{
+				"title": "Çevrimiçi alışveriş adresiniz",
+				"description": "Davet edin ve kazanın, uygulamanın avantajlarını keşfedin. "
+			},
+			{
+				"title": "Teknolojik proje",
+				"description": "Inclub liderleri Cieneguilla'daki Ribera del Rio emlak projesinin inanılmaz lansmanından keyif aldılar."
+			},
+			{
+				"title": "Inresorts Ribera del Rio",
+				"description": "Inclub liderleri, üyelerimizi çevrimiçi ağ endüstrisinde lider olmaları için güçlendirir."
+			}
+		]
+	},
+	"newsDetail": {
+		"date": "26 Eylül 2023",
+		"title": "Aileniz ve arkadaşlarınızla eğlenebileceğiniz mükemmel bir sığınak",
+		"description": "La Joya park tesisi, La Joya bölgesindeki Arequipa şehrine sadece 60 dakika uzaklıktadır; burada plajda günlerin tadını çıkarabilir veya su sporları yapabilirsiniz. ",
+		"content": [
+			{
+				"date": "14 Eylül 2023",
+				"title": "Başarılı iletişim kurun, dil ve iş iletişimi atölyesi"
+			},
+			{
+				"date": "29 Eylül 2023",
+				"title": "Inclub LEADERSHIP Eğitim Sistemi"
+			},
+			{
+				"date": "15 Eylül 2023",
+				"title": "Inclub eğitim sistemi Başarı Referansları"
+			}
+		]
+	},
+	"calendar": {
+		"title": "Takvim",
+		"subtitle": "Eylül",
+		"filters": {
+			"searchLabel": "Arayıcı",
+			"searchPlaceholder": "Etkinliği veya atölyeyi arayın",
+			"options": ["Bugün", "Haftalık", "Aylık"]
+		}
+	},
+	"eventPage": {
+		"upcommingEventsTitle": "Yaklaşan Etkinlikler",
+		"upcomingEvents": [
+			{
+				"date": "14 EYLÜL 2023",
+				"title": "Başarılı iletişim kurun, dil ve iş iletişimi atölyesi"
+			},
+			{
+				"date": "29 EYLÜL 2023",
+				"title": "Eğitim Sistemi Kulüp İçi LİDERLİK"
+			},
+			{
+				"date": "15 EYLÜL 2023",
+				"title": "Inclub eğitim sistemi Başarı Referansları"
+			}
+		],
+		"pastEventsTitle": "Önceki etkinlikler",
+		"pastEvents": [
+			{
+				"date": "12 EYLÜL 2023",
+				"title": "Eğitim Sistemi Kulüp İçi Okuma Kulübü"
+			},
+			{
+				"date": "10 EYLÜL 2023",
+				"title": "Inclub LEADERSHIP Eğitim Sistemi"
+			},
+			{
+				"date": "8 EYLÜL 2023",
+				"title": "Inclub Eğitim Sistemi Başarı Referansları"
+			}
+		],
+		"trendsTitle": "Trendler"
+	},
+	"eventsDetail": {
+		"backLabel": "Geri dönmek",
+		"resumeTitle": "Özet",
+		"learnTitle": "Ne öğreneceksin?"
+	},
+	"events": [
+		{
+			"title": "Başarılı iletişim kurun, dil ve iş iletişimi atölyesi",
+			"date": "14 EYLÜL 2023",
+			"type": "Çevrimiçi",
+			"duration": "Yaklaşık süre: 22 dakika.",
+			"positiveReviews": "%98 olumlu yorum (567).",
+			"summary": "İş alanında iletişim becerilerinizi geliştirmek ister misiniz? ",
+			"learn": [
+				"Sunum ve müzakere becerilerini geliştirin",
+				"Açık ve etkili bir şekilde ifade etmeyi öğrenin",
+				"Diğer teorik atölyelerden farklı olarak bu atölye, öğrendiklerinizi hemen uygulamaya koymanıza olanak tanır.",
+				"Alıştırmalar ve grup dinamikleri sayesinde iletişim becerilerinizi geliştirebilecek ve konunun uzmanlarından anında geri bildirim alabileceksiniz. ",
+				"Ve dahası."
+			]
+		},
+		{
+			"date": "29 EYLÜL 2023",
+			"title": "Inclub Eğitim Sistemi: Liderlik",
+			"type": "Çevrimiçi",
+			"duration": "Yaklaşık süre: 22 dakika.",
+			"positiveReviews": "%98 olumlu yorum (567).",
+			"summary": "İş alanında iletişim becerilerinizi geliştirmek ister misiniz? ",
+			"learn": [
+				"Sunum ve müzakere becerilerini geliştirin",
+				"Açık ve etkili bir şekilde ifade etmeyi öğrenin",
+				"Diğer teorik atölyelerden farklı olarak bu atölye, öğrendiklerinizi hemen uygulamaya koymanıza olanak tanır.",
+				"Alıştırmalar ve grup dinamikleri sayesinde iletişim becerilerinizi geliştirebilecek ve konunun uzmanlarından anında geri bildirim alabileceksiniz. ",
+				"Ve dahası."
+			]
+		},
+		{
+			"date": "15 EYLÜL 2023",
+			"title": "Inclub Eğitim Sistemi: Başarı Hikayeleri",
+			"type": "Çevrimiçi",
+			"duration": "Yaklaşık süre: 22 dakika.",
+			"positiveReviews": "%98 olumlu yorum (567).",
+			"summary": "İş alanında iletişim becerilerinizi geliştirmek ister misiniz? ",
+			"learn": [
+				"Sunum ve müzakere becerilerini geliştirin",
+				"Açık ve etkili bir şekilde ifade etmeyi öğrenin",
+				"Diğer teorik atölyelerden farklı olarak bu atölye, öğrendiklerinizi hemen uygulamaya koymanıza olanak tanır.",
+				"Alıştırmalar ve grup dinamikleri sayesinde iletişim becerilerinizi geliştirebilecek ve konunun uzmanlarından anında geri bildirim alabileceksiniz. ",
+				"Ve dahası."
+			]
+		},
+		{
+			"date": "12 EYLÜL 2023",
+			"title": "Inclub Eğitim Sistemi: Kitap Kulübü",
+			"type": "Çevrimiçi",
+			"duration": "Yaklaşık süre: 22 dakika.",
+			"positiveReviews": "%98 olumlu yorum (567).",
+			"summary": "İş alanında iletişim becerilerinizi geliştirmek ister misiniz? ",
+			"learn": [
+				"Sunum ve müzakere becerilerini geliştirin",
+				"Açık ve etkili bir şekilde ifade etmeyi öğrenin",
+				"Diğer teorik atölyelerden farklı olarak bu atölye, öğrendiklerinizi hemen uygulamaya koymanıza olanak tanır.",
+				"Alıştırmalar ve grup dinamikleri sayesinde iletişim becerilerinizi geliştirebilecek ve konunun uzmanlarından anında geri bildirim alabileceksiniz. ",
+				"Ve dahası."
+			]
+		},
+		{
+			"date": "10 EYLÜL 2023",
+			"title": "Inclub Eğitim Sistemi: Liderlik",
+			"type": "Çevrimiçi",
+			"duration": "Yaklaşık süre: 22 dakika.",
+			"positiveReviews": "%98 olumlu yorum (567).",
+			"summary": "İş alanında iletişim becerilerinizi geliştirmek ister misiniz? ",
+			"learn": [
+				"Sunum ve müzakere becerilerini geliştirin",
+				"Açık ve etkili bir şekilde ifade etmeyi öğrenin",
+				"Diğer teorik atölyelerden farklı olarak bu atölye, öğrendiklerinizi hemen uygulamaya koymanıza olanak tanır.",
+				"Alıştırmalar ve grup dinamikleri sayesinde iletişim becerilerinizi geliştirebilecek ve konunun uzmanlarından anında geri bildirim alabileceksiniz. ",
+				"Ve dahası."
+			]
+		},
+		{
+			"date": "8 EYLÜL 2023",
+			"title": "Inclub Eğitim Sistemi: Başarı Hikayeleri",
+			"type": "Çevrimiçi",
+			"duration": "Yaklaşık süre: 22 dakika.",
+			"positiveReviews": "%98 olumlu yorum (567).",
+			"summary": "İş alanında iletişim becerilerinizi geliştirmek ister misiniz? ",
+			"learn": [
+				"Sunum ve müzakere becerilerini geliştirin",
+				"Açık ve etkili bir şekilde ifade etmeyi öğrenin",
+				"Diğer teorik atölyelerden farklı olarak bu atölye, öğrendiklerinizi hemen uygulamaya koymanıza olanak tanır.",
+				"Alıştırmalar ve grup dinamikleri sayesinde iletişim becerilerinizi geliştirebilecek ve konunun uzmanlarından anında geri bildirim alabileceksiniz. ",
+				"Ve dahası."
+			]
+		}
+	]
+}

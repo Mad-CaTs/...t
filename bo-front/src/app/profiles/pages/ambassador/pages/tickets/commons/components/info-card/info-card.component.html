@@ -1,0 +1,16 @@
+<div class="card border-0 shadow mb-3 rounded">
+	<div class="card-body d-flex flex-column gap-2">
+		<div class="border-start border-4 border-{{ data.color }} ps-3">
+			<small class="text-muted d-block">{{data.type }}</small>
+			<h6 class="mb-1">{{ data.title }}</h6>
+		</div>
+		<hr class="mt-2 mb-2" />
+		<div class="d-flex justify-content-between ps-3">
+			<small class="text-primary d-flex align-items-center">
+				<img src="assets/icons/user-tag.svg" alt="user icon" class="me-2" width="18" f height="18" />
+				{{ data.subtitle }}
+			</small>
+			<small class="fw-bold">Usuario: {{ data.user }}</small>
+		</div>
+	</div>
+</div>

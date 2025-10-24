@@ -1,0 +1,47 @@
+<div *ngIf="isLoading" class="d-flex justify-content-center align-items-center py-5">
+	<p-progressSpinner
+		[style]="{ width: '3.5rem', height: '3.5rem' }"
+		strokeWidth="2"
+		fill="var(--surface-ground)"
+		animationDuration=".5s"
+	></p-progressSpinner>
+</div>
+
+<ng-container *ngIf="filteredDocuments?.length > 0">
+	<p>Estados de documentos</p>
+	<div class="row">
+		<div class="col-12 col-md-4 mb-3 d-flex align-items-stretch" *ngFor="let doc of filteredDocuments">
+			<card-product
+				class="w-100"
+				[membershipType]="doc.documentTypeName"
+				[subscriptionStatus]="doc.statusName"
+				[installmentNumber]="doc.userLocalUbicDescription"
+				[date]="doc.legalizationName"
+				[pacValue]="doc.familyPackageName"
+				[statusColor]="getStatusColor(doc.statusName, doc.statusColor)"
+				[progressValue]="doc.progressPercentage"
+				[fromLegalModule]="true"
+				[fromLegalizarStatus]="true"
+				[firstButtonLabel]="'Ver proceso'"
+				[secondButtonLabel]="'Modificar Lugar'"
+				(firstButtonClick)="handleVerDocumentos(doc)"
+				(secondButtonClick)="handleVerCertificado(doc)"
+			></card-product>
+		</div>
+	</div>
+
+	<div
+		class="alert alert-info d-flex flex-column flex-sm-row gap-2 align-items-center text-center text-sm-start p-2"
+		role="alert"
+	>
+		<mat-icon class="fs-4 flex-shrink-0">info</mat-icon>
+		<span class="fw-normal fs-6 text-wrap">
+			Tener en cuenta que el tramite a distancia (Provincia o Extranjero), su documentación se enviará
+			por encomienda.
+		</span>
+	</div>
+</ng-container>
+<div *ngIf="messageError" class="alert alert-info text-center my-3">
+	<i class="pi pi-exclamation-triangle me-2"></i>
+	{{ messageError }}
+</div>

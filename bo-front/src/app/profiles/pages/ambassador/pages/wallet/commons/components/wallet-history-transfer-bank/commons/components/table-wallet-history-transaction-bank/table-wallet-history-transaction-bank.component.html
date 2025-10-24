@@ -1,0 +1,85 @@
+	<div class="d-flex flex-column gap-3">
+		<div class="d-flex flex-row justify-content-between align-items-center w-100">
+			<div
+				class="d-flex gap-2 justify-content-end justify-content-md-start align-items-center mb-3 mb-md-0"
+			>
+				<button
+					class="btn btn-secondary px-3 fs-12"
+					style="height: fit-content"
+					(click)="onRequestTransfer()"
+					[disabled]="(walletBlock || disabledUser)"
+				>
+					Nueva Tranferencia
+				</button>
+				<button
+					class="btn btn-secondary px-3 fs-12"
+					type="button"
+					style="height: fit-content"
+					(click)="onClickBtn()"
+					[disabled]="(!selected.value || disabledUser)"
+				>
+					Detalle de registro
+				</button>
+			</div>
+
+			<app-pagination
+				[totalPages]="table.totalPages"
+				[currentPage]="table.currentPage"
+				(changePage)="tableService.changePage($event, id)"
+				class="d-flex gap-2 justify-content-end justify-content-md-start align-items-center mb-3 mb-md-0"
+			></app-pagination>
+		</div>
+
+		<app-table
+			class="w-100"
+			[headers]="['Fecha', 'Titular', 'Cuenta', 'Descripción', 'Monto', 'Solicitud']"
+			[minWidthHeader]="[150, 300, 250, 250, 100, 150]"
+			[hasCheckbox]="false"
+			[minWidth]="1500"
+			[customRows]="true"
+			[loading]="loading"
+			[hasData]="table.data.length > 0"
+		>
+			<tr class="w-100 d-flex flex-row" *ngFor="let d of table.data; let i = index">
+				<td class="table__first__v1 d-flex flex-row justify-content-center align-items-center">
+					<div class="form-check d-flex flex-row align-items-center gap-2">
+						<input
+							class="form-check-input cursor-pointer"
+							style="width: 18px; height: 18px"
+							type="radio"
+							[value]="d.id"
+							[name]="'t-a-t-p-group'"
+							[formControl]="selected"
+							[id]="'t-a-t-p-list-' + i"
+							(change)="updateBody(d.id)"
+						/>
+						<label class="form-check-label fw-normal cl-muted m-0 mt-1" [for]="'t-a-t-p-list-' + i">{{
+							i + 1
+						}}</label>
+					</div>
+				</td>
+				<td class="fs-6 py-4 px-4 text-center w-100" style="min-width: 150px">
+					{{ d.date }}
+				</td>
+				<td class="fs-6 py-4 px-4 w-100 text-center" style="min-width: 300px">
+					{{ d.fullname }}
+				</td>
+				<td class="fs-6 py-4 px-4 w-100 text-center" style="min-width: 250px">
+					{{ d.account }}
+				</td>
+				<td class="fs-6 py-4 px-4 w-100 text-center" style="min-width: 250px">
+					{{ d.description }}
+				</td>
+				<td class="fs-6 py-4 px-4 w-100 text-center" style="min-width: 100px">
+					{{ formatAmount(d.amount) }}
+				</td>
+				<td
+					class="fs-6 py-4 px-4 w-100 text-center"
+					style="min-width: 150px"
+					[ngStyle]="{ color: d.request === 'Rechazado' ? 'red' : 'inherit' }"
+				>
+					{{ d.request }}
+				</td>
+			</tr>
+		</app-table>
+	</div>

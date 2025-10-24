@@ -1,0 +1,25 @@
+<div>
+  <h2 class="title">Perfiles</h2>
+  <p class="text">
+    Administra la información de tu perfil y usa los mismos detalles en el BackOffice.
+  </p>
+  <div class="content">
+    @if (profiles.length) {
+    <app-principal-profile [profile]="profiles[0]" />
+    }
+
+    <p-divider />
+
+    <div class="profiles-container">
+      @for (profile of profiles; track profile.user.id) {
+      <app-sub-profile-change-item [profile]="profile" (selectSubProfile)="onSelectSubProfile(profile.user.username)" />
+      }
+    </div>
+  </div>
+  <div class="alert alert-info d-flex flex-row gap-2 mt-4 align-items-center">
+    <mat-icon class="text-info-emphasis d-flex justify-content-center align-items-center">info</mat-icon>
+    <div class="fs-14">
+      Elige el perfil que deseas usar en el BackOffice.
+    </div>
+  </div>
+</div>

@@ -1,0 +1,89 @@
+.container-mebership {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    border-radius: 0.375rem;
+    border: 0;
+    // margin-top: 3.2rem;
+
+    .container-resumen {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        border-radius: 1.5rem;
+        padding-top: 2rem;
+        padding-bottom: 1.5rem;
+        position: relative;
+        flex-grow: 1;
+        width: 100%;
+
+        .figure-custom {
+            position: absolute;
+            top: -50%;
+
+            .img-gender {
+                font-weight: bold;
+                width: 88px;
+                height: 88px
+            }
+        }
+
+    }
+
+    .container-details {
+        padding-top: 1rem;
+        border: 1px solid #dee2e6;
+        border-radius: 2rem;
+        margin-top: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        flex-grow: 1;
+        width: 100%;
+    }
+
+    .custom-color-text {
+        color: #FE7C04;
+    }
+
+    .custom-color-background {
+        background-color: #FE7C04;
+    }
+
+    .min-custom {
+        width: fit-content;
+        margin: 0 auto;
+    }
+
+    .custom-size-text {
+        font-size: 0.9rem;
+        padding-left: 0.8rem;
+        padding-right: 0.8rem;
+    }
+
+    .progress {
+        height: 20px;
+        background-color: #e9ecef;
+        border-radius: 10px;
+
+        .progress-bar {
+            background-color: #007bff;
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+    }
+
+    @media (min-width: 1440px) {
+        // margin-top: 2.4rem;
+        .custom-size-text {
+            font-size: 1rem;
+            padding-left: 2rem;
+            padding-right: 2rem;
+        }
+    }
+
+
+}

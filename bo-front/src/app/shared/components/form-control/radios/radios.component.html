@@ -1,0 +1,41 @@
+<label 
+  class="fs-6 mb-2 cl-muted" 
+  *ngIf="label">
+  {{ label }}
+</label>
+
+<div class="d-flex"
+  [ngClass]="{
+    'flex-column': verticalLayout,
+    'flex-row justify-content-center align-items-center': horizontalLayout
+  }">
+  
+  <div 
+    *ngFor="let option of options"
+    class="radio-item"
+    [ngClass]="{
+      'disabled-option': option.disabled,
+      'me-4': !verticalLayout && !horizontalLayout,
+      'mb-2 ms-2 mt-1': verticalLayout && horizontalLayout
+    }">
+    
+    <p-radioButton 
+      [inputId]="option.content"
+      [name]="controlName"
+      [formControl]="form?.get(this.controlName)"
+      [value]="option.value"
+      (onClick)="onChangeRadios($event)">
+    </p-radioButton>
+
+    <label 
+      [for]="option.content"
+      class="ps-2 cursor-pointer">
+      {{ option.content }}
+    </label>
+  </div>
+</div>
+
+<app-control-error 
+  [form]="form" 
+  [controlName]="controlName">
+</app-control-error>

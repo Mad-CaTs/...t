@@ -1,0 +1,16 @@
+<div class="modal-header" style="display: flex; flex-direction: column; align-items: center; position: relative; padding: 10px;">
+	<div class="filled-side"></div>
+	<h4 class="modal-title m-0 text-uppercase text-center fs-4 text-black fw-bold" style="font-family: Arial, sans-serif; padding-bottom: 5px; border-bottom: 1px solid #d3d3d3; width: 100%;">
+		{{ title }}
+	</h4>
+	<button
+		type="button"
+		class="btn-close"
+		aria-label="Close"
+		(click)="instanceModal.dismiss('Cross click')"
+		style="position: absolute; right: 10px; top: 10px;"
+	></button>
+</div>
+<div class="modal-body">
+	<ng-content></ng-content>
+</div>

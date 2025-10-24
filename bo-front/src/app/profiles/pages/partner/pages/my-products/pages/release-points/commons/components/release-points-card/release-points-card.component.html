@@ -1,0 +1,23 @@
+<div class="p-4 card px-0 px-md-4 card-border-none">
+	<div class="toggle-container">
+		<button
+			class="toggle-button"
+			[ngClass]="type == 'rewards' ? 'active' : ''"
+			(click)="type = 'rewards'"
+		>
+			Histórico de USD Rewards
+		</button>
+		<button
+			class="toggle-button"
+			[ngClass]="type == 'exchanges' ? 'active' : ''"
+			(click)="type = 'exchanges'"
+		>
+			Histórico de canjes
+		</button>
+	</div>
+</div>
+
+<!-- <app-historical-exchange *ngIf="type == 'exchanges'"></app-historical-exchange> -->
+<app-historical-rewards *ngIf="type == 'rewards'"></app-historical-rewards>
+
+<not-found *ngIf="type == 'exchanges'"></not-found>

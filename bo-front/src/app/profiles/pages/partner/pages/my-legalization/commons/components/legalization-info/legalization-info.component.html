@@ -1,0 +1,47 @@
+<div class="d-flex align-items-start gap-2 p-3 rounded mb-4" style="background-color: #f9faff" role="alert">
+	<img src="assets/icons/Group.svg" alt="Información" style="width: 24px; height: 24px" />
+
+	<div>
+		<strong style="color: #136077">
+			Costo para legalización de {{ rate?.documentNameGeneral?.toLowerCase() }} </strong
+		><br />
+
+		<div *ngIf="payTypeSelected === 1; else textoOtro">
+			<span class="text-grey">Antes de pagar recuerda que el costo es de </span>
+			<strong class="text-grey"> {{ getCurrencySymbol(rate?.currency) }}{{ rate?.price }} </strong>
+			<span class="text-grey">
+				por derecho de legalización de {{ rate?.documentNameGeneral?.toLowerCase() }}
+				<ng-container *ngIf="rate?.localName === 'EXTRANJERO'"> (para extranjero) </ng-container>
+				<ng-container *ngIf="rate?.localName !== 'EXTRANJERO'">
+					(para socios {{ capitalize(rate?.localName) }})
+				</ng-container>
+			</span>
+		</div>
+
+		<ng-template #textoOtro>
+			<span class="text-grey">Antes de efectuar el pago, se le informa lo siguiente:</span><br />
+
+			<div style="display: flex; align-items: flex-start; gap: 8px">
+				<span style="font-size: 20px; line-height: 1">•</span>
+				<span class="text-grey">
+					El derecho de legalización del {{ rate?.documentNameGeneral?.toLowerCase() }} tiene un
+					costo de
+					<strong>{{ getCurrencySymbol(rate?.currency) }}{{ rate?.price }}</strong>
+					<ng-container *ngIf="rate?.localName === 'EXTRANJERO'"> para extranjero. </ng-container>
+					<ng-container *ngIf="rate?.localName !== 'EXTRANJERO'">
+						para socios residentes en {{ capitalize(rate?.localName) }}.
+					</ng-container>
+				</span>
+			</div>
+
+			<div style="display: flex; align-items: flex-start; gap: 8px">
+				<span style="font-size: 20px; line-height: 1">•</span>
+				<span class="text-grey">
+					El servicio de envío implica un costo adicional de
+					<strong>{{ getCurrencySymbol(rate?.currency) }}{{ montoSoles }}</strong
+					>.
+				</span>
+			</div>
+		</ng-template>
+	</div>
+</div>

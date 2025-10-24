@@ -1,0 +1,18 @@
+<app-modal [title]="title">
+	<div class="d-flex flex-column w-100 gap-4">
+		<span class="text-black fs-6 fw-normal text-center">
+			<ng-container *ngFor="let txt of text; let i = index">
+				<span *ngIf="i % 2 === 0">{{ txt }}</span>
+				<strong class="fw-medium" *ngIf="i % 2 !== 0">{{ txt }}</strong>
+			</ng-container>
+		</span>
+		<div class="d-flex flex-row justify-content-center gap-4">
+			<button class="btn btn-outline-secondary" type="button" (click)="instanceModal.close()">
+				Cancelar
+			</button>
+			<button class="btn btn-secondary" type="button" (click)="clickBtn.emit()">
+				{{ btnSuccessText }}
+			</button>
+		</div>
+	</div>
+</app-modal>

@@ -1,0 +1,9 @@
+<app-table-wallet-history
+	[dataBody]="tableData"
+	[loading]="loading"
+	[navigation]="navegation"
+	[totalRecords]="totalRecords"
+	(pageChange)="onPageChange($event)"
+	(btnClick)="showDetail($event)"
+	[walletBlock]="walletBlock"
+></app-table-wallet-history>

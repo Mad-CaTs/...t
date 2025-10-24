@@ -1,0 +1,32 @@
+import { ILanguajeOptions } from "../interfaces/navbar-languaje.interface";
+
+export const Languages: ILanguajeOptions[] = [
+	{ flag: 'AS.png', country: 'Árabe', prefix: 'ar' },
+	{ flag: 'DE.png', country: 'Alemán', prefix: 'de' },
+	{ flag: 'BN.png', country: 'Bengalí', prefix: 'bn' },
+	{ flag: 'BG.png', country: 'Búlgaro', prefix: 'bg' },
+	{ flag: 'CS.png', country: 'Checo', prefix: 'cs' },
+	{ flag: 'CN.png', country: 'China', prefix: 'zh' },
+	{ flag: 'ES.png', country: 'Español', prefix: 'es' },
+	{ flag: 'FR.png', country: 'Frances', prefix: 'fr' },
+	{ flag: 'BR.png', country: 'Portugués', prefix: 'pt' },
+	{ flag: 'EN.png', country: 'Inglés', prefix: 'en' },
+	{ flag: 'EL.png', country: 'Griego', prefix: 'el' },
+	{ flag: 'GN.png', country: 'Guaraní', prefix: 'gn' },
+	{ flag: 'HI.png', country: 'Hindi', prefix: 'hi' },
+	{ flag: 'HU.png', country: 'Húngaro', prefix: 'hu' },
+	{ flag: 'ID.png', country: 'Indonesio', prefix: 'id' },
+	{ flag: 'IT.png', country: 'Italiano', prefix: 'it' },
+	{ flag: 'JP.png', country: 'Japonés', prefix: 'ja' },
+	{ flag: 'KO.png', country: 'Coreano', prefix: 'ko' },
+	{ flag: 'HO.png', country: 'Holandés', prefix: 'nl' },
+	{ flag: 'PL.png', country: 'Polaco', prefix: 'pl' },
+	{ flag: 'RU.png', country: 'Ruso', prefix: 'ru' },
+	{ flag: 'TE.png', country: 'Telugu', prefix: 'te' },
+	{ flag: 'TH.png', country: 'Tailandés', prefix: 'th' },
+	{ flag: 'TL.png', country: 'Tagalo', prefix: 'tl' },
+	{ flag: 'TR.png', country: 'Turco', prefix: 'tr' },
+	{ flag: 'UR.png', country: 'Ucraniano', prefix: 'uk' },
+	{ flag: 'VI.png', country: 'Vietnamita', prefix: 'vi' },
+	{ flag: 'RO.png', country: 'Rumano', prefix: 'ro' }
+];

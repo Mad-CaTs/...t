@@ -1,0 +1,57 @@
+<div class="line bg-black opacity-50"></div>
+<form [formGroup]="conciliationForm" class="d-flex flex-column gap-3 mt-3">
+    <div class="d-flex flex-column flex-md-row gap-2 gap-md-4 w-100">
+        <div class="d-flex flex-column w-50">
+            <app-input [form]="conciliationForm" controlName="amount" label="Monto en declaración *" type="dollar"
+                placeholder="S/. 0" buttons="true" class="w-100"></app-input>
+        </div>
+        <div class="d-flex flex-column w-50">
+            <app-input [form]="conciliationForm" controlName="number" label="Número de comprobante *" type="text"
+                placeholder="00000000" buttons="true" class="w-100"></app-input>
+        </div>
+    </div>
+    <div class="d-flex flex-column flex-md-row gap-2 gap-md-4 w-100">
+        <app-date class="w-100" label="Fecha de emisión *" [form]="conciliationForm" controlName="date"
+            placeholder="DD/MM/YYYY" [config]="true">
+        </app-date>
+        <app-select [form]="conciliationForm" controlName="currency" label="Moneda *" placeholder="Seleccionar"
+            [options]="currencies" class="w-100"></app-select>
+    </div>
+    <app-select [form]="conciliationForm" controlName="documentType" label="Tipo de documento *"
+        placeholder="Seleccione el tipo de documento" [options]="documentTypes" name="description"
+        class="w-100"></app-select>
+    <div *ngIf="this.conciliationForm.get('documentType').value == 2">
+        <app-checkbox [form]="conciliationForm" controlName="rent" label="Renta"></app-checkbox>
+        <br>
+        <app-input [form]="conciliationForm" controlName="rentValue" label="Valor de Renta" type="dollar"
+            *ngIf="this.conciliationForm.get('rent').value" class="w-100 mt-2"></app-input>
+    </div>
+    <div *ngIf="this.conciliationForm.get('documentType').value == 1">
+        <app-checkbox [form]="conciliationForm" controlName="detraction" label="Detracción"></app-checkbox>
+        <br>
+        <app-input [form]="conciliationForm" controlName="detractionValue" label="Valor de Detracción" type="dollar"
+            *ngIf="this.conciliationForm.get('detraction').value" class="w-100 mt-2"></app-input>
+    </div>
+    <div class="d-flex flex-column w-100 mb-2">
+        <app-text-area [form]="conciliationForm" name="noteAditional" label="Nota adicional *"
+            placeholder="Ingresar el mensaje" class="w-100"></app-text-area>
+    </div>
+    <label class="fs-6 cl-muted">Subir comprobante *</label>
+    <app-file placeholder="JPG, PNG or PDF, file size no more than 10MB" [form]="conciliationForm" controlName="file"
+        accept=".png, .jpg, .jpeg, .pdf" [maxLength]="10000000" [inline]="true" class="w-100"
+        [multiple]="true"></app-file>
+    <div class="d-flex flex-row justify-content-center gap-4 mt-3">
+
+        <button class="btn btn-outline-secondary" type="button" (click)="this.ref.close()">
+            Cancelar
+        </button>
+        <button class="btn btn-secondary" type="submit" [disabled]="isLoading || this.conciliationForm.invalid"
+            (click)="saveConciliation()">
+            <span *ngIf="!isLoading">Enviar</span>
+            <div class="d-flex justify-content-center align-items-center" *ngIf="isLoading">
+                <p-progressSpinner [style]="{ width: '1.5rem', height: '1rem' }" strokeWidth="8" fill="transparent"
+                    animationDuration=".5s"></p-progressSpinner>
+            </div>
+        </button>
+    </div>
+</form>

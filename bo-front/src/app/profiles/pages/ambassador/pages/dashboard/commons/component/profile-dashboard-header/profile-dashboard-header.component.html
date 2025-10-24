@@ -1,0 +1,11 @@
+<div class="container-profile">
+  <app-tab-profiles [tabs]="tabs"></app-tab-profiles>
+</div>
+<div class="w-100 d-flex flex-column gap-4">
+  <div class="d-flex flex-column flex-md-row w-100 justify-content-end align-items-end">
+    <button class="change-button position-absolute mt-custom" (click)="onChangeProfile()">
+      <mat-icon class="change-icon" aria-hidden="false"
+        fontIcon="supervised_user_circle"></mat-icon>
+      <span class="text">Cambiar Perfil</span>
+    </button>
+  </div>

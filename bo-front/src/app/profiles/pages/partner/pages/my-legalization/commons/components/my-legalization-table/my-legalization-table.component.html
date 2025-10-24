@@ -1,0 +1,70 @@
+<div class="d-flex flex-column gap-3 card p-lg-4 border-0">
+	<app-bordered-table [headers]="headers" [rows]="filteredData">
+		<ng-template #body let-element>
+			<tr>
+				<td class="fs-6 py-2 px-2 w-100 text-center text-break border-bottom">
+					{{ element.nameSuscription }}
+				</td>
+
+				<td class="fs-6 py-2 px-2 w-100 text-center border-bottom">-</td>
+
+				<td class="fs-6 py-2 px-2 w-100 text-center border-bottom">{{ element.numberQuotas }}</td>
+
+				<td class="fs-6 py-2 px-2 w-100 text-center border-bottom">
+					<div
+						class="w-auto rounded py-1 px-3"
+						[ngStyle]="{
+							'background-color': getStatusColorById(element.idStatus).backgroundColor,
+							color: getStatusColorById(element.idStatus).textColor
+						}"
+					>
+						{{ element.status }}
+					</div>
+				</td>
+				<td class="fs-6 py-2 w-100 px-2 text-center border-bottom">
+					<div class="d-flex justify-content-center">
+						<button
+							type="button"
+							class="btn d-flex flex-row align-items-center justify-content-center gap-1 px-3 py-1 rounded cl-link no-hover w-auto"
+							style="min-width: 80px"
+							(click)="openLegalizationRequestModal(element)"
+							[disabled]="loadingRows[element.id]"
+						>
+							<ng-container *ngIf="!loadingRows[element.id]; else loadingSpinner">
+								<mat-icon class="cl-link">visibility</mat-icon>
+								<span class="text-nowrap">Ver</span>
+							</ng-container>
+							<ng-template #loadingSpinner>
+								<span
+									class="spinner-border spinner-border-sm"
+									role="status"
+									aria-hidden="true"
+								></span>
+							</ng-template>
+						</button>
+					</div>
+				</td>
+				<td class="fs-6 py-1 px-2 w-100 text-center align-middle border-bottom">
+					<button
+						class="btn btn-secondary py-1 px-3 d-flex align-items-center justify-content-center gap-2"
+						type="submit"
+						(click)="openLegalizationSourceModal(element)"
+						[disabled]="loadingMap[element.id] || disabledUser"
+					>
+						<ng-container *ngIf="!loadingMap[element.id]; else loadingTemplate">
+							Solicitar
+						</ng-container>
+						<ng-template #loadingTemplate>
+							<span
+								class="spinner-border spinner-border-sm"
+								role="status"
+								aria-hidden="true"
+							></span>
+							Cargando
+						</ng-template>
+					</button>
+				</td>
+			</tr>
+		</ng-template>
+	</app-bordered-table>
+</div>

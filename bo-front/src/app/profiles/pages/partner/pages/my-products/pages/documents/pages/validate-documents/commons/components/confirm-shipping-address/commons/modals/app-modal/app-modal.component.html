@@ -1,0 +1,20 @@
+<div class="modal-container p-3">
+  <div class="d-flex align-items-center mb-2">
+    <div class="icon-bg">
+      <div class="icon-inner">
+        <img [src]="icon" alt="icon" />
+      </div>
+    </div>
+  </div>
+  <h5 class="fw-bold mb-2 text-start title-text">{{ title }}</h5>
+  <p class="mb-3 text-start message-text" [innerHTML]="messageHtml"></p>
+  <div class="d-flex justify-content-center gap-2 mt-4 equal-buttons">
+  <button *ngIf="showSecondaryBtn" type="button" class="btn btn-outline-orange" (click)="onSecondaryClick()">
+    {{ secondaryBtnText }}
+  </button>
+
+  <button *ngIf="showPrimaryBtn" type="button" class="btn" [ngClass]="primaryBtnColor === 'orange' ? 'btn-orange' : 'btn-white-orange'" (click)="onPrimaryClick()">
+    {{ primaryBtnText }}
+  </button>
+</div>
+</div>

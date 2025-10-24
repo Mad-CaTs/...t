@@ -1,0 +1,13 @@
+<app-modal title="Desposicionamiento">
+	<div class="d-flex flex-column gap-3">
+		<p class="text-center text-black fs-6 cl-muted m-0">
+			¿Desea desposicionar a <strong class="fw-medium text-uppercase">{{ name }}</strong> ?
+		</p>
+		<div class="d-flex flex-row justify-content-center gap-3">
+			<button class="btn btn-outline-secondary" type="button" (click)="instanceModal.close()">
+				Cancelar
+			</button>
+			<button class="btn btn-secondary" type="button" (click)="onConfirm()">Confirmar</button>
+		</div>
+	</div>
+</app-modal>

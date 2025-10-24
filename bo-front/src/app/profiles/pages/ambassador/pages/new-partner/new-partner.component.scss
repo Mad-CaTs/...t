@@ -1,0 +1,171 @@
+.new-partner-page {
+	&__title {
+		font-size: 1rem;
+		text-align: left;
+	}
+
+	&__btn {
+		font-size: 1rem;
+		width: fit-content;
+	}
+}
+
+@media (min-width: 786px) {
+	.new-partner-page {
+		&__title {
+			font-size: 1.25rem;
+		}
+	}
+}
+
+
+.fade-toggle {
+	transition: opacity 0.3s ease-in-out;
+
+	&.hidden {
+		opacity: 0;
+		pointer-events: none;
+		visibility: hidden;
+	}
+
+	&.visible {
+		opacity: 1;
+		visibility: visible;
+	}
+}
+
+.spinner-overlay {
+	@extend .fade-toggle;
+	position: absolute;
+	inset: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 10;
+}
+
+form {
+	@extend .fade-toggle;
+	z-index: 1;
+}
+
+
+/* En el archivo .css del componente */
+::ng-deep .modal-content {
+	display: flex;
+	flex-direction: column;
+	min-height: 100%;
+	/* Asegura que ocupe todo el espacio disponible */
+}
+
+::ng-deep .modal-dialog {
+	display: flex;
+	align-items: center;
+	/* Centrado vertical */
+	min-height: calc(100% - 1rem);
+	/* Considera el margen del modal */
+}
+
+::ng-deep .border-decorate {
+	border-radius: 50%;
+	border: 1.5px #fcebb7 !important;
+	background-color: #FEF0C7;
+	box-shadow: 0px 1px 11px #FEF0C7;
+}
+
+::ng-deep .border-decorate-span {
+	border-radius: 50%;
+	border: 1.5px #faefd0 !important;
+	background-color: #FFFAEB;
+	box-shadow: 0px 1px 11px #FFFAEB;
+}
+
+
+::ng-deep .btn:hover {
+	border: solid 1px #FE7C04 !important;
+	background: #FE7C04 !important;
+	color: #fdfdfd !important;
+}
+
+
+.new-register-container {
+	margin: 0 5rem;
+	padding: 0rem;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	z-index: 1;
+
+	.parnert-timeline {
+		margin-bottom: 0rem;
+
+		.timeline-steps {
+			display: flex;
+			justify-content: space-between;
+			position: relative;
+			padding: 0 20px;
+
+			&::before {
+				content: '';
+				position: absolute;
+				top: 25px;
+				left: 15%;
+				right: auto;
+				height: 4px;
+				width: 71%;
+				background-color: #ACAFB3;
+				z-index: 1;
+				transform: translateX(0);
+			}
+
+			.step {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				position: relative;
+				z-index: 2;
+				flex: 1;
+				min-width: 0;
+
+				&:first-child::before {
+					content: none;
+				}
+
+				.step-number {
+					width: 50px;
+					height: 50px;
+					border: 4px solid #FAFAFA;
+					border-radius: 50%;
+					background-color: #ACAFB3;
+					color: #ffffff;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					font-size: 1.5rem;
+					font-weight: bold;
+					margin-bottom: 0.8rem;
+					transition: all 0.3s ease;
+				}
+
+				.step-label {
+					color: #7f8c8d;
+					font-size: 1rem;
+					text-align: center;
+					max-width: 150px;
+				}
+
+				&.active {
+					.step-number {
+						background-color: #19809E;
+						color: white;
+						border: 4px solid #FAFAFA;
+					}
+
+					.step-label {
+						color: #000;
+						font-weight: 500;
+					}
+				}
+			}
+		}
+	}
+
+}

@@ -1,0 +1,41 @@
+<div class="container my-4">
+	<div class="card p-3">
+		<div class="row g-2 align-items-center">
+			<div class="col-12 col-sm-auto d-flex justify-content-center">
+				<img [src]="medalImageUrl" alt="Rango Esmeralda" class="img-fluid" style="max-width: 120px" />
+			</div>
+
+			<div class="col-12 col-sm">
+				<h6 class="fw-bold mb-1">Rango Esmeralda</h6>
+				<p class="mb-1">
+					<span class="fw-semibold text-muted">Status:</span>
+					<span class="fw-bold text-dark">Activo</span>
+				</p>
+				<p class="mb-2">
+					<span class="fw-semibold text-muted">Asignado:</span>
+					<span class="fw-bold text-dark">Auto Toyota/Corolla</span>
+				</p>
+				<div
+					class="alert alert-info py-2 px-3 mb-2 small"
+					style="word-wrap: break-word; max-width: 100%; white-space: normal"
+				>
+					<i class="bi bi-info-circle me-1"></i>
+					Recuerda que cuentas con un bono adicional por haber alcanzado el rango Esmeralda. No
+					pierdas este rango, ya que de lo contrario el bono será descontado de tu cuenta Wallet.
+				</div>
+			</div>
+
+			<div class="col-12 col-sm-auto d-flex justify-content-sm-end">
+				<div class="d-flex gap-2 flex-wrap">
+					<button class="btn btn-sm bglight text-white border-0" style="pointer-events: none">
+						Enviar proforma
+					</button>
+
+					<button class="btn btn-outline-secondary btn-sm" (click)="onCronogramaClick()">
+						Ver cronograma
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

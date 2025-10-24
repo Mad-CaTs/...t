@@ -1,0 +1,26 @@
+<div class=" p-4 card px-0 px-md-4 card-border-none">
+  <div class="d-flex flex-column gap-3 card p-lg-4 border-0">
+    <app-navigation [data]="stepNavigation"
+                    [selected]="currentStep"
+                    [noBgSecondary]="true"
+                    (changeSelected)="onChangeStep($event)"></app-navigation>
+  </div>
+  <div *ngIf="cardData"
+       class="rounded  contenedor-imagen overflow-hidden rounded-top position-relative w-100 card-image-height mb-4">
+    <div class="d-flex flex-column gap-3 p-0 bg-white shadow rounded event-card"
+         style="height: 300px;">
+      <img appConcatenateSrc="{{ cardData.imagePath }}"
+           mat-card-image
+           class="w-100 h-100 rounded img-cover" />
+    </div>
+  </div>
+  <div class="row g-4">
+    <app-card *ngFor="let data of cardsData"
+              class="col-6"
+              [title]="data.title"
+              [content]="data.content"
+              [headerIcon]="data.icon"
+              (buttonClick)="navigateToComponent(data.id)">
+    </app-card>
+  </div>
+</div>

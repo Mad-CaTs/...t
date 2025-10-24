@@ -1,0 +1,60 @@
+<div class="d-flex flex-column gap-3 mt-3">
+
+  <div class="d-flex flex-row justify-content-between align-items-center">
+    <div class="px-3 fs-12" style="height: fit-content">
+    </div>
+    <app-pagination-ng-prime [rows]="rows" [totalRecords]="totalRecords" [rowsPerPageOptions]="[10, 20, 30, 40, 50]"
+      [align]="align" (pageChange)="onPageChange($event)" (refresh)="onRefresh($event)">
+    </app-pagination-ng-prime>
+  </div>
+
+  <app-table [headers]="headers" [hasCheckbox]="false" [firstEmpty]="true" [customRows]="true" [minWidth]="1500"
+    [minWidthHeader]="minWidthHeaders" [hasData]="table.data.length > 0" [loading]="isLoading">
+    <tr class="w-100 d-flex flex-row align-items-center" *ngFor="let d of table.data; let i = index">
+
+      <td class="fs-6 py-2 px-2 w-100 text-center">
+        <div class="fs-6 py-2 px-2 w-100 text-center">
+          <!-- <input class="form-check-input cursor-pointer" style="width: 18px; height: 18px" type="radio" [value]="d.id"
+            [name]="'radioGroup'" [formControl]="selected" [id]="'t-a-t-p-list-' + i" (change)="onSelectionChange(d)" /> -->
+          <label class="form-check-label fw-normal cl-muted m-0" [for]="'t-a-t-p-list-' + i">
+            {{ i + 1 }}
+          </label>
+        </div>
+      </td>
+
+      <td class="fs-6 py-2 px-2 w-100 text-center">{{ d.createDate | date:'d/M/yyyy' }}</td>
+      <td class="fs-6 py-2 px-2 w-100 text-center">{{ d.userName }}</td>
+      <td class="fs-6 py-2 px-2 w-100 text-center">{{ d.fullName }}</td>
+      <td class="fs-6 py-2 px-2 w-100 text-center">{{ d.sponsorName || '-' }}</td>
+      <td class="fs-6 py-2 px-2 w-100 text-center">
+        <div class="rounded py-1 px-3" [ngStyle]="{ 'background-color': getTransparentColor(d.color) }">
+          <span [ngStyle]="{ color: getSolidColor(d.color) }">{{ d.stateName }}</span>
+        </div>
+      </td>
+      <td class="fs-6 py-2 px-2 w-100 text-center">
+        {{ d.rangeName || '-' }}
+      </td>
+      <td class="fs-6 py-2 px-2 w-100 text-center">
+        {{ d.rama1Points || 0 }}
+      </td>
+      <td class="fs-6 py-2 px-2 w-100 text-center">
+        {{ d.rama2Points || 0 }}
+      </td>
+      <td class="fs-6 py-2 px-2 w-100 text-center">
+        {{ d.rama3Points || 0 }}
+      </td>
+      <td class="fs-6 py-2 px-2 w-100 text-center">
+        {{ d.directosPoints || 0 }}
+      </td>
+      <td class="fs-6 py-2 px-2 w-100 text-center">
+        <!-- <button type="button" class="btn btn-link detail-link" (click)="detailModal.emit(d.idUser)"> -->
+        <button type="button" class="btn d-flex flex-row gap-2 align-items-center justify-content-center mx-auto px-4 py-1 rounded cl-link no-hover"
+         (click)="onClickBtn(d)">
+          <i class="pi pi-eye" style="color: #19809e"></i>
+          <span style="color: #19809e" (click)="onClickBtn(d)">Detalle</span>
+        </button>
+
+      </td>
+    </tr>
+  </app-table>
+</div>

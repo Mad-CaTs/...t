@@ -1,0 +1,136 @@
+<div class="card px-0 px-md-4 card-border-none">
+	<app-breadcrumb [breadcrumbs]="breadcrumbItems"></app-breadcrumb>
+	<div class="ms-3 mt-4">
+		<h5>Enviar correo a {{ '@' + userData?.username }}</h5>
+	</div>
+	<div class="container">
+		<div class="row mt-2">
+			<div class="col-1 col-md-2"></div>
+			<div class="col-10 col-md-8">
+				<div class="row justify-content-center">
+					<div class="col-12 col-md-6 mb-3" *ngFor="let card of cards1; let i = index">
+						<app-point-card
+							[cardData]="card"
+							[borderless]="i === 0 ? true : false"
+							[ngClass]="{'custom-blue-border': i === 1}"
+							class="w-100">
+						</app-point-card>
+					</div>
+				</div>
+			</div>
+			<div class="col-1 col-md-2"></div>
+		</div>
+	</div>
+	<div class="ms-3 mt-4">
+		<p class="text-medium mb-1">¿Qué tipo de correo desea enviar?</p>
+		<span class="cl-slate small">
+			Enviar correos al usuario ayudará a un mejor feedback del servicio.
+		</span>
+	</div>
+	<div class="container">
+		<div class="row mt-4">
+			<div class="col-1 col-md-2"></div>
+			<div class="col-10 col-md-8">
+				<div class="row g-3">
+					<ng-container *ngFor="let card of cards2; let i = index">
+						<div class="col-12 col-md-6 d-flex">
+							<app-point-card
+								[cardData]="card"
+								[selected]="selectedCardIndex === i"
+								(click)="onCardSelect(i)"
+								class="w-100 h-100 d-flex flex-column"
+							></app-point-card>
+						</div>
+					</ng-container>
+				</div>
+			</div>
+			<div class="col-1 col-md-2"></div>
+		</div>
+	</div>
+	<div class="ms-3 mt-4">
+		<span class="text-medium">¿Deseas enviar el correo con copia a alguien?</span>
+	</div>
+	<div class="container mt-4">
+		<div class="row">
+			<div class="col-1 col-md-2"></div>
+			<div class="col-10 col-md-8">
+				<div class="row g-3">
+					<div class="col-12">
+						<app-card-correo
+							[form]="form"
+							title="Patrocinador"
+							controlNameEmail="email1"
+							controlNameCheckbox="checked1"
+							(checkedChange)="onSendToPartnerChange($event)"
+							[nombre]="fullSponsorName"
+							[apellido]="userData?.sponsorLastName"
+							[email]="userData?.sponsorEmail"
+							[showAvatar]="true"
+							[showInputEmail]="false"
+							controlName="email1"
+						>
+						</app-card-correo>
+					</div>
+					<div class="col-md-6">
+						<app-card-correo
+							[form]="form"
+							controlNameCheckbox="checked2"
+							controlNameEmail="email2"
+							[checked]="form.get('checked2')!.value"
+							[showInputEmail]="true"
+							placeholder="example@inclub.com"
+							title="Reenviar a"
+							(emailChange)="onOtherEmailChange($event, 0)"
+						></app-card-correo>
+					</div>
+					<div class="col-md-6">
+						<app-card-correo
+							[form]="form"
+							controlNameCheckbox="checked3"
+							controlNameEmail="email3"
+							[checked]="form.get('checked3')!.value"
+							[showInputEmail]="true"
+							placeholder="example@inclub.com"
+							title="Reenviar a"
+							(emailChange)="onOtherEmailChange($event, 1)"
+						></app-card-correo>
+					</div>
+				</div>
+				<div
+					class="alert alert-info d-flex flex-column flex-sm-row gap-2 align-items-center text-center text-sm-start p-2 mt-3"
+					role="alert"
+				>
+					<mat-icon class="fs-4 flex-shrink-0">info</mat-icon>
+					<span class="fw-normal fs-8 text-wrap">
+						Evite enviar demasiados correos para minimizar el riesgo de que sean identificados
+						como spam
+					</span>
+				</div>
+			</div>
+			<div class="col-1 col-md-2"></div>
+		</div>
+	</div>
+	<div class="ms-3 mt-2 mb-3">
+		<div class="row">
+			<div class="col-12 col-md-6 mb-2 mb-md-0">
+				<button class="btn btn-outline-secondary w-100" type="button" (click)="goBack()">Cancelar</button>
+			</div>
+			<div class="col-12 col-md-6">
+				<button
+					class="btn btn-secondary w-100"
+					type="button"
+					(click)="handleEmailClick()"
+					[disabled]="isEnviarDisabled"
+				>
+					<span
+						*ngIf="isLoading"
+						class="spinner-border spinner-border-sm"
+						role="status"
+						aria-hidden="true"
+					></span>
+					Enviar
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

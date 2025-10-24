@@ -1,0 +1,162 @@
+<!-- <div class="card p-4 d-flex flex-column w-100 gap-4 new-partner-page border-0">
+
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="me-2">
+          <a (click)="goBack()">Comunicados</a>
+          <i class="pi pi-chevron-right right-arrow"></i>
+        </li>
+        <li class="cl-sorbus"
+            aria-current="page">Novedades</li>
+      </ol>
+    </nav>
+    <div class="row">
+      <div class="col-lg-8 d-flex flex-column h-100">
+        <div class="card border-0 shadow-sm d-flex flex-column h-100">
+          <img appConcatenateSrc="ef81cddc-6ef7-47ba-a21b-2c48e3a5bf86-noticias.png"
+               class="card-img-top rounded"
+               alt="Novedad Principal">
+          <div class="card-body d-flex flex-column flex-grow-1">
+            <h6 class="text-orange">01 diciembre, 2023</h6>
+            <h5 class="card-title">¿Sabías qué La Joya Park Resort contará con 3 hoteles de lujo?</h5>
+            <p class="card-text">Anímate a ser parte de La Joya Park Resort donde vivirás grandes recuerdos de diversión
+              y
+              adrenalina. La Joya park resort está a sólo 60 minutos de la ciudad de Arequipa en el distrito de La Joya,
+              aquí podrás disfrutar de días de playa o practicar deportes acuáticos. Gracias a nuestra socios
+              patrocinadores es uno de los parques más grandes de Latinoamérica y cuenta con una innovadora tecnología
+              sustentable con el medioambiente, nos convierten en el único club privado con una laguna de aguas
+              cristalinas y playas de arena blanca en la Región Sur del País. Contáctate con un embajador para
+              informarte
+              más acerca de este proyecto.</p>
+
+            <ng-container>
+             
+              <img appConcatenateSrc="ef81cddc-6ef7-47ba-a21b-2c48e3a5bf86-card&la&joya.png"
+                   class="img-fluid mt-3 rounded">
+            
+            </ng-container>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 d-flex flex-column h-100">
+
+        <div class="row h-100 align-items-start prueba1">
+          <div *ngFor="let comunicado of eventList"
+               class="col-12 mb-3 d-flex align-items-start">
+            <div class="d-flex flex-row align-items-start"
+                 style="gap: 8px;">
+              <img [src]="comunicado.imageUrl"
+                   class="img-fluid"
+                   style="border-radius: 16px; width: 181.5px; height: 185.33px;"
+                   [alt]="comunicado.title">
+              <div class="ms-3">
+                <p>{{ comunicado.location }}</p>
+                <p class="text-orange"><strong>{{ comunicado.date }}</strong></p>
+                <p><strong>{{ comunicado.title }}</strong></p>
+                <a (click)="navigateToOverview()"
+                   class="text-orange"
+                   style="font-size: 1rem; text-decoration: none;">
+                  Ver Más <span class="ms-2">&rarr;</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p><strong>Otras noticias</strong></p>
+        <div class="card border-0 shadow-sm mt-auto">
+          <img appConcatenateSrc="ef81cddc-6ef7-47ba-a21b-2c48e3a5bf86-proyecto&tecnologico.png"
+               class="card-img-top"
+               alt="Otra Noticia">
+          <div class="mt-3">
+            <h6 class="text-orange">Novedades</h6>
+          </div>
+          <div class="card-body text-center">
+            <h5 class="card-title">Genera ingresos como socio </h5>
+            <p>Disfruta de los diferentes beneficios como socio de Ribera del Rio Inresort y podrás disfrutar de las
+              instalaciones los 365 días totalmente gratis. </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+
+<div class="card p-4 d-flex flex-column w-100 gap-4 new-partner-page border-0">
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="me-2">
+          <a (click)="goBack()">Comunicados</a>
+          <i class="pi pi-chevron-right right-arrow"></i>
+        </li>
+        <li class="cl-sorbus" aria-current="page">Novedades</li>
+      </ol>
+    </nav>
+    <div class="row">
+      <div class="col-lg-8 d-flex flex-column h-100">
+        <div class="card border-0 shadow-sm d-flex flex-column h-100">
+          <img appConcatenateSrc="ef81cddc-6ef7-47ba-a21b-2c48e3a5bf86-noticias.png"
+               class="card-img-top rounded"
+               alt="Novedad Principal"
+               style="height: 600px; object-fit: cover;"> 
+
+          <div class="card-body d-flex flex-column flex-grow-1">
+            <h6 class="text-orange mt-4">01 diciembre, 2023</h6>
+            <h5 class="card-title mt-4">¿Sabías qué La Joya Park Resort contará con 3 hoteles de lujo?</h5>
+            <p class="card-text">Anímate a ser parte de La Joya Park Resort donde vivirás grandes recuerdos de diversión
+              y
+              adrenalina. La Joya park resort está a sólo 60 minutos de la ciudad de Arequipa en el distrito de La Joya,
+              aquí podrás disfrutar de días de playa o practicar deportes acuáticos. Gracias a nuestra socios
+              patrocinadores es uno de los parques más grandes de Latinoamérica y cuenta con una innovadora tecnología
+              sustentable con el medioambiente, nos convierten en el único club privado con una laguna de aguas
+              cristalinas y playas de arena blanca en la Región Sur del País. Contáctate con un embajador para
+              informarte
+              más acerca de este proyecto.</p>
+            <ng-container>
+              <img appConcatenateSrc="ef81cddc-6ef7-47ba-a21b-2c48e3a5bf86-card&la&joya.png"
+                   class="img-fluid mt-3 rounded">
+            </ng-container>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 d-flex flex-column h-100">
+        <div class="row h-100 align-items-start prueba1">
+          <div *ngFor="let comunicado of eventList" class="col-12 mb-3 d-flex align-items-start">
+            <div class="d-flex flex-row align-items-start" style="gap: 8px;">
+              <img [src]="comunicado.imageUrl" class="img-fluid"
+                   style="border-radius: 16px; width: 181.5px; height: 185.33px;" [alt]="comunicado.title">
+              <div class="ms-3">
+                <p>{{ comunicado.location }}</p>
+                <p class="text-orange"><strong>{{ comunicado.date }}</strong></p>
+                <p><strong>{{ comunicado.title }}</strong></p>
+                <a (click)="navigateToOverview()" class="text-orange" style="font-size: 1rem; text-decoration: none;">
+                  Ver Más <span class="ms-2">&rarr;</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p><strong>Otras noticias</strong></p>
+        <div class="card border-0 shadow-sm">
+          <img src="https://s3.us-east-2.amazonaws.com/backoffice.documents/eventos/beneficios-ribera.png
+          "
+               class="card-img-top"
+               alt="Otra Noticia">
+          <div class="mt-3">
+            <h6 class="text-orange">Novedades</h6>
+          </div>
+          <div class="card-body text-center">
+            <h5 class="card-title">Genera ingresos como socio</h5>
+            <p>Disfruta de los diferentes beneficios como socio de Ribera del Rio Inresort y podrás disfrutar de las
+              instalaciones los 365 días totalmente gratis. </p>          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

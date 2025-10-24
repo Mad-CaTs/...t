@@ -1,0 +1,336 @@
+<ng-container *ngIf="paymentForm as form">
+	<ng-container>
+		<form [formGroup]="form" class="d-flex flex-column w-100 gap-4">
+			<div *ngIf="!pkgDetail?.isSpecialFractional && pkgDetail?.numberInitialQuote === 1">
+				<h4 class="m-0 fs-6 fw-medium">Metodos de pagos</h4>
+				<h4 class="m-0 fs-6 fw-medium text-center">Paquetes Seleccionados</h4>
+				<div class="d-flex flex-column gap-4 w-100">
+					<div class="d-flex flex-row justify-content-between w-100">
+						<span class="fs-6">Descripción: </span>
+						<span class="fs-6 fw-medium">{{ selectedPackageData?.description }}</span>
+					</div>
+					<div class="d-flex flex-row justify-content-between w-100">
+						<span class="fs-6">Precio Total: </span>
+						<span class="fs-6 fw-medium">$ {{ pkgDetail?.price }}</span>
+					</div>
+					<div class="d-flex flex-row justify-content-between w-100">
+						<span class="fs-6">Inicial: </span>
+						<span class="fs-6 fw-medium">$ {{ pkgDetail?.initialPrice }}</span>
+					</div>
+					<div class="d-flex flex-row justify-content-between w-100">
+						<span class="fs-6">Nro. de cuotas: </span>
+						<span class="fs-6 fw-medium">{{ pkgDetail?.numberQuotas }}</span>
+					</div>
+					<div class="line bg-black opacity-25 w-100"></div>
+					<h4 class="m-0 fs-6 fw-medium">Detalle</h4>
+					<div class="d-flex flex-row justify-content-between w-100">
+						<span class="fs-6"> {{ selectedPackageData?.name }}: </span>
+					</div>
+					<div class="d-flex flex-row justify-content-between w-100">
+						<span class="fs-6">Inicial: </span>
+						<span class="fs-6 fw-medium">$ {{ pkgDetail?.initialPrice }}</span>
+					</div>
+					<div class="d-flex flex-row justify-content-between w-100">
+						<span class="fs-6">Total de cuotas a pagar: </span>
+						<div>
+							<span class="fs-6 fw-medium">
+								<input type="number" id="tentacles" name="tentacles"
+									formControlName="totalNumberPaymentPaid" min="0" [max]="pkgDetail?.numberQuotas"
+									(input)="ensureNotEmpty($event)" /></span>
+							<span class="fs-6 fw-medium">$ {{ amountPaid }}</span>
+					</div>
+				</div>
+				<div class="d-flex flex-row justify-content-between w-100">
+					<span class="fs-6">Descuento: </span>
+					<span class="fs-6 fw-medium" [class.text-success]="discountAmount > 0">
+						{{ discountAmount > 0 ? '- $ ' + discountAmount.toFixed(2) : '$ 0.00' }}
+					</span>
+				</div>
+				<div class="line bg-black opacity-25 w-100"></div>
+				<div class="d-flex flex-row justify-content-between w-100">
+						<span class="fs-6">Total: </span>
+						<span class="fs-6 fw-medium">$ {{ getTotalAmountPaid }}</span>
+					</div>
+				</div>
+			</div>
+			<div class="row" *ngIf="pkgDetail?.isSpecialFractional || pkgDetail?.numberInitialQuote > 1">
+				<h4 class="mb-3 fs-6 fw-medium text-center text-md-start d-md-none d-lg-block text-uppercase">
+					Paquete Seleccionado
+				</h4>
+				<div class="col col-md-8 order-2 order-md-1">
+					<div>
+						<p-table [value]="[{}]" [tableStyle]="{ 'min-width': '50rem', height: '10rem' }">
+							<ng-template pTemplate="header">
+								<tr class="bordered rounded-top text-center">
+									<th class="bg-light fw-normal">Descripción</th>
+									<th class="bg-light fw-normal">Duración</th>
+									<th class="bg-light fw-normal">Precio</th>
+									<th class="bg-light fw-normal">Inicial</th>
+									<th class="bg-light fw-normal">N° de cuotas</th>
+								</tr>
+							</ng-template>
+							<ng-template pTemplate="body" class="w-100" let-product>
+								<tr>
+									<td class="text-center">{{ selectedPackageData?.name }}</td>
+									<td class="text-center">
+										{{ pkgDetail?.monthsDuration }}
+										{{ pkgDetail?.monthsDuration > 1 ? 'meses' : 'mes' }}
+									</td>
+									<td class="text-center">$ {{ pkgDetail?.price }}</td>
+									<td class="text-center">$ {{ pkgDetail?.initialPrice }}</td>
+									<td class="text-center">{{ pkgDetail?.numberQuotas }}</td>
+								</tr>
+							</ng-template>
+						</p-table>
+					</div>
+
+					<div>
+						<h4 class="mt-3 fs-6 fw-medium text-md-start d-md-none d-lg-block text-uppercase">
+							¿Cómo lo quiere pagar?
+						</h4>
+						<p-messages severity="info">
+							<ng-template pTemplate>
+								<mat-icon fontIcon="visibility"></mat-icon>
+								<div class="ms-2 cl-gray-700">
+									El fraccionamiento especial aplica solo para membresía VITALICIA y
+									VITALICIA PREMIUM
+								</div>
+							</ng-template>
+						</p-messages>
+					</div>
+					<div class="my-4">
+						<app-radios label="" [options]="payTypeList" class="w-100" [form]="form" verticalLayout="true"
+							(changeSelection)="onChangeSelectionPayType($event)" controlName="payType">
+						</app-radios>
+					</div>
+					
+					<!-- Sección de fraccionar pago - Solo se muestra si payType es 2 (Fraccionar pago) -->
+					<div *ngIf="paymentForm.get('payType').value === 2" class="row">
+						<div class="col-12 col-md-5 mb-3 mb-md-0">
+							<app-select class="w-100"
+								[label]="'¿Cuántas cuotas? (Máx. ' + pkgDetail.numberInitialQuote + ')'"
+								placeholder="Selecciona una opción" [form]="form"
+								[options]="getListNumberQuotes(pkgDetail?.numberInitialQuote)"
+								(onChangeSelection)="changeSelectionNumberQuotes($event)"
+								controlName="numberPaymentInitials"></app-select>
+						</div>
+						<div class="col-12 col-md-7">
+							<label class="fs-6 mb-2 cl-muted">Monto de las cuotas</label>
+							<div class="row">
+								<div class="col">
+									<p-inputNumber [showButtons]="true" inputId="stacked" mode="currency"
+										[formControl]="form.get('amount1')" currencyDisplay="symbol" currency="USD"
+										locale="en-US" />
+								</div>
+								<div class="col g-0">
+									<p-inputNumber [showButtons]="true" inputId="stacked2" mode="currency"
+										[formControl]="form.get('amount2')" currency="USD" locale="en-US" />
+								</div>
+								<div class="col">
+									<p-inputNumber [showButtons]="true" inputId="stacked3" mode="currency"
+										[formControl]="form.get('amount3')" currency="USD" locale="en-US" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col col-md-4 order-1 order-md-2 mb-md-0 mb-5">
+					<p-card header="Paquete">
+						<div class="d-flex flex-column w-100 mb-3">
+							<span class="fw-bold text-primary fs-6">{{ selectedPackageData?.description }}</span>
+						</div>
+						
+						<div class="d-flex flex-row w-100 justify-content-between align-items-center mb-2">
+							<span>Duración del paquete</span>
+							<span class="text-black">
+								{{ pkgDetail?.monthsDuration }}
+								{{ pkgDetail?.monthsDuration > 1 ? 'meses' : 'mes' }}
+							</span>
+						</div>
+						
+						<p-divider />
+						
+						<h4 class="fs-6 fw-medium text-center text-md-start d-md-none d-lg-block text-uppercase mb-3">
+							Detalle del pago
+						</h4>
+						
+						<div class="d-flex flex-row w-100 justify-content-between align-items-center mb-2">
+							<span>Inicial</span>
+							<span class="text-black">$ {{ pkgDetail?.initialPrice }}</span>
+						</div>
+						
+						<div class="d-flex flex-row w-100 justify-content-between align-items-center mb-2">
+							<span>Cuotas a pagar</span>
+							<div class="d-flex align-items-center">
+								<input type="number" id="tentacles" name="tentacles"
+									formControlName="totalNumberPaymentPaid" min="0" [max]="pkgDetail.numberQuotas"
+									(input)="ensureNotEmpty($event)" class="form-control form-control-sm me-2" 
+									style="width: 60px;" />
+								<span class="text-black">$ {{ getAmountPaid }}</span>
+							</div>
+						</div>
+
+					<p-divider />
+
+					<!-- ✅ Sección de cupón de descuento - Mostrado SIEMPRE con descuento aplicado -->
+					<div *ngIf="isCouponValid && discountAmount > 0" class="d-flex flex-row w-100 justify-content-between align-items-center mb-2 text-success">
+						<span class="fw-bold">
+							<mat-icon class="me-1" style="font-size: 18px; vertical-align: middle;">local_offer</mat-icon>
+							Descuento ({{ appliedDiscountPercent }}%)
+						</span>
+						<span class="fw-bold">- $ {{ discountAmount }}</span>
+					</div>
+
+					<p-divider *ngIf="isCouponValid && discountAmount > 0" />
+
+					<div class="fw-bold d-flex flex-row w-100 justify-content-between align-items-center fs-5">
+						<span>Total</span>
+						<span class="text-black">$ {{ getTotalAmountPaid }}</span>
+					</div>
+				</p-card>
+			</div>
+		</div>
+
+	<!-- ✅ Sección de cupón - Solo visible para colaboradores -->
+	<div class="col-12 mb-4" *ngIf="isCollaborator">
+		<div class="card">
+			<div class="card-body">
+				<h5 class="fs-6 fw-medium mb-3">
+					<mat-icon class="me-2" style="vertical-align: middle;">local_offer</mat-icon>
+					¿Tienes un cupón de descuento?
+				</h5>
+
+					<div class="row align-items-end">
+						<div class="col-12 col-md-7 mb-3 mb-md-0">
+							<label for="coupon-code" class="form-label">Código del cupón</label>
+							<input type="text" 
+								   id="coupon-code"
+							   class="form-control" 
+							   [(ngModel)]="couponCode" 
+							   placeholder="Ingresa el código del cupón"
+							   [ngModelOptions]="{standalone: true}"
+							   [disabled]="isValidatingCoupon || isCouponApplied">
+					</div>
+					<div class="col-12 col-md-5">
+						<button type="button"
+								class="btn btn-primary w-100" 
+								(click)="validateCoupon()" 
+								[disabled]="isValidatingCoupon || !couponCode || isCouponApplied">
+							<span *ngIf="!isValidatingCoupon">Validar</span>
+							<span *ngIf="isValidatingCoupon">
+								<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+								Validando...
+							</span>
+						</button>
+					</div>
+				</div>
+				
+				<div *ngIf="couponError" class="alert alert-danger mt-3 mb-0">
+					<mat-icon class="me-2" style="vertical-align: middle;">error</mat-icon>
+					{{ couponError }}
+				</div>
+				
+				<div *ngIf="isCouponValid && !couponError" class="alert alert-success mt-3 mb-0 d-flex align-items-center justify-content-between">
+					<div>
+						<mat-icon class="me-2" style="vertical-align: middle;">check_circle</mat-icon>
+						¡Cupón validado! Se aplicará un descuento del {{ appliedDiscountPercent }}% ($ {{ discountAmount }}) al total.
+					</div>
+					<button type="button" 
+							class="btn btn-sm btn-outline-danger" 
+							(click)="resetCouponState()">
+						<mat-icon style="font-size: 16px; vertical-align: middle;">close</mat-icon>
+						Quitar
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- ✅ Sección de métodos de pago -->
+	<h4 class="m-0 fs-6 fw-medium">Seleccione un medio de pago</h4>
+
+	<div class="d-flex flex-wrap gap-4 align-items-center">
+		<button *ngFor="let payment of paymentTypeListaFiltered"
+					class="d-flex flex-row gap-2 align-items-center px-4 py-1 rounded" type="button"
+					style="height: 55px" [disabled]="diablePaymentMethods" [class.border]="methodSelected !== 'bcp'"
+					[style.background-color]="methodSelected === 'bcp' ? '#EBF3FF' : 'transparent'"
+					(click)="onMedioPago(payment)">
+					<img [src]="payment.pathPicture" style="width: 92px" [alt]="'Pay Method' + payment.description"
+						[title]="payment.description" (click)="(onPaypal)" />
+				</button>
+			</div>
+
+			<div class="w-100 overflow-x-auto" *ngIf="dataTableToShow !== ''">
+				<p-table [value]="dataTableToShow" [tableStyle]="{ 'min-width': '50rem' }">
+					<ng-template pTemplate="header">
+						<tr>
+							<th class="text-center">Banco</th>
+							<th class="text-center">Operación</th>
+							<th class="text-center">Código</th>
+							<th class="text-center">Nota</th>
+							<th class="text-center">Archivo</th>
+							<th class="text-center">Moneda</th>
+							<th class="text-center">Comisión</th>
+							<th class="text-center">Monto</th>
+							<th class="text-center">Acciones</th>
+						</tr>
+					</ng-template>
+					<ng-template pTemplate="body" let-voucher let-i="rowIndex">
+						<tr>
+							<td class="debug text-center">
+								{{ voucher.paymentMethod === 'wallet' ? 'Wallet' : voucher.bankName }}
+							</td>
+
+							<td class="text-center debug">{{ voucher.operationDescription }}</td>
+							<td class="text-center">
+								{{ voucher.operationNumber || '-' }}
+							</td>
+							<td class="text-center debug">{{ voucher.note }}</td>
+							<td class="text-center debug" *ngIf="voucher.img">
+								<span *ngIf="voucher.img === '-'">{{ voucher.img }}</span>
+								<span *ngIf="voucher.img !== '-'">
+									{{ voucher.img.name }}.{{ voucher.img.extension }} ({{
+									voucher.img.size.toFixed(2)
+									}}
+									MB)</span>
+							</td>
+							<td class="text-center debug">{{ voucher.currencyDescription }}</td>
+							<td class="text-center debug">{{ voucher.comision }}</td>
+							<td class="text-center debug">{{ voucher.totalAmount }}</td>
+							<td class="text-center debug">
+								<div>
+									<mat-icon class="cursor-pointer me-2 text-secondary" fontIcon="edit"
+										(click)="editPayItem(i, voucher)"></mat-icon>
+									<mat-icon class="cursor-pointer text-secondary" fontIcon="delete"
+										(click)="deletePayItem(i, voucher)"></mat-icon>
+								</div>
+							</td>
+						</tr>
+					</ng-template>
+				</p-table>
+			</div>
+			<div *ngIf="!isPackagePaymentContext" class="d-flex flex-column gap-2 w-100">
+				<app-checkbox [form]="form" controlName="isPayLater" [disabled]="listVochersToSave.length > 0"
+					(change)="onChangeIsPayLater($event)" label="Subir comprobante de pago despues"></app-checkbox>
+
+				<app-input class="w-100 mt-2" label="" [form]="form" controlName="email"
+					placeholder="example@inclub.com"></app-input>
+			</div>
+			<div class="d-flex flex-column flex-md-row justify-content-md-between gap-2">
+				<button [disabled]="disabledUser" class="btn btn-outline-secondary" type="button"
+					(click)="onGoBack()">
+					Atrás
+				</button>
+
+				<button class="btn btn-secondary" type="submit" [disabled]="(isLoading || disabledUser)"
+					(click)="onSubmit()">
+					<span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status"
+						aria-hidden="true"></span>
+
+					Registrar
+				</button>
+			</div>
+		</form>
+	</ng-container>
+</ng-container>

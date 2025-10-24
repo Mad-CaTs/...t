@@ -1,0 +1,16 @@
+<div class="p-4 card px-0 px-md-4 card-border-none">
+  <app-navigation [data]="tabs"
+                  [selected]="currentTab"
+                  [useNewDesign]="true"
+                  (changeSelected)="setTab($event)"></app-navigation>
+
+  <div [ngClass]="{'d-block': currentTab === 1, 'd-none': currentTab !== 1}">
+    <app-migration-package ></app-migration-package>
+  </div>
+
+  <div [ngClass]="{'d-block': currentTab === 2, 'd-none': currentTab !== 2}">
+    <app-migration-portafolios ></app-migration-portafolios>
+  </div>
+
+
+</div>

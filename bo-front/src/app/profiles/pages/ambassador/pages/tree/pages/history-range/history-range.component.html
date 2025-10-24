@@ -1,0 +1,100 @@
+<div class="d-flex flex-column gap-2">
+  <app-navigation [data]="navigation" [selected]="currentTab" (changeSelected)="onTabChange($event)">
+  </app-navigation>
+
+  <div *ngIf="loading" class="d-flex justify-content-center align-items-center p-3">
+    <p-progressSpinner [style]="{ width: '2rem', height: '2rem' }" strokeWidth="3" fill="var(--surface-ground)"
+      animationDuration=".7s"></p-progressSpinner>
+    <span class="ms-2">Actualizando...</span>
+  </div>
+
+  <div *ngIf="!loading">
+    <div *ngIf="currentTab === 1">
+      <!-- Vista de las tarjetas -->
+      <div *ngIf="!showPrizeDetailsView && !showScheduleView && ranks?.length > 0">
+        <div class="container my-4">
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-3">
+            <div class="col" *ngFor="let rank of ranks" [ngClass]="{'disabled-card': rank.buttonDisabled}">
+              <app-achievements-section
+                [name]="rank.name"
+                [status]="rank.status"
+                [rank]="rank.rank"
+                [rangeCount]="rank.rangeCount"
+                [description]="rank.description"
+                [mediana]="rank.mediana"
+                [buttonDisabled]="rank.buttonDisabled"
+                [medalImage]="getMedalImage(rank.name)"
+                [enabledText]="rank.enabledText"
+                (viewPrize)="showPrizeDetails()">
+              </app-achievements-section>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Vista de detalles del premio -->
+      <div *ngIf="showPrizeDetailsView && !showScheduleView" class="container-fluid p-0">
+        <div class="d-flex align-items-center mb-3">
+          <button class="btn p-0 me-2 d-flex align-items-center" style="color: #e67e22 !important;" (click)="goBack()" onmouseover="this.style.color='#e67e22'" onmouseout="this.style.color='#e67e22'">
+            <mat-icon class="me-1">arrow_back</mat-icon>
+            <span style="text-decoration: none;">Volver</span>
+          </button>
+        </div>
+
+        <h4>Bono Auto</h4>
+
+        <div class="card p-4" *ngIf="bonusData; else noBonusData">
+          <div class="d-flex align-items-center">
+            <img [src]="getMedalImage(bonusData.range)" alt="{{ bonusData.range }}" class="img-fluid me-3" style="max-width: 100px; height: auto;" />
+            <div class="flex-grow-1">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h5 class="mb-0">Rango {{ bonusData.range }}</h5>
+                <div class="d-flex">
+                  <button class="btn btn-outline-secondary me-2" disabled>Enviar proforma</button>
+                  <button class="btn btn-primary" (click)="showSchedule()">Ver cronograma</button>
+                </div>
+              </div>
+              <p><strong>Estado:</strong> Activo</p>
+              <p><strong>Asignado:</strong> {{ bonusData.car }}</p>
+            </div>
+          </div>
+          <div class="alert alert-info mt-3 d-flex align-items-center">
+            <mat-icon class="me-2">info</mat-icon>
+            <p class="m-0">
+              Recuerda que cuentas con un bono adicional por haber alcanzado el rango {{ bonusData.range }}. No pierdas este rango, ya que de lo contrario el bono será descontado de tu cuenta Wallet.
+            </p>
+          </div>
+        </div>
+        <ng-template #noBonusData>
+          <div class="alert alert-warning">
+            No se encontraron datos del bono para este rango.
+          </div>
+        </ng-template>
+      </div>
+
+      <!-- Vista del cronograma -->
+      <div *ngIf="showScheduleView" class="container-fluid p-0">
+        <app-emerald (goBack)="hideSchedule()"></app-emerald>
+      </div>
+    </div>
+  </div>
+
+  <app-table-account-tree-ranges [dataBody]="rangeTableData" *ngIf="currentTab === 2"
+    [totalRecords]="totalRecordsCompound" (pageChange)="onPageChange($event)" (refresh)="onRefresh($event)"
+    (btnClick)="onOpenRangeModal($event)">
+  </app-table-account-tree-ranges>
+
+  <app-table-account-tree-ranges-residual [dataBody]="rangeResidualTableData" *ngIf="currentTab === 3"
+    [totalRecords]="totalRecordsResidual" (pageChange)="onPageChange($event)" (refresh)="onRefresh($event)"
+    (btnClick)="onOpenRangeModal($event)">
+  </app-table-account-tree-ranges-residual>
+
+  <app-table-account-organization-manager [dataBody]="organizationTableData" *ngIf="currentTab === 4"
+    (btnClick)="onOpenOrganizationManagerModal($event)"></app-table-account-organization-manager>
+
+  <ng-container *ngIf="currentTab === 5">
+    <router-outlet *ngIf="childActive"></router-outlet>
+    <app-my-awards *ngIf="!childActive"></app-my-awards>
+  </ng-container>
+
+</div>

@@ -1,0 +1,81 @@
+<form class="d-flex flex-column gap-2 w-100" [formGroup]="form">
+  <!-- FILA 1: Buscador / Patrocinador / Socios -->
+  <div class="row g-3 align-items-end">
+    <div class="col-12 col-md-4">
+      <label class="form-label small mb-1">Patrocinador</label>
+      <app-input class="w-100"
+        type="text"
+        placeholder="Buscar por nombre"
+        [form]="form" controlName="searchSponsor">
+      </app-input>
+    </div>
+
+    <div class="col-12 col-md-4">
+      <label class="form-label small mb-1">Socios</label>
+      <app-input class="w-100"
+        type="text"
+        placeholder="Buscar por usuario o nombre"
+        [form]="form" controlName="searchBy">
+      </app-input>
+    </div>
+  </div>
+
+  <!-- FILA 2: Rangos / Estados / Rama / Botones -->
+  <div class="row g-3 align-items-end mt-1">
+    <div class="col-12 col-md-3">
+      <label class="form-label small mb-1">Rangos</label>
+      <app-select class="w-100"
+        [options]="rangeOptions"
+        placeholder="Selecciona uno"
+        [form]="form" controlName="range">
+      </app-select>
+    </div>
+
+    <div class="col-12 col-md-3">
+      <label class="form-label small mb-1">Estados</label>
+      <app-select class="w-100"
+        [options]="optStates" placeholder="Selecciona uno"
+        [form]="form" controlName="status">
+      </app-select>
+    </div>
+
+    <div class="col-12 col-md-3">
+      <label class="form-label small mb-1">Rama</label>
+      <app-select class="w-100"
+        [options]="optBrands" placeholder="Selecciona uno"
+        [form]="form" controlName="brand">
+      </app-select>
+    </div>
+
+    <div class="col-12 col-md-3 d-flex justify-content-md-end gap-2">
+      <button
+        class="btn btn-outline-secondary"
+        type="button"
+        (click)="onExport()"
+        [disabled]="disabledUser || exporting">
+        <ng-container *ngIf="!exporting; else expLoading">Exportar</ng-container>
+        <ng-template #expLoading>
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          Exportando...
+        </ng-template>
+      </button>
+      <button class="btn btn-secondary" type="submit" (click)="onSearch()" [disabled]="isLoading || disabledUser">
+        Filtrar
+      </button>
+    </div>
+  </div>
+
+  <!-- Tabla -->
+  <app-table-account-tree-partner-list class="w-100 mt-3"
+    [dataBody]="tableData"
+    (detailModal)="onOpenDetail($event)"
+    [totalRecords]="totalRecords"
+    (pageChange)="onPageChange($event)"
+    [isLoading]="isLoading"
+    (refresh)="onRefresh($event)">
+    
+  </app-table-account-tree-partner-list>
+
+</form>
+
+

@@ -1,0 +1,397 @@
+.container {
+	padding-top: 2.5rem;
+	gap: 2rem;
+
+	.custom-select-wrapper {
+		position: relative;
+		width: 100%;
+	}
+
+	.form-row {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 1rem;
+
+		@media (max-width: 640px) {
+			grid-template-columns: 1fr;
+			gap: 0;
+		}
+	}
+
+	.custom-nationality-select {
+		width: 100%;
+		padding-right: 45px;
+		/* Espacio para la bandera */
+		background: #fff;
+		border: 1px solid #ddd;
+		border-radius: 4px;
+		font-size: 14px;
+		appearance: none;
+
+		/* Arrow personalizada */
+		background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+		background-repeat: no-repeat;
+		background-position: right 8px center;
+		background-size: 16px;
+
+		&:focus {
+			outline: none;
+			border-color: #007bff;
+			box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+		}
+
+		&:disabled {
+			background-color: #e9ecef;
+			opacity: 1;
+		}
+	}
+
+	.selected-flag {
+		position: absolute;
+		right: 30px;
+		/* Antes del icono de dropdown */
+		top: 50%;
+		transform: translateY(-50%);
+		pointer-events: none;
+		z-index: 1;
+		display: flex;
+		align-items: center;
+	}
+
+	.flag-icon {
+		width: 20px;
+		height: auto;
+		border-radius: 2px;
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+		object-fit: cover;
+	}
+
+	/* Asegurar que funcione bien con tus estilos existentes */
+	.password-container .custom-select-wrapper {
+		width: 100%;
+	}
+
+	/* Para que se vea bien en mobile */
+	@media (max-width: 768px) {
+		.custom-nationality-select {
+			padding-right: 40px;
+		}
+
+		.selected-flag {
+			right: 25px;
+		}
+
+		.flag-icon {
+			width: 18px;
+		}
+	}
+
+	/* Hover effects */
+	.custom-nationality-select:hover {
+		border-color: #007bff;
+		cursor: pointer;
+	}
+
+	/* Loading state (opcional) */
+	.custom-nationality-select:disabled {
+		cursor: not-allowed;
+		background-color: #f8f9fa;
+	}
+
+	/* Error states (si tienes validaciones) */
+	.custom-nationality-select.ng-invalid.ng-touched {
+		border-color: #dc3545;
+	}
+
+	.custom-nationality-select.ng-invalid.ng-touched:focus {
+		border-color: #dc3545;
+		box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.25);
+	}
+
+	// Estilos para los botones de acción (Guardar, Cancelar)
+	.buttons {
+		display: flex;
+		gap: 1rem;
+		width: 100%;
+		max-width: 360px;
+		margin: 1.5rem auto 0;
+	}
+
+	.buttons .btn {
+		flex: 1;
+		padding: 0.75rem;
+		border-radius: 2rem;
+		font-size: 1rem;
+		cursor: pointer;
+		border: none;
+		transition: background 0.3s ease;
+	}
+
+	.buttons .primary {
+		background: #f97316;
+		color: #fff;
+	}
+
+	.buttons .primary:hover {
+		background: #ea580c;
+	}
+
+	.buttons .secondary {
+		background: #fff;
+		color: #f97316;
+		border: 1px solid #f97316;
+	}
+
+	.buttons .secondary:hover {
+		background: #f0f7fa;
+	}
+
+	.btn.primary {
+		background: #f97316;
+		color: #fff;
+	}
+
+	.form-control-title {
+		margin-bottom: 2px;
+		font-weight: 400;
+		// border: none !important;
+	}
+
+	.form-cont {
+		width: 50%;
+		margin: 0 auto;
+		padding-bottom: 16px;
+	}
+
+	.checkbox {
+		display: flex;
+		justify-content: center;
+		gap: 0.15rem;
+		margin-top: 2rem;
+		margin-bottom: 4rem;
+	}
+
+	.checkbox label {
+		display: flex;
+		justify-content: start;
+		align-items: center;
+		gap: 0.5rem;
+		width: 80%;
+		font-size: 1.1rem;
+		line-height: 1.5;
+		color: #555;
+		cursor: pointer;
+		user-select: none;
+		border-radius: 0.25rem;
+		transition: background 0.2s ease;
+	}
+
+	.checkbox input[type='checkbox'] {
+		appearance: none;
+		width: 1.4rem;
+		height: 1.4rem;
+		margin-top: 0.15rem;
+		border: 2px solid #ccc;
+		border-radius: 0.25rem;
+		position: relative;
+		cursor: pointer;
+		transition: background 0.2s ease, border-color 0.2s ease;
+	}
+
+	.checkbox input[type='checkbox']:checked {
+		background: #0c74ad;
+		border-color: #0c74ad;
+	}
+
+	.checkbox input[type='checkbox']:checked::after {
+		content: '\2713';
+		position: absolute;
+		top: 0;
+		left: 2px;
+		color: #fff;
+		font-size: 1rem;
+		line-height: 1.4rem;
+	}
+
+	.form-group {
+		display: flex;
+		// flex-direction: row;
+		gap: 2rem;
+		justify-content: center;
+		padding-bottom: 2.6rem;
+		padding-left: 8rem;
+		padding-right: 8rem;
+
+		@media (max-width: 768px) {
+			display: block;
+			margin: 0 auto;
+			padding-left: 0rem;
+			padding-right: 0rem;
+			gap: 2rem;
+
+		}
+
+		.message {
+			color: #5f7081;
+			font-size: 0.85rem;
+			margin-top: 0.25rem;
+		}
+
+		.form-cont-doc {
+			width: 50%;
+
+			.form-group {
+				width: 100%;
+				max-width: 360px;
+				margin: 0 auto 1rem;
+				text-align: left;
+			}
+
+			.form-group label {
+				display: block;
+				font-size: 0.95rem;
+				font-weight: 500;
+				color: #333;
+				margin-bottom: 0.5rem;
+			}
+
+			.form-group input,
+			.form-group select {
+				width: 100%;
+				padding: 0.6rem;
+				border: 1px solid #ccc;
+				border-radius: 0.5rem;
+				font-size: 1rem;
+			}
+
+			.form-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+				column-gap: 1rem;
+				row-gap: 0.75rem;
+			}
+
+			.form-grid .full {
+				grid-column: 1 / -1;
+			}
+
+			.form-grid .form-group {
+				margin: 0;
+			}
+
+			.doc-group .doc-input {
+				display: flex;
+				width: 100%;
+				border: 1px solid #e5e7eb;
+				border-radius: 0.75rem;
+				background: #ffffff;
+				transition: border-color 0.2s ease;
+			}
+
+			.doc-group .doc-input:focus-within {
+				border-color: #19809e;
+			}
+
+			.doc-group .doc-input .doc-type {
+				flex: 0 0 140px;
+				background: #ffffff;
+				border-right: 1px solid #e5e7eb;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				position: relative;
+				border-top-left-radius: 0.75rem;
+				border-bottom-left-radius: 0.75rem;
+				padding: 0 0.75rem;
+			}
+
+			.doc-group .doc-input .doc-type::after {
+				content: '▼';
+				position: absolute;
+				right: 0.75rem;
+				top: 50%;
+				transform: translateY(-50%);
+				pointer-events: none;
+				color: #0c74ad;
+				font-size: 0.6rem;
+			}
+
+			.doc-group .doc-input .doc-type select {
+				width: 100%;
+				border: none;
+				background: transparent;
+				font-weight: normal;
+				font-size: 1rem;
+				padding: 0.6rem 0 0.6rem 0.75rem;
+				appearance: none;
+				cursor: pointer;
+				color: #111;
+			}
+
+			.doc-group .doc-input .doc-type select:focus {
+				outline: none;
+			}
+
+			.doc-group .doc-input input {
+				flex: 1;
+				border: none;
+				outline: none;
+				padding: 0.6rem 0.75rem;
+				font-size: 1rem;
+				background: transparent;
+				color: #111;
+			}
+		}
+	}
+
+	.error-message {
+		color: #e74c3c !important;
+		/* Rojo para errores */
+		font-weight: 500;
+		font-size: 12px;
+	}
+
+	.styled-input.error {
+		border-color: #e74c3c !important;
+		/* Borde rojo cuando hay error */
+		box-shadow: 0 0 5px rgba(231, 76, 60, 0.3);
+	}
+
+	.styled-input.error:focus {
+		border-color: #e74c3c !important;
+		box-shadow: 0 0 8px rgba(231, 76, 60, 0.4);
+	}
+
+	/* Mantén tu estilo normal para mensajes sin error */
+	.message:not(.error-message) {
+		color: #666;
+		/* Color normal para mensajes informativos */
+		font-size: 12px;
+	}
+
+	.password-container {
+		width: 100%;
+
+		.styled-input {
+			padding: 10px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			font-size: 16px;
+			transition: border-color 0.3s ease;
+			width: 100%;
+		}
+
+		.styled-input:focus {
+			// outline: none;
+			border-color: #6c63ff;
+		}
+
+		.styled-input::placeholder {
+			color: #999;
+		}
+
+		.styled-input-pass {
+			padding-right: 60px;
+		}
+	}
+}

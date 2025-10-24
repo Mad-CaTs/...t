@@ -1,0 +1,46 @@
+<!-- Modal de PayPal -->
+<div class="modal-overlay" *ngIf="isOpen" (click)="onClose()">
+  <div class="modal-content paypal-modal" (click)="$event.stopPropagation()">
+    <!-- Header del Modal -->
+    <div class="modal-header">
+      <div class="paypal-logo">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal" />
+      </div>
+      <div class="header-right">
+        <button class="close-button" (click)="onClose()">×</button>
+        <span>Pago con Paypal</span>
+      </div>
+    </div>
+
+    <!-- Contenido del Modal -->
+    <div class="paypal-content">
+      <div class="paypal-description">
+        Te redireccionaremos a PayPal para completar el pago de forma segura. El precio del plan aparecerá en dólares.
+      </div>
+
+      <div class="payment-summary">
+        <div class="summary-item">
+          <span>Total a pagar</span>
+          <span class="total-amount">$ 6.50</span>
+        </div>
+      </div>
+
+      <div class="paypal-actions">
+        <button 
+          class="paypal-button" 
+          (click)="redirectToPayPal()"
+          [disabled]="isRedirecting"
+        >
+          <span *ngIf="!isRedirecting">Continuar con Paypal</span>
+          <span *ngIf="isRedirecting">Redirigiendo...</span>
+        </button>
+      </div>
+
+      <div class="paypal-legal">
+        Al hacer clic en Pagar, aceptar 
+        <a href="#" class="legal-link">Términos y Condiciones</a> & 
+        <a href="#" class="legal-link">Políticas de protección de datos personales</a>.
+      </div>
+    </div>
+  </div>
+</div>

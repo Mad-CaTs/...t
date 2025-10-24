@@ -1,0 +1,564 @@
+{
+	"header": {
+		"slogan": "Club de Inversión",
+		"menuItems": [
+			{
+				"label": "Ñepyrũ"
+			},
+			{
+				"label": "Umi mba’e ojejapóva",
+				"subItems": [
+					{
+						"label": "Inmuebles rehegua"
+					},
+					{
+						"label": "Tecnológico rehegua"
+					},
+					{
+						"label": "Ambue tembiaporã"
+					}
+				]
+			},
+			{
+				"label": "Juruja"
+			},
+			{
+				"label": "Avarekoha"
+			},
+			{
+				"label": "Ñembopyahu"
+			},
+			{
+				"label": "Calendario rehegua"
+			},
+			{
+				"label": "Umi mba’e ojehúva"
+			}
+		],
+		"languageTitle": "Ñe’ẽnguéra",
+		"languageInputPlaceholder": "Eheka ñe’ẽ",
+		"languageInputLabel": "Buscador",
+		"languages": [
+			"Árabe ",
+			"Alemán ñe’ẽ ",
+			"Bengali ",
+			"Búlgaro ñe’ẽ ",
+			"Checo ",
+			"China-pe ",
+			"Karaiñe'ẽ ",
+			"Francés ñe’ẽme ",
+			"Portugués ñe’ẽ ",
+			"Inglés ",
+			"Griego ñe’ẽme ",
+			"Guarani ",
+			"Hindi ñe’ẽ ",
+			"Húngaro ",
+			"Indonesio ñe’ẽ ",
+			"Italiano ñe’ẽ ",
+			"Japonés ñe’ẽ ",
+			"Coreano ñe’ẽ ",
+			"Holandés ñe’ẽ ",
+			"Polaco ñe’ẽ ",
+			"Ruso ñe’ẽ ",
+			"Telugu Ñe’ẽ ",
+			"Tailandés ",
+			"Tagalo rehegua ",
+			"Turco ñe’ẽ ",
+			"Ucrania-ygua ",
+			"Vietnam-ygua ",
+			"Rumania-pe "
+		]
+	},
+	"footer": {
+		"contactInformation": {
+			"phone": "(01) 618 5118 rehegua",
+			"email": "techapyrã@inclub.com.pe"
+		},
+		"sections": [
+			"Soluciones rehegua",
+			"EnResortos Ribera del Río-pe",
+			"EnResortos La Joya-pe",
+			"KeOla rehegua",
+			"Ñemuha ojeporúva",
+			"Ore-ñande",
+			"Blog rehegua",
+			"Porandu ojejapóva jepi",
+			"Cliente jeike",
+			"Guerojerapuku",
+			"Jekuaaverã",
+			"Tekome'ẽhe'íva",
+			"Umi política privacidad rehegua",
+			"Ñe’ẽme’ẽ ha Ñe’ẽme’ẽ",
+			"Aranduka denuncia rehegua"
+		]
+	},
+	"home": {
+		"carousel": {
+			"carouselEntry": "OÑEMBOJOPYRU HAGUÃ PE...",
+			"carouselTitle": "ARAPY INCLUB?",
+			"carouselText": "Maymávape ojeguerohory. ",
+			"carouselBtn1": "¡Ejoaju ko'ágã!",
+			"carouselBtn2": "Jeike"
+		},
+		"keola": {
+			"cta": "Ha orredimi código “UNETEKEOLA” ohupyty haguã punto.",
+			"btn": "Google Play rehegua",
+			"titles": ["Emboguejy pe aplicación Keola rehegua", "Umi ipyahuvéva", "Peinvita ha pegana"]
+		},
+		"lastUpdates": {
+			"title": "Ñembopyahu ipyahuvéva",
+			"description": "¡Roipota pesẽ porã ha pemongakuaa pene negocio ha’e haĝua pe pionero exitoso roikuaáva peẽ ha’eha! ",
+			"button": "Mbopyahu!"
+		},
+		"howWorks": {
+			"title": "Mba'éichapa oiko",
+			"subtitle": "Eñepyrũ 3 Paso Sencillo-pe",
+			"steps": [
+				{
+					"title": "Ejeregistra",
+					"description": "Emoinge ne patrocinador ha emohu’ã ne marandu ha ejapo ne ñe’ẽñemi."
+				},
+				{
+					"title": "Ojeporeka umi Producto rehe",
+					"description": "Ehecháke umi mba’e’oka ore portal Inclub-pe. "
+				},
+				{
+					"title": "Ñerumonga",
+					"description": "Oĩmbáma! "
+				}
+			]
+		},
+		"cards": [
+			{
+				"title": "Maletín rehegua",
+				"description": "Eike ha eike ore inmobiliario, proyecto tecnológico ha hetave mba'épe.",
+				"button": "Ejeporeka hetave mba’e"
+			},
+			{
+				"title": "Avarekoha",
+				"description": "Eñembohysýi umi producto tuichávape orekóva tuicha potencial de ganancia.",
+				"button": "Ejeporeka hetave mba’e"
+			},
+			{
+				"title": "Juruja",
+				"description": "Oiméramo reime dispuesto remoĩvo tembiapo, InClub ha’e pe mba’yrumýi ndegueraháva rehosehápe.",
+				"button": "Ejeporeka hetave mba’e"
+			}
+		],
+		"testimonialsSection": {
+			"cardPrefix": "Miembro guive",
+			"heading": "Opa mba’e reikotevẽva ha’e peteĩ teléfono nde pópe reñembojoaju haĝua pe oportunidad de negocio de toda la vida ndive.",
+			"button": "Ejeregistra ko'ágã",
+			"testimonials": [
+				{
+					"text": "Reñeha'ãmbaite ha reñeha'ã porãramo, Inclub ombohapekuaa ne rekove ha ombojegua opaite ne ñe'ẽngue",
+					"name": "Elias Vargas",
+					"since": "2020"
+				},
+				{
+					"text": "Mbohapy mba'e añetegua nde reikotevẽva ko yvy ape ári reiko porã hag̃ua: Tupa renda, nde reko ha ne ñe'ẽngue renda",
+					"name": "Paul Villacorta",
+					"since": "2020"
+				},
+				{
+					"text": "Ndaipóri mba'e vaiha reiko asy, mba'e vaiha ha'e nde reñeha'ã'ỹre, reiko asy ha nderehechakuaái ne ñe'ẽngue, araka'eve ndaipóri pytu'u oñepyrũ hag̃ua",
+					"name": "Mery Livias",
+					"since": "2021"
+				},
+				{
+					"text": "Nde ikatu reñe'ẽ porãve nde rekove rupive nde ñe'ẽ rupive",
+					"name": "Abel Meza",
+					"since": "2020"
+				}
+			]
+		}
+	},
+	"products": {
+		"navigation": ["Inmuebles rehegua", "Tech", "Umi proyecto oúva"],
+		"items": [
+			{
+				"title": "Inresortos Ríbera del Río-pe",
+				"description": "Evy'a umi beneficio ore Hotel Club Resort-pe ha eiko miembro ramo. ",
+				"buttonText": "Hetave marandu"
+			},
+			{
+				"title": "Inresortes La Joya rehegua",
+				"description": "Diversión familiar, naturaleza ha ganancia tekove pukukue javeve. ",
+				"buttonText": "Hetave marandu"
+			},
+			{
+				"title": "Redes Keola rehegua",
+				"description": "Peinvita ha pegana, peikuaa umi beneficio orekóva pe app. ",
+				"buttonText": "Hetave marandu"
+			}
+		],
+		"nextProjects": {
+			"title": "Romba’apo hína",
+			"description": "Ko'ágã equipo Inclub oime proceso creativo ohechauka haguã umi proyecto oúva. ",
+			"buttonText": "Mbopyahu!"
+		}
+	},
+	"productDetail": {
+		"aboutUsTitle": "Ore rehegua",
+		"aboutBtnText": "Aikuaase hetave mba’e",
+		"products": [
+			{
+				"aboutTitle": "Ysyry rembe’ýpe",
+				"aboutDescription": "Ore ha'e peteĩ Club Resort opytáva Cieneguilla-pe, 45 minutos Lima-gui. ",
+				"perkPreTitle": "Eaprovecha ñande...",
+				"perktitle": "Umi mba’e ohasava’ekue tesaráipe",
+				"perkDescription": "Pe retiro perfecto umi ohekávape ĝuarã peteĩ escapada ha experiencia de aventura ijojaha’ỹva. ",
+				"cards": [
+					{
+						"title": "Hotel-kuéra",
+						"description": "Káda koty Ribera del Río-pegua ojejapo rekomparti hag̃ua umi rehayhúva ndive; "
+					},
+					{
+						"title": "Umi mba’e ohasava’ekue",
+						"description": "Roikuave'ê hetaiterei experiencia ocio ha recreativa katuete nde cautiva. "
+					},
+					{
+						"title": "Restaurante-kuéra",
+						"description": "Akóinte iporã reñembopiro’y, ha upévarã, ore ‘Restaurante Ribera del Río’ ndeguerohory ha neinvita revy’a haguã opáichagua tembi’u típico nacional, regional ha criollo."
+					}
+				]
+			},
+			{
+				"aboutTitle": "Pe joya",
+				"aboutDescription": "Ore ha'e peteĩ Club Resort opytáva Arequipa-pe, 45 minutos-nte táva Arequipa-gui. ",
+				"perkPreTitle": "Eaprovecha ñande...",
+				"perktitle": "Umi mba’e ohasava’ekue tesaráipe",
+				"perkDescription": "Pe retiro perfecto umi ohekávape ĝuarã peteĩ escapada ha experiencia de aventura ijojaha’ỹva. ",
+				"cards": [
+					{
+						"title": "Piscina-kuéra",
+						"description": "Káda piscina La Joya-pe ojejapo rekomparti haĝua umi rehayhúva ndive; "
+					},
+					{
+						"title": "Umi mba’e ohasava’ekue",
+						"description": "Roikuave'ê hetaiterei experiencia ocio ha recreativa katuete nde cautiva. "
+					},
+					{
+						"title": "Parque Resort rehegua",
+						"description": "Parque acuático iporãva orekóva tobogán colorido; "
+					}
+				]
+			},
+			{
+				"aboutTitle": "Keola rehegua",
+				"aboutDescription": "¡Eju porãite Keola-pe, pe app paha rejuhúvo opaite ne mba’e rehayhuvéva peteĩ hendápe! ",
+				"perkPreTitle": "Eaprovecha ñande...",
+				"perktitle": "Keola Mba’eporã",
+				"perkDescription": "Einvita ha egana, edescubri umi beneficio orekóva solicitud. ",
+				"cards": [
+					{
+						"title": "Umi mba’e ojejapóva",
+						"description": "Eikuaa opaichagua mba’e ha categoría. "
+					},
+					{
+						"title": "Ñemuhakuéra",
+						"description": "Emohenda nde tenda ha emohenda ne mba’erepy, eme’ẽvo peteĩ servicio de entrega calidad ha eficiente."
+					},
+					{
+						"title": "Me'ẽ",
+						"description": "Reikotevẽpa tembi’u, pohã? "
+					}
+				]
+			}
+		]
+	},
+	"oportunity": {
+		"title": "Juruja",
+		"description": "Ojepe’a oimeraẽvape, taha’e ha’éva experiencia, ubicación térã circunstancia.",
+		"sections": [
+			{
+				"pre": "Egana nde influencia reheve",
+				"title": "Maymáva ha’e peteĩ micro influenciado",
+				"content": "Mayma tapicha ha’e peteĩ microinfluenciador. "
+			},
+			{
+				"pre": "Che arrecomenda umi producto de calidad",
+				"title": "Umi producto de punta, omoîva tape industria-pe",
+				"content": "Ára ha ára romomarandu umi producto ha servicio ore angirũ ha ore rogayguápe. "
+			},
+			{
+				"pre": "Eaprende ne irũnguéragui",
+				"title": "Opa mbaʼe reikotevẽva resẽ porã hag̃ua",
+				"content": "Rokomparti umi mba’ekuaa ore especialista-kuéragui, oñeinspiráva roipota haguére ojejapo redes rentabilidad hetave opavavépe ĝuarã ha umi afiliado-kuérape ĝuarã oikuaa haĝua mba’éichapa ogenera activo."
+			},
+			{
+				"pre": "Plan de compensación rehegua",
+				"title": "Ore Plan de Compensación ha’e pe ipu’akavéva ko industria-pe",
+				"content": "Roipytyvõ tapichakuérape omopu’ã haĝua peteĩ cartera de inversiones inteligente ha ohupyty haĝua pe libertad financiera oñeha’arõva’ekue hetaiterei beneficio reheve, ndaipóri ambue club de inversión-icha."
+			}
+		],
+		"testimonials": {
+			"pre": "Testimonios rehegua",
+			"title": "Umi tembiasakue osẽ porãva",
+			"items": [
+				{
+					"text": "Peteĩ persóna oikóva yma guarépe arakaʼeve ndosẽporãmoʼãiramo koʼág̃arupi, ha saʼive amo gotyove",
+					"name": "Elías Vargas",
+					"since": "2020-pe"
+				},
+				{
+					"text": "Reikotevê 3 mba'énte ko mundo-pe revy'a haguã: Jerovia Ñandejárare, Jerovia ndejehe ha Jerovia nde képe",
+					"name": "Paul Villacorta",
+					"since": "2020-pe"
+				},
+				{
+					"text": "Ndaha'éi ivaíva ha'e Mboriahu, pe ivaíva ha'e araka'eve noñeha'ãi, omano Mboriahu ha Sueño'ỹre, Araka'eve ndaha'éi tardeiterei oñepyrũ haguã",
+					"name": "Mery Livias",
+					"since": "2020-pe"
+				},
+				{
+					"text": "Ikatu reme’ẽ pe discurso iporãvéva nde rekovépe, ne ñe’ẽgui.",
+					"name": "Abel Meza",
+					"since": "2020-pe"
+				}
+			]
+		}
+	},
+	"comunity": {
+		"title": "Ñande Comunidad",
+		"description": "Pe éxito iporãve oñekomparti jave. ",
+		"sections": [
+			{
+				"pre": "EKAKUAA HA EÑEMBOGUATA ORE NDIVY",
+				"title": "Umi afiliado oĩva ko yvy ape ári",
+				"content": "Red de afiliados tuichavéva ha ipoderosovéva ko'ã árape América Latina-pe ha'e, sin duda, Inclub. "
+			},
+			{
+				"pre": "Reconocimiento ha umi mba’e ojehúva",
+				"title": "Millones de personas ogueromandu’áta nde éxito.",
+				"content": "Roñemomba’eguasu increíblemente pe tembiapo pohýi ha dedicación omoĩva cada empresario inegocio-pe. "
+			},
+			{
+				"pre": "TEMBIAPORÃ HA ÑE’ẼME’Ẽ",
+				"title": "Opa mbaʼe reikotevẽva resẽ porã hag̃ua.",
+				"content": "Roipytyvõ tapichakuérape omoheñói haguã cartera de inversiones inteligente ha ohupyty haguã libertad financiera oñeha'ãrõitéva. "
+			}
+		],
+		"inspiration": {
+			"title": "Moapytu'ũroky",
+			"subtitle": "Comunidad Ñe’ẽ",
+			"testimonials": [
+				{
+					"text": "Inclub ha'e che rekove ha upévare araha en serio.",
+					"name": "Elías Vargas",
+					"since": "2020-pe"
+				},
+				{
+					"text": "Inclub oime ko'ápe omoambue haguã tapicha rekove.",
+					"name": "Paul Villacorta",
+					"since": "2020-pe"
+				},
+				{
+					"text": "Inclub ome'ê ñandéve pa'û ñamoambue haguã avei ambue tapicha rekove.",
+					"name": "Mery Livias",
+					"since": "2020-pe"
+				},
+				{
+					"text": "Umi afiliado oñeme'ê jopói éxito orekóva gracias masa de usuarios.",
+					"name": "Abel Meza",
+					"since": "2020-pe"
+				}
+			]
+		}
+	},
+	"news": {
+		"noticeLabel": "Marandu",
+		"titleMain": "NOVELIDAD",
+		"descriptionMain": "Pe refugio perfecto ojedisfruta haĝua familia ha amigokuéra ndive",
+		"commonEventsCountry": "Lima Perúpe",
+		"commonEventsBtn": "ehechave",
+		"content": [
+			{
+				"date": "14 jasypoteĩ ary 2023-pe",
+				"title": "Oñemomarandu porã, taller ñe’ẽ ha empresa rehegua"
+			},
+			{
+				"title": "Nde destino de compras en línea",
+				"description": "Peinvita ha pegana, peikuaa umi beneficio orekóva pe app. "
+			},
+			{
+				"title": "Proyecto inmobiliario rehegua",
+				"description": "Umi tendota Inclub-gua ovy'a peteî lanzamiento increíble proyecto inmobiliario Ribera del Río Cieneguilla-pe."
+			},
+			{
+				"title": "Encumbra Ñepyrũrã",
+				"description": "Umi tendota Inclub-gua omombarete ñande miembro-kuérape ha’e haĝua tendota industria de redes en línea-pe."
+			},
+			{
+				"title": "Nde destino de compras en línea",
+				"description": "Peinvita ha pegana, peikuaa umi beneficio orekóva pe app. "
+			},
+			{
+				"title": "Proyecto tecnológico rehegua",
+				"description": "Umi tendota Inclub-gua ovy'a peteî lanzamiento increíble proyecto inmobiliario Ribera del Río Cieneguilla-pe."
+			},
+			{
+				"title": "Inresortos Ríbera del Río-pe",
+				"description": "Umi tendota Inclub-gua omombarete ñande miembro-kuérape ha’e haĝua tendota industria de redes en línea-pe."
+			}
+		]
+	},
+	"newsDetail": {
+		"date": "26 jasypoteĩ ary 2023-pe",
+		"title": "Pe refugio perfecto ojedisfruta haĝua familia ha amigokuéra ndive",
+		"description": "La Joya park resort opyta 60 minutos-nte táva Arequipa-gui distrito La Joya-pe, ko'ápe ikatu ojevy'a ára playa-pe térã ojejapo deportes acuáticos. ",
+		"content": [
+			{
+				"date": "14 jasypoteĩ ary 2023-pe",
+				"title": "Oñemomarandu porã, taller ñe’ẽ ha empresa rehegua"
+			},
+			{
+				"date": "29 jasypoteĩ ary 2023-pe",
+				"title": "Oike LEDERSHIP Sistema Educativo rehegua"
+			},
+			{
+				"date": "15 jasypoteĩ ary 2023-pe",
+				"title": "Oike sistema educativo Testimonios de Éxito rehegua"
+			}
+		]
+	},
+	"calendar": {
+		"title": "Calendario rehegua",
+		"subtitle": "Jasyporundy",
+		"filters": {
+			"searchLabel": "Buscador",
+			"searchPlaceholder": "Eheka pe aty térã taller",
+			"options": ["Ko árape", "Arapokõindy pukukue", "Jasy jave"]
+		}
+	},
+	"eventPage": {
+		"upcommingEventsTitle": "Umi mba’e oikótava",
+		"upcomingEvents": [
+			{
+				"date": "14 jasypoteĩ ary 2023-pe",
+				"title": "Oñemomarandu porã, taller ñe’ẽ ha empresa rehegua"
+			},
+			{
+				"date": "29 jasypoteĩ ary 2023-pe",
+				"title": "Sistema Educativo Inclub LIDREADO"
+			},
+			{
+				"date": "15 jasypoteĩ ary 2023-pe",
+				"title": "Oike sistema educativo Testimonios de Éxito rehegua"
+			}
+		],
+		"pastEventsTitle": "Umi mba’e oikova’ekue yma",
+		"pastEvents": [
+			{
+				"date": "12 jasypoteĩ ary 2023-pe",
+				"title": "Sistema Educativo Inclub Club de Lectura rehegua"
+			},
+			{
+				"date": "10 jasypoteĩ ary 2023-pe",
+				"title": "Oike LEDERSHIP Sistema Educativo rehegua"
+			},
+			{
+				"date": "8 jasypoteĩ ary 2023-pe",
+				"title": "Oike Sistema Educativo Testimonios de Éxito rehegua"
+			}
+		],
+		"trendsTitle": "Tendencias rehegua"
+	},
+	"eventsDetail": {
+		"backLabel": "Jujey",
+		"resumeTitle": "Mombyky",
+		"learnTitle": "Mbaʼépa reaprendéta?"
+	},
+	"events": [
+		{
+			"title": "Oñemomarandu porã, taller ñe’ẽ ha empresa rehegua",
+			"date": "14 jasypoteĩ ary 2023-pe",
+			"type": "Liñoitére oĩva",
+			"duration": "Ipukukue aproximadamente: 22 minuto.",
+			"positiveReviews": "98% ojehecha porã (567).",
+			"summary": "¿Reipotavépa reñemongeta porãve pe ámbito de negocios-pe? ",
+			"learn": [
+				"Oñemoporãve katupyry presentación ha negociación rehegua",
+				"Eaprende remombeʼu porã ha hekopete",
+				"Ndojoguái ambue taller teórico-pe, ko taller rupive ikatu remoĩ pya’e umi mba’e reikuaava’ekue en práctica.",
+				"Ejercicio ha dinámica de grupo rupive ikatúta reñembokatupyry nde katupyry comunicación rehegua ha pya e rehupyty retroalimentación umi tapicha katupyrygui ko tema rehegua. ",
+				"Ha hetave mba’e."
+			]
+		},
+		{
+			"date": "29 jasypoteĩ ary 2023-pe",
+			"title": "Oike Sistema Educativo: Tendota",
+			"type": "Liñoitére oĩva",
+			"duration": "Ipukukue aproximadamente: 22 minuto.",
+			"positiveReviews": "98% ojehecha porã (567).",
+			"summary": "¿Reipotavépa reñemongeta porãve pe ámbito de negocios-pe? ",
+			"learn": [
+				"Oñemoporãve katupyry presentación ha negociación rehegua",
+				"Eaprende remombeʼu porã ha hekopete",
+				"Ndojoguái ambue taller teórico-pe, ko taller rupive ikatu remoĩ pya’e umi mba’e reikuaava’ekue en práctica.",
+				"Ejercicio ha dinámica de grupo rupive ikatúta reñembokatupyry nde katupyry comunicación rehegua ha pya e rehupyty retroalimentación umi tapicha katupyrygui ko tema rehegua. ",
+				"Ha hetave mba’e."
+			]
+		},
+		{
+			"date": "15 jasypoteĩ ary 2023-pe",
+			"title": "Oike Sistema Educativo: Tembiasakue Éxito rehegua",
+			"type": "Liñoitére oĩva",
+			"duration": "Ipukukue aproximadamente: 22 minuto.",
+			"positiveReviews": "98% ojehecha porã (567).",
+			"summary": "¿Reipotavépa reñemongeta porãve pe ámbito de negocios-pe? ",
+			"learn": [
+				"Oñemoporãve katupyry presentación ha negociación rehegua",
+				"Eaprende remombeʼu porã ha hekopete",
+				"Ndojoguái ambue taller teórico-pe, ko taller rupive ikatu remoĩ pya’e umi mba’e reikuaava’ekue en práctica.",
+				"Ejercicio ha dinámica de grupo rupive ikatúta reñembokatupyry nde katupyry comunicación rehegua ha pya e rehupyty retroalimentación umi tapicha katupyrygui ko tema rehegua. ",
+				"Ha hetave mba’e."
+			]
+		},
+		{
+			"date": "12 jasypoteĩ ary 2023-pe",
+			"title": "Oike Sistema Educativo: Club de Libros",
+			"type": "Liñoitére oĩva",
+			"duration": "Ipukukue aproximadamente: 22 minuto.",
+			"positiveReviews": "98% ojehecha porã (567).",
+			"summary": "¿Reipotavépa reñemongeta porãve pe ámbito de negocios-pe? ",
+			"learn": [
+				"Oñemoporãve katupyry presentación ha negociación rehegua",
+				"Eaprende remombeʼu porã ha hekopete",
+				"Ndojoguái ambue taller teórico-pe, ko taller rupive ikatu remoĩ pya’e umi mba’e reikuaava’ekue en práctica.",
+				"Ejercicio ha dinámica de grupo rupive ikatúta reñembokatupyry nde katupyry comunicación rehegua ha pya e rehupyty retroalimentación umi tapicha katupyrygui ko tema rehegua. ",
+				"Ha hetave mba’e."
+			]
+		},
+		{
+			"date": "10 jasypoteĩ ary 2023-pe",
+			"title": "Oike Sistema Educativo: Tendota",
+			"type": "Liñoitére oĩva",
+			"duration": "Ipukukue aproximadamente: 22 minuto.",
+			"positiveReviews": "98% ojehecha porã (567).",
+			"summary": "¿Reipotavépa reñemongeta porãve pe ámbito de negocios-pe? ",
+			"learn": [
+				"Oñemoporãve katupyry presentación ha negociación rehegua",
+				"Eaprende remombeʼu porã ha hekopete",
+				"Ndojoguái ambue taller teórico-pe, ko taller rupive ikatu remoĩ pya’e umi mba’e reikuaava’ekue en práctica.",
+				"Ejercicio ha dinámica de grupo rupive ikatúta reñembokatupyry nde katupyry comunicación rehegua ha pya e rehupyty retroalimentación umi tapicha katupyrygui ko tema rehegua. ",
+				"Ha hetave mba’e."
+			]
+		},
+		{
+			"date": "8 jasypoteĩ ary 2023-pe",
+			"title": "Oike Sistema Educativo: Tembiasakue Éxito rehegua",
+			"type": "Liñoitére oĩva",
+			"duration": "Ipukukue aproximadamente: 22 minuto.",
+			"positiveReviews": "98% ojehecha porã (567).",
+			"summary": "¿Reipotavépa reñemongeta porãve pe ámbito de negocios-pe? ",
+			"learn": [
+				"Oñemoporãve katupyry presentación ha negociación rehegua",
+				"Eaprende remombeʼu porã ha hekopete",
+				"Ndojoguái ambue taller teórico-pe, ko taller rupive ikatu remoĩ pya’e umi mba’e reikuaava’ekue en práctica.",
+				"Ejercicio ha dinámica de grupo rupive ikatúta reñembokatupyry nde katupyry comunicación rehegua ha pya e rehupyty retroalimentación umi tapicha katupyrygui ko tema rehegua. ",
+				"Ha hetave mba’e."
+			]
+		}
+	]
+}

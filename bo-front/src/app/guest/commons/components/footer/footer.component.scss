@@ -1,0 +1,51 @@
+@use 'guest-vars.scss' as var;
+
+footer {
+    background-color: var.$blue-dark;
+    color: var.$white;
+    display: flex;
+    flex-direction: row;
+    gap: 4rem;
+    padding: 1rem 4rem;
+    justify-content: flex-end;
+    align-items: center;
+
+    @media screen and (max-width: var.$lg) {
+        padding: 1rem 2rem;
+        gap: 2rem;
+        justify-content: center;
+    }
+
+    @media screen and (max-width: var.$sm) {
+        flex-direction: column;
+        align-items: center;
+        padding: 1rem;
+        gap: 1rem;
+    }
+}
+
+p {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 400;
+    color: var.$white;
+
+    @media screen and (max-width: var.$sm) {
+        font-size: 0.875rem;
+    }
+}
+
+a {
+    color: var.$white;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 400;
+
+    &:hover {
+        text-decoration: underline;
+    }
+
+    @media screen and (max-width: var.$sm) {
+        font-size: 0.875rem;
+    }
+}

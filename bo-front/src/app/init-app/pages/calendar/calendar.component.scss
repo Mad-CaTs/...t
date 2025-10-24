@@ -1,0 +1,44 @@
+.card-container {
+	width: 100%;
+	display: grid;
+	grid-template-columns: 100%;
+	max-width: 1500px;
+	margin: 0 auto;
+
+	& app-event-card {
+		max-width: 500px;
+	}
+}
+
+.calendar-filter {
+	background-color: #f6f6f6;
+	border: 1px solid #acafb3;
+
+	&__wrapper {
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100px;
+		border: 2px solid #fe9200;
+		transition: transform ease-in-out 500ms;
+	}
+
+	&__opt {
+		text-align: center;
+		width: 100px;
+		cursor: pointer;
+		transition: all ease-in-out 500ms;
+	}
+}
+
+@media (min-width: 768px) {
+	.card-container {
+		grid-template-columns: calc((100% - 1.5rem) / 2) calc((100% - 1.5rem) / 2);
+	}
+}
+
+@media (min-width: 1336px) {
+	.card-container {
+		grid-template-columns: repeat(3, calc((100% - 2rem) / 3));
+	}
+}

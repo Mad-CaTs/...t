@@ -1,0 +1,18 @@
+.percentage-icon-container {
+  position: relative; /* Necesario para posicionar el porcentaje dentro del ícono */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px; /* Ajusta el tamaño del ícono */
+  height: 50px; /* Ajusta el tamaño del ícono */
+}
+
+.percentage-value {
+  position: absolute; /* Posiciona el porcentaje dentro del ícono */
+  font-size: 16px; /* Tamaño del texto del porcentaje */
+  color: #ffffff; /* Color blanco para mayor contraste */
+  font-weight: bold;
+  text-align: center;
+  z-index: 2; /* Asegura que el porcentaje esté por encima del ícono */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); /* Mejora la legibilidad con sombra */
+}

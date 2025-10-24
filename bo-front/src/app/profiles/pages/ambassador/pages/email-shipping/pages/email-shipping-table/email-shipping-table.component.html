@@ -1,0 +1,126 @@
+<div class="d-flex flex-column gap-3 card p-lg-4 border-0">
+  <h1 class="m-0 fs-4 text-black fw-medium">Envío de Correos</h1>
+
+  <div class="row">
+    <div class="col-12 col-md-4">
+      <div class="d-flex align-items-center gap-2">
+        <div class="w-100">
+          <label for="searchBy" class="form-label">Buscar por usuario</label>
+          <p-autoComplete
+            id="searchBy"
+            [suggestions]="suggestions"
+            (completeMethod)="searchUsers($event)"
+            field="displayName"
+            placeholder="Ingrese su username o nombre"
+            [minLength]="2"
+            [forceSelection]="true"
+            [(ngModel)]="selectedUser"
+            (onClear)="onClearUser()"
+            styleClass="w-100"
+          >
+            <ng-template let-user pTemplate="item">
+              <div class="d-flex align-items-center gap-2">
+                <div
+                  class="avatar rounded-circle cl-sorbus bg-fe d-flex justify-content-center align-items-center"
+                  style="width: 30px; height: 30px;"
+                >
+                  {{ getInitials(user?.name, user?.lastName) }}
+                </div>
+                <div>
+                  <strong>{{ user?.username }}</strong>
+                  <div>{{ user?.name }} {{ user?.lastName }}</div>
+                </div>
+              </div>
+            </ng-template>
+          </p-autoComplete>
+        </div>
+
+        <button
+          class="btn btn-secondary px-3 d-flex align-items-center justify-content-center mt-4"
+          type="button"
+          (click)="filterUsers()"
+          style="height: 38px"
+        >
+          <span>Buscar</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <app-table
+    class="w-100"
+    [headers]="headers"
+    [hasCheckbox]="false"
+    [firstEmpty]="true"
+    [customRows]="true"
+    [showFooter]="false"
+    [minWidthHeader]="minWidthHeaders"
+    [loading]="isLoading"
+    [minWidth]="1000"
+    [hasData]="displayedData.length > 0"
+  >
+    <tr
+      class="w-100 d-flex flex-row align-items-center"
+      *ngFor="let d of displayedData; let i = index"
+    >
+      <td class="fs-6 py-2 px-2 w-100 text-start align-top ps-5">
+        <div class="d-flex align-items-center flex-nowrap gap-3">
+          <div
+            class="avatar rounded-circle cl-sorbus bg-fe d-flex justify-content-center align-items-center"
+            style="width: 40px; height: 40px; flex-shrink: 0; border: none; box-shadow: none"
+          >
+            {{ getInitials(d?.name, d?.lastName) }}
+          </div>
+          <div
+            class="text-wrap"
+            style="min-width: 0; word-break: break-word; white-space: normal"
+          >
+            <strong>{{ d?.username }}</strong><br />
+            <small>{{ d?.name }} {{ d?.lastName }}</small><br />
+            <small class="text-muted">{{ d?.email }}</small>
+          </div>
+        </div>
+      </td>
+
+      <td class="fs-6 py-2 px-2 w-100 text-center" style="min-width: 100px">
+        {{ d.namePackage }}
+      </td>
+
+      <td class="fs-6 py-2 px-2 w-100 text-break text-center align-top">
+        {{ d.creationDate | arrayDate }}
+      </td>
+
+      <td class="fs-6 py-2 px-2 w-100 text-break text-center align-top">
+        <button
+          class="btn btn-link text-primary"
+          (click)="sendEmail(d)"
+          style="text-decoration: none"
+        >
+          <i class="pi pi-envelope"></i> Enviar correo
+        </button>
+      </td>
+    </tr>
+    <tr
+      *ngIf="!isLoading && !displayedData.length"
+      class="d-flex justify-content-center align-items-center w-100"
+    >
+      <td colspan="100%" class="text-center">
+        <div class="d-flex justify-content-center align-items-center pt-3">
+          <p class="fs-5 text-muted">
+            Busca un socio y envía un correo de recuerdo.
+          </p>
+        </div>
+      </td>
+    </tr>
+  </app-table>
+
+  <app-pagination-ng-prime
+    [rows]="rows"
+    [totalRecords]="totalRecords"
+    [rowsPerPageOptions]="[10, 20, 30]"
+    [align]="'right'"
+    (pageChange)="onPageChange($event)"
+    (refresh)="onRefresh($event)"
+  >
+  </app-pagination-ng-prime>
+</div>

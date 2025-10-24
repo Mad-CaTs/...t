@@ -1,0 +1,8 @@
+export enum Section {
+  FIRST = 'FIRST',
+  NEXT = 'NEXT',
+  FIRST_PACKAGE = 'FIRST_PACKAGE',
+  NEXT_PACKAGE = 'NEXT_PACKAGE',
+  PACKAGES = "PACKAGES",
+
+}

@@ -1,0 +1,19 @@
+<div class="d-flex flex-column align-items-center w-100 gap-4" style="border-radius: 30px;">
+	<div class="icon-container mb-3">
+		<img [src]="data.icon" class="icon-img" />
+	</div>
+
+	<h4 class="text-black fs-5 fw-bold text-start mb-3">{{ data.title }}</h4>
+
+	<ng-container *ngIf="isArray(data.text); else singleText">
+		<p class="text-center p-0 m-0" *ngFor="let paragraph of data.text">{{ paragraph }}</p>
+	</ng-container>
+
+	<ng-template #singleText>
+		<p class="text-center">{{ data.text }}</p>
+	</ng-template>
+
+	<div class="d-flex justify-content-center mt-3">
+		<button class="btn btn-secondary" (click)="closeModal()">Confirmar</button>
+	</div>
+</div>

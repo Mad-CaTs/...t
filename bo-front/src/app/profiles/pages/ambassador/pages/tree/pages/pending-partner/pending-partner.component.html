@@ -1,0 +1,14 @@
+<form class="d-flex flex-column gap-2 w-100" [formGroup]="form">
+    <h1 class="fs-6 fw-medium m-0 text-black">Buscador</h1>
+    <div class="d-flex flex-column flex-md-row gap-2 w-100 align-items-md-center gap-md-4">
+        <app-input class="w-100" type="text" placeholder="Buscar por" label="Ingrese campo de búsqueda:" [form]="form"
+            controlName="searchBy"></app-input>
+    </div>
+    <div class="w-100 d-flex flex-row justify-content-center gap-4 mt-2 justify-content-md-end">
+        <button class="btn btn-secondary" type="submit" (click)="onSearch()" 
+        [disabled]="(isLoading || disabledUser)">Buscar</button>
+    </div>
+    <app-table-pending-partner-list class="w-100" [dataBody]="tableData"
+        [totalRecords]="totalRecords" (pageChange)="onPageChange($event)" [isLoading]="isLoading"
+        (refresh)="onRefresh($event)"></app-table-pending-partner-list>
+</form>

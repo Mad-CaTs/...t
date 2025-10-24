@@ -1,0 +1,108 @@
+<div class="border rounded p-3 mb-3 shadow-sm bg-white">
+	<div class="row text-muted small gy-3">
+		<div class="col-12 col-md-4 d-flex align-items-start gap-2">
+			<!-- <div class="flex-shrink-0">
+				<app-checkbox
+					[form]="form"
+					controlName="selectedStep"
+					[label]="''"
+					[checked]="isSelected"
+					(click)="onCheckboxClick()"
+				></app-checkbox>
+			</div> -->
+
+			<div class="d-flex flex-column">
+				<div class="fw-semibold">{{ step?.stepOrderName }}</div>
+				<div class="text-muted">{{ step.stepName }}</div>
+			</div>
+		</div>
+
+		<div class="col-12 col-md-4 text-md-center">
+			<div class="small text-muted">Estado</div>
+			<span
+				class="badge px-3 py-1"
+				[ngStyle]="{
+					'background-color': getStatusColorPre(step.statusColor).backgroundColor,
+					color: getStatusColorPre(step.statusColor).textColor
+				}"
+			>
+				{{ step.statusCodeDescription }}
+			</span>
+		</div>
+
+		<div
+			class="col-12 col-md-4 d-flex justify-content-between justify-content-md-end align-items-center gap-2"
+		>
+			<div>
+				<div class="fw-semibold">Tramite Iniciado</div>
+				<div>{{ step.creationDate | date : 'dd/MM/yyyy' }}</div>
+			</div>
+			<button
+				class="btn btn-sm p-0 border-0 bg-transparent d-flex align-items-center"
+				aria-label="Mostrar detalles"
+				(click)="toggleExpand()"
+			>
+				<i class="pi fs-5" [ngClass]="isExpanded ? 'pi-chevron-up' : 'pi-chevron-down'"></i>
+			</button>
+		</div>
+	</div>
+	<!-- &&  -->
+	<div *ngIf="isExpanded" class="mt-3">
+		<!-- Si extraData no es null -->
+		<div *ngIf="step.extraData !== null; else noExtraDataBlock">
+			<div class="border-top pt-3">
+				<label class="text-muted small d-block">Archivo generado*</label>
+				<p class="border-1 rounded p-2 cl-muted fs-12 fw-normal">
+					{{ getPrettyFileName(step.extraData) }}
+				</p>
+			</div>
+
+			<div class="d-flex justify-content-end mt-3">
+				<button
+					color="accent"
+					class="btn btn-outline-secondary custom-button-wrap d-flex align-items-center gap-2"
+					(click)="onButtonClick(step)"
+					[disabled]="isButtonDisabled(step)"
+				>
+					{{ getButtonLabel(step) }}
+					<i class="pi" [ngClass]="getButtonIcon(step)"></i>
+				</button>
+			</div>
+		</div>
+
+		<!-- Si extraData es null -->
+		<ng-template #noExtraDataBlock>
+			<div class="border-top pt-3">
+				<label class="text-muted small d-block">Motivo*</label>
+				<p class="border-1 rounded p-2 cl-muted fs-12 fw-normal">
+					{{ step.message }}
+				</p>
+			</div>
+
+			<div
+				*ngIf="step.reasonText && step.statusCodeDescription !== 'No disponible'"
+				class="border-top pt-3"
+			>
+				<label class="text-muted small d-block">Detalle*</label>
+				<p class="border-1 rounded p-2 cl-muted fs-12 fw-normal">
+					{{ step.reasonText }}
+				</p>
+			</div>
+			<!--  -->
+			<div
+				*ngIf="step.statusCodeDescription !== 'No disponible'"
+				class="d-flex justify-content-end mt-3"
+			>
+				<button
+					color="accent"
+					class="btn btn-outline-secondary custom-button-wrap d-flex align-items-center gap-2"
+					(click)="onButtonClick(step)"
+					[disabled]="isButtonDisabled(step)"
+				>
+					{{ getButtonLabel(step) }}
+					<i class="pi" [ngClass]="getButtonIcon(step)"></i>
+				</button>
+			</div>
+		</ng-template>
+	</div>
+</div>

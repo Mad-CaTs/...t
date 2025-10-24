@@ -1,0 +1,117 @@
+<div class="container-fluid p-0">
+  <div class="d-flex align-items-center mb-3">
+    <div class="d-flex align-items-center">
+      <button class="btn p-0 me-2 d-flex align-items-center" style="color: #000000 !important;" (click)="goBack.emit()" onmouseover="this.style.color='#000000'" onmouseout="this.style.color='#000000'">
+        <mat-icon class="me-1">arrow_back</mat-icon>
+        <span style="text-decoration: none;">Volver</span>
+      </button>
+      <span class="text-orange" style="margin-left: 2px;">></span>
+      <h4 class="mb-0 ms-2 text-orange" style="font-size: 1rem;">Cronograma</h4>
+    </div>
+  </div>
+  <!-- Alert moved to a new full-width row -->
+  <div class="row mb-3" *ngIf="partnerBonus">
+    <div class="col-12">
+      <div class="alert alert-info d-flex align-items-center" style="margin-bottom: 0; padding: 8px 12px; background-color: #e3f2fd; border: 1px solid #0288d1; border-radius: 6px;">
+        <mat-icon class="me-2" style="color: #0288d1;">info</mat-icon>
+        <p class="m-0" style="color: #0288d1; font-size: 0.9rem;">
+          Recuerda que cuentas con un bono adicional por haber alcanzado el rango {{ partnerBonus.range }}. No pierdas este rango, ya que de lo contrario el bono será descontado de tu cuenta Wallet.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dos cuadros blancos en la misma fila con igual tamaño -->
+  <div class="row mb-3">
+    <!-- Cuadro blanco para Detalle del cronograma -->
+    <div class="col-md-6">
+      <div class="card p-3 h-100">
+        <div class="d-flex justify-content-start align-items-center mb-2">
+          <mat-icon class="me-2" style="color: #757575;">insert_chart</mat-icon>
+          <span class="text-muted">Detalle del cronograma</span>
+        </div>
+        <div class="d-flex justify-content-center align-items-center h-100">
+          <div class="text-center mx-2">
+            <h5 class="mb-0">${{ partnerBonus?.price }}</h5>
+            <small class="text-muted">Precio</small>
+          </div>
+          <div class="text-center mx-2">
+            <h5 class="mb-0">Auto</h5>
+            <small class="text-muted">Bono</small>
+          </div>
+          <div class="text-center mx-2">
+            <h5 class="mb-0">{{ partnerBonus?.installmentQuantity }}</h5>
+            <small class="text-muted">Cuotas</small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cuadro blanco para Fechas -->
+    <div class="col-md-6">
+      <div class="card p-3 h-100">
+        <div class="d-flex justify-content-start align-items-center mb-2">
+          <mat-icon class="me-2" style="color: #757575;">calendar_today</mat-icon>
+          <span class="text-muted">Fechas</span>
+        </div>
+        <div class="d-flex justify-content-center align-items-center h-100">
+          <div class="text-center mx-2">
+            <h5 class="mb-0" *ngIf="partnerBonus && !isLoading">{{ formatAssignmentDate(partnerBonus.assignmentDate) }}</h5>
+            <small class="text-muted">Fecha de Asignación</small>
+          </div>
+          <div class="text-center mx-2">
+            <h5 class="mb-0" *ngIf="partnerBonus && paymentSchedulesLoaded">{{ getEndDate() }}</h5>
+            <small class="text-muted">Fecha de Finalización</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <div class="d-flex align-items-center">
+      <button class="btn btn-orange me-2" (click)="onChangeOpenValue(true)">Ver Premio</button>
+      <button class="btn btn-orange" (click)="onChangeOpenValue(false)">Ver detalle</button>
+    </div>
+    <app-pagination-ng-prime [rows]="rows" [totalRecords]="totalRecords" [rowsPerPageOptions]="[10, 20, 30]"
+      [align]="'right'" (pageChange)="onPageChange($event)" (refresh)="onRefresh($event)">
+    </app-pagination-ng-prime>
+  </div>
+  <app-table class="w-100" [headers]="headers" [hasCheckbox]="false" [minWidth]="800" [minWidthHeader]="minWidthHeaders"
+    [loading]="isLoading" [customRows]="true" [hasData]="displayedTableData.length > 0">
+    <tr class="w-100 d-flex flex-row align-items-center" *ngFor="let d of displayedTableData; let i = index">
+      <th class="table__first d-flex flex-row justify-content-center align-items-center p-1">
+        <div class="form-check d-flex flex-row align-items-center gap-2">
+          <input class="form-check-input cursor-pointer" style="width: 18px; height: 18px" type="radio" [value]="d.id"
+            name="table-emerald-select" [formControl]="selected" [id]="'t-e-list-' + i" />
+        </div>
+      </th>
+      <td class="fs-6 py-1 px-1 w-100 text-center">{{ d.date | date : 'dd/MM/yyyy' }}</td>
+      <td class="fs-6 py-1 px-1 w-100 text-center">{{ d.description }}</td>
+      <td class="fs-6 py-1 px-1 w-100 text-center">{{ d.netFinancingInstallmentValue | number : '1.2-2' }} / {{ d.companyInitial | number : '1.2-2' }}</td>
+      <td class="fs-6 py-1 px-1 w-100 text-center">{{ d.insurance | number : '1.2-2' }}</td>
+      <td class="fs-6 py-1 px-1 w-100 text-center">{{ d.fractionatedInitial | number : '1.2-2' }}</td>
+      <td class="fs-6 py-1 px-1 w-100 text-center">{{ d.companyInitial | number : '1.2-2' }}</td>
+      <td class="fs-6 py-1 px-1 w-100 text-center">{{ d.gps | number : '1.2-2' }}</td>
+      <td class="fs-6 py-1 px-1 w-100 text-center">{{ d.rangeBonus | number : '1.2-2' }}</td>
+      <td class="fs-6 py-1 px-1 w-100 text-center">{{ d.partnerAssumedPayment | number : '1.2-2' }}</td>
+      <td class="fs-6 py-1 px-1 w-100 text-center">
+        <span [ngStyle]="{
+          'background-color': d.status === 'Pagado' ? '#e8f5e9' :
+                            d.status === 'Pago por Validar' ? '#e1f5fe' :
+                            d.status === 'Por Pagar' ? '#eceff1' :
+                            d.status === 'Rechazado' ? '#ffebee' : '#eceff1',
+          'color': d.status === 'Pagado' ? '#388e3c' :
+                   d.status === 'Pago por Validar' ? '#0288d1' :
+                   d.status === 'Por Pagar' ? '#78909c' :
+                   d.status === 'Rechazado' ? '#d32f2f' : '#78909c',
+          'padding': '4px 8px',
+          'border-radius': '12px',
+          'display': 'inline-block'
+        }">
+          {{ d.status }}
+        </span>
+      </td>
+    </tr>
+  </app-table>
+</div>

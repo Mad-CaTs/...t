@@ -1,0 +1,100 @@
+<div class="card p-4 p-md-5 card-border-none d-flex flex-column h-100">
+	<app-breadcrumb [breadcrumbs]="breadcrumbItems"></app-breadcrumb>
+
+	<div class="text-center mb-4">
+		<h1 class="m-0 fs-5 fs-md-4 text-black fw-medium">{{ title }}</h1>
+	</div>
+
+	<!-- Step Progress -->
+	<div class="row mb-4">
+		<div class="col-12 col-md-6 offset-md-3">
+			<app-step-progress class="w-100" [stepLabels]="stepLabels" [activeIndex]="stepProcess - 1">
+			</app-step-progress>
+			<!-- 				(stepChange)="changeStep($event)"
+ -->
+		</div>
+	</div>
+
+	<!-- Contenido de los pasos -->
+	<div class="row">
+		<div class="col-12 col-md-6 offset-md-3">
+			<ng-container [ngSwitch]="stepProcess">
+				<!-- Paso 1 -->
+
+				<div *ngSwitchCase="1" class="w-100">
+					<ng-container *ngIf="loadingOptions; else optionsContent">
+						<div class="d-flex justify-content-center align-items-center py-5">
+							<app-loader [size]="'3rem'" [strokeWidth]="'3'"></app-loader>
+						</div>
+					</ng-container>
+
+					<ng-template #optionsContent>
+						<app-transfer-options
+							[options]="transferOptions"
+							(optionSelected)="onOptionClick($event)"
+							[selectedId]="selectedId"
+						>
+						</app-transfer-options>
+					</ng-template>
+				</div>
+
+				<!-- Paso 2 -->
+				<div *ngSwitchCase="2" class="w-100">
+					<app-transfer-detail
+						(formChange)="onTransferFormChange($event)"
+						[initialData]="transferInfoData"
+						[selectedId]="selectedId"
+						[userInfo]="userInfo"
+						(sponsorInfoChange)="onSponsorInfoChange($event)"
+					></app-transfer-detail>
+				</div>
+
+				<!-- Paso 3 -->
+				<div *ngSwitchCase="3" class="w-100 text-center">
+					<app-transfer-documents-submission
+						(formChange)="onTransferDocumentsChange($event)"
+						[initialData]="transferDocumentsData"
+					></app-transfer-documents-submission>
+				</div>
+
+				<!-- Paso 4 -->
+				<div *ngSwitchCase="4" class="w-100 text-center">
+					<app-request-confirmation
+						[transferData]="transferCombinedData"
+						[sponsorInfo]="sponsorInfo"
+						[selectedOption]="selectedOption"
+						[hasPendingConciliation]="hasPendingConciliation"
+					></app-request-confirmation>
+				</div>
+			</ng-container>
+		</div>
+	</div>
+
+	<div class="row mt-4">
+		<div class="col-12 col-md-6 offset-md-3 d-flex flex-column flex-md-row justify-content-center gap-2">
+			<button
+				class="btn btn-outline-secondary w-100 w-md-auto"
+				type="button"
+				(click)="previousStep()"
+				[disabled]="stepProcess === 1"
+			>
+				Volver
+			</button>
+
+			<button
+				class="btn btn-secondary w-100 w-md-auto d-flex justify-content-center align-items-center gap-2"
+				type="button"
+				(click)="nextStep()"
+				[disabled]="!isContinueEnabled || isSubmitting"
+			>
+				<span
+					*ngIf="isSubmitting"
+					class="spinner-border spinner-border-sm"
+					role="status"
+					aria-hidden="true"
+				></span>
+				<span *ngIf="!isSubmitting">Continuar</span>
+			</button>
+		</div>
+	</div>
+</div>

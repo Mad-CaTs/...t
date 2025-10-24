@@ -1,0 +1,23 @@
+ <div class="d-flex flex-column gap-2">
+	<ng-container *ngFor="let item of items">
+	  <div class="d-flex justify-content-between align-items-center">
+		<span
+		  class="fw-semibold"
+		  [ngClass]="item.isLink ? 'text-secondary' : 'text-muted'"
+		  role="button"
+		>
+		  {{ item.label }}
+		</span>
+  
+		<img
+		  src="assets/icons/arrow_forward.svg"
+		  width="14"
+		  height="14"
+		  class="ms-2"
+		  style="cursor: pointer"
+		  (click)="arrowClicked.emit(item)"
+		/>
+	  </div>
+	</ng-container>
+  </div>
+  

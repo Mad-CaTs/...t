@@ -1,0 +1,29 @@
+<div *ngIf="isLoading" class="d-flex justify-content-center align-items-center" style="min-height: 150px">
+    <p-progressSpinner [style]="{ width: '2rem', height: '2rem' }" strokeWidth="3" fill="var(--surface-ground)"
+        animationDuration=".7s"></p-progressSpinner>
+    <span class="ms-2">Actualizando...</span>
+</div>
+<div *ngIf="!isLoading">
+    <img src="assets/wallet/mail.svg">
+    <div>
+        <span class="text-title">Código de verificación</span>
+        <p class="text-description">Por favor, ingresa el código que enviamos a tu correo <br>
+            <span class="text-email"> {{email}}</span>
+        </p>
+    </div>
+    <div>
+        <app-input [form]="form1" controlName="token" (focusOut)="viewToken()" class="w-100"
+            placeholder="ingrese su codigo de verificion">
+        </app-input>
+        <p *ngIf="incorrecto" class="token-inco">El código que ha introducido es incorrecto. Inténtelo de nuevo.</p>
+        <p class="reenviar-code">reenviar código en: {{ minutes }}:{{ seconds | number:'2.0' }}</p>
+    </div>
+    <div>
+        <button class="btn-verificar" (click)="next()">
+            <p class="text-verificar">Verificar</p>
+        </button>
+        <p class="code">¿No ha recibido el código? <span class="reenviar" (click)="reenviarCode()">Reenviar
+                código</span>
+        </p>
+    </div>
+</div>

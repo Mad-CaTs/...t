@@ -1,0 +1,174 @@
+<form class="d-flex flex-column w-100 gap-4" [formGroup]="form">
+  <h4 class="m-0 fs-5 fw-medium">Datos del Registro</h4>
+  <div class="d-flex flex-column w-100 gap-2 gap-md-4">
+
+    <!-- SOLO OCULTE LA OPCIÓN DE PROMOTOR PORQUE AUN NO EXISTE, FAVOR DE MIGRAR TODO A TAILWIND V4 XD-->
+    <!-- Register Type Section -->
+    <div class="d-flex flex-column w-100 w-md-50">
+      <app-radios 
+        class="w-100" 
+        [form]="form" 
+        controlName="registerType" 
+        [options]="registerTypeList"
+        (changeSelection)="onChangeTypeUser($event)" 
+        label="Tipo de registro" />
+    </div>
+    
+    <div class="d-flex flex-column flex-md-row gap-2 gap-md-4 w-100">
+      <!-- Nationality -->
+      <div class="d-flex flex-column w-100 w-md-50">
+      <app-select 
+        class="w-100" 
+        [showImg]="true" 
+        label="Nacionalidad" 
+        placeholder="Selecciona la nacionalidad"
+        [form]="form" 
+        [options]="nationalitiesList" 
+        controlName="idNationality">
+      </app-select>
+      </div>
+
+      <!-- Birth Date -->
+      <div class="d-flex flex-column w-100 w-md-50">
+        <app-date class="w-100"
+                  placeholder="DD/MM/YYYY"
+                  label="Fecha de nacimiento"
+                  [form]="form"
+                  controlName="birthdate"
+                  [maxDate]="maxBirthDate"
+                  [config]="true">
+        </app-date>
+        <div *ngIf="form.get('birthdate')?.hasError('underage')" class="text-danger mt-1">
+          Debes tener al menos 18 años.
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex flex-column flex-md-row gap-2 gap-md-4 w-100">
+      <!-- Name -->
+      <div class="d-flex flex-column w-100 w-md-50">
+      <app-input 
+        class="w-100" 
+        label="Nombres" 
+        [form]="form" 
+        controlName="name"
+        placeholder="Ingresa el nombre completo">
+      </app-input>
+      </div>
+      <!-- Last Name -->
+      <div class="d-flex flex-column w-100 w-md-50">
+      <app-input 
+        class="w-100" 
+        label="Apellidos" 
+        [form]="form" 
+        controlName="lastname"
+        placeholder="Sus apellidos completos">
+      </app-input>
+      </div>
+    </div>
+
+    <div class="d-flex flex-column flex-md-row gap-2 gap-md-4 w-100">
+      <!-- Document Type -->
+      <div class="d-flex flex-column w-100 w-md-50">
+      <app-select 
+        class="w-100" 
+        label="Tipo de documento" 
+        placeholder="Selecciona un tipo de documento" 
+        [form]="form"
+        [options]="documentTypeList" 
+        controlName="idDocument">
+      </app-select>
+      </div>
+      <!-- Document Number -->
+      <div class="d-flex flex-column w-100 w-md-50">
+      <app-input 
+        class="w-100" 
+        label="Número de documento" 
+        [form]="form" 
+        [isLoading]="isDocumentLoading"
+        controlName="nroDocument" 
+        placeholder="Ingresa el número de documento"
+        (focusout)="checkDocumentExists($event)"
+        (input)="removeSpaces($event)">
+      </app-input>
+      </div>
+    </div>
+
+    <div class="d-flex flex-column flex-md-row gap-2 gap-md-4 w-100">
+      <!-- Civil State -->
+      <div class="d-flex flex-column w-100 w-md-50">
+      <app-select 
+        class="w-100" 
+        label="Estado Civil" 
+        placeholder="Selecciona un estado civil" 
+        [form]="form"
+        [options]="civilStateList" 
+        controlName="civilState">
+      </app-select>
+      </div>
+      <!-- Gender -->
+      <div class="d-flex flex-column w-100 w-md-50">
+      <app-radios 
+        class="w-100" 
+        [form]="form" 
+        controlName="gender" 
+        [options]="genderList" 
+        label="Sexo">
+      </app-radios>
+      </div>
+    </div>
+  </div>
+
+  <!--Alert for multi-user-->
+  @if(isMultiUsuario) {
+    <div class="alert alert-info d-flex flex-row gap-2 mt-2 align-items-center" role="alert">
+      <div style="min-width: 24px;" class="d-flex justify-content-center align-items-center">
+        <mat-icon fontIcon="info"></mat-icon>
+      </div>
+      <span class="fw-normal">Recuerde que solo puede tener un máximo de <strong>3 multi-usuarios</strong> para su cuenta.</span>
+    </div>
+  }
+
+  <!-- CO-Requester -->
+  @if (coRequesterData && !isMultiUsuario) {
+    <div class="p-4 border border-2 rounded w-100">
+      <h4 class="m-0 fs-6 fw-medium">Registro del Co-Solicitante</h4>
+      <div class="w-100 overflow-x-auto overlow-y-hidden">
+        <div class="d-flex flex-row gap-4 justify-content-between align-items-center mt-2 w-100"
+          style="min-width: 1000px">
+          <div class="d-flex flex-column align-items-center">
+            <span class="text-black">Nombre</span>
+            <span class="cl-muted">{{ coRequesterData?.name }}</span>
+          </div>
+          <div class="d-flex flex-column align-items-center">
+            <span class="text-black">Apellidos</span>
+            <span class="cl-muted">{{ coRequesterData?.lastName }}</span>
+          </div>
+          <div class="d-flex flex-column align-items-center">
+            <span class="text-black">Tipo de Documento</span>
+            <span class="cl-muted">{{ getDocumentDescription(coRequesterData?.idDocument) }}</span>
+          </div>
+          <div class="d-flex flex-column align-items-center">
+            <span class="text-black">Número de documento</span>
+            <span class="cl-muted">{{ coRequesterData?.nroDocument}}</span>
+          </div>
+          <div class="d-flex flex-column align-items-center">
+            <span class="text-black">Fecha de nacimiento</span>
+            <span class="cl-muted">{{ coRequesterData?.birthDate | date: 'dd-MM-yyyy'}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Buttons -->
+  <div class="d-flex flex-column flex-md-row justify-content-md-between gap-2">
+    <button class="btn btn-outline-secondary" type="button"
+      [disabled]="(coRequesterData || disabledUser || isMultiUsuario)" (click)="onClickOpenCoAffiliateModal()">
+      Registrar Co-Solicitante
+    </button>
+    <button class="btn btn-secondary" type="submit" [disabled]="(form.invalid || disabledUser)"
+      (click)="onNextStep()">Siguiente</button>
+  </div>
+
+</form>

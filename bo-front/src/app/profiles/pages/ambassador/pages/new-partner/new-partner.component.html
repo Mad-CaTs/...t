@@ -1,0 +1,133 @@
+<div class="card p-4 d-flex flex-column w-100 gap-4 new-partner-page border-0">
+	<div
+		*ngIf="!dataToken && currentStep == 0"
+		class="d-flex flex-column flex-md-row gap-2 gap-md-0 justify-content-md-end align-items-md-center"
+	>
+		<button
+			id="btn-new-parnet-link-register"
+			(click)="generateTemporalUrl()"
+			class="btn btn-secondary d-flex flex-row gap-2 align-items-center ms-auto ms-md-0 new-partner-page__btn"
+			type="button"
+		>
+			<mat-icon fontIcon="link"></mat-icon>
+			<span *ngIf="!copied">Link de Registro</span>
+			<span *ngIf="copied">Link copiado</span>
+		</button>
+	</div>
+	<div class="new-register-container">
+		<div class="parnert-timeline">
+			<div class="timeline-steps">
+				<div
+					*ngFor="let steps of stepNavigation"
+					class="step"
+					[class.active]="steps.id <= currentStep"
+				>
+					<div class="step-number">{{ steps.id + 1 }}</div>
+					<div class="step-label">{{ steps.text }}</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="spinner-overlay" [class.visible]="onChangeLoading" [class.hidden]="!onChangeLoading">
+		<img src="assets/icons/bars-scale-fade.svg" alt="Loading..." width="100" height="100" />
+	</div>
+
+	<form
+		[formGroup]="newPartnerFormPresenter.multiStepForm"
+		[class.visible]="!onChangeLoading"
+		[class.hidden]="onChangeLoading"
+	>
+		<app-new-partner-general-info
+			[ngClass]="{ 'd-block': currentStep === 0, 'd-none': currentStep != 0 }"
+			[form]="newPartnerFormPresenter.multiStepForm.controls['personalData']"
+			[coRequesterData]="coRequesterData"
+			[isMultiUsuario]="isMultiUsuario"
+			[isToken]="isToken"
+			(submit)="onSubmitFirstStep()"
+			(changeTypeUser)="onChangeTypeUser($event)"
+			(familyPackagesChanged)="onFamilyPackagesChange($event)"
+		>
+		</app-new-partner-general-info>
+
+		<app-new-partner-contact-info
+			[ngClass]="{ 'd-block': currentStep === 1, 'd-none': currentStep != 1 }"
+			[form]="newPartnerFormPresenter.multiStepForm.controls['contactData']"
+			[isPromotor]="isPromotor"
+			(submit)="onSubmitSecondStep()"
+			(saveNewUserPromotor)="onSaveNewUserPromotor()"
+			(prevState)="onNavigateStep()"
+			[registerTypeControl]="registerTypeControl"
+			(familyPackagesChanged)="onFamilyPackagesChange($event)"
+		>
+		</app-new-partner-contact-info>
+
+		<ng-container *ngIf="!isPromotor">
+			<app-new-partner-select-package
+				[ngClass]="{ 'd-block': currentStep === 2, 'd-none': currentStep != 2 }"
+				[presenter]="newPartnerFormPresenter"
+				[familyPackages]="familyPackagesList"
+				[isMultiUser]="isMultiUsuario"
+				(prevState)="onNavigateStep()"
+				(submit)="onSubmitThirdStep()"
+			>
+			</app-new-partner-select-package>
+
+			<!-- PASO ASIGNAR PADRINO OCULTO POR VERSIÓN DE PRODUCCIÓN -->
+			<!-- <app-new-partner-assign-godfather 
+				[ngClass]="{'d-block': currentStep === 3, 'd-none': currentStep != 3}"
+				[sponsorId]="sponsorId"
+				(submit)="onSubmitGodfatherStep($event)"
+				(prevState)="onNavigateStep()"
+				(skipGodfather)="onSkipGodfatherStep()">
+			</app-new-partner-assign-godfather> -->
+
+			<app-new-partner-payment
+				[ngClass]="{ 'd-block': currentStep === 3, 'd-none': currentStep != 3 }"
+				[presenter]="newPartnerFormPresenter"
+				[isToken]="isToken"
+				[isLoading]="isLoading"
+				(prevState)="onNavigateStep()"
+				(paypalData)="onPaypalData($event)"
+				(saveNewUser)="onSubmitPaymentStep($event)"
+			>
+			</app-new-partner-payment>
+		</ng-container>
+  </form>
+
+  <ng-template #modalTemplateClock>
+    <div class="modal-content">
+      <div class="modal-header mt-4 d-flex justify-content-center">
+        <span class="p-2 d-flex justify-content-center border-decorate-span">
+          <svg class="bi bi-clock border-decorate p-2" xmlns="http://www.w3.org/2000/svg" width="50" height="50"
+            fill="#19809E" stroke="#FE7C04" viewBox="-1 -0.7 17.5 17.5">
+            <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z" />
+            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0" />
+          </svg>
+        </span>
+      </div>
+      <div class="modal-body pb-0">
+        <div class="row">
+          <div class="col-12 mb-2 text-center">
+            <h3 class="text-black py-2">Tiene 6 horas de espera</h3>
+            <p class="">
+              Le recordamos que el plazo máximo para completar el proceso es de
+              6 horas. Transcurrido dicho tiempo, el registro se anulará
+              automáticamente.
+            </p>
+          </div>
+          <div class="text-center">
+            <h6 class="">Url Temporal:</h6>
+            <a target="_blank" [href]="urlgenerate" class=""> {{ urlgenerate }}</a>
+          </div>
+
+        </div>
+      </div>
+      <div class="d-flex justify-content-center m-6 gap-4 px-3 py-4 my-2">
+        <button type="button" (click)="closeModal()" class="btn btn-outline-secondary w-50 mx-auto">
+          Entendido
+        </button>
+      </div>
+    </div>
+  </ng-template>
+</div>

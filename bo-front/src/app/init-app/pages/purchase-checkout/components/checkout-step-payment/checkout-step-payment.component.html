@@ -1,0 +1,35 @@
+<section class="pm">
+  <p class="pm__step">{{ stepLabel }}</p>
+  <h2 class="pm__title">Elige tu método de pago</h2>
+
+  <div class="pm__list" role="radiogroup" aria-label="Métodos de pago">
+    <label
+      class="pm__item"
+      *ngFor="let m of methods; trackBy: trackByMethod"
+      [class.pm__item--selected]="selectedId === m.id"
+    >
+
+      <input
+        class="pm__radio-native"
+        type="radio"
+        name="payment-method"
+        [value]="m.id"
+        [checked]="selectedId === m.id"
+        (change)="onSelect(m.id, $event)"
+      />
+
+      <span class="pm__radio">
+        <span class="pm__radio-dot" [class.on]="selectedId === m.id"></span>
+      </span>
+
+      <span class="pm__info">
+        <strong class="pm__title-sm">{{ m.title }}</strong>
+        <small class="pm__desc" *ngIf="m.description">{{ m.description }}</small>
+      </span>
+
+  <span class="pm__icons" *ngIf="m.icons?.length" [style.--icon-size.px]="iconSize(m)" [style.--icon-gap.px]="iconGap(m)">
+        <img *ngFor="let icon of m.icons; trackBy: trackByIcon" [src]="icon" alt="" />
+      </span>
+    </label>
+  </div>
+</section>

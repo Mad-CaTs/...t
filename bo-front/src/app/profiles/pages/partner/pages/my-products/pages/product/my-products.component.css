@@ -1,0 +1,29 @@
+.card-body {
+  overflow-wrap: break-word; 
+  word-wrap: break-word;
+}
+
+.text-adjustable {
+  font-size: 1.5rem; 
+  text-align: center; 
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+}
+
+.text-small {
+  font-size: 1rem; 
+}
+
+.card-body .d-flex {
+  align-items: center; 
+  justify-content: center; 
+  word-wrap: break-word; 
+}
+
+.card-body i {
+  margin-right: 10px; 
+}
+
+.card-body h5 {
+  word-wrap: break-word; 
+}

@@ -1,0 +1,65 @@
+<article
+  class="video-wrapper"
+  role="region"
+  aria-label="Reproductor de video"
+  [style.width.px]="width"
+  [style.height.px]="height"
+>
+  <!-- Caso HTML5 -->
+  <ng-container *ngIf="!isYoutube; else youtubeEmbed">
+    <!-- Botón play -->
+    <div
+      class="overlay-play"
+      *ngIf="!isPlaying"
+      (click)="onPlay()"
+      tabindex="0"
+      aria-label="Reproducir video"
+      (keyup.enter)="onPlay()"
+    >
+      <mat-icon fontIcon="play_arrow" />
+    </div>
+
+    <!-- Video -->
+    <video
+      #video
+      class="video-element"
+      [poster]="poster || 'https://via.placeholder.com/800x450?text=Vista+previa'"
+      [attr.autoplay]="autoplay ? '' : null"
+      [attr.loop]="loop ? '' : null"
+      [attr.muted]="muted ? '' : null"
+      [attr.controls]="controls ? '' : null"
+      playsinline
+      preload="auto"
+      controlsList="nodownload noremoteplayback"
+      disablePictureInPicture
+    >
+      <!-- Varias fuentes -->
+      <ng-container *ngIf="videoSourceList?.length; else singleSource">
+        <source
+          *ngFor="let video of videoSourceList"
+          [src]="video.src"
+          [type]="video.mimeType"
+        />
+      </ng-container>
+
+      <!-- Fuente única -->
+      <ng-template #singleSource>
+        <source *ngIf="src" [src]="src" />
+      </ng-template>
+
+      Tu navegador no soporta videos HTML5.
+    </video>
+  </ng-container>
+
+  <!-- Caso YouTube -->
+  <ng-template #youtubeEmbed>
+    <iframe
+      class="video-element"
+      [src]="youtubeEmbedUrl"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+      title="Reproductor de YouTube"
+    ></iframe>
+  </ng-template>
+</article>

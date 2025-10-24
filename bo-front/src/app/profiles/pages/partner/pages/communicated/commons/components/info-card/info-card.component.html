@@ -1,0 +1,16 @@
+<mat-card class="info-card h-100 w-100">
+  <!-- Imagen principal con el banner -->
+  <mat-card-header class="position-relative p-0">
+    <img [src]="imageSrc" [alt]="title" class="w-100 rounded-top" style="object-fit: cover; height: 200px;">
+    <div class="position-absolute bottom-0 w-100 text-white text-center py-1" style="background-color: #ff9800; font-weight: bold;">
+      {{ footerText }}
+    </div>
+  </mat-card-header>
+
+  <!-- Contenido de la tarjeta -->
+  <mat-card-content class="p-3">
+    <small class="text-primary fw-bold">{{ date }}</small>
+    <h5 class="mt-2 mb-1 fw-bold">{{ title }}</h5>
+    <p class="text-muted">{{ description }}</p>
+  </mat-card-content>
+</mat-card>

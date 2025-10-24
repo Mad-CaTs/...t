@@ -1,0 +1,8 @@
+<label [for]="name" class="fs-6 mb-2 cl-muted" *ngIf="label">{{ label }}</label>
+
+<div>
+       <p-calendar (onSelect)="onSelect($event)" [formControl]="form.get(this.controlName)" styleClass="exampleee"
+              iconDisplay="input" [minDate]="minDate" [maxDate]="maxDate" [readonlyInput]="readonly"
+              [placeholder]="placeholder" [showIcon]="true" dateFormat="dd/mm/yy"></p-calendar>
+</div>
+<app-control-error [form]="form" [controlName]="controlName"> </app-control-error>

@@ -1,0 +1,43 @@
+.custom-card {
+	background-color: #f7f3f3; /* Fondo del card */
+	border-radius: 8px;
+	display: inline-flex; /* Hace que el fondo se ajuste al contenido */
+	align-items: center;
+	padding: 8px 12px; /* Espaciado reducido */
+}
+
+.icon-container {
+	width: 28px; /* Ajustamos el tamaño del icono */
+	height: 28px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: rgba(0, 0, 0, 0.05); /* Fondo con transparencia */
+	border-radius: 50%;
+}
+
+.icon-img {
+	width: 16px; /* Tamaño del icono */
+	height: auto;
+}
+
+.title-text {
+	font-size: 12px;
+	font-weight: 600;
+}
+
+.points {
+	font-size: 16px;
+	font-weight: 700;
+}
+
+.pts {
+	font-size: 14px;
+	font-weight: 700;
+	margin-left: 2px;
+}
+
+.portfolio-text {
+	font-size: 10px;
+	opacity: 0.8;
+}

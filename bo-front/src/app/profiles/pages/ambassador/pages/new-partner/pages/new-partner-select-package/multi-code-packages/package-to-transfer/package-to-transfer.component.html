@@ -1,0 +1,28 @@
+<div
+  class="card"
+  [class.selected]="form?.get(controlName)?.value === package.idSubscription"
+  (click)="selectPackage()"
+>
+    <div class="header">
+        <div class="radio-button-container">
+            <div class="radio-button">
+                <p-radioButton [name]="controlName" [value]="package.idSubscription" [inputId]="package.idSubscription" [formControl]="form?.get(this.controlName)"/>
+                <label [for]="package.idSubscription">
+                    {{ package.nameSubscription }}
+                </label>
+            </div>
+            <span class="status" [ngStyle]="setStatusColor()">
+                {{ statusName }}
+            </span>
+        </div>
+        <div class="family">
+            <span>{{ package.familyPackageName.split(' ')[0] }}</span>
+            <span class="portafolio"> / portafolio</span>
+        </div>
+    </div>
+    <p-divider />
+    <div class="footer">
+        <span>Fecha del pedido: {{ package.creationDate | date }}</span>
+        <span>N° de cuotas: {{ package.numberQuotas }}</span>
+    </div>
+</div>

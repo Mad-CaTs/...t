@@ -1,0 +1,34 @@
+<div class="d-flex flex-column gap-3 mt-3">
+    <div class="w-100 line"></div>
+    <div class="d-flex flex-column text-center">
+        <app-pagination-ng-prime [rows]="rows" [totalRecords]="totalRecords" [rowsPerPageOptions]="[10, 20, 30]"
+            [align]="align" (pageChange)="onPageChange($event)" (refresh)="onRefresh($event)">
+        </app-pagination-ng-prime>
+    </div>
+    <app-table class="w-100" [headers]="headers" [hasCheckbox]="false" [firstEmpty]="true" [customRows]="true"
+        [minWidth]="1500" [minWidthHeader]="minWidthHeaders" [loading]="isLoading" [hasData]="table.data.length > 0">
+        <tr class="w-100 d-flex flex-row align-items-center" *ngFor="let d of table.data; let i = index">
+            <td class="fs-6 py-2 px-2 w-100 text-center text-break">{{ d.userName }}</td>
+            <td class="fs-6 py-2  px-2 w-100 text-center">{{ d.fullName }}</td>
+            <td class="fs-6 py-2 px-2 w-100 text-center">
+                <div class="w-auto text-success rounded py-1 px-3" [ngStyle]="{
+            'background-color': getTransparentColor(d.color),
+          }">
+                    <span [ngStyle]="{ color: getSolidColor(d.color) }">{{ d.stateName }}</span>
+                </div>
+            </td>
+            <td class="fs-6 py-2 px-2 w-100 text-center">{{ d.sponsorLevel }}</td>
+            <td class="fs-6 py-2 px-2 w-100 text-center">{{ d.sponsorName }}</td>
+            <td class="fs-6 py-4 px-4 w-100 text-center">
+                <button pButton class="p-button p-component btn btn-secondary button-width" type="button"
+                    [disabled]="isButtonLoading[d.id]" (click)="deletePendingPartner(d)">
+                    <span *ngIf="!isButtonLoading[d.id]"> Eliminar </span>
+                    <div class="d-flex justify-content-center align-items-center" *ngIf="isButtonLoading[d.id]">
+                        <p-progressSpinner [style]="{ width: '1.5rem', height: '1rem' }" strokeWidth="8"
+                            fill="transparent" animationDuration=".5s"></p-progressSpinner>
+                    </div>
+                </button>
+            </td>
+        </tr>
+    </app-table>
+</div>

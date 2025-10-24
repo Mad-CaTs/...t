@@ -1,0 +1,31 @@
+@use 'guest-global.scss' as *;
+@use 'guest-vars.scss' as vars;
+
+.date{
+    display: block;
+    // width: 100%;
+    text-align: center;
+}
+
+.total {
+    display: block;
+    width: 100%;
+    color: vars.$secondary-green;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.document {
+    color: vars.$foundation-blue-normal;
+    text-align: center;
+    display: block;
+}
+
+.nomina {
+    text-align: center;
+    display: block;
+}
+
+.default {
+    text-align: center;
+}

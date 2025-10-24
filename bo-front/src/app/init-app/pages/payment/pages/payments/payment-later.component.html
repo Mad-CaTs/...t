@@ -1,0 +1,229 @@
+<ng-container>
+  <div class="card p-4 d-flex flex-column w-100 gap-4 new-partner-page border-0">
+    <ng-container *ngIf="!isLoadingToken && !pagePayError && !tokenError && !hasError">
+      <form class="d-flex flex-column w-100 gap-4">
+        <div class="row"
+             style="justify-content: center; width: 100%">
+          <div class="col col-md-4 order-1 order-md-2 mb-md-0 mb-5"
+               style="width: 70%">
+            <p-card header="Información de pago">
+              <!-- PAQUETE SELECCIONADO (TABLA) -->
+              <div class="pb-4">
+                <h4 class="mb-3 fs-5 fw-medium text-md-start d-md-none d-lg-block">
+                  Paquete seleccionado
+                </h4>
+
+                <div class="pt-3">
+                  <app-table-payment-later [dataBody]="tableData"
+                                           [isLoading]="isLoadingTable"></app-table-payment-later>
+                </div>
+              </div>
+
+              <p-divider />
+              <!-- MÉTODOS DE PAGO -->
+
+
+
+
+              <div class="pt-4 pb-4">
+                <h4 class="mb-3 fs-5 fw-medium text-md-start d-md-none d-lg-block">
+                  Métodos de pagos
+                </h4>
+                <div class="d-flex flex-wrap gap-4 justify-content-center align-items-center pt-3">
+                  <button *ngFor="let payment of paymentTypeListaFiltered"
+                          class="d-flex flex-row gap-2 align-items-center px-4 py-1 rounded"
+                          type="button"
+                          style="height: 55px"
+                          [class.border]="methodSelected !== 'bcp'"
+                          [style.background-color]="
+											methodSelected === 'bcp' ? '#EBF3FF' : 'transparent'
+										"
+                          (click)="onMedioPago(payment)">
+                    <img [src]="payment.pathPicture"
+                         style="width: 92px"
+                         alt="Pay Method"
+                         (click)="(onPaypal)" />
+                  </button>
+                </div>
+              </div>
+
+              <!-- TABLA DE PAGOS -->
+              <div class="w-100 overflow-x-auto pt-4 pb-4"
+                   *ngIf="dataTableToShow && dataTableToShow.length > 0">
+                <p-table [value]="dataTableToShow"
+                         [tableStyle]="{ 'min-width': '50rem' }">
+                  <ng-template pTemplate="header">
+                    <tr>
+                      <th>Banco</th>
+                      <th>Operacion</th>
+                      <th>Código</th>
+                      <th>Nota</th>
+                      <th>Archivo</th>
+                      <th>Moneda</th>
+                      <th>Comisión</th>
+                      <th>Monto</th>
+                      <th>Acciones</th>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body"
+                               let-voucher
+                               let-i="rowIndex">
+                    <tr>
+                      <td>{{ voucher.bankName }}</td>
+                      <td>{{ voucher.operationDescription }}</td>
+                      <td>{{ voucher.operationNumber }}</td>
+                      <td>{{ voucher.note }}</td>
+                      <td class="debug text-center"
+                          *ngIf="voucher.img">
+                        <span *ngIf="voucher.img==='-'">{{voucher.img}}</span>
+                        <span *ngIf="voucher.img!=='-'"> {{ voucher.img.name }}.{{ voucher.img.extension }} ({{
+                          voucher.img.size.toFixed(2) }} MB)</span>
+                      </td>
+                      <!-- <td>
+												{{ voucher.img.name }}.{{ voucher.img.extension }} ({{
+												voucher.img.size.toFixed(2)
+												}}
+												MB)
+											</td> -->
+
+                      <td>{{ voucher.currency }}</td>
+                      <td>{{ voucher.comision }}</td>
+                      <td>{{ voucher.totalAmount }}</td>
+                      <td>
+                        <div>
+                          <mat-icon class="cursor-pointer me-2 text-secondary"
+                                    fontIcon="edit"
+                                    (click)="editPayItem(i)"></mat-icon>
+                          <mat-icon class="cursor-pointer text-secondary"
+                                    fontIcon="delete"
+                                    (click)="deletePayItem(voucher, i)"></mat-icon>
+                        </div>
+                      </td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+              </div>
+
+              <!--   <div *ngIf="!showWalletMethod" class="d-flex justify-content-start gap-4 pt-4">
+                <div class="row w-100">
+                  <h4 class="mb-3 fs-5 fw-medium text-md-start d-md-none d-lg-block">Código Wallet</h4>
+
+                  <div class="col-6">
+                    <p-inputNumber 
+                    id="codigoWallet"
+                    [formControl]="form.get('codigo')" 
+                    [placeholder]="'Ingrese su código'" 
+                    [showButtons]="false" 
+                    [inputStyleClass]="'p-inputtext-sm'" 
+                    [mode]="'decimal'" 
+                    [min]="0" 
+                    [step]="1" 
+                    [useGrouping]="false">
+                  </p-inputNumber>
+                  
+                  </div>
+
+                  <div class="col-3 d-flex align-items-center">
+                    <button pButton
+                            type="button"
+                            class="p-button p-component btn btn-outline-secondary p-button-warning text-center w-100"
+                            (click)="validarCodigo()">Validar</button>
+                  </div>
+                </div>
+              </div> -->
+
+              <div *ngIf="!showWalletMethod"
+                   class="d-flex flex-column gap-4 pt-4">
+                <h4 class="mb-3 fs-5 fw-medium text-md-start">Código Wallet</h4>
+
+                <div class="row align-items-center w-100">
+                  <div class="col-8">
+                    <p-inputNumber id="codigoWallet"
+                                   [formControl]="form.get('codigo')"
+                                   placeholder="Ingrese su código"
+                                   class="w-100"
+                                   [showButtons]="false"
+                                   [mode]="'decimal'"
+                                   [min]="0"
+                                   [step]="1"
+                                   [useGrouping]="false"></p-inputNumber>
+                  </div>
+
+                  <div class="col-4">
+                    <button pButton
+                            type="button"
+                            [disabled]="isLoadingCode"
+                            class="p-button p-component btn btn-outline-secondary p-button-warning text-center w-100"
+                            (click)="validarCodigo()"
+                            style="white-space: nowrap;">
+                      <span *ngIf="!isLoadingCode">Validar</span>
+
+                      <span *ngIf="isLoadingCode">
+                        <i class="pi pi-spin pi-spinner"></i> Cargando...
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="d-flex justify-content-center pt-4">
+                <button pButton
+                        type="button"
+                        class="p-button p-component btn btn-outline-secondary p-button-warning text-center w-50 w-sm-50"
+                        (click)="onSubmit()">
+                  Guardar
+                </button>
+              </div>
+            </p-card>
+          </div>
+        </div>
+      </form>
+    </ng-container>
+
+    <ng-container *ngIf="!isLoadingToken && pagePayError"
+                  style="min-height: 100vh">
+      <div class="d-flex flex-column justify-content-center align-items-center p-3 w-100">
+        <i class="pi pi-check"
+           style="width: 100px; height: 100px; font-size: 100px; color: green; padding-bottom: 10px"></i>
+        <h1 class="text-secondary text-center pb-5">¡Muchas gracias por tu pago!</h1>
+        <span class="ms-2 pb-5 text-center">En breve nos encargaremos de validar el pago y te enviaremos la
+          confirmación a través de
+          tu correo electrónico.</span>
+        <button class="btn btn-secondary"
+                (click)="goHome()">Volver al inicio</button>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="!isLoadingToken && tokenError">
+      <div class="d-flex flex-column justify-content-center align-items-center w-100">
+        <img src="assets/images/notFound.svg"
+             alt="Notfound"
+             class="me-2 pb-4"
+             style="width: 350px; height: 350px" />
+        <span class="ms-2 fs-4 text-muted">Lo sentimos, inténtelo nuevamente.</span>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="!isLoadingToken && hasError">
+      <div class="d-flex flex-column justify-content-center align-items-center w-100">
+        <img src="assets/images/notFound.svg"
+             alt="Notfound"
+             class="me-2 pb-4"
+             style="width: 350px; height: 350px" />
+        <span class="ms-2 fs-4 text-muted">Lo sentimos, inténtelo nuevamente.</span>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="isLoadingToken">
+      <div class="d-flex justify-content-center align-items-center p-3 w-100">
+        <div class="d-flex"
+             style="padding-bottom: 50px; padding-top: 25px">
+          <p-progressSpinner [style]="{ width: '15rem', height: '15rem' }"
+                             strokeWidth="2"
+                             fill="var(--surface-ground)"
+                             animationDuration=".5s"></p-progressSpinner>
+        </div>
+        <!-- <span class="ms-2 text-muted" style="font-size: 40px">Actualizando</span> -->
+      </div>
+    </ng-container>
+  </div>
+</ng-container>

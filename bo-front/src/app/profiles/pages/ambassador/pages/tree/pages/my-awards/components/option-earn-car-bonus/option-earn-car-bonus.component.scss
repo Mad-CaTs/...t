@@ -1,0 +1,108 @@
+.custom-accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+
+    .mat-expansion-panel {
+        border-radius: 16px !important;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+        border: none;
+        background: #fff;
+        transition: all 0.3s ease;
+
+        &:hover {
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .mat-expansion-panel-header {
+            padding: 16px 20px;
+            border-radius: 16px;
+            background-color: #ffffff;
+
+            .accordion-title {
+                font-size: 16px;
+                color: #00758f;
+                font-weight: 500;
+            }
+
+            .mat-expansion-indicator::after {
+                color: #00758f;
+            }
+        }
+
+        .accordion-body {
+            background-color: #ffffff;
+            padding: 16px 20px 20px 20px;
+
+            .ciclos {
+                // color: #6c757d;
+                font-weight: 500;
+                font-size: 14px;
+                margin-bottom: 0.5rem;
+            }
+
+            .fechas {
+                font-weight: 600;
+                font-size: 17px;
+                color: #212529;
+            }
+
+            .puntos {
+                font-weight: 500;
+                color: #212529;
+                font-size: 15px;
+            }
+
+            .faltan {
+                font-size: 14px;
+                color: #6c757d;
+                margin-bottom: 0;
+            }
+
+            .info-box {
+                border: none;
+                background-color: #e8f4fc;
+                color: #004d73;
+                border-radius: 12px;
+                padding: 10px 14px;
+                font-size: 13.5px;
+            }
+        }
+    }
+}
+
+:host {
+    --progress-color: #19809e;
+}
+
+::ng-deep .custom-progress {
+    height: 8px !important; // grosor deseado
+
+    .mdc-linear-progress {
+        height: 100% !important;
+    }
+}
+:host .custom-progress {
+    width: 50%;
+    margin: 0 auto;
+    display: block;
+    --mdc-linear-progress-active-indicator-height: 8px;
+    --mdc-linear-progress-track-height: 8px;
+    --mdc-linear-progress-track-shape: 7;
+    border-radius: 10px;
+    --mdc-linear-progress-active-indicator-color: var(--progress-color);
+    --mdc-linear-progress-track-color: #ededed;
+}
+
+.mat-expansion-panel-header.mat-expanded {
+    height: auto;
+}
+
+hr {
+    margin: 0rem 0;
+}
+
+.progress-container {
+    text-align: center;
+}

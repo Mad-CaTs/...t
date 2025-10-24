@@ -1,0 +1,564 @@
+{
+	"header": {
+		"slogan": "Beleggingsclub",
+		"menuItems": [
+			{
+				"label": "Begin"
+			},
+			{
+				"label": "Producten",
+				"subItems": [
+					{
+						"label": "Vastgoed"
+					},
+					{
+						"label": "Technologisch"
+					},
+					{
+						"label": "Andere projecten"
+					}
+				]
+			},
+			{
+				"label": "Kans"
+			},
+			{
+				"label": "Gemeenschap"
+			},
+			{
+				"label": "Updates"
+			},
+			{
+				"label": "Kalender"
+			},
+			{
+				"label": "Evenementen"
+			}
+		],
+		"languageTitle": "Talen",
+		"languageInputPlaceholder": "Zoek de taal",
+		"languageInputLabel": "Zoeker",
+		"languages": [
+			"Arabisch ",
+			"Duits ",
+			"Bengaals ",
+			"Bulgaars ",
+			"Tsjechisch ",
+			"China ",
+			"Spaans ",
+			"Frans ",
+			"Portugees ",
+			"Engels ",
+			"Grieks ",
+			"Guarani ",
+			"Hindi ",
+			"Hongaars ",
+			"Indonesisch ",
+			"Italiaans ",
+			"Japans ",
+			"Koreaans ",
+			"Nederlands ",
+			"Pools ",
+			"Russisch ",
+			"Telugu ",
+			"Thais ",
+			"Tagalog ",
+			"Turks ",
+			"Oekraïens ",
+			"Vietnamees ",
+			"Roemeense "
+		]
+	},
+	"footer": {
+		"contactInformation": {
+			"phone": "(01) 618 5118",
+			"email": "voorbeeld@inclub.com.pe"
+		},
+		"sections": [
+			"Oplossingen",
+			"InResorts Ribera del Rio",
+			"InResorts La Joya",
+			"KeOla",
+			"Gebruikte verkoop",
+			"Ons",
+			"Bloggen",
+			"Veelgestelde vragen",
+			"Toegang voor klanten",
+			"Duurzaamheid",
+			"Contact",
+			"Legaal",
+			"Privacy beleid",
+			"Voorwaarden",
+			"Klachten boek"
+		]
+	},
+	"home": {
+		"carousel": {
+			"carouselEntry": "KLAAR OM DEEL TE NEMEN AAN DE",
+			"carouselTitle": "UNIVERSUM INCLUB?",
+			"carouselText": "Iedereen is welkom. ",
+			"carouselBtn1": "Sluit je nu aan!",
+			"carouselBtn2": "Toegang"
+		},
+		"keola": {
+			"cta": "En wissel de code “UNETEKEOLA” in om punten te verdienen.",
+			"btn": "Google Spelen",
+			"titles": ["Download de Keola-app", "De meest nieuwe", "Nodig uit en win"]
+		},
+		"lastUpdates": {
+			"title": "Laatste updates",
+			"description": "Wij willen dat u slaagt en uw bedrijf laat groeien tot de succesvolle pionier waarvan we weten dat u die bent! ",
+			"button": "Update!"
+		},
+		"howWorks": {
+			"title": "Hoe werkt het",
+			"subtitle": "Ga aan de slag in 3 eenvoudige stappen",
+			"steps": [
+				{
+					"title": "Aanmelden",
+					"description": "Vul uw sponsor in, vul uw gegevens in en maak uw wachtwoord aan."
+				},
+				{
+					"title": "Ontdek producten",
+					"description": "Ontdek de producten op ons Inclub-portaal. "
+				},
+				{
+					"title": "Winnen",
+					"description": "Klaar! "
+				}
+			]
+		},
+		"cards": [
+			{
+				"title": "Aktentas",
+				"description": "Doe mee en maak deel uit van ons vastgoed, technologische projecten en nog veel meer.",
+				"button": "Meer ontdekken"
+			},
+			{
+				"title": "Gemeenschap",
+				"description": "Duik in geweldige producten met een enorm verdienpotentieel.",
+				"button": "Meer ontdekken"
+			},
+			{
+				"title": "Kans",
+				"description": "Als u bereid bent te werken, is InClub het voertuig dat u brengt waar u heen wilt.",
+				"button": "Meer ontdekken"
+			}
+		],
+		"testimonialsSection": {
+			"cardPrefix": "Lid sinds",
+			"heading": "Het enige dat u nodig heeft, is een telefoon in uw hand om verbinding te maken met de zakelijke mogelijkheid van uw leven.",
+			"button": "Registreer nu",
+			"testimonials": [
+				{
+					"text": "Als je hard werkt en ijverig bent, zal Inclub je leven veranderen en al je dromen waarmaken",
+					"name": "Elias Vargas",
+					"since": "2020"
+				},
+				{
+					"text": "Je hebt slechts 3 dingen nodig in deze wereld om gelukkig te zijn: Geloof in God, geloof in jezelf en geloof in je dromen",
+					"name": "Paul Villacorta",
+					"since": "2020"
+				},
+				{
+					"text": "Het is niet erg om arm te zijn, het ergste is het nooit te hebben geprobeerd, arm en zonder dromen te sterven, het is nooit te laat om te beginnen",
+					"name": "Mery Livias",
+					"since": "2021"
+				},
+				{
+					"text": "Je kunt de beste toespraak houden met je leven dan met je woorden",
+					"name": "Abel Meza",
+					"since": "2020"
+				}
+			]
+		}
+	},
+	"products": {
+		"navigation": ["Vastgoed", "Technologie", "Volgende projecten"],
+		"items": [
+			{
+				"title": "In resorts Ribera del Rio",
+				"description": "Geniet van de voordelen van ons Hotel Club Resort en word lid. ",
+				"buttonText": "Meer informatie"
+			},
+			{
+				"title": "Inresorts La Joya",
+				"description": "Familieplezier, natuur en winst voor het leven. ",
+				"buttonText": "Meer informatie"
+			},
+			{
+				"title": "Keola-netwerken",
+				"description": "Nodig uit en win, ontdek de voordelen van de app. ",
+				"buttonText": "Meer informatie"
+			}
+		],
+		"nextProjects": {
+			"title": "Wij zijn aan het werken",
+			"description": "Momenteel is het Inclub-team bezig met het creatieve proces om komende projecten te laten zien. ",
+			"buttonText": "Update!"
+		}
+	},
+	"productDetail": {
+		"aboutUsTitle": "Over ons",
+		"aboutBtnText": "ik wil meer weten",
+		"products": [
+			{
+				"aboutTitle": "Rivieroever",
+				"aboutDescription": "Wij zijn een Club Resort gelegen in Cieneguilla, op 45 minuten van Lima. ",
+				"perkPreTitle": "Profiteer van onze",
+				"perktitle": "Onvergetelijke ervaringen",
+				"perkDescription": "Het perfecte toevluchtsoord voor mensen die op zoek zijn naar een uniek uitje en avontuurlijke ervaring. ",
+				"cards": [
+					{
+						"title": "Hotels",
+						"description": "Elke kamer in Ribera del Río is ontworpen om te delen met uw dierbaren; "
+					},
+					{
+						"title": "Ervaringen",
+						"description": "Wij bieden een breed scala aan recreatieve en recreatieve ervaringen die u zeker zullen boeien. "
+					},
+					{
+						"title": "Restaurants",
+						"description": "Het is altijd goed om uzelf te trakteren, en daarvoor heet ons 'Ribera del Río Restaurant' u welkom en nodigt u uit om te genieten van verschillende typische nationale, regionale en Creoolse gerechten."
+					}
+				]
+			},
+			{
+				"aboutTitle": "Het juweel",
+				"aboutDescription": "Wij zijn een Club Resort gelegen in Arequipa, op slechts 45 minuten van de stad Arequipa. ",
+				"perkPreTitle": "Profiteer van onze",
+				"perktitle": "Onvergetelijke ervaringen",
+				"perkDescription": "Het perfecte toevluchtsoord voor mensen die op zoek zijn naar een uniek uitje en avontuurlijke ervaring. ",
+				"cards": [
+					{
+						"title": "Zwembaden",
+						"description": "Elk zwembad van La Joya is ontworpen om te delen met uw dierbaren; "
+					},
+					{
+						"title": "Ervaringen",
+						"description": "Wij bieden een breed scala aan recreatieve en recreatieve ervaringen die u zeker zullen boeien. "
+					},
+					{
+						"title": "Resortpark",
+						"description": "Prachtig waterpark met kleurrijke glijbanen; "
+					}
+				]
+			},
+			{
+				"aboutTitle": "Keola",
+				"aboutDescription": "Welkom bij Keola, de ultieme app om al je favoriete producten op één plek te vinden! ",
+				"perkPreTitle": "Profiteer van onze",
+				"perktitle": "Keola-voordelen",
+				"perkDescription": "Nodig uit en verdien, ontdek de voordelen van de applicatie. ",
+				"cards": [
+					{
+						"title": "Producten",
+						"description": "Ontdek een verscheidenheid aan producten en categorieën. "
+					},
+					{
+						"title": "Winkels",
+						"description": "Beheer uw winkel en beheer uw producten en bied een hoogwaardige en efficiënte bezorgservice."
+					},
+					{
+						"title": "Levering",
+						"description": "Heeft u voedsel of medicijnen nodig? "
+					}
+				]
+			}
+		]
+	},
+	"oportunity": {
+		"title": "Kans",
+		"description": "Het staat open voor iedereen, ongeacht ervaring, locatie of omstandigheden.",
+		"sections": [
+			{
+				"pre": "Verdien met uw invloed",
+				"title": "Iedereen is micro-beïnvloed",
+				"content": "Iedereen is een micro-influencer. "
+			},
+			{
+				"pre": "Ik raad kwaliteitsproducten aan",
+				"title": "Baanbrekende producten die de weg vrijmaken in de branche",
+				"content": "Elke dag bevelen wij producten en diensten aan bij onze vrienden en familie. "
+			},
+			{
+				"pre": "Leer van uw collega's",
+				"title": "Alles wat je nodig hebt om te slagen",
+				"content": "Wij delen kennis van onze specialisten, geïnspireerd door de wens om netwerken voor iedereen winstgevender te maken en voor affiliates om te leren hoe ze assets kunnen genereren."
+			},
+			{
+				"pre": "Compensatie plan",
+				"title": "Ons compensatieplan is het krachtigste in de sector",
+				"content": "Wij helpen mensen een slimme beleggingsportefeuille op te bouwen en de langverwachte financiële vrijheid te bereiken met een breed scala aan voordelen, als geen andere beleggingsclub."
+			}
+		],
+		"testimonials": {
+			"pre": "Getuigenissen",
+			"title": "Succesverhalen",
+			"items": [
+				{
+					"text": "Als iemand die in het verleden leeft nooit succes zal hebben in het heden, laat staan ​​in de toekomst",
+					"name": "Elias Vargas",
+					"since": "2020"
+				},
+				{
+					"text": "Je hebt in deze wereld maar 3 dingen nodig om gelukkig te zijn: Geloof in God, Geloof in jezelf en Geloof in je dromen",
+					"name": "Paul Villacorta",
+					"since": "2020"
+				},
+				{
+					"text": "Het is niet erg om arm te zijn, het slechte is om het nooit geprobeerd te hebben, om arm en zonder dromen te sterven, het is nooit te laat om te beginnen",
+					"name": "Mery Livias",
+					"since": "2021"
+				},
+				{
+					"text": "Je kunt de beste toespraak houden met je leven dan met je woorden.",
+					"name": "Abel Meza",
+					"since": "2020"
+				}
+			]
+		}
+	},
+	"comunity": {
+		"title": "Onze gemeenschap",
+		"description": "Succes is beter als het wordt gedeeld. ",
+		"sections": [
+			{
+				"pre": "GROEI EN GEBLOEI MET ONS",
+				"title": "Filialen over de hele wereld",
+				"content": "Het grootste en krachtigste aangesloten netwerk van vandaag in Latijns-Amerika is zonder twijfel Inclub. "
+			},
+			{
+				"pre": "Erkenning en evenementen",
+				"title": "Miljoenen mensen zullen uw succes vieren.",
+				"content": "We zijn ongelooflijk trots op het harde werk en de toewijding die elke ondernemer in zijn bedrijf steekt. "
+			},
+			{
+				"pre": "ONDERWIJS- EN LEERHULPMIDDELEN",
+				"title": "Alles wat je nodig hebt om te slagen.",
+				"content": "Wij helpen mensen een slimme beleggingsportefeuille te creëren en de langverwachte financiële vrijheid te bereiken. "
+			}
+		],
+		"inspiration": {
+			"title": "Inspiratie",
+			"subtitle": "Stemmen uit de gemeenschap",
+			"testimonials": [
+				{
+					"text": "Inclub is mijn leven en daarom neem ik het heel serieus.",
+					"name": "Elias Vargas",
+					"since": "2020"
+				},
+				{
+					"text": "Inclub is er om de levens van mensen te veranderen.",
+					"name": "Paul Villacorta",
+					"since": "2020"
+				},
+				{
+					"text": "Inclub heeft ons de mogelijkheid gegeven om ook het leven van anderen te veranderen.",
+					"name": "Mery Livias",
+					"since": "2021"
+				},
+				{
+					"text": "Affiliates worden beloond voor succes dankzij de massa gebruikers.",
+					"name": "Abel Meza",
+					"since": "2020"
+				}
+			]
+		}
+	},
+	"news": {
+		"noticeLabel": "Nieuws",
+		"titleMain": "NIEUWIGHEID",
+		"descriptionMain": "Het perfecte toevluchtsoord om te genieten met familie en vrienden",
+		"commonEventsCountry": "Lima, Peru",
+		"commonEventsBtn": "Bekijk meer",
+		"content": [
+			{
+				"date": "14 SEPTEMBER 2023",
+				"title": "Succesvol communiceren, workshop taal en zakelijke communicatie"
+			},
+			{
+				"title": "Uw online winkelbestemming",
+				"description": "Nodig uit en win, ontdek de voordelen van de app. "
+			},
+			{
+				"title": "Vastgoedproject",
+				"description": "De leiders van de Inclub genoten van een ongelooflijke lancering van het vastgoedproject Ribera del Rio in Cieneguilla."
+			},
+			{
+				"title": "Encumbra-lancering",
+				"description": "Inclubleiders stellen onze leden in staat leiders te worden in de online netwerkindustrie."
+			},
+			{
+				"title": "Uw online winkelbestemming",
+				"description": "Nodig uit en win, ontdek de voordelen van de app. "
+			},
+			{
+				"title": "Technologisch project",
+				"description": "De leiders van de Inclub genoten van een ongelooflijke lancering van het vastgoedproject Ribera del Rio in Cieneguilla."
+			},
+			{
+				"title": "In resorts Ribera del Rio",
+				"description": "Inclubleiders stellen onze leden in staat leiders te worden in de online netwerkindustrie."
+			}
+		]
+	},
+	"newsDetail": {
+		"date": "26 september 2023",
+		"title": "Het perfecte toevluchtsoord om te genieten met familie en vrienden",
+		"description": "La Joya parkresort ligt op slechts 60 minuten van de stad Arequipa in de wijk La Joya, hier kunt u genieten van dagen op het strand of watersporten beoefenen. ",
+		"content": [
+			{
+				"date": "14 september 2023",
+				"title": "Succesvol communiceren, workshop taal en zakelijke communicatie"
+			},
+			{
+				"date": "29 september 2023",
+				"title": "Inclub LEIDERSCHAP onderwijssysteem"
+			},
+			{
+				"date": "15 september 2023",
+				"title": "Inclub onderwijssysteem Getuigenissen van succes"
+			}
+		]
+	},
+	"calendar": {
+		"title": "Kalender",
+		"subtitle": "september",
+		"filters": {
+			"searchLabel": "Zoeker",
+			"searchPlaceholder": "Zoek het evenement of de workshop",
+			"options": ["Vandaag", "Wekelijks", "Maandelijks"]
+		}
+	},
+	"eventPage": {
+		"upcommingEventsTitle": "Aankomende evenementen",
+		"upcomingEvents": [
+			{
+				"date": "14 SEPTEMBER 2023",
+				"title": "Succesvol communiceren, workshop taal en zakelijke communicatie"
+			},
+			{
+				"date": "29 SEPTEMBER 2023",
+				"title": "Onderwijssysteem Inclub LEIDERSCHAP"
+			},
+			{
+				"date": "15 SEPTEMBER 2023",
+				"title": "Inclub onderwijssysteem Getuigenissen van succes"
+			}
+		],
+		"pastEventsTitle": "Vorige evenementen",
+		"pastEvents": [
+			{
+				"date": "12 SEPTEMBER 2023",
+				"title": "Onderwijssysteem Inclub Leesclub"
+			},
+			{
+				"date": "10 SEPTEMBER 2023",
+				"title": "Inclub LEIDERSCHAP onderwijssysteem"
+			},
+			{
+				"date": "8 september 2023",
+				"title": "Getuigenissen van succes in het Inclub-onderwijssysteem"
+			}
+		],
+		"trendsTitle": "Trends"
+	},
+	"eventsDetail": {
+		"backLabel": "Opbrengst",
+		"resumeTitle": "Samenvatting",
+		"learnTitle": "Wat ga je leren?"
+	},
+	"events": [
+		{
+			"title": "Succesvol communiceren, workshop taal en zakelijke communicatie",
+			"date": "14 SEPTEMBER 2023",
+			"type": "Online",
+			"duration": "Geschatte duur: 22 minuten.",
+			"positiveReviews": "98% positieve recensies (567).",
+			"summary": "Wil jij jouw communicatieve vaardigheden op zakelijk gebied verbeteren? ",
+			"learn": [
+				"Verbeter presentatie- en onderhandelingsvaardigheden",
+				"Leer duidelijk en effectief uit te drukken",
+				"In tegenstelling tot andere theoretische workshops kun je bij deze workshop het geleerde direct in de praktijk brengen.",
+				"Door middel van oefeningen en groepsdynamiek oefent u uw communicatieve vaardigheden en krijgt u direct feedback van experts ter zake. ",
+				"En meer."
+			]
+		},
+		{
+			"date": "29 SEPTEMBER 2023",
+			"title": "Inclub-onderwijssysteem: leiderschap",
+			"type": "Online",
+			"duration": "Geschatte duur: 22 minuten.",
+			"positiveReviews": "98% positieve recensies (567).",
+			"summary": "Wil jij jouw communicatieve vaardigheden op zakelijk gebied verbeteren? ",
+			"learn": [
+				"Verbeter presentatie- en onderhandelingsvaardigheden",
+				"Leer duidelijk en effectief uit te drukken",
+				"In tegenstelling tot andere theoretische workshops kun je bij deze workshop het geleerde direct in de praktijk brengen.",
+				"Door middel van oefeningen en groepsdynamiek oefent u uw communicatieve vaardigheden en krijgt u direct feedback van experts ter zake. ",
+				"En meer."
+			]
+		},
+		{
+			"date": "15 SEPTEMBER 2023",
+			"title": "Inclub-onderwijssysteem: succesverhalen",
+			"type": "Online",
+			"duration": "Geschatte duur: 22 minuten.",
+			"positiveReviews": "98% positieve recensies (567).",
+			"summary": "Wil jij jouw communicatieve vaardigheden op zakelijk gebied verbeteren? ",
+			"learn": [
+				"Verbeter presentatie- en onderhandelingsvaardigheden",
+				"Leer duidelijk en effectief uit te drukken",
+				"In tegenstelling tot andere theoretische workshops kun je bij deze workshop het geleerde direct in de praktijk brengen.",
+				"Door middel van oefeningen en groepsdynamiek oefent u uw communicatieve vaardigheden en krijgt u direct feedback van experts ter zake. ",
+				"En meer."
+			]
+		},
+		{
+			"date": "12 SEPTEMBER 2023",
+			"title": "Inclub-onderwijssysteem: Boekenclub",
+			"type": "Online",
+			"duration": "Geschatte duur: 22 minuten.",
+			"positiveReviews": "98% positieve recensies (567).",
+			"summary": "Wil jij jouw communicatieve vaardigheden op zakelijk gebied verbeteren? ",
+			"learn": [
+				"Verbeter presentatie- en onderhandelingsvaardigheden",
+				"Leer duidelijk en effectief uit te drukken",
+				"In tegenstelling tot andere theoretische workshops kun je bij deze workshop het geleerde direct in de praktijk brengen.",
+				"Door middel van oefeningen en groepsdynamiek oefent u uw communicatieve vaardigheden en krijgt u direct feedback van experts ter zake. ",
+				"En meer."
+			]
+		},
+		{
+			"date": "10 SEPTEMBER 2023",
+			"title": "Inclub-onderwijssysteem: leiderschap",
+			"type": "Online",
+			"duration": "Geschatte duur: 22 minuten.",
+			"positiveReviews": "98% positieve recensies (567).",
+			"summary": "Wil jij jouw communicatieve vaardigheden op zakelijk gebied verbeteren? ",
+			"learn": [
+				"Verbeter presentatie- en onderhandelingsvaardigheden",
+				"Leer duidelijk en effectief uit te drukken",
+				"In tegenstelling tot andere theoretische workshops kun je bij deze workshop het geleerde direct in de praktijk brengen.",
+				"Door middel van oefeningen en groepsdynamiek oefent u uw communicatieve vaardigheden en krijgt u direct feedback van experts ter zake. ",
+				"En meer."
+			]
+		},
+		{
+			"date": "8 september 2023",
+			"title": "Inclub-onderwijssysteem: succesverhalen",
+			"type": "Online",
+			"duration": "Geschatte duur: 22 minuten.",
+			"positiveReviews": "98% positieve recensies (567).",
+			"summary": "Wil jij jouw communicatieve vaardigheden op zakelijk gebied verbeteren? ",
+			"learn": [
+				"Verbeter presentatie- en onderhandelingsvaardigheden",
+				"Leer duidelijk en effectief uit te drukken",
+				"In tegenstelling tot andere theoretische workshops kun je bij deze workshop het geleerde direct in de praktijk brengen.",
+				"Door middel van oefeningen en groepsdynamiek oefent u uw communicatieve vaardigheden en krijgt u direct feedback van experts ter zake. ",
+				"En meer."
+			]
+		}
+	]
+}

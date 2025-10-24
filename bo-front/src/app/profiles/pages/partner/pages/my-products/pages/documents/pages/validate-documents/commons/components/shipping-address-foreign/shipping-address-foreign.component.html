@@ -1,0 +1,150 @@
+<ng-container >
+	<form [formGroup]="form">
+	<div class="container">
+		<h4 class="fw-bold">Dirección de Envío</h4>
+		<p class="text-muted">
+			Por favor, ingresa tu dirección completa y datos de contacto; estos nos ayudarán a coordinar la
+			entrega con el courier.
+		</p>
+
+		<app-select
+			class="w-100"
+			[showImg]="true"
+			label="País de residencia"
+			placeholder="Selecciona uno"
+			[form]="form"
+			[options]="nationalitiesList"
+			controlName="idResidenceCountry"
+		></app-select>
+		<div class="mt-2">
+			<app-input
+				label="Dirección"
+				placeholder="Dirección, Distrito, Provincia o Ciudad, Departamento o Estado, País de residencia."
+				[form]="form"
+				controlName="foreignFullAddress"
+				[isIconRight]="true"
+				iconName="pi pi-compass"
+				(clickIconRight)="emitGeolocation()"
+			></app-input>
+			<small *ngIf="isInvalidFormat" class="text-danger">
+				{{ documentMessages['ADDRESS_FORMAT_INFO'] }}
+			</small>
+		</div>
+
+		<div class="col-12 mt-2">
+			<div class="alert alert-info d-flex align-items-center px-4 py-2">
+				<img src="assets/icons/info.svg" alt="info" class="me-2" width="24" />
+				<span
+					>Considerar que el formato para el registro de su dirección debe seguir el siguiente orden
+					específico: "Dirección, Distrito, Provincia o Ciudad, Departamento o Estado, País de
+					residencia. “</span
+				>
+			</div>
+		</div>
+
+		<div class="row g-3">
+			<div class="col-12 col-md-6">
+				<div class="form-group">
+					<app-input
+						[form]="form"
+						controlName="nroPhone"
+						label="Celular*"
+						type="text"
+						placeholder="00000000"
+						[phonecodeCountry]="phonecodeCountry"
+						[iconName]="iconName"
+						[phonecodeCountry]="phonecodeCountry"
+						[isIconLeft]="true"
+						class="w-100"
+					></app-input>
+				</div>
+			</div>
+
+			<div class="col-12 col-md-6">
+				<div class="form-group">
+					<app-input
+						[form]="form"
+						controlName="email"
+						label="Correo electrónico *"
+						type="text"
+						placeholder="correo@email.com"
+						buttons="true"
+						class="w-100"
+					></app-input>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="selectedProduct && selectedProduct.tipo === 2" class="row g-3">
+			<div class="col-12">
+				<div class="form-group">
+					<app-radios
+						class="w-100"
+						[form]="form"
+						verticalLayout="true"
+						controlName="availability"
+						[options]="optList"
+						label="¿Cuentas con disponibilidad?"
+					></app-radios>
+				</div>
+			</div>
+		</div>
+		<div class="col-12 mt-2">
+			<div class="alert alert-info d-flex align-items-center px-4 py-2">
+				<img src="assets/icons/info.svg" alt="info" class="me-2" width="24" />
+				<span>{{ documentMessages['CONTRACT_LEGALIZATION_NOTE'] }}</span>
+			</div>
+		</div>
+
+		<div class="d-flex flex-column flex-md-row align-items-center gap-1 gap-md-2 w-100">
+			<app-radios
+				class="w-100"
+				[form]="form"
+				controlName="typeLegalization"
+				[options]="optTypeLegalization"
+				label="Tipo de legalización:"
+			></app-radios>
+
+			<div class="form-check form-check-inline d-flex align-items-center">
+				<a
+					href="#"
+					(click)="openCronogramaAlert($event)"
+					class="ms-3 text-secondary fw-semibold text-decoration-none d-flex align-items-center"
+					style="white-space: nowrap"
+				>
+					<img src="assets/icons/link.svg" alt="link icon" width="20" height="20" class="me-2" />
+					Ver cronograma de entrega
+				</a>
+			</div>
+		</div>
+		<div class="col-12">
+			<div class="alert alert-info d-flex align-items-center px-4 py-2">
+				<img src="assets/icons/info.svg" alt="info" class="me-2" width="24" />
+				<span>{{ documentMessages['INTERNATIONAL_SHIPPING_COST'] }}</span>
+			</div>
+		</div>
+		<div >
+			<app-radios
+				class="w-100"
+				[form]="form"
+				controlName="apostillaOLegalizacion"
+				verticalLayout="true"
+				[options]="tipoServicioOpciones"
+				label="¿Desea solicitar el servicio de apostillado o legalización consular?"
+			></app-radios>
+
+			<div class="col-12">
+				<div class="alert alert-info d-flex align-items-center px-4 py-2">
+					<img src="assets/icons/info.svg" alt="info" class="me-2" width="24" />
+					<span>{{ documentMessages['APOSTILLE_EXTRA_INFO'] }}</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
+</ng-container>
+
+<!-- <ng-template #foreignAddressBlock>
+ -->
+<!-- <app-validate-personal-data [optTypeLegalization]="optTypeLegalization" 
+(formDataChanged)="onFormUserChange($event)"></app-validate-personal-data>
+</ng-template> -->

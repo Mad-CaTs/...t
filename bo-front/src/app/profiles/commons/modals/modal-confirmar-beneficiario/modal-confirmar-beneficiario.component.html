@@ -1,0 +1,26 @@
+<div class="confirm-modal">
+  <h5 class="title">Confirmación de beneficiario</h5>
+  <p class="subtitle">
+    ¿Está seguro de agregar a <strong>{{ fullName }}</strong> a su lista de beneficiarios?
+  </p>
+
+  <div class="countdown" [style.--pct]="progress">
+    <span>{{ seconds }}</span>
+  </div>
+
+  <div class="info">
+    <i class="pi pi-info-circle"></i>
+    <div>
+      <strong>Información importante</strong>
+      <div class="small text-muted">
+        Recuerde que no podrá realizar el cambio hasta luego de 12 meses. ({{ nextChangeDate }}).
+        Revise bien la información antes de confirmar.
+      </div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button type="button" class="btn btn-outline-secondary" (click)="back()">Volver</button>
+    <button type="button" class="btn btn-secondary" (click)="confirm()">Confirmar</button>
+  </div>
+</div>

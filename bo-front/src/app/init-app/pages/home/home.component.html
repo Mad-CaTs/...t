@@ -1,0 +1,318 @@
+<!--Welcome card-->
+<section class="position-relative">
+	<ngb-carousel
+		#carousel
+		[interval]="3000"
+		[pauseOnHover]="false"
+		[pauseOnFocus]="false"
+		[showNavigationArrows]="false"
+	>
+		<ng-template ngbSlide *ngFor="let img of images">
+			<div class="picsum-img-wrapper">
+				<div
+					class="welcome"
+					[style]="
+						'background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.1)), url(' +
+						img +
+						');'
+					"
+				></div>
+			</div>
+		</ng-template>
+	</ngb-carousel>
+	<div
+		class="position-absolute d-flex flex-column align-items-center justify-content-center z-2 p-2 p-lg-5 m-auto start-0 end-0 top-0 bottom-0"
+	>
+		<h6 class="cl-white fs-5">{{ lang.carousel.carouselEntry }}</h6>
+		<h1 class="cl-white fw-bolder welcome__heading text-center">{{ lang.carousel.carouselTitle }}</h1>
+		<h3 class="fw-normal mb-3 cl-white fs-5 text-center" style="max-width: 661px">
+			{{ lang.carousel.carouselText }}
+		</h3>
+		<!-- ---------------------------comentado hasta recuperar dominios fecha 04/09/2024 -->
+		<div class="d-inline-flex gap-2 mt-4">
+			<a (click)="navigateToLogin()" class="nav-link btn btn-raised" mat-raised-button color="accent">
+				{{ lang.carousel.carouselBtn1 }}
+			</a>
+			<a (click)="navigateToLogin()" class="nav-link btn btn-stroked" mat-stroked-button color="accent">
+				{{ lang.carousel.carouselBtn2 }}
+			  </a>
+			  
+
+			<!-- <a
+				[href]="getLoginUrl"
+				class="nav-link btn btn-stroked"
+				mat-stroked-button
+				color="accent"
+				>{{ lang.carousel.carouselBtn2 }}</a
+			> -->
+		</div>
+		<!-- <div class="d-inline-flex gap-2 mt-4">
+			<a
+				href="https://dashboard.inclub.world/form-preregister-in"
+				class="nav-link btn btn-raised"
+				mat-raised-button
+				color="accent"
+			>
+				{{ lang.carousel.carouselBtn1 }}
+			</a>
+			<a
+				href="https://dashboard.inclub.world/sign-in"
+				class="nav-link btn btn-stroked"
+				mat-stroked-button
+				color="accent"
+				>{{ lang.carousel.carouselBtn2 }}</a
+			>
+		</div> -->
+	</div>
+</section>
+<!--How works section-->
+<div class="pt-5 mt-3 container text-center function-div">
+	<h1 class="cl-sorbus mt-3 fs-6">{{ lang.howWorks.subtitle }}</h1>
+	<h3 class="fw-bolder cl-black mb-5">{{ lang.howWorks.title }}</h3>
+	<div class="overflow-y-visible row text-center function-div__card-container m-0">
+		<div class="h-100 p-0 function-div__card-container__card">
+			<mat-card class="w-100 h-100">
+				<mat-card-header
+					class="d-flex flex-column justify-content-center align-items-center"
+					data-num="1"
+				>
+					<div
+						class="img-card mb-3"
+						style="background-image: url('https://staticv1.inclub.site/images/phone-1.png')"
+					></div>
+					<span class="title-card">{{ lang.howWorks.steps[0].title }}</span>
+				</mat-card-header>
+				<mat-card-content>
+					<p>{{ lang.howWorks.steps[0].description }}</p>
+				</mat-card-content>
+			</mat-card>
+		</div>
+		<div class="h-100 p-0 function-div__card-container__card">
+			<mat-card class="w-100 h-100">
+				<mat-card-header
+					class="d-flex flex-column justify-content-center align-items-center"
+					data-num="2"
+				>
+					<div
+						class="img-card mb-3"
+						style="background-image: url('https://staticv1.inclub.site/images/megaphone-1.png')"
+					></div>
+					<span class="title-card">{{ lang.howWorks.steps[1].title }}</span>
+				</mat-card-header>
+				<mat-card-content>
+					<p>
+						{{ lang.howWorks.steps[1].description }}
+					</p>
+				</mat-card-content>
+			</mat-card>
+		</div>
+		<div class="h-100 p-0 function-div__card-container__card">
+			<mat-card class="w-100 h-100">
+				<mat-card-header
+					class="d-flex flex-column justify-content-center align-items-center"
+					data-num="3"
+				>
+					<div
+						class="img-card mb-3"
+						style="background-image: url('https://staticv1.inclub.site/images/trash-1.svg')"
+					></div>
+					<span class="title-card">{{ lang.howWorks.steps[2].title }}</span>
+				</mat-card-header>
+				<mat-card-content>
+					<p>{{ lang.howWorks.steps[2].description }}</p>
+				</mat-card-content>
+			</mat-card>
+		</div>
+	</div>
+</div>
+<!--Keola Download section-->
+<keola-advice />
+<!--Last Updates section-->
+<home-last-updates />
+<!--Brand Options section-->
+<div class="py-5 my-3 container text-center info-div">
+	<div class="brand-options justify-content-center align-items-center gap-4 mb-3 text-center">
+		<div class="brand-options__card">
+			<mat-card class="w-100 mb-3">
+				<mat-card-header class="d-flex flex-column justify-content-center align-items-center">
+					<div
+						mat-card-avatar
+						class="brand-options__card__image"
+						style="background-image: url('https://staticv1.inclub.site/images/portfolio.png')"
+					></div>
+					<mat-card-title class="mb-2 test-raised brand-options__card__title">{{
+						lang.cards[0].title
+					}}</mat-card-title>
+				</mat-card-header>
+				<mat-card-content>
+					<p class="mb-3 brand-options__card__text">
+						{{ lang.cards[0].description }}
+					</p>
+					<a
+						routerLink="/products"
+						class="nav-link btn btn-raised mt-3"
+						mat-raised-button
+						color="accent"
+					>
+						{{ lang.cards[0].button }}
+					</a>
+				</mat-card-content>
+			</mat-card>
+		</div>
+		<div class="brand-options__card">
+			<mat-card class="w-100 mb-3">
+				<mat-card-header class="d-flex flex-column justify-content-center align-items-center">
+					<div
+						mat-card-avatar
+						class="brand-options__card__image"
+						style="background-image: url('https://staticv1.inclub.site/images/celebran.png')"
+					></div>
+					<mat-card-title class="mb-2 test-raised brand-options__card__title">{{
+						lang.cards[1].title
+					}}</mat-card-title>
+				</mat-card-header>
+				<mat-card-content>
+					<p class="mb-3 brand-options__card__text">
+						{{ lang.cards[1].description }}
+					</p>
+					<a
+						routerLink="/communities"
+						class="nav-link btn btn-raised mt-3"
+						mat-raised-button
+						color="accent"
+					>
+						{{ lang.cards[1].button }}
+					</a>
+				</mat-card-content>
+			</mat-card>
+		</div>
+		<div class="brand-options__card">
+			<mat-card class="w-100 mb-3">
+				<mat-card-header class="d-flex flex-column justify-content-center align-items-center">
+					<div
+						mat-card-avatar
+						class="brand-options__card__image"
+						style="background-image: url('https://staticv1.inclub.site/images/triunfar.png')"
+					></div>
+					<mat-card-title class="mb-2 test-raised brand-options__card__title">
+						{{ lang.cards[2].title }}</mat-card-title
+					>
+				</mat-card-header>
+				<mat-card-content>
+					<p class="mb-3 brand-options__card__text">
+						{{ lang.cards[2].description }}
+					</p>
+					<a
+						routerLink="/opportunities"
+						class="nav-link btn btn-raised mt-3"
+						mat-raised-button
+						color="accent"
+					>
+						{{ lang.cards[2].button }}
+					</a>
+				</mat-card-content>
+			</mat-card>
+		</div>
+	</div>
+</div>
+<!--Testimonials-->
+<div class="text-center py-5" style="background-color: #111111">
+	<div class="container h-100">
+		<div class="col-xl-6 mb-3 p-lg-5 mx-auto">
+			<h3 class="fw-bold fs-2 mb-3 cl-white">
+				{{ lang.testimonialsSection.heading }}
+			</h3>
+			<a
+				href="https://dashboard.inclub.world/sign-in"
+				class="nav-link btn btn-raised mt-3"
+				mat-raised-button
+				color="accent"
+			>
+				{{ lang.testimonialsSection.button }}
+			</a>
+		</div>
+
+		<ngb-carousel
+			#carousel
+			[interval]="3000"
+			[pauseOnHover]="false"
+			[pauseOnFocus]="false"
+			[showNavigationArrows]="false"
+			[showNavigationIndicators]="false"
+			class="d-xl-none"
+		>
+			<ng-template ngbSlide>
+				<div class="w-100 d-flex justify-content-center align-items-center">
+					<app-recomendation-card
+						urlImage="https://staticv1.inclub.site/images/testimonials/avatar-1.jpg"
+						[text]="lang.testimonialsSection.testimonials[0].text"
+						[name]="lang.testimonialsSection.testimonials[0].name"
+						[since]="lang.testimonialsSection.testimonials[0].since"
+					/>
+				</div>
+			</ng-template>
+			<ng-template ngbSlide>
+				<div class="w-100 d-flex justify-content-center align-items-center">
+					<app-recomendation-card
+						urlImage="https://staticv1.inclub.site/images/testimonials/avatar-2.jpg"
+						[text]="lang.testimonialsSection.testimonials[1].text"
+						[name]="lang.testimonialsSection.testimonials[1].name"
+						[since]="lang.testimonialsSection.testimonials[1].since"
+					/>
+				</div>
+			</ng-template>
+			<ng-template ngbSlide>
+				<div class="w-100 d-flex justify-content-center align-items-center">
+					<app-recomendation-card
+						urlImage="https://staticv1.inclub.site/images/testimonials/avatar-3.jpg"
+						[text]="lang.testimonialsSection.testimonials[2].text"
+						[name]="lang.testimonialsSection.testimonials[2].name"
+						[since]="lang.testimonialsSection.testimonials[2].since"
+					/>
+				</div>
+			</ng-template>
+			<ng-template ngbSlide>
+				<div class="w-100 d-flex justify-content-center align-items-center">
+					<app-recomendation-card
+						urlImage="https://staticv1.inclub.site/images/testimonials/avatar-4.jpg"
+						[text]="lang.testimonialsSection.testimonials[3].text"
+						[name]="lang.testimonialsSection.testimonials[3].name"
+						[since]="lang.testimonialsSection.testimonials[3].since"
+					/>
+				</div>
+			</ng-template>
+		</ngb-carousel>
+		<div class="d-none d-xl-flex flex-row overflow-y-visible justify-content-center gap-3 w-100">
+			<app-recomendation-card
+				urlImage="https://staticv1.inclub.site/images/testimonials/avatar-1.jpg"
+				[text]="lang.testimonialsSection.testimonials[0].text"
+				[name]="lang.testimonialsSection.testimonials[0].name"
+				[since]="lang.testimonialsSection.testimonials[0].since"
+			/>
+			<app-recomendation-card
+				urlImage="https://staticv1.inclub.site/images/testimonials/avatar-2.jpg"
+				[text]="lang.testimonialsSection.testimonials[1].text"
+				[name]="lang.testimonialsSection.testimonials[1].name"
+				[since]="lang.testimonialsSection.testimonials[1].since"
+			/>
+			<app-recomendation-card
+				urlImage="https://staticv1.inclub.site/images/testimonials/avatar-3.jpg"
+				[text]="lang.testimonialsSection.testimonials[2].text"
+				[name]="lang.testimonialsSection.testimonials[2].name"
+				[since]="lang.testimonialsSection.testimonials[2].since"
+			/>
+			<app-recomendation-card
+				urlImage="https://staticv1.inclub.site/images/testimonials/avatar-4.jpg"
+				[text]="lang.testimonialsSection.testimonials[3].text"
+				[name]="lang.testimonialsSection.testimonials[3].name"
+				[since]="lang.testimonialsSection.testimonials[3].since"
+			/>
+		</div>
+	</div>
+</div>
+
+<app-whatsapp-button
+  phoneNumber="51987743819"
+  message="Hola"
+></app-whatsapp-button>
+

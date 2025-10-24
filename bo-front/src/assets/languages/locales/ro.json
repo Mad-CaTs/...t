@@ -1,0 +1,564 @@
+{
+	"header": {
+		"slogan": "Club de Investiții",
+		"menuItems": [
+			{
+				"label": "start"
+			},
+			{
+				"label": "Produse",
+				"subItems": [
+					{
+						"label": "Imobiliare"
+					},
+					{
+						"label": "Tehnologic"
+					},
+					{
+						"label": "Alte proiecte"
+					}
+				]
+			},
+			{
+				"label": "Şansă"
+			},
+			{
+				"label": "Comunitate"
+			},
+			{
+				"label": "Actualizări"
+			},
+			{
+				"label": "Calendar"
+			},
+			{
+				"label": "Evenimente"
+			}
+		],
+		"languageTitle": "Limbi",
+		"languageInputPlaceholder": "Găsiți limba",
+		"languageInputLabel": "Căutător",
+		"languages": [
+			"arab ",
+			"limba germana ",
+			"bengaleză ",
+			"bulgară ",
+			"ceh ",
+			"China ",
+			"Spaniolă ",
+			"limba franceza ",
+			"portugheză ",
+			"Engleză ",
+			"greacă ",
+			"Guarani ",
+			"hindi ",
+			"maghiară ",
+			"indoneziană ",
+			"Italiană ",
+			"japonez ",
+			"coreeană ",
+			"olandeză ",
+			"Lustrui ",
+			"Rusă ",
+			"Telugu ",
+			"thailandez ",
+			"tagalog ",
+			"turc ",
+			"ucrainean ",
+			"vietnamez ",
+			"Română "
+		]
+	},
+	"footer": {
+		"contactInformation": {
+			"phone": "(01) 618 5118",
+			"email": "exemplu@inclub.com.pe"
+		},
+		"sections": [
+			"Soluții",
+			"InResorts Ribera del Rio",
+			"InResorts La Joya",
+			"KeOla",
+			"Vânzări second hand",
+			"Ne",
+			"Blog",
+			"Întrebări frecvente",
+			"Accesul clientului",
+			"Durabilitate",
+			"a lua legatura",
+			"Legal",
+			"Politici de confidențialitate",
+			"Termeni și condiții",
+			"Cartea de reclamatii"
+		]
+	},
+	"home": {
+		"carousel": {
+			"carouselEntry": "GATA SĂ SE ALĂRĂ LA",
+			"carouselTitle": "UNIVERSUL INCLUB?",
+			"carouselText": "Toată lumea este binevenită. ",
+			"carouselBtn1": "Alătură-te acum!",
+			"carouselBtn2": "Acces"
+		},
+		"keola": {
+			"cta": "Și răscumpărați codul „UNETEKEOLA” pentru a câștiga puncte.",
+			"btn": "Google Play",
+			"titles": ["Descărcați aplicația Keola", "Cel mai nou", "Invită și câștigă"]
+		},
+		"lastUpdates": {
+			"title": "Ultimele actualizări",
+			"description": "Vrem să reușiți și să vă dezvoltați afacerea pentru a fi pionierul de succes pe care știm că sunteți! ",
+			"button": "Actualizați!"
+		},
+		"howWorks": {
+			"title": "Cum functioneazã",
+			"subtitle": "Începeți în 3 pași simpli",
+			"steps": [
+				{
+					"title": "Inscrie-te",
+					"description": "Introduceți sponsorul dvs. și completați-vă informațiile și creați-vă parola."
+				},
+				{
+					"title": "Explorați produsele",
+					"description": "Explorați produsele de pe portalul nostru Inclub. "
+				},
+				{
+					"title": "Victorie",
+					"description": "Gata! "
+				}
+			]
+		},
+		"cards": [
+			{
+				"title": "Servietă",
+				"description": "Alăturați-vă și fiți parte din proiectele noastre imobiliare, tehnologice și multe altele.",
+				"button": "Explorează mai mult"
+			},
+			{
+				"title": "Comunitate",
+				"description": "Scufundați-vă în produse grozave cu potențial uriaș de câștig.",
+				"button": "Explorează mai mult"
+			},
+			{
+				"title": "Şansă",
+				"description": "Dacă sunteți dispus să lucrați, InClub este vehiculul care vă va duce acolo unde doriți.",
+				"button": "Explorează mai mult"
+			}
+		],
+		"testimonialsSection": {
+			"cardPrefix": "Membru din",
+			"heading": "Tot ce aveți nevoie este un telefon în mână pentru a vă conecta cu oportunitatea de afaceri a vieții.",
+			"button": "Înregistrează-te acum",
+			"testimonials": [
+				{
+					"text": "Dacă te străduiești mult și lucrezi cu diligență, Inclub îți va schimba viața și îți va îndeplini toate visele",
+					"name": "Elias Vargas",
+					"since": "2020"
+				},
+				{
+					"text": "Ai nevoie doar de 3 lucruri în această lume pentru a fi fericit: Credință în Dumnezeu, Credință în tine și Credință în visele tale",
+					"name": "Paul Villacorta",
+					"since": "2020"
+				},
+				{
+					"text": "Nu e rău să fii sărac, rău e să nu încerci niciodată, să mori sărac și fără vise. Nu e niciodată prea târziu să începi",
+					"name": "Mery Livias",
+					"since": "2021"
+				},
+				{
+					"text": "Poți rosti cel mai bun discurs cu viața ta decât cu cuvintele tale",
+					"name": "Abel Meza",
+					"since": "2020"
+				}
+			]
+		}
+	},
+	"products": {
+		"navigation": ["Imobiliare", "Teh", "Următoarele proiecte"],
+		"items": [
+			{
+				"title": "Stațiunea Ribera del Rio",
+				"description": "Bucurați-vă de beneficiile Hotelului Club Resort și deveniți membru. ",
+				"buttonText": "Mai multe informatii"
+			},
+			{
+				"title": "Complexul La Joya",
+				"description": "Distracție în familie, natură și profituri pe viață. ",
+				"buttonText": "Mai multe informatii"
+			},
+			{
+				"title": "Keola Networks",
+				"description": "Invitați și câștigați, descoperiți beneficiile aplicației. ",
+				"buttonText": "Mai multe informatii"
+			}
+		],
+		"nextProjects": {
+			"title": "Noi lucram",
+			"description": "În prezent, echipa Inclub este în proces creativ pentru a prezenta proiecte viitoare. ",
+			"buttonText": "Actualizați!"
+		}
+	},
+	"productDetail": {
+		"aboutUsTitle": "Despre noi",
+		"aboutBtnText": "Vreau sa stiu mai mult",
+		"products": [
+			{
+				"aboutTitle": "Riverside",
+				"aboutDescription": "Suntem un Club Resort situat în Cieneguilla, la 45 de minute de Lima. ",
+				"perkPreTitle": "Profită de noi",
+				"perktitle": "Experiențe de neuitat",
+				"perkDescription": "Refugiul perfect pentru cei care caută o evadare unică și o experiență de aventură. ",
+				"cards": [
+					{
+						"title": "Hoteluri",
+						"description": "Fiecare cameră de la Ribera del Río este concepută pentru a fi împărtășită cu cei dragi; "
+					},
+					{
+						"title": "Experiențe",
+						"description": "Oferim o gamă largă de experiențe de agrement și recreere care vă vor captiva cu siguranță. "
+					},
+					{
+						"title": "Restaurante",
+						"description": "Este întotdeauna bine să te răsfeți și, pentru asta, „Restaurantul nostru Ribera del Río” vă urează bun venit și vă invită să savurați diverse mâncăruri tipice naționale, regionale și creole."
+					}
+				]
+			},
+			{
+				"aboutTitle": "Bijuteria",
+				"aboutDescription": "Suntem un Club Resort situat în Arequipa, la doar 45 de minute de orașul Arequipa. ",
+				"perkPreTitle": "Profită de noi",
+				"perktitle": "Experiențe de neuitat",
+				"perkDescription": "Refugiul perfect pentru cei care caută o evadare unică și o experiență de aventură. ",
+				"cards": [
+					{
+						"title": "Bazine de înot",
+						"description": "Fiecare piscină de la La Joya este concepută pentru a fi împărtășită cu cei dragi; "
+					},
+					{
+						"title": "Experiențe",
+						"description": "Oferim o gamă largă de experiențe de agrement și recreere care vă vor captiva cu siguranță. "
+					},
+					{
+						"title": "Parcul stațiunii",
+						"description": "Parc acvatic frumos cu tobogane colorate; "
+					}
+				]
+			},
+			{
+				"aboutTitle": "Keola",
+				"aboutDescription": "Bun venit la Keola, aplicația supremă pentru a găsi toate produsele tale preferate într-un singur loc! ",
+				"perkPreTitle": "Profită de noi",
+				"perktitle": "Beneficiile Keola",
+				"perkDescription": "Invită și câștigă, descoperă beneficiile aplicației. ",
+				"cards": [
+					{
+						"title": "Produse",
+						"description": "Descoperiți o varietate de produse și categorii. "
+					},
+					{
+						"title": "Magazine",
+						"description": "Gestionează-ți magazinul și gestionează-ți produsele, oferind un serviciu de livrare de calitate și eficient."
+					},
+					{
+						"title": "Livrare",
+						"description": "Ai nevoie de mâncare, de medicamente? "
+					}
+				]
+			}
+		]
+	},
+	"oportunity": {
+		"title": "Şansă",
+		"description": "Este deschis oricui, indiferent de experiență, locație sau circumstanțe.",
+		"sections": [
+			{
+				"pre": "Câștigă cu influența ta",
+				"title": "Toată lumea este un micro influențat",
+				"content": "Toată lumea este un micro-influencer. "
+			},
+			{
+				"pre": "Recomand produse de calitate",
+				"title": "Produse de ultimă oră, deschizând drumul în industrie",
+				"content": "În fiecare zi recomandăm produse și servicii prietenilor și familiei noastre. "
+			},
+			{
+				"pre": "Învață de la colegii tăi",
+				"title": "Tot ce ai nevoie pentru a reuși",
+				"content": "Împărtășim cunoștințele specialiștilor noștri, inspirați de dorința de a face networkingul mai profitabil pentru toată lumea și pentru ca afiliații să învețe cum să genereze active."
+			},
+			{
+				"pre": "Plan de compensare",
+				"title": "Planul nostru de compensare este cel mai puternic din industrie",
+				"content": "Ajutăm oamenii să construiască un portofoliu de investiții inteligent și să obțină libertatea financiară mult așteptată cu o gamă largă de beneficii, ca niciun alt club de investiții."
+			}
+		],
+		"testimonials": {
+			"pre": "Mărturii",
+			"title": "Povesti de succes",
+			"items": [
+				{
+					"text": "Dacă o persoană care trăiește în trecut nu va reuși niciodată în prezent, cu atât mai puțin în viitor",
+					"name": "Elias Vargas",
+					"since": "2020"
+				},
+				{
+					"text": "Ai nevoie doar de 3 lucruri pe lumea asta pentru a fi fericit: credință în Dumnezeu, credință în tine și credință în visele tale",
+					"name": "Paul Villacorta",
+					"since": "2020"
+				},
+				{
+					"text": "Nu este rău să fii sărac, răul este să nu fi încercat niciodată, să mori sărac și fără vise, niciodată nu este prea târziu pentru a începe",
+					"name": "Mery Livias",
+					"since": "2021"
+				},
+				{
+					"text": "Poți să rostești cel mai bun discurs cu viața ta decât cu cuvintele tale.",
+					"name": "Abel Meza",
+					"since": "2020"
+				}
+			]
+		}
+	},
+	"comunity": {
+		"title": "Comunitatea noastra",
+		"description": "Succesul este mai bun atunci când este împărtășit. ",
+		"sections": [
+			{
+				"pre": "CREȘTEȘTE ȘI PROSPERSĂ CU NOI",
+				"title": "Afiliați din întreaga lume",
+				"content": "Cea mai mare și mai puternică rețea de afiliați de astăzi din America Latină este, fără îndoială, Inclub. "
+			},
+			{
+				"pre": "Recunoaștere și evenimente",
+				"title": "Milioane de oameni vor sărbători succesul tău.",
+				"content": "Suntem incredibil de mândri de munca grea și dedicarea fiecărui antreprenor în afacerea sa. "
+			},
+			{
+				"pre": "INSTRUMENTE DE EDUCAȚIE ȘI ÎNVĂȚARE",
+				"title": "Tot ce ai nevoie pentru a reuși.",
+				"content": "Ajutăm oamenii să creeze un portofoliu de investiții inteligent și să obțină libertatea financiară mult așteptată. "
+			}
+		],
+		"inspiration": {
+			"title": "Inspirație",
+			"subtitle": "Voci ale comunității",
+			"testimonials": [
+				{
+					"text": "Inclub este viața mea și de aceea o iau foarte în serios.",
+					"name": "Elias Vargas",
+					"since": "2020"
+				},
+				{
+					"text": "Inclub este aici pentru a schimba viețile oamenilor.",
+					"name": "Paul Villacorta",
+					"since": "2020"
+				},
+				{
+					"text": "Inclub ne-a oferit oportunitatea de a schimba și viețile altora.",
+					"name": "Mery Livias",
+					"since": "2021"
+				},
+				{
+					"text": "Afiliații sunt recompensați pentru succes datorită masei de utilizatori.",
+					"name": "Abel Meza",
+					"since": "2020"
+				}
+			]
+		}
+	},
+	"news": {
+		"noticeLabel": "Știri",
+		"titleMain": "NOUTATE",
+		"descriptionMain": "Refugiul perfect pentru a te bucura alături de familie și prieteni",
+		"commonEventsCountry": "Lima, Peru",
+		"commonEventsBtn": "Vezi mai mult",
+		"content": [
+			{
+				"date": "14 SEP 2023",
+				"title": "Comunicați cu succes, atelier de comunicare lingvistică și de afaceri"
+			},
+			{
+				"title": "Destinația dvs. de cumpărături online",
+				"description": "Invitați și câștigați, descoperiți beneficiile aplicației. "
+			},
+			{
+				"title": "Proiect imobiliar",
+				"description": "Liderii Inclub s-au bucurat de o lansare incredibilă a proiectului imobiliar Ribera del Rio în Cieneguilla."
+			},
+			{
+				"title": "Lansare Encumbra",
+				"description": "Liderii Inclub îi dă putere membrilor noștri să fie lideri în industria rețelelor online."
+			},
+			{
+				"title": "Destinația dvs. de cumpărături online",
+				"description": "Invitați și câștigați, descoperiți beneficiile aplicației. "
+			},
+			{
+				"title": "Proiect tehnologic",
+				"description": "Liderii Inclub s-au bucurat de o lansare incredibilă a proiectului imobiliar Ribera del Rio în Cieneguilla."
+			},
+			{
+				"title": "Stațiunea Ribera del Rio",
+				"description": "Liderii Inclub îi dă putere membrilor noștri să fie lideri în industria rețelelor online."
+			}
+		]
+	},
+	"newsDetail": {
+		"date": "26 septembrie 2023",
+		"title": "Refugiul perfect pentru a te bucura alături de familie și prieteni",
+		"description": "Parcul La Joya se află la doar 60 de minute de orașul Arequipa din cartierul La Joya, aici vă puteți bucura de zile la plajă sau puteți practica sporturi nautice. ",
+		"content": [
+			{
+				"date": "14 septembrie 2023",
+				"title": "Comunicați cu succes, atelier de comunicare lingvistică și de afaceri"
+			},
+			{
+				"date": "29 septembrie 2023",
+				"title": "Sistem educațional Include LEADERSHIP"
+			},
+			{
+				"date": "15 septembrie 2023",
+				"title": "Sistemul educațional Inclub Mărturii ale succesului"
+			}
+		]
+	},
+	"calendar": {
+		"title": "Calendar",
+		"subtitle": "Septembrie",
+		"filters": {
+			"searchLabel": "Căutător",
+			"searchPlaceholder": "Căutați evenimentul sau atelierul",
+			"options": ["Astăzi", "Săptămânal", "Lunar"]
+		}
+	},
+	"eventPage": {
+		"upcommingEventsTitle": "Evenimente viitoare",
+		"upcomingEvents": [
+			{
+				"date": "14 SEP 2023",
+				"title": "Comunicați cu succes, atelier de comunicare lingvistică și de afaceri"
+			},
+			{
+				"date": "29 SEP 2023",
+				"title": "Sistemul Educațional Include LEADERSHIP"
+			},
+			{
+				"date": "15 SEP 2023",
+				"title": "Sistemul educațional Inclub Mărturii ale succesului"
+			}
+		],
+		"pastEventsTitle": "Evenimente anterioare",
+		"pastEvents": [
+			{
+				"date": "12 SEP 2023",
+				"title": "Sistem educațional Include Club de lectură"
+			},
+			{
+				"date": "10 SEPTIEMBRE 2023",
+				"title": "Sistem educațional Include LEADERSHIP"
+			},
+			{
+				"date": "8 SEP 2023",
+				"title": "Sistemul Educațional Inclub Mărturii de succes"
+			}
+		],
+		"trendsTitle": "Tendințe"
+	},
+	"eventsDetail": {
+		"backLabel": "Întoarcere",
+		"resumeTitle": "rezumat",
+		"learnTitle": "Ce vei invata?"
+	},
+	"events": [
+		{
+			"title": "Comunicați cu succes, atelier de comunicare lingvistică și de afaceri",
+			"date": "14 SEP 2023",
+			"type": "Pe net",
+			"duration": "Durata aproximativă: 22 minute.",
+			"positiveReviews": "98% recenzii pozitive (567).",
+			"summary": "Doriți să vă îmbunătățiți abilitățile de comunicare în domeniul afacerilor? ",
+			"learn": [
+				"Îmbunătățiți abilitățile de prezentare și negociere",
+				"Învață să te exprimi clar și eficient",
+				"Spre deosebire de alte ateliere teoretice, acest atelier vă permite să puneți imediat în practică ceea ce ați învățat.",
+				"Prin exerciții și dinamică de grup, vei putea să-ți exersezi abilitățile de comunicare și să primești feedback imediat de la experți în domeniu. ",
+				"Și altele."
+			]
+		},
+		{
+			"date": "29 SEP 2023",
+			"title": "Sistem educațional Inclub: Leadership",
+			"type": "Pe net",
+			"duration": "Durata aproximativă: 22 minute.",
+			"positiveReviews": "98% recenzii pozitive (567).",
+			"summary": "Doriți să vă îmbunătățiți abilitățile de comunicare în domeniul afacerilor? ",
+			"learn": [
+				"Îmbunătățiți abilitățile de prezentare și negociere",
+				"Învață să te exprimi clar și eficient",
+				"Spre deosebire de alte ateliere teoretice, acest atelier vă permite să puneți imediat în practică ceea ce ați învățat.",
+				"Prin exerciții și dinamică de grup, vei putea să-ți exersezi abilitățile de comunicare și să primești feedback imediat de la experți în domeniu. ",
+				"Și altele."
+			]
+		},
+		{
+			"date": "15 SEP 2023",
+			"title": "Sistem educațional Inclub: povești de succes",
+			"type": "Pe net",
+			"duration": "Durata aproximativă: 22 minute.",
+			"positiveReviews": "98% recenzii pozitive (567).",
+			"summary": "Doriți să vă îmbunătățiți abilitățile de comunicare în domeniul afacerilor? ",
+			"learn": [
+				"Îmbunătățiți abilitățile de prezentare și negociere",
+				"Învață să te exprimi clar și eficient",
+				"Spre deosebire de alte ateliere teoretice, acest atelier vă permite să puneți imediat în practică ceea ce ați învățat.",
+				"Prin exerciții și dinamică de grup, vei putea să-ți exersezi abilitățile de comunicare și să primești feedback imediat de la experți în domeniu. ",
+				"Și altele."
+			]
+		},
+		{
+			"date": "12 SEP 2023",
+			"title": "Sistem educațional Inclub: Club de carte",
+			"type": "Pe net",
+			"duration": "Durata aproximativă: 22 minute.",
+			"positiveReviews": "98% recenzii pozitive (567).",
+			"summary": "Doriți să vă îmbunătățiți abilitățile de comunicare în domeniul afacerilor? ",
+			"learn": [
+				"Îmbunătățiți abilitățile de prezentare și negociere",
+				"Învață să te exprimi clar și eficient",
+				"Spre deosebire de alte ateliere teoretice, acest atelier vă permite să puneți imediat în practică ceea ce ați învățat.",
+				"Prin exerciții și dinamică de grup, vei putea să-ți exersezi abilitățile de comunicare și să primești feedback imediat de la experți în domeniu. ",
+				"Și altele."
+			]
+		},
+		{
+			"date": "10 SEPTIEMBRE 2023",
+			"title": "Sistem educațional Inclub: Leadership",
+			"type": "Pe net",
+			"duration": "Durata aproximativă: 22 minute.",
+			"positiveReviews": "98% recenzii pozitive (567).",
+			"summary": "Doriți să vă îmbunătățiți abilitățile de comunicare în domeniul afacerilor? ",
+			"learn": [
+				"Îmbunătățiți abilitățile de prezentare și negociere",
+				"Învață să te exprimi clar și eficient",
+				"Spre deosebire de alte ateliere teoretice, acest atelier vă permite să puneți imediat în practică ceea ce ați învățat.",
+				"Prin exerciții și dinamică de grup, vei putea să-ți exersezi abilitățile de comunicare și să primești feedback imediat de la experți în domeniu. ",
+				"Și altele."
+			]
+		},
+		{
+			"date": "8 SEP 2023",
+			"title": "Sistem educațional Inclub: povești de succes",
+			"type": "Pe net",
+			"duration": "Durata aproximativă: 22 minute.",
+			"positiveReviews": "98% recenzii pozitive (567).",
+			"summary": "Doriți să vă îmbunătățiți abilitățile de comunicare în domeniul afacerilor? ",
+			"learn": [
+				"Îmbunătățiți abilitățile de prezentare și negociere",
+				"Învață să te exprimi clar și eficient",
+				"Spre deosebire de alte ateliere teoretice, acest atelier vă permite să puneți imediat în practică ceea ce ați învățat.",
+				"Prin exerciții și dinamică de grup, vei putea să-ți exersezi abilitățile de comunicare și să primești feedback imediat de la experți în domeniu. ",
+				"Și altele."
+			]
+		}
+	]
+}

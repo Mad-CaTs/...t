@@ -1,0 +1,75 @@
+.followment-card {
+    width: 240px;
+    height: 240px;
+    justify-content: center;
+    padding: 4px;
+    text-align: left;
+    border: solid 2px #9f9f9f;
+    margin: 10px;
+}
+
+.card-footer {
+    padding: 16px;
+}
+
+.new-card {
+    width: 240px;
+    height: 240px;
+    justify-content: center;
+    padding: 4px;
+    text-align: left;
+    border: solid 2px #9f9f9f;
+    margin: 10px;
+}
+
+.ticket-card {
+    width: 200px;
+    height: 240px;
+    justify-content: center;
+    padding: 4px;
+    text-align: left;
+    border: solid 2px #9f9f9f;
+    margin: 10px;
+}
+
+.type-card {
+    width: 200px;
+    height: 260px;
+    justify-content: center;
+    padding: 4px;
+    text-align: left;
+    border: solid 2px #9f9f9f;
+    margin: 10px;
+}
+
+.items-card {
+    display: inline-flex;
+}
+
+.title-card {
+    font-weight: bold;
+}
+
+.letter-card {
+    background: #fe7c04;
+    color: #fff !important;
+}
+
+::ng-deep .mat-step-header .mat-step-icon-selected {
+    background-color: #fe7c04; 
+ }
+
+ ::ng-deep .mat-horizontal-stepper-header{
+    pointer-events: none !important;
+}
+.modal-ml {
+    max-width: 654px !important;
+    min-width: 654px !important;
+}
+
+    .modal-dialog {
+        max-width: 654px !important;
+        margin-right: auto;
+        margin-left: auto;
+    }
+

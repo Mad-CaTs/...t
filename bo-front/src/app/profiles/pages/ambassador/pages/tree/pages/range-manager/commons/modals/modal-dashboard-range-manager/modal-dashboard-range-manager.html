@@ -1,0 +1,47 @@
+<div class="container">
+  <h1 class="fs-5 mb-24">
+    <a (click)="goBack()"
+       class="nav-link cl-sorbus align-items-center d-flex">
+      <mat-icon class="me-2">arrow_back</mat-icon>
+      <span>Volver</span>
+    </a>
+  </h1>
+  <h5 class="fw-bold">Dashboard</h5>
+  <p class="text-muted mb-3">Aquí podras visualizar la información del socio.</p>
+
+  <app-range-manager-navigation (tabChange)="onTabChange($event)"></app-range-manager-navigation>
+
+  <div *ngIf="activeTab === 'state'">
+    <app-range-manager-state-data [data]="data"
+                                  [pointsData]="pointsData"></app-range-manager-state-data>
+  </div>
+
+  <div *ngIf="activeTab === 'score'">
+    <div class="w-100 d-flex flex-column flex-md-row gap-3">
+      <app-point-volume-component [dataPoints]="dataPoints"
+                                  [pointRangesData]="pointRangesData"
+                                  [isLoading]="isLoading">
+      </app-point-volume-component>
+
+
+    </div>
+  </div>
+
+  <div *ngIf="activeTab === 'range'">
+    <app-range class="w-100"
+               tipo="Compuesto"
+               [rangeData]="rangeData"
+               [nextRangeData]="nextRangeData"
+               [pointRangesData]="pointRangesData"
+               [isDataLoaded]="isDataLoaded">
+    </app-range>
+
+    <app-range class="w-100"
+               tipo="Residual"
+               [rangeData]="rangeData"
+               [nextRangeData]="nextRangeData"
+               [pointRangesData]="pointRangesData"
+               [isDataLoaded]="isDataLoaded">
+    </app-range>
+  </div>
+</div>

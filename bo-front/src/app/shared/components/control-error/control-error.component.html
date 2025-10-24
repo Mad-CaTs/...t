@@ -1,0 +1,32 @@
+<!-- <div *ngIf="getFieldError as errorMessage"
+     class="text-danger d-flex flex-column flex-md-row gap-2 gap-md-4 w-100">
+  <span>{{errorMessage}}</span>
+</div> -->
+<div class="d-inline-block">
+  <span *ngIf="getFieldError as errorMessage"
+        class="error-message text-danger">{{ errorMessage }}</span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="text-danger d-flex flex-column flex-md-row gap-2 gap-md-4 w-100"
+     *ngIf="form.controls[controlName].invalid && (form.controls[controlName].touched) || form.controls[controlName].dirty">
+  <span *ngIf="form.controls[controlName].errors?.['required']">Este campo es requerido</span>
+</div>  -->

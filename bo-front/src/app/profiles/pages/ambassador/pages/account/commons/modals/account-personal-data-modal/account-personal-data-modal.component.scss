@@ -1,0 +1,56 @@
+.modal-backdrop {
+	border-radius: 10px;
+}
+
+.family-font {
+	font-family: 'Roboto';
+}
+
+.size-14 {
+	font-size: 14px;
+}
+
+.modal-container {
+	max-width: 600px; /* Ajusta el ancho del modal */
+	width: 100%;
+	padding: 15px;
+}
+
+.close-btn {
+	position: absolute;
+	cursor: pointer;
+	border: none;
+	background: none;
+	top: 20px;
+	right: 20px;
+}
+
+.custom-select {
+	width: 100%; /* Mantiene el tamaño uniforme */
+	min-width: 150px; /* Define un ancho mínimo */
+	max-width: 100%; /* Evita que se expanda más allá del contenedor */
+}
+
+.d-flex {
+	gap: 0.25rem; /* Reduce el espacio entre elementos */
+}
+
+.mt-2 {
+	margin-top: 0.25rem !important; /* Reduce el margen superior */
+}
+
+.border {
+	border-radius: 10px;
+}
+
+.app.input {
+	border-radius: 10px;
+}
+
+.size-btnn {
+	width: inherit;
+}
+
+.form-group {
+	margin-bottom: 5px;
+}

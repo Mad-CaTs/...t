@@ -1,0 +1,26 @@
+  <!-- Icono y título -->
+  <div class="text-center">
+    <div class="d-inline-flex align-items-center justify-content-center rounded-circle mb-2" 
+         style="width: 48px; height: 48px; background-color: #FEF0C7;">
+      <mat-icon fontIcon="visibility" style="color: #F79009; font-size: 28px; width: 28px; height: 28px;"></mat-icon>
+    </div>
+    <h6 class="fw-bold mb-2">No asignaste un padrino</h6>
+    <p class="text-muted small mb-3">¡Ojo! no has escogido un padrino. La comisión irá al patrocinador.</p>
+  </div>
+  
+  <!-- Botones -->
+  <div class="d-flex gap-2">
+    <button 
+      type="button" 
+      class="btn btn-outline-secondary flex-fill" 
+      (click)="onCancel()">
+      Cancelar
+    </button>
+    <button 
+      type="button" 
+      class="btn btn-warning flex-fill text-white" 
+      style="background-color: #FF6B00; border-color: #FF6B00;"
+      (click)="onConfirm()">
+      Confirmar
+    </button>
+  </div>

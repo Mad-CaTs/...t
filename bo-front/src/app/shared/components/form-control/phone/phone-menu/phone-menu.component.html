@@ -1,0 +1,15 @@
+<div class="d-flex flex-column gap-3 card w-100 p-2" tabindex="0" #list>
+      <!-- TODO: Corregir con nueva forma -->
+<!-- 	<app-input class="w-100" placeholder="Buscar por país o prefijo" [control]="search"></app-input>
+ -->	<ul class="d-flex flex-column">
+		<li
+			class="d-flex flex-row gap-3 select-list__item rounded"
+			[class.select-list__item--active]="prefix === country.prefix"
+			(click)="onSelectOption(country.prefix)"
+			*ngFor="let country of countryData"
+		>
+			<img [src]="country.flag" />
+			<span class="cl-muted">{{ country.name }} ({{ country.prefix }})</span>
+		</li>
+	</ul>
+</div>

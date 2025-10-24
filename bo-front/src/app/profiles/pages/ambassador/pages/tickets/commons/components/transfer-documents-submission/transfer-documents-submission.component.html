@@ -1,0 +1,99 @@
+<div class="card h-100 d-flex flex-column p-2 mb-5 text-start">
+	<h4>Envío de documentos</h4>
+	<p class="mb-4 cl-gray-100">Adjunta los documentos necesarios para completar tu solicitud.</p>
+
+	<app-file
+		label="Adjuntar documento de identidad del titular:"
+		placeholder="JPG, PNG o PDF, máximo 10MB"
+		[form]="presenter.form"
+		controlName="documentoIdentidad"
+		class="w-100"
+		accept=".png,.jpg,.jpeg,.pdf"
+		[inline]="true"
+		[sendAsBase64]="false"
+	>
+	</app-file>
+
+	<div
+		class="alert alert-info d-flex flex-column flex-sm-row gap-2 align-items-center text-center text-sm-start p-2 mt-2"
+		role="alert"
+	>
+		<mat-icon class="fs-4 flex-shrink-0">info</mat-icon>
+		<span class="alert-info-text fs-6 text-wrap"
+			>Debe subir ambas caras de su DNI (frontal y posterior) y verifique que sea legible del titular y
+			socio a traspasar.</span
+		>
+	</div>
+
+	<app-file
+		label="Adjuntar documento de identidad del socio a traspasar:"
+		placeholder="JPG, PNG o PDF, máximo 10MB"
+		[form]="presenter.form"
+		controlName="partnerDocument"
+		class="w-100"
+		accept=".png,.jpg,.jpeg,.pdf"
+		[inline]="true"
+		[sendAsBase64]="false"
+	>
+	</app-file>
+
+	<!-- 	<div
+		class="alert alert-info d-flex flex-column flex-sm-row gap-2 align-items-center text-center text-sm-start p-2 mt-2"
+		role="alert"
+	>
+		<mat-icon class="fs-4 flex-shrink-0">info</mat-icon>
+		<span class="alert-info-text fs-6 text-wrap"
+			>Debe subir ambas caras de su DNI (frontal y posterior) y verifique que sea legible.</span
+		>
+		</div> -->
+
+	<div class="mb-3">
+		<div class="d-flex justify-content-between align-items-baseline mb-2">
+			<label class="fs-6 mb-0 cl-muted">Adjuntar declaración jurada (DJ):</label>
+			<a href="https://acortar.link/UULZPc" target="_blank" rel="noopener noreferrer" class="d-none d-sm-inline-flex align-items-center gap-1 small link-primary text-decoration-none" aria-label="Ver ejemplo declaración jurada" title="Ver ejemplo declaración jurada" style="transform: translateX(-8px);">
+				<span class="fw-normal">Ver</span>
+			</a>
+		</div>
+
+		<app-file
+			placeholder="JPG, PNG o PDF, máximo 10MB"
+			[form]="presenter.form"
+			controlName="declaracionJurada"
+			class="w-100"
+			accept=".png,.jpg,.jpeg,.pdf"
+			[sendAsBase64]="false"
+		>
+		</app-file>
+	</div>
+
+	<div>
+<!-- --------------------------------HASTA QUE SE IMPLEMENTE CONCIALIACIONES -->
+<!-- <div class="card h-100 d-flex flex-column p-2 mb-5 text-start">
+	<h4>Regularización de conciliación</h4>
+	<p class="mb-4 cl-gray-100">Responda las preguntas para validar información.</p>
+
+	<div class="mt-2">
+		<app-radios
+			class="w-100"
+			[form]="presenter.form"
+			verticalLayout="true"
+			controlName="hasPendingConciliations"
+			[options]="optHasPendingConciliations"
+			label="¿Tienes conciliaciones pendientes?"
+		></app-radios>
+	</div>
+
+	 <div class="mt-2" [hidden]="presenter.form.get('hasPendingConciliations')?.value != 1">
+
+		<app-radios
+			class="w-100"
+			[form]="presenter.form"
+			verticalLayout="true"
+			controlName="conciliationResponsible"
+			[options]="optConciliationResponsible"
+			label="En caso de haber respondido 'Sí', ¿quién se encargará del pago?"
+		></app-radios>
+	</div>
+
+	
+</div> -->

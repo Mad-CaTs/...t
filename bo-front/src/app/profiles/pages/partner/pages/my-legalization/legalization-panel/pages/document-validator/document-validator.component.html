@@ -1,0 +1,269 @@
+<div class="card px-0 px-md-4 card-border-none">
+	<header class="p-4 border-bottom mb-4">
+		<h1 class="fs-3 mb-3">Validador de documentos</h1>
+		<app-breadcrumb [breadcrumbs]="breadcrumbItems"></app-breadcrumb>
+		<div class="d-flex justify-content-end gap-3 mt-4" *ngIf="mostrarBotonesTop">
+			<button
+				class="btn btn-outline-secondary px-4"
+				type="button"
+				(click)="mostrarCorreccion()"
+				[disabled]="disableCorreccionBtn"
+			>
+				Solicitar Corrección
+			</button>
+
+			<button
+				class="btn btn-secondary px-4 d-flex align-items-center justify-content-center"
+				type="button"
+				(click)="mostrarConformidad()"
+				[disabled]="disableConformidadBtn"
+			>
+				Dar Conformidad
+			</button>
+		</div>
+	</header>
+	<div class="containerp" [ngClass]="{ 'solo-pdf': modoVista === 'soloPDF' }">
+		<!-- PANEL IZQUIERDO -->
+		<div class="left-panel" *ngIf="modoVista === 'correccion'">
+			<h2>{{ isStatusTrue ? 'Detalles de corrección' : 'Solicitud de corrección' }}</h2>
+			<p *ngIf="!isStatusTrue">
+				Por favor, indique qué datos o en qué sección la información es incorrecta. Asimismo, es muy
+				importante que adjunte su Documento de identidad escaneada para validar los datos erróneos.
+			</p>
+			<p *ngIf="isStatusTrue">Se detalla el contenido de lo corregido.</p>
+
+			<div class="d-flex flex-column w-100 mb-2">
+				<app-text-area
+					[form]="correccionForm"
+					name="requestMessage"
+					label="Solicitud"
+					placeholder="Escriba los detalles"
+					class="w-100"
+				></app-text-area>
+			</div>
+			<div class="d-flex flex-column w-100">
+				<app-select
+					*ngIf="!isStatusTrue"
+					[form]="correccionForm"
+					controlName="documentType"
+					label="Tipo de documento"
+					placeholder="Selecciona uno"
+					[options]="documentTypeList"
+				>
+				</app-select>
+			</div>
+
+			<div class="d-flex flex-column w-100 mt-4">
+				<app-input
+					*ngIf="!isStatusTrue"
+					[form]="correccionForm"
+					controlName="documentNumber"
+					label="Número del documento"
+					type="text"
+					placeholder="Ingrese número"
+				>
+				</app-input>
+			</div>
+
+			<app-file
+				label="Adjuntar documento"
+				placeholder="JPG, PNG o PDF, máximo 10MB"
+				[form]="correccionForm"
+				controlName="archivosPrincipales"
+				class="w-100"
+				accept=".png,.jpg,.jpeg,.pdf"
+				[multiple]="true"
+				[maxLength]="5"
+				[inline]="true"
+				[sendAsBase64]="false"
+			>
+			</app-file>
+
+			<!-- Nota 1 -->
+
+			<div
+				class="alert alert-info d-flex flex-column flex-sm-row gap-2 align-items-center text-center text-sm-start p-2 mt-2"
+				role="alert"
+				*ngIf="!isStatusTrue"
+			>
+				<mat-icon class="fs-4 flex-shrink-0">info</mat-icon>
+				<span class="alert-info-text fs-6 text-wrap">Máximo 5 archivos.</span>
+			</div>
+
+			<!-- Nota 2 -->
+			<div
+				class="alert alert-info d-flex flex-column flex-sm-row gap-2 align-items-center text-center text-sm-start p-2 mt-2"
+				role="alert"
+				*ngIf="!isStatusTrue"
+			>
+				<mat-icon class="fs-4 flex-shrink-0">info</mat-icon>
+				<span class="alert-info-text fs-6 text-wrap">
+					Debe subir ambas caras de su DNI (frontal y posterior). Verifique que sea legible.
+				</span>
+			</div>
+
+			<app-file
+				label="Archivos adicionales (opcional)"
+				placeholder="JPG, PNG o PDF, máximo 10MB"
+				[form]="correccionForm"
+				controlName="archivosOpcionales"
+				class="w-100"
+				accept=".png,.jpg,.jpeg,.pdf"
+				[maxLength]="5"
+				[multiple]="true"
+				[sendAsBase64]="false"
+			>
+			</app-file>
+
+			<div
+				class="alert alert-info d-flex flex-column flex-sm-row gap-2 align-items-center text-center text-sm-start p-2 mt-2"
+				role="alert"
+				*ngIf="!isStatusTrue"
+			>
+				<mat-icon class="fs-4 flex-shrink-0">info</mat-icon>
+				<span class="alert-info-text fs-6 text-wrap">Máximo 5 archivos.</span>
+			</div>
+
+			<div
+				class="alert alert-info d-flex flex-column flex-sm-row gap-2 align-items-center text-center text-sm-start p-2 mt-2"
+				role="alert"
+				*ngIf="!isStatusTrue"
+			>
+				<mat-icon class="fs-4 flex-shrink-0">info</mat-icon>
+				<span class="alert-info-text fs-6 text-wrap">
+					De ser necesario de adjuntar alguna evidencia con la que usted pueda sustentar el error,
+					suba en está sección
+				</span>
+			</div>
+
+			<div class="d-flex justify-content-center w-100 mt-4 gap-3" *ngIf="!isStatusTrue">
+				<button class="btn btn-outline-secondary flex-fill" type="button" (click)="cancelar()">
+					Cancelar
+				</button>
+
+				<button
+					class="btn btn-secondary flex-fill d-flex align-items-center justify-content-center"
+					type="button"
+					(click)="abrirModalCorreccion()"
+					[disabled]="!puedeSolicitarCorreccion()"
+				>
+					Solicitar
+				</button>
+			</div>
+		</div>
+
+		<!-- PANEL CONFORMIDAD -->
+		<div class="left-panel" *ngIf="modoVista === 'conformidad'">
+			<h2>Documento de Identidad</h2>
+			<p>Suba su documento de identidad y revíselo antes de enviarlo al área legal.</p>
+			<div class="d-flex flex-column w-100">
+				<app-select
+					class="w-100"
+					[showImg]="false"
+					label="Tipo de documento"
+					placeholder="Seleccione su documento"
+					[form]="form"
+					[options]="documentTypeList"
+					controlName="documentId"
+				>
+				</app-select>
+			</div>
+			<div class="d-flex flex-column w-100 mt-4">
+				<app-input
+					[form]="form"
+					controlName="nroDocument"
+					label="Número del documento"
+					type="text"
+					placeholder="Ingrese documento de identidad"
+					buttons="true"
+					class="w-100"
+				></app-input>
+			</div>
+
+			<app-file
+				label="Adjuntar documento"
+				placeholder="JPG, PNG o PDF, máximo 10MB"
+				[form]="form"
+				controlName="userDocumentFile"
+				class="w-100"
+				accept=".png, .jpg, .jpeg, .pdf"
+				[maxLength]="10000000"
+				[sendAsBase64]="false"
+			></app-file>
+			<div
+				class="alert alert-info d-flex flex-column flex-sm-row gap-2 align-items-center text-center text-sm-start p-2 mt-2"
+				role="alert"
+				*ngIf="!isStatusTrue"
+			>
+				<mat-icon class="fs-4 flex-shrink-0">info</mat-icon>
+				<span class="alert-info-text fs-6 text-wrap">Solo 1 archivo permitido.</span>
+			</div>
+
+			<div
+				class="alert alert-info d-flex flex-column flex-sm-row gap-2 align-items-center text-center text-sm-start p-2 mt-2"
+				role="alert"
+				*ngIf="!isStatusTrue"
+			>
+				<mat-icon class="fs-4 flex-shrink-0">info</mat-icon>
+				<span class="alert-info-text fs-6 text-wrap">
+					Debe subir ambas caras de su DNI (frontal y posterior). Verifique que sea legible.
+				</span>
+			</div>
+
+			<div class="d-flex justify-content-center w-100 mt-4 gap-3">
+				<button class="btn btn-outline-secondary flex-fill" type="button" (click)="cancelar()">
+					Cancelar
+				</button>
+
+				<button
+					class="btn btn-secondary flex-fill d-flex align-items-center justify-content-center"
+					type="button"
+					(click)="enviarConformidad()"
+					[disabled]="!conformidadCompleta()"
+				>
+					Enviar
+				</button>
+			</div>
+		</div>
+
+		<div class="right-panel">
+			<div
+				class="floating-messages position-absolute ms-3 d-flex flex-column gap-2 z-3"
+				*ngIf="modoVista === 'soloPDF'"
+			>
+				<div class="message-box" *ngIf="idLegalDocument == 1">
+					<mat-icon>info</mat-icon>
+					<span
+						>Revise cuidadosamente cada dato ingresado en este certificado. Tenga en cuenta que
+						los campos resaltados de color naranja corresponde a sus datos personales y son los
+						únicos que se encuentran sujetos a correcciones o modificaciones. Si todo es correcto,
+						brinde su conformidad. En caso detecte algún error, podrá solicitar la corrección
+						utilizando el botón ubicado en la parte superior derecha.</span
+					>
+				</div>
+				<div class="message-box" *ngIf="idLegalDocument == 2">
+					<mat-icon>info</mat-icon>
+					<span
+						>Revise cuidadosamente cada dato generados en este contrato. Los campos resaltados en
+						color naranja corresponden a su información personal y pueden ser corregidos si es
+						necesario. Si todo es correcto, brinde su conformidad. En caso detecte algún error,
+						podrá solicitar la corrección utilizando el botón ubicado en la parte superior
+						derecha.
+					</span>
+				</div>
+			</div>
+
+			<div class="pdf-viewer">
+				<iframe *ngIf="modoVista === 'conformidad' && archivoConformidad" [src]="safeLink"></iframe>
+				<iframe *ngIf="modoVista !== 'conformidad' && safeLink" [src]="safeLink"></iframe>
+			</div>
+		</div>
+	</div>
+</div>
+<div
+	*ngIf="isLoadingCorreccion"
+	class="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center bg-white bg-opacity-75"
+	style="z-index: 1050"
+>
+	<app-loader [size]="'3rem'" [strokeWidth]="'3'"></app-loader>
+</div>

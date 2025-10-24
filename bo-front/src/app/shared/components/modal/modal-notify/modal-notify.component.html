@@ -1,0 +1,53 @@
+<div class="modal-backdrop">
+	<div class="modal-box">
+		<header class="modal-header">
+			<div class="modal-header-content">
+				<div class="modal-icon" [ngClass]="iconType">
+					<i
+						[ngClass]="{
+							'bi bi-check-circle': iconType === 'success',
+							'bi bi-exclamation-triangle-fill': iconType === 'error',
+							'bi bi-info-lg': iconType === 'info',
+							'bi bi-exclamation-circle': iconType === 'warning',
+							'bi bi-file-earmark-text-fill': iconType === 'file'
+						}"
+					></i>
+				</div>
+				<h3 class="modal-title">{{ title }}</h3>
+			</div>
+			<button type="button" class="close-btn" (click)="onClose()">
+				<i class="bi bi-x-lg"></i>
+			</button>
+		</header>
+
+		<p class="modal-message">{{ message }}</p>
+
+		<ul class="modal-bullets" *ngIf="showBullets && bulletItems && bulletItems.length">
+			<li *ngFor="let it of bulletItems">{{ it }}</li>
+		</ul>
+
+		<div class="modal-info" *ngIf="showInfoBox && infoBoxMessage">
+			<i class="bi bi-info-circle"></i>
+			<div class="modal-info-text">{{ infoBoxMessage }}</div>
+		</div>
+
+		<hr class="modal-divider" />
+
+		<footer class="modal-footer" *ngIf="oneButton; else twoActions">
+			<button type="button" class="btn btn-primary btn-pill" (click)="onClose()">
+				{{ computedPrimaryText }}
+			</button>
+		</footer>
+
+		<ng-template #twoActions>
+			<footer class="modal-footer two">
+				<button type="button" class="btn btn-outline btn-pill" (click)="onCancel()">
+					{{ secondaryText }}
+				</button>
+				<button type="button" class="btn btn-primary btn-pill" (click)="onConfirm()">
+					{{ computedPrimaryText }}
+				</button>
+			</footer>
+		</ng-template>
+	</div>
+</div>

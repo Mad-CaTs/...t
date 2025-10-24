@@ -1,0 +1,8 @@
+<div class="d-flex flex-column gap-4 card p-lg-4 border-0">
+	<h1 class="m-0 fs-4 text-black fw-medium">Cuenta</h1>
+	<!--Navigation-->
+	<app-navigation [data]="navigation" [selected]="selected" (changeSelected)="onNav($event)">
+	</app-navigation>
+	<!--Content-->
+	<router-outlet></router-outlet>
+</div>

@@ -1,0 +1,10 @@
+<div class="d-flex flex-column gap-4 card p-lg-4 border-0">
+    <h1 class="m-0 fs-4 text-black fw-medium">Pagos y comisiones</h1>
+    <app-navigation [data]="navigation" [selected]="currentTab" (changeSelected)="onNavigate($event)"
+        class="navigation"></app-navigation>
+    <div class="row">
+        <app-table-rent-exemption [dataBody]="rentExemptions" [totalRecords]="totalRecords"
+            (pageChange)="onPageChange($event)" (refresh)="onRefresh($event)">
+        </app-table-rent-exemption>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+.banner {
+	height: 192px;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	border-radius: 16px;
+}
+
+.bar {
+	min-width: 300px;
+
+	&__container {
+		height: 14px;
+		background-color: #e3d9ea;
+		border-radius: 4px;
+	}
+}
+
+.project-card {
+	border: 1px solid #d2cece;
+	box-shadow: 0px 4px 4px 0px #bbb1b140;
+	border-radius: 16px;
+}

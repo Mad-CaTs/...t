@@ -1,0 +1,75 @@
+<app-modal title="Detalle">
+  <div class="d-flex flex-column gap-3 w-100">
+   
+    <div class="d-flex flex-row justify-content-center gap-2 align-items-center">
+      <span class="cl-muted w-100">Nombre:</span>
+      <span class="text-black w-100 fw-medium">{{ detailData.nameSlave }} {{ detailData.lastNameSlave }}</span>
+    </div>
+    <div class="d-flex flex-row justify-content-center gap-2 align-items-center">
+      <span class="cl-muted w-100">Tipo de Comisión:</span>
+      <span class="text-black w-100 fw-medium">{{ detailData.typeBonusDescription }}</span>
+    </div>
+    <div class="d-flex flex-row justify-content-center gap-2 align-items-center">
+      <span class="cl-muted w-100">Puntaje:</span>
+      <span class="text-black w-100 fw-medium">{{ detailData.points }}</span>
+    </div>
+    <div class="d-flex flex-row justify-content-center gap-2 align-items-center">
+      <span class="cl-muted w-100">Porcentaje (%):</span>
+      <span class="text-black w-100 fw-medium">{{ detailData.percentage }} %</span>
+    </div>
+    <div class="d-flex flex-row justify-content-center gap-2 align-items-center">
+      <span class="cl-muted w-100">Monto:</span>
+      <span class="text-black w-100 fw-medium">$ {{ detailData.amount.toFixed(2) }}</span>
+    </div>
+
+    <div *ngFor="let label of getConditionLabels()">
+      <div class="d-flex flex-row justify-content-center gap-2 align-items-center">
+        <span class="cl-muted w-100">{{label}}:</span>
+
+        <div class="w-100"
+             *ngIf="label === 'Por Estado'">
+          <span *ngIf="detailData.isLevelQualified"
+                class="w-auto text-success rounded py-1 px-3"
+                style="background-color: #16a34a33">Sí</span>
+          <span *ngIf="!detailData.isLevelQualified"
+                class="w-auto cl-muted rounded py-1 px-3"
+                style="background-color: #e3e3e3">No</span>
+        </div>
+
+        <div class="w-100"
+             *ngIf="label === 'Por Nivel'">
+          <span *ngIf="detailData.isConditionQualified"
+                class="w-auto text-success rounded py-1 px-3"
+                style="background-color: #16a34a33">Sí</span>
+          <span *ngIf="!detailData.isConditionQualified"
+                class="w-auto cl-muted rounded py-1 px-3"
+                style="background-color: #e3e3e3">No</span>
+        </div>
+
+        <div class="w-100"
+             *ngIf="label === 'Por Tipo de Membresía'">
+          <span *ngIf="detailData.isConditionQualified"
+                class="w-auto text-success rounded py-1 px-3"
+                style="background-color: #16a34a33">Sí</span>
+          <span *ngIf="!detailData.isConditionQualified"
+                class="w-auto cl-muted rounded py-1 px-3"
+                style="background-color: #e3e3e3">No</span>
+        </div>
+
+        <div class="w-100"
+             *ngIf="label === 'Por Tipo de Monto'">
+          <span class="text-black w-100 fw-medium">Por Tipo de Monto</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="w-100 d-flex flex-row justify-content-center">
+      <button type="button"
+              class="btn btn-secondary"
+              (click)="instanceModal.close()">Salir</button>
+    </div>
+
+
+   
+  </div>
+</app-modal>

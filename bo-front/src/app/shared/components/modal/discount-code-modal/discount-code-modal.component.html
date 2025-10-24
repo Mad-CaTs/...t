@@ -1,0 +1,43 @@
+<div class="dc-modal">
+  <div class="dc-header">
+    <button type="button" class="dc-back-btn circle" aria-label="Cerrar" (click)="onCancel()">
+      <img src="/assets/icons/arrow-back-ios.svg" alt="volver" class="dc-back-svg" />
+    </button>
+    <div class="dc-header-text">
+      <h3 class="title">Elige tu opción de cupón</h3>
+      <p class="subtitle">Selecciona el tipo de código que deseas ingresar</p>
+    </div>
+  </div>
+
+  <div class="dc-body">
+    <div class="options w-100">
+      <app-discount-card
+        key="promoter"
+        [selected]="selectedType === 'promoter'"
+        [showCouponInput]="selectedType === 'promoter'"
+        [form]="couponForm"
+        controlName="coupon"
+        (select)="select('promoter')"
+        (couponChange)="onCouponChange($event)"></app-discount-card>
+
+      <app-discount-card
+        key="general"
+        [selected]="selectedType === 'general'"
+        [showCouponInput]="selectedType === 'general'"
+        [form]="couponForm"
+        controlName="coupon"
+        (select)="select('general')"
+        (couponChange)="onCouponChange($event)"></app-discount-card>
+    </div>
+
+  </div>
+
+  <div class="dc-footer d-flex justify-content-between align-items-center">
+    <div class="footer-left">
+      <button type="button" class="btn btn-outline-orange btn-pill" (click)="onCancel()">Cancelar</button>
+    </div>
+    <div class="footer-right">
+      <button type="button" class="btn btn-orange btn-pill" [disabled]="!selectedType" (click)="onValidate()">Validar</button>
+    </div>
+  </div>
+</div>

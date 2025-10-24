@@ -1,0 +1,15 @@
+<div class="container py-4">
+	<div class="row gy-4">
+		<div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let b of myRerwarsCards">
+			<app-my-rewards-card
+				[id]="b.id"
+				[title]="b.title"
+				[description]="b.description"
+				[icon]="b.icon"
+				[helpText]="b.helpText"
+				(viewClicked)="onViewClicked($event)"
+			>
+			</app-my-rewards-card>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,108 @@
+<app-modal title="">
+	<ng-container *ngIf="screen === 1">
+		<div class="w-100 d-flex flex-column gap-3">
+			<div class="d-flex flex-row gap-4" style="align-self: center;">
+				<h1 class="fs-6 fw-medium m-0 text-black pb-2">Traspaso de suscripción a socio vigente</h1>
+			</div>
+			<label for="info" class="text-black font-weight-bold" style="font-size: 16px;">Información del usuario</label>
+			<div class="w-100 d-flex flex-row justify-content-between align-items-center">
+				<span>Usuario</span>
+				<span class="fw-medium">{{ currentUser.username }}</span>
+			</div>
+			<div class="w-100 d-flex flex-row justify-content-between align-items-center">
+				<span>Nombre y Apellido</span>
+				<span class="fw-medium">{{ currentUser.lastName + ' ' + currentUser.name }}</span>
+			</div>
+			<app-select
+				class="w-100"
+				label="Elija tu perfil"
+				placeholder="Selecciona tu perfil"
+				[form]="form"
+				[options]="profileOpt"
+				controlName="profile"
+				(onChangeSelection)="onSelectionMembership($event)"
+			>
+			</app-select>
+			<div class="w-100 d-flex flex-row justify-content-between align-items-center">
+				<input
+					style="width: 70%;"
+					type="text"
+					pInputText
+					placeholder="buscar usuario"
+					[(ngModel)]="searchUser"					
+				/>
+				<button
+					style="width: 30%;"
+					class="btn btn-primary"
+					type="button"
+					(click)="getUsersByFilter()"
+				>
+					Buscar
+				</button>
+			</div>
+			<app-select
+				class="w-100"
+				label="Nombre de Usuario"
+				placeholder="Selecciona un usuario"
+				[form]="form"
+				[options]="selectOpt"
+				controlName="user"
+				(onChangeSelection)="onSelectionChange($event)"
+				>
+			</app-select>			
+			<div class="d-flex flex-row justify-content-center gap-3">
+				<button class="btn btn-outline-secondary" type="button" (click)="instanceModal.close()">
+					Cancelar
+				</button>
+				<button
+					class="btn btn-secondary"
+					type="button"
+					[disabled]="form.invalid"
+					(click)="screen = 2"
+				>
+					Aceptar
+				</button>
+			</div>
+		</div>
+	</ng-container>
+
+	<!--confirm traspaso-->
+	<div class="d-flex flex-column gap-3" *ngIf="screen === 2">
+		<div class="d-flex flex-row gap-4" style="align-self: center;">
+			<h1 class="fs-6 fw-medium m-0 text-black pb-2">Traspaso suscripción a socio vigente</h1>
+		</div>
+		<div class="w-100 d-flex flex-row justify-content-between align-items-center">
+			<img style="margin-left: 42%;" src="../../../../../../../../../../../assets/icons/icon-transfer.svg" alt="">
+		</div>
+		<div class="w-100 d-flex flex-row justify-content-between align-items-center">
+			<h3 class="fs-6 fw-medium m-0 text-black pb-2">¿Desea traspasar la suscripción de <b>{{selectedProfile.content}}</b> para <b>{{ selectedUser.content }}?</b></h3>
+		</div>
+		
+		<div class="d-flex flex-row justify-content-center gap-3">
+			<button class="btn btn-outline-secondary" type="button" (click)="instanceModal.close()">
+				Cancelar
+			</button>
+			<button
+				class="btn btn-secondary"
+				type="button"
+				[disabled]="form.invalid"
+				(click)="saveTransferLiquidation()"
+			>
+				Aceptar
+			</button>
+		</div>
+	</div>
+
+	<!--confirmiation message-->
+	<div class="d-flex flex-column gap-3" *ngIf="screen === 3">
+		<div class="d-flex flex-row gap-4" style="align-self: center;">
+			<h1 class="fs-6 fw-medium m-0 text-black pb-2">Notificación</h1>
+		</div>
+		<div class="w-100 d-flex flex-row justify-content-between align-items-center">
+			<img style="margin-left: 42%;" src="../../../../../../../../../../../assets/icons/success.svg" alt="">
+		</div>
+		<div class="w-100 d-flex flex-row justify-content-between align-items-center">
+			<h4 class="fs-6 fw-medium m-0 text-black pb-2">Tu solicitud de traspaso de suscripción esta siendo validada. Para más información le enviaremos un correo.</h4>
+		</div>
+	</div>
+</app-modal>

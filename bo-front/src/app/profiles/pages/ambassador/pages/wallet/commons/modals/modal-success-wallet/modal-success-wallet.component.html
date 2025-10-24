@@ -1,0 +1,41 @@
+<div class="transfer-voucher">
+    <div class="icon-container mb-3">
+        <img [src]="data.icon" class="icon-img" />
+    </div>
+    <div class="transfer-header">
+        <h2>Transferencia exitosa</h2>
+        <h3>Comprobante de transferencia</h3>
+    </div>
+    <div class="linea-separation"></div>
+
+    <div class="transfer-amount">
+        <span class="amount"> {{monto| currency:'USD':'symbol':'1.2-2'}}</span>
+        <span class="date">{{initialDate}}</span>
+    </div>
+
+    <div class="transfer-details">
+        <div class="detail-row">
+            <span class="detail-label">Enviado a</span>
+            <span class="detail-value">{{name}} {{lastName}}</span>
+        </div>
+        <div class="detail-row" style="justify-content: end;">
+            <span class="detail-label"></span>
+            <span class="detail-label" style="text-align: end;">{{username}}</span>
+        </div>
+        <div class="linea-separation"></div>
+
+        <!--    <div class="detail-row ">
+            <span class="detail-label">Código de operación</span>
+            <span class="detail-value">AC1681849</span>
+        </div> 
+        <div class="linea-separation"></div>
+-->
+        <div class="detail-row">
+            <span class="detail-label">Detalle</span>
+            <span class="detail-value">Transferencia entre wallet</span>
+        </div>
+    </div>
+    <div class="linea-separation"></div>
+
+    <button class="confirm-button" (click)="closeModal()">Confirmar</button>
+</div>

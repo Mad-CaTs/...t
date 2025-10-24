@@ -1,0 +1,31 @@
+.text {
+    font-size: 0.875rem;
+    color: #51565F;
+    font-weight: 400;
+}
+
+.title {
+    font-size: 1.125rem;
+    color: #181D27;
+    font-weight: bold;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.profiles-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-height: 360px;
+    min-height: 80px;
+    overflow-y: auto;
+}
+
+:host ::ng-deep .p-divider {
+    margin: 0;
+    padding: 0;
+}

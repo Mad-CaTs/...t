@@ -1,0 +1,564 @@
+{
+	"header": {
+		"slogan": "Befektetési Klub",
+		"menuItems": [
+			{
+				"label": "Rajt"
+			},
+			{
+				"label": "Termékek",
+				"subItems": [
+					{
+						"label": "Ingatlan"
+					},
+					{
+						"label": "Technikai"
+					},
+					{
+						"label": "Egyéb projektek"
+					}
+				]
+			},
+			{
+				"label": "Véletlen"
+			},
+			{
+				"label": "Közösség"
+			},
+			{
+				"label": "Frissítések"
+			},
+			{
+				"label": "Naptár"
+			},
+			{
+				"label": "Események"
+			}
+		],
+		"languageTitle": "Nyelvek",
+		"languageInputPlaceholder": "Találd meg a nyelvet",
+		"languageInputLabel": "Kereső",
+		"languages": [
+			"arab ",
+			"német ",
+			"bengáli ",
+			"bolgár ",
+			"cseh ",
+			"Kína ",
+			"spanyol ",
+			"Francia ",
+			"portugál ",
+			"angol ",
+			"görög ",
+			"Guarani ",
+			"hindi ",
+			"Magyar ",
+			"indonéz ",
+			"olasz ",
+			"japán ",
+			"koreai ",
+			"holland ",
+			"fényesít ",
+			"orosz ",
+			"telugu ",
+			"thai ",
+			"tagalog ",
+			"török ",
+			"ukrán ",
+			"vietnami ",
+			"román "
+		]
+	},
+	"footer": {
+		"contactInformation": {
+			"phone": "(01) 618 5118",
+			"email": "example@inclub.com.pe"
+		},
+		"sections": [
+			"Megoldások",
+			"InResorts Ribera del Rio",
+			"InResorts La Joya",
+			"KeOla",
+			"Használt értékesítés",
+			"Minket",
+			"Blog",
+			"Gyakori kérdések",
+			"Ügyfél hozzáférés",
+			"Fenntarthatóság",
+			"Kapcsolatba lépni",
+			"Jogi",
+			"Adatvédelmi szabályzat",
+			"Felhasználási feltételek",
+			"Panaszkönyv"
+		]
+	},
+	"home": {
+		"carousel": {
+			"carouselEntry": "CSATLAKOZÁSRA KÉSZEN A",
+			"carouselTitle": "Universe InClub?",
+			"carouselText": "Mindenkit szívesen látunk. ",
+			"carouselBtn1": "Csatlakozz most!",
+			"carouselBtn2": "Hozzáférés"
+		},
+		"keola": {
+			"cta": "És váltsa be az „UNETEKEOLA” kódot, hogy pontokat szerezzen.",
+			"btn": "A Google Play",
+			"titles": ["Töltse le a Keola alkalmazást", "A legújabb", "Hívd meg és nyerj"]
+		},
+		"lastUpdates": {
+			"title": "Legújabb frissítések",
+			"description": "Azt akarjuk, hogy sikeres legyen, és vállalkozása olyan sikeres úttörő legyen, amelyről ismerjük! ",
+			"button": "Aktuális!"
+		},
+		"howWorks": {
+			"title": "Hogyan működik",
+			"subtitle": "Kezdje el 3 egyszerű lépésben",
+			"steps": [
+				{
+					"title": "Regisztrálj",
+					"description": "Adja meg szponzorát, adja meg adatait, és hozza létre jelszavát."
+				},
+				{
+					"title": "Fedezze fel a termékeket",
+					"description": "Fedezze fel a termékeket Inclub portálunkon. "
+				},
+				{
+					"title": "Győzelem",
+					"description": "Kész! "
+				}
+			]
+		},
+		"cards": [
+			{
+				"title": "Aktatáska",
+				"description": "Csatlakozzon ingatlan-, technológiai projektjeinkhez és még sok máshoz, és legyen részese.",
+				"button": "Fedezzen fel többet"
+			},
+			{
+				"title": "Közösség",
+				"description": "Merüljön el a nagyszerű termékekben, amelyek hatalmas bevételi potenciállal rendelkeznek.",
+				"button": "Fedezzen fel többet"
+			},
+			{
+				"title": "Véletlen",
+				"description": "Ha hajlandó belefektetni a munkába, az InClub az a jármű, amely oda viszi, ahova szeretne.",
+				"button": "Fedezzen fel többet"
+			}
+		],
+		"testimonialsSection": {
+			"cardPrefix": "Tag ...-óta",
+			"heading": "Mindössze egy telefonra van szükséged a kezedben, hogy kapcsolatba léphess az életed üzleti lehetőségével.",
+			"button": "Regisztrálj most",
+			"testimonials": [
+				{
+					"text": "Ha keményen dolgozol és szorgalmasan munkálkodsz, az Inclub megváltoztatja az életedet és valóra váltja az összes álmodat",
+					"name": "Elias Vargas",
+					"since": "2020"
+				},
+				{
+					"text": "Ehhez a világhoz csak három dologra van szükséged a boldogsághoz: hit Istenben, önmagadban és az álmaidban",
+					"name": "Paul Villacorta",
+					"since": "2020"
+				},
+				{
+					"text": "Nem baj, ha szegény vagy, a baj az, ha soha nem próbáltad meg, szegényen és álmok nélkül meghalni, soha nem késő elkezdeni",
+					"name": "Mery Livias",
+					"since": "2021"
+				},
+				{
+					"text": "Az életeddel a legjobb beszédet mondhatod el a szavaidnál",
+					"name": "Abel Meza",
+					"since": "2020"
+				}
+			]
+		}
+	},
+	"products": {
+		"navigation": ["Ingatlan", "Tech", "Következő projektek"],
+		"items": [
+			{
+				"title": "Ribera del Rio üdülőhely",
+				"description": "Élvezze a Hotel Club Resort előnyeit, és legyen tag. ",
+				"buttonText": "Több információ"
+			},
+			{
+				"title": "La Joya üdülőhelye",
+				"description": "Családi szórakozás, természet és életre szóló nyereség. ",
+				"buttonText": "Több információ"
+			},
+			{
+				"title": "Keola Networks",
+				"description": "Hívjon meg és nyerjen, fedezze fel az alkalmazás előnyeit. ",
+				"buttonText": "Több információ"
+			}
+		],
+		"nextProjects": {
+			"title": "Dolgozunk",
+			"description": "Jelenleg az Inclub csapata a kreatív folyamatban van, hogy bemutathassa a közelgő projekteket. ",
+			"buttonText": "Aktuális!"
+		}
+	},
+	"productDetail": {
+		"aboutUsTitle": "Rólunk",
+		"aboutBtnText": "többet akarok tudni",
+		"products": [
+			{
+				"aboutTitle": "Folyóparti",
+				"aboutDescription": "Club Resort vagyunk Cieneguillában, 45 percre Limától. ",
+				"perkPreTitle": "Használja ki a mi lehetőségeinket",
+				"perktitle": "Felejthetetlen élmények",
+				"perkDescription": "Tökéletes menedék azoknak, akik egyedi kiruccanásra és kalandélményre vágynak. ",
+				"cards": [
+					{
+						"title": "Szállodák",
+						"description": "A Ribera del Río minden szobája úgy van kialakítva, hogy ossza meg szeretteivel. "
+					},
+					{
+						"title": "Tapasztalatok",
+						"description": "A szabadidős és rekreációs élmények széles skáláját kínáljuk, amelyek biztosan elragadják Önt. "
+					},
+					{
+						"title": "Éttermek",
+						"description": "Mindig jó magát kényeztetni, ezért a \"Ribera del Río étterem\" szeretettel várja Önt, és különféle jellegzetes nemzeti, regionális és kreol ételeket kínál."
+					}
+				]
+			},
+			{
+				"aboutTitle": "Az ékszer",
+				"aboutDescription": "Club Resort vagyunk Arequipában, mindössze 45 percre Arequipa városától. ",
+				"perkPreTitle": "Használja ki a mi lehetőségeinket",
+				"perktitle": "Felejthetetlen élmények",
+				"perkDescription": "Tökéletes menedék azoknak, akik egyedi kiruccanásra és kalandélményre vágynak. ",
+				"cards": [
+					{
+						"title": "Úszó medencék",
+						"description": "A La Joya minden medencéjét úgy tervezték, hogy ossza meg szeretteivel; "
+					},
+					{
+						"title": "Tapasztalatok",
+						"description": "A szabadidős és rekreációs élmények széles skáláját kínáljuk, amelyek biztosan elragadják Önt. "
+					},
+					{
+						"title": "Resort Park",
+						"description": "Gyönyörű vízi park színes csúszdákkal; "
+					}
+				]
+			},
+			{
+				"aboutTitle": "Keola",
+				"aboutDescription": "Üdvözöljük a Keolában, a tökéletes alkalmazásban, amellyel egy helyen megtalálhatja kedvenc termékeit! ",
+				"perkPreTitle": "Használja ki a mi lehetőségeinket",
+				"perktitle": "Keola előnyei",
+				"perkDescription": "Hívjon meg és keressen, fedezze fel az alkalmazás előnyeit. ",
+				"cards": [
+					{
+						"title": "Termékek",
+						"description": "Fedezze fel a különféle termékeket és kategóriákat. "
+					},
+					{
+						"title": "Üzletek",
+						"description": "Kezelje üzletét és kezelje termékeit, minőségi és hatékony szállítási szolgáltatást nyújtva."
+					},
+					{
+						"title": "Szállítás",
+						"description": "Kell étel, gyógyszer? "
+					}
+				]
+			}
+		]
+	},
+	"oportunity": {
+		"title": "Véletlen",
+		"description": "Tapasztalattól, helyszíntől és körülményektől függetlenül bárki számára nyitva áll.",
+		"sections": [
+			{
+				"pre": "Keress befolyásoddal",
+				"title": "Mindenki mikro befolyásolt",
+				"content": "Mindenki mikro-befolyásoló. "
+			},
+			{
+				"pre": "minőségi termékeket ajánlok",
+				"title": "Élvonalbeli termékek, utat nyitnak az iparban",
+				"content": "Minden nap ajánlunk termékeket és szolgáltatásokat barátainknak és családtagjainknak. "
+			},
+			{
+				"pre": "Tanuljon társaitól",
+				"title": "Minden, ami a sikerhez kell",
+				"content": "Szakembereink tudását megosztjuk azzal a szándékkal, hogy a hálózatépítést mindenki számára jövedelmezőbbé tegyük, és hogy a leányvállalatok megtanulják, hogyan lehet eszközöket generálni."
+			},
+			{
+				"pre": "Kompenzációs terv",
+				"title": "Kompenzációs tervünk a legerősebb az iparágban",
+				"content": "Segítünk az embereknek egy intelligens befektetési portfólió felépítésében és a régóta várt pénzügyi szabadság elérésében az előnyök széles skálájával, semmi más befektetési klubhoz hasonlóan."
+			}
+		],
+		"testimonials": {
+			"pre": "Beszámolók",
+			"title": "Sikertörténetek",
+			"items": [
+				{
+					"text": "Ha egy ember, aki a múltban él, soha nem lesz sikeres a jelenben, még kevésbé a jövőben",
+					"name": "Vargas Elias",
+					"since": "2020"
+				},
+				{
+					"text": "Csak 3 dolog kell ezen a világon, hogy boldog legyél: hit Istenben, hit önmagadban és hit az álmaidban",
+					"name": "Paul Villacorta",
+					"since": "2020"
+				},
+				{
+					"text": "Nem rossz szegénynek lenni, az a rossz, hogy soha nem próbáltam, meghalni szegényen és álmok nélkül, soha nem késő elkezdeni",
+					"name": "Mery Livias",
+					"since": "2021"
+				},
+				{
+					"text": "Életeddel tudod a legjobb beszédet mondani, mint szavaiddal.",
+					"name": "Ábel Meza",
+					"since": "2020"
+				}
+			]
+		}
+	},
+	"comunity": {
+		"title": "A közösségünk",
+		"description": "A siker jobb, ha megosztják. ",
+		"sections": [
+			{
+				"pre": "NÖVEKEDJ ÉS GYORZULJ VELÜNK",
+				"title": "Leányvállalatok szerte a világon",
+				"content": "A legnagyobb és legerősebb társult hálózat ma Latin-Amerikában kétségtelenül az Inclub. "
+			},
+			{
+				"pre": "Felismerés és események",
+				"title": "Emberek milliói fogják ünnepelni a sikeredet.",
+				"content": "Hihetetlenül büszkék vagyunk arra a kemény munkára és elhivatottságra, amelyet minden vállalkozó a vállalkozásába fektet. "
+			},
+			{
+				"pre": "OKTATÁSI ÉS TANULÁSI ESZKÖZÖK",
+				"title": "Minden, ami a sikerhez kell.",
+				"content": "Segítünk az embereknek intelligens befektetési portfólió létrehozásában és a régóta várt pénzügyi szabadság elérésében. "
+			}
+		],
+		"inspiration": {
+			"title": "Ihlet",
+			"subtitle": "Közösségi hangok",
+			"testimonials": [
+				{
+					"text": "Az Inklub az életem, és ezért veszem nagyon komolyan.",
+					"name": "Vargas Elias",
+					"since": "2020"
+				},
+				{
+					"text": "Az Inclub azért van itt, hogy megváltoztassa az emberek életét.",
+					"name": "Paul Villacorta",
+					"since": "2020"
+				},
+				{
+					"text": "Az Inclub lehetőséget adott nekünk arra, hogy mások életét is megváltoztassuk.",
+					"name": "Mery Livias",
+					"since": "2021"
+				},
+				{
+					"text": "A leányvállalatokat a felhasználók tömegének köszönhetően jutalmazzák a sikerért.",
+					"name": "Ábel Meza",
+					"since": "2020"
+				}
+			]
+		}
+	},
+	"news": {
+		"noticeLabel": "hírek",
+		"titleMain": "ÚJDONSÁG",
+		"descriptionMain": "Tökéletes menedék családdal és barátokkal",
+		"commonEventsCountry": "Lima Peru",
+		"commonEventsBtn": "többet látni",
+		"content": [
+			{
+				"date": "2023. SZEPT. 14",
+				"title": "Sikeres kommunikáció, nyelvi és üzleti kommunikációs műhely"
+			},
+			{
+				"title": "Az Ön online vásárlási célpontja",
+				"description": "Hívjon meg és nyerjen, fedezze fel az alkalmazás előnyeit. "
+			},
+			{
+				"title": "Ingatlan projekt",
+				"description": "Az Inclub vezetői élvezték a Ribera del Rio ingatlanprojekt hihetetlen elindítását Cieneguillában."
+			},
+			{
+				"title": "Encumbra Launch",
+				"description": "Az Inklub vezetői felhatalmazzák tagjainkat arra, hogy vezető szerepet töltsenek be az online hálózati iparágban."
+			},
+			{
+				"title": "Az Ön online vásárlási célpontja",
+				"description": "Hívjon meg és nyerjen, fedezze fel az alkalmazás előnyeit. "
+			},
+			{
+				"title": "Technológiai projekt",
+				"description": "Az Inclub vezetői élvezték a Ribera del Rio ingatlanprojekt hihetetlen elindítását Cieneguillában."
+			},
+			{
+				"title": "Ribera del Rio üdülőhely",
+				"description": "Az Inklub vezetői felhatalmazzák tagjainkat arra, hogy vezető szerepet töltsenek be az online hálózati iparágban."
+			}
+		]
+	},
+	"newsDetail": {
+		"date": "2023. szeptember 26",
+		"title": "Tökéletes menedék családdal és barátokkal",
+		"description": "A La Joya park üdülőhely mindössze 60 percre van Arequipa városától, a La Joya kerületben, ahol napokat tölthet a tengerparton vagy gyakorolhat vízi sportokat. ",
+		"content": [
+			{
+				"date": "2023. szeptember 14",
+				"title": "Sikeres kommunikáció, nyelvi és üzleti kommunikációs műhely"
+			},
+			{
+				"date": "2023. szeptember 29",
+				"title": "Inklub VEZETŐI Oktatási Rendszer"
+			},
+			{
+				"date": "2023. szeptember 15",
+				"title": "Inklub oktatási rendszer Beszámolók a sikerről"
+			}
+		]
+	},
+	"calendar": {
+		"title": "Naptár",
+		"subtitle": "szeptember",
+		"filters": {
+			"searchLabel": "Kereső",
+			"searchPlaceholder": "Keresse meg az eseményt vagy workshopot",
+			"options": ["Ma", "Heti", "Havi"]
+		}
+	},
+	"eventPage": {
+		"upcommingEventsTitle": "Közelgő események",
+		"upcomingEvents": [
+			{
+				"date": "2023. SZEPT. 14",
+				"title": "Sikeres kommunikáció, nyelvi és üzleti kommunikációs műhely"
+			},
+			{
+				"date": "2023. SZEPT. 29",
+				"title": "Oktatási Rendszer Inklub VEZETŐSÉG"
+			},
+			{
+				"date": "2023. SZEPT. 15",
+				"title": "Inklub oktatási rendszer Beszámolók a sikerről"
+			}
+		],
+		"pastEventsTitle": "Korábbi események",
+		"pastEvents": [
+			{
+				"date": "2023. SZEPT. 12",
+				"title": "Oktatási Rendszert Befogadó Olvasóklub"
+			},
+			{
+				"date": "2023. SZEPTEMBER 10",
+				"title": "Inklub VEZETŐI Oktatási Rendszer"
+			},
+			{
+				"date": "2023. SZEPT. 8",
+				"title": "Az Inklub oktatási rendszer sikerélményei"
+			}
+		],
+		"trendsTitle": "Trendek"
+	},
+	"eventsDetail": {
+		"backLabel": "Visszatérés",
+		"resumeTitle": "Összegzés",
+		"learnTitle": "Mit fogsz tanulni?"
+	},
+	"events": [
+		{
+			"title": "Sikeres kommunikáció, nyelvi és üzleti kommunikációs műhely",
+			"date": "2023. SZEPT. 14",
+			"type": "Online",
+			"duration": "Hozzávetőleges időtartam: 22 perc.",
+			"positiveReviews": "98% pozitív értékelés (567).",
+			"summary": "Szeretné fejleszteni kommunikációs készségeit üzleti területen? ",
+			"learn": [
+				"A prezentációs és tárgyalási készségek fejlesztése",
+				"Tanulj meg világosan és hatékonyan kifejezni",
+				"Más elméleti műhelyektől eltérően ez a műhely lehetővé teszi, hogy a tanultakat azonnal a gyakorlatba is átültessék.",
+				"Gyakorlatokon és csoportdinamikán keresztül gyakorolhatja kommunikációs készségeit, és azonnali visszajelzést kaphat a témával kapcsolatos szakértőktől. ",
+				"És több."
+			]
+		},
+		{
+			"date": "2023. SZEPT. 29",
+			"title": "Befogadó oktatási rendszer: Vezetés",
+			"type": "Online",
+			"duration": "Hozzávetőleges időtartam: 22 perc.",
+			"positiveReviews": "98% pozitív értékelés (567).",
+			"summary": "Szeretné fejleszteni kommunikációs készségeit üzleti területen? ",
+			"learn": [
+				"A prezentációs és tárgyalási készségek fejlesztése",
+				"Tanulj meg világosan és hatékonyan kifejezni",
+				"Más elméleti műhelyektől eltérően ez a műhely lehetővé teszi, hogy a tanultakat azonnal a gyakorlatba is átültessék.",
+				"Gyakorlatokon és csoportdinamikán keresztül gyakorolhatja kommunikációs készségeit, és azonnali visszajelzést kaphat a témával kapcsolatos szakértőktől. ",
+				"És több."
+			]
+		},
+		{
+			"date": "2023. SZEPT. 15",
+			"title": "Inklub oktatási rendszer: Sikertörténetek",
+			"type": "Online",
+			"duration": "Hozzávetőleges időtartam: 22 perc.",
+			"positiveReviews": "98% pozitív értékelés (567).",
+			"summary": "Szeretné fejleszteni kommunikációs készségeit üzleti területen? ",
+			"learn": [
+				"A prezentációs és tárgyalási készségek fejlesztése",
+				"Tanulj meg világosan és hatékonyan kifejezni",
+				"Más elméleti műhelyektől eltérően ez a műhely lehetővé teszi, hogy a tanultakat azonnal a gyakorlatba is átültessék.",
+				"Gyakorlatokon és csoportdinamikán keresztül gyakorolhatja kommunikációs készségeit, és azonnali visszajelzést kaphat a témával kapcsolatos szakértőktől. ",
+				"És több."
+			]
+		},
+		{
+			"date": "2023. SZEPT. 12",
+			"title": "Inklubb Oktatási Rendszer: Könyvklub",
+			"type": "Online",
+			"duration": "Hozzávetőleges időtartam: 22 perc.",
+			"positiveReviews": "98% pozitív értékelés (567).",
+			"summary": "Szeretné fejleszteni kommunikációs készségeit üzleti területen? ",
+			"learn": [
+				"A prezentációs és tárgyalási készségek fejlesztése",
+				"Tanulj meg világosan és hatékonyan kifejezni",
+				"Más elméleti műhelyektől eltérően ez a műhely lehetővé teszi, hogy a tanultakat azonnal a gyakorlatba is átültessék.",
+				"Gyakorlatokon és csoportdinamikán keresztül gyakorolhatja kommunikációs készségeit, és azonnali visszajelzést kaphat a témával kapcsolatos szakértőktől. ",
+				"És több."
+			]
+		},
+		{
+			"date": "2023. SZEPTEMBER 10",
+			"title": "Befogadó oktatási rendszer: Vezetés",
+			"type": "Online",
+			"duration": "Hozzávetőleges időtartam: 22 perc.",
+			"positiveReviews": "98% pozitív értékelés (567).",
+			"summary": "Szeretné fejleszteni kommunikációs készségeit üzleti területen? ",
+			"learn": [
+				"A prezentációs és tárgyalási készségek fejlesztése",
+				"Tanulj meg világosan és hatékonyan kifejezni",
+				"Más elméleti műhelyektől eltérően ez a műhely lehetővé teszi, hogy a tanultakat azonnal a gyakorlatba is átültessék.",
+				"Gyakorlatokon és csoportdinamikán keresztül gyakorolhatja kommunikációs készségeit, és azonnali visszajelzést kaphat a témával kapcsolatos szakértőktől. ",
+				"És több."
+			]
+		},
+		{
+			"date": "2023. SZEPT. 8",
+			"title": "Inklub oktatási rendszer: Sikertörténetek",
+			"type": "Online",
+			"duration": "Hozzávetőleges időtartam: 22 perc.",
+			"positiveReviews": "98% pozitív értékelés (567).",
+			"summary": "Szeretné fejleszteni kommunikációs készségeit üzleti területen? ",
+			"learn": [
+				"A prezentációs és tárgyalási készségek fejlesztése",
+				"Tanulj meg világosan és hatékonyan kifejezni",
+				"Más elméleti műhelyektől eltérően ez a műhely lehetővé teszi, hogy a tanultakat azonnal a gyakorlatba is átültessék.",
+				"Gyakorlatokon és csoportdinamikán keresztül gyakorolhatja kommunikációs készségeit, és azonnali visszajelzést kaphat a témával kapcsolatos szakértőktől. ",
+				"És több."
+			]
+		}
+	]
+}

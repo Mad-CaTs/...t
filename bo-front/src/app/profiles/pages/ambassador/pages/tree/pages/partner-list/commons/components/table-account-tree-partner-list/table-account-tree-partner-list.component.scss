@@ -1,0 +1,36 @@
+.line {
+  width: 100%;
+  height: 5px;
+  background-color: #FE7C04;
+  margin-bottom: 15px;
+}
+
+.icon { width: 18px; height: 18px; margin-right: .4rem; color: #0e8292; }
+
+:root { --detail-teal: #157E8A; }
+
+.detail-link.btn-link{
+  color: #157E8A !important;   
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  padding: 0;
+}
+
+.detail-link.btn-link:hover,
+.detail-link.btn-link:focus{
+  color: #0F6F79 !important;
+  text-decoration: underline;
+}
+
+.detail-link .icon{
+  width: 18px;
+  height: 18px;
+}
+
+.detail-link.btn-link,
+.detail-link.btn-link:hover,
+.detail-link.btn-link:focus,
+.detail-link.btn-link:active {
+  text-decoration: none !important;
+}

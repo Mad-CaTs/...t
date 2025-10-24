@@ -1,0 +1,95 @@
+<div class="d-flex w-100 flex-column gap-3 px-2">
+	<!-- Sección de Estadísticas del socio -->
+	<div class="d-flex w-100 flex-column gap-4 p-3 rounded border order-2 order-md-1">
+		<div class="container-points border-bottom">
+			<h4 class="m-0 custom-text fw-medium">Estadísticas del Socio</h4>
+			<div
+			class="update-socio position-relative">
+			<span class="custom-text cl-muted fw-normal"> {{ currentDateTime }} </span>
+				<button class="btn btn-link border-0 " (click)="requestRefreshPoints()" [disabled]="isRefreshingPoints"
+				[title]="'Actualizar estadísticas del socio'">
+				<i class="pi pi-sync" [class.pi-spin]="isRefreshingPoints"></i>
+			</button>
+		</div>
+		</div>
+
+
+		<div
+			class="row row-cols-3 d-md-flex flex-md-row justify-content-md-between gap-3 px-5 py-2 bg-white-lilac rounded-4">
+			<ng-container *ngIf="isRefreshingPoints">
+				<div *ngIf="isRefreshingPoints" class="d-flex justify-content-center align-items-center w-100">
+					<p-progressSpinner [style]="{ width: '3.5rem', height: '3.5rem'}" strokeWidth="2"
+						fill="var(--surface-ground)" animationDuration=".5s"></p-progressSpinner>
+				</div>
+			</ng-container>
+			<ng-container *ngIf="!isRefreshingPoints">
+				<div class="col-md d-md-flex flex-column align-items-start pb-2">
+					<span class="text-primary review-state__helper fw-medium text-center">Volumen
+						personal</span>
+					<div class="d-flex flex-row gap-1 align-items-end">
+						<span class="text-black fs-4 fw-medium">{{ puntajeDeLaMembresia }}</span>
+						<span class="text-black fs-12 mb-1 fw-medium">pts</span>
+					</div>
+				</div>
+				<div class="col-md d-md-flex flex-column align-items-start pb-2">
+					<span class="text-primary review-state__helper fw-medium text-center">Volumen grupal</span>
+					<div class="d-flex flex-row gap-1 align-items-end">
+						<span class="text-black fs-4 fw-medium">{{ volTotal }}</span>
+						<span class="text-black fs-12 mb-1 fw-medium">pts</span>
+					</div>
+				</div>
+				<div class="col-md d-md-flex flex-column align-items-start pb-2">
+					<span class="text-primary review-state__helper fw-medium text-center">Personas en tu
+						red</span>
+					<div>
+						<span class="text-black fs-4 fw-medium">+{{ numberTotal }}</span>
+					</div>
+				</div>
+			</ng-container>
+
+		</div>
+		<!-- Sección de Bonificaciones -->
+	</div>
+	<div *ngIf="tipo === 'Compuesto' && !isLoading"
+		class="d-flex w-100 flex-column gap-4 p-3 rounded border order-1 order-md-2">
+		<div class="container-points border-bottom">
+			<h4 class="m-0 custom-text fw-medium text-black">Bonificaciones</h4>
+			<div
+			class="update-socio">
+			<span class="custom-text cl-muted fw-normal"> {{ currentDateTime }} </span>
+				<button class="btn btn-link border-0" (click)="requestRefreshBonus()" [disabled]="isRefreshingBonus"
+				[title]="'Actualizar bonificaciones'">
+				<i class="pi pi-sync" [class.pi-spin]="isRefreshingBonus"></i>
+			</button>
+		</div>
+		</div>
+		<div
+			class="row row-cols-3 d-md-flex flex-md-row gap-3 justify-content-md-between align-items-md-center px-5 py-2 bg-white-lilac rounded-4">
+			<ng-container *ngIf="isRefreshingBonus">
+				<div *ngIf="isRefreshingBonus" class="d-flex justify-content-center align-items-center w-100">
+					<p-progressSpinner [style]="{ width: '3.5rem', height: '3.5rem'}" strokeWidth="2"
+						fill="var(--surface-ground)" animationDuration=".5s"></p-progressSpinner>
+				</div>
+			</ng-container>
+			<ng-container *ngIf="!isRefreshingBonus">
+				<div class="col-md d-md-flex flex-column justify-content-center align-items-start pb-2">
+					<span class="text-primary review-state__helper fw-medium text-center">Último ciclo</span>
+					<div class="d-flex flex-row align-items-start gap-1">
+						<span class="fs-4 m-0 fw-medium text-black">$ {{singleBonus?.lastCycleBonus}}</span>
+					</div>
+				</div>
+				<div class="col-md d-md-flex flex-column justify-content-center align-items-start pb-2">
+					<span class="text-primary review-state__helper fw-medium text-center">Último mes</span>
+					<div class="d-flex flex-row align-items-start gap-1">
+						<span class="fs-4 m-0 fw-medium text-black">$ {{singleBonus?.lastMonthBonus}}</span>
+					</div>
+				</div>
+				<div class="col-md d-md-flex flex-column justify-content-center align-items-start pb-2">
+					<span class="text-primary review-state__helper fw-medium text-center">Acumulado</span>
+					<div class="d-flex flex-row align-items-start gap-1">
+						<span class="fs-4 m-0 fw-medium text-black">$ {{singleBonus?.accumulatedBonus}}</span>
+					</div>
+				</div>
+			</ng-container>
+		</div>
+	</div>

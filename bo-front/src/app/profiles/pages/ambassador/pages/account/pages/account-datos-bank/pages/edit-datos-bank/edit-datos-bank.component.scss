@@ -1,0 +1,140 @@
+/* Estilos generales */
+.text-title {
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 32px;
+    letter-spacing: 0%;
+    color: #212121;
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+/* Contenedor principal del acordeón */
+.operacion-item {
+    width: 700px;
+    border-radius: 16px;
+    padding: 16px;
+    border: 1px solid #CDCED0;
+    background: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 16px;
+
+    &:hover {
+        box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+    }
+}
+
+/* Cabecera del acordeón */
+.operacion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Contenido de la cabecera */
+.operacion-contenido {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+/* Número circular */
+.number-count {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #ACAFB3;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    flex-shrink: 0;
+}
+
+/* Textos */
+.datos-bank {
+    font-family: 'Roboto';
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 100%;
+    color: #5F7081;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.update-form {
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #5F7081;
+}
+
+/* Ícono de flecha */
+.chevron-icon {
+    transition: transform 0.3s ease;
+    width: 24px;
+    height: 24px;
+
+    .operacion-item.abierto & {
+        transform: rotate(180deg);
+    }
+}
+
+/* Contenido desplegable */
+.operacion-detalle {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    background-color: #f9f9f9;
+    border-radius: 0 0 8px 8px;
+    margin: 16px -16px -16px;
+    padding: 0 16px;
+
+    &.abierto {
+        max-height: 100%;
+        padding: 16px;
+        border-top: 1px solid #e0e0e0;
+    }
+
+    .detalle-item {
+       // display: none;
+        padding: 8px 0;
+
+        &.abierto & {
+            display: block;
+        }
+    }
+}
+
+/* Efecto visual cuando está abiero */
+.operacion-item.abierto {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.text-nota {
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0px;
+    color: #546E7A;
+}
+
+.btn-volver {
+    width: 100%;
+    background: #FFFFFF;
+    border: 1px solid #FE7C04;
+    color: #FE7C04;
+    border-radius: 4px;
+    gap: 8px;
+    border-width: 1px;
+    padding-top: 8px;
+    padding-right: 24px;
+    padding-bottom: 8px;
+    padding-left: 24px;
+}

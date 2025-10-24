@@ -1,0 +1,142 @@
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999999;
+}
+
+.modal-box.confirmation {
+  background: transparent;
+  border-radius: 40px;
+  width: 100%;
+  max-width: 520px;
+  padding: 0;
+  box-shadow: none;
+  position: relative;
+  text-align: left;
+}
+
+:host-context(.discount-confirmation-dialog) .p-dialog .p-dialog-content {
+  background: #ffffff !important;
+  border-radius: 24px !important;
+  padding: 8px 10px !important;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.16) !important;
+}
+
+@media (max-width: 900px) {
+  .modal-box.confirmation {
+    max-width: 92%;
+    padding: 0;
+  }
+}
+
+.modal-content {
+  position: relative;
+}
+
+.modal-head {
+  display: block;
+}
+
+.floating-icon {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.modal-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  filter: drop-shadow(0 8px 20px var(--icon-glow, rgba(22, 163, 74, 0.20)));
+}
+
+.modal-icon.success {
+  background: #e6f4ea;
+}
+
+.modal-icon.success::after {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border-radius: 50%;
+  background: var(--icon-shadow, rgba(22, 163, 74, 0.06));
+}
+
+.modal-body {
+  padding-top: 2px;
+  padding-left: 0;
+  padding-right: 0;
+  width: 100%;
+}
+
+.modal-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 2px;
+  text-align: left;
+}
+
+.modal-message {
+  font-size: 0.9rem;
+  color: #4b5563;
+  margin-bottom: 4px;
+  text-align: left;
+}
+
+.modal-divider {
+  border: none;
+  border-top: 1px solid #f1f5f9;
+  margin: 4px 0 6px;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 0;
+}
+
+.modal-footer .btn {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  margin: 6px 0 0;
+  padding: 0.58rem 1.2rem;
+  font-weight: 700;
+  border-radius: 9999px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  font-size: 14.5px;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+@media (max-width: 480px) {
+  :host-context(.discount-confirmation-dialog) .p-dialog .p-dialog-content {
+    padding: 12px !important;
+  }
+  .modal-title {
+    font-size: 0.98rem;
+  }
+  .modal-message {
+    font-size: 0.88rem;
+  }
+}
+
+.modal-footer .btn.btn-primary {
+  background: #ff7a00;
+  border-color: #ff7a00;
+  color: #fff;
+}
+
+.modal-footer .btn.btn-primary:hover {
+  background: #e56c00;
+  border-color: #e56c00;
+}

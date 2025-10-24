@@ -1,0 +1,8 @@
+<div [ngClass]="{'align-left': flag === 1, 'align-center': flag === 2, 'align-right': flag === 3}"
+    class="paginator-container">
+    <p-paginator #paginator [rows]="rows" [totalRecords]="totalRecords" [rowsPerPageOptions]="rowsPerPageOptions"
+        (onPageChange)="onPageChange($event)">
+    </p-paginator>
+    <p-button icon="pi pi-refresh" class="refresh-button" styleClass="p-button-rounded p-button-secondary"
+        (click)="onRefresh()" [loading]="isLoading"></p-button>
+</div>

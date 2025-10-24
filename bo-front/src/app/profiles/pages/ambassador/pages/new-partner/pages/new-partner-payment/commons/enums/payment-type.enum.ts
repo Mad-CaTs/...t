@@ -1,0 +1,10 @@
+export enum PaymentType {
+	CASH = 'cash',
+	WALLET = 'WALLET',
+	PAYPAL = 'PAYPAL',
+	OTROS = 'OTROS',
+	DAVIVIENDA = 'DAVIVIENDA',
+	INTERBANK = 'INTERBANK',
+	BCP = 'BCP',
+	// BANCOLOMBIA = 'BANCOLOMBIA'
+}

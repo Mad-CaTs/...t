@@ -1,0 +1,44 @@
+{
+    "upgradeCurrent": {
+        "id": 5,
+        "title": "Gánate un full day en Ribera del Rio Club Resort",
+        "date": "01 Febrero, 2023",
+        "description": "¿Quieres experimentar un día lleno de lujo y relajación en uno de los destinos más exclusivos? ¡Esta es tu oportunidad! Obtén 270 puntos directos en el mes de febrero, recuerda que solo cuentan los puntos por socios vitalicios. ¡No te pierdas esta oportunidad de escapar de la rutina diaria, donde tus sueños de vacaciones se hacen realidad!.",
+        "img": "https://staticv1.inclub.site/images/noticia-2.png",
+        "videoUri": ""
+    },
+    "upgrades": [
+        {
+            "id": 1,
+            "title": "Inauguración Apart Hotel de Ribera del Río Club Resort",
+            "date": "16 de diciembre 2023",
+            "description": "En un día ameno se realizó la apertura de las puertas de la primera etapa de Ribera del Río Club Resort, donde la arquitectura del hotel y la belleza natural fue aplaudida por una audiencia selecta. Los asistentes fueron recibidos por un ambiente de elegancia y modernidad, mientras exploraban las instalaciones meticulosamente diseñadas que abrazan el río y la exuberante vegetación circundante. La ceremonia de inauguración contó con discursos inspiradores de los desarrolladores y visionarios detrás de este proyecto innovador. ¡Felicitaciones por su primera etapa de Ribera del Río Club Resort!.",
+            "img": "https://staticv1.inclub.site/INAUGURACION-APART-HOTEL.png",
+            "videoUri": "https://staticv1.inclub.site/Cuarto%20Piloto.mp4"
+        },
+        {
+            "id": 2,
+            "title": "¿Sabías qué La Joya Park Resort contará con 3 hoteles de lujo?",
+            "date": "01 diciembre, 2023",
+            "description": "Anímate a ser parte de La Joya Park Resort donde vivirás grandes recuerdos de diversión y adrenalina. La Joya park resort está a sólo 60 minutos de la ciudad de Arequipa en el distrito de La Joya, aquí podrás disfrutar de días de playa o practicar deportes acuáticos. Gracias a nuestros socios patrocinadores es uno de los parques más grandes de Latinoamérica y cuenta con una innovadora tecnología sustentable con el medioambiente, nos convierten en el único club privado con una laguna de aguas cristalinas y playas de arena blanca en la Región Sur del País. Contáctate con un embajador para informarte más acerca de este proyecto.",
+            "img": "https://staticv1.inclub.site/images/upgrades/upgrade-1.jpg",
+            "videoUri": ""
+        },
+        {
+            "id": 3,
+            "title": "Genera ingresos con Inclub",
+            "date": "25 noviembre, 2023",
+            "description": "Disfruta y genera ingresos, así como nuestros Socios Accionistas. Únete a nuestra familia de socios y sé parte del éxito de nuestra cadena hotelera. Los beneficios de ser socio serán que siendo socio accionista de este club resort puedes disfrutar de sus instalaciones y actividades de manera gratuita, repartición de utilidades, valorización de acciones entre otros. Contamos con distintos bonos, como bono viaje y bono auto de los que puedes disfrutar mientras vas subiendo de rango. Gracias a InClub obtendrás el mejor estilo de vida.",
+            "img": "https://staticv1.inclub.site/images/upgrades/upgrade-2.jpg",
+            "videoUri": "https://staticv1.inclub.site/videos/event-junio.mp4"
+        },
+        {
+            "id": 4,
+            "title": "Entrega de Camioneta 0KM",
+            "date": "30 junio, 2023",
+            "description": "Evento Encumbra entrega una camioneta 0km reconocimientos a todos nuestros líderes y entrega de certificados legalizados a nuestros socios de nuestro portafolio inmobiliario. Celebramos un momento extraordinario para la promoción a nuestro rango esmeralda Mery Livias quien se hizo ganadora de una Camioneta 0KM. Este evento es mucho más que la entrega de un vehículo; es la culminación de expectativas, la materialización de sueños y el comienzo de un viaje lleno de aventuras sobre ruedas.",
+            "img": "https://staticv1.inclub.site/images/upgrades/upgrade-3.png",
+            "videoUri": "https://staticv1.inclub.site/videos/0103.mp4"
+        }
+    ]
+}

@@ -1,0 +1,564 @@
+{
+	"header": {
+		"slogan": "CLUB DE INVERSIÓN",
+		"menuItems": [
+			{
+				"label": "Inicio"
+			},
+			{
+				"label": "Productos",
+				"subItems": [
+					{
+						"label": "Inmobiliario"
+					},
+					{
+						"label": "Tecnológico"
+					},
+					{
+						"label": "Otros proyectos"
+					}
+				]
+			},
+			{
+				"label": "Oportunidad"
+			},
+			{
+				"label": "Comunidad"
+			},
+			{
+				"label": "Actualizaciones"
+			},
+			{
+				"label": "Calendario"
+			},
+			{
+				"label": "Eventos"
+			}
+		],
+		"languageTitle": "Idiomas",
+		"languageInputPlaceholder": "Buscar el idioma",
+		"languageInputLabel": "Buscador",
+		"languages": [
+			"Árabe ",
+			"Alemán ",
+			"Bengalí ",
+			"Búlgaro ",
+			"Checo ",
+			"China ",
+			"Español ",
+			"Frances ",
+			"Portugués ",
+			"Inglés ",
+			"Griego ",
+			"Guaraní ",
+			"Hindi ",
+			"Húngaro ",
+			"Indonesio ",
+			"Italiano ",
+			"Japonés ",
+			"Coreano ",
+			"Holandés ",
+			"Polaco ",
+			"Ruso ",
+			"Telugu ",
+			"Tailandés ",
+			"Tagalo ",
+			"Turco ",
+			"Ucraniano ",
+			"Vietnamita ",
+			"Rumano "
+		]
+	},
+	"footer": {
+		"contactInformation": {
+			"phone": "(01) 618 5118",
+			"email": "inclubnotification@inclub.world"
+		},
+		"sections": [
+			"Soluciones",
+			"InResorts Ribera del Rio",
+			"InResorts La Joya",
+			"KeOla",
+			"Ventas de usados",
+			"Nosotros",
+			"Blog",
+			"Preguntas Frecuentes",
+			"Acceso clientes",
+			"Sostenibilidad",
+			"Contacto",
+			"Legales",
+			"Políticas de privacidad",
+			"Términos y condiciones",
+			"Libro de reclamaciones"
+		]
+	},
+	"home": {
+		"carousel": {
+			"carouselEntry": "¿LISTO PARA UNIRSE AL",
+			"carouselTitle": "UNIVERSO INCLUB?",
+			"carouselText": "Todos son bienvenidos. ¡Sumérgete en excelentes productos, recomiéndalos a otros y haz crecer tu propio negocio exitoso!",
+			"carouselBtn1": "¡Únete ahora!",
+			"carouselBtn2": "Acceso"
+		},
+		"keola": {
+			"cta": "Y canjea el código “UNETEKEOLA” para ganar puntos.",
+			"btn": "Google Play",
+			"titles": ["Descarga el app de Keola", "Lo más nuevo", "Invita y gana"]
+		},
+		"lastUpdates": {
+			"title": "Últimas actualizaciones",
+			"description": "¡Queremos que tenga éxito y haga crecer su negocio para que sea el pionero exitoso que sabemos que es! No se pierda oportunidades y noticias importantes que pueden ser vitales para su viaje.",
+			"button": "¡Ponte al día!"
+		},
+		"howWorks": {
+			"title": "Como Funciona",
+			"subtitle": "Comience en 3 Simples Pasos",
+			"steps": [
+				{
+					"title": "Registrate",
+					"description": "Ingresa tu patrocinador y completa tus datos y crea tu contraseña."
+				},
+				{
+					"title": "Explora Productos",
+					"description": "Explora los productos en nuestro portal de Inclub. Podrás ser parte de nuestros proyectos inmobiliarios o tecnológicos."
+				},
+				{
+					"title": "Gana",
+					"description": "¡Listo! ya puedes empezar a ganar e invertir en Inclub."
+				}
+			]
+		},
+		"cards": [
+			{
+				"title": "Portafolios",
+				"description": "Únete y se parte de nuestros proyectos inmobiliarios, tecnológicos y mucho más.",
+				"button": "Explora más"
+			},
+			{
+				"title": "Comunidad",
+				"description": "Sumérgete en excelentes productos con un enorme potencial de ganancias.",
+				"button": "Explora más"
+			},
+			{
+				"title": "Oportunidad",
+				"description": "Si está dispuesto a trabajar, InClub es el vehículo que lo llevará a donde quiera ir.",
+				"button": "Explora más"
+			}
+		],
+		"testimonialsSection": {
+			"cardPrefix": "Afiliado desde",
+			"heading": "Todo lo que necesita es un teléfono en la mano para conectarse con la oportunidad comercial de su vida.",
+			"button": "Regístrate ahora",
+			"testimonials": [
+				{
+					"text": "Si te esfuerzas mucho y trabajas diligentemente, Inclub cambiará tu vida y cumplirá todos tus sueños",
+					"name": "Elias Vargas",
+					"since": "junio 2019"
+				},
+				{
+					"text": "Solo necesitas 3 cosas en este mundo para ser feliz: Fe en Dios, Fe en ti mismo y Fe en tus sueños",
+					"name": "Paul Villacorta",
+					"since": "noviembre 2019"
+				},
+				{
+					"text": "No es malo ser Pobre, lo malo es no haberlo intentado Nunca, para Morir Pobre y sin Sueños, Nunca es tarde para empezar",
+					"name": "Mery Livias",
+					"since": "octubre 2021"
+				},
+				{
+					"text": "Tu puedes pronunciar el mejor discurso con tu vida que con tus palabras",
+					"name": "Abel Meza",
+					"since": "diciembre 2019"
+				}
+			]
+		}
+	},
+	"products": {
+		"navigation": ["Inmobiliario", "Tech", "Próximos Proyectos"],
+		"items": [
+			{
+				"title": "Inresorts Ribera del Rio",
+				"description": "Disfruta de los beneficios de nuestro Hotel Club Resort y conviértete en socio. Construye un patrimonio en Bienes Raíces para ti y tu familia, ganas dinero y mucho más.",
+				"buttonText": "Más Información"
+			},
+			{
+				"title": "Inresorts La Joya",
+				"description": "Diversión familiar, naturaleza y ganancias para toda la vida. Disfruta de nuestro proyecto hotelero La Joya mientras ganas dinero por usar el club resort y más.",
+				"buttonText": "Más Información"
+			},
+			{
+				"title": "Keola Networks",
+				"description": "Invita y gana, descubre los beneficios de la app. Goza de un servicio de calidad y encuentra descuentos de productos en nuestra tienda virtual.",
+				"buttonText": "Más Información"
+			}
+		],
+		"nextProjects": {
+			"title": "Estamos trabajando",
+			"description": "Actualmente el equipo de Inclub está en proceso de creatividad para mostrar los próximos proyectos. Le invitamos que sea parte de nosotros para que sea los primeros en saber las novedades de Inclub.",
+			"buttonText": "¡Ponte al día!"
+		}
+	},
+	"productDetail": {
+		"aboutUsTitle": "Acerca de nosotros",
+		"aboutBtnText": "Quiero saber más",
+		"products": [
+			{
+				"aboutTitle": "Ribera del Río",
+				"aboutDescription": "Somos un Club Resort ubicado en Cieneguilla, a 45 minutos de Lima. Un lugar mágico donde te ofrecemos un entorno natural en el que puedes deleitarte con paisajes verdes y divertidos, con un clima cálido para que disfrutes con tu familia.",
+				"perkPreTitle": "Aprovecha nuestras",
+				"perktitle": "Experiencias inolvidables",
+				"perkDescription": "El refugio perfecto para aquellos que buscan una escapada única y una experiencia de aventura. Ubicado en un entorno pintoresco rodeado de exuberante vegetación.",
+				"cards": [
+					{
+						"title": "Hoteles",
+						"description": "Cada habitación en Ribera del Río está diseñada para compartir con tus seres queridos; aquí encontrarás el mejor plan para crear nuevas experiencias."
+					},
+					{
+						"title": "Experiencias",
+						"description": "Ofrecemos una amplia gama de experiencias de ocio y recreación que seguramente te cautivarán. Crea las mejores experiencias acompañado de tus seres queridos."
+					},
+					{
+						"title": "Restaurantes",
+						"description": "Siempre es bueno darse un gusto, y para eso, nuestro 'Restaurante Ribera del Río' te da la bienvenida y te invita a disfrutar de diversos platos típicos nacionales, regionales y criollos."
+					}
+				]
+			},
+			{
+				"aboutTitle": "La Joya",
+				"aboutDescription": "Somos un Club Resort ubicado en Arequipa, a solo 45 minutos de la ciudad de Arequipa. Un lugar lleno de adrenalina y diversión donde puedes crear los mejores recuerdos con tu familia. Somos el parque acuático más grande de Perú.",
+				"perkPreTitle": "Aprovecha nuestras",
+				"perktitle": "Experiencias inolvidables",
+				"perkDescription": "El refugio perfecto para aquellos que buscan una escapada única y una experiencia de aventura. Ubicado en un entorno pintoresco rodeado de exuberante vegetación.",
+				"cards": [
+					{
+						"title": "Piscinas",
+						"description": "Cada piscina en La Joya está diseñada para compartir con tus seres queridos; aquí encontrarás el mejor plan para crear nuevas experiencias."
+					},
+					{
+						"title": "Experiencias",
+						"description": "Ofrecemos una amplia gama de experiencias de ocio y recreación que seguramente te cautivarán. Crea las mejores experiencias acompañado de tus seres queridos."
+					},
+					{
+						"title": "Parque Resort",
+						"description": "Hermoso parque acuático con toboganes coloridos; disfruta con tu familia o grupo de amigos donde compartirás experiencias de escapada y aventura únicas."
+					}
+				]
+			},
+			{
+				"aboutTitle": "Keola",
+				"aboutDescription": "¡Bienvenido a Keola, la aplicación definitiva para encontrar todos tus productos favoritos en un solo lugar! Descubre una experiencia de compra sin igual con una amplia variedad de productos, desde deliciosa comida hasta productos de belleza y artículos para el hogar.",
+				"perkPreTitle": "Aprovecha nuestras",
+				"perktitle": "Beneficios de Keola",
+				"perkDescription": "Invita y gana, descubre los beneficios de la aplicación. Disfruta de un servicio de calidad y encuentra descuentos en productos en nuestra tienda virtual.",
+				"cards": [
+					{
+						"title": "Productos",
+						"description": "Descubre una variedad de productos y categorías. Encuentra descuentos en tus platillos favoritos, productos de belleza, tecnología y mucho más."
+					},
+					{
+						"title": "Tiendas",
+						"description": "Administra tu tienda y gestiona tus productos, brindando un servicio de entrega de calidad y eficiente."
+					},
+					{
+						"title": "Entrega",
+						"description": "¿Necesitas comida, medicinas? En KeOla, puedes encontrar eso y mucho más. Donde tus productos estarán más cerca de ti."
+					}
+				]
+			}
+		]
+	},
+	"oportunity": {
+		"title": "Oportunidad",
+		"description": "Está abierta para cualquier persona, sin importar su experiencia, ubicación o circunstancias.",
+		"sections": [
+			{
+				"pre": "Gana con tu influencia",
+				"title": "Todo el mundo es un micro influenciado",
+				"content": "Todo el mundo es un microinfluencer. La red de afiliados más grande y poderosa en Latinoamérica es, sin lugar a dudas, Inclub. Miles de emprendedores ya están generando ingresos con esta red y cada día se suman más y más productos."
+			},
+			{
+				"pre": "Recomiendo productos de calidad",
+				"title": "Productos de vanguardia, abriendo camino en la industria",
+				"content": "Todos los días recomendamos productos y servicios a nuestros amigos y familiares. Todos somos microinfluencers. Con Inclub, lo interesante de esta gran red son las comisiones que puedes ganar si tomas en serio esta profesión."
+			},
+			{
+				"pre": "Aprende de tus compañeros",
+				"title": "Todo lo que necesitas para triunfar",
+				"content": "Compartimos conocimientos de nuestros especialistas, inspirados por el deseo de hacer que el networking sea más rentable para todos y que los afiliados aprendan a generar activos."
+			},
+			{
+				"pre": "Plan de compensación",
+				"title": "Nuestro Plan de Compensación es el más poderoso de la industria",
+				"content": "Ayudamos a la gente a crear una cartera de inversión inteligente y alcanzar la tan anhelada libertad financiera con una amplia gama de beneficios, como ningún otro club de inversión."
+			}
+		],
+		"testimonials": {
+			"pre": "Testimonios",
+			"title": "Historias de Éxito",
+			"items": [
+				{
+					"text": "Si una persona que vive en el pasado nunca triunfará en el presente, menos en el futuro",
+					"name": "Elias Vargas",
+					"since": "junio 2019"
+				},
+				{
+					"text": "Solo necesitas 3 cosas en este mundo para ser feliz: Fe en Dios, Fe en ti mismo y Fe en tus sueños",
+					"name": "Paul Villacorta",
+					"since": "noviembre 2019"
+				},
+				{
+					"text": "No es malo ser Pobre, lo malo es no haberlo intentado Nunca, para Morir Pobre y sin Sueños, Nunca es tarde para empezar",
+					"name": "Mery Livias",
+					"since": "octubre 2021"
+				},
+				{
+					"text": "Tu puedes pronunciar el mejor discurso con tu vida que con tus palabras",
+					"name": "Abel Meza",
+					"since": "diciembre 2019"
+				}
+			]
+		}
+	},
+	"comunity": {
+		"title": "Nuestra Comunidad",
+		"description": "El éxito es mejor cuando se comparte. Únase a una comunidad global de empresarios a medida que crecemos y prosperamos juntos.",
+		"sections": [
+			{
+				"pre": "CRECE Y PROSPERA CON NOSOTROS",
+				"title": "Afiliados en todo el mundo",
+				"content": "La red de afiliados más grande y potente al día de hoy en Latinoamérica es, sin lugar a dudas, Inclub. Miles de emprendedores ya están generando ingresos con esta red y cada día se suman más y más productos."
+			},
+			{
+				"pre": "Reconocimiento y eventos",
+				"title": "Millones de personas celebrarán su éxito.",
+				"content": "Estamos increíblemente orgullosos del arduo trabajo y la dedicación que cada emprendedor pone en su negocio. A medida que nuestros Afiliados suben de rango dentro de la Multitud, nos aseguramos de celebrar sus logros en nuestros Eventos de Reconocimiento."
+			},
+			{
+				"pre": "HERRAMIENTAS DE EDUCACIÓN Y APRENDIZAJE",
+				"title": "Todo lo que necesitas para triunfar.",
+				"content": "Ayudamos a la gente a crear una cartera de inversión inteligente y alcanzar la tan anhelada libertad financiera. InClub te da oportunidades de invertir en muchos rubros como inmobiliario, tecnológico, transporte, etc. Con una amplia gama de beneficios como ningún otro club de inversión."
+			}
+		],
+		"inspiration": {
+			"title": "Inspiración",
+			"subtitle": "Voces de la Comunidad",
+			"testimonials": [
+				{
+					"text": "Inclub es mi vida y por eso me lo tomo muy en serio.",
+					"name": "Elias Vargas",
+					"since": "junio 2019"
+				},
+				{
+					"text": "Inclub está aquí para cambiar la vida de las personas.",
+					"name": "Paul Villacorta",
+					"since": "noviembre 2019"
+				},
+				{
+					"text": "Inclub nos ha dado la oportunidad de cambiar también la vida de otras personas.",
+					"name": "Mery Livias",
+					"since": "octubre 2021"
+				},
+				{
+					"text": "Los afiliados son recompensados por el éxito gracias a la masa de los usuarios.",
+					"name": "Abel Meza",
+					"since": "diciembre 2019"
+				}
+			]
+		}
+	},
+	"news": {
+		"noticeLabel": "Noticias",
+		"titleMain": "NOVEDAD",
+		"descriptionMain": "El refugio perfecto para disfrutar en familia y amigos",
+		"commonEventsCountry": "Lima, Perú",
+		"commonEventsBtn": "Ver más",
+		"content": [
+			{
+				"date": "14 SEP, 2023",
+				"title": "Comunica con éxito, taller de lenguaje y comunicación empresarial"
+			},
+			{
+				"title": "Tu destino de compras en línea",
+				"description": "Invita y gana, descubre los beneficios de la app. Disfruta de un servicio de calidad y encuentra descuentos en productos."
+			},
+			{
+				"title": "Proyecto inmobiliario",
+				"description": "Los líderes de Inclub disfrutaron de un increíble lanzamiento de proyecto inmobiliario Ribera del Rio en Cieneguilla."
+			},
+			{
+				"title": "Lanzamiento de Encumbra",
+				"description": "Los líderes de Inclub empoderan a nuestros miembros para ser líderes en la industria de redes en línea."
+			},
+			{
+				"title": "Tu destino de compras en línea",
+				"description": "Invita y gana, descubre los beneficios de la app. Disfruta de un servicio de calidad y encuentra descuentos en productos."
+			},
+			{
+				"title": "Proyecto tecnológico",
+				"description": "Los líderes de Inclub disfrutaron de un increíble lanzamiento de proyecto inmobiliario Ribera del Rio en Cieneguilla."
+			},
+			{
+				"title": "Inresorts Ribera del Rio",
+				"description": "Los líderes de Inclub empoderan a nuestros miembros para ser líderes en la industria de redes en línea."
+			}
+		]
+	},
+	"newsDetail": {
+		"date": "26 de septiembre de 2023",
+		"title": "El refugio perfecto para disfrutar en familia y amigos",
+		"description": "La Joya park resort está a solo 60 minutos de la ciudad de Arequipa en el distrito de La Joya, aquí podrás disfrutar de días de playa o practicar deportes acuáticos. Gracias a nuestros socios patrocinadores, es uno de los parques más grandes de Latinoamérica y cuenta con una innovadora tecnología sustentable con el medio ambiente, nos convierten en el único club privado con una laguna de aguas cristalinas y playas de arena blanca en la Región Sur del País.",
+		"content": [
+			{
+				"date": "14 de septiembre de 2023",
+				"title": "Comunica con éxito, taller de lenguaje y comunicación empresarial"
+			},
+			{
+				"date": "29 de septiembre de 2023",
+				"title": "Sistema Educativo Inclub LIDERAZGO"
+			},
+			{
+				"date": "15 de septiembre de 2023",
+				"title": "Sistema educativo Inclub Testimonios de Éxito"
+			}
+		]
+	},
+	"calendar": {
+		"title": "Calendario",
+		"subtitle": "Septiembre",
+		"filters": {
+			"searchLabel": "Buscador",
+			"searchPlaceholder": "Buscar el evento o taller",
+			"options": ["Hoy", "Semanal", "Mensual"]
+		}
+	},
+	"eventPage": {
+		"upcommingEventsTitle": "Próximos eventos",
+		"upcomingEvents": [
+			{
+				"date": "22 NOV, 2023",
+				"title": "Habilidades Blandas LIDERAZGO"
+			},
+			{
+				"date": "29 SEP, 2023",
+				"title": "Sistema Edcuativo Inclub LIDERAZGO"
+			},
+			{
+				"date": "15 SEP, 2023",
+				"title": "Sistema educativo Inclub Testimonios de Éxito"
+			}
+		],
+		"pastEventsTitle": "Eventos anteriores",
+		"pastEvents": [
+			{
+				"date": "12 SEP, 2023",
+				"title": "Sistema Educativo Inclub Club de Lectura"
+			},
+			{
+				"date": "10 SEP, 2023",
+				"title": "Sistema Educativo Inclub LIDERAZGO"
+			},
+			{
+				"date": "08 SEP, 2023",
+				"title": "Sistema Educativo Inclub Testimonios de Éxito"
+			}
+		],
+		"trendsTitle": "Tendencias"
+	},
+	"eventsDetail": {
+		"backLabel": "Volver",
+		"resumeTitle": "Resumen",
+		"learnTitle": "¿Qué aprenderás?"
+	},
+	"events": [
+		{
+			"title": "Habilidades Blandas LIDERAZGO",
+			"date": "22 NOV, 2023",
+			"type": "Online",
+			"duration": "Duración aprox: 22 minutos.",
+			"positiveReviews": "98% valoraciones positivas (567).",
+			"summary": "¿Quieres mejorar tus habilidades de comunicación en el ámbito empresarial? ¡No busques más! Comunica con éxito es el taller de lenguaje y comunicación empresarial que estabas esperando. En este artículo, te contaré todo lo que necesitas saber sobre este increíble taller que te ayudará a alcanzar el éxito en el mundo de los negocios. Comunica con éxito es un taller diseñado específicamente para aquellos que desean mejorar su capacidad de comunicación en el entorno empresarial. Además, Comunica con éxito se adapta a tus necesidades y nivel de experiencia. No importa si eres un principiante en el mundo de los negocios o si ya tienes experiencia, este taller te proporcionará las herramientas necesarias para mejorar tu comunicación empresarial. Una de las principales ventajas de este evento Comunica con éxito es su enfoque práctico.",
+			"learn": [
+				"Mejorar habilidades de presentación, negociación",
+				"Aprender a expresar de manera clara y efectiva",
+				"A diferencia de otros talleres teóricos, este taller te permite poner en práctica lo aprendido de inmediato.",
+				"A través de ejercicios y dinámicas grupales, podrás practicar tus habilidades de comunicación y recibir retroalimentación inmediata de los expertos en el tema. Los expertos en comunicación te guiarán paso a paso, brindándote consejos y técnicas que te ayudarán a comunicarte de manera efectiva en cualquier situación.",
+				"Y más."
+			]
+		},
+		{
+			"date": "23 NOV, 2023",
+			"title": "Sistema Educativo Inclub COMUNICA CON ÉXITO",
+			"type": "Online",
+			"duration": "Duración aprox: 22 minutos.",
+			"positiveReviews": "98% valoraciones positivas (567).",
+			"summary": "¿Quieres mejorar tus habilidades de comunicación en el ámbito empresarial? ¡No busques más! Comunica con éxito es el taller de lenguaje y comunicación empresarial que estabas esperando. En este artículo, te contaré todo lo que necesitas saber sobre este increíble taller que te ayudará a alcanzar el éxito en el mundo de los negocios. Comunica con éxito es un taller diseñado específicamente para aquellos que desean mejorar su capacidad de comunicación en el entorno empresarial. Además, Comunica con éxito se adapta a tus necesidades y nivel de experiencia. No importa si eres un principiante en el mundo de los negocios o si ya tienes experiencia, este taller te proporcionará las herramientas necesarias para mejorar tu comunicación empresarial. Una de las principales ventajas de este evento Comunica con éxito es su enfoque práctico.",
+			"learn": [
+				"Mejorar habilidades de presentación, negociación",
+				"Aprender a expresar de manera clara y efectiva",
+				"A diferencia de otros talleres teóricos, este taller te permite poner en práctica lo aprendido de inmediato.",
+				"A través de ejercicios y dinámicas grupales, podrás practicar tus habilidades de comunicación y recibir retroalimentación inmediata de los expertos en el tema. Los expertos en comunicación te guiarán paso a paso, brindándote consejos y técnicas que te ayudarán a comunicarte de manera efectiva en cualquier situación.",
+				"Y más."
+			]
+		},
+		{
+			"date": "23 NOV, 2023",
+			"title": "Proyecto INMOBILIARIO Lanzamiento oficial",
+			"type": "Online",
+			"duration": "Duración aprox: 22 minutos.",
+			"positiveReviews": "98% valoraciones positivas (567).",
+			"summary": "¿Quieres mejorar tus habilidades de comunicación en el ámbito empresarial? ¡No busques más! Comunica con éxito es el taller de lenguaje y comunicación empresarial que estabas esperando. En este artículo, te contaré todo lo que necesitas saber sobre este increíble taller que te ayudará a alcanzar el éxito en el mundo de los negocios. Comunica con éxito es un taller diseñado específicamente para aquellos que desean mejorar su capacidad de comunicación en el entorno empresarial. Además, Comunica con éxito se adapta a tus necesidades y nivel de experiencia. No importa si eres un principiante en el mundo de los negocios o si ya tienes experiencia, este taller te proporcionará las herramientas necesarias para mejorar tu comunicación empresarial. Una de las principales ventajas de este evento Comunica con éxito es su enfoque práctico.",
+			"learn": [
+				"Mejorar habilidades de presentación, negociación",
+				"Aprender a expresar de manera clara y efectiva",
+				"A diferencia de otros talleres teóricos, este taller te permite poner en práctica lo aprendido de inmediato.",
+				"A través de ejercicios y dinámicas grupales, podrás practicar tus habilidades de comunicación y recibir retroalimentación inmediata de los expertos en el tema. Los expertos en comunicación te guiarán paso a paso, brindándote consejos y técnicas que te ayudarán a comunicarte de manera efectiva en cualquier situación.",
+				"Y más."
+			]
+		},
+		{
+			"date": "23 NOV, 2023",
+			"title": "Proyecto TECNOLÓGICO Lanzamiento oficial",
+			"type": "Online",
+			"duration": "Duración aprox: 22 minutos.",
+			"positiveReviews": "98% valoraciones positivas (567).",
+			"summary": "¿Quieres mejorar tus habilidades de comunicación en el ámbito empresarial? ¡No busques más! Comunica con éxito es el taller de lenguaje y comunicación empresarial que estabas esperando. En este artículo, te contaré todo lo que necesitas saber sobre este increíble taller que te ayudará a alcanzar el éxito en el mundo de los negocios. Comunica con éxito es un taller diseñado específicamente para aquellos que desean mejorar su capacidad de comunicación en el entorno empresarial. Además, Comunica con éxito se adapta a tus necesidades y nivel de experiencia. No importa si eres un principiante en el mundo de los negocios o si ya tienes experiencia, este taller te proporcionará las herramientas necesarias para mejorar tu comunicación empresarial. Una de las principales ventajas de este evento Comunica con éxito es su enfoque práctico.",
+			"learn": [
+				"Mejorar habilidades de presentación, negociación",
+				"Aprender a expresar de manera clara y efectiva",
+				"A diferencia de otros talleres teóricos, este taller te permite poner en práctica lo aprendido de inmediato.",
+				"A través de ejercicios y dinámicas grupales, podrás practicar tus habilidades de comunicación y recibir retroalimentación inmediata de los expertos en el tema. Los expertos en comunicación te guiarán paso a paso, brindándote consejos y técnicas que te ayudarán a comunicarte de manera efectiva en cualquier situación.",
+				"Y más."
+			]
+		},
+		{
+			"date": "21 NOV, 2023",
+			"title": "Proyecto INMOBILIARIO Lanzamiento oficial",
+			"type": "Online",
+			"duration": "Duración aprox: 22 minutos.",
+			"positiveReviews": "98% valoraciones positivas (567).",
+			"summary": "¿Quieres mejorar tus habilidades de comunicación en el ámbito empresarial? ¡No busques más! Comunica con éxito es el taller de lenguaje y comunicación empresarial que estabas esperando. En este artículo, te contaré todo lo que necesitas saber sobre este increíble taller que te ayudará a alcanzar el éxito en el mundo de los negocios. Comunica con éxito es un taller diseñado específicamente para aquellos que desean mejorar su capacidad de comunicación en el entorno empresarial. Además, Comunica con éxito se adapta a tus necesidades y nivel de experiencia. No importa si eres un principiante en el mundo de los negocios o si ya tienes experiencia, este taller te proporcionará las herramientas necesarias para mejorar tu comunicación empresarial. Una de las principales ventajas de este evento Comunica con éxito es su enfoque práctico.",
+			"learn": [
+				"Mejorar habilidades de presentación, negociación",
+				"Aprender a expresar de manera clara y efectiva",
+				"A diferencia de otros talleres teóricos, este taller te permite poner en práctica lo aprendido de inmediato.",
+				"A través de ejercicios y dinámicas grupales, podrás practicar tus habilidades de comunicación y recibir retroalimentación inmediata de los expertos en el tema. Los expertos en comunicación te guiarán paso a paso, brindándote consejos y técnicas que te ayudarán a comunicarte de manera efectiva en cualquier situación.",
+				"Y más."
+			]
+		},
+		{
+			"date": "21 NOV, 2023",
+			"title": "Proyecto TECNOLÓGICO Lanzamiento oficial",
+			"type": "Online",
+			"duration": "Duración aprox: 22 minutos.",
+			"positiveReviews": "98% valoraciones positivas (567).",
+			"summary": "¿Quieres mejorar tus habilidades de comunicación en el ámbito empresarial? ¡No busques más! Comunica con éxito es el taller de lenguaje y comunicación empresarial que estabas esperando. En este artículo, te contaré todo lo que necesitas saber sobre este increíble taller que te ayudará a alcanzar el éxito en el mundo de los negocios. Comunica con éxito es un taller diseñado específicamente para aquellos que desean mejorar su capacidad de comunicación en el entorno empresarial. Además, Comunica con éxito se adapta a tus necesidades y nivel de experiencia. No importa si eres un principiante en el mundo de los negocios o si ya tienes experiencia, este taller te proporcionará las herramientas necesarias para mejorar tu comunicación empresarial. Una de las principales ventajas de este evento Comunica con éxito es su enfoque práctico.",
+			"learn": [
+				"Mejorar habilidades de presentación, negociación",
+				"Aprender a expresar de manera clara y efectiva",
+				"A diferencia de otros talleres teóricos, este taller te permite poner en práctica lo aprendido de inmediato.",
+				"A través de ejercicios y dinámicas grupales, podrás practicar tus habilidades de comunicación y recibir retroalimentación inmediata de los expertos en el tema. Los expertos en comunicación te guiarán paso a paso, brindándote consejos y técnicas que te ayudarán a comunicarte de manera efectiva en cualquier situación.",
+				"Y más."
+			]
+		}
+	]
+}

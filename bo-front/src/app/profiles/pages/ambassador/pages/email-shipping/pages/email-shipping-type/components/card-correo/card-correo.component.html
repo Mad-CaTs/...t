@@ -1,0 +1,38 @@
+<div class="border rounded p-3 h-100" [formGroup]="form">
+	<div class="d-flex align-items-start mb-3">
+		<app-checkbox
+			[form]="form"
+			[controlName]="controlNameCheckbox"
+			[label]="title"
+			(change)="onCheckboxChange($event)"
+		>
+		</app-checkbox>
+	</div>
+
+	<div *ngIf="showAvatar && nombre && email" class="d-flex align-items-center gap-3">
+		<div
+			class="rounded-circle bg-light d-flex align-items-center justify-content-center"
+			style="width: 48px; height: 48px"
+		>
+			<span class="text-danger fw-bold">
+				{{ nombre.charAt(0) + apellido.charAt(0) }}
+			</span>
+		</div>
+		<div>
+			<div class="fw-bold">{{ nombre }}</div>
+			<div class="text-muted">{{ email }}</div>
+		</div>
+	</div>
+
+	<app-input
+		*ngIf="showInputEmail"
+		class="w-100"
+		label="Correo electrónico"
+		[form]="form"
+		[controlName]="controlNameEmail"
+		placeholder="example@inclub.com"
+		(focusOut)="onEmailBlur()"
+		(keydown)="preventSpaces($event)"
+		(focusOut)="trimSpaces(controlNameEmail)"
+	></app-input>
+</div>

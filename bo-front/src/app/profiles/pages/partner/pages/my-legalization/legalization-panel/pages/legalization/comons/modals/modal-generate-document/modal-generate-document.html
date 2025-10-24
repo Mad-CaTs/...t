@@ -1,0 +1,44 @@
+<ng-container>
+	<div class="rounded bg-white w-100">
+		<div class="d-flex justify-content-between align-items-center mb-4">
+			<div class="icon-box">
+				<img src="assets/icons/personalcard@2x.svg" alt="Patrocinador" class="icon-img" />
+			</div>
+
+			<button class="btn p-0 border-0 bg-transparent" (click)="closeModal()" aria-label="Cerrar">
+				<mat-icon fontIcon="close" class="fs-4"></mat-icon>
+			</button>
+		</div>
+
+		<h3>Generar Certificado</h3>
+		<p class="mb-4 cl-gray-100">Por favor, valida los datos previos para generar el certificados.</p>
+
+		<div class="d-flex flex-column flex-md-row gap-3 mb-3">
+			<app-input
+				[form]="form"
+				controlName="name"
+				placeholder="Usuario"
+				label="Usuario *"
+				class="w-100"
+			></app-input>
+
+			<app-input
+				[form]="form"
+				controlName="userCode"
+				placeholder=""
+				label="Código de Usuario *"
+				class="w-100"
+			></app-input>
+		</div>
+
+		<app-input [form]="form" controlName="portfolio" placeholder="" label="Portafolio *" class="w-100">
+		</app-input>
+
+		<div class="d-flex flex-column flex-md-row justify-content-center p-4 gap-2">
+			<button class="btn btn-outline-secondary w-100" type="button" (click)="closeModal()">
+				Cancelar
+			</button>
+			<button class="btn btn-secondary w-100" type="button" (click)="onGenerate()">Generar</button>
+		</div>
+	</div>
+</ng-container>

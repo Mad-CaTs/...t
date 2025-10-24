@@ -1,0 +1,27 @@
+<div class="d-flex flex-column gap-3 card p-lg-4 border-0">
+  <h1 class="m-0 fs-4 text-black fw-medium">Pagos y comisiones</h1>
+  <div class="d-flex flex-row gap-2 cursor-pointer"
+       (click)="router.navigate(['/profile/ambassador/payments'])">
+    <mat-icon class="text-secondary"
+              fontIcon="arrow_back"></mat-icon>
+    <span class="fw-medium text-secondary">Volver</span>
+  </div>
+  <div class="row">
+    <div class="col-4">
+      <app-payment-card [payment]="paymentDetail"
+                        [showDetailButton]="false"></app-payment-card>
+    </div>
+  </div>
+
+  <app-navigation [data]="navigation"
+                  [selected]="currentTab"
+                  (changeSelected)="currentTab = $event"></app-navigation>
+  <!--All submodules-->
+  <app-payment-detail-overview *ngIf="currentTab === 1"></app-payment-detail-overview>
+  <app-payment-detail-comission *ngIf="currentTab >= 2"
+                                [tab]="currentTab"
+                                [userId]="userId"
+                                [periodId]="periodId"
+                                [loading]="loading"
+                                [allData]="allTableData"></app-payment-detail-comission>
+</div>

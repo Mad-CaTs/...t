@@ -1,0 +1,27 @@
+<div class="discount-card" [class.selected]="selected" (click)="onSelect()" role="button" tabindex="0" (keydown.enter)="onSelect()">
+  <div class="discount-header">
+    <div class="icon-wrap">
+      <img *ngIf="icon" [src]="icon" alt="icon" class="discount-icon"/>
+    </div>
+
+    <div class="discount-text">
+      <div class="discount-title">{{ title }}</div>
+      <div *ngIf="subtitle" class="discount-subtitle">{{ subtitle }}</div>
+    </div>
+
+    <div class="discount-chevron">
+      <img src="/assets/icons/arrow-back-ios.svg" alt="chevron" class="chevron-img" />
+    </div>
+  </div>
+
+  <div class="coupon-area" *ngIf="showCouponInput">
+    <div class="coupon-inner">
+      <ng-container *ngIf="form && controlName; else nativeInput">
+        <app-input [form]="form" [controlName]="controlName" placeholder="Ingrese tu código de descuento" class="w-100"></app-input>
+      </ng-container>
+      <ng-template #nativeInput>
+        <input #nativeInput class="coupon-input" [(ngModel)]="coupon" (ngModelChange)="onCouponInput($event)" placeholder="Ingrese tu código de descuento" />
+      </ng-template>
+    </div>
+  </div>
+</div>

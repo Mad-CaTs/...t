@@ -1,0 +1,34 @@
+<div class="strip" [ngClass]="colorClass">
+  <div class="strip__inner">
+    <!-- IZQUIERDA: imagen + info -->
+    <div class="event">
+      <img class="event__thumb" [src]="imageUrl" alt="" *ngIf="imageUrl" />
+      <div class="event__meta">
+        <div class="event__title">{{ title }}</div>
+        <div class="event__chips">
+          <span class="chip">
+            <!-- ícono calendario -->
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M7 2v2M17 2v2M3 8h18M5 5h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+            {{ eventDateLabel }}
+          </span>
+          <span class="chip">
+            <!-- ícono reloj -->
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M12 6v6l4 2M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+            {{ eventTimeLabel }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- DERECHA: contador -->
+    <div class="timer">
+      <div class="timer__value">{{ mmss }}</div>
+      <div class="timer__hint">Ey, aún tienes tiempo de sobra</div>
+    </div>
+  </div>
+
+  <!-- barra de progreso inferior -->
+  <div class="strip__track">
+    <div class="strip__bar" [style.width.%]="progressPct"></div>
+  </div>
+</div>

@@ -1,0 +1,79 @@
+<div class="conteinerblog">
+	<div class="container-img-banner">
+		<img class="img-banner" src="assets/images/bg-login-new.png" alt="Descripción de la imagen" />
+	</div>
+	<div class="form-container">
+		<form class="form" (ngSubmit)="onSubmit()">
+			<div class="go-back cursor-pointer" (click)="goLoginSelection()">
+				<img src="assets/images/arrow-left.svg" alt="" />
+				<a class="go-back-label cursor-pointer" (click)="goLoginSelection()"
+					>Volver a Home</a
+				>
+			</div>
+			<div class="form-logo">
+				<a routerLink="/home">
+					<img class="form-logo-img" src="assets/images/Inclub.svg" alt="Logo Inclub" />
+				</a>
+			</div>
+			<h1 class="form-title">Iniciar sesión</h1>
+			<div class="form-control">
+				<span class="form-control-title">Nombre de usuario:</span>
+				<input
+					id="username"
+					[(ngModel)]="username"
+					placeholder="Usuario"
+					class="styled-input"
+					name="username"
+					type="text"
+					autocomplete="off"
+					required
+					(input)="clearErrors()"
+				/>
+				<span *ngIf="usernameError" class="error">*Ingresa tu usuario.</span>
+			</div>
+			<div class="form-control">
+				<span class="form-control-title">Contraseña</span>
+				<div class="password-container">
+					<input
+						id="input-password"
+						[(ngModel)]="password"
+						name="password"
+						placeholder="Contraseña"
+						class="styled-input styled-input-pass"
+						type="password"
+						autocomplete="off"
+						required
+						(input)="clearErrors()"
+					/>
+					<img
+						id="eye-icon"
+						class="eye-icon"
+						src="assets/images/eye-show.svg"
+						(click)="togglePasswordVisibility()"
+						alt="Mostrar/Ocultar contraseña"
+					/>
+				</div>
+				<span *ngIf="passwordError" class="error">*Ingresa tu contraseña.</span>
+			</div>
+			<div>
+				<button class="styled-button" type="submit" [disabled]="loading">
+					<span
+						*ngIf="loading"
+						class="spinner-border spinner-border-sm"
+						role="status"
+						aria-hidden="true"
+					></span>
+					Iniciar Sesión
+				</button>
+			</div>
+			<p *ngIf="loginError" class="control-error">Usuario o contraseña incorrectos</p>
+			<div class="forgot-pass-container">
+				<a class="forgot-pass-link" [routerLink]="'/forgot-password'">¿Olvidaste tu contraseña?</a>
+			</div>
+
+			<!-- <div class="forgot-pass-container">
+				<a class="forgot-pass-link cursor-pointer" routerLink="/forgot-password">¿Olvidaste tu contraseña?</a>
+			</div> -->
+		</form>
+	</div>
+</div>

@@ -1,0 +1,17 @@
+<h5 class="mb-3">{{ sectionTitle }}</h5>
+<div class="card border-0 shadow-sm p-4 mb-4">
+	<app-info-card-stack [cards]="cards"></app-info-card-stack>
+	<div class="mt-4">
+		<h6 class="fw-bold">{{ helpTitle }}</h6>
+		<p class="text-muted">{{ helpText }}</p>
+	</div>
+</div>
+<div class="card border-0 p-3 bg-white shadow rounded">
+	<h6 class="fw-bold mb-2">¿Necesitas ayuda?</h6>
+	<p class="text-muted">{{ supportText }}</p>
+	<div class="d-grid">
+		<button class="btn btn-secondary w-100">
+			{{ supportButton }}
+		</button>
+	</div>
+</div>

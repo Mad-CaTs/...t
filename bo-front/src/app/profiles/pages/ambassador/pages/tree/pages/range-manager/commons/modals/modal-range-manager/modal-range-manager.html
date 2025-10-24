@@ -1,0 +1,82 @@
+<div *ngIf="isLoading"
+     class="d-flex justify-content-center align-items-center py-4">
+  <p-progressSpinner></p-progressSpinner>
+</div>
+
+<div *ngIf="modalReady && !isLoading"
+     class="container">
+  <span class="fw-bold">Datos del registro</span>
+  <div *ngIf="!pointsData"
+       class="alert alert-warning"
+       role="alert">
+    Los datos no están disponibles. Por favor, intente más tarde.
+  </div>
+
+  <div class="row py-2"
+       style="background-color: #f9fcff;">
+    <div class="col-6 text-muted">Usuario</div>
+    <div class="col-6 text-end text-muted">{{data.userName}}</div>
+  </div>
+  <div class="row py-2">
+    <div class="col-6 text-muted">Nombre y Apellido</div>
+    <div class="col-6 text-end text-muted">{{data.fullName}}</div>
+  </div>
+
+  <div class="row py-2"
+       style="background-color: #f9fcff;">
+    <div class="col-6 text-muted">Fecha de afiliación</div>
+    <div class="col-6 text-end text-muted">{{data.createDate | date:'d/M/yyyy'}}</div>
+  </div>
+  <div class="row py-2">
+    <div class="col-6 text-muted">Estado</div>
+    <div class="col-6 text-end text-muted">{{data.stateName}}</div>
+  </div>
+  <div class="row py-2"
+       style="background-color: #f9fcff;">
+    <div class="col-6 text-muted">Nivel patrocinio</div>
+    <div class="col-6 text-end text-muted">{{data.sponsorLevel }}</div>
+  </div>
+
+  <div *ngIf="pointsData"
+       class="row py-2">
+    <div class="col-6 text-muted">Rama 1</div>
+    <div class="col-6 text-end text-muted">{{pointsData?.compuestoRama1}}</div>
+  </div>
+
+  <div *ngIf="pointsData"
+       class="row py-2"
+       style="background-color: #f9fcff;">
+    <div class="col-6 text-muted">Rama 2</div>
+    <div class="col-6 text-end text-muted">{{pointsData?.compuestoRama2}}</div>
+  </div>
+  <div *ngIf="pointsData"
+       class="row py-2">
+    <div class="col-6 text-muted">Rama 3</div>
+    <div class="col-6 text-end text-muted">{{pointsData?.compuestoRama3}}</div>
+  </div>
+  <div *ngIf="pointsData"
+       class="row py-2"
+       style="background-color: #f9fcff;">
+    <div class="col-6 text-muted">Directos</div>
+    <div class="col-6 text-end text-muted">{{pointsData?.directoCTotal}}</div>
+  </div>
+
+
+  <div class="d-flex flex-row justify-content-center gap-3">
+    <button class="btn btn-outline-secondary"
+            type="button"
+            (click)="closeModal()">
+      Volver
+    </button>
+    <button class="btn btn-secondary"
+            type="button"
+            [disabled]="isLoading"
+            (click)="openDashboard()">
+      <span *ngIf="isLoading"
+            class="spinner-border spinner-border-sm"
+            role="status"
+            aria-hidden="true"></span>
+      <span *ngIf="!isLoading">Dashboard</span>
+    </button>
+  </div>
+</div>

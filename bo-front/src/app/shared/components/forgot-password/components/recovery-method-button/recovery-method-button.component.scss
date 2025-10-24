@@ -1,0 +1,43 @@
+.radio-button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: #FFFFFF;
+    border-radius: 1rem;
+    border: 2px solid #CDCED0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: #363A3E;
+    font-size: 1rem;
+    font-weight: 400;
+
+    &:hover {
+        background: darken(#FFFFFF, 5%);
+
+    }
+
+    &.selected {
+        border-color: #19809E;
+        color: #19809E;
+    }
+}
+
+label {
+    word-break: break-word;
+    white-space: normal;
+}
+
+::ng-deep .p-radiobutton-box {
+    border: 2px solid #CDCED0 !important;
+    background-color: white;
+    border-radius: 100%;
+    width: 1.2rem;
+    height: 1.2rem;
+}
+
+::ng-deep .p-radiobutton-box.p-highlight {
+    background-color: #19809E !important;
+    border-color: #19809E !important;
+}

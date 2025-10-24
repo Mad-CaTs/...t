@@ -1,0 +1,111 @@
+<div class="login-selection-container">
+	<div class="login-options">
+		<a routerLink="/home">
+			<img src="assets/images/Inclub.svg" alt="Logo InClub" class="logo" />
+		</a>
+
+		<div class="header">
+			<h2>Iniciar sesión</h2>
+			<p class="login-sub">
+				¿No tienes una cuenta?
+				<a href="#" class="link" (click)="onRegister($event)">Regístrate</a>
+			</p>
+		</div>
+
+		<form [formGroup]="loginForm">
+			<!-- Documento -->
+			<div class="form-group full doc-group">
+				<label for="docNumber">Documento de identidad</label>
+				<div class="doc-input">
+					<div class="doc-type">
+						<select id="docType" formControlName="docType">
+							<option [ngValue]="null" disabled>Selecciona tipo</option>
+							<option *ngFor="let t of docTypes" [ngValue]="t.id">
+								{{ t.name }}
+							</option>
+						</select>
+					</div>
+
+					<input
+						id="docNumber"
+						type="text"
+						formControlName="docNumber"
+						placeholder="Número de documento"
+						(keydown)="handleDocNumberKeydown($event)"
+						(input)="sanitizeDocNumber($event)"
+						(paste)="sanitizeDocNumber($event)"
+						(blur)="sanitizeDocNumber($event); trimSpaces($event)"
+					/>
+				</div>
+				<div *ngIf="docNumberControl.touched && docNumberControl.invalid" class="error">
+					{{ getDocNumberErrorMessage() }}
+				</div>
+			</div>
+
+			<!-- Contraseña -->
+			<div class="form-group">
+				<label for="password" class="password-label">
+					Contraseña
+					<a href="#" class="link small" (click)="onForgotPassword($event)"
+						>¿Olvidaste tu contraseña?</a
+					>
+				</label>
+				<div class="password-input">
+					<input
+						id="password"
+						formControlName="password"
+						[type]="showPassword ? 'text' : 'password'"
+						placeholder="Ingresar contraseña"
+						autocomplete="current-password"
+						aria-describedby="login-pwd-helper"
+					/>
+					<button
+						type="button"
+						class="toggle-visibility"
+						[attr.aria-label]="showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'"
+						[attr.aria-pressed]="showPassword"
+						(click)="showPassword = !showPassword"
+					>
+						{{ showPassword ? 'Ocultar' : 'Mostrar' }}
+					</button>
+				</div>
+				<div *ngIf="passwordControl.touched && passwordControl.invalid" class="error">
+					{{ getPasswordErrorMessage() }}
+				</div>
+				<div id="login-pwd-helper" class="help-text">
+					La contraseña es sensible a mayúsculas y minúsculas.
+				</div>
+			</div>
+
+			<!-- Checkbox -->
+			<label class="checkbox">
+				<input type="checkbox" formControlName="rememberPwd" />
+				Recuérdame mi contraseña
+			</label>
+
+			<button class="btn primary" [disabled]="loginForm.invalid" (click)="onContinue()">
+				Continuar
+			</button>
+		</form>
+	</div>
+
+	<div class="notched-wrapper">
+		<app-login-testimonial />
+	</div>
+
+	<app-modal-notify
+		*ngIf="showModal"
+		[title]="modalTitle"
+		[message]="modalMessage"
+		iconType="info"
+		(closed)="onCloseModal()"
+	/>
+
+	<!-- Spinner fullscreen modal -->
+	<app-logo-spinner
+		[show]="isSubmitting"
+		[fullscreen]="true"
+		[delay]="150"
+		[minVisible]="400"
+	></app-logo-spinner>
+</div>

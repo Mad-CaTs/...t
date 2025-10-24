@@ -1,0 +1,14 @@
+<div class="d-flex flex-column gap-3 card w-100 p-2" tabindex="0" #list>
+	<ul class="d-flex flex-column gap-3">
+		<li class="select-list__item rounded" *ngIf="options.length === 0">No hay elementos que mostrar</li>
+		<li
+			class="select-list__item rounded"
+			[class.select-list__item--active]="opt.content === control.value"
+			tabindex="0"
+			(click)="onClickOpt(opt.content)"
+			*ngFor="let opt of options"
+		>
+			{{ opt.content }}
+		</li>
+	</ul>
+</div>

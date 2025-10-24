@@ -1,0 +1,157 @@
+<form class="d-flex flex-column w-100 gap-4" [formGroup]="form">
+	<h4 class="m-0 fs-5 fw-medium">Datos de contacto</h4>
+	<div class="d-flex flex-column w-100 gap-2 gap-md-4">
+		<div class="d-flex flex-column flex-md-row gap-2 gap-md-4 w-100">
+			<div class="d-flex flex-column w-100 w-md-50">
+				<app-input
+					class="w-100"
+					label="Correo electrónico"
+					[form]="form"
+					controlName="email"
+					placeholder="example@inclub.com"
+					(focusout)="checkEmailExists()"
+					[disabled]="isMultiUser"
+				></app-input>
+			</div>
+			<div class="d-flex flex-column w-100 w-md-50">
+				<app-input
+					class="w-100"
+					label="Dirección"
+					iconRigth="location_searching"
+					[form]="form"
+					controlName="address"
+					[isIconRight]="true"
+					iconName="pi pi-search"
+					placeholder="Ingresar su dirección"
+					[disabled]="isMultiUser"
+					(clickIconRight)="onFocusLocation()"
+				></app-input>
+			</div>
+		</div>
+		<!-- BLOQUE OCULTO : Residencia y Ciudad
+		<div class="d-flex flex-column flex-md-row gap-2 gap-md-4 w-100">
+			<div class="d-flex flex-column w-100 w-md-50">
+				<app-select
+					class="w-100"
+					label="Residencia"
+					showImg="true"
+					placeholder="Selecciona un país"
+					[form]="form"
+					[options]="nationalitiesList"
+					controlName="country"
+					(onChangeSelection)="onChangContry($event)"
+					[disabled]="isMultiUser"
+				></app-select>
+			</div>
+			<div class="d-flex flex-column w-100 w-md-50">
+				<app-input
+					class="w-100"
+					label="Ciudad"
+					[form]="form"
+					controlName="city"
+					placeholder="Ingresar su ciudad"
+					[disabled]="isMultiUser"
+				></app-input>
+			</div>
+		</div>
+		-->
+		<div class="d-flex flex-column flex-md-row gap-2 gap-md-4 w-100">
+			<div class="d-flex flex-column w-100 w-md-25">
+				<app-select
+					class="w-100"
+					label="País-residencia"
+					placeholder="Selecciona"
+					[form]="form"
+					[options]="paisResidenciaOptions"
+					controlName="paisResidencia"
+					(onChangeSelection)="onCountryResidenceChange($event)"
+					[disabled]="isMultiUser"
+				></app-select>
+			</div>
+			<div class="d-flex flex-column w-100 w-md-25">
+				<app-select
+					class="w-100"
+					label="Estado/Departamento"
+					placeholder="Selecciona"
+					[form]="form"
+					[options]="departmentOptions"
+					controlName="department"
+					(onChangeSelection)="onRegionChange($event)"
+					[disabled]="isMultiUser"
+				></app-select>
+			</div>
+			<div class="d-flex flex-column w-100 w-md-25">
+				<app-select
+					class="w-100"
+					label="Provincia"
+					placeholder="Selecciona"
+					[form]="form"
+					[options]="provinceOptions"
+					controlName="province"
+					(onChangeSelection)="onProvinceChange($event)"
+					[disabled]="isMultiUser"
+				></app-select>
+			</div>
+			<div class="d-flex flex-column w-100 w-md-25">
+				<app-select
+					class="w-100"
+					label="Distrito"
+					placeholder="Selecciona"
+					[form]="form"
+					[options]="districtOptions"
+					controlName="district"
+					(onChangeSelection)="onDistrictChange($event)"
+					[disabled]="isMultiUser"
+				></app-select>
+			</div>
+		</div>
+		<div class="d-flex flex-column flex-md-row gap-2 gap-md-4 w-100">
+			<div class="d-flex flex-column w-100 w-md-50">
+				<app-input
+					class="w-100"
+					label="Nro. Celular"
+					[form]="form"
+					controlName="phone"
+					placeholder="999999999"
+					[iconName]="iconName"
+					[phonecodeCountry]="phonecodeCountry"
+					[isIconLeft]="true"
+					[disabled]="isMultiUser"
+				>
+				</app-input>
+			</div>
+			<div class="d-flex flex-column w-100 w-md-50">
+				<!-- <app-input class="w-100"
+                   label="Provincia"
+                   [form]="form"
+                   controlName="province"
+                   placeholder="Ingresar la provincia"
+                   [disabled]="isMultiUser"></app-input> -->
+			</div>
+		</div>
+	</div>
+	<div class="alert alert-info d-flex flex-row gap-2 mt-2 align-items-center" role="alert">
+		<mat-icon fontIcon="info"></mat-icon>
+		<span class="fw-normal">El registro de celular es un dato <strong>único</strong>.</span>
+	</div>
+
+	<!--Buttons-->
+	<div class="d-flex flex-column flex-md-row justify-content-md-between gap-2">
+		<button
+			class="btn btn-outline-secondary"
+			[disabled]="disabledUser"
+			type="button"
+			(click)="prevState.emit()"
+		>
+			Atrás
+		</button>
+		<button
+			class="btn btn-secondary"
+			[disabled]="disabledUser"
+			(click)="isPromotor ? onRegister() : onSubmit()"
+			type="button"
+		>
+			{{ isPromotor ? 'Registrar' : 'Siguiente' }}
+		</button>
+	</div>
+</form>

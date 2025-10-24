@@ -1,0 +1,61 @@
+<div class="card p-4 d-flex flex-column w-100 gap-4 border-0">
+	<app-breadcrumb [breadcrumbs]="breadcrumbItems"></app-breadcrumb>
+	<div
+		class="d-flex flex-column flex-md-row gap-2 gap-md-0 justify-content-md-between align-items-md-center"
+	>
+		<h1 class="m-0 fs-4 text-black fw-medium">Mis documentos</h1>
+	</div>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-8 col-12">
+				<app-navigation
+					[data]="tabs"
+					[selected]="currentTab"
+					[useNewDesign]="true"
+					(changeSelected)="setTab($event)"
+				>
+				</app-navigation>
+				<div class="alert alert-info d-flex flex-row gap-2 mt-3 align-items-center p-1" role="alert">
+					<mat-icon fontIcon="info"></mat-icon>
+					<div>
+						<span class="alert-info-text"
+							>Los documentos no están verificados, realizar el firmado digital.</span
+						>
+						<a class="d-block mt-1 alert-info-text cursor-pointer"
+							>Ir a firmar digitalmente &gt;</a
+						>
+					</div>
+				</div>
+				<div *ngIf="isLoading" class="d-flex justify-content-center align-items-center my-4">
+					<p-progressSpinner
+						[style]="{ width: '5rem', height: '5rem' }"
+						strokeWidth="3"
+						fill="var(--surface-ground)"
+						animationDuration=".7s"
+					></p-progressSpinner>
+				</div>
+				<ng-container *ngIf="isState && !isLoading">
+					<div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-2 g-4">
+						<app-document-card
+							*ngFor="let doc of documentsAll.listLegalDocuments"
+							[document]="doc"
+							[date]="date"
+							[isDisabled]="isDisabled"
+							[idSubscription]="documentsAll.idSubscription"
+							[idFamily]="documentsAll.idFamily"
+							class="col"
+							(dataGenerada)="recibirData($event)"
+						></app-document-card>
+					</div>
+				</ng-container>
+			</div>
+			<div class="col-md-4 col-12 mt-4 mt-md-0">
+				<app-document-detail-card
+					[typeDocument]="typeDocument"
+					[date]="date"
+					[userInfo]="userInfo"
+				></app-document-detail-card>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,146 @@
+<!-- ...existing code... -->
+<div class="container mt-4">
+	<h1 class="text-center mb-4">Top Preguntas Frecuentes</h1>
+	<!-- Vista doble columna solo si hay pregunta seleccionada -->
+	<div class="row" *ngIf="selectedQuestion; else singleColumn">
+		<div class="col-md-5">
+			<!-- Buscador y lista -->
+			<div class="d-flex justify-content-center mb-4">
+				<!-- Reemplaza el bloque del input search por el componente search-select -->
+				<app-search-select
+					[placeholderText]="'Buscar pregunta...'"
+					[options]="filteredQuestions()"
+					(searchInput)="onSearch($event)"
+					[filteredOptionsHidden]="true"
+				></app-search-select>
+			</div>
+			<ul class="list-group">
+				<li
+					class="list-group-item list-group-item-action d-flex justify-content-between align-items-center shadow-sm mb-2 rounded"
+					*ngFor="let question of filteredQuestions()"
+					(click)="selectQuestion(question)"
+					style="cursor: pointer"
+				>
+					<span>{{ question.question }}</span>
+					<i class="bi bi-arrow-right"></i>
+				</li>
+			</ul>
+			<!-- Sección Recomiende preguntas frecuentes SIEMPRE visible -->
+			<div class="bg-light rounded shadow-sm p-4 mt-4">
+				<div class="d-flex align-items-center gap-2 fw-bold text-primary mb-3 fs-5">
+					<i class="bi bi-lightbulb"></i>
+					¡Recomiende preguntas frecuentes!
+				</div>
+				<div class="mb-3">
+					<textarea
+						class="form-control border-primary"
+						placeholder="Escriba su pregunta sugerida..."
+						rows="3"
+						[(ngModel)]="suggestedQuestion"
+						style="resize: none"
+					></textarea>
+				</div>
+				<div class="text-center">
+					<button
+						class="btn btn-outline-primary rounded-pill px-4 fw-medium shadow-sm"
+						type="button"
+						(click)="sendSuggestedQuestion()"
+					>
+						<i class="bi bi-send"></i> Enviar
+					</button>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-7">
+			<!-- Detalle con animación cada vez que cambia la pregunta -->
+			<ng-container *ngIf="selectedQuestion as q">
+				<div [attr.data-key]="q.id" class="card shadow-lg border-0 rounded-4">
+					<img
+						*ngIf="q.imageurl"
+						[src]="q.imageurl"
+						class="card-img-top mx-auto d-block rounded m-3"
+						style="max-width: 60%; max-height: 400px; object-fit: cover"
+						alt="Imagen de la pregunta"
+					/>
+					<div class="card-body">
+						<h5 class="card-title">{{ q.question }}</h5>
+						<p class="card-text">{{ q.description }}</p>
+					</div>
+				</div>
+			</ng-container>
+		</div>
+	</div>
+	<!-- Vista de una sola columna -->
+	<ng-template #singleColumn>
+		<div class="row">
+			<div class="col-md-8 mx-auto">
+				<div class="d-flex justify-content-center mb-4">
+					<app-search-select
+						[placeholderText]="'Buscar pregunta...'"
+						[options]="filteredQuestions()"
+						(searchInput)="onSearch($event)"
+						(selected)="selectQuestion($event)"
+						[filteredOptionsHidden]="true"
+					></app-search-select>
+				</div>
+				<ul class="list-group">
+					<li
+						class="list-group-item list-group-item-action d-flex justify-content-between align-items-center cursor-pointer"
+						*ngFor="let question of filteredQuestions()"
+						(click)="selectQuestion(question)"
+					>
+						<span>{{ question.question }}</span>
+						<i class="bi bi-arrow-right"></i>
+					</li>
+				</ul>
+
+				<!-- Sección Recomiende preguntas frecuentes SIEMPRE visible -->
+				<div class="recommend-card">
+					<div class="recommend-title">
+						<i class="bi bi-lightbulb"></i>
+						¡Recomiende preguntas frecuentes!
+					</div>
+					<div class="mb-3">
+						<textarea
+							class="form-control custom-search no-resize"
+							placeholder="Escriba su pregunta sugerida..."
+							rows="3"
+							[(ngModel)]="suggestedQuestion"
+						></textarea>
+					</div>
+					<div class="text-center">
+						<button
+							class="btn btn-outline-primary"
+							type="button"
+							(click)="sendSuggestedQuestion()"
+						>
+							<i class="bi bi-send"></i> Enviar
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</ng-template>
+
+	<footer class="text-center mt-4">
+		<small> Términos y condiciones en www.inclub.com.pe </small>
+	</footer>
+</div>
+
+<!-- Modal de notificación -->
+<div class="notify-wrapper" *ngIf="showModal">
+	<app-modal-faq
+		[title]="notifyTitle"
+		[message]="notifyMessage"
+		[iconType]="notifyType"
+		(closed)="onNotifyClose()"
+	></app-modal-faq>
+</div>
+<div class="notify-wrapper" *ngIf="showModalError">
+	<app-modal-faq
+		[title]="notifyTitle"
+		[message]="notifyMessage"
+		[iconType]="notifyType"
+		(closed)="onNotifyClose()"
+	></app-modal-faq>
+</div>

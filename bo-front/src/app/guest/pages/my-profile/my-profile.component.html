@@ -1,0 +1,193 @@
+<guest-panels [panel]="myProfile">
+	<div class="container">
+		<form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+			<div class="form-group form-row">
+				<div class="form-cont">
+					<label class="form-control-title">Patrocinador</label>
+					<div class="password-container">
+						<input id="sponsor" name="sponsor" placeholder="Patrocinador"
+							class="styled-input styled-input-pass" type="text" disabled formControlName="sponsor" />
+					</div>
+				</div>
+				<div class="form-cont">
+					<label class="form-control-title">Username</label>
+					<div class="password-container">
+						<input id="username" name="username" placeholder="Username"
+							class="styled-input styled-input-pass" type="text" autocomplete="off" required
+							formControlName="username" disabled />
+					</div>
+				</div>
+			</div>
+			<div class="form-group form-row">
+				<div class="form-cont">
+					<label class="form-control-title">Nombres</label>
+					<div class="password-container">
+						<input id="firstName" name="firstName" placeholder="Nombres"
+							class="styled-input styled-input-pass" type="text" autocomplete="off" required
+							formControlName="firstName" (keypress)="onlyLetters($event)" />
+					</div>
+					<span class="message">Nombre como figura en tu documento</span>
+				</div>
+				<div class="form-cont">
+					<label class="form-control-title">Apellidos</label>
+					<div class="password-container">
+						<input id="lastName" name="lastName" placeholder="Apellidos"
+							class="styled-input styled-input-pass" type="text" autocomplete="off" required
+							formControlName="lastName" (keypress)="onlyLetters($event)" />
+					</div>
+					<span class="message">Apellido como figura en tu documento</span>
+				</div>
+			</div>
+			<div class="form-group form-row">
+				<div class="form-cont">
+					<label class="form-control-title">Usuario</label>
+					<div class="password-container">
+						<input id="user" name="user" placeholder="Usuario" class="styled-input styled-input-pass"
+							type="text" autocomplete="off" required formControlName="username" />
+					</div>
+				</div>
+				<div class="form-cont">
+					<label class="form-control-title">Correo electronico</label>
+					<div class="password-container">
+						<input id="email" name="email" placeholder="Correo electrónico"
+							class="styled-input styled-input-pass"
+							[class.error]="f['email'].invalid && f['email'].touched" type="email" autocomplete="off"
+							required formControlName="email" />
+					</div>
+
+					<span class="message error-message"
+						*ngIf="f['email'].invalid && f['email'].touched && f['email'].errors?.['email']">
+						Por favor, ingresa un correo electrónico válido.
+					</span>
+					<span class="message" *ngIf="f['email'].valid || (!f['email'].touched)">
+						E-mail para tus notificaciones y recuperación de contraseña.
+					</span>
+				</div>
+			</div>
+			<div class="form-group form-row">
+				<div class="form-cont">
+					<label class="form-control-title">Nacionalidad</label>
+					<div class="password-container">
+						<div class="custom-select-wrapper">
+							<select id="nationality" name="nationality"
+								class="styled-input styled-input-pass custom-nationality-select"
+								formControlName="nationality" (change)="onNationalityChange($event)">
+								<option value="" disabled>Selecciona uno</option>
+								<option *ngFor="let country of nationalitiesList" [value]="country.content"
+									[attr.data-icon]="country.icon">
+									{{ country.content }}
+								</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="form-cont">
+					<label class="form-control-title">Pais de residencia</label>
+					<div class="password-container">
+						<div class="custom-select-wrapper">
+							<select id="country" name="country"
+								class="styled-input styled-input-pass custom-nationality-select"
+								formControlName="country" (change)="onNationalityChange($event)">
+								<option value="" disabled>Selecciona uno</option>
+								<option *ngFor="let country of nationalitiesList" [value]="country.value"
+									[attr.data-icon]="country.icon">
+									{{ country.content }}
+								</option>
+							</select>
+						</div>
+					</div>
+					<span class="message">El país donde vives</span>
+				</div>
+			</div>
+			<div class="form-group form-row">
+				<div class="form-cont">
+					<label class="form-control-title">Distrito</label>
+					<div class="password-container">
+						<input id="district" name="district" placeholder="Distrito"
+							class="styled-input styled-input-pass" type="text" autocomplete="off"
+							formControlName="district" (keypress)="onlyLetters($event)" />
+					</div>
+				</div>
+				<div class="form-cont">
+					<label class="form-control-title">Genero</label>
+					<div class="password-container">
+						<select id="gender" name="gender" class="styled-input styled-input-pass"
+							formControlName="gender">
+							<option value="" disabled>Selecciona uno</option>
+							<option value="Masculino">Masculino</option>
+							<option value="Femenino">Femenino</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="form-group form-row">
+				<div class="form-cont-doc">
+					<div class="full doc-group">
+						<label class="form-control-title">Tipo de documento</label>
+						<div class="doc-input">
+							<div class="doc-type">
+								<select id="docType" name="docType" formControlName="docType">
+									<option *ngFor="let document of documentsTypesData" [value]="document.id">
+										{{ document.name }}
+									</option>
+								</select>
+							</div>
+							<input id="docNumber" type="text" formControlName="docNumber"
+								(keypress)="onlyNumbers($event)" (input)="limitLength($event, 8)"
+								placeholder="Número de documento" />
+						</div>
+						<span class="message">Nombre como figura en tu documento</span>
+					</div>
+				</div>
+				<div class="form-cont">
+					<label class="form-control-title">Teléfono</label>
+					<div class="password-container">
+						<input id="phone" name="phone" placeholder="Teléfono" class="styled-input styled-input-pass"
+							type="text" autocomplete="off" required formControlName="phone"
+							(keypress)="onlyNumbers($event)" (input)="limitLength($event, 9)" />
+					</div>
+					<span class="message">Característica y número para contactarte. Es un dato único.</span>
+				</div>
+			</div>
+			<div class="form-group form-row">
+				<div class="form-cont">
+					<label class="form-control-title">Fecha de nacimiento</label>
+					<div class="password-container">
+						<input id="birthDate" name="birthDate" placeholder="Fecha de nacimiento"
+							class="styled-input styled-input-pass" type="date" autocomplete="off" required
+							formControlName="birthDate" />
+					</div>
+					<span class="message">Fecha de nacimiento en DD/MM/YYYY</span>
+				</div>
+				<div class="form-cont">
+					<label class="form-control-title">Dirección</label>
+					<div class="password-container">
+						<input id="address" name="address" placeholder="Dirección"
+							class="styled-input styled-input-pass" type="text" autocomplete="off" required
+							formControlName="address" />
+					</div>
+				</div>
+			</div>
+
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" formControlName="promotions" />
+					Acepto recibir información de eventos por correo electrónico.
+				</label>
+			</div>
+
+			<div class="buttons">
+				<button class="btn secondary" type="button" [disabled]="profileForm.pristine"
+					(click)="cancelChanges()">Cancelar</button>
+				<button class="btn primary" type="submit" [disabled]="profileForm.pristine">Guardar cambios</button>
+			</div>
+		</form>
+	</div>
+
+	<app-modal-notify *ngIf="showModal" [title]="modalTitle" [message]="modalMessage" iconType="success"
+		(closed)="onCloseModal()" />
+
+	<app-logo-spinner [show]="isLoading || isSubmitting" [fullscreen]="true" [delay]="150"
+		[minVisible]="400"></app-logo-spinner>
+
+</guest-panels>

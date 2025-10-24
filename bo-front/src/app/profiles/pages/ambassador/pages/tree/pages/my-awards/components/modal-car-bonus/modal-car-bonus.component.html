@@ -1,0 +1,62 @@
+<div *ngIf="cars.length > 0" class="cars-container">
+  <div class="car-card" *ngFor="let car of cars" [ngClass]="{ 'active': car.maxAchievedPoints > 0, 'gray': car.maxAchievedPoints <= 0 }">
+  <div class="car-image" [ngClass]="{'cursor': car.maxAchievedPoints > 0}" (click)="activetionTabCarBonus(car)">
+      <img [src]="car.imagenCar" [alt]="car.titleBonus" [ngClass]="{ 'skewed': true }" />
+      <div class="price-tag">$ {{ car.bonusPrice | number:'1.0-3' }}</div>
+      <div class="badge">
+        <img [src]="getMedalImage(car.rankName)" [alt]="car.rankName" />
+      </div>
+    </div>
+    <div *ngIf="flagTextInfo" class="text-end me-3">
+      <img [src]="'assets/images/Eye-on.svg'" class="pb-1">
+      <span class="text-info-imag ms-2">Más Info</span>
+    </div>
+    <div class="car-content title-car">
+      <h3 [ngClass]="{ 'title-car-active': car.maxAchievedPoints > 0, 'title-car': car.maxAchievedPoints <= 0 }">
+        {{ car.titleBonus }}
+      </h3>
+      <div *ngIf="flagProgressBar">
+        <p class="label">Tus puntos actuales</p>
+        <div class="progress-bar">
+          <div class="progress" [style.width.%]="(car.maxAchievedPoints / car.requiredPoints) * 100" [bufferValue]="car.requiredPoints">
+          </div>
+        </div>
+
+        <div class="text-progrress">{{car.maxAchievedPoints}}/{{car.requiredPoints}}</div>
+      </div>
+      <p class="range mt-3">Rango {{ car.rankName }}</p>
+      <p class="details m-0">$ {{ car.initialBonus }} + $ {{ car.monthlyBonus }} M</p>
+       <p class="details m-0">{{ car.requiredPoints }} PV</p>
+    </div>
+
+    <div *ngIf="car.classificationId && flagButtonSchedule" class="d-flex gap-2 pb-2 parent">
+      <button class="btn btn-outline-secondary text-button p-2 ms-2" (click)="goToInitialSchedule(car)">Cronograma Inicial</button>
+      <button class="btn btn-outline-secondary text-button p-2 me-2" (click)="goToGeneralSchedule(car)">Cronograma General</button>
+    </div>
+
+    <div *ngIf="car.classificationId && flagButtonPrefor" class="d-flex gap-2 justify-content-center mb-3 parent">
+      <button class="btn btn-outline-secondary text-button" type="button" (click)="goToProformas()">
+        Proformas
+      </button>
+      <button class="btn btn-outline-secondary text-button" type="submit" (click)="goToDocument()">
+        Documentos
+      </button>
+    </div>
+
+  </div>
+</div>
+<div *ngIf="footer" class="alert alert-primary no-border d-flex align-items-center" role="alert">
+  <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:">
+    <use xlink:href="#info-fill" />
+  </svg>
+
+  <img [src]="'assets/images/auto/icon-i.svg'" class="me-2">
+  <span class="text-footer"> Todos los bonos de Autos se entregarán en base a la políticas de CALIFICACIÓN: 18 ciclos
+    semanales.
+    La cuota mensual se cubrirá mes a mes, por el sostenimiento de rango, hasta que el auto se pague completamente por
+    un periodo de 60 meses.</span>
+
+</div>
+
+	<app-logo-spinner [show]="cars.length <=0" [fullscreen]="true" [delay]="150"
+		[minVisible]="400"></app-logo-spinner>

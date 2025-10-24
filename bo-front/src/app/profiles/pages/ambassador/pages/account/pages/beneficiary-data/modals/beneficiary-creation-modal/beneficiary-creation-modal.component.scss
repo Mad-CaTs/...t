@@ -1,0 +1,71 @@
+/* contenedor del DynamicDialog */
+:host ::ng-deep .beneficiary-dd .p-dialog-content {
+  padding: 0 !important;
+  border-radius: 16px;
+}
+
+/* layout interno */
+.beneficiary-modal {
+  padding: 16px 16px 12px 16px;
+}
+
+/* header con avatar y botón cerrar */
+.bm-header {
+  position: relative;
+  height: 32px;
+  margin-bottom: 4px;
+
+  .bm-avatar {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    background: #f1f5f9;
+    color: #475569;
+  }
+
+  .bm-close {
+    position: absolute;
+    right: 0; top: 0;
+    border: 0; background: transparent;
+    width: 32px; height: 32px;
+    display: grid; place-items: center;
+    cursor: pointer;
+    color: #64748b;
+  }
+}
+
+.bm-title { margin: 4px 0 2px; font-weight: 600; }
+.bm-subtitle { margin: 0 0 12px; color: #6b7280; }
+
+/* Documento de identidad: select + input en un mismo “campo” */
+.doc-combo {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 8px;
+}
+
+/* aviso importante */
+.bm-info {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 12px;
+  border: 1px solid #cfe8ff;
+  background: #f3f9ff;
+  border-radius: 8px;
+  margin-top: 8px;
+
+  i { font-size: 1.2rem; margin-top: 2px; }
+}
+
+/* footer */
+.bm-footer {
+  display: flex; justify-content: space-between; gap: 12px;
+  margin-top: 16px;
+
+  .btn { min-width: 140px; }
+}
+
+/* responsivo */
+@media (max-width: 576px) {
+  .doc-combo { grid-template-columns: 1fr; }
+  .bm-footer { flex-direction: column-reverse; }
+}

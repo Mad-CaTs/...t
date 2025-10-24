@@ -1,0 +1,25 @@
+<app-modal title="Ubicación">
+  <div class="w-100 d-flex flex-column gap-4">
+    <div class="w-100">
+      <app-map [mapType]="mapType.ADDRESS"
+               [address]="address.value"
+               (loading)="loading = $event"
+               (addressEvent)="address.setValue($event)">
+      </app-map>
+    </div>
+
+    <app-autocomplete class="w-100"
+                      [control]="address"
+                      [options]="searchOpt"
+                      controlName="address"
+                      [iconRigth]="loading ? 'hourglass_empty' : 'location_searching'"
+                      placeholder="Ingresar su dirección"></app-autocomplete>
+
+    <div class="w-100 d-flex flex-row justify-content-center gap-2"
+         style="margin-top: -1rem">
+      <button class="btn btn-secondary"
+              type="button"
+              (click)="instanceModal.close()">Listo</button>
+    </div>
+  </div>
+</app-modal>

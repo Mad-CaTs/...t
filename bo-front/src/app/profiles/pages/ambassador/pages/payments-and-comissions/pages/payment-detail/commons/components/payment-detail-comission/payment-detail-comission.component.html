@@ -1,0 +1,10 @@
+<app-table-payments-comission
+	[dataBody]="tableData"
+	(selectionChange)="onSelectionChange($event)"
+	(btnClick)="onClickShowDetail($event)"
+	[isDirectRecomendation]="tab === 2"
+	[isProductComission]="tab === 9"
+	[hasData]="hasData"
+	[customHeaders]="customHeaders"
+>
+</app-table-payments-comission>

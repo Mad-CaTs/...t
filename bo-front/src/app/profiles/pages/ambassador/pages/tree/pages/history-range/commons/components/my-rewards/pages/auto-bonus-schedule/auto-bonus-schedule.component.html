@@ -1,0 +1,28 @@
+<div class="card px-0 px-md-4 card-border-none">
+	<app-breadcrumb [breadcrumbs]="breadcrumbItems"></app-breadcrumb>
+
+	<div class="row">
+		<div class="col-12 col-md-6 mb-3" *ngFor="let card of cardsData">
+			<app-schedule-detail [title]="card.title" [iconSvg]="card.iconSvg" [items]="card.items">
+			</app-schedule-detail>
+		</div>
+	</div>
+
+	<div class="w-100 d-flex flex-column flex-md-row justify-content-between align-items-center gap-3 mt-3">
+		<div class="d-flex flex-row gap-3">
+			<button class="btn btn-outline-secondary" type="button">Exportar</button>
+			<button class="btn btn-secondary" (click)="onClickBtnOpenDetailModal()" type="submit">Ver detalle</button>
+		</div>
+
+		<app-pagination-ng-prime
+			[rows]="rows"
+			[totalRecords]="totalRecords"
+			[rowsPerPageOptions]="[10, 20, 30]"
+			[align]="align"
+			(pageChange)="onPageChange($event)"
+			(refresh)="onRefresh($event)"
+		>
+		</app-pagination-ng-prime>
+	</div>
+    <app-table-bono-card></app-table-bono-card>
+</div>

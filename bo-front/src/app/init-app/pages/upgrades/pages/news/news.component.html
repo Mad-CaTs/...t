@@ -1,0 +1,44 @@
+<!-- Banner Hero Section -->
+<app-banner 
+  [title]="'¿Sabías qué lanzaremos La Joya Park Resort?'"
+  [badgeText]="'Novedades'"
+  [buttonText]="'¡Únete Ahora!'"
+  [backgroundImage]="'assets/images/banner-hero.png'"
+  [resortImage]="'assets/images/upgrades/cards/la-joya-park-resort.png'">
+</app-banner>
+
+<!-- News Section -->
+ <app-news-section
+  [sectionTitle]="'Noticias y últimas novedades'"
+  [sectionSubtitle]="'Entérate de nuestras últimas noticias y novedades que suceden en la empresa InClub, siempre generando avances en Perú y a nivel mundial.'"
+  [newsData]="newsDataList"
+  [showDebugInfo]="false"
+  (newsClick)="onNewsClick($event)"
+  (viewAllClick)="navigateToAllNews()">
+</app-news-section>
+
+<!-- Contenido existente (sección de comunicados y eventos) -->
+<div class="container-fluid py-5">
+  <div class="w-100 rounded d-flex flex-column gap-4 card border-0">
+  
+    <!-- Sección de eventos -->
+    <div class="d-flex justify-content-between align-items-center">
+      <h2 class="mb-0">Nuestros eventos</h2>
+      <a (click)="navigateToOverview()" class="text-orange" style="font-size: 1rem; text-decoration: none;">
+        Ver todo <span class="ms-2">&rarr;</span>
+      </a>
+    </div>
+    
+    <div class="row">
+      <div class="col-12 col-md-3 mb-3" *ngFor="let evento of eventos">
+        <card-communicated 
+          [image]="evento.imagen"
+          [title]="evento.titulo"
+          [eventType]="evento.tipo"
+          [date]="evento.fecha"
+          (clickDetail)="onDetail(evento.id)">
+        </card-communicated>
+      </div>
+    </div>
+  </div>
+</div>

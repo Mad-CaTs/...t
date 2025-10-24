@@ -1,0 +1,40 @@
+.confirm-modal {
+  padding: 8px 8px 12px;
+
+  .title { margin: 0 0 4px; font-weight: 600; }
+  .subtitle { margin: 0 0 12px; color: #6b7280; }
+
+  .countdown {
+    --size: 96px;
+    --track: #e6eefb;
+    --accent: #ff8a00; 
+    --pct: 0;
+
+    width: var(--size);
+    height: var(--size);
+    margin: 8px auto 12px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background:
+      radial-gradient(#fff 56%, transparent 57%),
+      conic-gradient(var(--accent) calc(var(--pct) * 1%), var(--track) 0);
+    box-shadow: 0 1px 3px rgba(0,0,0,.06);
+    span { font-weight: 700; font-size: 1.25rem; }
+  }
+
+  .info {
+    display: flex; gap: 10px; align-items: flex-start;
+    padding: 12px;
+    border: 1px solid #cfe8ff;
+    background: #f3f9ff;
+    border-radius: 8px;
+    margin: 8px 0 14px;
+    i { font-size: 1.1rem; margin-top: 2px; color: #2f80ed; }
+  }
+
+  .actions {
+    display: flex; justify-content: space-between; gap: 12px;
+    .btn { min-width: 140px; }
+  }
+}

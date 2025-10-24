@@ -1,0 +1,112 @@
+<div class="container py-4">
+	<h4 class="fw-bold mb-2">Confirmar pago de legalización</h4>
+	<p class="text-muted mb-4">Elige el medio de pago para la solicitud y validar el pago</p>
+	<app-legalization-info
+		[payTypeSelected]="payTypeSelected"
+		[montoSoles]="montoSoles"
+		[rate]="legalizationRate"
+	></app-legalization-info>
+
+
+	<!-- -------------------COMNTADO HASTA QUE SE CAMBIE EL DISEÑO DEL MODAL SEGUN FIGMA  -->
+	<!-- <div class="row gy-3">
+		<div class="col-12" *ngFor="let payment of paymentTypeListaFiltered">
+		  <ng-container *ngIf="payment.description === 'BCP'">
+			<label
+			  class="w-100 border rounded p-3 d-flex flex-column flex-sm-row align-items-start align-items-sm-center justify-content-between payment-option"
+			  [class.active]="form.get('paymentMethod')?.value === 'bcp_interbank'"
+			>
+			  <div class="form-check d-flex align-items-center">
+				<input
+				  class="form-check-input"
+				  type="radio"
+				  formControlName="paymentMethod"
+				  value="bcp_interbank"
+				  name="paymentMethod"
+				  (change)="onMedioPago(payment)"
+				  style="accent-color: #19809e"
+				/>
+				<span class="ms-2">Pago con transferencia bancaria</span>
+			  </div>
+	  
+			  <div class="d-flex flex-wrap gap-4 justify-content-sm-end mt-2 mt-sm-0">
+				<img
+				  class="img-fluid"
+				  [src]="payment.pathPicture"
+				  alt="BCP"
+				  style="max-height: 24px"
+				/>
+				<img
+				  class="img-fluid"
+				  *ngIf="getPicture('INTERBANK')"
+				  [src]="getPicture('INTERBANK')"
+				  alt="Interbank"
+				  style="max-height: 24px"
+				/>
+			  </div>
+			</label>
+		  </ng-container>
+	  
+		  <ng-container *ngIf="payment.description !== 'BCP' && payment.description !== 'INTERBANK'">
+			<label
+			  class="w-100 border rounded p-3 d-flex flex-column flex-sm-row align-items-start align-items-sm-center justify-content-between payment-option"
+			  [class.active]="form.get('paymentMethod')?.value === payment.code"
+			>
+			  <div class="form-check d-flex align-items-center">
+				<input
+				  class="form-check-input"
+				  type="radio"
+				  formControlName="paymentMethod"
+				  [value]="payment.code"
+				  name="paymentMethod"
+				  (change)="onMedioPago(payment)"
+				  style="accent-color: #19809e"
+				/>
+				<span class="ms-2">
+				  {{
+					payment.description === 'OTROS'
+					  ? 'Pago con otros medios'
+					  : payment.description.charAt(0) + payment.description.slice(1).toLowerCase()
+				  }}
+				</span>
+			  </div>
+	  
+			  <div class="d-flex flex-wrap gap-2 justify-content-sm-end mt-2 mt-sm-0" *ngIf="payment.pathPicture">
+				<img
+				  class="img-fluid"
+				  [src]="payment.pathPicture"
+				  [alt]="payment.description"
+				  style="max-height: 24px"
+				/>
+			  </div>
+			</label>
+		  </ng-container>
+		</div>
+	  </div>  -->
+
+	<div class="row gy-3">
+		<div class="col-12" *ngFor="let payment of paymentTypeListaFiltered">
+			<label
+				class="w-100 border rounded p-3 d-flex align-items-center justify-content-between payment-option"
+				[class.active]="form.get('paymentMethod')?.value === payment.code"
+			>
+				<div class="form-check d-flex align-items-center">
+					<input
+						class="form-check-input"
+						type="radio"
+						formControlName="paymentMethod"
+						[value]="payment.code"
+						name="paymentMethod"
+						(change)="onMedioPago(payment)"
+						style="accent-color: #19809e"
+					/>
+					<span class="ms-2">{{ payment.name }}</span>
+				</div>
+
+				<div class="d-flex gap-2" *ngIf="payment.pathPicture">
+					<img [src]="payment.pathPicture" [alt]="payment.name" style="height: 24px" />
+				</div>
+			</label>
+		</div>
+	</div>
+</div>

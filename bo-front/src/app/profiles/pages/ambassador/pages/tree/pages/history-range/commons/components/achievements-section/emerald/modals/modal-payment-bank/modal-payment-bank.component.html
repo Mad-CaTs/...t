@@ -1,0 +1,495 @@
+<ng-container *ngIf="!data.isFromStepTimeline">
+	<ng-container *ngIf="paymentBankPresenter.paymentForm as form">
+		<form [formGroup]="form" class="d-flex flex-column w-100 gap-4">
+			<div class="fs-14">
+				<div class="d-flex flex-row justify-content-between align-items-center">
+					<span></span>
+					<span class="cl-gray-900 fw-500">{{ companyName }}</span>
+				</div>
+				@for (account of bussinesAccounts; track $index) {
+				<div class="d-flex flex-row justify-content-between align-items-center">
+					<span class="cl-gray-100">{{ account.description }}:</span>
+					<span class="cl-gray-900 fw-500">{{ account.accountNumber }}</span>
+				</div>
+				}
+
+				<span class="cl-info fw-normal fs-12"
+					>* Los pagos a través de este medio tienen una COMISIÓN de acuerdo al tipo de operación.
+				</span>
+				<div class="line bg-black opacity-50"></div>
+			</div>
+
+			<div>
+				<div class="d-flex flex-row w-100 justify-content-between align-items-center">
+					<span>Moneda</span>
+					<app-select
+						class="w-100 mt-2"
+						placeholder="Tipo de moneda"
+						[form]="form"
+						[options]="data.operationCurrency"
+						controlName="currency"
+						(onChangeSelection)="changeSelectionCurrency($event)"
+						style="max-width: 200px"
+					></app-select>
+				</div>
+
+				<div class="d-flex flex-row w-100 justify-content-between align-items-center">
+					<span>Monto {{ methodSelected?.description }}:</span>
+					<span class="text-black"
+						>{{ selectedCurrency }} {{ totalAmountPaid | number : '1.2-2' }}</span
+					>
+				</div>
+
+				<div class="d-flex flex-row justify-content-between align-items-center">
+					<span>Comisión:</span>
+					<span class="text-black"
+						>{{ selectedCurrency }} {{ totalComision | number : '1.2-2' }}</span
+					>
+				</div>
+
+				<ng-container *ngIf="data.payTypeSelected !== 1 && data.fromLegalization">
+					<div class="d-flex flex-row w-100 justify-content-between align-items-center">
+						<span>Monto legalización:</span>
+						<span class="text-black"
+							>{{ selectedCurrency }} {{ totalAmountPaid | number : '1.2-2' }}</span
+						>
+					</div>
+
+					<div class="d-flex flex-row w-100 justify-content-between align-items-center">
+						<span>Costo de envío de documentos:</span>
+						<span class="text-black">{{ selectedCurrency }} {{ documentShippingCost }}</span>
+					</div>
+
+					<div
+						*ngIf="data?.apostilladoMontoPEN != null"
+						class="d-flex flex-row w-100 justify-content-between align-items-center"
+					>
+						<span>Monto apostilla:</span>
+						<span class="text-black"
+							>{{ selectedCurrency }} {{ apostillaConvertida | number : '1.2-2' }}</span
+						>
+					</div>
+				</ng-container>
+
+				<div class="d-flex flex-row w-100 justify-content-between align-items-center">
+					<span class="fw-bold">Monto total a pagar:</span>
+					<span class="text-black fw-bold"
+						>{{ selectedCurrency }} {{ montoTotalEsperado | number : '1.2-2' }}</span
+					>
+				</div>
+				<span class="cl-info fw-normal fs-12"
+					>(*) Después de agregar los comprobantes de pago no olvide REGISTRAR el formulario.
+				</span>
+				<div class="line bg-black opacity-50"></div>
+				<div class="d-flex flex-row w-100 justify-content-between align-items-center mt-2">
+					<span>Tipo de Cambio:</span>
+					<span class="text-black">{{ data.exchangeType }}</span>
+				</div>
+				<div class="line bg-black opacity-50"></div>
+			</div>
+
+			<div class="d-flex flex-row w-100 justify-content-end align-items-center mt-0 gap-3">
+				<div class="d-flex flex-row gap-2 justify-content-end mt-2">
+					<button
+						(click)="onClickAddMoreVouchers()"
+						class="btn btn-outline-secondary d-flex align-items-center px-3 py-1"
+						type="button"
+						[disabled]="paymentBankPresenter.isThereEditing"
+					>
+						<mat-icon fontIcon="add_circle_outline"></mat-icon>
+					</button>
+				</div>
+			</div>
+			<ng-container>
+				<ng-container formArrayName="listaVouches"></ng-container>
+
+				<ng-container *ngFor="let voucher of form.get('listaVouches').controls; let i = index">
+					<div class="p-3 border rounded">
+						<form
+							*ngIf="!voucher.get('viewMode').value"
+							[formGroup]="voucher"
+							class="d-flex flex-column gap-2 w-100"
+						>
+							<div
+								class="d-flex flex-row w-100 justify-content-end align-items-center mt-2 gap-3"
+							>
+								<div class="d-flex flex-row gap-2 justify-content-end mt-2"></div>
+							</div>
+							<app-select
+								class="w-100"
+								label="Tipo de operación"
+								placeholder="Selecciona una opción"
+								[form]="voucher"
+								[options]="methodSelected?.paymentSubTypeList"
+								(onChangeSelection)="changeSelectionOperation(voucher, $event)"
+								controlName="methodSubTipoPagoId"
+							></app-select>
+
+							<div
+								class="d-flex flex-row w-100 justify-content-between align-items-center mt-2"
+							>
+								<span>Comisión:</span>
+								<span class="text-black"
+									>{{ selectedCurrency }} {{ voucher.get('comision').value }}</span
+								>
+							</div>
+
+							<app-input
+								class="w-100 mt-2"
+								label="Código de Operación"
+								[form]="voucher"
+								controlName="operationNumber"
+								placeholder="Ingrese el código"
+							></app-input>
+
+							<app-input
+								class="w-100 mt-2"
+								label="Nota"
+								[form]="voucher"
+								controlName="note"
+								placeholder="Ingrese la nota"
+							></app-input>
+
+							<app-input
+								class="w-100 mt-2"
+								label="Monto a pagar"
+								[form]="voucher"
+								controlName="totalAmount"
+								placeholder="Ingrese el  Monto"
+							></app-input>
+
+							<div class="text-black">Imagen del váucher o comprobante de pago</div>
+							<app-file
+								[form]="voucher"
+								placeholder="JPG, PNG, file size no more than 10MB"
+								accept=".png, .jpg, .jpeg"
+								controlName="imagen"
+								[sendAsBase64]="false"
+							></app-file>
+						</form>
+						<div *ngIf="voucher.get('viewMode').value">
+							<div class="w-100 d-flex flex-row justify-content-between">
+								<div>
+									<span class="fw-normal fs-6 fw-medium"
+										>Pago {{ i + 1 }} -
+										{{ voucher.get('operationDescription').value }}</span
+									>
+									<span class="d-block fw-normal">Resumen</span>
+								</div>
+								<div>
+									<mat-icon
+										class="cursor-pointer me-4 black-light"
+										fontIcon="edit"
+										(click)="editForm(voucher)"
+									></mat-icon>
+									<mat-icon
+										class="cursor-pointer black-light"
+										fontIcon="delete"
+										(click)="paymentBankPresenter.removeForm(i)"
+									></mat-icon>
+								</div>
+							</div>
+
+							<div class="d-flex flex-row gap-2 justify-content-end mt-2">
+								<button (click)="showVoucherDetail(voucher)" class="btn-unstyled">
+									<span class="cl-link">{{
+										voucher.get('showDetail').value ? 'Ver Menos' : 'Ver detalle'
+									}}</span>
+								</button>
+							</div>
+
+							<div *ngIf="voucher.get('showDetail').value">
+								<div class="line bg-black opacity-25 my-4"></div>
+
+								<div class="d-flex flex-row w-100 justify-content-between align-items-center">
+									<span class="cl-gray-100">Tipo de operacion: </span>
+									<span class="text-black">{{
+										voucher.get('operationDescription').value
+									}}</span>
+								</div>
+								<div class="d-flex flex-row w-100 justify-content-between align-items-center">
+									<span class="cl-gray-100">Comision: </span>
+									<span class="text-black"
+										>{{ selectedCurrency }} {{ voucher.get('comision').value }}</span
+									>
+								</div>
+								<div class="d-flex flex-row w-100 justify-content-between align-items-center">
+									<span class="cl-gray-100">(*) Codigo de operacion: </span>
+									<span class="text-black">{{ voucher.get('operationNumber').value }}</span>
+								</div>
+								<div class="d-flex flex-row w-100 justify-content-between align-items-center">
+									<span class="cl-gray-100">Nota: </span>
+									<span class="text-black">{{ voucher.get('note').value }}</span>
+								</div>
+								<div class="d-flex flex-row w-100 justify-content-between align-items-center">
+									<span class="cl-gray-100">Monto total a pagar: </span>
+									<span class="text-black">{{ voucher.get('totalAmount').value }}</span>
+								</div>
+								<div class="d-flex flex-row w-100 justify-content-between align-items-center">
+									<span class="cl-gray-100">Imagen: </span>
+									<span class="text-black">Completo</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</ng-container>
+			</ng-container>
+			<div class="d-flex flex-row w-100 justify-content-center align-items-center mt-2 gap-3">
+				<div class="d-flex flex-row gap-2 justify-content-end mt-2">
+					<button
+						(click)="closeModal()"
+						class="btn btn-outline-secondary d-flex align-items-center px-3 py-1"
+						type="button"
+					>
+						Cerrar
+					</button>
+					<button
+						(click)="handleVoucherAction()"
+						class="btn btn-outline-secondary d-flex align-items-center px-3 py-1"
+						type="button"
+					>
+						{{ voucherButtonText }}
+					</button>
+				</div>
+			</div>
+		</form>
+	</ng-container>
+</ng-container>
+<!-- ---------------------------------Diseño Legal----------- -->
+<ng-container *ngIf="data.isFromStepTimeline">
+	<ng-container *ngIf="paymentBankPresenter.paymentForm as form">
+		<form [formGroup]="form" class="d-flex flex-row w-100 gap-4">
+			<div class="d-flex flex-column w-50 gap-3">
+				<div
+					class="alert alert-info d-flex flex-column flex-sm-row gap-2 align-items-center text-center text-sm-start p-2"
+					role="alert"
+				>
+					<mat-icon class="fs-4 flex-shrink-0">info</mat-icon>
+					<span class="fw-normal fs-6 text-wrap">
+						Los pagos a través de este medio tienen una COMISIÓN de acuerdo al tipo de
+						operación.</span
+					>
+				</div>
+				<app-radios
+					class="w-100"
+					[form]="paymentForm"
+					controlName="bancoSeleccionado"
+					[options]="optBanks"
+					label="Emisor del banco"
+					(changeSelection)="onRadioChange($event)"
+				></app-radios>
+
+				<!-- 	<app-radios
+					class="w-100"
+					[form]="form"
+					controlName="bancoSeleccionado"
+					[options]="optBanks"
+					label="Emisor del banco"
+				></app-radios> -->
+				<div class="fs-14">
+					<div class="d-flex flex-row justify-content-between align-items-center">
+						<span></span>
+						<span class="cl-gray-900 fw-500">{{ companyName }}</span>
+					</div>
+					@for (account of bussinesAccounts; track $index) {
+					<div class="d-flex flex-row justify-content-between align-items-center">
+						<span class="cl-gray-100">{{ account.description }}:</span>
+						<span class="cl-gray-900 fw-500">{{ account.accountNumber }}</span>
+					</div>
+					}
+
+					<div class="line bg-black opacity-50"></div>
+				</div>
+
+				<div>
+					<div class="d-flex flex-row w-100 justify-content-between align-items-center">
+						<span>Monto {{ methodSelected?.description }}:</span>
+						<span class="text-black"
+							>{{ selectedCurrency }} {{ totalAmountPaid | number : '1.2-2' }}</span
+						>
+					</div>
+					<div class="d-flex flex-row w-100 justify-content-between align-items-center">
+						<span>Monto total a pagar:</span>
+						{{ selectedCurrency }} {{ montoTotalEsperado | number : '1.2-2' }}
+
+						<!-- 	<span class="text-black"
+							>{{ selectedCurrency }} {{ totalAmountPaid | number : '1.2-2' }}</span
+						> -->
+					</div>
+					<span class="cl-info fw-normal fs-12"
+						>(*) Después de agregar los comprobantes de pago no olvide REGISTRAR el
+						formulario.</span
+					>
+					<div class="line bg-black opacity-50"></div>
+					<div class="d-flex flex-row w-100 justify-content-between align-items-center mt-2">
+						<span>Tipo de Cambio:</span>
+						<span class="text-black">{{ data.exchangeType }}</span>
+					</div>
+					<div class="line bg-black opacity-50"></div>
+				</div>
+			</div>
+
+			<div class="d-flex flex-column w-50 gap-3">
+				<ng-container *ngFor="let voucher of form.get('listaVouches').controls; let i = index">
+					<div class="p-3 rounded">
+						<form
+							*ngIf="!voucher.get('viewMode').value"
+							[formGroup]="voucher"
+							class="d-flex flex-column gap-2 w-100"
+						>
+							<div class="row mt-2">
+								<div class="col-12 col-md-6">
+									<app-select
+										class="w-100 mt-2"
+										label="Moneda"
+										placeholder="Tipo de moneda"
+										[form]="form"
+										[options]="data.operationCurrency"
+										controlName="currency"
+										(onChangeSelection)="changeSelectionCurrency($event)"
+									></app-select>
+								</div>
+								<div class="col-12 col-md-6">
+									<app-select
+										class="w-100"
+										label="Tipo de operación"
+										placeholder="Selecciona una opción"
+										[form]="voucher"
+										[options]="methodSelected?.paymentSubTypeList"
+										(onChangeSelection)="changeSelectionOperation(voucher, $event)"
+										controlName="methodSubTipoPagoId"
+									></app-select>
+								</div>
+							</div>
+							<div class="row mt-2">
+								<div class="col-12 col-md-6">
+									<app-input
+										class="w-100 mt-2"
+										label="Código de Operación"
+										[form]="voucher"
+										controlName="operationNumber"
+										placeholder="Ingrese el código"
+									></app-input>
+								</div>
+
+								<div class="col-12 col-md-6">
+									<app-input
+										class="w-100"
+										label="Monto a pagar"
+										[form]="voucher"
+										controlName="totalAmount"
+										placeholder="Ingrese el Monto"
+									></app-input>
+								</div>
+							</div>
+							<app-input
+								class="w-100"
+								label="Nota"
+								[form]="voucher"
+								controlName="note"
+								placeholder="Escribe tu texto aquí"
+							></app-input>
+
+							<div class="text-black">Imagen del váucher o comprobante de pago</div>
+							<app-file
+								[form]="voucher"
+								placeholder="JPG, PNG, file size no more than 10MB"
+								accept=".png, .jpg, .jpeg"
+								controlName="imagen"
+								[sendAsBase64]="false"
+							></app-file>
+						</form>
+						<div *ngIf="voucher.get('viewMode').value">
+							<div class="w-100 d-flex flex-row justify-content-between">
+								<div>
+									<span class="fw-normal fs-6 fw-medium"
+										>Pago {{ i + 1 }} -
+										{{ voucher.get('operationDescription').value }}</span
+									>
+									<span class="d-block fw-normal">Resumen</span>
+								</div>
+								<div>
+									<mat-icon
+										class="cursor-pointer me-4 black-light"
+										fontIcon="edit"
+										(click)="editForm(voucher)"
+									></mat-icon>
+									<mat-icon
+										class="cursor-pointer black-light"
+										fontIcon="delete"
+										(click)="paymentBankPresenter.removeForm(i)"
+									></mat-icon>
+								</div>
+							</div>
+
+							<div class="d-flex flex-row gap-2 justify-content-end mt-2">
+								<button (click)="showVoucherDetail(voucher)" class="btn-unstyled">
+									<span class="cl-link">{{
+										voucher.get('showDetail').value ? 'Ver Menos' : 'Ver detalle'
+									}}</span>
+								</button>
+							</div>
+
+							<div *ngIf="voucher.get('showDetail').value">
+								<div class="line bg-black opacity-25 my-4"></div>
+
+								<div class="d-flex flex-row w-100 justify-content-between align-items-center">
+									<span class="cl-gray-100">Tipo de operacion: </span>
+									<span class="text-black">{{
+										voucher.get('operationDescription').value
+									}}</span>
+								</div>
+								<div class="d-flex flex-row w-100 justify-content-between align-items-center">
+									<span class="cl-gray-100">Comision: </span>
+									<span class="text-black"
+										>{{ selectedCurrency }} {{ voucher.get('comision').value }}</span
+									>
+								</div>
+								<div class="d-flex flex-row w-100 justify-content-between align-items-center">
+									<span class="cl-gray-100">(*) Codigo de operacion: </span>
+									<span class="text-black">{{ voucher.get('operationNumber').value }}</span>
+								</div>
+								<div class="d-flex flex-row w-100 justify-content-between align-items-center">
+									<span class="cl-gray-100">Nota: </span>
+									<span class="text-black">{{ voucher.get('note').value }}</span>
+								</div>
+								<div class="d-flex flex-row w-100 justify-content-between align-items-center">
+									<span class="cl-gray-100">Monto total a pagar: </span>
+									<span class="text-black">{{ voucher.get('totalAmount').value }}</span>
+								</div>
+								<div class="d-flex flex-row w-100 justify-content-between align-items-center">
+									<span class="cl-gray-100">Imagen: </span>
+									<span class="text-black">Completo</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</ng-container>
+
+				<div class="d-flex justify-content-end">
+					<button
+						(click)="onClickAddMoreVouchers()"
+						class="btn btn-outline-secondary d-flex align-items-center px-3 py-1"
+						type="button"
+						[disabled]="paymentBankPresenter.isThereEditing"
+					>
+						<mat-icon fontIcon="add_circle_outline"></mat-icon>
+					</button>
+				</div>
+
+				<div class="d-flex justify-content-center gap-2 mt-2">
+					<button (click)="closeModal()" class="btn btn-outline-secondary px-3 py-1" type="button">
+						Cerrar
+					</button>
+					<button
+						(click)="handleVoucherAction()"
+						class="btn btn-outline-secondary px-3 py-1"
+						type="button"
+					>
+						{{ voucherButtonText }}
+					</button>
+				</div>
+			</div>
+		</form>
+	</ng-container>
+</ng-container>

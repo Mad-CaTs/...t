@@ -1,0 +1,19 @@
+<app-info-card *ngIf="sponsorInfo" [data]="sponsorInfo"></app-info-card>
+
+<app-transfer-form
+	[form]="presenter.form"
+	(formChange)="onFormChange($event)"
+	(search)="onSearch($event)"
+	[initialData]="initialData"
+	[selectedId]="selectedId"
+	[sponsorInfo]="sponsorInfo"
+	[searchResults]="searchResults"
+	[membershipList]="membershipResults"
+	[loading]="loadingSearch"
+	[multicodeListOpt]="multicodeList"
+	[existingUserData]="existingUserData"
+	[userInfo]="userInfo"
+	(onCheckEmailExists)="checkEmailExists()"
+	(onCheckDocumentExists)="checkDocumentExists()"
+	[isDocumentLoading]="isDocumentLoading"
+></app-transfer-form>

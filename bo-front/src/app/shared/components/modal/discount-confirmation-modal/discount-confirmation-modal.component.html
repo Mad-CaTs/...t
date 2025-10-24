@@ -1,0 +1,24 @@
+<div class="modal-box confirmation">
+  <div class="modal-content">
+    <div class="modal-head">
+      <div class="floating-icon" *ngIf="showIcon">
+        <div class="modal-icon success" [ngStyle]="{ 'background': iconBg, 'width.px': iconSize, 'height.px': iconSize, '--icon-shadow': iconShadowColor, '--icon-glow': iconGlowColor }">
+          <img [src]="iconSrc" alt="icon"
+               [ngStyle]="{ 'width.px': iconSize * 0.64, 'height.px': iconSize * 0.64 }" />
+        </div>
+      </div>
+      <div class="modal-body">
+        <h3 class="modal-title">{{ title }}</h3>
+        <p class="modal-message">{{ message }}</p>
+      </div>
+    </div>
+
+    <hr class="modal-divider" />
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary btn-pill" (click)="onAcknowledge()">
+        {{ primaryText }}
+      </button>
+    </div>
+  </div>
+</div>

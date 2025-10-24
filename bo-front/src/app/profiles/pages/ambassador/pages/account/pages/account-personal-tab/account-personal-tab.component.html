@@ -1,0 +1,131 @@
+<div class="d-flex flex-column gap-4">
+	<h2 class="m-0 fs-5 text-black fw-medium">Titular</h2>
+	<div class="d-flex justify-content-end" *ngIf="!coRequester">
+		<button
+			class="btn btn-outline-secondary d-flex gap-2 align-items-center"
+			type="button"
+			(click)="onOpenModalCoRequester()"
+		>
+			<mat-icon fontIcon="add_circle_outline" />
+			<span>Coafiliado</span>
+		</button>
+	</div>
+
+	<div class="d-flex flex-column flex-md-row gap-3 w-100">
+		<app-input [form]="form" name="names" label="Nombres *" class="w-100" [disabled]="true"></app-input>
+		<app-input
+			[form]="form"
+			name="lastnames"
+			label="Apellidos *"
+			class="w-100"
+			[disabled]="true"
+		></app-input>
+	</div>
+	<div class="d-flex flex-column flex-md-row gap-3 w-100">
+		<app-select
+			class="w-100"
+			label="Nacionalidad *"
+			placeholder="Selecciona una nacionalidad"
+			[form]="form"
+			[options]="countryOpt"
+			name="nationality"
+		></app-select>
+		<app-select
+			class="w-100"
+			label="País de residencia *"
+			placeholder="Selecciona un país"
+			[form]="form"
+			[options]="countryOpt"
+			name="country"
+		></app-select>
+	</div>
+	<div class="d-flex flex-column flex-md-row gap-3 w-100 align-items-center">
+		<app-radios
+			[options]="genderOpt"
+			[form]="form"
+			class="w-100"
+			name="gender"
+			label="Sexo *"
+		></app-radios
+		><app-phone class="w-100" [form]="form" name="phone" label="Nro. Celular "></app-phone>
+	</div>
+	<div class="d-flex flex-column flex-md-row gap-3 w-100">
+		<app-select
+			class="w-100"
+			label="Tipo de documento *"
+			placeholder="Documento nacional de identidad"
+			[form]="form"
+			[options]="docTypeOpt"
+			name="docType"
+			[disabled]="true"
+		></app-select>
+		<app-input
+			[form]="form"
+			name="docNumber"
+			label="Nro. de documento *"
+			class="w-100"
+			[disabled]="true"
+		></app-input>
+	</div>
+	<div class="d-flex flex-column flex-md-row gap-3 w-100">
+		<app-select
+			class="w-100"
+			label="Distrito / Estado *"
+			placeholder="Tu distrito"
+			[form]="form"
+			[options]="districOpt"
+			name="state"
+		></app-select>
+		<app-input
+			[form]="form"
+			name="address"
+			label="Dirección"
+			placeholder="Tu dirección"
+			class="w-100"
+		></app-input>
+	</div>
+	<!-- CO-Requester -->
+	<div class="p-4 border border-2 rounded w-100" *ngIf="coRequester">
+		<h4 class="m-0 fs-6 fw-medium">Registro del Co-Solicitante</h4>
+		<div class="w-100 overflow-x-auto overlow-y-hidden">
+			<div
+				class="d-flex flex-row gap-4 justify-content-between align-items-center mt-2 w-100"
+				style="min-width: 1000px"
+			>
+				<div class="d-flex flex-column align-items-center">
+					<span class="cl-muted">Nombre</span>
+					<span class="text-black">{{ coRequester.names }}</span>
+				</div>
+				<div class="d-flex flex-column align-items-center">
+					<span class="cl-muted">Apellidos</span>
+					<span class="text-black">{{ coRequester.lastnames }}</span>
+				</div>
+				<div class="d-flex flex-column align-items-center">
+					<span class="cl-muted">Tipo de Documento</span>
+					<span class="text-black">{{ getDocType(coRequester.docType) }}</span>
+				</div>
+				<div class="d-flex flex-column align-items-center">
+					<span class="cl-muted">Número de documento</span>
+					<span class="text-black">{{ coRequester.docNumber }}</span>
+				</div>
+				<div class="d-flex flex-column align-items-center">
+					<span class="cl-muted">Fecha de naimiento</span>
+					<span class="text-black">{{ coRequester.bornDate | date : 'short' }}</span>
+				</div>
+				<div class="d-flex flex-row gap-2 align-items-center">
+					<span (click)="onOpenModalCoRequester()">
+						<mat-icon class="text-secondary" fontIcon="edit"></mat-icon>
+					</span>
+					<span (click)="onDeleteCoRequester()">
+						<mat-icon class="text-secondary" fontIcon="delete_outline"></mat-icon>
+					</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="d-flex justify-content-end">
+		<button class="btn btn-secondary gap-2" type="submit" [disabled]="form.invalid">Guardar</button>
+	</div>
+
+	<app-account-progress></app-account-progress>
+</div>

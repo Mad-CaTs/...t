@@ -1,0 +1,19 @@
+<div class="d-flex w-100 align-items-center">
+	<ng-container *ngFor="let label of stepLabels; let i = index">
+		<div class="step-circle" [ngClass]="{ active: activeIndex === i }" (click)="selectStep(i)">
+			{{ i + 1 }}
+		</div>
+
+		<div
+			*ngIf="i < stepLabels.length - 1"
+			class="step-line"
+			[ngClass]="{ 'step-line-active': activeIndex > i }"
+		></div>
+	</ng-container>
+</div>
+
+<div class="d-flex w-100 justify-content-between mt-2">
+	<ng-container *ngFor="let label of stepLabels">
+		<p class="step-title text-center">{{ label }}</p>
+	</ng-container>
+</div>

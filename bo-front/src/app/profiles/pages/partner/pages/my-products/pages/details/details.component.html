@@ -1,0 +1,179 @@
+<div class="p-4 card px-3 px-md-4 card-border-none">
+
+  <h1 class="fs-5 mb-24  cursor-pointer hover-custom">
+    <a (click)="goBack()" class="nav-link cl-sorbus align-items-center d-flex">
+      <mat-icon class="me-2">arrow_back</mat-icon>
+      <span>Volver</span>
+    </a>
+  </h1>
+
+  <div class="row mb-3">
+    <div class="col-12 col-md-4 mb-3">
+      <div class="w-100 h-100 d-flex flex-column">
+        <div class="card-content">
+          <div class="d-flex gap-1 align-items-center mb-3">
+            <mat-icon fontIcon="account_tree" class="cl-muted"></mat-icon>
+            <span class="text-base title">
+              Detalle del cronograma
+            </span>
+
+          </div>
+          <div class="d-flex flex-wrap justify-content-center gap-3">
+            <div *ngIf="selectedProduct" class="d-flex flex-column align-items-center" [class.points-text-disable]="!isInitialPayment">
+                <span class="text-base fs-4 fw-bold">{{selectedProduct?.volumen}} pts</span>
+              <span class="text-base">Ptje. por inicial</span>
+            </div>
+            <div *ngIf="selectedProduct" class="d-flex flex-column align-items-center" [class.points-text-disable]="!isInstallmentPayment">
+              <span class="text-base fs-4 fw-bold">{{selectedProduct?.volumenByFee}} pts</span>
+              <span class="text-base">Ptje. por cuota</span>
+            </div>
+            <div class="d-flex flex-column align-items-center">
+              <span class="text-base fs-4 fw-bold">{{nameSuscription}}</span>
+              <span class="text-base">Membresía</span>
+            </div>
+            <div class="d-flex flex-column align-items-center">
+              <span class="text-base fs-4 fw-bold">{{selectedProduct?.numberQuotas || 0}}</span>
+              <span class="text-base">Cuotas</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-4 mb-3">
+      <div class="w-100 h-100 d-flex flex-column">
+        <div class="card-content">
+            <div class="d-flex gap-1 align-items-center mb-3">
+            <i class="pi pi-calendar cl-muted me-2" style="font-size: 20px;"></i>
+            <span class="title">Fechas</span>
+            </div>
+          <div class="row g-2 text-center">
+            <div class="col-12 d-flex flex-column align-items-center">
+              <span class="text-base fs-4 fw-bold">
+                {{ selectedProduct?.startDate ? (selectedProduct.startDate | date: 'dd/MM/yyyy') : '' }}
+                {{ selectedProduct?.creationDate ? (selectedProduct.creationDate | date: 'dd/MM/yyyy') : '' }}
+              </span>
+              <span class="text-base">Fecha de adquisición</span>
+            </div>
+           <!--  <div class="col-6 d-flex flex-column align-items-center">
+              <span class="custom-text text-base">
+                {{ selectedProduct.modificationDate ? (selectedProduct.modificationDate | date: 'dd/MM/yyyy') :
+                '00/00/0000' }}
+              </span> <span class="text-detail text-base">Fecha de migración</span>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-4 mb-3">
+      <div class="w-100 h-100 d-flex flex-column">
+        <div class="card-content">
+          <div class="d-flex gap-1 align-items-center mb-3">
+            <i class="pi pi-clock cl-muted me-2" style="font-size: 20px;"></i>
+            <span class="title">Periodo de Gracia</span>
+          </div>
+          <div class="d-flex flex-wrap justify-content-center gap-3">
+            <div class="d-flex flex-column align-items-center">
+              <span class="text-base fs-4 fw-bold">{{gracePeriodParameter?.valueDays || 0}}</span>
+              <span class="text-base">Días totales</span>
+            </div>
+            <div class="d-flex flex-column align-items-center">
+              <span class="text-base fs-4 fw-bold">{{graceDebt || 0}}</span>
+              <span class="text-base">Días usados</span>
+            </div>
+            <div class="d-flex flex-column align-items-center">
+              <span class="text-base fs-4 fw-bold">{{(gracePeriodParameter?.valueDays - graceDebt) || 0}}</span>
+              <span class="text-base">Días restantes</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+  <div *ngIf="isLoading" class="d-flex justify-content-center align-items-center">
+    <div class="d-flex flex-column align-items-center">
+      <div class="spinner-border text-orange" role="status" style="width: 5rem; height: 5rem;">
+      </div>
+      <span class="mt-3 fs-4 text-orange">Cargando...</span>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading" class="col-12 col-md-12 mb-3">
+    <div class="d-flex flex-row justify-content-between">
+      <div *ngIf="hasMultiplePayes" class="d-flex flex-row gap-2">
+        <button type="button" class="btn btn-outline-secondary d-flex align-items-center px-3 py-1"
+          (click)="payMultipleInstallments()">Pagar varias cuotas</button>
+      </div>
+      <div class="d-flex flex-row align-items-center">
+        <span class="fs-6 me-2">Page</span>
+        <div class="me-2">
+          <select name="page" id="page" class="form-select">
+            <option value="1" selected>1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+          </select>
+        </div>
+        <span class="fs-6">Of 10</span>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading" class="w-100 overflow-x-auto">
+    <form [formGroup]="form">
+      <p-table [value]="dataSource" scrollable="true" scrollHeight="350px" class="table-details">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Descripción</th>
+            <th class="text-center">Fecha de vencimiento</th>
+            <th class="text-center">Capital</th>
+            <th class="text-center">Amortización</th>
+            <th class="text-center">Días de mora</th>
+            <th class="text-center">Mora</th>
+            <th class="text-center">Estado</th>
+            <th class="text-center">Acciones</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-element>
+          <tr>
+
+            <td>{{ element.quoteDescription }}</td>
+            <td class="text-center">{{ element.nextExpirationDate | date: 'dd-MM-yyyy'}}</td>
+            <td class="text-center">{{ element.capitalBalanceUsd }} USD</td>
+            <td class="text-center">{{ element.amortizationUsd }} USD</td>
+
+            <td class="text-center">{{ element.daysOverdue || 0 }} días</td>
+            <td class="text-center">{{ element.totalOverdue || 0 }} USD</td>
+            <td class="text-center">{{ element.statusName}} </td>
+            <td class="text-center">
+              <div class="d-flex justify-content-center align-items-center">
+                <button type="button"
+                  class="btn d-flex flex-row gap-2 align-items-center px-4 py-1 rounded cl-link no-hover"
+                  (click)="onClickOpenCoAffiliateModal(element)">
+                  <mat-icon class="cl-link me-2">visibility</mat-icon>
+                  Ver detalles
+                </button>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="footer">
+          <tr>
+            <td colspan="10">
+              <div class="table-footer-container">
+                <div class="p-datatable-scrollable-footer">
+                </div>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,78 @@
+<section class="rounded border-0 mt-3"
+  [class.border]="!withoutBox" [class.p-3]="!withoutBox" [class.p-lg-4]="!withoutBox" style="min-height: 420px;">
+
+  <div class="gap-3" style="min-width: 320px;">
+    <!-- Loading Spinner -->
+    <ng-container *ngIf="isLoading; else contentLoaded">
+      <div class="d-flex justify-content-center align-items-center" style="min-height: 450px;">
+        <p-progressSpinner [style]="{ width: '3rem', height: '3rem' }"></p-progressSpinner>
+      </div>
+    </ng-container>
+
+    <!-- Content Template -->
+    <ng-template #contentLoaded>
+      <div
+        class="bg-white-lilac rounded-4 pt-5 pb-4 position-relative flex-grow-1">
+        <figure class="position-absolute" style="top: -50px">
+          <img class="fw-bold box-cycle-weekly__title" style="width: 88px; height:88px"
+            [src]="'./assets/images/'+ (userInfo.gender === '1' ? 'Ellipse-man' : 'Ellipse')  +'.png'" />
+          <span class="rounded-5 m-0 position-absolute bottom-0" [ngStyle]="{ 
+                'padding': '6px 7px',
+              'background-color': statusColor.backgroundColor, 
+              'color': statusColor.textColor,
+              'right': '-2rem'
+            }">
+            {{ userStatus }}
+          </span>
+        </figure>
+        <h2 class="cl-muted fs-8 ">Socio Inversionista</h2>
+        <a (click)="openMembershipmodal()" role="button" class="text-decoration-none">Ver membresias</a>
+      </div>
+
+      <div class="pt-3 border rounded-5 mt-3 d-flex flex-column gap-3 flex-grow-1">
+        <aside class="px-3">
+          <article class="bg-white-lilac p-3 rounded-4 d-flex flex-column gap-2"
+            [style.color]="userStatus === 'Inactivo' ? '#19809E' : ''">
+            <span>Membresia</span>
+            <span>{{ result?.nameSuscription }}</span>
+          </article>
+        </aside>
+        <aside class="px-3">
+          <article class="bg-white-lilac p-3 rounded-4 d-flex flex-column gap-2"
+            [style.color]="userStatus === 'Inactivo' ? '#19809E' : ''">
+            <span>Fecha de vencimiento</span>
+            <span>{{ formatDate(result?.expirationDate) }}</span>
+          </article>
+        </aside>
+        <div class="d-flex flex-row justify-content-center align-items-center gap-3 p-3 border-top">
+          <span *ngIf="isPaymentUpToDate()" class="border rounded-5 py-2 text-white custom-color-background custom-size-text">
+            Tienes paquetes vencidos!
+          </span>
+          <a role="button" (click)="navigateToProductsById(result.id)" *ngIf="isPaymentUpToDate()"
+            class="custom-color-text text-decoration-none d-flex align-items-center gap-2">
+            Ir a pagar <i class="pi pi-arrow-up-right"></i>
+          </a>
+
+          <a *ngIf="!isPaymentUpToDate()"
+            class="py-1 px-5 rounded-5 text-white text-decoration-none d-flex align-items-center gap-2"
+            style="background-color: #4CAF50;">
+            ¡Felicidades! esta al día con tus pagos
+          </a>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+
+  <div class="w-50 d-flex flex-column h-100" style="min-width: 320px;">
+    <!-- Loading para la segunda columna también -->
+    <ng-container *ngIf="isLoading; else rightColumnContent">
+      <div class="d-flex justify-content-center align-items-center border rounded-5" style="min-height: 400px;">
+        <p-progressSpinner [style]="{ width: '3rem', height: '3rem' }"></p-progressSpinner>
+      </div>
+    </ng-container>
+
+    <ng-template #rightColumnContent>
+      
+    </ng-template>
+  </div>
+</section>

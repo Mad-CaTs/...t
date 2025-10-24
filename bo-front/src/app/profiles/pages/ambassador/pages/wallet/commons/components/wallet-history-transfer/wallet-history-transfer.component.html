@@ -1,0 +1,10 @@
+<div class="d-flex flex-column gap-5">
+	<h2 class="text-black fw-medium text-center text-uppercase m-0 fs-4">HISTORIAL DE SOLICITUDES</h2>
+	<app-table-wallet-history-transaction
+		[dataBody]="tableData"
+		[loading]="loading"
+		(btnClick)="onOpenDetail($event)"
+		(requestTransferCompletedTransaction)="handleRequestTransferCompletedE()"
+		[walletBlock]="walletBlock"
+	></app-table-wallet-history-transaction>
+</div>

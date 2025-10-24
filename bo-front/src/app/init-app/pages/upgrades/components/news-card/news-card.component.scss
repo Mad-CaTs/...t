@@ -1,0 +1,125 @@
+/* news-card.component.scss */
+.news-card {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 200px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15) !important;
+    
+    .news-card__overlay {
+      background: linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.8) 0%,
+        rgba(0, 0, 0, 0.6) 50%,
+        rgba(0, 0, 0, 0.3) 100%
+      );
+    }
+    
+    .news-card__action i {
+      transform: translateX(4px);
+    }
+  }
+  
+  &__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.7) 0%,
+      rgba(0, 0, 0, 0.4) 50%,
+      rgba(0, 0, 0, 0.1) 100%
+    );
+    transition: all 0.3s ease;
+    z-index: 1;
+  }
+  
+  &__content {
+    z-index: 2;
+  }
+  
+  &__title {
+    line-height: 1.3;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+  
+  &__description {
+    line-height: 1.4;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  }
+  
+  &__date {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  }
+  
+  &__action {
+    transition: all 0.3s ease;
+    
+    i {
+      transition: transform 0.3s ease;
+    }
+  }
+  
+  // Large card variant
+  &--large {
+    min-height: 350px;
+    
+    @media (min-width: 768px) {
+      min-height: 400px;
+    }
+  }
+}
+
+// Badge customization
+.badge {
+  font-size: 0.75rem !important;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+// Custom font sizes
+.fs-7 {
+  font-size: 0.75rem !important;
+}
+
+// Responsive adjustments
+@media (max-width: 767.98px) {
+  .news-card {
+    min-height: 180px;
+    
+    &--large {
+      min-height: 280px;
+    }
+    
+    &__content {
+      padding: 1rem !important;
+    }
+    
+    &__title {
+      font-size: 1rem !important;
+      
+      &.fs-4 {
+        font-size: 1.25rem !important;
+      }
+    }
+  }
+}
+
+@media (max-width: 575.98px) {
+  .news-card {
+    min-height: 160px;
+    
+    &--large {
+      min-height: 240px;
+    }
+  }
+}

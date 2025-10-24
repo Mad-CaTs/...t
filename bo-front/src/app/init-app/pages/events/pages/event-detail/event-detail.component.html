@@ -1,0 +1,59 @@
+<div class="event-detail" [class.blocked]="isLoading">
+	<div class="grid-container">
+		<div class="info-grid">
+			<h2 class="detail-title">{{ detail.title }}</h2>
+			<p class="detail-description">{{ detail.description }}</p>
+			<div class="media-slot first-img" [class.empty]="!detail.image1">
+				<ng-container *ngIf="detail.image1; else placeholder1">
+					<img class="media-img" [src]="detail.image1" alt="Evento imagen 1" />
+				</ng-container>
+				<ng-template #placeholder1>
+					<div class="placeholder-body" aria-label="Sin imagen 1">
+						<i class="bi bi-image icon" aria-hidden="true"></i>
+						<span class="placeholder-text">IMAGEN NO DISPONIBLE</span>
+					</div>
+				</ng-template>
+			</div>
+			<div class="media-slot second-img" [class.empty]="!detail.image2">
+				<ng-container *ngIf="detail.image2; else placeholder2">
+					<img class="media-img" [src]="detail.image2" alt="Evento imagen 2" />
+				</ng-container>
+				<ng-template #placeholder2>
+					<div class="placeholder-body" aria-label="Sin imagen 2">
+						<i class="bi bi-image icon" aria-hidden="true"></i>
+						<span class="placeholder-text">IMAGEN NO DISPONIBLE</span>
+					</div>
+				</ng-template>
+			</div>
+		</div>
+
+		<div class="detail-video-wrapper">
+			<ng-container *ngIf="detail.videoUrl; else videoPlaceholder">
+				<app-generic-video-player
+					[src]="detail.videoUrl"
+					[controls]="true"
+					[poster]="detail.image1"
+				>
+				</app-generic-video-player>
+			</ng-container>
+			<ng-template #videoPlaceholder>
+				<div class="video-placeholder" aria-label="Video no disponible">
+					<i class="bi bi-camera-video icon" aria-hidden="true"></i>
+					<span>VIDEO NO DISPONIBLE</span>
+				</div>
+			</ng-template>
+		</div>
+	</div>
+  </div>
+
+  <app-popular-events></app-popular-events>
+
+  <app-logo-spinner [show]="isLoading" [fullscreen]="true"></app-logo-spinner>
+
+  <app-modal-notify
+	*ngIf="showNotify"
+	[iconType]="notifyType"
+	[title]="notifyTitle"
+	[message]="notifyMessage"
+	(closed)="onNotifyClose()">
+  </app-modal-notify>

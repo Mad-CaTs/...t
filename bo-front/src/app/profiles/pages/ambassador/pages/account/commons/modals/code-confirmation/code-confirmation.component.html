@@ -1,0 +1,22 @@
+<div class="line bg-black opacity-50"></div>
+<form [formGroup]="form" class="d-flex flex-column gap-3 mt-3">
+    <div class="d-flex flex-column flex-md-row gap-2 gap-md-4 w-100">
+        <div class="d-flex flex-column w-100">
+            <app-input [form]="form" controlName="code" label="Código de validación *" type="text" placeholder="000000"
+                buttons="true" class="w-100"></app-input>
+        </div>
+    </div>
+    <div class="d-flex flex-row justify-content-center gap-4 mt-3">
+        <button class="btn btn-outline-secondary" type="button" (click)="this.ref.close()">
+            Cancelar
+        </button>
+        <button class="btn btn-secondary" type="submit" [disabled]="isLoading || this.form.invalid"
+            (click)="validate()">
+            <span *ngIf="!isLoading">Guardar</span>
+            <div class="d-flex justify-content-center align-items-center" *ngIf="isLoading">
+                <p-progressSpinner [style]="{ width: '1.5rem', height: '1rem' }" strokeWidth="8" fill="transparent"
+                    animationDuration=".5s"></p-progressSpinner>
+            </div>
+        </button>
+    </div>
+</form>

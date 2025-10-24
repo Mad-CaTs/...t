@@ -1,0 +1,36 @@
+::ng-deep {
+    .ng2-pdf-viewer-container {
+        overflow-y: scroll !important;
+        max-height: 90vh;
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+    }
+
+    .ng2-pdf-viewer-container::-webkit-scrollbar {
+        width: 10px; 
+    }
+
+    .ng2-pdf-viewer-container::-webkit-scrollbar-track {
+        background: #f0f0f0; 
+    }
+
+    .ng2-pdf-viewer-container::-webkit-scrollbar-thumb {
+        background: #E9662A; 
+        border-radius: 5px; 
+    }
+
+    .ng2-pdf-viewer-container::-webkit-scrollbar-thumb:hover {
+        background: #C1501E; 
+    }
+
+    .container-fluid {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+    }
+
+    .pdf-content {
+        width: 100%;
+        height: 90vh;
+        margin-top: 0;
+    }
+}

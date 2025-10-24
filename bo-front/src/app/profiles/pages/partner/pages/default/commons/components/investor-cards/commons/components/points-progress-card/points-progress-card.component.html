@@ -1,0 +1,57 @@
+<div class="border rounded-5 d-flex flex-column flex-grow-1">
+	<ng-container *ngIf="!isLoading; else loadingPoints">
+	<article class="d-flex flex-row justify-content-between align-items-end p-4">
+		<strong class="display-4 fw-bold" style="color: #2E8B8B;">{{ investorPoints?.actualPoints }}
+			<span class="fs-5 fw-normal" style="vertical-align: -0.3em; color: #4A9B9B;">pts</span>
+		</strong>
+		<span class="text-white px-3 py-1 rounded-pill " style="background-color: #4CAF50;">
+			Este mes <strong class="ms-2"> +{{ investorPoints?.pointsThisMonth }}</strong>
+		</span>
+	</article>
+	<p class="px-3 pt-1">
+		Completa la <span class="text-decoration-none" style="color: #2196F3;">suscripción</span>
+		de membresías y <span class="text-decoration-none" style="color: #2196F3;">gana más puntos</span>
+	</p>
+	<div class="d-flex justify-content-start align-items-center p-4 gap-3">
+		<mat-progress-bar [value]="investorPoints?.percetangeTotal" mode="determinate" class="custom-progress-bar">
+		</mat-progress-bar>
+		<span class="text-muted fs-6" style="width:6rem">Meta: {{ investorPoints?.totalPosiblePoints }}</span>
+	</div>
+	<div class="p-3 mb-4">
+		<h5 class="mb-3 fs-6 fw-normal">Fechas de ciclo semanal</h5>
+		<div class="d-flex flex-row gap-4">
+			<div class="bg-white-lilac p-2 w-50 rounded-4">
+				<small class="text-muted">Inicio de ciclo</small>
+				<div class="fw-bold text-dark">{{ initialDate  }}</div>
+			</div>
+			<div class="bg-white-lilac p-2 w-50 rounded-4">
+				<small class="text-muted">Fin de ciclo</small>
+				<div class="fw-bold text-dark">{{ endDate }}</div>
+			</div>
+		</div>
+	</div>
+	<div class="border-top p-4">
+		@if (userStatus === "Activo") {
+		<a (click)="navigateToProducts()" role="button"
+			class="pointer text-decoration-none fw-normal d-flex align-items-center justify-content-center gap-2 min-custom"
+			style="color: #2196F3;">
+			Ver mis productos
+			<i class="pi pi-arrow-up-right"></i>
+		</a>
+		} @else if(userStatus === "Inactivo") {
+		<a (click)="navigateToProducts()" role="button"
+			class="pointer text-decoration-none fw-normal d-flex align-items-center justify-content-center gap-2 min-custom"
+			style="color: #2196F3;">
+			ir activar
+			<i class="pi pi-arrow-up-right"></i>
+		</a>
+		}
+	</div>
+	</ng-container>
+
+	<ng-template #loadingPoints>
+		<div class="d-flex justify-content-center align-items-center" style="height: 280px">
+			<p-progressSpinner [style]="{ width: '2.2rem', height: '2.2rem' }"></p-progressSpinner>
+		</div>
+	</ng-template>
+</div>

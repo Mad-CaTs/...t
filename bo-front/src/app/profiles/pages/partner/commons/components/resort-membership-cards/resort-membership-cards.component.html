@@ -1,0 +1,18 @@
+<div *ngFor="let resort of resorts" class="mb-4">
+	<h5 class="fw-semibold mb-3">
+		<img src="assets/icons/box.svg" alt="Resort icon" width="20" height="20" class="me-2" />
+		{{ resort.name }}
+	</h5>
+	<hr class="mb-3 mt-1 opacity-50" />
+	<div class="row g-3">
+		<div *ngFor="let membership of resort.memberships" class="col-12 col-sm-6 col-md-4 col-lg-3">
+			<app-membership-card
+				[membership]="membership"
+				[color]="stateColors[membership.idStatus]"
+				[documentTypes]="legalizationDocList"
+				(accionSeleccionada)="handleAccionSeleccionada($event)"
+				[documentTypesLoaded]="documentTypesLoaded"  
+			></app-membership-card>
+		</div>
+	</div>
+</div>

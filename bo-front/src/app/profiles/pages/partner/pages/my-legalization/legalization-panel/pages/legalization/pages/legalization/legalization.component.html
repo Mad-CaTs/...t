@@ -1,0 +1,45 @@
+<div class="row" *ngIf="listLegalDocuments?.length > 0; else noDocs">
+	<div class="col-12 col-md-8">
+		<div
+			[ngClass]="{
+				'd-flex flex-column gap-4': listLegalDocuments?.length <= 2,
+				'row row-cols-1 row-cols-sm-2 g-4': listLegalDocuments?.length > 2
+			}"
+		>
+			<div
+				*ngFor="let doc of listLegalDocuments; let i = index"
+				[ngClass]="{
+					col: listLegalDocuments?.length > 2
+				}"
+			>
+				<app-document-summary-card
+					[document]="selectedProduct.data"
+					[date]="doc"
+					[isDisabled]="false"
+					[isFirst]="i === 0"
+				></app-document-summary-card>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-12 col-md-4 d-flex flex-column">
+		<app-document-detail-card
+			[typeDocument]="selectedProduct.data"
+			[nationalitiesList]="nationalitiesList"
+			[userInfo]="userInfo"
+			class="h-100"
+		></app-document-detail-card>
+	</div>
+</div>
+
+<ng-template #noDocs>
+	<div
+		class="alert alert-info d-flex flex-column flex-sm-row gap-2 align-items-center text-center text-sm-start p-2"
+		role="alert"
+	>
+		<mat-icon class="fs-4 flex-shrink-0">info</mat-icon>
+		<span class="fw-normal fs-6 text-wrap">
+			No se encontraron documentos asociados a esta suscripción.
+		</span>
+	</div>
+</ng-template>

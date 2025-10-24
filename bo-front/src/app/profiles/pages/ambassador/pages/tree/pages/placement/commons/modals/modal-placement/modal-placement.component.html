@@ -1,0 +1,52 @@
+<app-modal title="Posicionar">
+	<ng-container>
+		<div class="w-100 d-flex flex-column gap-3" *ngIf="!confirmation">
+			<label for="info" class="text-black font-weight-bold" style="font-size: 16px;">Información del usuario</label>
+			<div class="w-100 d-flex flex-row justify-content-between align-items-center">
+				<span>Usuario</span>
+				<span class="fw-medium">{{ selectedData.username }}</span>
+			</div>
+			<div class="w-100 d-flex flex-row justify-content-between align-items-center">
+				<span>Nombre y Apellido</span>
+				<span class="fw-medium">{{ selectedData.fullname }}</span>
+			</div>
+			<app-select
+				class="w-100"
+				label="Nombre de Usuario"
+				placeholder="Selecciona un usuario"
+				[form]="form"
+				[options]="selectOpt"
+				[filter]="true"
+				controlName="select"
+				(onChangeSelection)="onSelectionChange($event)"
+			>
+			</app-select>
+			<div class="d-flex flex-row justify-content-center gap-3">
+				<button class="btn btn-outline-secondary" type="button" (click)="instanceModal.close()">
+					Cancelar
+				</button>
+				<button
+					class="btn btn-secondary"
+					type="button"
+					[disabled]="form.invalid"
+					(click)="confirmation = true"
+				>
+					Aceptar
+				</button>
+			</div>
+		</div>
+		<div class="d-flex flex-column gap-3" *ngIf="confirmation">
+			<p class="text-center text-black fs-6 cl-muted m-0">
+				¿Desea posicionar a
+				<strong class="fw-medium text-uppercase">{{ selectedData.fullname }}</strong> debajo de
+				<strong class="fw-medium text-uppercase">{{ optInText }}</strong> ?
+			</p>
+			<div class="d-flex flex-row justify-content-center gap-3">
+				<button class="btn btn-outline-secondary" type="button" (click)="instanceModal.close()">
+					Cancelar
+				</button>
+				<button class="btn btn-secondary" type="button" (click)="onConfirm()">Aceptar</button>
+			</div>
+		</div>
+	</ng-container>
+</app-modal>

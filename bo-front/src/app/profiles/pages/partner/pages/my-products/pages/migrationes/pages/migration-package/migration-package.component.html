@@ -1,0 +1,78 @@
+<!-- <div class="p-4 card px-0 px-md-4 card-border-none">
+ -->
+
+<div class="mt-2 p-4 card px-0 px-md-4 card-border-none">
+	<div class="mt-2">
+		<h2 class="fs-5 text-black mt-2">Migrar paquetes</h2>
+		<p class="text-muted mt-2">Seleccione la membresía a la cual vas a comprar</p>
+	</div>
+
+	<div *ngIf="isLoading" class="d-flex justify-content-center align-items-center">
+		<div class="d-flex flex-column align-items-center">
+			<div class="spinner-border text-orange" role="status" style="width: 5rem; height: 5rem"></div>
+		</div>
+	</div>
+
+	<p-panel
+		header="{{
+			isLoading
+				? 'Cargando...'
+				: availablePackages.length > 0
+				? availablePackages[0].name
+				: 'Sin Paquetes Disponibles'
+		}}"
+	>
+		<div class="scrollable-table-container">
+			<div *ngIf="!isLoading">
+				<p-table [value]="availablePackages?.[0]?.packageList || []" [paginator]="false">
+					<ng-template pTemplate="header">
+						<tr>
+							<th></th>
+							<th class="text-center">Nombre</th>
+							<th class="text-center">Descripción</th>
+							<th class="text-center">Precio</th>
+							<th class="text-center">N° Cuotas</th>
+							<th class="text-center">Cuota Inicial</th>
+						</tr>
+					</ng-template>
+					<ng-template pTemplate="body" let-package>
+						<tr>
+							<td>
+								<app-radios
+									class="w-100 align-items-center"
+									[form]="form"
+									controlName="packageDetailId"
+									[verticalLayout]="true"
+									[horizontalLayout]="true"
+									[options]="[{ content: '', value: package.idPackage }]"
+									[idFamilyPackage]="'pkg-list-' + i"
+									(changeSelection)="onPackageSelection($event)"
+								>
+								</app-radios>
+							</td>
+							<td class="text-center">{{ package.name }}</td>
+							<td class="text-center">{{ package.description }}</td>
+							<td class="text-center">
+								{{ package.packageDetail?.[0]?.price| currency: 'USD' }}
+							</td>
+							<td class="text-center">{{ package.packageDetail[0]?.numberQuotas }}</td>
+							<td class="text-center">
+								{{ package.packageDetail[0]?.initialPrice | currency : 'USD' }}
+							</td>
+						</tr>
+					</ng-template>
+				</p-table>
+			</div>
+		</div>
+	</p-panel>
+
+	<div class="d-flex flex-column flex-md-row justify-content-center p-4 gap-2">
+		<button class="btn btn-outline-secondary custom-button" type="button" (click)="goBack()">
+			Atrás
+		</button>
+
+		<button class="btn btn-secondary" type="button" [disabled]="isLoading" (click)="onClickButton()">
+			<span>Siguiente</span>
+		</button>
+	</div>
+</div>

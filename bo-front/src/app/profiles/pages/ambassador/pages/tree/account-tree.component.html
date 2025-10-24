@@ -1,0 +1,10 @@
+<div class="d-flex flex-column gap-3 card p-lg-4 border-0">
+	<h1 class="m-0 fs-4 text-black fw-medium">Mi Red</h1>
+	<app-navigation
+		[data]="navigation"
+		[selected]="currentPage"
+		(changeSelected)="onNav($event)"
+	></app-navigation>
+
+	<router-outlet></router-outlet>
+</div>

@@ -1,0 +1,94 @@
+<div class="purchase-detail">
+  <h2>Detalle de mis entradas</h2>
+  <div class="back-row">
+    <button class="btn-back" (click)="goBack()">← Volver a Mis Entradas</button>
+  </div>
+  <div *ngIf="isLoading">Cargando...</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+  <div *ngIf="hasUsedTickets()" class="used-message">
+  ⚠️ Esta entrada de esta compra ya fue usada y no puede volver a nominarse.
+ </div>
+  <table *ngIf="!isLoading && !error">
+    <thead>
+      <tr>
+        <th>N° de orden</th>
+        <th>Fecha de compra</th>
+        <th>Evento</th>
+        <th>Vigencia</th>
+        <th>Zona</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let t of tickets">
+        <tr>
+          <td>{{ t.orderNumber }}</td>
+          <td>{{ t.purchaseDate | date:'dd/MM/yyyy' }}</td>
+          <td>{{ t.eventName }}</td>
+          <td>{{ formatValidity(t.validity) }}</td>
+          <td>{{ t.zone }}</td>
+          <td>{{ formatStatus(t.status) }}</td>
+          <td class="actions-cell">
+            <div class="cell-buttons">
+              <button (click)="download(t.pdfUrl, t.eventName)" [disabled]="!isNominated(t.status)">Descargar</button>
+              <button *ngIf="!isUsed(t)" (click)="nominate(t)">Nominar</button>
+            </div>
+          </td>
+        </tr>
+        <tr *ngIf="nominateOpenTicketUuid === (t.ticketUuid || t.uuid || t.ticketId)">
+          <td colspan="7">
+            <div class="inline-nominate">
+              <div class="inline-header">
+                <strong>Nominar entrada</strong>
+                <span class="ticket-meta">{{ t.eventName }} · {{ t.zone }} · {{ t.purchaseDate | date:'dd/MM/yyyy' }}</span>
+              </div>
+              <form [formGroup]="nominateForm" (ngSubmit)="submitNominationForm(t)" class="inline-form">
+                <div class="inline-row">
+                  <div class="field">
+                    <label class="field-label">Tipo</label>
+                    <select class="inline-input" formControlName="tipoDocumento">
+                      <option [value]="1000">DNI</option>
+                      <option [value]="1001">Carnet Extranjería (CE)</option>
+                      <option [value]="1002">Pasaporte</option>
+                    </select>
+                  </div>
+
+                  <div class="field">
+                    <label class="field-label">Documento</label>
+                    <input class="inline-input" formControlName="documento" />
+                  </div>
+
+                  <div class="field">
+                    <label class="field-label">Nombre</label>
+                    <input class="inline-input" formControlName="nombre" />
+                  </div>
+
+                  <div class="field">
+                    <label class="field-label">Apellidos</label>
+                    <input class="inline-input" formControlName="apellidos" />
+                  </div>
+
+                  <div class="field full">
+                    <label class="field-label">Email</label>
+                    <input class="inline-input" formControlName="email" />
+                  </div>
+                </div>
+
+                <div class="checks">
+                  <label class="check-item"><input type="checkbox" formControlName="confirmarDatos" /> <span>Confirmo que los datos son correctos</span></label>
+                  <label class="check-item"><input type="checkbox" formControlName="aceptarTerminos" /> <span>Acepto Términos y Condiciones</span></label>
+                </div>
+
+                <div class="actions">
+                  <button type="button" class="btn-cancel" (click)="closeNominateForm()">Cancelar</button>
+                  <button type="submit" class="btn-submit" [disabled]="nominateSubmitting">Enviar nominación</button>
+                </div>
+              </form>
+            </div>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</div>

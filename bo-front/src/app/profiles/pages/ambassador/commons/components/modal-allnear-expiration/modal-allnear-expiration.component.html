@@ -1,0 +1,36 @@
+<div>
+    <h2 class="title">Ver membresías</h2>
+    <p class="text">
+        Aquí podrás visualizar todas tus membresías
+    </p>
+    <div class="content">
+        <div *ngFor="let membership of allNearExpiration; let i = index" class="card">
+            <div class="container-description">
+                <h3 class="card-title">{{ membership.nameSuscription }} </h3>
+                <span>Fecha de vencimiento : {{ formatDate(membership.dateExpire)}}</span>
+                <div class="status">
+                    <span [ngStyle]="{
+                'font-size': '0.7rem', 
+                'padding': '4px 10px',
+              'background-color': membership?.statusColorOfMembership?.backgroundColor,
+              'color': membership.statusColorOfMembership?.textColor,
+              'right': '-5rem',
+              'border-radius': '0.4rem'
+              
+            }">{{ membership.status }}</span>
+                    <i (click)="toggleDetails(i)" role="button" class="pi"
+                        [class.pi-angle-down]="!membership.showDetails"
+                        [class.pi-angle-up]="membership.showDetails"></i>
+                </div>
+            </div>
+            <div class="actions" [class.show]="membership.showDetails" [class.hide]="!membership.showDetails">
+                <div class="actions-content">
+                    <a (click)="navigateToProducts(membership.id)" mat-stroked-button color="accent" class="border-color-sorbus btn text-secondary">
+                        Cronograma de pagos
+                    </a>
+                    <button (click)="navigateToPayment(membership.id)" class="btn btn-secondary">Pagar mi cuota</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

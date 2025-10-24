@@ -1,0 +1,140 @@
+<app-modal [title]="title">
+	<!-- Alert step 1 -->
+	<div class="d-flex flex-column gap-3 w-100" *ngIf="step === 1">
+		<mat-icon
+			svgIcon="transaction-money"
+			class="m-auto"
+			style="width: 124px; height: 124px; color: #363a3e"
+		/>
+		<span class="fs-6 fw-normal px-4"
+			>El pago de comisiones será transferido en Soles para el caso de Perú. Para otros páises será
+			transferido en dólares USD. Es requerido que el número de cuenta suministrado por usted sea una
+			cuenta en función a la moneda a recibir.</span
+		>
+		<div class="alert alert-info d-flex flex-row gap-2 mt-2 align-items-center" role="alert">
+			<mat-icon fontIcon="info" style="min-width: 32px"></mat-icon>
+			<span class="fw-medium"
+				>Verifique bien los datos, después no será POSIBLE editar el país de operaciones, el nombre
+				del banco y el tipo de cuenta.</span
+			>
+		</div>
+		<div class="d-flex flex-row justify-content-center gap-4">
+			<button class="btn btn-outline-secondary" type="button" (click)="instanceModal.close()">
+				Cancelar
+			</button>
+			<button class="btn btn-secondary" type="button" (click)="step = 2">Continuar</button>
+		</div>
+	</div>
+	<!-- Form -->
+	<form [formGroup]="form" (submit)="onSubmit()" class="d-flex flex-column gap-3 w-100" *ngIf="step === 2">
+		<app-navigation
+			[data]="navigation"
+			[selected]="currentSection"
+			(changeSelected)="currentSection = $event"
+			class="m-auto"
+		></app-navigation>
+		<!-- Bank Form -->
+		<ng-container *ngIf="currentSection === 1">
+			<app-select
+				class="w-100"
+				label="Nombre del banco"
+				placeholder="Seleccione el nombre del banco"
+				[form]="form"
+				[options]="bankNameOpt"
+				name="bank"
+			></app-select>
+			<app-select
+				class="w-100"
+				label="País de operaciones"
+				placeholder="Seleccione el país de operaciones"
+				[form]="form"
+				[options]="opCOuntryOpt"
+				name="opCountry"
+			></app-select>
+			<app-input
+				[form]="form"
+				name="bankAddress"
+				label="Dirección del Banco"
+				placeholder="Ingrese la Dirección del Banco"
+				class="w-100"
+			></app-input>
+			<app-input
+				[form]="form"
+				name="swift"
+				label="Código SWIFT"
+				placeholder="Ingrese el Código SWIFT"
+				class="w-100"
+			></app-input>
+			<app-input
+				[form]="form"
+				name="iban"
+				label="Código IBAN"
+				placeholder="Ingrese el Código IBAN"
+				class="w-100"
+			></app-input>
+		</ng-container>
+		<!-- Account Form -->
+		<ng-container *ngIf="currentSection === 2">
+			<app-input
+				[form]="form"
+				name="accountNumber"
+				label="Número de cuenta"
+				placeholder="Ingrese Número de cuenta"
+				class="w-100"
+			></app-input>
+			<app-input
+				[form]="form"
+				name="cci"
+				label="Cuenta Interbancario CCI"
+				placeholder="Ingrese el Código de cuenta interbancario CCI"
+				class="w-100"
+			></app-input>
+			<app-radios
+				[form]="form"
+				name="accountType"
+				[options]="accountTypeOpt"
+				label="Tipo de cuenta"
+				class="w-100"
+			/>
+		</ng-container>
+		<!-- Owner Form -->
+		<ng-container *ngIf="currentSection === 3">
+			<app-input
+				[form]="form"
+				name="ownerBankAccount"
+				label="Titular de la cuenta bancaria"
+				placeholder="Nombre del titular"
+				class="w-100"
+			></app-input>
+			<app-input
+				[form]="form"
+				name="contribuyerNumber"
+				type="number"
+				label="Número de contribuyente"
+				placeholder="Ingrese número de contribuyente"
+				class="w-100"
+			></app-input>
+			<app-input
+				[form]="form"
+				name="businessName"
+				label="Razón social"
+				placeholder="Ingrese razón social"
+				class="w-100"
+			></app-input>
+			<app-input
+				[form]="form"
+				name="fiscalAddress"
+				label="Dirección fiscal"
+				placeholder="Ingrese dirección fiscal"
+				class="w-100"
+			></app-input>
+		</ng-container>
+		<!-- Buttons -->
+		<div class="d-flex flex-row justify-content-center gap-4">
+			<button class="btn btn-outline-secondary" type="button" (click)="instanceModal.close()">
+				Cancelar
+			</button>
+			<button class="btn btn-secondary" type="submit" [disabled]="form.invalid">Aceptar</button>
+		</div>
+	</form>
+</app-modal>

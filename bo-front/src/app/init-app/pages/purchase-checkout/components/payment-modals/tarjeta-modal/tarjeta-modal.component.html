@@ -1,0 +1,127 @@
+<!-- Modal de Tarjeta de Crédito y Débito -->
+<div class="modal-overlay" *ngIf="isOpen" (click)="onClose()">
+  <div class="modal-content tarjeta-modal" (click)="$event.stopPropagation()">
+    <!-- Header del Modal -->
+    <div class="modal-header">
+      <img src="assets/images/Inclub.svg" alt="Inclub" class="brand-logo" />
+      <button class="close-button" (click)="onClose()">×</button>
+      <div class="order-info">
+        <span class="order-label">Número de pedido</span>
+        <span class="order-number">123456</span>
+      </div>
+    </div>
+
+    <!-- Banner informativo -->
+    <div class="info-banner">
+      <div class="info-icon">⚠️</div>
+      <span>Recuerda activar tus compras por internet.</span>
+    </div>
+
+    <!-- Formulario de Tarjeta -->
+    <div class="card-form">
+      <div class="form-field">
+        <label>Número de la tarjeta</label>
+        <input
+          type="text"
+          class="form-control"
+          [class.invalid]="errors.cardNumber"
+          [(ngModel)]="cardData.cardNumber"
+          (input)="formatCardNumberManual($event)"
+          placeholder="0000-0000-0000-0000"
+          maxlength="19"
+        />
+        <div class="error-message" *ngIf="errors.cardNumber">{{ errors.cardNumber }}</div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-field">
+          <label>Fecha de caducidad</label>
+          <input
+            type="text"
+            class="form-control"
+            [class.invalid]="errors.expirationDate"
+            [(ngModel)]="cardData.expirationDate"
+            (input)="formatExpirationDateManual($event)"
+            placeholder="MM/AA"
+            maxlength="5"
+          />
+          <div class="error-message" *ngIf="errors.expirationDate">{{ errors.expirationDate }}</div>
+        </div>
+        <div class="form-field">
+          <label>CVV</label>
+          <input
+            type="text"
+            class="form-control"
+            [class.invalid]="errors.cvv"
+            [(ngModel)]="cardData.cvv"
+            (input)="formatCVVManual($event)"
+            placeholder="CVV"
+            maxlength="3"
+          />
+          <div class="error-message" *ngIf="errors.cvv">{{ errors.cvv }}</div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-field two-col">
+          <label>Nombres</label>
+          <input
+            type="text"
+            class="form-control"
+            [class.invalid]="errors.firstName"
+            [(ngModel)]="cardData.firstName"
+            (input)="onNameChange('firstName')"
+            placeholder="ej. Emilio Alejandro"
+          />
+          <div class="error-message" *ngIf="errors.firstName">{{ errors.firstName }}</div>
+        </div>
+
+        <div class="form-field two-col">
+          <label>Apellidos</label>
+          <input
+            type="text"
+            class="form-control"
+            [class.invalid]="errors.lastName"
+            [(ngModel)]="cardData.lastName"
+            (input)="onNameChange('lastName')"
+            placeholder="ej. De la Cruz Aguilar"
+          />
+          <div class="error-message" *ngIf="errors.lastName">{{ errors.lastName }}</div>
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label>Correo electrónico</label>
+        <input
+          type="email"
+          class="form-control"
+          [class.invalid]="errors.email"
+          [(ngModel)]="cardData.email"
+          (input)="onEmailChange()"
+          placeholder="ej. usuario@email.com"
+        />
+        <div class="error-message" *ngIf="errors.email">{{ errors.email }}</div>
+      </div>
+    </div>
+
+    <!-- Botón de Pago -->
+    <div class="payment-actions">
+      <button
+        class="pay-button"
+        [class.disabled]="!isFormValid() || isProcessing"
+        [disabled]="!isFormValid() || isProcessing"
+        (click)="processPayment()"
+      >
+        <span *ngIf="!isProcessing">Pagar S/.29.80</span>
+        <span *ngIf="isProcessing">Procesando...</span>
+      </button>
+    </div>
+
+    <!-- Texto Legal -->
+    <div class="legal-text">
+      Al hacer clic en Pagar, aceptar
+      <a href="#" class="legal-link">Términos y Condiciones</a> &
+      <a href="#" class="legal-link">Políticas de protección de datos personales</a>.
+    </div>
+  </div>
+</div>

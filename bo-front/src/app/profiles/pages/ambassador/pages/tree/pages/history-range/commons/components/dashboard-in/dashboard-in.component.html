@@ -1,0 +1,219 @@
+<!--For Mobile -->
+<div class="d-flex flex-column gap-2 d-md-none">
+	<app-navigation
+		class="w-100"
+		[data]="dashboardNavigation"
+		[selected]="dahsboardNavigationTab"
+		(changeSelected)="dahsboardNavigationTab = $event"
+	></app-navigation>
+	<!--Partner state-->
+	<ng-container *ngIf="dahsboardNavigationTab === 1">
+		<div class="d-flex flex-row w-100 align-items-center">
+			<span class="w-100 cl-muted fs-6">Nombre:</span>
+			<span class="w-100 fs-6 text-black fw-medium">{{ fullname }}</span>
+		</div>
+		<div class="d-flex flex-row w-100 align-items-center">
+			<span class="w-100 cl-muted fs-6">D.N.I: </span>
+			<span class="w-100 fs-6 text-black fw-medium">{{ docNumber }}</span>
+		</div>
+		<div class="d-flex flex-column p-3 border rounded gap-2">
+			<div class="d-flex flex-row justify-content-between w-100 align-items-center">
+				<div class="d-flex flex-column w-auto">
+					<h4 class="m-0 fs-6 fw-medium text-black">Estadísticas del Socio</h4>
+					<span class="cl-muted fw-normal">Lunes 15 mayo 2023, 11:30PM</span>
+				</div>
+				<button class="btn btn-secondary">Hoy</button>
+			</div>
+			<div class="d-flex w-100 flex-column justify-content-center align-items-center">
+				<div class="d-flex flex-row align-items-start gap-1">
+					<span class="fs-3 m-0 fw-bold text-black">19575</span>
+					<span class="fs-12 fw-medium text-black">pts</span>
+				</div>
+				<span class="text-secondary fw-medium" style="margin-top: -0.5rem">Volumen Rama 1</span>
+			</div>
+			<div class="line bg-black opacity-25"></div>
+			<app-box-cycle-weekly [withoutBox]="true"></app-box-cycle-weekly>
+		</div>
+	</ng-container>
+	<!--Total points-->
+	<div class="d-flex flex-column gap-4 w-100" *ngIf="dahsboardNavigationTab === 2">
+		<app-navigation
+			class="w-100"
+			[data]="typeAccountNavigation"
+			[selected]="typeAccountPointsTab"
+			(changeSelected)="typeAccountPointsTab = $event"
+		></app-navigation>
+		<h4 class="m-0 text-secondary fw-bold fs-5">Puntos Totales</h4>
+		<div
+			class="w-100 d-flex flex-row justify-content-between p-4 rounded"
+			style="background-color: #4169e112"
+			*ngFor="let n of [1, 2, 3, 4]"
+		>
+			<div class="d-flex flex-column">
+				<h6 class="m-0 fs-6 fw-medium text-black">Volumen Rama {{ n }}</h6>
+				<span class="cl-muted fs-6 fw-medium">19575 pts</span>
+			</div>
+			<div
+				class="d-flex flex-row justify-content-center align-items-center rounded-circle"
+				style="background-color: #ffbe0a1a; width: 42px; height: 42px"
+			>
+				<mat-icon svgIcon="award"></mat-icon>
+			</div>
+		</div>
+	</div>
+	<!--Range advance-->
+	<ng-container *ngIf="dahsboardNavigationTab === 3">
+		<app-navigation
+			class="w-100"
+			[data]="typeAccountNavigation"
+			[selected]="typeAccountRangeAdvanceTab"
+			(changeSelected)="typeAccountRangeAdvanceTab = $event"
+		></app-navigation>
+		<h4 class="m-0 cl-muted fw-medium fs-5">Mi rango</h4>
+		<app-range class="w-100" [withoutBox]="true" [withoutTitle]="true" [noIndicators]="true"></app-range>
+	</ng-container>
+</div>
+
+<!--For md or Pc -->
+<div class="d-none d-md-flex flex-column gap-2">
+	<div class="d-flex flex-row w-100 align-items-center">
+		<span class="w-100 cl-muted fs-6">Nombre:</span>
+		<span class="w-100 fs-6 text-black fw-medium">{{ fullname }}</span>
+	</div>
+	<div class="d-flex flex-row w-100 align-items-center">
+		<span class="w-100 cl-muted fs-6">D.N.I: </span>
+		<span class="w-100 fs-6 text-black fw-medium">{{ docNumber }}</span>
+	</div>
+<!-- 	<app-box-cycle-weekly></app-box-cycle-weekly>
+ -->	<app-navigation
+		class="w-100"
+		[data]="dashboardMdNavigation"
+		[selected]="dahsboardMdNavigationTab"
+		(changeSelected)="dahsboardMdNavigationTab = $event"
+	></app-navigation>
+
+	<!--Partner state-->
+
+	<ng-container *ngIf="dahsboardMdNavigationTab === 1">
+		<app-navigation
+			class="w-100"
+			[data]="typeAccountNavigation"
+			[selected]="typeAccountRangeAdvanceTab"
+			(changeSelected)="typeAccountRangeAdvanceTab = $event"
+		></app-navigation>
+
+		<div class="d-flex flex-column p-3 border rounded gap-2">
+			<div class="d-flex flex-column w-auto">
+				<h4 class="m-0 fs-6 fw-medium text-black">Estadísticas del Socio</h4>
+				<span class="cl-muted fw-normal">Lunes 15 mayo 2023, 11:30PM</span>
+			</div>
+
+			<div class="d-flex flex-row gap-3 justify-content-center align-items-center">
+				<div class="d-flex w-100 flex-column justify-content-center align-items-center">
+					<div class="d-flex flex-row align-items-start gap-1">
+						<span class="fs-3 m-0 fw-medium text-black">19575</span>
+						<span class="fs-12 fw-medium text-black">pts</span>
+					</div>
+					<span class="text-primary fw-medium" style="margin-top: -0.5rem">Volumen Personal</span>
+				</div>
+				<div class="d-flex w-100 flex-column justify-content-center align-items-center">
+					<div class="d-flex flex-row align-items-start gap-1">
+						<span class="fs-3 m-0 fw-medium text-black">19575</span>
+						<span class="fs-12 fw-medium text-black">pts</span>
+					</div>
+					<span class="text-primary fw-medium" style="margin-top: -0.5rem">Volumen Grupal</span>
+				</div>
+				<div class="d-flex w-100 flex-column justify-content-center align-items-center">
+					<div class="d-flex flex-row align-items-center gap-1">
+						<mat-icon fontIcon="account_tree" class="text-primary"></mat-icon>
+						<span class="fs-3 m-0 fw-medium text-black">575</span>
+					</div>
+					<span class="text-primary fw-medium" style="margin-top: -0.5rem">Personas en tu Red</span>
+				</div>
+			</div>
+
+			<div class="line bg-black opacity-25"></div>
+
+			<h4 class="m-0 fs-6 fw-medium text-black">Bonificaciones</h4>
+
+			<div class="d-flex flex-row gap-3 justify-content-center align-items-center">
+				<div class="d-flex w-100 flex-column justify-content-center align-items-center">
+					<div class="d-flex flex-row align-items-start gap-1">
+						<span class="fs-3 m-0 fw-medium text-black">$ 175.00</span>
+					</div>
+					<span class="text-primary fw-medium" style="margin-top: -0.5rem">Último ciclo</span>
+				</div>
+				<div class="d-flex w-100 flex-column justify-content-center align-items-center">
+					<div class="d-flex flex-row align-items-start gap-1">
+						<span class="fs-3 m-0 fw-medium text-black">$ 785.00</span>
+					</div>
+					<span class="text-primary fw-medium" style="margin-top: -0.5rem">Último Mes</span>
+				</div>
+				<div class="d-flex w-100 flex-column justify-content-center align-items-center">
+					<div class="d-flex flex-row align-items-start gap-1">
+						<span class="fs-3 m-0 fw-medium text-black">$ 8,567.00</span>
+					</div>
+					<span class="text-primary fw-medium" style="margin-top: -0.5rem">Acumulado</span>
+				</div>
+			</div>
+
+			<div class="line bg-black opacity-25"></div>
+
+			<h4 class="m-0 fs-6 fw-medium text-black">Mi rango</h4>
+
+			<app-range class="w-100" [withoutBox]="true" [withoutTitle]="true"></app-range>
+		</div>
+	</ng-container>
+
+	<!--Points details-->
+	<div class="d-flex flex-column gap-3" *ngIf="dahsboardMdNavigationTab === 2">
+		<app-navigation
+			class="w-100"
+			[data]="typeAccountNavigation"
+			[selected]="typeAccountPointsTab"
+			(changeSelected)="typeAccountPointsTab = $event"
+		></app-navigation>
+		<h4 class="m-0 text-secondary fw-medium fs-5">Puntos Totales</h4>
+		<div
+			class="w-100 d-flex flex-row justify-content-between p-4 rounded"
+			style="background-color: #4169e112"
+			*ngFor="let n of [1, 2, 3, 4]"
+		>
+			<div class="d-flex flex-column">
+				<h6 class="m-0 fs-6 fw-medium text-black">Volumen Rama {{ n }}</h6>
+				<span class="cl-muted fs-6 fw-medium">19575 pts</span>
+			</div>
+			<div
+				class="d-flex flex-row justify-content-center align-items-center rounded-circle"
+				style="background-color: #ffbe0a1a; width: 42px; height: 42px"
+			>
+				<mat-icon svgIcon="award"></mat-icon>
+			</div>
+		</div>
+		<h4 class="m-0 text-primary fw-medium fs-5">Rango Actual</h4>
+		<div
+			class="w-100 d-flex flex-row justify-content-between p-4 rounded"
+			style="background-color: #4169e112"
+			*ngFor="let n of [1, 2, 3, 4]"
+		>
+			<div class="d-flex flex-column">
+				<h6 class="m-0 fs-6 fw-medium text-black">Volumen Rama {{ n }}</h6>
+				<span class="cl-muted fs-6 fw-medium">19575 pts</span>
+			</div>
+			<mat-icon svgIcon="percentaje" style="width: 42px; height: 42px"></mat-icon>
+		</div>
+		<h4 class="m-0 fw-medium fs-5" style="color: #ff4f79">Próximo rango</h4>
+		<div
+			class="w-100 d-flex flex-row justify-content-between p-4 rounded"
+			style="background-color: #4169e112"
+			*ngFor="let n of [1, 2, 3, 4]"
+		>
+			<div class="d-flex flex-column">
+				<h6 class="m-0 fs-6 fw-medium text-black">Volumen Rama {{ n }}</h6>
+				<span class="cl-muted fs-6 fw-medium">19575 pts</span>
+			</div>
+
+			<mat-icon svgIcon="percentaje_pink" style="width: 42px; height: 42px"></mat-icon>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,40 @@
+<div class="d-flex w-100 align-items-center">
+	<app-input
+		class="flex-grow-1 me-2"
+		type="text"
+		[placeholder]="placeholderText || 'Buscar por Nombres, Usuarios o N° Documentos'"
+		[form]="form"
+		controlName="searchBy"
+		[isIconRight]="true"
+		iconName="pi pi-search"
+		style="height: 38px"
+	></app-input>
+
+	<button
+		class="btn btn-secondary px-3 fs-12 d-flex align-items-center justify-content-center"
+		type="button"
+		(click)="onClickBtn()"
+		style="height: 38px"
+		[disabled]="!isSearchButtonEnabled"
+	>
+		<span
+			*ngIf="isLoading"
+			class="spinner-border spinner-border-sm"
+			role="status"
+			aria-hidden="true"
+		></span>
+		<span *ngIf="!isLoading">Buscar</span>
+	</button>
+</div>
+
+<div class="mt-3">
+	<app-select
+		class="w-100"
+		[placeholder]="placeholderText"
+		[form]="form"
+		controlName="selectedOption"
+		[options]="filteredOptions"
+		[disabled]="filteredOptions.length === 0"
+		[hidden]="filteredOptionsHidden"
+	></app-select>
+</div>

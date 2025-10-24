@@ -1,0 +1,68 @@
+<div class="p-4 card px-0 px-md-4 card-border-none">
+	<div class="d-flex flex-column flex-md-row gap-2 w-100 gap-md-4 mt-5">
+		<app-input
+			class="w-100"
+			label="Buscador"
+			[isIconRight]="true"
+			iconName="pi pi-search"
+			[form]="form"
+			placeholder="Buscar movimientos"
+			controlName="motion"
+			type="text"
+		>
+		</app-input>
+		<app-date
+			class="w-100"
+			[form]="form"
+			placeholder="dd/mm/aaaa"
+			[config]="true"
+			label="Fecha inicial"
+			controlName="startDate"
+			type="text"
+		></app-date>
+		<app-date
+			class="w-100"
+			[form]="form"
+			placeholder="dd/mm/aaaa"
+			[config]="true"
+			label="Fecha final"
+			controlName="endDate"
+			type="text"
+		></app-date>
+	</div>
+
+	<div class="overflow-x-auto rounded-lg shadow-md">
+		<table class="min-w-full text-sm text-left text-gray-700 table-rewards-historical">
+			<thead class="text-gray-500 uppercase text-xs">
+				<tr>
+					<th>Fecha</th>
+					<th>Portafolio</th>
+					<th>Membresía</th>
+					<th>Descripción</th>
+					<th>Recomp. usados</th>
+					<th>Status</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="border-b" *ngFor="let item of listMoveRewards; let i = index">
+					<td>{{ item.date | date : 'dd/MM/yyyy' }}</td>
+					<td>{{ item.portfolio }}</td>
+					<td>{{ item.membership }}</td>
+					<td>{{ item.description }}</td>
+					<td>{{ item.points }} USD</td>
+					<td>
+						<span
+							class="chip"
+							[ngClass]="{
+								'chip--consumed': item.status === 'Canjeados',
+								'chip--success': item.status === 'Ganados'
+							}"
+						>
+							{{ item.status }}
+						</span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

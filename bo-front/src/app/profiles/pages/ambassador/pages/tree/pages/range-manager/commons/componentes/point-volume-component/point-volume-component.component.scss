@@ -1,0 +1,93 @@
+.ranges-col {
+	top: 1rem;
+	width: 100%;
+}
+
+.nav-text {
+	font-size: 1rem;
+}
+
+.point-container {
+	width: 100%;
+}
+
+.point-title {
+	font-size: 1.25rem;
+}
+
+.point-subtitle {
+	font-size: 1rem;
+}
+
+.rounded-article {
+	border-radius: 15px;
+	border: 1px solid #ccc;
+}
+
+app-review-state {
+	width: 100%;
+}
+
+@media (min-width: 768px) {
+	app-review-state {
+		width: calc(100% - 8px);
+	}
+}
+
+@media (min-width: 1000px) {
+	.ranges-col {
+		background-color: #e9f5ff;
+	}
+
+	.point-title {
+		font-size: 1.5rem;
+	}
+
+	.point-subtitle {
+		font-size: 1.25rem;
+	}
+
+	.ranges-col {
+		border-style: solid;
+		border-width: 1px;
+	}
+}
+
+@media (min-width: 1200px) {
+	.ranges-col {
+		max-width: 400px;
+	}
+}
+
+@media (min-width: 1000px) and (max-width: 1500px) {
+	app-review-state {
+		width: 100%;
+	}
+}
+
+.progress-icon {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  svg {
+    transform: rotate(-90deg);
+  }
+
+  .progress-percentage {
+    position: absolute;
+    font-size: 10px;
+    color: #4a90e2;
+    font-weight: bold;
+  }
+}
+
+
+
+
+
+
+

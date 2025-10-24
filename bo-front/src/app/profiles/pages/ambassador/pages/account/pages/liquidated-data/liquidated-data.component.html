@@ -1,0 +1,8 @@
+<div class="d-flex flex-column gap-4 card p-lg-4 border-0">
+    <div class="row">
+       <!--  <app-liquidated-table [dataBody]="beneficiaries" [totalRecords]="totalRecords"
+            (pageChange)="onPageChange($event)" (refresh)="onRefresh($event)">
+        </app-liquidated-table> -->
+        <app-beneficiary-table [dataBody]="Liquidated" [isLoading]="isLoading"></app-beneficiary-table>
+    </div>
+</div>

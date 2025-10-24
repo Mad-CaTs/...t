@@ -1,0 +1,100 @@
+<div class="historic-released-point__container">
+	<form class="row g-4">
+		<div class="col-md-6">
+			<app-input
+				[isIconRight]="true"
+				iconName="pi pi-search"
+				[form]="form"
+				placeholder="Buscar movimientos"
+				controlName="motion"
+				type="text"
+			>
+			</app-input>
+		</div>
+		<div class="col-md-6">
+			<app-date
+				[form]="form"
+				placeholder="dd/mm/aaaa"
+				[config]="true"
+				controlName="date"
+				type="text"
+			></app-date>
+		</div>
+	</form>
+
+	<div *ngIf="isLoading" class="d-flex justify-content-center align-items-center my-4">
+		<p-progressSpinner
+			[style]="{ width: '5rem', height: '5rem' }"
+			strokeWidth="3"
+			fill="var(--surface-ground)"
+			animationDuration=".7s"
+		></p-progressSpinner>
+	</div>
+
+	<div class="historic-released-point__container__table" *ngIf="!isLoading">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="table-responsive" style="width: 100%; display: block">
+					<table class="table">
+						<thead>
+							<tr>
+								<th scope="col" class="text-custom2">Información</th>
+								<th scope="col" class="text-custom2">Membresía</th>
+								<th scope="col" class="text-custom2">Portafolio</th>
+								<th scope="col" class="text-custom2">Recompensas</th>
+								<th scope="col" class="text-custom2">Status</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr *ngIf="displayedTransactions.length === 0">
+								<td colspan="5" class="text-center text-muted">
+									No hay datos disponibles para mostrar
+								</td>
+							</tr>
+							<tr *ngFor="let item of displayedTransactions" style="vertical-align: middle">
+								<td>
+									<div class="historic-released-point__container__table__info">
+										<div class="historic-released-point__container__table__info__icon">
+											<img
+												*ngIf="item.status === 'Canjeados'"
+												src="assets/icons/arrow-down-left_blue.svg"
+												alt="arrow-down-left_blue"
+											/>
+											<img
+												*ngIf="item.status === 'Ganados'"
+												src="assets/icons/arrow-up-right_green.svg"
+												alt="arrow-up-right_green"
+											/>
+										</div>
+										<div class="historic-released-point__container__table__info__text">
+											<p class="m-0">{{ item.description }}</p>
+											<span style="text-transform: capitalize">
+												{{ item.date | date : 'dd MMMM yyyy, hh:mm a' }}
+											</span>
+										</div>
+									</div>
+								</td>
+								<td class="text-custom2">{{ item.membership }}</td>
+								<td class="text-custom2">{{ item.portfolio }}</td>
+								<td>
+									<strong>{{ item.points }} USD</strong>
+								</td>
+								<td>
+									<div
+										class="chip"
+										[ngClass]="{
+											'chip--consumed': item.status === 'Canjeados',
+											'chip--success': item.status === 'Ganados'
+										}"
+									>
+										{{ item.status }}
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

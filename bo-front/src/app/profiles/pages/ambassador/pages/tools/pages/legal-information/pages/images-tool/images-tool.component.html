@@ -1,0 +1,30 @@
+<div class="p-4 card px-0 px-md-4 card-border-none">
+  <div class="d-flex flex-column gap-3 card p-lg-4 border-0">
+    <app-navigation [data]="stepNavigation"
+                    [selected]="currentStep"
+                    [noBgSecondary]="true"
+                    (changeSelected)="onChangeStep($event)"></app-navigation>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <mat-card class="card-proyect position-relative">
+        <img appConcatenateSrc="ef81cddc-6ef7-47ba-a21b-2c48e3a5bf86-card&ribera&(1).png"
+             mat-card-image />
+        <div class="position-absolute top-0 start-0 m-2 text-white">
+          <p style="margin: 0;">Inresorts Ribera del Rio</p>
+        </div>
+        <a (click)="navigateToOverview()"
+           class="bottom-button text-white">Vamos a ver<span class="ms-2">&rarr;</span></a>
+      </mat-card>
+    </div>
+    <div class="col-6">
+      <mat-card class="card-proyect position-relative">
+        <img appConcatenateSrc="ef81cddc-6ef7-47ba-a21b-2c48e3a5bf86-card&la&joya.png"
+             mat-card-image />
+        <div class="position-absolute top-0 start-0 m-2 text-white">
+        </div>
+      
+      </mat-card>
+    </div>
+  </div>
+</div>

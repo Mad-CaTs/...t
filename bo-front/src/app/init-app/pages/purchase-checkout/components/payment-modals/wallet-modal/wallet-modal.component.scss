@@ -1,0 +1,254 @@
+.modal-overlay {
+	position: fixed;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: rgba(0, 0, 0, 0.5);
+	z-index: 9999999;
+}
+.wallet-modal {
+	background: #fff;
+	border-radius: 18px;
+	width: min(96vw, 460px);
+	box-shadow: 0 20px 54px rgba(0, 0, 0, 0.16);
+	overflow: visible;
+	padding: 0;
+}
+.modal-header {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	position: relative;
+	padding: 0.9rem 0.75rem 0.6rem;
+	border-bottom: 1px solid #e5e7eb;
+}
+.modal-header .brand-logo {
+	position: absolute;
+	top: 0.9rem;
+	left: 1rem;
+	height: 28px;
+	width: auto;
+}
+.modal-header .close-button {
+	background: none;
+	border: none;
+	font-size: 1.4rem;
+	color: #666;
+	cursor: pointer;
+	width: 28px;
+	height: 28px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.modal-header .close-button:hover {
+	background: #f3f4f6;
+}
+.modal-header .order-label {
+	font-size: 0.9rem;
+	color: #6b7280;
+	font-weight: 600;
+	line-height: 1.05;
+}
+
+.wallet-content { padding: 1.1rem 1.25rem 1.25rem; }
+.balance-cards { display:grid; grid-template-columns:1fr 1fr; gap:.75rem; margin-bottom:1rem; }
+.balance-card { background:#f8fafc; border:1px solid #e8eef5; padding:.55rem .6rem .65rem; border-radius:10px; text-align:center; }
+.balance-card .balance-main { display:flex; justify-content:center; gap:.35rem; margin-bottom:.25rem; }
+.balance-card .balance-icon {
+	width: 22px;
+	height: 22px;
+	object-fit: contain;
+	display: block;
+}
+.balance-card .balance-amount {
+	font-size: 1.05rem;
+	font-weight: 800;
+	color: #111827;
+	margin: 0;
+}
+.balance-card .balance-label {
+	font-size: 0.68rem;
+	color: #6b7280;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.4px;
+}
+
+.payment-details-section {
+	margin-bottom: 1.25rem;
+}
+.payment-details-section h3 {
+	font-size: 1rem;
+	font-weight: 700;
+	color: #374151;
+	margin: 0.25rem 0 0.6rem;
+}
+.payment-info-grid {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	margin-bottom: 0.75rem;
+}
+.info-item {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background: #f3f4f6;
+	border-radius: 10px;
+	padding: 0.6rem 0.75rem;
+}
+.info-item .info-label {
+	font-size: 0.8125rem;
+	color: #6b7280;
+}
+.info-item .info-value {
+	font-size: 0.8125rem;
+	color: #374151;
+	font-weight: 600;
+}
+.info-item.total .info-label {
+	font-weight: 700;
+	color: #111827;
+}
+.info-item.total .info-value {
+	color: #1e40af;
+	font-weight: 800;
+}
+
+/* Info bar */
+.info-bar { display:flex; align-items:center; gap:.5rem; background:#e8f1ff; border:1px solid #cfe1ff; color:#1e40af; border-radius:8px; padding:.55rem .7rem; font-size:.75rem; line-height:1.3; }
+.info-bar .info-icon { width:20px; height:20px; border-radius:50%; background:#d0e4ff; color:#1e40af; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:.75rem; }
+.info-bar.error { background:#fef2f2; border-color:#fecaca; color:#b91c1c; }
+.info-bar.error .info-icon { background:#fca5a5; color:#b91c1c; }
+
+form { padding:0 0 1.05rem; display:flex; flex-direction:column; }
+.textarea-wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	margin-bottom: 14px;
+}
+.textarea-wrapper label {
+	font-size: 0.75rem;
+	font-weight: 700;
+	color: #374151;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+}
+.textarea-wrapper textarea {
+	width: 100%;
+	padding: 0.58rem 0.7rem;
+	border: 1px solid #d1d5db;
+	border-radius: 10px;
+	font-size: 0.88rem;
+	background: #fff;
+	color: #111827;
+	transition: border-color 0.15s, box-shadow 0.15s;
+	resize: vertical;
+	min-height: 84px;
+}
+.textarea-wrapper:focus-within textarea {
+	outline: none;
+	border-color: #3b82f6;
+	box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+}
+.textarea-wrapper.error textarea {
+	border-color: #ef4444;
+	box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.12);
+}
+.field-error {
+	font-size: 0.7rem;
+	color: #ef4444;
+	margin-top: -4px;
+	animation: fadeIn 0.15s ease;
+}
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(-2px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.actions {
+	display: flex;
+	justify-content: flex-end;
+	gap: 0.65rem;
+	margin-top: 0.2rem;
+}
+.btn {
+	border: none;
+	border-radius: 10px;
+	padding: 0.7rem 1.25rem;
+	font-size: 0.85rem;
+	font-weight: 700;
+	cursor: pointer;
+	transition: background 0.15s, transform 0.1s, color 0.15s;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+}
+.btn.secondary {
+	background: #f3f4f6;
+	color: #374151;
+}
+.btn.secondary:hover:not(:disabled) {
+	background: #e5e7eb;
+}
+.btn.primary {
+	background: #fe7c04;
+	color: #fff;
+	min-width: 150px;
+}
+.btn.primary:hover:not(:disabled) {
+	background: #fe8d24;
+}
+.btn:disabled {
+	opacity: 0.6;
+	cursor: not-allowed;
+}
+.spinner {
+	width: 18px;
+	height: 18px;
+	border: 3px solid rgba(255, 255, 255, 0.35);
+	border-top-color: #fff;
+	border-radius: 50%;
+	animation: spin 1s linear infinite;
+}
+@keyframes spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+/* Skeleton loader for balance cards */
+.skeleton {
+	position: relative;
+	overflow: hidden;
+	min-height: 72px;
+	border-radius: 10px;
+	background: linear-gradient(90deg, #f1f5f9 0%, #e2e8f0 40%, #f1f5f9 80%);
+	background-size: 200% 100%;
+	animation: skeleton 1.15s linear infinite;
+	border: 1px solid #e2e8f0;
+}
+@keyframes skeleton {
+	to {
+		background-position: -200% 0;
+	}
+}
+
+@media (max-width: 520px) {
+	.wallet-modal {
+		width: 92vw;
+	}
+	.balance-cards {
+		grid-template-columns: 1fr;
+	}
+}

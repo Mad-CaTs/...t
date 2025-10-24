@@ -1,0 +1,89 @@
+.line {
+  width: 100%;
+  height: 5px;
+  background-color: #FE7C04;
+  margin-bottom: 15px;
+}
+.icon { width: 18px; height: 18px; margin-right: .4rem; color: #0e8292; }
+
+.table-header {
+  font-weight: 600;
+  color: #6b7280; 
+  border-bottom: 1px solid #e5e7eb;
+}
+.sortable {
+  cursor: pointer;
+  user-select: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .15rem;
+}
+.sortable .mat-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  line-height: 16px;
+  vertical-align: middle;
+}
+
+:host ::ng-deep app-table .table-header {
+  background: #f8fafc;            
+  border: 1px solid #e5e7eb;      
+  border-bottom: 0;                
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+:host ::ng-deep app-table .table-header > td {
+  color: #6b7280;                  
+  font-weight: 600;
+  padding: 10px 12px;
+  flex: 1 1 0;                     
+  border-right: 1px solid #eef2f6; 
+  white-space: nowrap;
+}
+:host ::ng-deep app-table .table-header > td:first-child {
+  border-top-left-radius: 10px;
+}
+:host ::ng-deep app-table .table-header > td:last-child {
+  border-top-right-radius: 10px;
+  border-right: 0;
+}
+
+.th-sort {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.th-label {
+  line-height: 1.1;
+  text-align: left; 
+}
+
+
+.sortable { cursor: pointer; user-select: none; }
+.sortable .mat-icon {
+  font-size: 16px;
+  width: 16px; height: 16px; line-height: 16px;
+  color: #94a3b8;                 
+}
+.sortable.active .mat-icon {
+  color: #475569;                 
+}
+
+:host ::ng-deep app-table tr.d-flex.align-items-center td {
+  flex: 1 1 0;
+}
+
+.sortable .pi { font-size: 0.9rem; color: #94a3b8; }
+.sortable.active .pi { color: #475569; }
+
+.detail-link--blue.btn-link{
+  color:#337ab7 !important;     
+}
+.detail-link--blue.btn-link:hover,
+.detail-link--blue.btn-link:focus{
+  color:#23527c !important;     
+  text-decoration:none;         
+}

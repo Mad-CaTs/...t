@@ -1,0 +1,48 @@
+<div class="p-4 card px-0 px-md-4 card-border-none">
+	<div class="d-flex flex-column gap-3 card p-lg-4 border-0">
+		<app-navigation
+			[data]="stepNavigation"
+			[selected]="currentStep"
+			[noBgSecondary]="true"
+			(changeSelected)="onChangeStep($event)"
+		></app-navigation>
+	</div>
+	<div class="row justify-content-center">
+		<!-- Primera fila: 2 cards -->
+		<div
+			class="col-12 col-md-6 col-lg-5 d-flex justify-content-center mb-4"
+			*ngFor="let card of cardsData.slice(0, 2)"
+		>
+			<mat-card
+				class="card-proyect card-clickable card-equal"
+				(click)="navigateToOverview(card.id, card.title)"
+			>
+				<div class="card-image-container">
+					<img [appConcatenateSrc]="card.imagePath" mat-card-image />
+				</div>
+				<div class="position-absolute top-0 start-0 m-2 text-white fw-semibold">
+					{{ card.title }}
+				</div>
+			</mat-card>
+		</div>
+
+		<!-- Segunda fila: card centrado -->
+		<div class="col-12 d-flex justify-content-center">
+			<div class="col-12 col-md-6 col-lg-5 d-flex justify-content-center">
+				<ng-container *ngIf="cardsData.length > 2">
+					<mat-card
+						class="card-proyect card-clickable card-equal"
+						(click)="navigateToOverview(cardsData[2].id, cardsData[2].title)"
+					>
+						<div class="card-image-container">
+							<img [appConcatenateSrc]="cardsData[2].imagePath" mat-card-image />
+						</div>
+						<div class="position-absolute top-0 start-0 m-2 text-white fw-semibold">
+							{{ cardsData[2].title }}
+						</div>
+					</mat-card>
+				</ng-container>
+			</div>
+		</div>
+	</div>
+</div>

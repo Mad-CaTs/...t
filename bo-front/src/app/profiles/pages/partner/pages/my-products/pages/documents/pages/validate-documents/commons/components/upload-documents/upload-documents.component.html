@@ -1,0 +1,67 @@
+<div class="container py-4">
+	<h4 class="fw-bold">
+		{{ isLegalization ? 'Adjuntar documentos personales ' : 'Attach Personal Documents' }}
+	</h4>
+	<p class="text-muted">
+		{{
+			isLegalization ? 'Completa  todos  los  campos exitosamente.' : 'Complete all fields successfully'
+		}}
+	</p>
+	<app-select
+		class="w-100"
+		[showImg]="false"
+		[label]="isLegalization ? 'Tipo de documento *' : 'Document Type *'"
+		[placeholder]="isLegalization ? 'Seleccione su documento' : 'Select your document'"
+		[form]="form"
+		[options]="documentTypeList"
+		controlName="documentId"
+	>
+	</app-select>
+	<div class="mt-2">
+		<app-input
+			[form]="form"
+			controlName="nroDocument"
+			label="Documento *"
+			type="text"
+			[placeholder]="isLegalization ? 'Ingrese el número' : 'Enter number'"
+			buttons="true"
+			class="w-100"
+		></app-input>
+	</div>
+	<div class="mb-3">
+		<label class="form-label">
+			{{ isLegalization ? 'Adjuntar documentos:' : 'Attach Files:' }}
+		</label>
+
+		<app-file
+			[form]="form"
+			controlName="documentFile"
+			[sendAsBase64]="true"
+			[multiple]="false"
+			[accept]="
+				isLegalization
+					? '.png, .jpg, .jpeg, .pdf, .doc, .docx'
+					: '.png, .jpg, .jpeg, .pdf, .doc, .docx'
+			"
+			[placeholder]="
+				isLegalization
+					? ' png, jpg, jpeg, pdf, doc y docx. Tamaño máximo de archivo: 10 MB.'
+					: 'Supported formats: png, jpg, jpeg, pdf, doc, docx. Max file size: 10 MB.'
+			"
+		>
+		</app-file>
+	</div>
+
+	<div class="col-12">
+		<div class="alert alert-info d-flex align-items-center px-4 py-2">
+			<img src="assets/icons/info.svg" alt="info" class="me-2" width="24" />
+			<span>
+				{{
+					isLegalization
+						? 'Por favor, adjunta una sola imagen que contenga ambos lados (frontal y posterior) de tu documento de identidad'
+						: 'You must send both sides (front and back) of your documents.'
+				}}
+			</span>
+		</div>
+	</div>
+</div>

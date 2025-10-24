@@ -1,0 +1,31 @@
+<app-dashboard-range-manager *ngIf="!_rangeManagerService.getFlagRangeManager"></app-dashboard-range-manager>
+
+<div class="d-flex flex-column gap-3" *ngIf="_rangeManagerService.getFlagRangeManager">
+	<h4 class="mb-2">Gestión de Rango</h4>
+	<div class="d-flex flex-row gap-2 w-100">
+			<app-input class="flex-fill" type="text" placeholder="Buscar por usuario o nombre" label="Buscador" [form]="form"
+				controlName="searchBy" [isIconRight]="true" iconName="pi pi-search"></app-input>
+
+		<app-select class="flex-fill" label="Estado" [options]="optStates" placeholder="Selecciona uno" [form]="form"
+			controlName="status">
+		</app-select>
+
+		<app-select class="flex-fill" label="Rangos" [options]="rangeOptions" placeholder="Selecciona uno" [form]="form"
+			controlName="range">
+		</app-select>
+
+
+<div class="d-flex align-items-center mt-1">
+  <button class="btn btn-secondary" type="submit"
+    style="height: 40px"
+    [disabled]="isLoading || disabledUser"
+    (click)="onSearch()">
+    Filtrar
+  </button>
+</div>
+
+	</div>
+	<app-table-account-tree-range-manager class="w-100" [dataBody]="tableData" (detailModal)="onDetail($event)"
+		[totalRecords]="totalRecords" (pageChange)="onPageChange($event)" [isLoading]="isLoading"
+		(refresh)="onRefresh($event)"></app-table-account-tree-range-manager>
+</div>

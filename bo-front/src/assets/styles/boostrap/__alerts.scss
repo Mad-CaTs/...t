@@ -1,0 +1,30 @@
+.alert-info {
+	--bs-alert-border-color: transparent;
+	--bs-alert-link-color: var(--bs-info-text-emphasis);
+}
+
+.alert-warning {
+	--bs-alert-border-color: transparent;
+	--bs-alert-link-color: var(--bs-info-text-emphasis);
+}
+
+.notification-icon {
+	position: relative;
+	display: inline-block;
+}
+
+.notification-count {
+	position: absolute;
+	top: -10px; 
+	right: -5px; 
+	background-color: red; 
+	color: white; 
+	border-radius: 50%; 
+	width: 20px; 
+	height: 20px; 
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 12px; 
+	font-weight: bold; 
+}

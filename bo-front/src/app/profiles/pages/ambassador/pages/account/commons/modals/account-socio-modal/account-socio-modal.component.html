@@ -1,0 +1,47 @@
+<div class="modal-container">
+    <div class="modal-content">
+        <!-- Header -->
+        <div class="modal-header">
+            <h5 class="text-black fw-medium family-font">Datos del socio</h5>
+        </div>
+        <p style="font-size: 14px" class="text-muted family-font">Información principal del socio.</p>
+
+        <!-- Formulario -->
+        <form [formGroup]="formUser">
+            <!-- Nombre de usuario -->
+            <div class="w-100 mt-2">
+                <app-input label="Nombre de usuario" placeholder="Ingresa tu nombre de usuario" [form]="formUser"
+                    controlName="username"></app-input>
+            </div>
+
+            <!-- Patrocinador -->
+            <div class="w-100 mt-2">
+                <app-input label="Patrocinador" placeholder="Patrocinador" [form]="formUser" controlName="sponsor"
+                    [disabled]="true"></app-input>
+            </div>
+
+            <!-- Alerta -->
+
+            <div class="alert alert-info d-flex flex-row gap-2 mt-2 align-items-center" role="alert">
+                <mat-icon fontIcon="info"></mat-icon>
+                <span class="fw-medium">Si cambias el nombre de usuario, tu enlace de perfil también cambiará. El
+                    usuario
+                    solo tiene 5 intentos para actualizar o cambiar.</span>
+            </div>
+
+
+            <div class="d-flex justify-content-center gap-3 mt-4">
+                <div class="d-flex w-100">
+                    <button class="btn btn-outline-secondary size-btnn" type="button" (click)="closeModal()">
+                        Volver
+                    </button>
+                </div>
+                <div class="d-flex w-100">
+                    <button class="btn btn-secondary size-btnn" type="submit" [disabled]="formUser.invalid">
+                        Actualizar
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

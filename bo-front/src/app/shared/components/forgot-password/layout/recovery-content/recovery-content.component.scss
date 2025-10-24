@@ -1,0 +1,32 @@
+.recovery-content {
+	max-width: 30.25rem;
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+
+	>* {
+		margin: 0;
+		color: #FFFFFF;
+	}
+}
+
+.content-title {
+	font-size: 3rem;
+	font-weight: 400;
+	word-break: break-word;
+}
+
+.content-message {
+	font-size: 1.25rem;
+	font-weight: 300;
+	word-break: break-word;
+}
+
+.inclub-icon {
+	filter: brightness(0) invert(1);
+	width: 9.688rem;
+}
+
+p {
+	margin: 0;
+}

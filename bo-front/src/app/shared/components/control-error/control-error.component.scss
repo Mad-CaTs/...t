@@ -1,0 +1,7 @@
+.error-message {
+  visibility: hidden; /* Ocultar el mensaje de error por defecto */
+}
+
+.error-message:not(:empty) {
+  visibility: visible; /* Mostrar el mensaje de error solo si no está vacío */
+}

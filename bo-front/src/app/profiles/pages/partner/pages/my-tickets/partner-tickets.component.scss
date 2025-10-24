@@ -1,0 +1,18 @@
+.contact-card {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 1.1rem 1rem;
+    border: 1px solid #A7C5FD;
+    border-radius: 0.5rem;
+    background-color: #F1F6FD;
+    height: 60px;
+    gap: 0.5rem;
+}
+
+.icon-exclamation-circle {
+    width: 1.2rem;
+    height: 1.2rem;
+    font-size: 1.2rem;
+    color: blue;
+}

@@ -1,0 +1,15 @@
+.description-container {
+  height: 3.2em; /* Fuerza a que SIEMPRE tenga dos líneas */
+  overflow: hidden; /* Evita que el contenido crezca */
+  display: flex;
+  align-items: center;
+}
+
+.description {
+  font-size: 1rem;
+  line-height: 1.6em; /* Ajusta para que sean dos líneas exactas */
+  white-space: normal;
+  word-break: break-word;
+  text-overflow: ellipsis;
+  margin-bottom: 0;
+}

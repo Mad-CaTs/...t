@@ -1,0 +1,23 @@
+[
+    {
+        "id": 1,
+        "urlImage": "https://example.com/image1.jpg",
+        "eventName": "Concert A",
+        "dateOfEvent": "2023-10-01",
+        "zone": "Zone 1"
+    },
+    {
+        "id": 2,
+        "urlImage": "https://example.com/image2.jpg",
+        "eventName": "Concert B",
+        "dateOfEvent": "2023-10-02",
+        "zone": "Zone 2"
+    },
+    {
+        "id": 3,
+        "urlImage": "https://example.com/image3.jpg",
+        "eventName": "Concert C",
+        "dateOfEvent": "2023-10-03",
+        "zone": "Zone 3"
+    }
+]

@@ -1,0 +1,32 @@
+<div class="card d-flex flex-column w-100 gap-4 border-0">
+	<app-breadcrumb [breadcrumbs]="breadcrumbItems"></app-breadcrumb>
+	<div *ngIf="isLoading" class="d-flex justify-content-center align-items-center py-5">
+		<p-progressSpinner
+			[style]="{ width: '3.5rem', height: '3.5rem' }"
+			strokeWidth="2"
+			fill="var(--surface-ground)"
+			animationDuration=".5s"
+		></p-progressSpinner>
+	</div>
+	<div class="container py-4" *ngIf="!isLoading">
+		<div class="row">
+			<div class="col-md-6 mb-4">
+				<app-status-progress-circle [data]="data"></app-status-progress-circle>
+			</div>
+
+			<div class="col-md-6">
+				<div *ngFor="let step of steps">
+					<app-status-timeline-step
+						[step]="step"
+						[form]="form"
+						[data]="data"
+						[selected]="form.get('selectedStep')?.value === step.id"
+						(selectStep)="onStepSelected($event)"
+						(openModal)="abrirModal($event)"
+					>
+					</app-status-timeline-step>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

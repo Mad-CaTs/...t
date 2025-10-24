@@ -1,0 +1,286 @@
+<div class="card h-100 d-flex flex-column p-2 mb-5" *ngIf="selectedId === 2">
+	<h4>Traspaso de cuenta multicódigo a nuevo socio</h4>
+	<p class="mb-4 cl-gray-100">Elige el perfil para traspasar</p>
+
+	<app-select
+		class="w-100"
+		[showImg]="true"
+		label="Perfil a traspasar"
+		placeholder="Selecciona la nacionalidad"
+		[form]="form"
+		[options]="multicodeListOpt"
+		controlName="transferProfileId"
+	></app-select>
+</div>
+
+<div class="card h-100 d-flex flex-column p-2 mb-5" *ngIf="selectedId === 3">
+	<h4>Traspaso de membresía a socio nuevo</h4>
+	<p class="mb-4 cl-gray-100">Elige el patrocinador y membresía a traspasar</p>
+	<div class="mb-2">
+		<label for="searchBy" class="">Elige el patrocinador del nuevo socio </label>
+		<p-autoComplete
+			id="searchBy"
+			[suggestions]="searchResults"
+			(completeMethod)="onSearchUser($event)"
+			(onSelect)="onUserSelect($event)"
+			optionLabel="label"
+			placeholder="Ingrese su username o nombre"
+			[minLength]="2"
+			[forceSelection]="true"
+			formControlName="searchBy"
+			(onClear)="onClearUser()"
+			styleClass="w-100"
+			[loading]="loading"
+		>
+			<ng-template let-item pTemplate="item">
+				<div>
+					<strong>{{ item.label }}</strong>
+				</div>
+			</ng-template>
+		</p-autoComplete>
+	</div>
+
+	<app-select
+		class="w-100 mt-3"
+		[showImg]="true"
+		label="Membresía"
+		placeholder="Selecciona uno"
+		[form]="form"
+		[options]="membershipList"
+		controlName="membership"
+	></app-select>
+</div>
+
+<div class="card h-100 d-flex flex-column p-2 mb-5" *ngIf="selectedId === 4">
+	<h4>Traspaso de membresía a socio vigente</h4>
+	<p class="mb-4 cl-gray-100">Elige el patrocinador y membresía a traspasar</p>
+	<div class="mb-2">
+		<label for="searchBy" class="">Usuario del socio a traspasar </label>
+		<p-autoComplete
+			id="searchBy"
+			[suggestions]="searchResults"
+			(completeMethod)="onSearchUser($event)"
+			(onSelect)="onUserSelect($event)"
+			optionLabel="label"
+			placeholder="Ingrese su username o nombre"
+			[minLength]="2"
+			[forceSelection]="true"
+			formControlName="searchBy"
+			(onClear)="onClearUser()"
+			styleClass="w-100"
+			[loading]="loading"
+		>
+			<ng-template let-item pTemplate="item">
+				<div>
+					<strong>{{ item.label }}</strong>
+				</div>
+			</ng-template>
+		</p-autoComplete>
+	</div>
+
+	<app-select
+		class="w-100 mt-3"
+		[showImg]="true"
+		label="Membresía a traspasar"
+		placeholder="Selecciona uno"
+		[form]="form"
+		[options]="membershipList"
+		controlName="membership"
+	></app-select>
+</div>
+
+<div class="card h-100 d-flex flex-column p-2 mb-5">
+	<h4>
+		{{ selectedId === 4 ? 'Traspaso de membresía a socio vigente' : 'Datos del nuevo socio a traspasar' }}
+	</h4>
+	<p class="mb-4 cl-gray-100">
+		{{
+			selectedId === 4
+				? 'Elige el socio vigente y membresía a traspasar'
+				: 'Completa el registro con la información del socio'
+		}}
+	</p>
+
+	<div class="d-flex flex-column w-100 gap-2 gap-md-4">
+		<div class="row g-3 w-100">
+			<div class="col-12 col-md-6">
+				<app-input
+					class="w-100"
+					label="Nombres"
+					[form]="form"
+					controlName="name"
+					placeholder="Ingresa el nombre completo"
+				>
+				</app-input>
+			</div>
+			<div class="col-12 col-md-6">
+				<app-input
+					class="w-100"
+					label="Apellidos"
+					[form]="form"
+					controlName="lastname"
+					placeholder="Sus apellidos completos"
+				>
+				</app-input>
+			</div>
+		</div>
+
+		<div class="row g-3 w-100" *ngIf="selectedId !== 4">
+			<div class="col-12 col-md-6">
+				<app-select
+					class="w-100"
+					[showImg]="true"
+					label="Nacionalidad *"
+					placeholder="Selecciona"
+					[form]="form"
+					[options]="nationalitiesList"
+					controlName="residenceCountryId"
+					(onChangeSelection)="getDocumentType($event)"
+				></app-select>
+			</div>
+
+			<div class="col-12 col-md-6">
+				<app-select
+					class="w-100"
+					label="Estado Civil"
+					placeholder="Selecciona"
+					[form]="form"
+					[options]="civilStateList"
+					controlName="civilState"
+				></app-select>
+			</div>
+		</div>
+
+		<div class="row g-3 w-100">
+			<div class="col-12 col-md-6">
+				<app-select
+					class="w-100"
+					label="Tipo de documento"
+					placeholder="Seleccione su documento"
+					[form]="form"
+					[options]="documentTypeList"
+					controlName="idDocument"
+				>
+				</app-select>
+			</div>
+
+			<div class="col-12 col-md-6">
+				<app-input
+					class="w-100"
+					label="Número de documento"
+					[form]="form"
+					controlName="nroDocument"
+					placeholder="Ingrese número de documento"
+					type="text"
+				>
+				</app-input>
+			</div>
+		</div>
+
+		<div class="row g-3 w-100" *ngIf="selectedId !== 4">
+			<div class="col-12 col-md-6">
+				<app-select
+					class="w-100"
+					label="Género"
+					[form]="form"
+					controlName="gender"
+					[options]="genderList"
+					placeholder="Selecciona"
+				>
+				</app-select>
+			</div>
+			<div class="col-12 col-md-6">
+				<app-date
+					class="w-100"
+					label="Fecha de nacimiento"
+					[form]="form"
+					controlName="birthDate"
+					readonly="true"
+					placeholder="dd/mm/aaaa"
+				></app-date>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="card h-100 d-flex flex-column p-2 mb-5" *ngIf="selectedId !== 4">
+	<h4>Datos de contacto</h4>
+	<p class="mb-4 cl-gray-100">Completa el registro con la información del socio.</p>
+
+	<div class="d-flex flex-column w-100 gap-2 gap-md-4">
+		<div class="row g-3 w-100">
+			<div class="col-12 col-md-6">
+				<app-select
+					class="w-100"
+					label="País de residencia *"
+					placeholder="Selecciona un país"
+					[form]="form"
+					[options]="residentOpt"
+					controlName="country"
+				></app-select>
+			</div>
+			<div class="col-12 col-md-6">
+				<app-input
+					label="Distrito"
+					placeholder="Seleccione su distrito"
+					[form]="form"
+					controlName="districtAddress"
+					class="w-100"
+				></app-input>
+			</div>
+		</div>
+
+		<div class="row g-3 w-100">
+			<div class="col-12 col-md-6">
+				<app-input
+					class="size-14"
+					label="Provincia"
+					placeholder="Seleccione su provincia"
+					[form]="form"
+					controlName="province"
+				></app-input>
+			</div>
+			<div class="col-12 col-md-6">
+				<app-input
+					class="w-100"
+					label="Dirección"
+					iconRigth="location_searching"
+					[form]="form"
+					controlName="address"
+					[isIconRight]="true"
+					iconName="pi pi-search"
+					placeholder="Ingresar su dirección"
+					(clickIconRight)="onFocusLocation()"
+				></app-input>
+			</div>
+		</div>
+
+		<div class="row g-3 w-100">
+			<div class="col-12 col-md-6">
+				<app-input
+					[form]="form"
+					controlName="email"
+					label="Correo electrónico"
+					placeholder="ej. usuario@email.com"
+					class="w-100"
+					(focusout)="checkEmailExists()"
+				></app-input>
+			</div>
+
+			<div class="col-12 col-md-6">
+				<app-input
+					[form]="form"
+					controlName="phone"
+					label="Celular*"
+					type="text"
+					placeholder="999 999 999"
+					[phonecodeCountry]="phonecodeCountry"
+					[iconName]="iconName"
+					[phonecodeCountry]="phonecodeCountry"
+					[isIconLeft]="true"
+					class="w-100"
+				></app-input>
+			</div>
+		</div>
+	</div>
+</div>

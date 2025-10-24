@@ -1,0 +1,17 @@
+<!-- <p>face-verification works!</p>
+ -->
+ <div class="face-validation-container">
+    <h2>Validación facial</h2>
+    <p>Estamos casi por terminar. Solo falta validar tu rostro.</p>
+  
+    <div class="face-box">
+      <video #videoElement class="face-video" autoplay *ngIf="!imageCaptured"></video>
+      <img [src]="capturedImage" class="face-image" *ngIf="imageCaptured">
+  
+      <div class="check-icon" *ngIf="imageCaptured">✔</div>
+    </div>
+  
+    <button (click)="captureImage()" *ngIf="!imageCaptured">Tomar Foto</button>
+    <button (click)="restartCapture()" *ngIf="imageCaptured">Reintentar</button>
+  </div>
+  

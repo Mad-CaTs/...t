@@ -1,0 +1,281 @@
+<div class="login-selection-container">
+	<!-- LADO IZQUIERDO — FORMULARIO -->
+	<div class="login-options">
+		<a routerLink="/home">
+			<img src="assets/images/Inclub.svg" alt="Logo InClub" class="logo" />
+		</a>
+
+		<!-- PASO 1 -->
+		<div class="header" *ngIf="step === 1">
+			<p class="step">Paso 1 de 2</p>
+			<h2>Crear una cuenta</h2>
+			<p class="login-sub">
+				¿Ya tienes una cuenta?
+				<a href="#" class="link" (click)="onLogin($event)">Iniciar sesión</a>
+			</p>
+
+			<!-- Correo electrónico -->
+			<div class="form-group" [formGroup]="registerForm">
+				<label for="email">Correo electrónico</label>
+				<input
+					#emailInput
+					id="email"
+					type="email"
+					formControlName="email"
+					placeholder="ej. usuario@email.com"
+					autocomplete="email"
+					(keydown)="handleEmailKeydown($event)"
+					(paste)="sanitizeEmail($event)"
+					(blur)="trimEmail($event)"
+				/>
+				<div *ngIf="emailControl.touched && emailControl.invalid" class="error">
+					{{ getEmailErrorMessage() }}
+				</div>
+			</div>
+
+			<!-- Contraseña -->
+			<div class="form-group" [formGroup]="registerForm">
+				<label for="password">Contraseña</label>
+				<div class="password-input">
+					<input
+						id="password"
+						[type]="showPassword ? 'text' : 'password'"
+						formControlName="password"
+						placeholder="Ingresar contraseña"
+						autocomplete="new-password"
+						(input)="passwordTouched = true"
+					/>
+					<button
+						type="button"
+						class="toggle-visibility"
+						[attr.aria-label]="showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'"
+						[attr.aria-pressed]="showPassword"
+						(click)="showPassword = !showPassword"
+					>
+						{{ showPassword ? 'Ocultar' : 'Mostrar' }}
+					</button>
+				</div>
+				<div *ngIf="passwordControl.touched && passwordControl.invalid" class="error">
+					{{ getPasswordErrorMessage() }}
+				</div>
+
+				<ul class="password-checks" *ngIf="passwordTouched && passwordControl.value?.length > 0">
+					<li
+						[class.valid]="passwordRules.hasMinLength"
+						[class.invalid]="!passwordRules.hasMinLength"
+					>
+						Contiene al menos 8 caracteres
+					</li>
+					<li
+						[class.valid]="passwordRules.hasUpperLowerCase"
+						[class.invalid]="!passwordRules.hasUpperLowerCase"
+					>
+						Contiene tanto letras minúsculas (a-z) como mayúsculas (A-Z)
+					</li>
+					<li
+						[class.valid]="passwordRules.hasNumberOrSymbol"
+						[class.invalid]="!passwordRules.hasNumberOrSymbol"
+					>
+						Contiene al menos un número (0-9) o un símbolo
+					</li>
+					<li [class.valid]="passwordRules.notEmail" [class.invalid]="!passwordRules.notEmail">
+						No contiene tu dirección de correo electrónico
+					</li>
+				</ul>
+			</div>
+
+			<!-- Patrocinador -->
+			<div class="form-group">
+				<label for="sponsor">
+					¿Quién es tu patrocinador? <span style="opacity: 0.6">(opcional)</span>
+				</label>
+				<select id="sponsor" disabled>
+					<option value="">Selecciona uno</option>
+					<option value="1">Patrocinador 1</option>
+					<option value="2">Patrocinador 2</option>
+					<option value="3">Patrocinador 3</option>
+				</select>
+				<div class="help-text">Aún no habilitado, próximamente.</div>
+			</div>
+
+			<div class="buttons">
+				<button
+					class="btn primary"
+					type="button"
+					(click)="onContinue()"
+					[disabled]="
+						emailControl.invalid ||
+						!passwordRules.hasMinLength ||
+						!passwordRules.hasUpperLowerCase ||
+						!passwordRules.hasNumberOrSymbol ||
+						!passwordRules.notEmail
+					"
+				>
+					Continuar
+				</button>
+			</div>
+		</div>
+
+		<!-- PASO 2 -->
+		<div class="header" *ngIf="step === 2">
+			<p class="step">Paso 2 de 2</p>
+			<h2>Datos de contacto</h2>
+			<p class="login-sub">
+				¿Ya tienes una cuenta?
+				<a href="#" class="link" (click)="onLogin($event)">Iniciar sesión</a>
+			</p>
+
+			<!-- FORM-GRID -->
+			<div class="form-grid" [formGroup]="registerForm">
+				<!-- Nombre -->
+				<div class="form-group">
+					<label for="firstName">Nombre*</label>
+					<input
+						id="firstName"
+						type="text"
+						formControlName="name"
+						placeholder="Agregar nombres"
+						(keydown)="handleSpace($event)"
+						(paste)="handleSpace($event)"
+						(blur)="trimSpaces($event)"
+					/>
+					<div *ngIf="nameControl.touched && nameControl.invalid" class="error">
+						{{ getNameErrorMessage() }}
+					</div>
+				</div>
+
+				<!-- Apellidos -->
+				<div class="form-group">
+					<label for="lastName">Apellidos*</label>
+					<input
+						id="lastName"
+						type="text"
+						formControlName="lastName"
+						placeholder="Agregar apellidos"
+						(keydown)="handleSpace($event)"
+						(paste)="handleSpace($event)"
+						(blur)="trimSpaces($event)"
+					/>
+					<div *ngIf="lastNameControl.touched && lastNameControl.invalid" class="error">
+						{{ getLastNameErrorMessage() }}
+					</div>
+				</div>
+
+				<!-- País -->
+				<div class="form-group">
+					<label for="country">País*</label>
+					<app-select
+						class="w-100"
+						[showImg]="true"
+						placeholder="Selecciona uno"
+						[form]="registerForm"
+						controlName="country"
+						[options]="nationalitiesList"
+					>
+					</app-select>
+					<div *ngIf="countryControl.touched && countryControl.invalid" class="error">
+						{{ getCountryErrorMessage() }}
+					</div>
+				</div>
+
+				<!-- Celular -->
+				<div class="form-group">
+					<label for="phone">Celular</label>
+					<input
+						#phoneInput
+						id="phone"
+						type="tel"
+						formControlName="phone"
+						placeholder="999 999 999"
+						(keydown)="handlePhoneKeydown($event)"
+						(paste)="sanitizePhone($event)"
+						(blur)="trimPhoneEnd($event)"
+					/>
+					<div *ngIf="phoneControl.touched && phoneControl.invalid" class="error">
+						{{ getPhoneErrorMessage() }}
+					</div>
+				</div>
+
+				<!-- Documento -->
+				<div class="form-group full doc-group">
+					<label for="docNumber">Documento de identidad</label>
+					<div class="doc-input">
+						<div class="doc-type">
+							<select
+								id="docType"
+								formControlName="docType"
+								[disabled]="docTypesLoading || !docTypes.length"
+							>
+								<option [ngValue]="null" disabled>Selecciona tipo</option>
+								<option *ngFor="let t of docTypes" [ngValue]="t.id">
+									{{ t.name }}
+								</option>
+							</select>
+						</div>
+						<input
+							#docInput
+							id="docNumber"
+							type="text"
+							formControlName="docNumber"
+							placeholder="Número de documento"
+							(keydown)="handleDocNumberKeydown($event)"
+							(paste)="sanitizeDocNumber($event)"
+							(blur)="trimSpaces($event)"
+						/>
+					</div>
+					<div *ngIf="docNumberControl.touched && docNumberControl.invalid" class="error">
+						{{ getDocNumberErrorMessage() }}
+					</div>
+				</div>
+
+				<!-- Checkboxes -->
+				<div class="form-group checkbox full" [formGroup]="registerForm">
+					<label>
+						<input type="checkbox" formControlName="terms" />
+						He leído y acepto los Términos y Condiciones
+					</label>
+					<div *ngIf="termsControl.invalid" class="info">Este campo es obligatorio.</div>
+					<label>
+						<input type="checkbox" />
+						¿Desea recibir información sobre eventos y promociones?
+					</label>
+				</div>
+			</div>
+
+			<!-- Botones -->
+			<div class="buttons">
+				<button class="btn secondary" type="button" (click)="goBack()">Atrás</button>
+				<button
+					class="btn primary"
+					type="button"
+					(click)="createAccount()"
+					[disabled]="registerForm.invalid"
+				>
+					Crear cuenta
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- LADO DERECHO — TESTIMONIAL -->
+	<div class="notched-wrapper">
+		<app-login-testimonial></app-login-testimonial>
+	</div>
+
+	<!-- MODAL DE CONFIRMACIÓN -->
+	<app-modal-notify
+		*ngIf="showModal"
+		[title]="modalTitle"
+		[message]="modalMessage"
+		iconType="info"
+		(closed)="onCloseModal()"
+	></app-modal-notify>
+
+	<!-- SPINNER FULLSCREEN: aparece si hay carga inicial o submit -->
+	<app-logo-spinner
+		[show]="isLoading || isSubmitting"
+		[fullscreen]="true"
+		[delay]="150"
+		[minVisible]="400"
+	></app-logo-spinner>
+</div>

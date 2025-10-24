@@ -1,0 +1,22 @@
+.commision {
+	width: 100%;
+	text-decoration: none;
+}
+
+@media (min-width: 786px) {
+	.commision {
+		width: calc((100% - 1rem) / 2);
+	}
+}
+
+@media (min-width: 1500px) {
+	.commision {
+		width: calc((100% - 2rem) / 3);
+	}
+}
+
+@media (min-width: 1800px) {
+	.commision {
+		width: calc((100% - 3rem) / 4);
+	}
+}

@@ -1,0 +1,9 @@
+.card-proyect {
+  border-radius: 8px;
+  overflow: hidden; /* Asegura que la imagen no salga del borde redondeado */
+}
+
+.rounded.ms-5 {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}

@@ -1,0 +1,121 @@
+.dc-modal {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 320px;
+  padding: 28px 28px 24px;
+  position: relative;
+  border-radius: 24px;
+  background: transparent;
+  box-shadow: none;
+  overflow: visible;
+}
+
+.dc-header {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding-top: 20px;
+}
+
+.dc-header .dc-back-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 122, 0, 0.12);
+  background: #ffffff;
+  box-shadow: 0 2px 6px rgba(16, 24, 40, 0.06);
+  color: inherit;
+  cursor: pointer;
+  padding: 6px;
+  position: absolute;
+  left: -22px;
+  top: -22px;
+  z-index: 6;
+}
+
+.dc-header .dc-back-svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+  filter: invert(40%) sepia(70%) saturate(300%) hue-rotate(10deg) brightness(95%) contrast(90%);
+}
+
+.dc-header .title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: #1f2937;
+  width: 100%;
+  text-align: left;
+  padding-left: 48px;
+}
+
+.dc-header .subtitle {
+  margin: 4px 0 0 0;
+  font-size: 14px;
+  color: #6b7280;
+  text-align: left;
+}
+
+.dc-body {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  align-items: center;
+  padding-top: 12px;
+}
+
+.dc-header+.dc-body {
+  border-top: 1px solid #e6eef1;
+  padding-top: 18px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.dc-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.footer-right {
+  display: flex;
+  gap: 12px;
+}
+
+@media (min-width: 720px) {
+  .dc-modal {
+    min-width: 640px;
+  }
+}
+
+:host ::ng-deep .discount-dialog.p-dialog,
+:host ::ng-deep .discount-dialog.p-dialog-panel,
+:host ::ng-deep .discount-dialog.p-dialog-mask {
+  border-radius: 24px !important;
+  box-shadow: 0 12px 30px rgba(2, 6, 23, 0.12) !important;
+  overflow: visible !important;
+  background: #ffffff !important;
+}
+
+:host ::ng-deep .discount-dialog .p-dialog-content {
+  border-radius: 24px !important;
+  background: transparent !important;
+  padding: 0 !important;
+}
+
+:host ::ng-deep .discount-dialog .p-dialog-titlebar {
+  border-radius: 24px 24px 0 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}

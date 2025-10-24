@@ -1,0 +1,61 @@
+<div
+	*ngIf="!useNewDesign"
+	class="overflow-x-auto overflow-y-hidden pb-2 position-relative navigation-container"
+	#parent>
+	<nav class="d-flex flex-row" style="width: max-content">
+		<span
+			class="px-4 py-2 cursor-pointer"
+			style="font-family: Roboto"
+			*ngFor="let item of data"
+			[class.text-secondary]="item.id === selected"
+			[class.disabled]="isDisabled"
+			(click)="onClickTab(item)"
+			[id]="'nav-' + item.id"
+		>
+			<i *ngIf="item.icon" class="pi {{ item.icon }}" style="margin-right: 8px"></i>
+
+			{{ item.text }}
+		</span>
+	</nav>
+	<div
+		class="navigation-bar position-absolute"
+		[ngClass]="{ 'bg-secondary': !noBgSecondary }"
+		[style.width]="sizeBar"
+		[style.transform]="transition"
+		style="height: 4px; bottom: 0"
+	></div>
+</div>
+<div
+	*ngIf="useNewDesign"
+	class="d-flex flex-column overflow-x-auto overflow-y-hidden pb-2 position-relative navigation-container"
+	#parent
+>
+	<nav class="d-flex flex-row w-100">
+		<ng-container *ngFor="let item of data">
+			<a
+				class="nav-link px-4 py-2 flex-fill text-center me-2 cursor-pointer"
+				[ngClass]="{
+					'bg-light text-dark': item.id === selected,
+					'bg-light text-muted': item.id !== selected
+				}"
+				(click)="onClickTab(item)"
+				[id]="'nav-' + item.id"
+				role="tab"
+				aria-selected="item.id === selected"
+				style="transition: background-color 0.3s, color 0.3s"
+			>
+				<img *ngIf="isImage(item.icon)" [src]="item.icon" alt="icon" class="tab-icon me-2" />
+				<i *ngIf="!isImage(item.icon)" class="pi {{ item.icon }}" style="margin-right: 8px"></i>
+
+				{{ item.text }}
+			</a>
+		</ng-container>
+	</nav>
+
+	<div
+		class="navigation-bar bg-secondary position-absolute"
+		[style.width]="sizeBar"
+		[style.transform]="transition"
+		style="height: 4px; bottom: 0"
+	></div>
+</div>

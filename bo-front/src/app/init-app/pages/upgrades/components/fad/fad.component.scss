@@ -1,0 +1,13 @@
+.picture-new {
+	width: 100%;
+	height: 200px;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+}
+
+@media (min-width: 768px) {
+	.picture-new {
+		height: 446px;
+	}
+}

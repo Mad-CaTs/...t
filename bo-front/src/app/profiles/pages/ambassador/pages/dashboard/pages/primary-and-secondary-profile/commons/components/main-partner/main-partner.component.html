@@ -1,0 +1,37 @@
+<div class="d-flex gap-4 flex-column">
+	<!--Header-->
+	<div class="d-flex flex-row justify-content-between align-items-center">
+		<h1 class="fs-4 fw-medium m-0">Proyectos</h1>
+	</div>
+	<!--Proyects-->
+	<article class="w-100 d-flex flex-column project-card" *ngFor="let a of [1, 2]">
+		<div class="w-100 banner" [style.background-image]="'url(https://staticv1.inclub.site/images/banner-la-joya.png)'"></div>
+		<span class="bg-secondary text-center fs-4 text-uppercase text-white fw-semibold py-2">
+			LA JOYA PARK RESORT
+		</span>
+		<!--Info-->
+		<div class="d-flex flex-column align-items-center py-4">
+			<span class="fs-6 text-black text-uppercase">AREQUIPA, Lima, Perú</span>
+			<h4 class="fs-4 text-black text-uppercase mt-1 d-block">CLUB RESORT</h4>
+			<div class="d-flex flex-column align-items-center bar gap-2">
+				<span class="fs-14 text-primary fw-medium">50%</span>
+				<div class="w-100 bar__container">
+					<div class="w-50 h-100 bg-primary rounded"></div>
+				</div>
+				<div class="w-100 d-flex align-items-center justify-content-between">
+					<span class="fs-14 cl-muted fw-medium">Objetivo</span>
+					<span class="fs-14 cl-muted fw-medium">USD$167 000</span>
+				</div>
+			</div>
+			<span class="fs-3 text-black fw-bold">8.59%</span>
+			<span class="fs-6 cl-muted">Retorno neto anual estimado</span>
+		</div>
+		<!--Footer-->
+		<a
+			class="d-block border-top py-3 fs-5 fw-normal text-secondary text-center text-decoration-none"
+			href=""
+		>
+			Más Detalles
+		</a>
+	</article>
+</div>

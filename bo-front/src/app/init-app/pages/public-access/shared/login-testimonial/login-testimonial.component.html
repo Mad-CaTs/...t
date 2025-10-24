@@ -1,0 +1,42 @@
+<svg width="0" height="0">
+  <defs>
+    <filter id="clip-rounded">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur" />
+      <feColorMatrix
+        in="blur"
+        mode="matrix"
+        values="1 0 0 0 0  
+                0 1 0 0 0  
+                0 0 1 0 0  
+                0 0 0 19 -9"
+        result="goo"
+      />
+      <feComposite in="SourceGraphic" in2="goo" operator="atop" />
+    </filter>
+  </defs>
+</svg>
+
+<div class="notched-card">
+  <h2>Lo que dicen nuestros socios de Inclub</h2>
+  <blockquote>
+    {{ testimonials[currentIndex].quote }}
+  </blockquote>
+  <p class="user">
+    {{ testimonials[currentIndex].author }}<br /><span>{{
+      testimonials[currentIndex].affiliation
+    }}</span>
+  </p>
+  <div class="dots">
+    <span
+      *ngFor="let t of testimonials; index as i"
+      [class.active]="i === currentIndex"
+    ></span>
+  </div>
+  <div class="investment-card">
+    <img
+      src="assets/images/login-public/img1.webp"
+      alt="Piscina hotel"
+    /><span>Accede a proyectos de inversión</span>
+    <button class="launch-btn" aria-label="Abrir proyecto">↗</button>
+  </div>
+</div>

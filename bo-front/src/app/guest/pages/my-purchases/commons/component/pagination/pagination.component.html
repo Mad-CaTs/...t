@@ -1,0 +1,53 @@
+<div class="pagination-container" *ngIf="shouldShowPagination()">
+  <div class="pagination-info">
+    <span>
+      Mostrando {{ getStartRecord() }} - {{ getEndRecord() }} de {{ totalElements }} resultados
+    </span>
+  </div>
+
+  <div class="pagination-controls">
+    <!-- Botón Primera Página -->
+    <button class="pagination-btn" [disabled]="!hasPrevious || isLoading" (click)="onFirstPage()"
+      title="Primera página">
+      <i class="pi pi-angle-double-left"></i>
+    </button>
+
+    <!-- Botón Página Anterior -->
+    <button class="pagination-btn" [disabled]="!hasPrevious || isLoading" (click)="onPreviousPage()"
+      title="Página anterior">
+      <i class="pi pi-angle-left"></i>
+    </button>
+
+    <!-- Números de página -->
+    <div class="page-numbers">
+      <ng-container *ngFor="let page of getVisiblePages()">
+        <button class="pagination-btn page-number" [class.active]="page === currentPage" [disabled]="isLoading"
+          (click)="onPageChange(page)">
+          {{ page + 1 }}
+        </button>
+      </ng-container>
+    </div>
+
+    <!-- Botón Página Siguiente -->
+    <button class="pagination-btn" [disabled]="!hasNext || isLoading" (click)="onNextPage()" title="Página siguiente">
+      <i class="pi pi-angle-right"></i>
+    </button>
+
+    <!-- Botón Última Página -->
+    <button class="pagination-btn" [disabled]="!hasNext || isLoading" (click)="onLastPage()" title="Última página">
+      <i class="pi pi-angle-double-right"></i>
+    </button>
+  </div>
+
+  <!-- Loading indicator -->
+  <div class="pagination-loading" *ngIf="isLoading">
+    <i class="pi pi-spin pi-spinner"></i>
+    <span>Cargando...</span>
+  </div>
+</div>
+
+<!-- Mensaje cuando no hay suficientes datos para paginar -->
+<div class="no-pagination-message" *ngIf="!shouldShowPagination() && totalElements > 0">
+  <span>{{ totalElements }} resultado{{ totalElements === 1 ? '' : 's' }} encontrado{{ totalElements === 1 ? '' : 's'
+    }}</span>
+</div>

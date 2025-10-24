@@ -1,0 +1,9 @@
+.account-tree-activation-manager-input {
+	width: 100%;
+}
+
+@media (min-width: 768px) {
+	.account-tree-activation-manager-input {
+		width: calc((100% - 1rem) / 2);
+	}
+}

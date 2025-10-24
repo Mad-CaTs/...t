@@ -1,0 +1,71 @@
+<ng-container>
+	<div class="rounded bg-white w-100">
+		<div class="d-flex justify-content-between align-items-center mb-4">
+			<div class="icon-box">
+				<img src="assets/icons/personalcard@2x.svg" alt="Patrocinador" class="icon-img" />
+			</div>
+
+			<button class="btn p-0 border-0 bg-transparent" (click)="closeModal()" aria-label="Cerrar">
+				<mat-icon fontIcon="close" class="fs-4"></mat-icon>
+			</button>
+		</div>
+
+		<p class="mb-4 cl-gray-100">Visualizarás información detallada del Pago</p>
+
+		<div class="d-flex flex-column gap-3">
+			<div class="d-flex justify-content-between bg-light rounded px-3 py-2">
+				<span class="fw-medium text-muted">Fecha y hora del movimiento</span>
+				<span class="text-muted">23/05/2024 | 10:01 a.m</span>
+			</div>
+			<div class="d-flex justify-content-between bg-light rounded px-3 py-2">
+				<span class="fw-medium text-muted">Tipo de operación</span>
+				<span class="text-muted">Cuota Auto</span>
+			</div>
+			<div class="d-flex justify-content-between bg-light rounded px-3 py-2">
+				<span class="fw-medium text-muted">Cód. de Operación</span>
+				<span class="text-muted">CUOTA-20250523-0011</span>
+			</div>
+			<div class="d-flex justify-content-between bg-light rounded px-3 py-2">
+				<span class="fw-medium text-muted">Descripción</span>
+				<span class="text-muted"
+					>Descuento de la cuota mensual del auto Toyota / Corolla Cuota N°11/24</span
+				>
+			</div>
+
+			<div
+				class="d-flex justify-content-between bg-light rounded px-3 py-2 align-items-center"
+				(click)="showMoreDetails = !showMoreDetails"
+				style="cursor: pointer"
+			>
+				<span class="fw-medium text-muted">Monto</span>
+				<div class="d-flex align-items-center gap-2">
+					<span class="text-muted">$ 845.24</span>
+					<mat-icon
+						class="text-muted"
+						[fontIcon]="showMoreDetails ? 'expand_less' : 'expand_more'"
+					></mat-icon>
+				</div>
+			</div>
+		</div>
+
+		<div *ngIf="showMoreDetails" class="mt-3">
+			<div class="d-flex justify-content-between bg-light rounded px-3 py-2 mb-2">
+				<span class="fw-medium text-muted">Pago financiado</span>
+				<span class="text-muted">$ 478.57</span>
+			</div>
+
+			<div class="d-flex justify-content-between bg-light rounded px-3 py-2 mb-2">
+				<span class="fw-medium text-muted">Inicial Fraccionada</span>
+				<span class="text-muted">$ 366.67</span>
+			</div>
+
+			<div class="alert alert-info d-flex align-items-center gap-2 mb-0" role="alert">
+				<mat-icon fontIcon="info" class="flex-shrink-0"></mat-icon>
+				<span class="text-wrap">
+					El pago automático se realizará el 23/08/2025. Vuelve en esa fecha para visualizar la
+					información correspondiente al pago.
+				</span>
+			</div>
+		</div>
+	</div>
+</ng-container>

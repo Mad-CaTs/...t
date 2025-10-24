@@ -1,0 +1,31 @@
+<div class="card mb-3">
+  <div class="card-footer text-end">
+    <input type="radio"
+           name="option"
+           [value]="option.idOption"
+           class="form-check-input"
+           (change)="onOptionSelect()" />
+  
+  </div>
+  <div class="card-body">
+    <span class="badge bg-light text-secondary">Opción {{ option.idOption }}</span>
+    <h6 class="card-title mt-2">
+      {{ option.description }}
+    </h6>
+
+    <p class="card-text">
+      <span class="cl-gray-100">Al seleccionar esta opción tendrá un pago adicional</span>
+
+ 
+    </p>
+    <div class="line bg-black opacity-50"></div>
+  
+    <div class="mt-2">
+      <button class="btn btn-link text-primary" (click)="onPreviewClick()">
+        Vista previa
+      </button>
+    </div>
+    
+  </div>
+
+</div>

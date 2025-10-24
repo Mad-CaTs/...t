@@ -1,0 +1,45 @@
+.modal-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.icon-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.25rem;
+    height: 3.25rem;
+    border-radius: 100%;
+    background-color: var(--bg-color);
+    border: 0.5rem solid var(--border-color);
+
+    i {
+        font-size: 1.25rem;
+        line-height: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        vertical-align: middle;
+        position: static;
+    }
+}
+
+.title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #181D27;
+    white-space: normal;
+    overflow-wrap: break-word;
+}
+
+.description {
+    font-size: 0.9rem;
+    color: #535862;
+    white-space: normal;
+    overflow-wrap: break-word;
+}
+
+p {
+    margin: 0;
+}

@@ -1,0 +1,71 @@
+{
+	"**/membership": {
+		"target": "https://membershippay-dev.inclub.world",
+		"secure": false,
+		"changeOrigin": true
+	},
+	"**/pay/**": {
+		"target": "https://membershippay-dev.inclub.world",
+		"secure": false,
+		"changeOrigin": true
+	},
+	"**/three/**": {
+		"target": "https://dev-treepointrange.inclub.world",
+		"secure": false,
+		"changeOrigin": true
+	},
+	"**/placement/**": {
+		"target": "https://dev-treepointrange.inclub.world",
+		"secure": false,
+		"changeOrigin": true
+	},
+	"**/three/placement": {
+		"target": "https://dev-treepointrange.inclub.world",
+		"secure": false,
+		"changeOrigin": true
+	},
+	"**/desplacement/**": {
+		"target": "https://dev-treepointrange.inclub.world",
+		"secure": false,
+		"changeOrigin": true
+	},
+	"**/wallet/user/**": {
+		"target": "https://walletapi-dev.inclub.world",
+		"secure": false,
+		"changeOrigin": true
+	},
+	"**/wallet/transaction/**": {
+		"target": "https://walletapi-dev.inclub.world",
+		"secure": false,
+		"changeOrigin": true
+	},
+	"**/wallettransaction/list/**": {
+		"target": "https://walletapi-dev.inclub.world",
+		"secure": false,
+		"changeOrigin": true
+	},
+	"**/withdrawalrequest/electronicpurse/**": {
+		"target": "https://walletapi-dev.inclub.world",
+		"secure": false,
+		"changeOrigin": true
+	},
+	"**/points/**": {
+		"target": "https://dashboardapi-dev.inclub.world",
+		"secure": false,
+		"changeOrigin": true
+	},
+	"**/account/**": {
+		"target": "https://account-dev.inclub.world",
+		"secure": false,
+		"changeOrigin": true,
+		"logLevel": "debug"
+	},
+	"/authenticate/": {
+		"target": "https://gateway-dev.inclub.world/authenticate",
+		"secure": false,
+		"changeOrigin": true,
+		"pathRewrite": {
+			"^/authenticate": ""
+		}
+	}
+}

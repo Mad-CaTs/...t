@@ -1,0 +1,49 @@
+<app-breadcrumb class="p-2" [breadcrumbs]="breadcrumbItems"></app-breadcrumb>
+
+<div class="d-flex flex-column gap-3 mt-3">
+    <h3>Documentos</h3>
+    <div class="w-100 line"></div>
+    <div class="d-flex flex-column text-center">
+        <app-pagination-ng-prime [rows]="rows" [totalRecords]="totalRecords" [rowsPerPageOptions]="[10, 20, 30, 40, 50]"
+            [align]="align" (pageChange)="onPageChange($event)" (refresh)="onRefresh($event)">
+        </app-pagination-ng-prime>
+    </div>
+
+    <app-table class="w-100" [headers]="headers" [hasCheckbox]="false" [firstEmpty]="true" [customRows]="true"
+        [minWidth]="900" [minWidthHeader]="minWidthHeaders" [hasData]="table.data.length > 0" [loading]="isLoading">
+
+        <tr class="w-100 d-flex flex-row align-items-center" *ngFor="let d of table.data; let i = index">
+            <td class="fs-6 py-2 px-2 w-100 text-center">
+                {{ d.documentType.name }}
+            </td>
+
+            <td class="fs-6 py-2 px-2 w-100 text-center">
+                {{ d.fileName }}
+            </td>
+
+            <td class="fs-6 py-2 px-2 w-100 text-center">
+                {{ d.createdAt }}
+            </td>
+
+            <td class="fs-6 py-2 px-2 w-100 text-center">
+                {{ d.fileSizeBytes }}
+            </td>
+
+            <td class="fs-6 py-2 px-2 w-100 text-center">
+                {{ d.fileSizeBytes }}
+            </td>
+
+            <td class="d-flex justify-content-center w-100 text-center">
+				<button type="button" (click)="seeDocument(d)"
+					class="btn d-flex flex-row p-2  rounded cl-link no-hover">
+					<img src="assets/images/Eye-on.svg" alt="Ver" />
+				</button>
+
+				<button type="button" (click)="download(d)"
+					class="btn d-flex flex-row p-2 rounded cl-link no-hover">
+					<img src="assets/images/auto/document.svg" alt="Ver"/>
+				</button>
+			</td>
+        </tr>
+    </app-table>
+</div>

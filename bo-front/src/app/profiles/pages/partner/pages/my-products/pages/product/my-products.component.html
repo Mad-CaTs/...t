@@ -1,0 +1,127 @@
+<div class="p-4 card px-0 px-md-4 card-border-none">
+	<h1 class="fs-2 mb-24">{{ fromLegalModule ? 'Legalizaciones' : 'Mis Productos' }}</h1>
+
+	<!-- 	<h1 class="fs-2 mb-24">Mis Productos</h1>
+ -->
+	<div *ngIf="isLoading " class="d-flex justify-content-center align-items-center">
+		<div class="d-flex justify-content-center align-items-center" *ngIf="isLoading">
+			<p-progressSpinner animationDuration=".5s">Cargando...</p-progressSpinner>
+		</div>
+	</div>
+	<div *ngIf="!isLoading">
+		<div class="row mb-3" *ngIf="!fromLegalModule">
+			<div class="col-12 col-md-4">
+				<app-card-ptos
+					iconSvg="coin_blue"
+					[title]="points + ' pts'"
+					subtitle="Puntaje activo compuesto"
+				>
+				</app-card-ptos>
+			</div>
+			<div class="col-12 col-md-4">
+				<app-card-ptos
+					iconSvg="coin_blue"
+					[title]="points + ' pts'"
+					subtitle="Puntaje activo residual"
+				>
+				</app-card-ptos>
+			</div>
+			<div class="col-12 col-md-4">
+				<app-card-ptos
+					iconSvg="notification-status_blue"
+					[title]="userStatus"
+					subtitle="Estado del socio"
+					[ngClass]="{ 'text-small': userStatus.length > 15 }"
+				>
+				</app-card-ptos>
+			</div>
+		</div>
+
+		<div class="d-flex flex-column flex-md-row gap-4 w-100">
+			<div class="d-flex flex-column flex-fill">
+				<label class="form-label">Buscador</label>
+				<app-input
+					class="w-100"
+					type="text"
+					placeholder="Buscar algún producto..."
+					[form]="form"
+					controlName="searchBy"
+					[isIconRight]="true"
+					iconName="pi pi-search"
+				></app-input>
+			</div>
+
+			<div class="col-6 col-md-2">
+				<label class="form-label">Membresía</label>
+				<app-select
+					class="w-100"
+					placeholder="Seleccione una membresía"
+					[form]="form"
+					[options]="membershipOptions"
+					controlName="membership"
+				></app-select>
+			</div>
+
+			<div class="col-6 col-md-2">
+				<label class="form-label">Status</label>
+				<app-select
+					class="w-100"
+					placeholder="Seleccione un status"
+					[form]="form"
+					[options]="statusOptions"
+					controlName="status"
+				></app-select>
+			</div>
+		</div>
+		<div class="row mt-4">
+			<div *ngIf="filteredProducts.length === 0" class="col-12 text-center">
+				<p class="fs-4 text-muted">
+					{{
+						hasProducts
+							? 'No se encontraron productos con los criterios seleccionados.'
+							: 'No hay productos disponibles.'
+					}}
+				</p>
+			</div>
+
+			<!--   <div *ngIf="filteredProducts.length === 0"
+           class="col-12 text-center">
+        <p class="fs-4 text-muted">No se encontraron productos con los criterios seleccionados.</p>
+        <button class="btn btn-outline-secondary mt-3"
+                (click)="resetFilters()">Restablecer Filtros</button>
+      </div> -->
+
+			<ng-container *ngIf="fromLegalModule; else productsList">
+				<app-resort-membership-cards
+					[products]="rawProducts"
+					[stateColors]="stateColors"
+					(accionDesdeMembresia)="recibirAccionDeNieto($event)"
+				></app-resort-membership-cards>
+			</ng-container>
+
+			<ng-template #productsList>
+				<div
+					class="col-12 col-md-4 mb-3 d-flex align-items-stretch"
+					*ngFor="let product of filteredProducts"
+				>
+					<card-product
+						class="w-100"
+						[membershipType]="product.membershipType"
+						[subscriptionStatus]="product.subscriptionStatus"
+						[installmentNumber]="product.installmentNumber"
+						[pacValue]="product.pacValue"
+						[date]="product.date"
+						[id]="product.id"
+						[idPackageDetail]="product.idPackageDetail"
+						[idPackage]="product.idPackage"
+						[idFamilyPackage]="product.idFamilyPackage"
+						[idStatus]="product.idStatus"
+						[statusColor]="getStatusColor(product.idStatus)"
+						[fromLegalModule]="fromLegalModule"
+					>
+					</card-product>
+				</div>
+			</ng-template>
+		</div>
+	</div>
+</div>

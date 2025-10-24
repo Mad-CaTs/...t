@@ -1,0 +1,42 @@
+@if(!payrolls?.length) {
+<div class="empty-state">
+    <p>No payrolls available.</p>
+</div>
+} @else {
+<guest-table [pagination]="false" [data]="payrolls" [columns]="columns">
+    <ng-template #bodyTemplate let-rowData let-columns="columns">
+        <tr>
+            @for (col of columns; track col){
+            @switch (col.field) {
+            @case('purchaseDate'){
+            <td>
+                <span class="date">{{ rowData[col.field] | date: 'dd/MM/yyyy' }}</span>
+            </td>
+            }
+            @case('eventName'){
+            <td>
+                <span class="total">{{ rowData[col.field]}}</span>
+            </td>
+            }
+            @case('zone'){
+            <td>
+                <span class="document">{{ rowData[col.field]}}</span>
+            </td>
+            }
+            @case('nomina'){
+            <td class="nomina">
+                <button>Nominar</button>
+            </td>gfdgfgdhfgjhf
+            }
+            @default {
+            <td class="default">
+                {{ rowData[col.field] }}
+            </td>
+            }
+
+            }}
+        </tr>
+
+    </ng-template>
+</guest-table>
+}

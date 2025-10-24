@@ -1,0 +1,15 @@
+
+<div class="card p-3 mb-4 position-relative">
+  <div class="video-container position-relative">
+    <video #videoPlayer class="w-100" (click)="playVideo(videoPlayer)">
+      <source [src]="videoUrl" type="video/mp4" />
+    </video>
+    <button pButton type="button" icon="pi pi-play" class="play-button" (click)="playVideo(videoPlayer)"></button>
+  </div>
+  <h5 class="mt-2">{{ title }}</h5>
+  <p class="text-muted">{{ date }}</p>
+  <p>{{ previewText }}</p>
+</div> 
+
+
+

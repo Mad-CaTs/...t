@@ -1,0 +1,27 @@
+<div class="card p-4 d-flex flex-column w-100 gap-4 border-0">
+  <div class="d-flex flex-column flex-md-row gap-2 gap-md-0 justify-content-md-between align-items-md-center">
+    <h1 class="m-0 fs-4 text-black fw-medium">Tienda</h1>
+  </div>
+
+  <app-navigation [data]="tabs"
+                  [selected]="currentTab"
+                  [useNewDesign]="true"
+                  (changeSelected)="setTab($event)"></app-navigation>
+
+  <div class="tab-content mt-0">
+
+    <div [ngClass]="{'d-block': currentTab === 1, 'd-none': currentTab !== 1}">
+      <app-store-packages ></app-store-packages>
+    </div>
+    <div [ngClass]="{'d-block': currentTab === 2, 'd-none': currentTab !== 2}">
+      <app-store-services></app-store-services>
+    </div>
+    <div [ngClass]="{'d-block': currentTab === 3, 'd-none': currentTab !== 3}">
+      <app-store-produts></app-store-produts>
+
+    </div>
+    <div [ngClass]="{'d-block': currentTab === 4, 'd-none': currentTab !== 4}">
+      <app-store-promotional-code></app-store-promotional-code>
+ </div>
+  </div>
+</div>

@@ -1,0 +1,63 @@
+.paginator-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.align-left {
+    justify-content: flex-start;
+}
+
+.align-center {
+    justify-content: center;
+}
+
+.align-right {
+    justify-content: flex-end;
+}
+
+:host ::ng-deep .p-button.p-button-secondary,
+.p-button-group.p-button-secondary>.p-button,
+.p-splitbutton.p-button-secondary>.p-button {
+    color: #6c757d;
+    margin-left: 10px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: transparent;
+    border: 2px solid transparent;
+    cursor: pointer;
+}
+
+:host ::ng-deep .p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
+    background: #f0692c;
+    border-radius: 20px;
+    color: white;
+}
+
+:host ::ng-deep .p-link:hover {
+    background: #f0692c;
+    border-radius: 20px;
+    color: white;
+}
+
+:host ::ng-deep .p-dropdown:not(.p-disabled):hover {
+    border-color: #f0692c;
+}
+
+:host ::ng-deep .p-dropdown:not(.p-disabled).p-focus {
+    border-color: #f0692c;
+    box-shadow: 0 0 0 1px #f0692c;
+}
+
+:host ::ng-deep .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight.p-focus {
+    background: #f0692c;
+}
+
+:host ::ng-deep .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
+    color: white;
+    background: #E3F2FD;
+}

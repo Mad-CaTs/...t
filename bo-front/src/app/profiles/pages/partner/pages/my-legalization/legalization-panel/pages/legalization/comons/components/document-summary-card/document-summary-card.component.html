@@ -1,0 +1,29 @@
+<div class="card p-3 shadow-sm rounded-3 border border-light-subtle">
+	<div class="d-flex justify-content-between align-items-start mb-2">
+		<h5 class="mb-0 fw-semibold text-truncate" style="max-width: 75%">
+			{{ date.name }}
+		</h5>
+	</div>
+
+	<p class="small mb-3">Fecha: {{ date.updateDate | arrayDate }}</p>
+
+	<hr class="my-2" />
+	<ng-container *ngIf="isFirst">
+		<app-action-items-list [items]="actionItems" (arrowClicked)="onArrowClick($event)">
+		</app-action-items-list>
+
+		<hr class="my-3" />
+	</ng-container>
+
+	<div class="d-flex justify-content-end cursor-pointer" *ngIf="link$ | async as link">
+		<button
+			type="button"
+			class="btn btn-light btn-sm text-muted d-flex align-items-center gap-1"
+			[disabled]="!link || link === '#'"
+			(click)="openDocument(link)"
+		>
+			<img src="assets/icons/document-text.svg" width="16" height="16" class="me-1" />
+			Ver documento
+		</button>
+	</div>
+</div>

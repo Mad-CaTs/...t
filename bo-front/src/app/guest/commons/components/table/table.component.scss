@@ -1,0 +1,24 @@
+@use 'guest-vars.scss' as var;
+
+:host ::ng-deep .p-datatable-tbody>tr>td,
+:host ::ng-deep .p-datatable-thead>tr>th {
+    border-bottom: 1px solid var.$gray-100;
+}
+
+:host ::ng-deep .p-datatable thead th {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var.$gray-800;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+:host ::ng-deep .p-datatable tbody td {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: var.$gray-600;
+    vertical-align: middle;
+}

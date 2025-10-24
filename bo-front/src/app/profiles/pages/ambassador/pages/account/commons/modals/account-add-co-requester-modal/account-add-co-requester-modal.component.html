@@ -1,0 +1,44 @@
+<ng-container *ngIf="accountAddCoRequesterPresenter.coRequesterForm as form">
+  <form [formGroup]="form"
+        class="d-flex flex-column gap-4 w-100"
+        (submit)="onSubmit()">
+      <app-input [form]="form"
+                 controlName="names"
+                 label="Nombres *"
+                 placeholder="Los nombres"
+                 class="w-100"></app-input>
+      <app-input [form]="form"
+                 controlName="lastnames"
+                 label="Apellidos *"
+                 placeholder="Los apellidos"
+                 class="w-100"></app-input>
+
+      <app-select class="w-100"
+                  label="Tipo de documento *"
+                  placeholder="Documento nacional de identidad"
+                  [form]="form"
+                  [options]="docTypeOpt"
+                  controlName="docType"></app-select>
+      <app-input [form]="form"
+                 controlName="docNumber"
+                 label="Nro. de documento *"
+                 placeholder="Ingresar Número de documento"
+                 class="w-100"></app-input>
+
+      <app-date class="w-100"
+                label="Fecha de nacimeinto"
+                [form]="form"
+                controlName="bornDate"> </app-date>
+      <div class="d-flex flex-row w-100 justify-content-center gap-4">
+        <button class="btn btn-outline-secondary"
+                type="button"
+                (click)="closeModal()">
+          Cancelar
+        </button>
+        <button class="btn btn-secondary"
+                type="submit"
+                [disabled]="form.invalid">Guardar</button>
+      </div>
+
+  </form>
+</ng-container>

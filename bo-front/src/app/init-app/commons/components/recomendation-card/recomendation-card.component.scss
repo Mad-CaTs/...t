@@ -1,0 +1,21 @@
+.testimonials__container {
+	flex-wrap: unset;
+	overflow-x: overlay;
+
+	&__card {
+		max-width: 280px;
+		height: 412px;
+
+		&__avatar {
+			width: 56px;
+			height: 56px;
+			border-radius: 50%;
+			background-size: cover;
+			box-shadow: none;
+			display: flex;
+			justify-content: flex-end;
+			align-items: flex-start;
+			background-position: center;
+		}
+	}
+}

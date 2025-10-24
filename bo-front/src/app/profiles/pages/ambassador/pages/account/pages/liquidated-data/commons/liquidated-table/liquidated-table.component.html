@@ -1,0 +1,48 @@
+<div class="d-flex flex-column gap-3">
+   <div class="d-flex flex-column text-center">
+       <div class="w-100 line"></div><!-- 
+        <app-pagination-ng-prime [rows]="rows" [totalRecords]="totalRecords" [rowsPerPageOptions]="[10, 20, 30]"
+            [align]="align" (pageChange)="onPageChange($event)" (refresh)="onRefresh($event)">
+        </app-pagination-ng-prime> -->
+    </div>
+ 
+    <app-table class="w-100"
+    [headers]="headers"
+    [hasCheckbox]="false"
+    [customRows]="true"
+    [minWidth]="800"
+    [scrollable]="true"
+    [minWidthHeader]="minWidthHeaders"
+    [hasData]="table.data.length > 0"
+    [loading]="isLoading"
+    style="table-layout: fixed;">
+    <tr class="w-100 d-flex flex-row text-center align-items-center"
+    *ngFor="let d of table.data; let i = index"
+    style="gap:2px;">
+
+  <th class="table__first__v1 d-flex flex-row justify-content-center align-items-center">
+  
+  </th>
+  <td class="fs-6 py-2 px-2 w-100 text-center">
+    {{ d.name	 }}
+  </td>
+  <td class="fs-6 py-2 px-2 w-100 text-center">
+    {{ d.lastName	 }}
+  </td>
+  <td class="fs-6 py-2 px-2 w-100 text-center">
+    {{ d.gender === '1'? 'Masculino' : 'Femenino' }}
+  </td>
+
+  <td class="fs-6 py-2 px-2 w-100 text-center">
+    {{ d.email}}
+  </td>
+  <td class="fs-6 py-2 px-2 w-100 text-center">
+    {{ d.document	}}
+  </td>
+  	<td class="fs-6 py-2 px-2 w-100 text-center">{{ d.created	 | date:'d-M-yyyy' }}
+  </td>
+  <td class="fs-6 py-2 px-2 w-100 text-center"> {{ d.liquidated.slice(0, 5) | arrayDate }}
+  </td>
+</tr>
+ </app-table>
+</div>

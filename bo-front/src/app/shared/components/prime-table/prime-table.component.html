@@ -1,0 +1,95 @@
+<!-- <p-table
+  [value]="data"
+  [loading]="loading"
+  [tableStyle]="{ 'min-width': minWidth + 'px' }"
+>
+  <ng-container *ngIf="!customRows">
+    <ng-template pTemplate="header">
+      <tr>
+        <th *ngIf="hasCheckbox" style="width: 3rem">
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th>
+        <th *ngFor="let header of headers; let i = index" [style.min-width.px]="minWidthHeader[i] || 100">
+          {{ header }}
+        </th>
+      </tr>
+    </ng-template>
+  </ng-container>
+
+  <ng-template pTemplate="body" let-rowData let-i="rowIndex">
+    <ng-content></ng-content>
+  </ng-template>
+
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td [attr.colspan]="headers.length" class="text-center">
+        No hay datos disponibles.
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+ -->
+
+ <div class="prime-table-container" [style.min-width.px]="minWidth">
+  <p-table
+    [value]="data"
+    [loading]="loading"
+    [styleClass]="'p-datatable-sm w-100'"
+  >
+    <!-- CABECERA -->
+    <ng-template pTemplate="header">
+      <tr>
+        <!-- Checkbox opcional -->
+        <th *ngIf="hasCheckbox" style="width: 40px; text-align: center">
+          <input type="checkbox" class="form-check-input" />
+        </th>
+
+        <!-- Headers dinámicos -->
+        <th *ngFor="let header of headers; let i = index"
+            [style.min-width.px]="minWidthHeader[i] || 100"
+            class="text-center fw-medium">
+          {{ header }}
+        </th>
+      </tr>
+    </ng-template>
+
+    <!-- BODY -->
+    <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
+      <!-- Si hay template customizado -->
+      <ng-container *ngIf="customRows && rowTemplate">
+        <ng-container
+          *ngTemplateOutlet="rowTemplate; context: { $implicit: rowData, index: rowIndex }">
+        </ng-container>
+      </ng-container>
+
+      <!-- Si no hay template customizado -->
+      <tr *ngIf="!customRows">
+        <td *ngIf="hasCheckbox" style="text-align: center">
+          <input type="checkbox" class="form-check-input" />
+        </td>
+        <td *ngFor="let header of headers" class="text-center">
+          {{ rowData[header] }}
+        </td>
+      </tr>
+    </ng-template>
+
+    <!-- EMPTY STATE -->
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td [attr.colspan]="headers.length + (hasCheckbox ? 1 : 0)" class="text-center">
+          <div class="p-3 text-muted">No hay datos disponibles.</div>
+        </td>
+      </tr>
+    </ng-template>
+
+    <!-- LOADING -->
+    <ng-template pTemplate="loadingbody">
+      <tr>
+        <td [attr.colspan]="headers.length + (hasCheckbox ? 1 : 0)" class="text-center">
+          <p-progressSpinner [style]="{ width: '2rem', height: '2rem' }" strokeWidth="3"></p-progressSpinner>
+          <span class="ms-2">Cargando...</span>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

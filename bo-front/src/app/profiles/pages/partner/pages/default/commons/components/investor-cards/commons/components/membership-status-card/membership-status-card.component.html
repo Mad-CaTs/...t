@@ -1,0 +1,58 @@
+<div class="container-mebership">
+	<ng-container *ngIf="isLoading; else contentLoaded" class="position-absolute start-40">
+		<p-progressSpinner [style]="{ width: '2.2rem', height: '2rem' }"></p-progressSpinner>
+	</ng-container>
+
+	<ng-template #contentLoaded>
+		<div class="h-100 w-100">
+			<div class="bg-white-lilac container-resumen flex-fill">
+				<figure class="figure-custom">
+					<img class="img-gender box-cycle-weekly__title"
+						[src]="'./assets/images/'+ (userInfo.gender === '1' ? 'Ellipse-man' : 'Ellipse')  +'.png'" />
+					<span class="rounded-5 m-0 position-absolute bottom-0" [ngStyle]="{ 
+                'padding': '6px 7px',
+              'background-color': statusColor.backgroundColor, 
+              'color': statusColor.textColor,
+              'right': '-2rem'            }">
+						{{ userStatus }}
+					</span>
+				</figure>
+				<h2 class="cl-muted fs-8 ">Socio Inversionista</h2>
+				<a (click)="openMembershipmodal()" role="button" class="text-decoration-none">Ver membresias</a>
+			</div>
+
+			<div class="container-details d-flex flex-wrap gap-3 w-100 h-100">
+				<aside class="px-3 flex-fill">
+					<article class="bg-white-lilac p-3 rounded-4 d-flex flex-column gap-2"
+						[style.color]="userStatus === 'Inactivo' ? '#19809E' : ''">
+						<span>Membresia</span>
+						<span>{{ result?.result?.nameSuscription }}</span>
+					</article>
+				</aside>
+				<aside class="px-3 flex-fill">
+					<article class="bg-white-lilac p-3 rounded-4 d-flex flex-column gap-2"
+						[style.color]="userStatus === 'Inactivo' ? '#19809E' : ''">
+						<span>Fecha de vencimiento</span>
+						<span>{{ formatDate(result?.result.expirationDate) }}</span>
+					</article>
+				</aside>
+				<div class="d-flex flex-row justify-content-center align-items-center gap-3 p-3 border-top">
+					<span *ngIf="isPaymentUpToDate()"
+						class="border rounded-5 py-2 text-white custom-color-background custom-size-text">
+						Tienes paquetes vencidos!
+					</span>
+					<a role="button" (click)="navigateToProductsById(result?.result?.id)" *ngIf="isPaymentUpToDate()"
+						class="custom-color-text text-decoration-none d-flex align-items-center gap-2">
+						Ir a pagar <i class="pi pi-arrow-up-right"></i>
+					</a>
+
+					<a *ngIf="!isPaymentUpToDate()"
+						class="py-1 px-5 rounded-5 text-white text-decoration-none d-flex align-items-center gap-2"
+						style="background-color: #4CAF50;">
+						¡Felicidades! esta al día con tus pagos
+					</a>
+				</div>
+			</div>
+		</div>
+	</ng-template>
+</div>

@@ -1,0 +1,20 @@
+.product-detail-bg {
+	width: 100%;
+	min-height: 360px;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+}
+
+.btn {
+	width: fit-content;
+}
+
+@media (min-width: 768px) {
+	.product-detail-bg {
+		min-height: 427px;
+	}
+}
+
+@media (min-width: 1336px) {
+}

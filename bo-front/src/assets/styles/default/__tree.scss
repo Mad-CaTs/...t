@@ -1,0 +1,19 @@
+.line-tree {
+	background-color: black;
+	min-width: 30px;
+	width: auto;
+	height: 2px;
+}
+
+.line-connector {
+	background-color: black;
+	width: 2px;
+	min-height: 2px;
+	position: absolute;
+	height: auto;
+}
+
+.tree-container {
+	transform-origin: left top;
+	padding-bottom: auto;
+}

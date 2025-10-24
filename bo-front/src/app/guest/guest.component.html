@@ -1,0 +1,16 @@
+<div class="guest-wrapper">
+    <div class="guest-container">
+        <guest-header (toggleSidebar)="onToggleSidebar()" />
+        <div class="guest-content">
+            <guest-sidebar-menu class="sidebar" />
+            <div class="content">
+                <router-outlet />
+            </div>
+        </div>
+    </div>
+    <guest-footer />
+</div>
+
+<p-sidebar [(visible)]="sidebarOpen" styleClass="custom-sidebar">
+    <guest-sidebar-menu />
+</p-sidebar>

@@ -1,0 +1,75 @@
+.modal-container {
+	min-width: 500px;
+	padding: 15px;
+	position: relative;
+}
+
+.family-font {
+	font-family: 'Roboto';
+}
+
+.size-14 {
+	font-size: 14px;
+}
+
+.modal-container {
+	min-width: 500px;
+	padding: 15px;
+}
+
+.close-btn {
+	position: absolute;
+	cursor: pointer;
+	border: none;
+	background: none;
+	top: 20px;
+	right: 20px;
+}
+
+.custom-select {
+	width: 50%;
+	min-width: 150px;
+	max-width: 50%;
+}
+
+.d-flex {
+	gap: 0.25rem;
+}
+
+.mt-2 {
+	margin-top: 0.25rem !important;
+}
+
+.border {
+	border-radius: 10px;
+}
+
+.app.input {
+	border-radius: 10px;
+}
+
+.size-btnn {
+	width: inherit;
+}
+
+.form-group {
+	margin-bottom: 5px;
+}
+
+.evidence-thumb {
+	width: 100%;
+	height: 15rem;
+	margin: 0 auto;
+}
+
+.position {
+	display: flex;
+	flex-direction: column;
+	align-items: end;
+}
+
+.form-field {
+	border: dashed black 1px;
+	padding: 8px;
+	border-radius: 1rem;
+}

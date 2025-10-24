@@ -1,0 +1,204 @@
+<ng-container *ngIf="expiredSubscriptions.length">
+	<div
+		*ngFor="let item of expiredSubscriptions"
+		class="mb-3 p-3 rounded-3"
+		[ngStyle]="{ 'background-color': item.read ? 'transparent' : '#F2F5FF' }"
+	>
+		<div class="d-flex align-items-center">
+			<div class="icon me-2">
+				<img src="assets/icons/Icon.svg" alt="Icono Info" />
+			</div>
+			<div>
+				<p class="fw-semibold mb-1">Tu cuota ya venció.</p>
+				<p class="mb-1 text-body-secondary" style="font-size: 0.95rem">
+					<ng-container *ngIf="item.dateExpiration; else sinFecha">
+						Venció el <strong>{{ item.dateExpiration | date : 'dd/MM/yyyy' }}</strong
+						>.
+					</ng-container>
+					<ng-template #sinFecha>
+						Hace <strong>{{ item.daysNextExpiration * -1 }}</strong> días venció esta cuota.
+					</ng-template>
+					<span class="text-deepblue">
+						Por favor, realiza el pago hoy para evitar inconvenientes en tus servicios.
+					</span>
+				</p>
+			</div>
+		</div>
+
+		<div class="d-flex justify-content-between mt-2">
+			<span class="text-muted small">{{ item.dueDate | date : 'MMM dd, yyyy' }}</span>
+			<a
+				class="text-primary text-decoration-none cursor-pointer d-inline-flex align-items-center"
+				(click)="onCronogramaClick(item)"
+			>
+				<img src="assets/icons/remove.svg" class="me-1" />
+				Ver cronograma
+			</a>
+		</div>
+	</div>
+</ng-container>
+
+<!-- Cuotas por vencer -->
+<ng-container *ngIf="expiringSoonSubscriptions.length">
+	<div
+		*ngFor="let item of expiringSoonSubscriptions"
+		class="mb-3 p-3 rounded-3"
+		[ngStyle]="{ 'background-color': item.read ? 'transparent' : '#F2F5FF' }"
+	>
+		<div class="d-flex align-items-center">
+			<div class="icon me-2">
+				<img src="assets/icons/Icon.svg" alt="Icono Info" />
+			</div>
+			<div>
+				<!--           
+ -->
+				<p *ngIf="item.daysNextExpiration === 0">
+					<span class="fw-bold mb-1 fs-6">¡Es hoy! Tu cuota vence hoy mismo. </span>
+					<span class="text-deepblue"
+						>Por favor, realiza el pago hoy para evitar inconvenientes en tus servicios.</span
+					>
+				</p>
+				<p *ngIf="item.daysNextExpiration > 0">
+					<span class="fw-bold mb-1 fs-6">Tu cuota está próxima a vencer.</span>
+					<span class="text-deepblue"> Solo</span>
+					<span class="fw-bold mb-1 fs-6"> faltan {{ item.daysNextExpiration }}</span>
+					días para la fecha límite. Te recomendamos realizar el pago a tiempo para evitar
+					inconvenientes.
+				</p>
+			</div>
+		</div>
+
+		<div class="d-flex justify-content-between mt-2">
+			<span class="text-muted small">{{ item.dueDate | date : 'MMM dd, yyyy' }}</span>
+			<a
+				class="text-primary text-decoration-none cursor-pointer d-inline-flex align-items-center"
+				(click)="onCronogramaClick(item)"
+			>
+				<img src="assets/icons/remove.svg" class="me-1" />
+				Ver cronograma
+			</a>
+		</div>
+	</div>
+</ng-container>
+
+@if (upcomingAnnualLiquidations.length > 0) {
+	@for (item of upcomingAnnualLiquidations; track item) {
+	<div class="mb-3 p-3 rounded-3" [ngStyle]="{ 'background-color': item.read ? 'transparent' : '#F2F5FF' }">
+		<div class="d-flex align-items-center">
+			<div class="icon me-2">
+				<img src="assets/icons/Icon.svg" alt="Icono Info" />
+			</div>
+			<div>
+				@switch (item.daysToAnnualLiquidation) {
+					@case(210) {
+						<p>
+							<span class="fw-bold mb-1 fs-6">Atención: 7 meses de deuda acumulada. </span>
+							<span class="text-deepblue">Tu cuenta está en riesgo de </span>
+							<span class="fw-bold mb-1 fs-6">liquidación anual. </span>
+							<span class="text-deepblue">Regulariza lo antes posible.</span>
+						</p>
+					}
+					@case (240) {
+						<p>
+							<span class="fw-bold mb-1 fs-6">Urgente: 8 meses de deuda acumulada. </span>
+							<span class="text-deepblue">Tu membresía continúa en cuenta regresiva hacia la </span>
+							<span class="fw-bold mb-1 fs-6">liquidación anual automática.</span>
+						</p>
+					}
+					@case(270) {
+						<p>
+							<span class="fw-bold mb-1 fs-6">Atención: 9 meses de deuda acumulada. </span>
+							<span class="text-deepblue">Solo te quedan 3 meses para evitar la </span>
+							<span class="fw-bold mb-1 fs-6">liquidación definitiva.</span>
+						</p>
+					}
+					@case(300) {
+						<p>
+							<span class="fw-bold mb-1 fs-6">Alerta final: 10 meses sin pago. </span>
+							<span class="text-deepblue">Estás muy cerca de </span>
+							<span class="fw-bold mb-1 fs-6">liquidación anual. </span>
+							<span class="text-deepblue">Regulariza inmediatamente.</span>
+						</p>
+					}
+					@case (330) {
+						<p>
+							<span class="fw-bold mb-1 fs-6">Has acumulado 11 meses de cuotas sin pago. </span>
+							<span class="text-deepblue">Para evitar la </span>
+							<span class="fw-bold mb-1 fs-6">liquidación anual automática, </span>
+							<span class="text-deepblue">regulariza tus pagos antes del </span>
+							<span class="fw-bold mb-1 fs-6">{{ calculateExpirationDate(item.daysToAnnualLiquidation) | date : 'dd/MM/yyyy' }}.</span>
+						</p>
+					}
+					@case (364) {
+						<p>
+							<span class="text-deepblue">Tu cuenta será </span>
+							<span class="fw-bold mb-1 fs-6">liquidada </span>
+							<span class="text-deepblue">por </span>
+							<span class="fw-bold mb-1 fs-6">12 meses de deuda acumulada </span>
+							<span class="text-deepblue">el día de </span>
+							<span class="fw-bold mb-1 fs-6">hoy. </span>
+							<span class="text-deepblue">Regulariza tus pagos antes de las 23:00:00 horas.</span>
+						</p>
+					}
+					@default {
+						@if (item.daysToAnnualLiquidation >= 349 && item.daysToAnnualLiquidation < 364) {
+							<p>
+								<span class="fw-bold mb-1 fs-6">Último aviso: Quedan {{ 364 - item.daysToAnnualLiquidation }} </span>
+								<span class="text-deepblue">días para evitar la </span>
+								<span class="fw-bold mb-1 fs-6">liquidación anual de tu cuenta. </span>
+								<span class="text-deepblue">Regulariza tus pagos antes del {{ calculateExpirationDate(item.daysToAnnualLiquidation) | date : 'dd/MM/yyyy' }}.</span>
+							</p>
+						}
+					}
+				}
+			</div>
+		</div>
+		<div class="d-flex justify-content-between mt-2">
+			<span class="text-muted small">{{ item.dueDate | date : 'MMM dd, yyyy' }}</span>
+			<a class="text-primary text-decoration-none cursor-pointer d-inline-flex align-items-center"
+				(click)="onCronogramaClick(item)">
+				<img src="assets/icons/remove.svg" class="me-1" />
+				Ver cronograma
+			</a>
+		</div>
+	</div>
+	}
+}
+
+@if (expiredAnnualLiquidations.length) {
+	@for (item of expiredAnnualLiquidations; track item) {
+		<div class="mb-3 p-3 rounded-3" [ngStyle]="{ 'background-color': item.read ? 'transparent' : '#F2F5FF' }">
+			<div class="d-flex align-items-center">
+				<div class="icon me-2">
+					<img src="assets/icons/Icon.svg" alt="Icono Info" />
+				</div>
+				<div>
+					<p>
+						<span class="text-deepblue">Tu suscripción ha sido </span>
+						<span class="fw-bold mb-1 fs-6">liquidada </span>
+						<span class="text-deepblue">el día de </span>
+						<span class="fw-bold mb-1 fs-6">{{ item.liquidationDate | date : 'dd/MM/yyyy' }}</span>
+						<span class="text-deepblue">. Si tienes dudas, por favor contacta a soporte.</span>
+					</p>
+				</div>
+			</div>
+			<div class="d-flex justify-content-between mt-2">
+				<span class="text-muted small">{{ item.dueDate | date : 'MMM dd, yyyy' }}</span>
+				<a class="text-primary text-decoration-none cursor-pointer d-inline-flex align-items-center"
+					(click)="onCronogramaClick(item)">
+					<img src="assets/icons/remove.svg" class="me-1" />
+					Ver cronograma
+				</a>
+			</div>
+		</div>
+	}
+}
+
+<ng-container *ngIf="!expiredSubscriptions.length && !expiringSoonSubscriptions.length && !upcomingAnnualLiquidations.length && !expiredAnnualLiquidations.length">
+	<div class="d-flex flex-column align-items-center justify-content-center text-center p-4">
+		<!--       <img src="assets/icons/check-notifications.svg" alt="Sin notificaciones" class="mb-3" style="width: 60px; opacity: 0.8" />
+ -->
+		<h5 class="fw-semibold mb-2">¡Todo en orden!</h5>
+		<p class="text-muted mb-0">No tienes notificaciones pendientes por el momento.</p>
+	</div>
+</ng-container>

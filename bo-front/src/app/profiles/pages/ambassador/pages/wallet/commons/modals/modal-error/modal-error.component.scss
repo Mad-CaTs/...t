@@ -1,0 +1,115 @@
+.cancel-dialog {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  max-width: 400px;
+  text-align: center;
+  
+  .warning-icon {
+    margin-bottom: 1.5rem;
+    
+    i {
+      font-size: 1rem;
+      color: #ef0e0e;
+      padding: 1rem;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 4rem;
+      height: 4rem;
+    }
+  }
+  
+  .dialog-content {
+    margin-bottom: 2rem;
+    
+    .dialog-title {
+      font-size: 1.45rem;
+      font-weight: 600;
+      color: #333;
+      margin: 0 0 1rem 0;
+      line-height: 1.4;
+    }
+    
+    .dialog-message {
+      color: #6f6e6e;
+      font-size: 1rem;
+      margin: 0;
+    }
+  }
+  
+  .dialog-actions {
+    display: flex;
+    gap: 0.75rem;
+    width: 100%;
+    
+    button {
+      flex: 1;
+      padding: 0.875rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      
+      &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+      
+      &:active {
+        transform: translateY(0);
+      }
+    }    
+    .confirm-btn {
+      background: #ff6b35;
+      color: white;
+      
+      &:hover {
+        background: #e55a2b;
+      }
+      
+      &:active {
+        background: #d14d22;
+      }
+    }
+  }
+}
+
+// Estilos para el overlay del diálogo
+:host ::ng-deep {
+  .p-dialog {
+    .p-dialog-header {
+      display: none;
+    }
+    
+    .p-dialog-content {
+      padding: 0;
+      border-radius: 12px;
+    }
+    
+    .p-dialog-mask {
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(4px);
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 480px) {
+  .cancel-dialog {
+    padding: 1.5rem;
+    
+    .dialog-actions {
+      flex-direction: column;
+      gap: 0.5rem;
+      
+      button {
+        padding: 1rem;
+      }
+    }
+  }
+}

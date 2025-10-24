@@ -1,0 +1,17 @@
+<section class="popular-events-section">
+  <div class="section-title">
+    <h2><strong>Nuestros eventos</strong> de Inclub</h2>
+    <p>más vistos por los socios</p>
+  </div>
+
+  <div class="event-card-list">
+    <app-detail-event-card
+      *ngFor="let event of events"
+      [imageUrl]="event.imageUrl"
+      [title]="event.title"
+      [type]="event.type"
+      [linkText]="'Ver más'"
+      (goToDetail)="onView(event)"
+    />
+  </div>
+</section>

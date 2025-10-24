@@ -1,0 +1,33 @@
+<div class="position-absolute d-flex flex-column gap-4 menu p-5 z-3 bg-white">
+	<button type="button" class="ms-auto d-md-none" (click)="close.emit()">
+		<mat-icon>close</mat-icon>
+	</button>
+
+	<div class="d-flex flex-column gap-4 wrapper">
+		<h4 class="m-0 text-black fs-4 fw-medium">{{ lang.languageTitle }}</h4>
+		<div class="w-100 line"></div>
+
+		<div class="d-flex flex-column gap-4 menu__info">
+            <!-- TODO: Corregir con nueva forma -->
+
+			<!-- <app-input
+				[placeholder]="lang.languageInputPlaceholder"
+				iconLeft="search"
+				[label]="lang.languageInputLabel"
+				name="search"
+				[control]="searchInput"
+			/>
+ -->
+			<div class="countries mt-4">
+				<div
+					class="d-flex gap-2 align-items-center cursor-pointer"
+					*ngFor="let country of languages"
+					(click)="changeLanguage(country.prefix)"
+				>
+					<img [src]="'assets/icons/Flags/' + country.flag" width="32px" height="32px" alt="Flag" />
+					<span class="text-black fs-6 fw-normal">{{ country.country }}</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

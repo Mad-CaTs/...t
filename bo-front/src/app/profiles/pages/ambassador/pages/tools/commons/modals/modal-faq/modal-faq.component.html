@@ -1,0 +1,29 @@
+<div class="modal-backdrop">
+	<div class="modal-box">
+		<header class="modal-header">
+			<div class="modal-header-content">
+				<div class="modal-icon" [ngClass]="iconType">
+					<i
+						[ngClass]="{
+							'bi bi-check-circle': iconType === 'success',
+							'bi bi-exclamation-triangle-fill': iconType === 'error',
+							'bi bi-info-lg': iconType === 'info'
+						}"
+					></i>
+				</div>
+				<h3 class="modal-title">{{ title }}</h3>
+			</div>
+			<button type="button" class="close-btn" (click)="onClose()">
+				<i class="bi bi-x-lg"></i>
+			</button>
+		</header>
+
+		<p class="modal-message">{{ message }}</p>
+
+		<hr class="modal-divider" />
+
+		<footer class="modal-footer">
+			<button type="button" class="btn btn-primary" (click)="onClose()">Entendido</button>
+		</footer>
+	</div>
+</div>

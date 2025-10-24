@@ -1,0 +1,16 @@
+.form-release-points {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+
+  
+}
+
+::ng-deep .dialog-success {
+    .p-dialog-header.p-dialog-content {
+        padding: 24px;
+    }
+
+
+}

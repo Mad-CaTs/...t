@@ -1,0 +1,60 @@
+@use 'guest-global.scss' as *;
+@use 'guest-vars.scss' as var;
+
+.title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var.$gray-800;
+    margin: 0;
+
+    @media screen and (max-width: var.$sm) {
+        font-size: 1.25rem;
+    }
+}
+
+.message {
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: var.$gray-600;
+    margin: 0;
+
+    @media screen and (max-width: var.$sm) {
+        font-size: 1rem;
+    }
+}
+
+div {
+    background-color: var.$background;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-radius: 1rem;
+    padding: 3rem 2rem;
+    gap: 0.625rem;
+}
+
+i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3.5rem;
+    color: var.$gray-600;
+}
+
+a {
+    background-color: var.$orange;
+    color: var.$white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 1.5rem;
+    font-size: 1rem;
+    font-weight: 400;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+        background-color: lighten(var.$orange, 5%);
+    }
+
+}

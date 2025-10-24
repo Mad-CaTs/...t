@@ -1,0 +1,49 @@
+<ng-container *ngIf="modalCoRequesterPresenter.coRequesterForm as form">
+  <form class="d-flex flex-column w-100 gap-4"
+        [formGroup]="form"
+        (submit)="onSubmit()">
+    <div class="d-flex flex-column flex-md-row gap-2 gap-md-4 w-100">
+      <app-input class="w-100"
+                 label="Nombres"
+                 [form]="form"
+                 controlName="name"
+                 placeholder="Ingresa el nombre completo"></app-input>
+      <app-input class="w-100"
+                 label="Apellidos"
+                 [form]="form"
+                 controlName="lastName"
+                 placeholder="Los apellidos"></app-input>
+    </div>
+    <div class="d-flex flex-column flex-md-row gap-2 gap-md-4 w-100">
+      <app-select class="w-100"
+                  label="Tipo de documento"
+                  placeholder="Selecciona tipo de documento"
+                  [form]="form"
+                  [options]="documentTypeList"
+                  controlName="idDocument"></app-select>
+      <app-input class="w-100"
+                 label="Nro. de documento"
+                 [form]="form"
+                 controlName="nroDocument"
+                 [placeholder]="nroDocumentPlaceholder"></app-input>
+    </div>
+    <div class="d-flex flex-column flex-md-row gap-4 gap-md-4 w-100">
+      <app-date class="w-100"
+                placeholder="DD/MM/YYYY"
+                label="Fecha de nacimiento"
+                [form]="form"
+                [config]="true"
+                controlName="birthDate"></app-date>
+    </div>
+    <div class="d-flex flex-row justify-content-center gap-2">
+      <button class="btn btn-outline-secondary"
+              type="button"
+              (click)="closeModal()">
+        Cerrar
+      </button>
+      <button class="btn btn-secondary"
+              type="submit"
+              [disabled]="form.invalid">Guardar</button>
+    </div>
+  </form>
+</ng-container>

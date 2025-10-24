@@ -1,0 +1,24 @@
+<div
+	class="card card-action d-flex flex-row align-items-start gap-3 p-5 border rounded-3 shadow-sm"
+	[ngClass]="{
+    'bg-light': blocked,
+    'bg-white': !blocked,
+    'active': active,
+    
+  }"
+	role="button"
+	(click)="onCardClick($event)"
+>
+	<div class="d-flex align-items-center">
+		<img [src]="icon" [alt]="title" class="img-fluid" />
+	</div>
+
+	<div class="flex-grow-1">
+		<h6 class="mb-1 fw-medium fs-6">{{ title }}</h6>
+		<p class="mb-0 text-muted small">{{ description }}</p>
+	</div>
+
+	<div class="d-flex align-items-center" *ngIf="chevron">
+		<i class="bi bi-chevron-right fs-5 text-muted" role="button"></i>
+	</div>
+</div>

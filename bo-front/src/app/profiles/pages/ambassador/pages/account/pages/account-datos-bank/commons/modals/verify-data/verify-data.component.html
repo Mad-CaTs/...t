@@ -1,0 +1,14 @@
+<img [src]="datos.icon">
+<div>
+    <span class="text-title">{{datos.title}}</span>
+    <p class="text-description" [innerHTML]="datos.descripcion"></p>
+</div>
+<div class="row">
+    <div class="col-12 col-md-6">
+        <button class="btn-volver" (click)="closeModal()">Volver a editar</button>
+    </div>
+    <div class="col-12 col-md-6">
+        <button class="btn-next" (click)="next()">Si, continuemos</button>
+
+    </div>
+</div>

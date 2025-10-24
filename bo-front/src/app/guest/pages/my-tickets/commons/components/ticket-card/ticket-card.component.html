@@ -1,0 +1,21 @@
+<!-- Lista de eventos -->
+<div class="events-container">
+  <div *ngFor="let event of events; let i = index" class="event-wrapper">
+    <div class="event-card static">
+      <div class="event-header">
+        <img [src]="event.eventImage || '/assets/images/placeholder-event.png'" [alt]="event.eventName || 'Evento'" class="event-image">
+        <div class="event-info">
+          <h3 class="event-title">{{ event.eventName }}</h3>
+          <div class="event-info-part">
+            <p class="event-date">Fecha del evento: {{ event.purchaseDate | date:'dd \'de\' MMMM, yyyy':'es' }}</p>
+          <!--  <p class="event-zone">Zona: {{ event.zone }}</p> -->
+          </div>
+        </div>
+        <div class="action-btns">
+          <!-- <button class="download-btn" (click)="downloadTickets(event)" [disabled]="!isNominated(event)">Descargar</button> -->
+          <button class="detail-btn nominate-btn" (click)="onNominate(event)">Nominar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

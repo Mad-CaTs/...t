@@ -1,0 +1,84 @@
+<div class="d-flex flex-column gap-3 mt-3">
+    <div class="line"></div>
+        <div class="d-flex flex-column text-center">
+            <app-pagination-ng-prime
+                [rows]="rows"
+                [totalRecords]="totalRecords"
+                [rowsPerPageOptions]="[10, 20, 30, 40, 50]"
+                [align]="align"
+                (pageChange)="onPageChange($event)"
+                (refresh)="onRefresh($event)">      
+            </app-pagination-ng-prime>
+        </div>
+        <app-table class="w-100" 
+            [hasCheckbox]="false"
+            [firstEmpty]="true"
+            [customRows]="true"
+            [minWidth]="1000"
+            [minWidthHeader]="minWidthHeaders"
+            [hasData]="dataBody?.length > 0"
+            [loading]="isLoading"
+            style="table-layout: fixed;">
+
+            <tr class="d-flex flex-row align-items-center table-header">
+                <td class="text-center">N°</td>
+                <td class="text-center">Rango</td>
+                <td class="text-center">Usuario</td>
+                <td class="text-center">Nombres y Apellidos</td>
+                <td class="text-center">Nivel de patrocinio</td>
+                <td class="text-center">Patrocinador</td>
+
+                <!-- N° Socios Directos -->
+                <td class="text-center sortable"
+                    [class.active]="activeField === 'directPartnersCount'"
+                    (click)="onHeaderClick('directPartnersCount')"
+                    [attr.aria-sort]="activeField==='directPartnersCount' ? (dirPartners==='desc' ? 'descending' : (dirPartners==='asc' ? 'ascending' : 'none')) : 'none'">
+                    <span class="th-sort">
+                    <span class="th-label">N° Socios<br>Directos</span>
+                    <ng-container [ngSwitch]="dirPartners">
+                        <mat-icon *ngSwitchCase="'asc'">north</mat-icon>
+                        <mat-icon *ngSwitchCase="'desc'">south</mat-icon>
+                        <mat-icon *ngSwitchDefault>unfold_more</mat-icon>
+                    </ng-container>
+                    </span>
+                </td>
+
+                <!-- Puntaje patrocinio directo -->
+                <td class="text-center sortable"
+                    [class.active]="activeField === 'directSponsorshipScore'"
+                    (click)="onHeaderClick('directSponsorshipScore')"
+                    [attr.aria-sort]="activeField==='directSponsorshipScore' ? (dirScore==='desc' ? 'descending' : (dirScore==='asc' ? 'ascending' : 'none')) : 'none'">
+                    <span class="th-sort">
+                    <span class="th-label">Puntaje<br>patrocinio directo</span>
+                    <ng-container [ngSwitch]="dirScore">
+                        <mat-icon *ngSwitchCase="'asc'">north</mat-icon>
+                        <mat-icon *ngSwitchCase="'desc'">south</mat-icon>
+                        <mat-icon *ngSwitchDefault>unfold_more</mat-icon>
+                    </ng-container>
+                    </span>
+                </td>
+
+                <td class="text-center">Acciones</td>
+                </tr>
+
+            <!-- BODY -->
+            <tr class="w-100 d-flex flex-row align-items-center" *ngFor="let d of displayData; let i=index">
+                <td class="fs-6 py-2 px-2 w-100 text-center">{{ i + 1 }}</td>
+                <td class="fs-6 py-2 px-2 w-100 text-center">{{d.rangeName}}</td>
+                <td class="fs-6 py-2 px-2 w-100 text-center text-break">{{d.userName}}</td>
+                <td class="fs-6 py-2 px-2 w-100 text-center">{{d.fullName}}</td>
+                <td class="fs-6 py-2 px-2 w-100 text-center">{{d.sponsorLevel}}</td>
+                <td class="fs-6 py-2 px-2 w-100 text-center">{{d.sponsorName}}</td>
+                <td class="fs-6 py-2 px-2 w-100 text-center">{{d.directPartnersCount}}</td>
+                <td class="fs-6 py-2 px-2 w-100 text-center">{{d.directSponsorshipScore}}</td>
+                <td class="fs-6 py-2 px-2 w-100 text-center">
+                    <button type="button" class="btn btn-link detail-link" (click)="detailModal.emit(d)">
+                        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill="currentColor" d="M12 5c5.5 0 9.7 4.5 10.9 6-1.2 1.5-5.4 6-10.9 6S2.3 12.5 1.1 11C2.3 9.5 6.5 5 12 5zm0 3.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9zm0 2a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5z"/>
+                        </svg>
+                    </button>
+                </td>
+            </tr>
+
+        </app-table>
+</div>

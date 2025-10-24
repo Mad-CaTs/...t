@@ -1,0 +1,14 @@
+<article class="video-container">
+	<div class="video-container__play-control cursor-pointer" (click)="onPlay()" *ngIf="!isPlaying">
+		<mat-icon fontIcon="play_arrow" class="text-white video-container__play-control__icon" />
+	</div>
+	<video
+		class="video-container__video"
+		#video
+		[src]="videoUrl"
+		[poster]="preview ? preview : 'https://staticv1.inclub.site/images/calender/CLUB-DE-LECTURA.jpg'"
+		(click)="onPause()"
+		loop
+		style="object-fit: cover;"
+	></video>
+</article>

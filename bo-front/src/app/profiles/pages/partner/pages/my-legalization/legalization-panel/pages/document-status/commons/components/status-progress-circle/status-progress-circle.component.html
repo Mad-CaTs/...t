@@ -1,0 +1,37 @@
+<div class="d-flex justify-content-center align-items-center flex-column">
+	<h5 class="fw-semibold mb-4 text-center">
+	Detalle de Estado de Legalización - {{ data?.documentInfo?.documentTypeName }} - {{ data?.documentInfo?.familyPackageName }}
+	</h5>
+
+	<div
+		class="position-relative d-flex justify-content-center align-items-center rounded-circle"
+		style="width: 352px; height: 352px; background-color: #f5f5f5"
+	>
+		<div
+			class="position-absolute top-0 start-0 w-100 h-100 rounded-circle"
+			[ngStyle]="{
+				background: getProgressCircle(data?.progress?.progress)
+			}"
+		></div>
+
+		<div
+			class="position-relative bg-white rounded-circle d-flex flex-column justify-content-center align-items-center"
+			style="width: 280px; height: 280px"
+		>
+			<div class="fw-semibold text-muted">{{ data?.progress?.currentStep?.stepName }}</div>
+			<div class="fs-3 fw-bold">{{ data?.progress?.progress }}%</div>
+		</div>
+	</div>
+	<div
+		class="alert alert-info d-flex flex-column flex-sm-row gap-2 align-items-center text-center text-sm-start p-2 mt-5"
+		role="alert"
+	>
+		<mat-icon class="fs-4 flex-shrink-0">info</mat-icon>
+		<span class="fw-normal fs-6 text-wrap"> Hemos recibido tu solicitud. Tu trámite ha comenzado. </span>
+	</div>
+
+	<!-- <div class="d-flex align-items-center gap-2 text-muted small mt-2">
+		<i class="bi bi-exclamation-triangle-fill fs-6"></i>
+		<span>En los próximos días se informará por medio del correo adjunto.</span>
+	</div> -->
+</div>

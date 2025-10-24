@@ -1,0 +1,18 @@
+<div class="">
+	<app-tab-profiles [tabs]="tabs"></app-tab-profiles>
+	<h4 class="fs-3 mt-4 mb-3">Resumen</h4>
+
+	<div class="row mt-4 mb-3">
+		<div class="col-12">
+			<app-investor-cards
+				[investorPoints]="investorPoints"
+				[isLoading]="isLoading"
+				[userStatus]="userStatus"
+				[statusColor]="statusColor"
+				[rangoPeriodo]="rangoPeriodo"
+			></app-investor-cards>
+		</div>
+	</div>
+</div>
+
+<app-whatsapp-button phoneNumber="51987743819" message="Hola"></app-whatsapp-button>

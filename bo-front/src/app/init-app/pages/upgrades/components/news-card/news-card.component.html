@@ -1,0 +1,43 @@
+<!-- news-card.component.html -->
+<div class="news-card position-relative overflow-hidden rounded-4 shadow-sm h-100 cursor-pointer"
+     (click)="onCardClick()"
+     [style.background-image]="'url(' + imageUrl + ')'"
+     [class.news-card--large]="isLarge">
+  
+  <!-- Overlay gradient -->
+  <div class="news-card__overlay"></div>
+  
+  <!-- Content -->
+  <div class="news-card__content position-absolute bottom-0 start-0 w-100 p-3 text-white">
+    <!-- Category badge (optional) -->
+    <span *ngIf="category" 
+          class="badge bg-primary rounded-pill px-2 py-1 mb-2 fs-7">
+      {{ category }}
+    </span>
+    
+    <!-- Title -->
+    <h5 class="news-card__title mb-2 fw-bold" 
+        [class.fs-4]="isLarge"
+        [class.fs-6]="!isLarge">
+      {{ title }}
+    </h5>
+    
+    <!-- Date (now shown in ALL cards) -->
+    <p *ngIf="date"
+        class="news-card__date mb-2 opacity-75 small">
+      {{ date }}
+    </p>
+    
+    <!-- More info button -->
+    <div class="news-card__action d-flex align-items-center">
+      <span class="small me-2">{{ buttonText || 'Más información' }}</span>
+      <i class="bi bi-arrow-right"></i>
+    </div>
+  </div>
+  
+  <!-- Size indicator (for debugging - remove in production) -->
+  <div *ngIf="showSizeInfo" 
+       class="position-absolute top-0 end-0 m-2 bg-info text-white px-2 py-1 rounded small">
+    {{ imageWidth }} × {{ imageHeight }}
+  </div>
+</div>

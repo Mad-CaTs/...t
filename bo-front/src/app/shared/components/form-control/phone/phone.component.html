@@ -1,0 +1,45 @@
+<label [for]="name" class="fs-6 mb-2 cl-muted" *ngIf="label">{{ label }}</label>
+
+<div
+	class="input position-relative"
+	[class.input--disabled]="disabled"
+	[class.border-danger]="errors && !disabled"
+	#input
+>
+	<div class="d-flex flex-row gap-2 align-items-center cursor-pointer" (click)="onOpenList()">
+		<img [src]="country?.flag" />
+		<mat-icon fontIcon="arrow_drop_down" [class.text-danger]="errors && !disabled"></mat-icon>
+		<span class="fs-6 cl-muted" style="width: max-content">{{ country?.prefix }}</span>
+	</div>
+	<input
+		type="number"
+		[placeholder]="placeholder"
+		[attr.aria-label]="label"
+		[attr.disabled]="disabled ? true : undefined"
+		[class.text-danger]="errors && !disabled"
+		[name]="name"
+		[id]="name"
+		[value]="phoneValue"
+		(change)="onChange($event)"
+	/>
+</div>
+
+<app-phone-menu
+	class="select-list shadow-lg w-100 h-auto"
+	style="max-width: 280px"
+	[input]="input"
+	[control]="formControl"
+	(onClose)="showList = false"
+	[class.d-none]="!showList"
+></app-phone-menu>
+
+<div
+	class="d-flex flex-row align-items-center gap-2 mt-3 ms-3"
+	[class.cl-muted]="!disabled"
+	[class.cl-disabled]="disabled"
+	[class.text-danger]="errors && !disabled"
+	*ngIf="helper"
+>
+	<mat-icon fontIcon="info" class="fs-5" style="width: 19px; height: 19px"></mat-icon>
+	<span class="fs-6 m-0">This is the description area</span>
+</div>

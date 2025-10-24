@@ -1,0 +1,17 @@
+::ng-deep .p-dropdown-item {
+    white-space: normal !important; 
+    line-height: 1.4; 
+    max-width: 100%; 
+  }
+
+  ::ng-deep .p-dropdown-label {
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    display: block !important;
+  }
+  ::ng-deep .p-dropdown {
+    max-width: 100% !important;
+  }
+  
+  

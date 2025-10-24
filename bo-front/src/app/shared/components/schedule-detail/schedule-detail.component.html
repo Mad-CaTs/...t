@@ -1,0 +1,48 @@
+<!-- <div class="card w-100 h-100 d-flex flex-column bg-custom-light border-0">
+	<div class="card-body">
+		<div class="d-flex gap-1 align-items-center mb-3">
+			<mat-icon *ngIf="iconType === 'mat'" fontIcon="{{ icon }}" class="cl-muted"></mat-icon>
+			<i *ngIf="iconType === 'pi'" class="{{ icon }} cl-muted" style="font-size: 20px"></i>
+			<span class="text-detail text-base">{{ title }}</span>
+		</div>
+
+		<div class="d-flex flex-wrap justify-content-center gap-3" *ngIf="items.length <= 3">
+			<div class="d-flex flex-column align-items-center" *ngFor="let item of items">
+				<span class="custom-text text-base">{{ item.value }}</span>
+				<span class="text-detail text-base">{{ item.label }}</span>
+			</div>
+		</div>
+
+		<div class="row g-2 text-center" *ngIf="items.length > 3">
+			<div class="col-6 d-flex flex-column align-items-center" *ngFor="let item of items">
+				<span class="custom-text text-base">{{ item.value }}</span>
+				<span class="text-detail text-base">{{ item.label }}</span>
+			</div>
+		</div>
+	</div>
+</div>
+ -->
+
+ <div class="card w-100 h-100 d-flex flex-column bg-custom-light border-0">
+    <div class="card-body">
+      <div class="d-flex gap-1 align-items-center mb-3">
+        <img *ngIf="iconSvg" [src]="iconSvg" alt="icon" width="20" height="20" class="cl-muted" />
+        <span class="text-detail text-base">{{ title }}</span>
+      </div>
+  
+      <div class="d-flex flex-wrap justify-content-center gap-3" *ngIf="items.length <= 3">
+        <div class="d-flex flex-column align-items-center" *ngFor="let item of items">
+          <span class="custom-text text-base">{{ item.value }}</span>
+          <span class="text-detail text-base">{{ item.label }}</span>
+        </div>
+      </div>
+  
+      <div class="row g-2 text-center" *ngIf="items.length > 3">
+        <div class="col-6 d-flex flex-column align-items-center" *ngFor="let item of items">
+          <span class="custom-text text-base">{{ item.value }}</span>
+          <span class="text-detail text-base">{{ item.label }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  

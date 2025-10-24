@@ -1,0 +1,59 @@
+.event-list-page {
+  display: flex;
+  flex-direction: column;
+  gap: 0; /* gestionamos distancias por sección */
+  padding: 2rem;
+}
+
+/* Espaciados por defecto entre secciones */
+.event-list-page > * + * {
+  margin-top: 6rem;
+}
+
+/* Botón de login casi pegado al hero */
+.event-list-page > .login-btn-wrapper + app-hero-section {
+  margin-top: 0.25rem;
+}
+
+@media (max-width: 1024px) {
+  .event-list-page > .login-btn-wrapper + app-hero-section { margin-top: 0.2rem; }
+}
+@media (max-width: 768px) {
+  .event-list-page > .login-btn-wrapper + app-hero-section { margin-top: 0.16rem; }
+}
+
+.login-btn-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 0;
+}
+
+.login-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(90deg, #2563eb 0%, #1e40af 100%);
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  height: 40px;
+  padding: 0 1rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  min-width: 128px;
+  box-shadow: 0 2px 8px rgba(37,99,235,0.08);
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+}
+
+.login-btn:hover {
+  background: linear-gradient(90deg, #1e40af 0%, #2563eb 100%);
+  box-shadow: 0 4px 16px rgba(37,99,235,0.15);
+  transform: translateY(-2px) scale(1.03);
+}
+
+.login-btn svg {
+  display: inline-block;
+  vertical-align: middle;
+}

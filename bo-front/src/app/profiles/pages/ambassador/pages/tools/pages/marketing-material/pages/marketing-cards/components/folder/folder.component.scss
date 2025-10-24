@@ -1,0 +1,38 @@
+.event-card {
+	border-radius: 12px;
+	transition: all 0.2s ease-in-out;
+	cursor: pointer;
+
+	&:hover {
+		transform: scale(1.02);
+		box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+	}
+}
+mat-icon {
+	font-size: 2rem;
+	color: #5f6368;
+}
+
+.tag {
+	font-size: 0.75rem;
+	color: #fff;
+	text-transform: capitalize;
+}
+
+.tag-green {
+	background-color: #16a34a33; // Individual
+	color: #16a34a;
+}
+
+.tag-blue {
+	background-color: #0090bc33; // Documento
+	color: #0090bc;
+}
+
+.tag-orange {
+	background-color: #ff9800; // Video
+}
+
+.text-muted {
+	font-size: 0.85rem;
+}

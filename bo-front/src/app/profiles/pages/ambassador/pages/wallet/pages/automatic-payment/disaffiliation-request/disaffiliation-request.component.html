@@ -1,0 +1,64 @@
+<div class="container">
+  <div class="membership-info">
+    <div class="membership-details">
+      <div class="label">Membresía</div>
+      <div class="membership-type">
+        <span class="type-text">{{ membershipInfo.namePackage }}</span>
+        <span class="active-badge">{{ membershipInfo.status ? 'Activo' : 'Inactivo' }}</span>
+      </div>
+    </div>
+    <div class="end-date">
+      <div class="label" >Fecha de finalización</div>
+      <div class="date">{{ dateActualal }}</div>
+    </div>
+  </div>
+
+  <div class="content">
+    <p class="cancellation-info">
+      Tu afiliación terminará el {{ dateActualal }}.<br>
+      Para ayudarnos a mejorar nuestro servicio, nos gustaría que nos
+      comentes el motivo o razón de tu desafiliación.
+    </p>
+
+    <div class="question">
+      ¿Cuál es el motivo principal por el que cancelaste tu suscripción de pago automático?
+    </div>
+
+    <form [formGroup]="cancellationForm" class="radio-group">
+      <div *ngFor="let reason of cancellationReasons" class="radio-option"
+        [class.selected]="cancellationForm.get('reason')?.value === reason.value"
+        [class.other-reason]="reason.value === 'other'" (click)="onReasonChange(reason.id)">
+        <input type="radio" [id]="reason.value" [value]="reason.id" formControlName="reason">
+        <label [for]="reason.value">{{ reason.label }}</label>
+
+        <div *ngIf="reason.value === 'other' && isOtherSelected" class="reason-input">
+          <label for="other-text" class="input-label">Especifique su motivo</label>
+          <textarea 
+            id="other-text" 
+            class="improved-textarea"
+            formControlName="otherReason" 
+            placeholder="Escriba brevemente aquí..."
+            required
+            [maxlength]="maxCharacters" 
+            (click)="$event.stopPropagation()"
+            rows="4"
+            aria-label="Campo para escribir la razón adicional"
+            aria-describedby="char-counter"
+            >
+          </textarea>
+          <div class="char-count">{{ characterCount }}</div>
+        </div>
+      </div>
+    </form>
+
+    <div class="button-group">
+      <button type="button" class="secondary" (click)="onGoBack()">
+        Volver
+      </button>
+      <button type="button" class="primary" [disabled]="!isFormValid || loadingDesafiliate"  (click)="onNext()">
+        Siguiente
+      </button>
+    </div>
+  </div>
+
+</div>

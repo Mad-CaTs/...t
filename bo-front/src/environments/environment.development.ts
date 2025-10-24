@@ -1,0 +1,39 @@
+import { Environment } from '@shared/interfaces/environment';
+/* :) */
+export const environment: Environment = {
+	URL_API: 'https://usersapi.inclub.world',
+	URL_API_CALENDAR: 'https://scheduleapi-dev.inclub.world/api/v1',
+	LOGIN_USER_CLIENT: 'client',
+	LOGIN_USER_SECRET: 'secret',
+	CODE_CHALLENGE: 'meWMSrkRBnMbd5RRseIVwuFGFOU6xwHi0_LgQyCOd1A',
+	CODE_CHALLENGE_METHOD: 'S256',
+	TOKEN_PAYPAL: 'AY9d5jrHkZwPllAZSM9VqWR-6Na5CZd0W7FX0YfnUJ7P1vCkY6oI6YeikymWbwSWsRn_FAlngtku095k',
+	CLIENT_ID: 'floofle-client',
+	CLIENT_SECRET: 'secret',
+	URL_AUTH_SERVER: 'oauth-dev.inclub.world',
+	LOGIN_URL: '/oauth2/authorization/backoffice-gateway',
+	SHOW_IMAGES_COMPONENT: false,
+	URL_IMG: 'https://s3.us-east-2.amazonaws.com/backoffice.documents/bo-imagenes/',
+	LOCAL_LOGIN: false,
+	URL_ADMIN: 'https://adminpanelapi-dev.inclub.world/api',
+	// URL_ADMIN_LOCAL: 'http://localhost:8081/api',
+	URL_API_PAYMENT: 'https://membershipapi-dev.inclub.world/api/v1',
+	URL_API_VALIDA_SPONSOR: 'https://adminpanelapi-dev.inclub.world/user/exists',
+	URL_API_TRANSFER_LIQUIDATION: 'https://transferapi-dev.inclub.world/api/v1',
+	URL_API_REGISTER_MIGRATION: 'https://migrationapi-dev.inclub.world/api/v1',
+	URL_API_COMMISSION: 'https://commissionsapi-dev.inclub.world/api/v1',
+	URL_GATEWEY: 'https://opengateway-dev.inclub.world/api/v1',
+	URL_GATEWAY_LOCAL: 'http://localhost:8777/api/v1',
+	URL_BONUS_API: 'http://localhost:8716/api/v1',
+
+	URL_API_PDF: 'https://pdfapi-dev.inclub.world/api/v1',
+	URL_ACCOUNT: 'https://account-dev.inclub.world/api/v1',
+	URL_JOBSTATUSAPI: 'https://jobstatusapi-dev.inclub.world/api/v1',
+	URL_WALLET: 'https://walletapi-dev.inclub.world/api/v1',
+	URL_API_LEGAL: 'https://legalapi-dev.inclub.world/api/v1',
+	URL_API_REWARDS: 'https://rewardsapi-dev.inclub.world/api/v1',
+
+	URL_API_TicketApi: 'https://ticketapi-dev.inclub.world',
+	URL_API_TRANSFER: 'https://transferapi-dev.inclub.world/api/v1',
+
+};

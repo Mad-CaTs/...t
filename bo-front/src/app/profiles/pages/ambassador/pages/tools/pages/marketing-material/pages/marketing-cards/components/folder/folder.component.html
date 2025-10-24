@@ -1,0 +1,33 @@
+<div class="d-flex flex-column gap-3 p-0 bg-white shadow rounded event-card h-100">
+	<div class="card p-4 border shadow-none d-flex flex-column h-100">
+		<!-- Header: icono a la izquierda, tag a la derecha -->
+		<div class="d-flex justify-content-between align-items-center px-4 pt-2 pb-2">
+			<mat-icon class="fs-3 text-muted">{{ headerIcon }}</mat-icon>
+
+			<!-- Tag dinámico alineado a la derecha -->
+			<span
+				class="tag px-3 py-1 rounded-pill"
+				[ngClass]="{
+					'tag-green': fileCategory === 'individual',
+					'tag-blue': fileCategory === 'documento' || fileCategory === 'paquete',
+					'tag-orange': fileCategory === 'video'
+				}"
+			>
+				{{ fileCategory | uppercase }}
+			</span>
+		</div>
+
+		<!-- Cuerpo -->
+		<div class="d-flex flex-column align-items-start px-4">
+			<span class="text-muted small">{{ fileType | uppercase }}</span>
+			<h5 class="m-0 mt-1 fw-normal">{{ title }}</h5>
+		</div>
+
+		<p-divider></p-divider>
+
+		<!-- Footer -->
+		<div class="d-flex justify-content-end align-items-center px-4 pt-3 mt-auto">
+			<span class="mdc-button__label text-primary" style="cursor: pointer" (click)="onClickButton()"> {{ buttonText || 'Descargar' }} </span>
+		</div>
+	</div>
+</div>

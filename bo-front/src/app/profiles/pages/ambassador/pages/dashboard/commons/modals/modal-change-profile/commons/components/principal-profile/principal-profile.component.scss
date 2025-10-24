@@ -1,0 +1,56 @@
+.global-icon {
+	width: 2.5rem;
+	height: 2.5rem;
+	border-radius: 50%;
+	background-color: #FBE9E7;
+	color: #FE7C04;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: 500;
+	font-size: 1.25rem;
+	flex-shrink: 0;
+	flex-grow: 0;
+}
+
+.global-card {
+	display: flex;
+	flex-direction: column;
+	border-radius: 0.5rem;
+	border: none;
+	padding: 1rem 2rem;
+	gap: 1rem;
+	background-color: #F9FAFF;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+}
+
+.title {
+	color: #51565F;
+	font-size: 1.25rem;
+	font-weight: 700;
+	word-break: break-word;
+	white-space: normal;
+}
+
+.description {
+	display: block;
+	text-align: center;
+	flex-grow: 1;
+	min-width: 0;
+	word-break: break-word;
+	white-space: normal;
+	color: #51565F;
+	font-size: 0.875rem;
+	font-weight: 400;
+}
+
+.separator {
+	font-weight: 600;
+	color: #CDCED0;
+}
+
+p {
+	margin: 0;
+}

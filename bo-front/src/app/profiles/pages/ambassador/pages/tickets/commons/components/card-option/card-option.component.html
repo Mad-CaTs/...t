@@ -1,0 +1,20 @@
+<div class="bg-white shadow rounded p-0">
+	<div class="card border shadow-sm card-hover">
+		<div class="card-body d-flex flex-column">
+			<ng-container *ngIf="!isSvg; else svgIcon">
+				<i [ngClass]="[icon, 'text-primary', 'fs-3', 'mb-2']"></i>
+			</ng-container>
+			<ng-template #svgIcon>
+				<img [src]="icon" alt="icono" class="mb-2" style="width: 25px; height: 25px" />
+			</ng-template>
+			<h5 class="card-title">{{ title }}</h5>
+			<p class="card-text text-muted">{{ description }}</p>
+			<hr class="mt-3 mb-2" />
+			<div class="d-flex justify-content-end">
+				<button class="btn p-0 text-primary" style="text-decoration: none" (click)="navigate()">
+					Seleccionar
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,24 @@
+:host ::ng-deep .p-accordion-header-text {
+	color: black !important;
+	text-decoration: none !important;
+}
+
+:host ::ng-deep .p-accordion-header:hover .p-accordion-header-text {
+	color: black !important;
+}
+
+:host ::ng-deep .p-accordion-header {
+	background-color: transparent;
+}
+
+:host ::ng-deep .p-icon {
+	color: black !important;
+}
+
+:host ::ng-deep .p-icon path {
+	fill: black !important;
+}
+
+:host ::ng-deep .p-accordion-header-link {
+	text-decoration: none !important;
+}

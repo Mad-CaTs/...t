@@ -1,0 +1,32 @@
+<div class="card text-center shadow-sm d-flex flex-column h-100" [ngClass]="{'disabled-card': status === 'No Logrado'}" [attr.status]="status">
+  <div class="card-body d-flex flex-column justify-content-between" style="min-height: 300px;">
+    <img [src]="medalImage" alt="{{ rank }}" class="img-fluid mb-3 mx-auto" style="max-width: 100px; height: auto;" />
+
+    <h5 class="fw-bold">{{ name }}</h5>
+
+    <div class="d-flex justify-content-start">
+      <span class="w-auto text-success rounded py-1 px-3" *ngIf="status === 'Logrado'" style="background-color: #16a34a33;">
+        {{ status }}
+      </span>
+
+      <span class="w-auto text-primary rounded py-1 px-3" *ngIf="status !== 'Logrado'" style="background-color: #93c5fd33;">
+        {{ status }}
+      </span>
+    </div>
+    <h5 class="card-title text-dark mt-2">{{ rank }}</h5>
+
+    <div *ngIf="enabledText" class="text-center mt-3">
+      <p class="m-0 card-text text-start">{{ enabledText }}</p>
+    </div>
+
+    <p *ngIf="rangeCount !== null" class="text-muted text-start mt-2">
+      Número de calificación: {{ rangeCount }}
+    </p>
+
+    <div class="d-flex justify-content-center mt-3" style="flex-shrink: 0;">
+      <button class="btn btn-secondary d-flex align-items-center" pButton type="button" (click)="onViewPrize()" [disabled]="status !== 'No Logrado'">
+        <mat-icon class="text-white me-2" aria-hidden="true">visibility</mat-icon> Ver premio
+      </button>
+    </div>
+  </div>
+</div>

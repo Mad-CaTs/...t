@@ -1,0 +1,15 @@
+<div class="token-container">
+    <p-inputOtp [integerOnly]="true" [formControl]="form?.get(controlName)" length="4" class="custom-input-otp" />
+
+    @if (remainingTime) {
+    <p class="remaining-time">
+        Podrás solicitar un nuevo código en <b>{{ calculateRemainingTime() }}</b>
+    </p>
+    } @else {
+    <p class="remaining-time">
+        <button class="btn-new-code" type="button" (click)="onRequestNewCode()">
+            Solicitar nuevo código
+        </button>
+    </p>
+    }
+</div>

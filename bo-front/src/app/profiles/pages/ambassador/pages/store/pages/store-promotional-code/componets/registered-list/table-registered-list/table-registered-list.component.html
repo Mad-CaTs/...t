@@ -1,0 +1,82 @@
+<div class="d-flex flex-column gap-3 mt-3">
+  <div class="d-flex flex-column w-50">
+    <h1 class="m-0 fs-4 text-black fw-medium mt-0">Lista de usuario
+    </h1>
+    <h2 class="m-0 fs-6 text-muted mt-2">
+      Visualiza todos tus usuarios registrados
+    </h2>
+  </div>
+
+  <div class="d-flex flex-column text-center">
+
+    <app-pagination-ng-prime [rows]="rows"
+                             [totalRecords]="totalRecords"
+                             [rowsPerPageOptions]="[10, 20, 30]"
+                             [align]="align"
+                             (pageChange)="onPageChange($event)"
+                             (refresh)="onRefresh($event)">
+    </app-pagination-ng-prime>
+
+    
+  </div>
+
+
+  <app-table class="w-100"
+             [headers]="headers"
+             [hasCheckbox]="false"
+             [minWidth]="1600"
+             [minWidthHeader]="minWidthHeaders"
+             [loading]="isLoading"
+             [customRows]="true"
+             [firstEmpty]="true"
+             [hasData]="table.data.length > 0"
+             style="table-layout: fixed;">
+    <tr class="w-100 d-flex flex-row align-items-center"
+        *ngFor="let d of table.data; let i = index">
+      <td class="fs-6 py-2 px-2 text-center w-100"
+          [style.min-width.px]="minWidthHeaders[0]">{{ i + 1 }}</td>
+      <td class="fs-6 py-2 px-3 text-center w-100"
+          [style.min-width.px]="minWidthHeaders[1]">{{ d.name }}</td>
+          <td class="fs-6 py-2 px-3 text-center w-100"
+          [style.min-width.px]="minWidthHeaders[2]">{{ d.lastname}}</td>
+      <td class="fs-6 py-2 px-3 text-center w-100"
+          [style.min-width.px]="minWidthHeaders[3]">{{ d.customerType === 1 ? 'Promocional' : 'Regular' }}</td>
+      <td class="fs-6 py-2 px-3 text-center w-100"
+          [style.min-width.px]="minWidthHeaders[4]">{{ d.suscriptionName ? d.suscriptionName : '-'}}</td>
+      <td class="fs-6 py-2 px-2 text-center w-100"
+          [style.min-width.px]="minWidthHeaders[5]">{{ d.nroDocument }}</td>
+      <td class="fs-6 py-2 px-3 text-center w-100"
+          [style.min-width.px]="minWidthHeaders[6]">{{ d.birthDate }}</td>
+      <td class="fs-6 py-2 px-2 text-center w-100"
+          [style.min-width.px]="minWidthHeaders[7]">{{ getCivilStateDescription(d.civilState) }}</td>
+      <td class="fs-6 py-2 px-3 text-center w-100"
+          [style.min-width.px]="minWidthHeaders[8]">{{ getCountryName(d.residenceCountryId) }}</td>
+      <td class="fs-6 py-2 px-2 text-center w-100"
+          [style.min-width.px]="minWidthHeaders[9]">{{ d.nroPhone }}</td>
+      <td class="fs-6 py-2 px-2 text-center w-100"
+          [style.min-width.px]="minWidthHeaders[10]">{{ d.email }}</td>
+   
+
+      <td class="fs-6 py-2 px-2 text-center w-100"
+      [style.min-width.px]="minWidthHeaders[11]"
+      >
+        <mat-icon class="cursor-pointer me-2 text-secondary"
+            fontIcon="edit" (click)="editPayItem(d.id)"
+            >
+          </mat-icon>
+    
+        <mat-icon class="cursor-pointer text-secondary" *ngIf="!isButtonLoading[d.id]" fontIcon="delete" (click)="deletePayItem(d)">
+        </mat-icon>
+    
+        <div *ngIf="isButtonLoading[d.id]" class="d-flex justify-content-center align-items-center">
+            <p-progressSpinner [style]="{ width: '1.5rem', height: '1.5rem' }" strokeWidth="8"
+                fill="transparent" animationDuration=".5s"></p-progressSpinner>
+        </div>
+    </td>
+    
+    </tr>
+
+
+  </app-table>
+
+</div>

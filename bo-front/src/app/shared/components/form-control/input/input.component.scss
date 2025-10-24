@@ -1,0 +1,81 @@
+.p-input-icon-left,
+.p-input-icon-right {
+	width: 100%;
+}
+
+.asdsaf {
+	position: absolute;
+	top: 43%;
+	margin-top: -0.5rem;
+}
+
+.p-input-icon-left .pi {
+	display: flex;
+	align-items: center;
+}
+
+.p-input-icon-right .pi {
+	display: flex;
+	align-items: center;
+}
+
+.p-input-icon-left>.p-inputtext {
+	padding-left: 5.5rem;
+	display: flex;
+	justify-content: space-between;
+}
+
+.p-input-icon-right>.p-inputtext {
+	padding-right: 2.5rem;
+}
+
+.p-input-icon-left>.asdsaf {
+	display: flex;
+	align-items: center;
+}
+
+:host ::ng-deep .p-password.p-component.p-inputwrapper {
+	width: 100%;
+}
+
+:host ::ng-deep .p-password.p-component.p-inputwrapper.d-flex {
+	display: flex;
+}
+
+::ng-deep .custom-input-number .p-inputnumber-button {
+	background-color: #F0692C;
+}
+
+::ng-deep .custom-input-number .p-inputnumber-button-up {
+	border-bottom-left-radius: 0;
+	border-top-right-radius: 5px;
+}
+
+::ng-deep .custom-input-number .p-inputnumber-button-down {
+	border-top-left-radius: 0;
+	border-bottom-right-radius: 5px;
+}
+
+.margin-negative {
+	margin-top: -26px;
+}
+.custom-white {
+	color: white;
+  }
+ 
+.text-red {
+	color: black; 
+	font-weight: bold; 
+  } 
+ 
+
+  
+  
+  
+
+  
+  
+  
+  
+  
+  

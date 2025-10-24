@@ -1,0 +1,196 @@
+<ng-container *ngIf="paymentDetails">
+	<form class="d-flex flex-column w-100 gap-4">
+		<div class="row w-100 g-4">
+			<span class="cl-gray-100">Aquí verás información detallada de tu cuota.</span>
+
+			<div class="col-12 col-md-6 order-1 order-md-1">
+				<div class="fs-14 bg-white rounded p-3 h-100 shadow-sm">
+					<h5 class="cl-gray-100 mb-3">Detalle de la Cuota</h5>
+
+					<div class="d-flex justify-content-between align-items-center mb-3">
+						<span class="cl-gray-100">Fecha de vencimiento</span>
+						<span class="fw-medium">
+							{{ paymentDetails.nextExpirationDate | date: 'dd-MM-yyyy' }}
+						</span>
+					</div>
+
+					<div class="d-flex justify-content-between align-items-center mb-3">
+						<span class="cl-gray-100">Capital</span>
+						<span class="fw-medium">{{ paymentDetails.capitalBalanceUsd }} USD</span>
+					</div>
+
+					<div class="d-flex justify-content-between align-items-center mb-3">
+						<span class="cl-gray-100">Amortización</span>
+						<span class="fw-medium">{{ paymentDetails.amortizationUsd }} USD</span>
+					</div>
+
+					<div *ngIf="!hideFields" class="d-flex justify-content-between align-items-center mb-3">
+						<span class="cl-gray-100">Mora</span>
+						<span class="fw-medium">{{ paymentDetails.totalOverdue || 0 }} USD</span>
+					</div>
+
+					<div class="d-flex justify-content-between align-items-center mb-3">
+						<span class="cl-gray-100">Cuota</span>
+						<span class="fw-medium">{{ paymentDetails.quoteUsd }} USD</span>
+					</div>
+
+					<div class="alert alert-info d-flex align-items-center gap-2 mt-3" role="alert">
+						<mat-icon fontIcon="info"></mat-icon>
+						<span *ngIf="!hideFields">
+							Le queda {{ gracePeriod }} días de periodo de gracia
+						</span>
+						<span *ngIf="hideFields" class="fw-medium">
+							La migración de una membresía es de menor a mayor
+						</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-12 col-md-6 order-2 order-md-2">
+				<div class="bg-light rounded p-3 h-100 shadow-sm">
+					<div class="text-center">
+						<span>Imagen del voucher o evidencia bancaria</span>
+					</div>
+
+					<div class="d-flex justify-content-center mt-3">
+						<card-communicated
+							*ngIf="selectedVoucher; else noImage"
+							[image]="selectedVoucher.imagePath"
+							[horizontal]="false"
+							[noMoreButton]="true"
+							class="full-image"
+						></card-communicated>
+
+						<ng-template #noImage>
+							<div class="image-placeholder text-center p-4 border rounded bg-white">
+								<mat-icon
+									fontIcon="image"
+									class="placeholder-icon fs-1 text-muted"
+								></mat-icon>
+								<p class="cl-gray-500 mt-2">No se ha adjuntado evidencia de este pago.</p>
+							</div>
+						</ng-template>
+					</div>
+
+					<div
+						*ngIf="vouchers?.length > 1"
+						class="mini-gallery mt-3 d-flex flex-wrap justify-content-center gap-2"
+					>
+						<div
+							class="mini-card cursor-pointer"
+							*ngFor="let voucher of vouchers"
+							(click)="selectVoucher(voucher)"
+						>
+							<card-communicated
+								[image]="voucher.imagePath"
+								[horizontal]="false"
+								[noMoreButton]="true"
+							></card-communicated>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!--   <div class="col-12 col-md-6">
+        <div class="fs-14  bg-white rounded p-3">
+          <h5 class="cl-gray-100">Detalle de la Cuota</h5>
+          <div class="d-flex flex-row justify-content-between align-items-center mt-2">
+            <span class="cl-gray-100">Fecha de vencimiento</span>
+            <span class="cl-gray-100">{{ paymentDetails.nextExpirationDate | date: 'dd-MM-yyyy' }}</span>
+          </div>
+          <div class="d-flex flex-row justify-content-between align-items-center mt-4">
+            <span class="cl-gray-100">Capital</span>
+            <span class="cl-gray-100">{{ paymentDetails.capitalBalanceUsd }} USD</span>
+          </div>
+          <div class="d-flex flex-row justify-content-between align-items-center mt-4">
+            <span class="cl-gray-100">Amortización</span>
+            <span class="cl-gray-100">{{ paymentDetails.amortizationUsd }} USD</span>
+          </div>
+          <div *ngIf="!hideFields" class="d-flex flex-row justify-content-between align-items-center mt-4">
+            <span class="cl-gray-100">Mora</span>
+            <span class="cl-gray-100">{{ paymentDetails.totalOverdue || 0 }} USD</span>
+          </div>
+          <div class="d-flex flex-row justify-content-between align-items-center mt-4">
+            <span class="cl-gray-100">Cuota</span>
+            <span class="cl-gray-100">{{ paymentDetails.quoteUsd }} USD</span>
+          </div>
+          <div *ngIf="!hideFields" class="d-flex flex-row justify-content-between align-items-center mt-4">
+            <span class="cl-gray-100">Total</span>
+            <span class="cl-gray-100">{{ paymentDetails.total ?? 0 }} USD</span>
+          </div>
+          <div class="d-flex flex-row justify-content-between align-items-center mt-4">
+            <span class="cl-gray-100">Estado</span>
+            <span class="cl-gray-100">{{ paymentDetails.statusName }}</span>
+          </div>
+          <div class="alert alert-info d-flex flex-row gap-2 mt-4 align-items-center" role="alert">
+            <mat-icon fontIcon="info"></mat-icon>
+            <span *ngIf="!hideFields">Le queda {{gracePeriod}} días de periodo de gracia</span>
+            <span *ngIf="hideFields" class="fw-medium">La migración de una membresía es de menor a mayor</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6">
+        <div class="bg-light rounded p-3">
+          <div class="text-center">
+            <span>Imagen del voucher o evidencia bancaria</span>
+          </div>
+
+          <div class="d-flex justify-content-center mt-3">
+            <card-communicated *ngIf="selectedVoucher; else noImage" [image]="selectedVoucher.imagePath" [title]="''"
+              [date]="''" [description]="''" [horizontal]="false" [noMoreButton]="true"
+              class="full-image"></card-communicated>
+
+            <ng-template #noImage>
+              <div class="image-placeholder">
+                <mat-icon fontIcon="image" class="placeholder-icon"></mat-icon>
+                <p class="cl-gray-500 text-center mt-2">
+                  No se ha adjuntado evidencia de este pago.
+                </p>
+              </div>
+            </ng-template>
+          </div>
+
+          <div *ngIf="vouchers?.length > 1" class="mini-gallery mt-3">
+            <div class="mini-card" *ngFor="let voucher of vouchers" (click)="selectVoucher(voucher)">
+              <card-communicated [image]="voucher.imagePath" [title]="''" [date]="''" [description]="''"
+                [horizontal]="false" [noMoreButton]="true"></card-communicated>
+            </div>
+          </div>
+        </div>
+      </div> -->
+		</div>
+
+		<div class="d-flex flex-column flex-md-row justify-content-between gap-3">
+			<div class="col-12 col-md-6">
+				<button
+					class="btn btn-outline-secondary w-100 d-flex align-items-center justify-content-center px-3 py-1 text-center"
+					type="button"
+					(click)="closeModal()"
+				>
+					Cancelar
+				</button>
+			</div>
+
+			<div class="col-12 col-md-6">
+				<button
+					*ngIf="!hideFields"
+					class="btn btn-outline-secondary w-100 d-flex align-items-center justify-content-center px-3 py-1 text-center"
+					type="button"
+					(click)="onClickButton()"
+					[disabled]="(paymentDetails?.payed && paymentDetails?.statusName !== 'RECHAZO CUOTA') || isLoading"
+				>
+					<span
+						*ngIf="isLoading"
+						class="spinner-border spinner-border-sm me-2"
+						role="status"
+						aria-hidden="true"
+					></span>
+					Continuar
+				</button>
+			</div>
+		</div>
+	</form>
+</ng-container>
+
+

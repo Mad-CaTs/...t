@@ -1,0 +1,35 @@
+
+.card-stack {
+  width: 100%;         /* siempre ocupa todo el ancho */
+  display: flex;       /* apila hijos */
+  flex-direction: column; /* uno debajo de otro */
+  gap: 1rem;           /* separación entre cards */
+}
+
+.stack-item {
+  width: 100%;         /* cada item ocupa todo el ancho */
+}
+
+
+.pos-0 {
+  transform: rotate(0deg);
+  margin-bottom: -20px;
+  z-index: 1;
+}
+.pos-1 {
+  transform: rotate(2deg) translateY(-13px); /* sube 10px hacia arriba */
+  margin-bottom: -20px;
+  z-index: 1;
+}
+
+
+
+.pos-2 {
+  transform: rotate(-3deg) translateY(-15px); /* lo bajamos un poco */
+  z-index: 3;
+}
+
+ 
+
+
+

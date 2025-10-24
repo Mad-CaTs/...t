@@ -1,0 +1,23 @@
+:host {
+  flex: 1;
+  min-width: 0;     
+  display: flex;    
+}
+
+.score-details-card {
+  flex: 1;      
+  width: auto;
+}
+
+.conteniner-gradient {
+  padding: 15px;
+  border-radius: 8px;
+  border-color: #EDEDED;
+}
+
+.progress-spinner-container {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				height: 30rem;
+			}

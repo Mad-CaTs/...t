@@ -1,0 +1,16 @@
+<div class="line bg-black opacity-50"></div>
+<form [formGroup]="gracePeriodForm" class="d-flex flex-column gap-3 mt-3" (submit)="submit()">
+  <app-input [form]="gracePeriodForm" controlName="daysUsed" label="Días para aplicar *" type="number"
+    placeholder="Días" buttons="true" class="w-100" [maxValue]="maxDays"></app-input>
+  <app-checkbox [form]="gracePeriodForm" controlName="flagSchedule" label="Cambiar fecha de cronograma"></app-checkbox>
+  <p *ngIf="!this.gracePeriodForm.get('flagSchedule').value" class="text-danger">No se modificará su fecha de pago.
+    El próximo pago lo tendrás que realizar según
+    la fecha que indica cronograma.
+    Ten en cuenta que ello implica que puedas quedarte inactivo pese a haber pagado la cuota y la mora.</p>
+  <div class="d-flex flex-row justify-content-center gap-4 mt-2">
+    <button class="btn btn-outline-secondary" type="button" (click)="closeModal()">
+      Cancelar
+    </button>
+    <button class="btn btn-secondary" type="submit" [disabled]="false">Aceptar</button>
+  </div>
+</form>

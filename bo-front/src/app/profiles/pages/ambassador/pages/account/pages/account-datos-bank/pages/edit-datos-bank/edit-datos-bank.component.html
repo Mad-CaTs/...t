@@ -1,0 +1,221 @@
+<div class="d-flex flex-column gap-4 p-lg-4 border-0">
+    <div class="d-flex justify-content-center">
+        <span class="text-title">Editar información bancaria</span>
+    </div>
+    <div *ngIf="isLoading" class="d-flex justify-content-center align-items-center" style="min-height: 150px">
+        <p-progressSpinner [style]="{ width: '2rem', height: '2rem' }" strokeWidth="3" fill="var(--surface-ground)"
+            animationDuration=".7s"></p-progressSpinner>
+        <span class="ms-2">Actualizando...</span>
+    </div>
+    <!--Opcion 1-->
+    <div *ngIf="!isLoading" class="d-flex justify-content-center">
+        <div class="operacion-item" style="width: 700px;" (click)="toggleDetalle($event, 0)">
+            <div class="operacion-header d-flex justify-content-between align-items-center">
+                <!-- Contenedor flex mejorado -->
+                <div class="d-flex align-items-center">
+                    <div class="number-count">1</div>
+                    <div class="ms-3">
+                        <div>
+                            <span class="datos-bank">Datos del banco</span>
+                        </div>
+                        <span class="update-form">Actualiza los campos del formulario</span>
+                    </div>
+                </div>
+                <div>
+                    <img class="chevron-icon" src="assets/wallet/chevron_down.svg" alt="">
+                </div>
+            </div>
+            <div #detalle class="operacion-detalle">
+                <div class="detalle-seccion">
+                    <div class="detalle-item">
+                        <!--Nota-->
+                        <div class="row alert alert-info  mb-3 mt-3 mb-0 w-100 m-0" role="alert">
+                            <div class="col-12 col-sm-1  d-flex justify-content-center" style="align-items: center;">
+                                <img width=" 24" height="24" src="/assets/icons/eye-primary.svg">
+                            </div>
+                            <div class="col-12 col-sm-11 d-flex ">
+                                <span class="text-nota  text-center text-sm-start">
+                                    El pago de comisiones será transferido en soles para el caso de Perú. Para otros
+                                    países será transferido en dólares USD. Es requerido que el número de cuenta
+                                    suministrado por usted sea una cuenta en función a la moneda de recibir.
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                                <app-select class="w-100" [showImg]="true" label="País de operaciones*"
+                                    placeholder="Selecciona uno" [options]="nationalitiesList" [form]="form1"
+                                    [disabled]="true" controlName="paisOpe"></app-select>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                                <app-select class="w-100" label="Nombre del banco*" placeholder="Selecciona uno"
+                                    [options]="countryIdBank" [form]="form1" controlName="nameBank"></app-select>
+                            </div>
+                         <!--    <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                                <app-input [form]="form1" controlName="directBank" placeholder="Ingresa la dirección"
+                                    label="Dirección del banco" class="w-100">
+                                </app-input>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                                <app-input [form]="form1" controlName="switf" placeholder="XXXX XX XX 000"
+                                    label="Código SWITF" class="w-100">
+                                </app-input>
+                            </div>
+                            <div class="col-12">
+                                <app-input [form]="form1" controlName="iban" placeholder="XX 00 0000 0000 00 0000000000"
+                                    label="Código IBAN" class="w-100">
+                                </app-input>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Opcion 2-->
+    <div *ngIf="!isLoading" class="d-flex justify-content-center">
+        <div class="operacion-item" style="width: 700px;" (click)="toggleDetalle($event, 1)">
+            <div class="operacion-header d-flex justify-content-between align-items-center">
+                <!-- Contenedor flex mejorado -->
+                <div class="d-flex align-items-center">
+                    <div class="number-count">2</div>
+                    <div class="ms-3">
+                        <div>
+                            <span class="datos-bank">Datos de la cuenta bancaria</span>
+                        </div>
+                        <span class="update-form">Actualiza los campos del formulario </span>
+                    </div>
+                </div>
+                <div>
+                    <img class="chevron-icon" src="assets/wallet/chevron_down.svg" alt="">
+                </div>
+            </div>
+            <div #detalle class="operacion-detalle">
+                <div class="detalle-seccion">
+                    <div class="detalle-item">
+                        <div class="d-flex flex-column w-100">
+                            <app-select class="w-100" label="Tipo de cuenta*" placeholder="Eje.: Cuenta corriente"
+                                [options]="accountTypeOpt" [form]="form2" controlName="tipCuenta"></app-select>
+
+                        </div>
+                        <div class="d-flex flex-column w-100">
+                            <app-input [form]="form2" controlName="numCuenta" placeholder="ej. 000–00000000-0-00"
+                                label="N° de cuenta bancaria*" class="w-100">
+                            </app-input>
+                        </div>
+                        <div class="d-flex flex-column w-100">
+                            <app-input [form]="form2" controlName="cci"
+                                placeholder="CCI:  000 – 000 – 000000000000 – 00"
+                                label="N° de cuenta Interbancaria (CCI)*" class="w-100">
+                            </app-input>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Opcion 3-->
+    <div *ngIf="!isLoading" class="d-flex justify-content-center">
+        <div class="operacion-item" style="width: 700px;" (click)="toggleDetalle($event, 2)">
+            <div class="operacion-header d-flex justify-content-between align-items-center">
+                <!-- Contenedor flex mejorado -->
+                <div class="d-flex align-items-center">
+                    <div class="number-count">3</div>
+                    <div class="ms-3">
+                        <div>
+                            <span class="datos-bank">Datos del titular</span>
+                        </div>
+                        <span class="update-form">Para finalizar ingresa los datos del titular</span>
+                    </div>
+                </div>
+                <div>
+                    <img class="chevron-icon" src="assets/wallet/chevron_down.svg" alt="">
+                </div>
+            </div>
+            <div #detalle class="operacion-detalle">
+                <div class="detalle-seccion">
+                    <div class="detalle-item">
+                        <!--Nota-->
+                        <div class="row alert alert-info  mb-3 mt-3 mb-0 w-100 m-0" role="alert">
+                            <div class="col-12 col-sm-1  d-flex justify-content-center" style="align-items: center;">
+                                <img width=" 24" height="24" src="/assets/icons/eye-primary.svg">
+                            </div>
+                            <div class="col-12 col-sm-11 d-flex ">
+                                <span class="text-nota  text-center text-sm-start">Si el titular es el mismo, el
+                                    formulario se completará automáticamente. Si se trata de un nuevo titular, será
+                                    necesario realizar un nuevo registro.</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 ">
+                                <app-radios [form]="form3" controlName="title" [options]="tipUsuario"
+                                    label="El titular es" (changeSelection)="onChangeTypeBank($event)" class="w-100" />
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                                <app-input [form]="form3" controlName="nameHoler" placeholder="Nombres completos"
+                                    label="Nombres del titular de la cuenta*" class="w-100">
+                                </app-input>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                                <app-input [form]="form3" controlName="lastNameHolder" placeholder="Apellidos completos"
+                                    label="Apellidos del titular de la cuenta*" class="w-100">
+                                </app-input>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                                <app-select class="w-100" [showImg]="true" label="Tipo de Documento*"
+                                    placeholder="Selecciona uno" [options]="documentTypes" [form]="form3"
+                                    controlName="typeDoc"></app-select>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                                <app-input [form]="form3" controlName="numDoc" placeholder="Numero del Documento"
+                                    label="Numero de Documento*" class="w-100">
+                                </app-input>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                                <app-input [form]="form3" controlName="email" placeholder="ej. usuario@email.com"
+                                    label="Correo electrónico*" class="w-100">
+                                </app-input>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                                <app-input [form]="form3" controlName="numContri" placeholder="Eje.: 10 60364594 8"
+                                    label="Número de contribuyente o RUC*" class="w-100">
+                                </app-input>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                                <app-input [form]="form3" controlName="razonSocial" placeholder="Agregar razón social"
+                                    label="Razón Social o Denominación" class="w-100">
+                                </app-input>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                                <app-input [form]="form3" controlName="direccionFiscal" placeholder="Agregar dirección"
+                                    label="Dirección fiscal" class="w-100">
+                                </app-input>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Submit-->
+    <div *ngIf="!isLoading" class="dd-flex flex-column mx-auto w-100" style="max-width: 640px;">
+        <div class="row mt-4">
+            <div class="col-12 col-md-6">
+                <button class="btn btn-volver w-100 mb-2" type="button" (click)="onPreviousStep()">Cancelar
+                    cambios</button>
+
+            </div>
+            <div class="col-12 col-md-6">
+                <button class="w-100" [ngClass]="{
+					btn: true,
+					'btn-secondary': true
+				}" type="button" [disabled]="(disabledUser)" (click)="onNextStep()">
+                    Guardar todos los cambios
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<p-toast></p-toast>

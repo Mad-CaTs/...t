@@ -1,0 +1,66 @@
+.line {
+    width: 100%;
+    height: 5px;
+    background-color: #FE7C04;
+    margin-bottom: 15px;
+}
+/* Elimina el contorno y la sombra de los botones deshabilitados */
+button:not([disabled]):focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+button[disabled] {
+  cursor: not-allowed;
+  color: #9e9e9e;
+  border: none !important;
+  opacity: 0.7;
+  box-shadow: none !important;
+}
+app-table {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+app-table th,
+app-table td {
+  border: 0px solid #e0e0e0;
+  vertical-align: middle;
+}
+
+
+.table-container {
+  padding-left: 0;
+  margin-left: 0;
+}
+
+.table-container th:first-child {
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+  text-align: left; /* Alinear el texto a la izquierda */
+}
+
+.table-container td:first-child {
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+  text-align: left; /* Alinear el texto a la izquierda */
+}
+
+
+.btn-gray {
+	color: #6c757d;
+   cursor: pointer !important;
+}
+
+.btn-gray img {
+	filter: grayscale(100%);
+
+     cursor: pointer !important;
+}
+
+
+
+
+

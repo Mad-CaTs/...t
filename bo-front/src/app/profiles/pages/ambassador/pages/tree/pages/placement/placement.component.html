@@ -1,0 +1,33 @@
+<div class="d-flex flex-column gap-3">
+	<app-navigation
+		class="w-100"
+		[data]="navigationData"
+		[selected]="selectedId"
+		(changeSelected)="onChangeSelected($event)"
+	>
+	</app-navigation>
+	<ng-container *ngIf="selectedId === 1">
+		<app-table-account-tree-placement
+			class="w-100"
+			[dataBody]="tableDataPlacement"
+			[loading]="loading"
+			[btnText]="btnText"
+			[disabled]="disabledUser"
+      		[selectedId]="selectedId"
+			(btnClick)="onOpenModal($event)"
+		>
+		</app-table-account-tree-placement>
+	</ng-container>
+	<ng-container *ngIf="selectedId === 2">
+		<app-table-account-tree-placement
+			class="w-100"
+			[dataBody]="tableDataUnplacement"
+			[loading]="loadingUnplacement"
+			[btnText]="btnText"
+			[disabled]="disabledUser"
+      		[selectedId]="selectedId"
+			(btnClick)="onOpenModal($event)"
+		>
+		</app-table-account-tree-placement>
+	</ng-container>
+</div>

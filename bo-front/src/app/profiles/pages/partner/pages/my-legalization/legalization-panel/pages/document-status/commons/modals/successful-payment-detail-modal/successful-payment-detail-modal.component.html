@@ -1,0 +1,33 @@
+<div class="px-3 py-2" style="width: 100%">
+	<div class="d-flex flex-column gap-1 mb-3">
+		<span class="fw-semibold text-start fs-6">Código de operación {{ vouchers?.operationNumber }}</span>
+		<span class="fw-semibold text-start fs-6">Solicitado desde {{modalData?.userLocalUbicDescription}}</span>
+		<span class="fw-semibold text-start fs-6"
+			>Legalización de {{ modalData?.documentTypeName }} | Tipo {{ modalData?.legalizationName }} |
+			{{ modalData?.nameSuscription }}</span
+		>
+		<p>{{ modalData?.createdAt | date : 'dd/MM/yyyy | HH:mm' }}</p>
+	</div>
+	<span class="fw-bold mt-4 ext-start fs-6">Resumen del pago</span>
+	<div class="d-flex flex-column gap-1 mb-3">
+		<div class="d-flex justify-content-between fs-6"></div>
+		<div class="d-flex justify-content-between fs-6">
+			<span>Costo de Apostillado</span>
+			<span>$ {{ modalData.costoServicioApostillado }}</span>
+		</div>
+		<div class="d-flex justify-content-between fs-6">
+			<span>Costo de envío de documentos</span>
+			<span>$ {{ vouchers.costoEnvio }}</span>
+		</div>
+		<div class="d-flex justify-content-between fs-6">
+			<span>Costo de legalización</span>
+			<span>$ {{ modalData.totalAmount }}</span>
+		</div>
+	</div>
+
+	<div class="d-flex justify-content-center mt-4">
+		<button color="accent" type="button" (click)="onClick()" class="btn btn-secondary w-50">
+			{{ buttonText }}
+		</button>
+	</div>
+</div>

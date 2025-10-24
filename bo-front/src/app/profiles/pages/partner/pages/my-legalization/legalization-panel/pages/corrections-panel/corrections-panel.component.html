@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="breadcrumbs">
+    Legalizaciones > Mis Documentos > <span>Detalles</span>
+  </div>
+  <h1>Detalles de Correcciones</h1>
+
+  <button class="date-btn">
+    {{ timeline[0]?.createdAt | date:'dd/MM/yyyy' }}
+    <i class="bi bi-calendar-event"></i>
+  </button>
+
+  <div class="timeline" *ngIf="timeline.length > 0; else noHistory">
+    <div *ngFor="let item of timeline; let i = index" class="timeline-item">
+      <div class="timeline-dot" [ngClass]="{ 'active': i === 0 }"></div>
+
+      <div class="time-label">
+         {{ item.createdAt | date:'shortTime' }} - {{ item.createdAt | date:'dd/MM/yyyy' }}
+      </div>
+
+      <div class="card">
+        <div class="card-content">
+          <div class="icon"><i class="bi bi-person"></i></div>
+          <div class="text">
+            <strong>{{ item.userName || 'Usuario desconocido' }}</strong>
+
+            {{ item.comment || 'Sin comentario' }}
+          </div>
+        </div>
+        <div class="card-actions">
+          <span
+            class="status"
+            [ngClass]="{
+              'green': item.status === 'CORREGIDO',
+              'yellow': item.status === 'PENDIENTE'
+            }"
+          >
+            {{ item.status }}
+          </span>
+          <a class="view-detail" (click)="goToDetail(item)">
+            <i class="bi bi-eye"></i> Ver Detalle
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #noHistory>
+    <div class="timeline-empty">
+      <i class="bi bi-info-circle"></i> No hay registros en el histórico.
+    </div>
+  </ng-template>
+</div>

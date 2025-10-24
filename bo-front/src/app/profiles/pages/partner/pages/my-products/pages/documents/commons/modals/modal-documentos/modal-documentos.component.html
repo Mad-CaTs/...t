@@ -1,0 +1,28 @@
+<div class="modal-container custom-modal p-3 mx-auto">
+	<div class="modal-header d-flex justify-content-between align-items-start">
+		<div class="d-flex flex-column align-items-start">
+			<div class="d-flex align-items-center justify-content-center bg-white border rounded-3 shadow-sm p-2"
+				style="max-width: 60px; height: auto;">
+				<img src="assets/icons/Signature.svg" alt="Firma Digital" class="img-fluid" style="max-width: 35px;" />
+			</div>
+			<span class="fw-bold fs-5 mt-4">Firma Digital</span>
+		</div>
+		<button class="btn-close" (click)="closeModal()"></button>
+	</div>
+
+	<div class="modal-body text-start mt-2">
+		<p class="ms-1">
+			Para poder descargar sus documentos, usted tiene que pasar a la firma digital. ¿Desea pasar a la firma digital?
+		</p>
+	</div>
+
+	<div class="d-flex flex-wrap justify-content-between w-100 px-3 gap-2">
+		<button class="btn btn-outline-secondary flex-fill" type="button" (click)="closeModal()">
+			Cancelar
+		</button>
+		<button class="btn btn-secondary flex-fill" type="button" (click)="goToValidateDocuments()">
+			Sí, deseo firmar
+		</button>
+	</div>
+</div>
+

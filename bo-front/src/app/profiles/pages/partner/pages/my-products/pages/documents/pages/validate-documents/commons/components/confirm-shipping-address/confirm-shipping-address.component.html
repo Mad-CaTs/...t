@@ -1,0 +1,186 @@
+<ng-container *ngIf="isForeign === 1">
+	<form [formGroup]="formShipping">
+		<div class="container">
+			<h4 class="fw-bold">Confirmar lugar de recojo</h4>
+			<p class="text-muted">Completa y verifica la dirección de recojo</p>
+
+			<app-radios
+				class="w-100"
+				[form]="formShipping"
+				controlName="dtoRecojo"
+				verticalLayout="true"
+				[label]="currentDeliveryLabel"
+				[options]="currentDeliveryOptions"
+			></app-radios>
+
+			<ng-container *ngIf="selectedProduct.tipo === 2">
+				<div class="d-flex justify-content-between align-items-center mb-1">
+					<label class="form-label fw-semibold">¿Cómo deseas legalizarlo?</label>
+					<a
+						href="#"
+						(click)="openCronograma($event)"
+						class="text-secondary fw-semibold text-decoration-none d-flex align-items-center"
+						style="white-space: nowrap"
+					>
+						<img
+							src="assets/icons/link.svg"
+							alt="link icon"
+							width="20"
+							height="20"
+							class="me-2"
+						/>
+						Ver cronograma
+					</a>
+				</div>
+
+				<app-select
+					class="w-100"
+					[showImg]="true"
+					[form]="formShipping"
+					[options]="legalizationMethodOptions"
+					placeholder="Selecciona uno"
+					controlName="legalizationMethod"
+				></app-select>
+
+				<div class="col-12 mt-4">
+					<div class="alert alert-info d-flex align-items-center px-4 py-2">
+						<img src="assets/icons/info.svg" alt="info" class="me-2" width="24" />
+						<span>{{ documentMessages['CONTRACT_LEGALIZATION_NOTE'] }}</span>
+					</div>
+				</div>
+
+				<div class="mt-2">
+					<app-radios
+						class="w-100"
+						[form]="formShipping"
+						controlName="typeLegalization"
+						[options]="optTypeLegalization"
+						label="Tipo de legalización:"
+					></app-radios>
+				</div>
+			</ng-container>
+
+			<ng-container *ngIf="selectedProduct.tipo !== 2">
+				<div class="mb-1 mt-2">
+					<label class="form-label fw-semibold">Tipo de legalización:</label>
+				</div>
+
+				<div class="d-flex align-items-start gap-3">
+					<div class="flex-grow-1">
+						<app-radios
+							class="w-100"
+							[form]="formShipping"
+							controlName="typeLegalization"
+							[options]="optTypeLegalization"
+							label=""
+						></app-radios>
+					</div>
+					<div style="margin-top: 0.25rem">
+						<a
+							href="#"
+							(click)="openCronograma($event)"
+							class="text-secondary fw-semibold text-decoration-none d-flex align-items-center"
+							style="white-space: nowrap"
+						>
+							<img
+								src="assets/icons/link.svg"
+								alt="link icon"
+								width="20"
+								height="20"
+								class="me-2"
+							/>
+							Ver cronograma
+						</a>
+					</div>
+				</div>
+			</ng-container>
+
+			<div *ngIf="registeredAuthorizedPerson" class="border border-primary rounded p-2 mb-4">
+				<button
+					class="btn btn-light w-100 text-start d-flex justify-content-between align-items-center"
+					type="button"
+					data-bs-toggle="collapse"
+					data-bs-target="#authorizedPersonCollapse"
+					aria-expanded="false"
+					aria-controls="authorizedPersonCollapse"
+				>
+					<span class="fw-bold">Persona autorizada</span>
+					<span class="dropdown-toggle"></span>
+				</button>
+
+				<div class="collapse mt-2" id="authorizedPersonCollapse" style="margin-bottom: 1rem">
+					<div class="table-responsive">
+						<pre>{{ tableRows | json }}</pre>
+						<app-bordered-table [headers]="tableHeaders" [rows]="[registeredAuthorizedPerson]">
+							<ng-template #body let-row>
+								<tr>
+									<td class="text-center border-bottom py-3">{{ row.name }}</td>
+									<td class="text-center border-bottom py-3">{{ row.lastName }}</td>
+									<td class="text-center border-bottom py-3">DNI</td>
+									<td class="text-center border-bottom py-3">{{ row.nroDocument }}</td>
+									<td class="text-center border-bottom py-3">
+										{{ row.fecha | date : 'dd/MM/yyyy' }}
+									</td>
+									<td class="text-center border-bottom py-3">
+										<div>
+											<mat-icon
+												class="cursor-pointer me-2 text-secondary"
+												fontIcon="edit"
+												(click)="
+													openAuthorizedPersonModal(registeredAuthorizedPerson)
+												"
+											></mat-icon>
+											<mat-icon
+												class="cursor-pointer text-secondary"
+												fontIcon="delete"
+												(click)="removeAuthorizedPerson()"
+											></mat-icon>
+										</div>
+									</td>
+								</tr>
+							</ng-template>
+						</app-bordered-table>
+					</div>
+				</div>
+			</div>
+
+			<div class="d-flex align-items-center gap-2 mb-3">
+				<img
+					src="assets/icons/Add.svg"
+					alt="Agregar persona autorizada"
+					[style.cursor]="registeredAuthorizedPerson ? 'not-allowed' : 'pointer'"
+					[style.opacity]="registeredAuthorizedPerson ? 0.5 : 1"
+					(click)="!registeredAuthorizedPerson && openAuthorizedPersonModal()"
+					style="width: 24px; height: 24px"
+				/>
+				<span class="text-primary">Registrar persona autorizada</span>
+			</div>
+		</div>
+	</form>
+</ng-container>
+
+<ng-container *ngIf="isForeign === 3">
+	<app-shipping-address-foreign
+		[form]="formShippingForeign"
+		[nationalitiesList]="nationalitiesList"
+		(formDataChanged)="subscribeToFormChanges($event)"
+		[optTypeLegalization]="optTypeLegalization"
+		[legalizationDocList]="legalizationDocList"
+		[isForeign]="isForeign"
+		[selectedProduct]="selectedProduct"
+	></app-shipping-address-foreign>
+</ng-container>
+
+<ng-container *ngIf="isForeign === 2">
+	<app-validate-personal-data
+		[formUser]="formUser"
+		[optTypeLegalization]="optTypeLegalization"
+		(formDataChanged)="subscribeToFormChanges($event)"
+		(selectedBranchChange)="onselectedBranchChange($event)"
+		(sucursalesCercanasChange)="onSucursalesChange($event)"
+		(loadingSucursalesChange)="onLoadingSucursalesChange($event)"
+		[selectedProduct]="selectedProduct"
+		[nationalitiesList]="nationalitiesList"
+	></app-validate-personal-data>
+</ng-container>
+

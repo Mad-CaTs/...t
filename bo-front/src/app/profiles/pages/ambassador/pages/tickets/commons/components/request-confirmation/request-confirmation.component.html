@@ -1,0 +1,117 @@
+<div class="card shadow-sm border-0 rounded-3 p-3 bg-light">
+	<h6 class="fw-bold mb-3">Solicitud del traspaso</h6>
+
+	<div class="row g-2">
+		<div class="col-12">
+			<div
+				class="d-flex justify-content-between align-items-center bg-white rounded-pill px-3 py-3 h-100"
+			>
+				<div class="text-muted">Patrocinador</div>
+				<div class="text-end fw-semibold">
+					<!-- Si selectedId === 3 usamos title + user, sino mostramos como antes -->
+					<ng-container *ngIf="selectedOption?.id === 3; else defaultSponsor">
+						{{ sponsorInfo?.title }}
+						<br />
+						<small class="text-secondary">{{ sponsorInfo?.user }}</small>
+					</ng-container>
+
+					<ng-template #defaultSponsor>
+						{{ sponsorInfo?.sponsor_name }} {{ sponsorInfo?.sponsor_last_name }}
+						<br />
+						<small class="text-secondary">{{ sponsorInfo?.sponsor_username }}</small>
+					</ng-template>
+				</div>
+			</div>
+		</div>
+
+		<!-- 	<div class="col-12">
+			<div
+				class="d-flex justify-content-between align-items-center bg-white rounded-pill px-3 py-3 h-100"
+			>
+				<div class="text-muted">Patrocinador</div>
+				<div class="text-end fw-semibold">
+					{{ sponsorInfo?.sponsor_name }} {{ sponsorInfo?.sponsor_last_name }}
+					<br />
+					<small class="text-secondary">{{ sponsorInfo?.sponsor_username }}</small>
+				</div>
+			</div>
+		</div> -->
+
+		<div class="col-12">
+			<div
+				class="d-flex justify-content-between align-items-center bg-white rounded-pill px-3 py-3 h-100"
+			>
+				<div class="text-muted">Tipo de traspaso</div>
+				<div class="text-end fw-semibold">{{ selectedOption?.title }}</div>
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div
+				class="d-flex justify-content-between align-items-center bg-white rounded-pill px-3 py-3 h-100"
+			>
+				<div class="text-muted">Socio</div>
+				<div class="text-end fw-semibold">
+					{{ transferData.info?.value?.name }} {{ transferData.info?.value?.lastname }}
+
+					<!-- 					{{ transferData.info?.name }} {{ transferData.info?.lastname }}
+ -->
+					<br />
+					<small class="text-secondary">{{ transferData.info?.value?.nroDocument }}</small>
+				</div>
+			</div>
+		</div>
+		<div class="col-12">
+			<div
+				class="d-flex justify-content-between align-items-center bg-white rounded-pill px-3 py-3 h-100"
+			>
+				<div class="text-muted">Documento de identidad</div>
+				<div class="text-end">
+					<span
+						*ngIf="transferData.documentos?.documentoIdentidad"
+						class="badge bg-success bg-opacity-25 text-success px-3 py-2"
+					>
+						Adjuntado
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="col-12">
+			<div
+				class="d-flex justify-content-between align-items-center bg-white rounded-pill px-3 py-3 h-100"
+			>
+				<div class="text-muted">Declaración jurada (DJ)</div>
+				<div class="text-end">
+					<span
+						*ngIf="transferData.documentos?.declaracionJurada"
+						class="badge bg-success bg-opacity-25 text-success px-3 py-2"
+					>
+						Adjuntado
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="col-12">
+			<div
+				class="d-flex justify-content-between align-items-center bg-white rounded-pill px-3 py-3 h-100"
+			>
+				<div class="text-muted">Conciliaciones</div>
+				<!-- <div class="text-end fw-semibold">
+					{{ hasPendingConciliation ? 'Sí' : 'No' }} cuenta con conciliaciones pendientes
+				</div> -->
+				<div class="text-end fw-semibold">{{conciliacionTexto}}</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div
+	class="alert alert-info d-flex flex-column flex-sm-row gap-2 align-items-center text-center text-sm-start p-2 mt-5"
+	role="alert"
+>
+	<mat-icon class="fs-4 flex-shrink-0">info</mat-icon>
+	<span class="alert-info-text fs-6 text-wrap"
+		>El nuevo titular no debe ser socio activo ni menor de edad. Valida la transferencia y confirma para
+		continuar.</span
+	>
+</div>

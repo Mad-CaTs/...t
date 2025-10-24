@@ -1,0 +1,222 @@
+<div class="d-flex flex-column w-100 gap-4">
+  <!-- <h4 class="m-0 fs-5 fw-medium">ASIGNAR PADRINO (OPCIONAL)</h4>
+  <p class="text-muted small mb-0">
+    Puedes seleccionar un padrino para este nuevo socio. El padrino recibirá comisiones según las reglas establecidas.
+  </p>-->
+
+  <!-- Contenedor centrado con ancho limitado -->
+  <div class="d-flex justify-content-center w-100">
+    <div class="d-flex flex-column gap-2 gap-md-4" style="max-width: 650px; width: 100%;">
+
+    <!-- Línea ascendente -->
+    <div class="d-flex flex-column w-100">
+      <div class="card border">
+        <!-- Título -->
+        <div class="card-header bg-white border-bottom p-3">
+          <h6 class="mb-0 fw-bold">Línea ascendente</h6>
+          <small class="text-muted">Socio(a): Emilia Flores Belez Pérez</small>
+        </div>
+        
+        <div class="card-body p-0">
+          <!-- Loading -->
+          <div *ngIf="isLoadingLine" class="text-center py-4">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Cargando...</span>
+            </div>
+            <p class="mt-2 text-muted mb-0">Cargando línea ascendente...</p>
+          </div>
+
+          <!-- Lista de usuarios -->
+          <div *ngIf="!isLoadingLine && ascendingLineUsers.length > 0">
+            <div class="list-group list-group-flush">
+              <div 
+                *ngFor="let user of ascendingLineUsers" 
+                class="list-group-item d-flex justify-content-between align-items-center py-2 px-3"
+                [ngClass]="{
+                  'bg-light': selectedGodfather && user.level === selectedGodfather.level
+                }"
+                style="cursor: pointer;"
+                (click)="selectFromAscendingLine(user)">
+                <div class="d-flex align-items-center gap-2 w-100">
+                  <!-- Icono según estado -->
+                  <ng-container *ngIf="selectedGodfather">
+                    <!-- Si el padrino NO está en la línea ascendente: todos con X roja -->
+                    <ng-container *ngIf="!selectedGodfather.isInLine">
+                      <mat-icon 
+                        fontIcon="cancel" 
+                        class="text-danger"
+                        style="font-size: 20px; width: 20px; height: 20px;">
+                      </mat-icon>
+                    </ng-container>
+                    
+                    <!-- Si el padrino SÍ está en la línea ascendente -->
+                    <ng-container *ngIf="selectedGodfather.isInLine">
+                      <!-- Niveles superiores o el seleccionado: Check verde -->
+                      <mat-icon 
+                        *ngIf="user.level >= selectedGodfather.level" 
+                        fontIcon="check_circle" 
+                        class="text-success"
+                        style="font-size: 20px; width: 20px; height: 20px;">
+                      </mat-icon>
+                      <!-- Niveles inferiores: X roja -->
+                      <mat-icon 
+                        *ngIf="user.level < selectedGodfather.level" 
+                        fontIcon="cancel" 
+                        class="text-danger"
+                        style="font-size: 20px; width: 20px; height: 20px;">
+                      </mat-icon>
+                    </ng-container>
+                  </ng-container>
+                  
+                  <!-- Sin selección: Radio button invisible (solo visual con click en la fila) -->
+                  <div 
+                    *ngIf="!selectedGodfather"
+                    class="form-check-input mt-0 border rounded-circle"
+                    style="width: 20px; height: 20px;">
+                  </div>
+                  
+                  <div class="flex-grow-1">
+                    <div class="fw-medium" 
+                         [ngClass]="{
+                           'text-danger': selectedGodfather && (!selectedGodfather.isInLine || user.level < selectedGodfather.level)
+                         }">
+                      {{ user.name }} {{ user.lastName }}
+                    </div>
+                    <!--<small class="text-muted">Nivel {{ user.level }}</small>-->
+                  </div>
+                </div>
+                
+                <div class="text-muted">
+                  Nivel {{ user.level }}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sin datos -->
+          <div *ngIf="!isLoadingLine && ascendingLineUsers.length === 0" class="text-center py-4">
+            <mat-icon fontIcon="info" class="text-muted" style="font-size: 48px;"></mat-icon>
+            <p class="mt-2 text-muted mb-0">No se encontraron usuarios en tu línea ascendente</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Búsqueda con autocomplete -->
+    <div class="d-flex flex-column w-100">
+      <label class="form-label fw-medium">Ingresa su username o nombre para asignar</label>
+      
+      <!-- Input de búsqueda -->
+      <div class="position-relative">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Escribe el nombre del padrino..."
+          [formControl]="searchInput"
+          (input)="onSearchInput($event)"
+          (focus)="onSearchFocus()"
+          (blur)="onSearchBlur()"
+          autocomplete="off">
+        
+        <!-- Loading spinner -->
+        <div *ngIf="isSearching" class="position-absolute top-50 end-0 translate-middle-y pe-3">
+          <div class="spinner-border spinner-border-sm text-primary" role="status">
+            <span class="visually-hidden">Buscando...</span>
+          </div>
+        </div>
+        
+        <!-- Dropdown de resultados -->
+        <div 
+          *ngIf="showSearchResults && searchResults.length > 0" 
+          class="position-absolute w-100 bg-white border rounded-bottom shadow-sm"
+          style="top: 100%; z-index: 1000; max-height: 300px; overflow-y: auto;">
+          
+          <div 
+            *ngFor="let user of searchResults; trackBy: trackByUserId"
+            class="px-3 py-2 border-bottom cursor-pointer search-result-item"
+            (click)="selectFromSearchResults(user)"
+            (mousedown)="$event.preventDefault()">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <div class="fw-medium">{{ user.name }} {{ user.lastName }}</div>
+                <small class="text-muted" *ngIf="user.username">{{ user.username }}</small>
+              </div>
+              <div class="text-muted small" *ngIf="user.level > 0">
+                Nivel {{ user.level }}
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Sin resultados -->
+        <div 
+          *ngIf="showSearchResults && searchResults.length === 0 && searchInput.value && !isSearching" 
+          class="position-absolute w-100 bg-white border rounded-bottom shadow-sm px-3 py-2 text-muted"
+          style="top: 100%; z-index: 1000;">
+          No se encontraron usuarios
+        </div>
+      </div>
+      
+      <!-- Usuario seleccionado -->
+      <div *ngIf="selectedGodfather" class="mt-2">
+        <div class="alert alert-success d-flex align-items-center gap-2 mb-0">
+          <mat-icon fontIcon="check_circle" class="text-success"></mat-icon>
+          <div>
+            <strong>{{ selectedGodfather.name }} {{ selectedGodfather.lastName }}</strong>
+            <span *ngIf="selectedGodfather.level > 0" class="text-muted ms-2">(Nivel {{ selectedGodfather.level }})</span>
+            <button 
+              type="button" 
+              class="btn btn-sm btn-outline-danger ms-2"
+              (click)="clearSelection()">
+              <mat-icon fontIcon="close" style="font-size: 16px;"></mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Información adicional -->
+    <div class="d-flex flex-column w-100">
+      <div class="alert alert-info border-0 mb-0">
+        <div class="d-flex align-items-start gap-2">
+          <mat-icon fontIcon="info" class="text-info flex-shrink-0"></mat-icon>
+          <div class="small">
+            <p class="fw-bold mb-1">Información importante:</p>
+            <ol class="mb-0 ps-3">
+              <li>Las comisiones generadas será para el patrocinador</li>
+              <li>Los patrocinadores por niveles no van a cambiar</li>
+              <li>Si un nuevo socio pertenece a su línea, los demás niveles no van a cobrar</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botones de navegación -->
+    <div class="d-flex flex-column flex-md-row justify-content-md-between gap-2 mt-3">
+      <button
+        class="btn btn-outline-secondary"
+        type="button"
+        (click)="onBack()">
+        Atrás
+      </button>
+      
+      <div class="d-flex gap-2">
+        <button
+          class="btn btn-outline-secondary"
+          type="button"
+          (click)="onSkip()">
+          Continuar sin padrino
+        </button>
+        <button
+          class="btn btn-secondary"
+          type="button"
+          (click)="onSubmit()">
+          Siguiente
+        </button>
+      </div>
+    </div>
+
+    </div><!-- Cierre contenedor centrado -->
+  </div><!-- Cierre contenedor justify-content-center -->
+</div><!-- Cierre contenedor principal -->

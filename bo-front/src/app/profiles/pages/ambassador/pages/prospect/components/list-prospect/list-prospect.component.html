@@ -1,0 +1,7 @@
+<div class="d-flex flex-column gap-4 card p-lg-4 border-0">
+    <div class="row">
+        <app-table-prospect [dataBody]="prospects" [totalRecords]="totalRecords" (pageChange)="onPageChange($event)"
+            (refresh)="onRefresh($event)">
+        </app-table-prospect>
+    </div>
+</div>

@@ -1,0 +1,160 @@
+<div class="nomination-page">
+	<div class="page-header">
+		<h1>Nominar entradas</h1>
+		<p class="subtitle">Aquí podrás nominar todas tus entradas compradas.</p>
+	</div>
+
+	<!-- Meta superior -->
+	<div class="meta">
+		<div class="meta-item">
+			<p class="k">Fecha de evento</p>
+			<h4 class="v">
+				{{
+					tickets[0]?.eventDate
+						? (tickets[0]?.eventDate | date : 'dd/MM/yyyy')
+						: (tickets[0]?.purchaseDate | date : 'dd/MM/yyyy')
+				}}
+			</h4>
+		</div>
+		<div class="meta-item">
+			<p class="k">Evento</p>
+			<h4 class="v">{{ tickets[0]?.eventName || '—' }}</h4>
+		</div>
+			<div class="meta-item">
+				<p class="k">Zona</p>
+				<h4 class="v">{{ zonesLabel }}</h4>
+			</div>
+	</div>
+	<div class="meta-header">
+		<h3 class="meta-label"></h3>
+	</div>
+
+	<form [formGroup]="nominationForm" (ngSubmit)="submit()">
+		<!-- Selector: Para mí / Para otro asistente -->
+		<div class="for-who">
+			<p class="label">Selecciona si la entrada será para ti o para otra persona</p>
+			<div class="options">
+				<label class="option">
+					<p-radioButton inputId="rb-mi" formControlName="tipo" value="mi"></p-radioButton>
+					<span>Para mí</span>
+				</label>
+				<label class="option">
+					<p-radioButton inputId="rb-otro" formControlName="tipo" value="otro"></p-radioButton>
+					<span>Para otro asistente</span>
+				</label>
+			</div>
+		</div>
+
+		<!-- Tarjetas de asistentes -->
+		<div formArrayName="assistants" *ngIf="getAssistantsArray().length > 0">
+			<ng-container
+				*ngFor="let c of getAssistantsArray().controls; let i = index; trackBy: trackByIndex"
+			>
+				<div class="assistant-card">
+					<div class="assistant-card__head">
+						<h6 class="assistant-title">Datos del asistente: Entrada #{{ i + 1 }}</h6>
+						<div class="head-actions">
+							<span class="zone-chip">{{ tickets[i]?.zone || 'Zona general' }}</span>
+							<button
+								type="button"
+								class="chevron"
+								[class.is-open]="!collapsed[i]"
+								[attr.aria-expanded]="!collapsed[i]"
+								(click)="toggle(i)"
+								aria-label="Expandir/contraer"
+							>
+								▾
+							</button>
+						</div>
+					</div>
+
+					<!-- Cuerpo colapsable -->
+					<div class="assistant-card__body" *ngIf="!collapsed[i]" [formGroupName]="i">
+						<div class="grid">
+							<div class="field">
+								<label>Documento de identidad</label>
+								<div class="doc-row">
+									<p-dropdown
+										[options]="documentos"
+										formControlName="tipoDocumento"
+									></p-dropdown>
+									<input pInputText formControlName="documento" placeholder="12345678" />
+								</div>
+							</div>
+
+							<div class="field">
+								<label>Correo electrónico</label>
+								<input
+									pInputText
+									type="email"
+									formControlName="email"
+									placeholder="ej. usuario@email.com"
+								/>
+							</div>
+
+							<div class="field">
+								<label>Nombre</label>
+								<input
+									pInputText
+									formControlName="nombre"
+									placeholder="ej. Maria de los Ángeles"
+								/>
+							</div>
+
+							<div class="field">
+								<label>Apellidos</label>
+								<input pInputText formControlName="apellidos" placeholder="ej. Velez Saenz" />
+							</div>
+						</div>
+
+						<div class="checks">
+							<label class="check">
+								<p-checkbox formControlName="confirmarDatos" [binary]="true"></p-checkbox>
+								<span
+									>Confirmo que los datos ingresados son correctos y corresponden al
+									asistente asociado a la entrada, asimismo, acepto que estos datos no
+									podrán ser modificados.</span
+								>
+							</label>
+							<label class="check">
+								<p-checkbox formControlName="aceptarTerminos" [binary]="true"></p-checkbox>
+								<span
+									>Declaro que he leído y acepto los Términos y Condiciones, y la Política
+									de Privacidad de Incluib.</span
+								>
+							</label>
+						</div>
+					</div>
+				</div>
+			</ng-container>
+		</div>
+
+		<!-- Acciones -->
+		<div class="actions actions--end">
+			<button pButton type="button" class="btn-cancel" label="Cancelar" (click)="cancel()"></button>
+			<button
+				pButton
+				type="submit"
+				class="btn-accept"
+				[disabled]="nominationForm.invalid"
+				label="Aceptar"
+			></button>
+		</div>
+	</form>
+
+	<!-- Overlay de éxito -->
+	<div class="success-overlay" *ngIf="showSuccess">
+		<div class="success-card">
+			<button class="close-x" (click)="closeSuccess()">✕</button>
+			<div class="icon">✔️</div>
+			<h3>Nominación exitosa</h3>
+			<p>
+				La nominación fue registrada exitosamente. En breves momentos le enviaremos el correo con la
+				información.
+			</p>
+			<div class="actions">
+				<button pButton type="button" label="Cerrar" (click)="closeSuccess()"></button>
+			</div>
+		</div>
+	</div>
+</div>

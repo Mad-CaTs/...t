@@ -1,0 +1,50 @@
+@use 'guest-vars.scss' as var;
+@use 'guest-global.scss' as *;
+
+:host ::ng-deep .p-divider {
+    margin: 0;
+    padding: 0;
+    border: 1 solid var.$gray-200;
+    background: var.$gray-200;
+}
+
+.panel {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 3.5rem 2.5rem;
+    width: 100%;
+    height: 100%;
+
+    @media screen and (max-width: var.$md) {
+        padding: 2rem 1.25rem;
+    }
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+
+.title {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var.$gray-900;
+
+    @media screen and (max-width: var.$md) {
+        font-size: 1.5rem;
+    }
+}
+
+.description {
+    margin: 0;
+    font-size: 1rem;
+    color: var.$gray-600;
+
+    @media screen and (max-width: var.$md) {
+        font-size: 0.875rem;
+    }
+}

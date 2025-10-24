@@ -1,0 +1,11 @@
+<label for="email" class="input-label">
+    Correo electrónico
+</label>
+<input
+    pInputText
+    id="email"
+    placeholder="ejemplo@email.com"
+    class="custom-email-input"
+    [formControl]="form?.get(controlName)"
+    (input)="sendEmail($event.target.value)"
+/>

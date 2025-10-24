@@ -1,0 +1,16 @@
+<div class="d-flex flex-column gap-3 p-0 bg-white shadow rounded event-card h-100">
+	<div class="card p-4 border shadow-none d-flex flex-column h-100">
+		<div class="d-flex align-items-center p-4">
+			<mat-icon class="me-2">{{ headerIcon }}</mat-icon>
+			<h5 class="m-0">{{ title }}</h5>
+		</div>
+		<div class="card-body flex-grow-1">
+			<p class="card-text">{{ content }}</p>
+		</div>
+		<div class="p-4">
+			<button class="btn btn-secondary" (click)="onClickButton()" pButton type="button">
+				{{ buttonText }}
+			</button>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,59 @@
+<div class="d-flex flex-column gap-3">
+	<h2 class="m-0 fs-6 text-black text-uppercase">{{ title }}</h2>
+	<!-- For Mobile -->
+	<div class="w-100 overflow-x-auto overflow-y-hidden pb-2 d-md-none">
+		<div class="d-flex flex-row gap-2" style="width: max-content">
+			<div
+				class="d-flex flex-row align-items-center gap-2 leyends-container__leyend"
+				*ngFor="let leyend of leyends"
+			>
+				<i class="tree-icon rounded" [style.background-color]="leyend.colorRGB"></i>
+				<span class="m-0 tree-leyend-name">{{ leyend.nameState }}</span>
+			</div>
+		</div>
+	</div>
+	<!-- For Tablets and pc -->
+	<div
+		class="leyends-container d-none d-md-block overflow-x-auto overflow-y-hidden pb-2"
+		[class.hide-scrollbar]="isMenuOpen"
+	>
+		<div class="d-flex flex-row justify-content-between gap-lg-4 gap-xl-0 leyends-container__scroll">
+			<div class="d-flex flex-column leyends-container__leyend" *ngFor="let leyends of leyendsMd">
+				<div class="d-flex flex-row align-items-center gap-1" *ngFor="let leyend of leyends">
+					<i class="tree-icon rounded" [style.background-color]="leyend.colorRGB"></i>
+					<span class="tree-leyend-name m-0">{{ leyend.nameState }}</span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="d-flex flex-row gap-2 align-items-center justify-content-center justify-content-md-end">
+		<div class="d-flex flex-column gap-2 align-items-center me-auto">
+			<span class="text-black fs-6">Zoom</span>
+			<div
+				class="p-2 border border-2 bg-light rounded cursor-pointer"
+				style="width: 80px"
+				(mousedown)="inZoom = true"
+				(mouseleave)="onMouseUpBoxZoom($event)"
+				(mousemove)="onMouseMoveBoxZoom($event)"
+				(mouseup)="onMouseUpBoxZoom($event)"
+				#containerZoom
+			>
+				<div
+					class="bg-primary rounded-circle"
+					style="width: 14px; height: 14px; transition: margin-left linear 100ms"
+					[style.margin-left]="marginLeftZoom"
+				></div> 
+			</div>
+		</div>
+		<button class="btn btn-outline-secondary p-2" [disabled]="disabledUser" (click)="refreshTree()">Actualizar</button>
+		<button class="btn btn-outline-secondary p-2" [disabled]="disabledUser" (click)="onChangeOpenValue(true)">Mostrar Todo</button>
+		<button class="btn btn-outline-secondary p-2" [disabled]="disabledUser" (click)="onChangeOpenValue(false)">Ocultar Todo</button>
+	</div>
+
+	<ng-content>
+		
+	</ng-content>
+
+	<app-tree #treeComponent [leyends]="leyends" [zoomValue]="zoomValue" [type]="type" [openAll]="openAll"></app-tree>
+</div>

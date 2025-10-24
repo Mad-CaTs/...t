@@ -1,0 +1,109 @@
+<div class="beneficiary-modal">
+  <div class="bm-header">
+    <div class="bm-avatar">
+      <i class="pi pi-user"></i>
+    </div>
+    <button class="bm-close" type="button" (click)="ref.close()">
+      <i class="pi pi-times"></i>
+    </button>
+  </div>
+
+  <h5 class="bm-title">Agregar nuevo beneficiario</h5>
+  <p class="bm-subtitle">Completa el registro para agregar un beneficiario.</p>
+
+  <form [formGroup]="beneficiaryForm" class="bm-form" (ngSubmit)="saveBeneficiary()">
+    <div class="row g-3">
+      <div class="col-12 col-md-6">
+        <app-input [form]="beneficiaryForm" controlName="name"
+          label="Nombres" type="text" placeholder="Ingrese los nombres" class="w-100"></app-input>
+      </div>
+      <div class="col-12 col-md-6">
+        <app-input [form]="beneficiaryForm" controlName="lastName"
+          label="Apellidos" type="text" placeholder="Ingrese los apellidos" class="w-100"></app-input>
+      </div>
+    </div>
+
+    <!-- País / Documento de identidad (select + input integrados) -->
+    <div class="row g-3">
+      <div class="col-12 col-md-6">
+        <app-select class="w-100" [showImg]="true" label="País de residencia"
+          placeholder="Selecciona uno"
+          [form]="beneficiaryForm" [options]="nationalitiesList"
+          controlName="residenceCountryId" (onChangeSelection)="getDocumentType($event)">
+        </app-select>
+      </div>
+
+      <div class="col-12 col-md-6">
+        <label class="form-label">Documento de identidad</label>
+        <div class="doc-combo">
+          <app-select class="w-100" [showImg]="false" label=""
+            placeholder="Selecciona" [form]="beneficiaryForm"
+            [options]="documentTypes" controlName="documentId">
+          </app-select>
+          <app-input class="w-100" [form]="beneficiaryForm" controlName="nroDocument"
+            label="" type="text" placeholder="12345678"></app-input>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-3">
+      <div class="col-12 col-md-6">
+        <app-select class="w-100" label="Género" placeholder="Selecciona uno"
+          [options]="optGenders" [form]="beneficiaryForm" controlName="gender">
+        </app-select>
+      </div>
+      <div class="col-12 col-md-6">
+        <app-date label="Fecha de nacimiento" controlName="ageDate"
+          placeholder="dd/mm/aaaa" [config]="true" [form]="beneficiaryForm">
+        </app-date>
+      </div>
+    </div>
+
+    <div class="row g-3">
+      <div class="col-12 col-md-6">
+        <app-input [form]="beneficiaryForm" controlName="email"
+          label="Correo electrónico" type="text" placeholder="ej. usuario@email.com" class="w-100">
+        </app-input>
+      </div>
+      <div class="col-12 col-md-6">
+        <label class="form-label">Edad</label>
+        <input class="form-control" [value]="ageDisplay" disabled />
+      </div>
+    </div>
+
+    <div class="row g-3">
+      <div class="col-12">
+        <app-select
+          class="w-100"
+          label="Membresía"
+          placeholder="Selecciona uno"
+          [form]="dummyMembershipForm"
+          controlName="idSubscription"
+          [options]="membershipOptions"
+          [disabled]="true">
+        </app-select>
+      </div>
+    </div>
+    <br>
+    <div class="bm-info">
+      <i class="pi pi-info-circle"></i>
+      <div>
+        <strong>Información importante</strong>
+        <div class="small text-muted">
+          Recuerde que no podrá realizar el cambio hasta luego de 12 meses. ({{ nextChangeDate }}).  
+          Revise bien la información antes de confirmar.
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer de acciones -->
+    <div class="bm-footer">
+      <button class="btn btn-outline-secondary" type="button" (click)="ref.close()">Cancelar</button>
+      <button class="btn btn-secondary button-width" type="button"
+        [disabled]="isLoading || beneficiaryForm.invalid"
+        (click)="openConfirm()">
+        <span *ngIf="!isLoading">{{ btnText }}</span>
+        </button>
+    </div>
+  </form>
+</div>

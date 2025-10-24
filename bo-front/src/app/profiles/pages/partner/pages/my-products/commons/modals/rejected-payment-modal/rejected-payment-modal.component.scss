@@ -1,0 +1,72 @@
+.header {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    gap: 1rem;
+    margin-bottom: 1.3125rem;
+}
+
+.title {
+    font-size: 1.125rem;
+    font-weight: bold;
+    color: #181D27;
+}
+
+.description {
+    font-size: 0.875rem;
+    color: #535862;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+p {
+    margin: 0;
+}
+
+:host ::ng-deep .p-accordion-header-text {
+    color: #19809E !important;
+    text-decoration: none !important;
+}
+
+:host ::ng-deep .p-accordion-header:hover .p-accordion-header-text {
+    color: #19809E !important;
+}
+
+:host ::ng-deep .p-accordion-header {
+    background-color: transparent;
+}
+
+:host ::ng-deep .p-icon {
+    color: #19809E !important;
+}
+
+:host ::ng-deep .p-icon path {
+    fill: #19809E !important;
+}
+
+:host ::ng-deep .p-accordion-header-link {
+    text-decoration: none !important;
+}
+
+.fade-in {
+    opacity: 0;
+    transform: scale(0.98);
+    animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}

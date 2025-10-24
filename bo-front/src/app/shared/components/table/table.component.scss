@@ -1,0 +1,20 @@
+.table {
+	&__first {
+		width: 100px;
+		min-width: 100px;
+	}
+}
+
+.scroll-body {
+	display: block;
+	max-height: 400px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	tr {
+		display: flex;
+		flex-direction: row;
+	}
+	td {
+		flex: 1;
+	}
+}

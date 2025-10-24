@@ -1,0 +1,564 @@
+{
+	"header": {
+		"slogan": "Investiční klub",
+		"menuItems": [
+			{
+				"label": "Start"
+			},
+			{
+				"label": "produkty",
+				"subItems": [
+					{
+						"label": "Nemovitost"
+					},
+					{
+						"label": "Technologický"
+					},
+					{
+						"label": "Jiné projekty"
+					}
+				]
+			},
+			{
+				"label": "Šance"
+			},
+			{
+				"label": "Společenství"
+			},
+			{
+				"label": "Aktualizace"
+			},
+			{
+				"label": "Kalendář"
+			},
+			{
+				"label": "Události"
+			}
+		],
+		"languageTitle": "Jazyky",
+		"languageInputPlaceholder": "Najděte jazyk",
+		"languageInputLabel": "Hledač",
+		"languages": [
+			"Arab ",
+			"Němec ",
+			"bengálský ",
+			"bulharský ",
+			"čeština ",
+			"Čína ",
+			"španělština ",
+			"francouzština ",
+			"portugalština ",
+			"Angličtina ",
+			"řecký ",
+			"Guarani ",
+			"hindština ",
+			"maďarský ",
+			"indonéština ",
+			"italština ",
+			"japonský ",
+			"korejština ",
+			"holandský ",
+			"polština ",
+			"ruština ",
+			"telugština ",
+			"thajština ",
+			"Tagalog ",
+			"turečtina ",
+			"ukrajinština ",
+			"vietnamština ",
+			"rumunština "
+		]
+	},
+	"footer": {
+		"contactInformation": {
+			"phone": "(01) 618 5118",
+			"email": "example@inclub.com.pe"
+		},
+		"sections": [
+			"Řešení",
+			"InResorts Ribera del Rio",
+			"InResorts La Joya",
+			"KeOla",
+			"Prodej použitých",
+			"Nás",
+			"Blog",
+			"Časté dotazy",
+			"Zákaznický přístup",
+			"Udržitelnost",
+			"Kontakt",
+			"Právní",
+			"Zásady ochrany osobních údajů",
+			"Pravidla a podmínky",
+			"Kniha stížností"
+		]
+	},
+	"home": {
+		"carousel": {
+			"carouselEntry": "PŘIPRAVEN K PŘIPOJENÍ K",
+			"carouselTitle": "Vesmír InClub?",
+			"carouselText": "Každý je vítán. ",
+			"carouselBtn1": "Přidej se teď!",
+			"carouselBtn2": "Přístup"
+		},
+		"keola": {
+			"cta": "A uplatněte kód „UNETEKEOLA“ a získejte body.",
+			"btn": "Google Play",
+			"titles": ["Stáhněte si aplikaci Keola", "Nejnověji", "Pozvěte a vyhrajte"]
+		},
+		"lastUpdates": {
+			"title": "Poslední aktualizace",
+			"description": "Chceme, abyste uspěli a rozvíjeli své podnikání, abyste byli úspěšným průkopníkem, o kterém víme, že jste! ",
+			"button": "Aktualizace!"
+		},
+		"howWorks": {
+			"title": "Jak to funguje",
+			"subtitle": "Začněte ve 3 jednoduchých krocích",
+			"steps": [
+				{
+					"title": "Přihlásit se",
+					"description": "Zadejte svého sponzora a vyplňte své údaje a vytvořte si heslo."
+				},
+				{
+					"title": "Prozkoumat produkty",
+					"description": "Prozkoumejte produkty na našem portálu Inclub. "
+				},
+				{
+					"title": "Vyhrát",
+					"description": "Připraveno! "
+				}
+			]
+		},
+		"cards": [
+			{
+				"title": "Aktovka",
+				"description": "Připojte se a buďte součástí našich realitních, technologických projektů a mnoha dalších.",
+				"button": "Prozkoumejte více"
+			},
+			{
+				"title": "Společenství",
+				"description": "Ponořte se do skvělých produktů s obrovským potenciálem výdělku.",
+				"button": "Prozkoumejte více"
+			},
+			{
+				"title": "Šance",
+				"description": "Pokud jste ochotni dát si práci, InClub je vozidlo, které vás doveze tam, kam chcete.",
+				"button": "Prozkoumejte více"
+			}
+		],
+		"testimonialsSection": {
+			"cardPrefix": "Členem od",
+			"heading": "Vše, co potřebujete, je telefon v ruce, abyste se spojili s obchodní příležitostí na celý život.",
+			"button": "Zaregistrujte se nyní",
+			"testimonials": [
+				{
+					"text": "Pokud se hodně snažíte a pracujete pilně, Inclub vám změní život a splní všechny vaše sny",
+					"name": "Elias Vargas",
+					"since": "2020"
+				},
+				{
+					"text": "Na tomto světě potřebujete k štěstí jen tři věci: víru v Boha, víru v sebe a víru ve své sny",
+					"name": "Paul Villacorta",
+					"since": "2020"
+				},
+				{
+					"text": "Být chudý není špatné, špatné je nikdy to nezkusit, zemřít chudý a bez snů, nikdy není pozdě začít",
+					"name": "Mery Livias",
+					"since": "2021"
+				},
+				{
+					"text": "Svůj nejlepší projev v životě můžete pronést svými činy, ne slovy",
+					"name": "Abel Meza",
+					"since": "2020"
+				}
+			]
+		}
+	},
+	"products": {
+		"navigation": ["Nemovitost", "Tech", "Další projekty"],
+		"items": [
+			{
+				"title": "Inresorts Ribera del Rio",
+				"description": "Využijte výhod našeho Hotel Club Resort a staňte se členem. ",
+				"buttonText": "Více informací"
+			},
+			{
+				"title": "Inresorts La Joya",
+				"description": "Rodinná zábava, příroda a zisky na celý život. ",
+				"buttonText": "Více informací"
+			},
+			{
+				"title": "Keola Networks",
+				"description": "Pozvěte a vyhrajte, objevte výhody aplikace. ",
+				"buttonText": "Více informací"
+			}
+		],
+		"nextProjects": {
+			"title": "Pracujeme",
+			"description": "V současné době je tým Inclubu v kreativním procesu, aby ukázal připravované projekty. ",
+			"buttonText": "Aktualizace!"
+		}
+	},
+	"productDetail": {
+		"aboutUsTitle": "O nás",
+		"aboutBtnText": "chci vědět více",
+		"products": [
+			{
+				"aboutTitle": "Riverside",
+				"aboutDescription": "Jsme Club Resort se nachází v Cieneguilla, 45 minut od Limy. ",
+				"perkPreTitle": "Využijte našeho",
+				"perktitle": "Nezapomenutelné zážitky",
+				"perkDescription": "Dokonalé útočiště pro ty, kteří hledají jedinečný útěk a dobrodružství. ",
+				"cards": [
+					{
+						"title": "hotely",
+						"description": "Každý pokoj v Ribera del Río je navržen tak, abyste je mohli sdílet s vašimi blízkými; "
+					},
+					{
+						"title": "Zkušenosti",
+						"description": "Nabízíme širokou škálu volnočasových a rekreačních zážitků, které vás jistě uchvátí. "
+					},
+					{
+						"title": "Restaurace",
+						"description": "Vždy je dobré si dopřát, a proto vás naše 'Ribera del Río Restaurant' vítá a zve k ochutnání různých typických národních, regionálních a kreolských jídel."
+					}
+				]
+			},
+			{
+				"aboutTitle": "Klenot",
+				"aboutDescription": "Jsme Club Resort se nachází v Arequipa, pouhých 45 minut od města Arequipa. ",
+				"perkPreTitle": "Využijte našeho",
+				"perktitle": "Nezapomenutelné zážitky",
+				"perkDescription": "Dokonalé útočiště pro ty, kteří hledají jedinečný útěk a dobrodružství. ",
+				"cards": [
+					{
+						"title": "Bazény",
+						"description": "Každý bazén v La Joya je navržen tak, abyste je mohli sdílet s vašimi blízkými; "
+					},
+					{
+						"title": "Zkušenosti",
+						"description": "Nabízíme širokou škálu volnočasových a rekreačních zážitků, které vás jistě uchvátí. "
+					},
+					{
+						"title": "Resort Park",
+						"description": "Krásný vodní park s barevnými skluzavkami; "
+					}
+				]
+			},
+			{
+				"aboutTitle": "Keola",
+				"aboutDescription": "Vítejte v Keole, ultimátní aplikaci, kde najdete všechny své oblíbené produkty na jednom místě! ",
+				"perkPreTitle": "Využijte našeho",
+				"perktitle": "Výhody Keoly",
+				"perkDescription": "Pozvěte a vydělávejte, objevujte výhody aplikace. ",
+				"cards": [
+					{
+						"title": "produkty",
+						"description": "Objevte různé produkty a kategorie. "
+					},
+					{
+						"title": "Obchody",
+						"description": "Spravujte svůj obchod a spravujte své produkty a poskytujte kvalitní a efektivní doručovací služby."
+					},
+					{
+						"title": "dodávka",
+						"description": "Potřebujete jídlo, léky? "
+					}
+				]
+			}
+		]
+	},
+	"oportunity": {
+		"title": "Šance",
+		"description": "Je otevřená komukoli, bez ohledu na zkušenosti, umístění nebo okolnosti.",
+		"sections": [
+			{
+				"pre": "Vydělávejte svým vlivem",
+				"title": "Každý je mikro ovlivněn",
+				"content": "Každý je mikroinfluencer. "
+			},
+			{
+				"pre": "Doporučuji kvalitní produkty",
+				"title": "Špičkové produkty, které razí cestu v průmyslu",
+				"content": "Každý den doporučujeme produkty a služby našim přátelům a rodině. "
+			},
+			{
+				"pre": "Učte se od svých vrstevníků",
+				"title": "Vše, co potřebujete k úspěchu",
+				"content": "Sdílíme znalosti od našich specialistů, inspirovaných touhou, aby bylo vytváření sítí ziskovější pro každého, a pro přidružené společnosti, aby se naučili generovat aktiva."
+			},
+			{
+				"pre": "Kompenzační plán",
+				"title": "Náš plán odměňování je nejvýkonnější v oboru",
+				"content": "Pomáháme lidem vybudovat chytré investiční portfolio a dosáhnout dlouho očekávané finanční svobody s širokou škálou výhod, jako žádný jiný investiční klub."
+			}
+		],
+		"testimonials": {
+			"pre": "Posudky",
+			"title": "Příběhy úspěchu",
+			"items": [
+				{
+					"text": "Jestliže člověk, který žije v minulosti, nikdy neuspěje v přítomnosti, tím méně v budoucnosti",
+					"name": "Eliáš Vargas",
+					"since": "2020"
+				},
+				{
+					"text": "Ke štěstí potřebujete na tomto světě pouze 3 věci: víru v Boha, víru v sebe a víru ve své sny",
+					"name": "Paul Villacorta",
+					"since": "2020"
+				},
+				{
+					"text": "Není špatné být chudý, špatné je nikdy to nezkusit, zemřít chudý a bez snů, nikdy není pozdě začít",
+					"name": "Mery Livias",
+					"since": "2021"
+				},
+				{
+					"text": "Nejlepší řeč dokážeš svým životem než svými slovy.",
+					"name": "Abel Meza",
+					"since": "2020"
+				}
+			]
+		}
+	},
+	"comunity": {
+		"title": "Naše komunita",
+		"description": "Úspěch je lepší, když je sdílený. ",
+		"sections": [
+			{
+				"pre": "RŮSTE A PROSPĚJTE S NÁMI",
+				"title": "Pobočky po celém světě",
+				"content": "Největší a nejmocnější affiliate sítí současnosti v Latinské Americe je bezesporu Inclub. "
+			},
+			{
+				"pre": "Uznání a události",
+				"title": "Váš úspěch budou slavit miliony lidí.",
+				"content": "Jsme neuvěřitelně hrdí na tvrdou práci a obětavost, kterou každý podnikatel vkládá do svého podnikání. "
+			},
+			{
+				"pre": "VZDĚLÁVACÍ A VZDĚLÁVACÍ NÁSTROJE",
+				"title": "Vše, co potřebujete k úspěchu.",
+				"content": "Pomáháme lidem vytvořit chytré investiční portfolio a dosáhnout dlouho očekávané finanční svobody. "
+			}
+		],
+		"inspiration": {
+			"title": "Inspirace",
+			"subtitle": "Hlasy komunity",
+			"testimonials": [
+				{
+					"text": "Inclub je můj život a proto ho beru velmi vážně.",
+					"name": "Eliáš Vargas",
+					"since": "2020"
+				},
+				{
+					"text": "Inclub je tu od toho, aby lidem měnil životy.",
+					"name": "Paul Villacorta",
+					"since": "2020"
+				},
+				{
+					"text": "Inclub nám dal příležitost změnit také životy ostatních lidí.",
+					"name": "Mery Livias",
+					"since": "2021"
+				},
+				{
+					"text": "Přidružení jsou odměňováni za úspěch díky masu uživatelů.",
+					"name": "Abel Meza",
+					"since": "2020"
+				}
+			]
+		}
+	},
+	"news": {
+		"noticeLabel": "zprávy",
+		"titleMain": "NOVINKA",
+		"descriptionMain": "Ideální útočiště, které si můžete užít s rodinou a přáteli",
+		"commonEventsCountry": "Lima Peru",
+		"commonEventsBtn": "vidět víc",
+		"content": [
+			{
+				"date": "14. září 2023",
+				"title": "Úspěšně komunikovat, workshop jazykové a obchodní komunikace"
+			},
+			{
+				"title": "Vaše online nákupní destinace",
+				"description": "Pozvěte a vyhrajte, objevte výhody aplikace. "
+			},
+			{
+				"title": "Realitní projekt",
+				"description": "Vedoucí klubu si užili neuvěřitelné zahájení realitního projektu Ribera del Rio v Cieneguille."
+			},
+			{
+				"title": "Spuštění Encumbra",
+				"description": "Vedoucí klubu umožňují našim členům stát se lídry v odvětví online sítí."
+			},
+			{
+				"title": "Vaše online nákupní destinace",
+				"description": "Pozvěte a vyhrajte, objevte výhody aplikace. "
+			},
+			{
+				"title": "Technologický projekt",
+				"description": "Vedoucí klubu si užili neuvěřitelné zahájení realitního projektu Ribera del Rio v Cieneguille."
+			},
+			{
+				"title": "Inresorts Ribera del Rio",
+				"description": "Vedoucí klubu umožňují našim členům stát se lídry v odvětví online sítí."
+			}
+		]
+	},
+	"newsDetail": {
+		"date": "26. září 2023",
+		"title": "Ideální útočiště, které si můžete užít s rodinou a přáteli",
+		"description": "Rezort La Joya park se nachází pouhých 60 minut od města Arequipa ve čtvrti La Joya, kde si můžete užít dny na pláži nebo provozovat vodní sporty. ",
+		"content": [
+			{
+				"date": "14. září 2023",
+				"title": "Úspěšně komunikovat, workshop jazykové a obchodní komunikace"
+			},
+			{
+				"date": "29. září 2023",
+				"title": "Vzdělávací systém Inclub LEADERSHIP"
+			},
+			{
+				"date": "15. září 2023",
+				"title": "Vzdělávací systém Inclub Testimonials of Success"
+			}
+		]
+	},
+	"calendar": {
+		"title": "Kalendář",
+		"subtitle": "září",
+		"filters": {
+			"searchLabel": "Hledač",
+			"searchPlaceholder": "Vyhledejte událost nebo workshop",
+			"options": ["Dnes", "Týdně", "Měsíční"]
+		}
+	},
+	"eventPage": {
+		"upcommingEventsTitle": "Připravované akce",
+		"upcomingEvents": [
+			{
+				"date": "14. září 2023",
+				"title": "Úspěšně komunikovat, workshop jazykové a obchodní komunikace"
+			},
+			{
+				"date": "29. září 2023",
+				"title": "Vzdělávací systém Inclub LEADERSHIP"
+			},
+			{
+				"date": "15. září 2023",
+				"title": "Vzdělávací systém Inclub Testimonials of Success"
+			}
+		],
+		"pastEventsTitle": "Předchozí události",
+		"pastEvents": [
+			{
+				"date": "12. září 2023",
+				"title": "Vzdělávací systém zahrnuje čtenářský klub"
+			},
+			{
+				"date": "10. září 2023",
+				"title": "Vzdělávací systém Inclub LEADERSHIP"
+			},
+			{
+				"date": "8. září 2023",
+				"title": "Osvědčení o úspěchu vzdělávacího systému Inclub"
+			}
+		],
+		"trendsTitle": "Trendy"
+	},
+	"eventsDetail": {
+		"backLabel": "Vrátit se",
+		"resumeTitle": "souhrn",
+		"learnTitle": "co se naučíš?"
+	},
+	"events": [
+		{
+			"title": "Měkké dovednosti VEDENÍ",
+			"date": "23. září 2023",
+			"type": "On-line",
+			"duration": "Přibližná délka: 22 minut.",
+			"positiveReviews": "98 % kladných recenzí (567).",
+			"summary": "Chcete zlepšit své komunikační dovednosti v obchodní oblasti? ",
+			"learn": [
+				"Zlepšit prezentační a vyjednávací dovednosti",
+				"Naučte se vyjadřovat jasně a efektivně",
+				"Na rozdíl od jiných teoretických workshopů vám tento workshop umožňuje okamžitě uplatnit to, co jste se naučili, v praxi.",
+				"Prostřednictvím cvičení a skupinové dynamiky si budete moci procvičit své komunikační dovednosti a získat okamžitou zpětnou vazbu od odborníků na dané téma. ",
+				"A více."
+			]
+		},
+		{
+			"date": "22. září 2023",
+			"title": "Integrovaný vzdělávací systém: Vedení",
+			"type": "On-line",
+			"duration": "Přibližná délka: 22 minut.",
+			"positiveReviews": "98 % kladných recenzí (567).",
+			"summary": "Chcete zlepšit své komunikační dovednosti v obchodní oblasti? ",
+			"learn": [
+				"Zlepšit prezentační a vyjednávací dovednosti",
+				"Naučte se vyjadřovat jasně a efektivně",
+				"Na rozdíl od jiných teoretických workshopů vám tento workshop umožňuje okamžitě uplatnit to, co jste se naučili, v praxi.",
+				"Prostřednictvím cvičení a skupinové dynamiky si budete moci procvičit své komunikační dovednosti a získat okamžitou zpětnou vazbu od odborníků na dané téma. ",
+				"A více."
+			]
+		},
+		{
+			"date": "23. září 2023",
+			"title": "Oficiální spuštění NEMOVITOSTNÍHO PROJEKTU",
+			"type": "On-line",
+			"duration": "Přibližná délka: 22 minut.",
+			"positiveReviews": "98 % kladných recenzí (567).",
+			"summary": "Chcete zlepšit své komunikační dovednosti v obchodní oblasti? ",
+			"learn": [
+				"Zlepšit prezentační a vyjednávací dovednosti",
+				"Naučte se vyjadřovat jasně a efektivně",
+				"Na rozdíl od jiných teoretických workshopů vám tento workshop umožňuje okamžitě uplatnit to, co jste se naučili, v praxi.",
+				"Prostřednictvím cvičení a skupinové dynamiky si budete moci procvičit své komunikační dovednosti a získat okamžitou zpětnou vazbu od odborníků na dané téma. ",
+				"A více."
+			]
+		},
+		{
+			"date": "23. září 2023",
+			"title": "Oficiální spuštění TECHNOLOGICKÉHO PROJEKTU.",
+			"type": "On-line",
+			"duration": "Přibližná délka: 22 minut.",
+			"positiveReviews": "98 % kladných recenzí (567).",
+			"summary": "Chcete zlepšit své komunikační dovednosti v obchodní oblasti? ",
+			"learn": [
+				"Zlepšit prezentační a vyjednávací dovednosti",
+				"Naučte se vyjadřovat jasně a efektivně",
+				"Na rozdíl od jiných teoretických workshopů vám tento workshop umožňuje okamžitě uplatnit to, co jste se naučili, v praxi.",
+				"Prostřednictvím cvičení a skupinové dynamiky si budete moci procvičit své komunikační dovednosti a získat okamžitou zpětnou vazbu od odborníků na dané téma. ",
+				"A více."
+			]
+		},
+		{
+			"date": "23. září 2023",
+			"title": "Oficiální spuštění NEMOVITOSTNÍHO PROJEKTU",
+			"type": "On-line",
+			"duration": "Přibližná délka: 22 minut.",
+			"positiveReviews": "98 % kladných recenzí (567).",
+			"summary": "Chcete zlepšit své komunikační dovednosti v obchodní oblasti? ",
+			"learn": [
+				"Zlepšit prezentační a vyjednávací dovednosti",
+				"Naučte se vyjadřovat jasně a efektivně",
+				"Na rozdíl od jiných teoretických workshopů vám tento workshop umožňuje okamžitě uplatnit to, co jste se naučili, v praxi.",
+				"Prostřednictvím cvičení a skupinové dynamiky si budete moci procvičit své komunikační dovednosti a získat okamžitou zpětnou vazbu od odborníků na dané téma. ",
+				"A více."
+			]
+		},
+		{
+			"date": "23. září 2023",
+			"title": "Oficiální spuštění TECHNOLOGICKÉHO PROJEKTU.",
+			"type": "On-line",
+			"duration": "Přibližná délka: 22 minut.",
+			"positiveReviews": "98 % kladných recenzí (567).",
+			"summary": "Chcete zlepšit své komunikační dovednosti v obchodní oblasti? ",
+			"learn": [
+				"Zlepšit prezentační a vyjednávací dovednosti",
+				"Naučte se vyjadřovat jasně a efektivně",
+				"Na rozdíl od jiných teoretických workshopů vám tento workshop umožňuje okamžitě uplatnit to, co jste se naučili, v praxi.",
+				"Prostřednictvím cvičení a skupinové dynamiky si budete moci procvičit své komunikační dovednosti a získat okamžitou zpětnou vazbu od odborníků na dané téma. ",
+				"A více."
+			]
+		}
+	]
+}

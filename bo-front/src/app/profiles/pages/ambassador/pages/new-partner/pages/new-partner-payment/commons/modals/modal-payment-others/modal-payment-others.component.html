@@ -1,0 +1,154 @@
+<app-modal title="Otros medios">
+	<form [formGroup]="form" class="d-flex flex-column w-100 gap-4">
+		<div class="d-flex flex-row w-100 justify-content-between align-items-center">
+			<span>Moneda</span>
+
+			<app-select
+				class="w-100"
+				placeholder="Tipo de moneda"
+				[form]="form"
+				[options]="optCurrency"
+				name="currency"
+				style="max-width: 200px"
+			></app-select>
+		</div>
+		<div class="d-flex flex-row w-100 justify-content-between align-items-center">
+			<span>Monto: </span>
+			<span class="text-black">$ 25000.00</span>
+		</div>
+		<div class="d-flex flex-row w-100 justify-content-between align-items-center">
+			<span>Comision: </span>
+			<span class="text-black">$ 0.3</span>
+		</div>
+		<div class="d-flex flex-row w-100 justify-content-between align-items-center">
+			<span>Monto total a pagar:</span>
+			<span class="text-black">$ 26427.38</span>
+		</div>
+    
+		<span class="text-secondary fw-normal fs-12 m-0">
+			(*) Después de agregar los comprobantes de pago no olvide REGISTRAR el formulario.
+		</span>
+		<div class="d-flex flex-row gap-2 justify-content-end">
+			<button
+				class="btn btn-outline-primary d-flex align-items-center"
+				type="button"
+				(click)="onAdd()"
+				[disabled]="invalidAddButton"
+			>
+				<mat-icon fontIcon="add_circle_outline"></mat-icon>
+			</button>
+			<button
+				class="btn btn-outline-primary d-flex align-items-center"
+				type="button"
+				(click)="onDelete()"
+				[disabled]="invalidDeleteButton"
+			>
+				<mat-icon fontIcon="delete_outline"></mat-icon>
+			</button>
+		</div>
+
+		<ng-container *ngFor="let method of methods.controls; let i = index">
+			<!-- Data view -->
+			<div class="d-flex flex-column gap-2 w-100" *ngIf="i !== currentIndex">
+				<div class="d-flex flex-row w-100 justify-content-between align-items-center">
+					<span>Tipo de operación: </span>
+					<span class="text-black">Banca Movil</span>
+				</div>
+				<div class="d-flex flex-row w-100 justify-content-between align-items-center">
+					<span>Comisión: </span>
+					<span class="text-black">$ 0.00</span>
+				</div>
+				<div class="d-flex flex-row w-100 justify-content-between align-items-center">
+					<span>(*) Código de operación: </span>
+					<span class="text-black">{{ getValue(method, 'opCode') }}</span>
+				</div>
+				<div class="d-flex flex-row w-100 justify-content-between align-items-center">
+					<span>Nota: </span>
+					<span class="text-black">{{ getValue(method, 'note') }}</span>
+				</div>
+				<div class="d-flex flex-row w-100 justify-content-between align-items-center">
+					<span>Monto total a pagar: </span>
+					<span class="text-black">$ {{ getAmount(method) }}</span>
+				</div>
+				<div class="d-flex flex-row w-100 justify-content-between align-items-center">
+					<span>Imagen: </span>
+					<span class="text-black">Cargada</span>
+				</div>
+				<div class="w-100 d-flex flex-row justify-content-end">
+					<button
+						class="btn btn-outline-dark d-flex flex-row gap-2 align-items-center"
+						(click)="onEdit(i)"
+					>
+						<mat-icon fontIcon="edit"></mat-icon>
+						<span>Editar</span>
+					</button>
+				</div>
+				<div class="line bg-black opacity-25"></div>
+			</div>
+
+			<!-- Data forms -->
+			<form
+				[formGroup]="method"
+				class="d-flex flex-column gap-2 w-100"
+				*ngIf="i === currentIndex"
+				(submit)="onSave(method)"
+			>
+				<app-select
+					class="w-100"
+					placeholder="Tipo de Operacion"
+					[form]="method"
+					[options]="optOperations"
+					name="opType"
+				></app-select>
+
+				<div class="d-flex flex-row w-50 justify-content-between align-items-center ms-auto">
+					<span class="text-black">Comission:</span>
+					<span class="text-black">$ 0.00</span>
+				</div>
+
+				<app-input
+					class="w-100"
+					label="Código de Operación"
+					[form]="method"
+					name="opCode"
+					placeholder="Ingresar código"
+				></app-input>
+				<app-input
+					class="w-100"
+					label="Nota"
+					[form]="method"
+					name="note"
+					placeholder="Escribe una Nota"
+				></app-input>
+				<app-input
+					class="w-100"
+					label="Monto a pagar"
+					[form]="method"
+					name="amount"
+					placeholder="$ 0.00"
+					iconLeft="attach_money"
+					type="number"
+				></app-input>
+
+				<div class="d-flex flex-row w-100 justify-content-end">
+					<button
+						class="btn btn-outline-dark d-flex flex-row gap-2 align-items-center"
+						type="submit"
+						[disabled]="method.invalid"
+					>
+						<mat-icon fontIcon="save"></mat-icon>
+						<span>Guardar</span>
+					</button>
+				</div>
+				<div class="line bg-black opacity-25"></div>
+			</form>
+		</ng-container>
+
+		<div class="d-flex flex-row justify-content-center align-items-center w-100 gap-4">
+			<button class="btn btn-primary" type="submit" [disabled]="invalidSubmit">Pagar</button>
+			<button class="btn btn-outline-primary" type="button" (click)="instanceModal.close()">
+				Cancelar
+			</button>
+		</div>
+	</form>
+</app-modal>

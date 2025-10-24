@@ -1,0 +1,25 @@
+<nav class="d-flex flex-row bg-white w-100 justify-content-center position-relative mb-4 ps-4 pt-3">
+  <button class="nav-text bg-white px-4 text-center w-100"
+          [class.text-secondary]="activeTab === 'state'"
+          [class.fw-medium]="activeTab === 'state'"
+          (click)="setActiveTab('state')">
+    Estado del Socio
+  </button>
+
+  <button class="nav-text bg-white px-2 px-lg-4 text-center w-100"
+          [class.text-secondary]="activeTab === 'score'"
+          [class.fw-medium]="activeTab === 'score'"
+          (click)="setActiveTab('score')">
+    Puntos Totales
+  </button>
+
+  <button class="nav-text bg-white px-2 px-lg-4 text-center w-100"
+          [class.text-secondary]="activeTab === 'range'"
+          [class.fw-medium]="activeTab === 'range'"
+          (click)="setActiveTab('range')">
+    Avance de Rango
+  </button>
+
+  <div class="rounded bg-secondary position-absolute start-0 bottom-0 transition-transform-500"
+       [ngStyle]="{ width: '33.33%', height: '4px', transform: navPosition }"></div>
+</nav>

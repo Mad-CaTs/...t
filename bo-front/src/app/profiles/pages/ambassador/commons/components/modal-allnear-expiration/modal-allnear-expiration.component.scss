@@ -1,0 +1,91 @@
+.text {
+    font-size: 0.875rem;
+    color: #51565F;
+    font-weight: 400;
+}
+
+.title {
+    font-size: 1.3rem;
+    color: #181D27;
+    font-weight: bold;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    .card {
+        border-radius: 1rem;
+
+        .container-description {
+            padding: 0.7rem;
+
+            .card-title {
+                font-size: 1.3rem;
+                font-weight: 600;
+            }
+
+            .status {
+                padding-top: 0.5rem;
+                padding-bottom: 0.5rem;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+
+        .actions {
+            overflow: hidden;
+            transition: all 0.3s ease-in-out;
+            border-top: 1px solid var(--bs-border-color-translucent);
+            
+            &.hide {
+                height: 0;
+                opacity: 0;
+                margin: 0;
+                padding: 0;
+            }
+
+            &.show {
+                height: auto;
+                opacity: 1;
+                padding: 1rem 0;
+            }
+
+            .actions-content {
+                display: flex;
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: end;
+                align-items: end;
+                padding-right: 1rem;
+
+                transition: transform 0.3s ease-in-out;
+            }
+
+            &.hide .actions-content {
+                transform: translateY(-10px);
+            }
+
+            &.show .actions-content {
+                transform: translateY(0);
+            }
+        }
+
+    }
+}
+
+.profiles-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-height: 360px;
+    min-height: 80px;
+    overflow-y: auto;
+}
+
+:host ::ng-deep .p-divider {
+    margin: 0;
+    padding: 0;
+}

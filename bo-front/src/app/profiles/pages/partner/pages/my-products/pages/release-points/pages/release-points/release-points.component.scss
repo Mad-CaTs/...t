@@ -1,0 +1,161 @@
+.release-points-container {
+	font-family: Roboto, sans-serif;
+	color: #333;
+	padding: 20px;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-template-areas:
+		'breadcrumps breadcrumps breadcrumps'
+		'points_container points_history_container points_history_container';
+	row-gap: 24px;
+	column-gap: 32px;
+}
+
+p {
+	margin: 0;
+}
+
+.release-points-container__breadcrumps {
+	grid-area: breadcrumps;
+}
+
+.release-points-container__points_container {
+	grid-area: points_container;
+}
+
+.release-points-container__points_container_header h5 {
+	font-size: 18px;
+	font-weight: 600;
+	line-height: 28px;
+}
+
+.release-points-container__points_container_header p {
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 20px;
+}
+
+/* Tarjetas pequeñas */
+.release-points-container__points_container_body {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+}
+
+.small-card {
+	margin-top: 10px;
+	width: calc(50% - 5px);
+	padding: 10px;
+
+	background-color: #fbfbfb;
+	border-radius: 8px;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+.coin-image {
+	width: 32px;
+	height: 32px;
+}
+
+.points-info {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	flex-grow: 1;
+}
+
+.point-total {
+	font-size: 20px;
+	line-height: 23px;
+	font-weight: 700;
+}
+
+.pts {
+	margin-left: 4px;
+	strong {
+		font-size: 10px;
+		line-height: 12px;
+		font-weight: 700;
+	}
+}
+.cts {
+	font-size: 16px;
+	line-height: 19px;
+	font-weight: 700;
+	margin-left: 4px;
+}
+
+@media (max-width: 768px) {
+	.release-points-container {
+		display: block;
+	}
+}
+.release-points-container__points_history_container {
+	grid-area: points_history_container;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	gap: 16px;
+}
+
+/* .custom-text- {
+    font-family: Roboto, sans-serif;
+    font-weight: 800;
+    font-size: 12px;
+    line-height: 12px; 
+    letter-spacing: 0;
+    color: #5F7081; 
+}
+ */
+
+.custom {
+	background-color: #f9faff;
+}
+
+.text-gray {
+	color: #6c757d !important;
+	font-weight: normal;
+	cursor: pointer;
+}
+
+.card-historic {
+	padding: 16px;
+	gap: 16px;
+	border-radius: 16px;
+	background-color: #136077;
+	box-shadow: 0px 4px 13px 0px #1b1d271f;
+	color: #ffffff;
+	display: flex;
+	align-items: center;
+	font-weight: 400;
+	font-size: 14px;
+
+	img {
+		opacity: 50%;
+	}
+	span {
+		font-weight: 500;
+		font-size: 20px;
+		line-height: 24px;
+		letter-spacing: 0%;
+	}
+	p {
+		letter-spacing: 0%;
+	}
+	a {
+		letter-spacing: 0.2px;
+		border: 1px solid #ffffff;
+		max-width: 144px;
+		width: 100%;
+		padding: 12px;
+		gap: 8px;
+		border-radius: 24px;
+		text-align: center;
+		cursor: pointer;
+		&:hover {
+			background-color: #ffffff;
+			color: #136077;
+		}
+	}
+}

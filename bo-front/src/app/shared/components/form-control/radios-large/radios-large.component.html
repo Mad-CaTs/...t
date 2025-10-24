@@ -1,0 +1,20 @@
+<label class="fs-6 mb-2 cl-muted" *ngIf="label">{{ label }}</label>
+
+<div class="d-flex" *ngFor="let option of options"
+     [ngClass]="{
+       'flex-column': verticalLayout,
+       'flex-row justify-content-center align-items-center': horizontalLayout
+     }"
+     style="padding-bottom: 12px;">
+  <div class="p-field-radiobutton">
+    <p-radioButton [inputId]="option.content"
+                   [name]="controlName"
+                   [formControl]="form?.get(this.controlName)"
+                   [value]="option.value"
+                   (onClick)="onChangeRadios($event)">
+    </p-radioButton>
+
+    <label [for]="option.content"
+           class="ps-2 cursor-pointer">{{ option.content }}</label>
+  </div>
+</div>

@@ -1,0 +1,84 @@
+<mat-drawer-container class="drawer-container"
+                      [style.z-index]="showDrawer ? 10 : -1">
+  <mat-drawer class="main-drawer"
+              position="end"
+              [opened]="showDrawer"
+              mode="over"
+              (closed)="onClickCloseMenu()">
+    <div class="w-100 d-flex flex-column py-4 px-3 gap-4">
+      <!--Close buttons-->
+      <div class="header-drawer">
+        <button type="button"
+                class="icon-close_drawer"
+                (click)="onClickCloseMenu()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      <!--Logo-->
+      <span class="ms-2">
+        <img src="./assets/logos/navologo.png"
+             height="42" />
+      </span>
+      <!--Line-->
+      <div class="line"></div>
+      <!--Paths-->
+      <nav class="w-100 px-3">
+        <ul class="d-flex flex-column w-100 gap-3">
+          <ng-container *ngFor="let nav of navigation; trackBy: trackByNav">
+            <li class="w-100 fs-6 fw-medium d-flex"
+                [class.justify-content-between]="nav.items.length > 0">
+              <a [routerLink]="nav.link"
+                 routerLinkActive="text-secondary"
+                 class="py-1 item-navigation"
+                 (click)="onClickCloseMenu()">
+                {{ nav.label }}
+              </a>
+
+              <mat-icon *ngIf="nav.items.length > 0"
+                        svgIcon="chevron_down"
+                        class="cl-muted"
+                        style="width: 24px; height: 24px; transition: all ease-in-out 500ms"
+                        [style.transform]="!openProducts ? 'rotate(0deg)' : 'rotate(180deg)'"
+                        (click)="onToggleProducts()" />
+            </li>
+
+            <ul class="d-flex flex-column gap-3"
+                *ngIf="openProducts && nav.items.length > 0">
+              <li class="w-100 fs-6"
+                  *ngFor="let subNav of nav.items">
+                <a routerLink="/products"
+                   [queryParams]="{ s: subNav.link }"
+                   class="py-1 item-submenu">{{ subNav.label }}</a>
+              </li>
+            </ul>
+          </ng-container>
+        </ul>
+      </nav>
+      <!--Line-->
+      <div class="line"></div>
+      <!--Auth buttons-->
+      <div class="w-100 d-flex gap-3 px-3">
+        <a [href]="getLoginUrl"
+        class="btn btn-orange"
+        style="border-radius: 33px">
+       {{ this.lang.home.carousel.carouselBtn1 }}
+     </a>
+       <!--  <a href="https://dashboard.inclub.world/form-preregister-in"
+           class="btn btn-orange"
+           style="border-radius: 33px">
+          {{ this.lang.home.carousel.carouselBtn1 }}
+        </a> -->
+        <a [href]="getLoginUrl"
+           class="btn btn-outline-orange"
+           style="border-radius: 33px">{{ this.lang.home.carousel.carouselBtn2 }}</a>
+
+        <!-- 	<a
+					href="https://dashboard.inclub.world/sign-in"
+					class="btn btn-outline-orange"
+					style="border-radius: 33px"
+					>{{ this.lang.home.carousel.carouselBtn2 }}</a
+				> -->
+      </div>
+    </div>
+  </mat-drawer>
+</mat-drawer-container>

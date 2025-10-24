@@ -1,0 +1,245 @@
+.table-generic-wrapper {
+	width: 100%;
+	overflow-x: auto;
+	overflow-y: hidden;
+	-webkit-overflow-scrolling: touch;
+	&.scrollable {
+		border: 1px solid #e5e7eb;
+		border-radius: 8px;
+		background: #fff;
+		padding: 2px 4px;
+	}
+
+	&::-webkit-scrollbar {
+		height: 15px;
+	}
+	&::-webkit-scrollbar-track {
+		background: #f3f4f6;
+		border-radius: 8px;
+	}
+	&::-webkit-scrollbar-thumb {
+		background: #c7c9d1;
+		border-radius: 8px;
+		border: 2px solid rgba(0, 0, 0, 0);
+		background-clip: padding-box;
+	}
+
+	scrollbar-color: #c7c9d1 #f3f4f6;
+	scrollbar-width: auto;
+}
+
+.table-generic {
+	width: 100%;
+	table-layout: fixed;
+	border-collapse: collapse;
+	margin-top: 1rem;
+	font-size: 0.95rem;
+
+	&.auto-layout {
+		table-layout: auto;
+	}
+
+	thead {
+		background-color: #f9fafb;
+	}
+
+	tbody {
+		tr.selected {
+			background-color: #dbeafe;
+		}
+	}
+
+	th,
+	td {
+		padding: 12px;
+		border-bottom: 1px solid #e5e7eb;
+		text-align: left;
+		word-wrap: break-word;
+		overflow-wrap: break-word;
+	}
+
+	th {
+		font-weight: 600;
+		color: #3f4c5c;
+	}
+	td {
+		color: #374151;
+	}
+
+	.accordion-toggle {
+		background: transparent;
+		border: 0;
+		padding: 0;
+		cursor: pointer;
+		line-height: 1;
+	}
+	.accordion-toggle i {
+		font-size: 16px;
+		color: #6b7280;
+	}
+	tr.selected .accordion-toggle i {
+		color: #111827;
+	}
+
+	.badge {
+		display: inline-block;
+		padding: 4px 10px;
+		border-radius: 9999px;
+		font-size: 0.75rem;
+		font-weight: 500;
+		text-align: center;
+		white-space: nowrap;
+	}
+
+	.activo {
+		background-color: #d1fae5;
+		color: #047857;
+	}
+	.pagado {
+		background-color: #d1fae5;
+		color: #047857;
+	}
+	.inactivo {
+		background-color: #fde8e8;
+		color: #b91c1c;
+	}
+	.pendiente {
+		background-color: #dbeafe;
+		color: #1d4ed8;
+	}
+	.destacado {
+		background-color: #d1fae5;
+		color: #047857;
+	}
+	.secundario {
+		background-color: #f8e1cd;
+		color: #da6806;
+	}
+	.desconocido {
+		background-color: #f3f4f6;
+		color: #6b7280;
+	}
+
+	.actions {
+		padding: 0;
+
+		.action-buttons {
+			display: flex;
+			gap: 8px;
+			padding: 12px;
+
+			button {
+				background: none;
+				border: none;
+				cursor: pointer;
+				color: #4b5563;
+				font-size: 1rem;
+
+				&:hover {
+					background-color: #e5e7eb;
+					color: #1f2937;
+					border-radius: 4px;
+				}
+			}
+
+			&.only-view {
+				justify-content: center;
+				width: 100%;
+				padding: 12px 0;
+
+				.only-view-btn {
+					display: flex;
+					align-items: center;
+					gap: 8px;
+					color: #f57c1f;
+					font-weight: 600;
+					font-size: 1.05rem;
+					background: none;
+					border: none;
+					cursor: pointer;
+					transition: color 0.2s;
+				}
+				.only-view-btn i {
+					font-size: 1.2rem;
+					color: #f57c1f;
+					transition: color 0.2s;
+				}
+				.only-view-label {
+					color: #f57c1f;
+				}
+				.only-view-btn:hover,
+				.only-view-btn:hover i,
+				.only-view-btn:hover .only-view-label {
+					color: #d35400;
+				}
+			}
+		}
+	}
+}
+
+.cell-image {
+	max-width: 60px;
+	max-height: 60px;
+	object-fit: cover;
+	border-radius: 6px;
+}
+
+.detail-row td {
+	background-color: transparent;
+	padding: 16px 24px;
+}
+
+.accordion-detail {
+	display: block;
+}
+
+.detail-inline {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px 24px;
+	font-size: 0.9rem;
+	line-height: 1.4;
+}
+.detail-inline > span {
+	white-space: nowrap;
+}
+
+:host-context(.night-mode) {
+	.table-generic {
+		tbody tr.selected {
+			background-color: rgba(29, 155, 240, 0.12);
+		}
+		td {
+			color: #f3f4f6 !important;
+		}
+		.badge {
+			color: #222 !important;
+		}
+		.action-buttons {
+			color: unset !important;
+		}
+	}
+
+	.table-generic-wrapper.scrollable {
+		border-color: rgba(255, 255, 255, 0.06);
+		background: rgba(255, 255, 255, 0.03);
+		box-shadow: 0 1px 0 rgba(255, 255, 255, 0.02) inset;
+
+		&::-webkit-scrollbar {
+			height: 12px;
+		}
+		&::-webkit-scrollbar-track {
+			background: rgba(128, 115, 115, 0.02);
+			border-radius: 8px;
+		}
+		&::-webkit-scrollbar-thumb {
+			background: rgba(117, 112, 112, 0.12);
+			border-radius: 8px;
+			border: 2px solid rgba(0, 0, 0, 0);
+			background-clip: padding-box;
+		}
+
+		scrollbar-color: rgba(255, 255, 255, 0.12) rgba(255, 255, 255, 0.02);
+		scrollbar-width: auto;
+	}
+}

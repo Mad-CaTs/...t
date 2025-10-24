@@ -1,0 +1,19 @@
+.status-bg {
+  padding: 6px 12px; 
+  background-color: #16a34a33; 
+  color: #16a34a; 
+}
+button:disabled {
+  background-color: #f1f1f1; 
+  color: #b0b0b0; 
+  border: 1px solid #dcdcdc; 
+  cursor: not-allowed; 
+}
+.custom-button-wrap {
+  padding: 0.5rem 0.75rem; 
+  white-space: normal !important;
+  word-break: break-word;
+  line-height: 1.4;
+  text-align: center;
+}
+

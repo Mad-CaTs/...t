@@ -1,0 +1,11 @@
+<app-new-partner-contact-info-component 
+    [form]="form"
+    [optNationalities]="optNationalities"
+    [isPromotor]="isPromotor"
+    (onCheckEmailExists)="checkEmailExists()"
+    (prevState)="onPrevState()"
+    (submit)="onSubmit()"
+    (saveNewUserPromotor)="onSaveNewUserPromotor()"
+    (onChangeResidency)="onResidencyChange($event)"
+    (familyPackagesChanged)="onFamilyPackagesChange($event)">
+</app-new-partner-contact-info-component>

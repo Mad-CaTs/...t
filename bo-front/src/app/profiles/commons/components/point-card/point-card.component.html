@@ -1,0 +1,34 @@
+<div class="d-flex flex-column w-100 h-100">
+	<div class="text-muted small mb-1 ms-1" style="min-height: 1.25rem">
+		{{ cardData.labelTop || '' }}
+	</div>
+
+	<div
+		class="card bg-custom-light rounded-4 p-3 d-flex flex-row align-items-center gap-2 w-100 h-100"
+		[ngClass]="[borderless ? 'border-0' : 'border-1', selected ? 'selected' : '']"
+	>
+		<div
+			class="d-flex align-items-center justify-content-center bg-light bg-opacity-25 rounded-4"
+			style="width: 60px; height: 60px"
+		>
+			<ng-container *ngIf="cardData.image; else initials">
+				<img [src]="cardData.image" alt="icono" [ngClass]="{ 'svg-blue': selected }" />
+			</ng-container>
+			<ng-template #initials>
+				<div
+					class="rounded-circle bg-fe cl-sorbus d-flex justify-content-center align-items-center fw-bold fs-6 p-2"
+					style="width: 40px; height: 40px"
+				>
+					{{ cardData.initialsName }}
+				</div>
+			</ng-template>
+		</div>
+		<div>
+			<h4 class="fs-6 fw-bold mb-1" [ngClass]="{ 'custom-teal': selected }">{{ cardData.value }}</h4>
+			<p class="text-grey small mb-0">{{ cardData.description }}</p>
+			<p *ngIf="cardData.subDescription" class="small cl-muted mb-0 text-break">
+				{{ cardData.subDescription }}
+			</p>
+		</div>
+	</div>
+</div>

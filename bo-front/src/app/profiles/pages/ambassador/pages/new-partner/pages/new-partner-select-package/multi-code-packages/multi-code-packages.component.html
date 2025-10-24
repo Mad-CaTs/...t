@@ -1,0 +1,30 @@
+<form [formGroup]="form">
+    <div class="header">
+        <h2 class="title">Paquetes disponibles</h2>
+        <p class="description">Selecciona la membresía que deseas transferir</p>
+    </div>
+
+    <div class="packages-container">
+        <!-- Spinner -->
+        <div class="spinner-overlay" [class.visible]="isLoading" [class.hidden]="!isLoading">
+            <img src="assets/icons/bars-scale-fade.svg" alt="Loading..." width="60" height="60" />
+        </div>
+
+        <!-- Contenido -->
+        <div class="content-panel" [class.visible]="!isLoading" [class.hidden]="isLoading">
+            @for (package of packages; track package.idSubscription) {
+            <app-package-to-transfer [package]="package" (packageSelected)="onPackageSelected($event)"
+                controlName="package" [form]="form" />
+            }
+        </div>
+    </div>
+
+    <footer>
+        <button class="btn btn-outline-secondary w-100" type="button" (click)="closeModal()">
+            Cancelar
+        </button>
+        <button class="btn btn-secondary w-100" type="submit" [disabled]="disabledTransfer" (click)="onSubmit()">
+            Transferir
+        </button>
+    </footer>
+</form>

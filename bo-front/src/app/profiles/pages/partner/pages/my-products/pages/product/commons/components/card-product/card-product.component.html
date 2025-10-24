@@ -1,0 +1,205 @@
+<div class="card h-100 d-flex flex-column">
+	<div class="card-body flex-grow-1 d-flex flex-column justify-content-between">
+		<div class="d-flex justify-content-between mb-3 align-items-center">
+			<div class="d-flex">
+				<span class="text-medium">{{ membershipType }}</span>
+			</div>
+			<div *ngIf="isLoading" class="d-flex justify-content-center align-items-center">
+				<div class="d-flex flex-column align-items-center">
+					<div
+						class="spinner-border text-orange"
+						role="status"
+						style="width: 2rem; height: 2rem"
+					></div>
+				</div>
+			</div>
+			<span
+				*ngIf="!isLoading"
+				class="rounded py-1 px-2 fs-6"
+				[ngStyle]="{
+					'background-color': statusColor.backgroundColor,
+					color: statusColor.textColor
+				}"
+			>
+				{{ subscriptionStatus }}
+			</span>
+		</div>
+		<div class="mb-3">
+			<ng-container *ngIf="fromLegalModule && fromLegalizarStatus; else normalDetails">
+				<div class="d-flex justify-content-between align-items-center">
+					<span class="fs-6 cl-gray">Solicitado en: {{ installmentNumber }}</span>
+					<span class="fs-6 cl-gray">Legalización: {{ date }}</span>
+				</div>
+				<div class="mt-2">
+					<span class="fs-6 cl-gray">Portafolio: {{ pacValue }}</span>
+				</div>
+			</ng-container>
+
+			<ng-template #normalDetails>
+				<span class="fs-6 cl-gray">Cuotas: Número {{ installmentNumber }}</span>
+				<div class="d-flex justify-content-between mt-3 align-items-center">
+					<div class="d-flex">
+						<span class="fs-6 cl-gray">PAC: {{ pacValue }}</span>
+					</div>
+					<div class="d-flex">
+						<span class="fs-6 cl-gray">PAR: {{ pacValue }}</span>
+					</div>
+					<div class="d-flex justify-content-between">
+						<span class="fs-6 cl-gray">Fecha: {{ formatDate(date) }}</span>
+					</div>
+				</div>
+			</ng-template>
+		</div>
+
+		<div class="mt-auto">
+			<div class="row">
+				<ng-container *ngIf="fromLegalModule && fromLegalizarStatus">
+					<div class="col-sm-12 mb-2">
+						<div class="d-flex justify-content-between align-items-center mb-1">
+							<small class="text-muted">Progreso</small>
+							<small class="fw-semibold">{{ progressValue }}%</small>
+						</div>
+						<mat-progress-bar
+							mode="determinate"
+							color="primary"
+							class="w-100"
+							[value]="progressValue"
+						></mat-progress-bar>
+					</div>
+					<div class="row">
+						<div class="col-sm-12 col-md-6 mb-2 d-flex">
+							<button
+								class="btn btn-outline-secondary w-100 d-flex align-items-center justify-content-center text-center py-1 px-2 py-md-2 px-md-3"
+								(click)="firstButtonClick.emit()"
+							>
+								{{ firstButtonLabel }}
+							</button>
+						</div>
+
+						<div class="col-sm-12 col-md-6 mb-2 d-flex">
+							<button
+								[disabled]="true"
+								class="btn btn-secondary w-100 d-flex align-items-center justify-content-center text-center py-1 px-2 py-md-2 px-md-3 border-color-sorbus"
+								(click)="secondButtonClick.emit()"
+							>
+								{{ secondButtonLabel }}
+							</button>
+						</div>
+					</div>
+				</ng-container>
+				<ng-container *ngIf="fromLegalModule && !fromLegalizarStatus">
+					<div class="col-sm-12 mb-2">
+						<button
+							mat-stroked-button
+							color="accent"
+							class="w-100 border-color-sorbus"
+							(click)="onLegalizarClick()"
+						>
+							Legalizar
+						</button>
+					</div>
+
+					<div class="col-sm-12 col-md-6 mb-2">
+						<button
+							mat-stroked-button
+							(click)="onDocumentoClick(membershipType)"
+							color="accent"
+							class="w-100 border-color-sorbus"
+						>
+							Documentos
+						</button>
+					</div>
+
+					<div class="col-sm-12 col-md-6 mb-2">
+						<button mat-stroked-button color="accent" class="w-100 border-color-sorbus">
+							Certificado
+						</button>
+					</div>
+				</ng-container>
+
+				<ng-container *ngIf="!fromLegalModule">
+					<div class="col-sm-12 col-md-6 mb-2">
+						<a
+							(click)="onCronogramaClick()"
+							mat-stroked-button
+							color="accent"
+							class="w-100 border-color-sorbus nav-link"
+						>
+							Cronograma
+						</a>
+					</div>
+
+					<div class="col-sm-12 col-md-6 mb-2">
+						<button
+							mat-stroked-button
+							(click)="onDocumentoClick(membershipType)"
+							color="accent"
+							class="w-100 border-color-sorbus"
+						>
+							Documentos
+						</button>
+					</div>
+
+					<div class="col-sm-12 col-md-6 mb-2">
+						<button
+							mat-stroked-button
+							color="accent"
+							class="w-100 border-color-sorbus"
+							[disabled]="true"
+						>
+							Certificado
+						</button>
+					</div>
+
+					<div class="col-sm-12 col-md-6 mb-2">
+						<button
+							mat-stroked-button
+							color="accent"
+							class="w-100 border-color-sorbus"
+							(click)="onMigrationClick()"
+						>
+							Migrar
+						</button>
+					</div>
+
+					<div class="col-sm-12 mb-2">
+						<button
+							[disabled]="false"
+							color="accent"
+							class="btn btn-secondary w-100"
+							(click)="onReleasePointsClick()"
+						>
+							Usar recompensas
+						</button>
+					</div>
+					<div class="col-sm-12 mb-2">
+						<button
+							color="black"
+							mat-stroked-button
+							class="w-100 border-color-sorbus nav-link"
+							(click)="onBeneficiariosClick()"
+							[disabled]="isFull"
+						>
+							<span>Beneficiarios</span>
+
+							<ng-container *ngIf="hasCounts">
+							<span
+								*ngIf="hasCounts"
+								[class.text-danger]="isFull"
+								[class.text-success]="hasAvailable">
+								({{ beneficiariesUsed }}/{{ beneficiariesMax }})
+							</span>
+							</ng-container>
+
+							<ng-container *ngIf="!hasCounts && isCountsLoading">
+							<span>(…)</span>
+							</ng-container>
+						</button>
+					</div>
+				</ng-container>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- [disabled]="!this.isMigrationEnabled"
+ -->

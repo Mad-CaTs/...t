@@ -1,0 +1,71 @@
+<div class="d-flex flex-column gap-3 mt-3">
+	<app-table
+		class="w-100"
+		[headers]="headers"
+		[hasCheckbox]="false"
+		[firstEmpty]="true"
+		[customRows]="true"
+		[minWidthHeader]="minWidthHeaders"
+		[minWidth]="1800"
+		[hasData]="table.data.length > 0"
+		[loading]="isLoading"
+		[scrollable]="true"
+		style="table-layout: fixed"
+	>
+		<tr
+			class="w-100 d-flex flex-row text-center align-items-center"
+			*ngFor="let d of table.data; let i = index"
+			style="gap: 2px"
+		>
+			<td class="fs-6 py-2 px-0 w-100 text-left" style="min-width: 100px">
+				{{ d.installmentNumber }}
+			</td>
+			<td class="fs-6 py-2 px-2 w-100 text-center" style="min-width: 100px">
+				{{ d.paymentDate }}
+			</td>
+
+			<td class="fs-6 py-2 px-2 w-100 text-center" style="min-width: 100px">
+				{{ d.financedPaymentUSD }}
+			</td>
+			<td class="fs-6 py-2 px-2 w-100 text-center" style="min-width: 100px">
+				{{ d.interestUSD }}
+			</td>
+			<td class="fs-6 py-2 px-2 w-100 text-center" style="min-width: 100px">
+				{{ d.amortizationUSD }}
+			</td>
+			<td class="fs-6 py-2 px-2 w-100 text-center" style="min-width: 100px">
+				{{ d.splitInitialPaymentUSD }}
+			</td>
+			<td class="fs-6 py-2 px-2 w-100 text-center" style="min-width: 100px">
+				{{ d.rankBonusUSD }}
+			</td>
+			<td class="fs-6 py-2 px-2 w-100 text-center" style="min-width: 100px">
+				{{ d.finalPaymentUSD }}
+			</td>
+			<td class="fs-6 py-2 px-2 w-100 text-center" style="min-width: 100px">
+				{{ d.remainingBalanceUSD }}
+			</td>
+			<td class="fs-6 py-2 w-100 text-center" style="min-width: 100px">
+				<div
+					class="w-auto text-success rounded py-1 px-3"
+					[ngStyle]="{ 'background-color': getTransparentColor(d.color) }"
+				>
+					<span [ngStyle]="{ color: getSolidColor(d.color) }">{{ d.stateName }}</span>
+				</div>
+			</td>
+			<td class="fs-6 py-2 w-100 text-center" style="min-width: 100px">
+				<div class="d-flex justify-content-center align-items-center">
+					<button
+						type="button"
+						class="btn d-flex flex-row gap-1 align-items-center px-2 py-1 rounded cl-link no-hover"
+						style="font-size: 14px"
+						(click)="onClickOpenDetailModal(d)"
+					>
+						<mat-icon class="cl-link me-1" style="font-size: 22px">visibility</mat-icon>
+						Ver detalles
+					</button>
+				</div>
+			</td>
+		</tr>
+	</app-table>
+</div>

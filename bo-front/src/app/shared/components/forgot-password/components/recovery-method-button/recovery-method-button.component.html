@@ -1,0 +1,15 @@
+<div
+    class="radio-button"
+    [class.selected]="form?.get(controlName)?.value === method"
+    (click)="selectMethod()"
+>
+    <p-radioButton
+        [name]="controlName"
+        [value]="method"
+        [inputId]="method"
+        [formControl]="form?.get(controlName)"
+    />
+    <label [for]="method">
+        {{ RecoveryMethodLabels[method] }}
+    </label>
+</div>

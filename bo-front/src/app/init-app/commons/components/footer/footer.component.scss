@@ -1,0 +1,25 @@
+a {
+	text-decoration: none;
+}
+
+.info {
+	width: 100%;
+}
+
+@media (min-width: 768px) {
+	.info {
+		width: 65%;
+	}
+}
+
+@media (min-width: 850px) {
+	.info {
+		width: 60%;
+	}
+}
+
+@media (min-width: 1336px) {
+	.info {
+		width: 50%;
+	}
+}

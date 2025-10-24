@@ -1,0 +1,96 @@
+.card-container {
+  background: #ffffff;
+  border-radius: 12px;
+  margin: 16px;
+  max-width: 270px;
+
+  .card-header {
+    padding: 24px;
+    position: relative;
+
+    .card-opcion {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+      opacity: 0.9;
+    }
+
+    .card-title {
+      font-size: 24px;
+      font-weight: 700;
+      margin: 0;
+      line-height: 1.2;
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+
+  .card-body {
+    padding: 24px;
+
+    .card-paragraph {
+      color: #6b7280;
+      font-size: 14px;
+      line-height: 1.6;
+      margin: 0 0 24px 0;
+    }
+
+    .pricing-details {
+      .pricing-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+        padding: 8px 0;
+        border-bottom: 1px solid #f3f4f6;
+
+        &:last-child {
+          border-bottom: none;
+          margin-bottom: 0;
+          padding-top: 16px;
+          margin-top: 8px;
+          border-top: 2px solid #e5e7eb;
+          font-weight: 600;
+        }
+
+        .label {
+          color: #374151;
+          font-size: 14px;
+        }
+
+        .value {
+          color: #1f2937;
+          font-weight: 600;
+          font-size: 16px;
+
+          &.price {
+            color: #059669;
+            font-size: 18px;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .card-container {
+    margin: 12px 8px;
+    max-width: 100%;
+
+    .card-header {
+      padding: 20px;
+
+      .card-title {
+        font-size: 20px;
+      }
+    }
+
+    .card-body {
+      padding: 20px;
+    }
+  }
+}

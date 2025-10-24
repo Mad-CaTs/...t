@@ -1,0 +1,73 @@
+<mat-toolbar color="#fff" class="p-0 container-toolbar">
+	<div class="h-100" [className]="auth == true ? 'container-fluid h-100' : 'container h-100'">
+		<div [className]="auth == true ? 'wrap-header h-100 px-0 px-md-3' : 'wrap-header h-100'">
+			<span class="navbar-brand logo" style="position: relative">
+				<img src="./assets/logos/Inclub.svg" />
+			</span>
+			<!--Desktop navigation-->
+			<div class="menu-desktop navbar-nav" *ngIf="auth == false">
+				<a
+					[routerLink]="nav.link"
+					routerLinkActive="text-secondary"
+					class="nav-link"
+					mat-flat-button
+					*ngFor="let nav of navigation; trackBy: trackByNav"
+					>{{ nav.label }}</a
+				>
+			</div>
+			<!--Spacer-->
+			<span class="nav-spacer"></span>
+			<!--Auth buttons-->
+			<div class="menu-desktop navbar-nav" *ngIf="auth == false">
+				<a [href]="getLoginUrl" class="nav-link btn btn-raised" mat-raised-button color="accent">{{
+					lang.home.carousel.carouselBtn1
+				}}</a>
+				<a [href]="getLoginUrl" class="nav-link btn btn-stroked" mat-stroked-button color="accent">
+					{{ lang.home.carousel.carouselBtn2 }}
+				</a>
+			</div>
+			<!--Languaje control-->
+			<div
+				*ngIf="!showOnlyLogoAndBackButton"
+				class="gap-2 ms-5 cursor-pointer d-flex align-items-center"
+				(click)="languajeMenu.toogleMenu()"
+			>
+				<img [src]="flagSelected" alt="Flag languaje" width="32" height="32" />
+				<mat-icon
+					svgIcon="chevron_down"
+					style="width: 24px; height: 24px; transition: all ease-in-out 500ms"
+					[style.transform]="!languajeMenu.showMenu ? 'rotate(0deg)' : 'rotate(180deg)'"
+				/>
+			</div>
+			<!--Menu Icon for responsive-->
+			<div
+				*ngIf="!showOnlyLogoAndBackButton"
+				[className]="
+					auth == true ? 'show-auth menu-mobile navbar-nav rounded' : 'menu-mobile navbar-nav'
+				"
+				(click)="onClickOpenMenu()"
+			>
+				<mat-icon class="menu-mobile__icon">menu</mat-icon>
+			</div>
+
+			<h1 *ngIf="showOnlyLogoAndBackButton" class="fs-5 mb-24 cursor-pointer hover-custom">
+				<a (click)="emitGoHome()" class="nav-link cl-sorbus align-items-center d-flex">
+					<mat-icon class="me-2">arrow_back</mat-icon>
+					<span>Volver a inicio</span>
+				</a>
+			</h1>
+		</div>
+	</div>
+	<!--Unknow code-->
+	<div class="container" [className]="auth == true ? 'container-fluid' : 'container'">
+		<div [className]="auth == true ? 'px-3 wrap-header sub-navbar' : 'wrap-header sub-navbar'">
+			<div *ngFor="let route of routes" class="pb-1">
+				<a [routerLink]="route.url" class="nav-link" mat-flat-button>
+					<mat-icon>{{ route.name_icon }}</mat-icon>
+					<span>{{ route.name_link }}</span>
+				</a>
+			</div>
+		</div>
+	</div>
+</mat-toolbar>
+<app-navbar-languaje-menu class="w-100" (close)="languajeMenu.closeMenu()" *ngIf="languajeMenu.showMenu" />

@@ -1,0 +1,9 @@
+<div class="d-flex flex-column">
+  <ng-container *ngFor="let event of eventList">
+    <app-event-card
+      [imageUrl]="event.imageUrl"
+      [title]="event.title"
+      [date]="event.date + ' - ' + event.location">
+    </app-event-card>
+  </ng-container>
+</div>

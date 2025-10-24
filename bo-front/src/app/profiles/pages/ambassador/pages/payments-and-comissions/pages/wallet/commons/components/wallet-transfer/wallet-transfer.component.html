@@ -1,0 +1,145 @@
+<div class="d-flex flex-column gap-4">
+	<button class="ms-auto btn btn-secondary w-auto" [disabled]="disabledUser" type="button" (click)="onReset()">
+		Nueva Transferencia
+	</button>
+	<div class="d-flex flex-column gap-4 mx-auto w-100" style="max-width: 500px">
+		<h3 class="text-black m-0 fw-medium text-center text-uppercase fs-5 mb-4 mt-md-3">{{ title }}</h3>
+
+		<!--Steps-->
+		<div class="d-flex flex-row justify-content-center px-4 mb-5">
+			<div class="d-flex flex-column align-items-center position-relative">
+				<span
+					class="rounded-circle text-white d-flex justify-content-center align-items-center"
+					[class.bg-success]="step >= 1"
+					[style.background-color]="step >= 1 ? 'auto' : '#b5bdb8'"
+					style="width: 32px; height: 32px"
+					>1</span
+				>
+				<span class="text-black fw-normal position-absolute" style="width: max-content; bottom: -30px"
+					>Paso 1</span
+				>
+			</div>
+			<div
+				class="line w-100"
+				style="margin-top: 16px"
+				[class.bg-success]="step >= 2"
+				[style.background-color]="step >= 2 ? 'auto' : '#b5bdb8'"
+			></div>
+			<div class="d-flex flex-column align-items-center position-relative">
+				<span
+					class="rounded-circle text-white d-flex justify-content-center align-items-center"
+					style="width: 32px; height: 32px"
+					[class.bg-success]="step >= 2"
+					[style.background-color]="step >= 2 ? 'auto' : '#b5bdb8'"
+					>2</span
+				>
+				<span class="text-black fw-normal position-absolute" style="width: max-content; bottom: -30px"
+					>Paso 2</span
+				>
+			</div>
+			<div
+				class="line w-100"
+				style="margin-top: 16px"
+				[class.bg-success]="step >= 3"
+				[style.background-color]="step >= 3 ? 'auto' : '#b5bdb8'"
+			></div>
+			<div class="d-flex flex-column align-items-center position-relative">
+				<span
+					class="rounded-circle text-white d-flex justify-content-center align-items-center"
+					style="width: 32px; height: 32px"
+					[class.bg-success]="step === 3"
+					[style.background-color]="step === 3 ? 'auto' : '#b5bdb8'"
+					>3</span
+				>
+				<span class="text-black fw-normal position-absolute" style="width: max-content; bottom: -30px"
+					>Paso 3</span
+				>
+			</div>
+		</div>
+
+		<!--Step 1-->
+		<ng-container *ngIf="step === 1">
+			<app-input
+				[form]="form"
+				controlName="user"
+				placeholder="Ingrese el destino"
+				label="Usuario:"
+				class="w-100"
+				(focusout)="getUsername($event)"
+			>
+			</app-input>
+			<app-input
+				type="dollar"
+				[form]="form"
+				controlName="amount"
+				placeholder="Ingrese el monto: $ 10.00"
+				label="Monto $:"
+				class="w-100"
+			></app-input>
+		</ng-container>
+		<!--Step 2-->
+		<ng-container *ngIf="step === 2">
+			<div class="alert alert-info d-flex flex-row gap-2 align-items-center mb-0" role="alert">
+				<mat-icon fontIcon="info"></mat-icon>
+				<span class="fw-normal">Nota: Ingrese su contraseña</span>
+			</div>
+			<div class="d-flex flex-row justify-content-between align-items-center">
+				<span class="text-black fw-medium">Usuario:</span>
+				<span class="text-black fw-medium">{{ form.get('user').value }}</span>
+			</div>
+			<div class="d-flex flex-row justify-content-between align-items-center">
+				<span class="text-black fw-medium">Monto:</span>
+				<span class="text-black fw-medium">$ {{ amount | number : '1.2-2' }}</span>
+			</div>
+			<app-input
+				[form]="form"
+				controlName="password"
+				type="password"
+				placeholder="Ingrese su contraseña"
+				label="Contraseña"
+				class="w-100"
+			></app-input>
+		</ng-container>
+
+		<!--Step 3-->
+		<ng-container *ngIf="step === 3">
+			<div class="alert alert-info d-flex flex-row gap-2 align-items-center mb-0" role="alert">
+				<mat-icon fontIcon="info"></mat-icon>
+				<span class="fw-normal">Nota: Ingrese el código de confirmación</span>
+			</div>
+			<app-input
+				[form]="form"
+				controlName="confirmCode"
+				type="text"
+				placeholder="Ingrese el código enviado"
+				label="Código:"
+				class="w-100"
+			></app-input>
+		</ng-container>
+
+		<!--Submit-->
+		<div class="d-flex flex-wrap justify-content-between">
+			<button
+				*ngIf="step === 2 || step === 3"
+				class="btn btn-secondary"
+				type="button"
+				(click)="onPreviousStep()"
+			>
+				{{ btnBack }}
+			</button>
+			<button
+				[ngClass]="{
+					'ms-auto': step === 1,
+					btn: true,
+					'btn-secondary': true
+				}"
+				type="button"
+				[disabled]="(!isValidBtn || disabledUser)" 
+				(click)="onNextStep()"
+			>
+				{{ btnText }}
+			</button>
+		</div>
+	</div>
+</div>
+<p-toast></p-toast>

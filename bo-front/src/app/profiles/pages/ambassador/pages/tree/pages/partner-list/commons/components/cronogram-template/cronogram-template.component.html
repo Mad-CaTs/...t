@@ -1,0 +1,47 @@
+<div class="d-flex flex-column gap-3">
+	<div class="w-100 overflow-y-auto overflow-x-hidden" style="max-height: 500px">
+		<div class="d-flex flex-column gap-4">
+			<ng-container *ngFor="let example of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]; let i = index">
+				<div class="d-flex flex-column gap-2 w-100">
+					<div class="d-flex flex-row w-100 align-items-center">
+						<span class="w-100 cl-muted fs-6">Descripción:</span>
+						<span class="w-100 fs-6 text-black fw-medium">Inicial N° 2</span>
+					</div>
+					<div class="d-flex flex-row w-100 align-items-center">
+						<span class="w-100 cl-muted fs-6">Fecha vencimiento:</span>
+						<span class="w-100 fs-6 text-black fw-medium">29 de diciembre del 2023</span>
+					</div>
+					<div class="d-flex flex-row w-100 align-items-center">
+						<span class="w-100 cl-muted fs-6">Capital</span>
+						<span class="w-100 fs-6 text-black fw-medium">195.00 USD</span>
+					</div>
+					<div class="d-flex flex-row w-100 align-items-center">
+						<span class="w-100 cl-muted fs-6">Amortización</span>
+						<span class="w-100 fs-6 text-black fw-medium">15.00 USD</span>
+					</div>
+					<div class="d-flex flex-row w-100 align-items-center">
+						<span class="w-100 cl-muted fs-6">Interes</span>
+						<span class="w-100 fs-6 text-black fw-medium">0.00 USD</span>
+					</div>
+					<div class="d-flex flex-row w-100 align-items-center">
+						<span class="w-100 cl-muted fs-6">Mora</span>
+						<span class="w-100 fs-6 text-black fw-medium">-</span>
+					</div>
+					<div class="d-flex flex-row w-100 align-items-center">
+						<span class="w-100 cl-muted fs-6">Cuota</span>
+						<span class="w-100 fs-6 text-black fw-medium">15.00 USD</span>
+					</div>
+					<div class="d-flex flex-row w-100 align-items-center">
+						<span class="w-100 cl-muted fs-6">Fecha de pago</span>
+						<span class="w-100 fs-6 text-black fw-medium">01 de julio del 2023</span>
+					</div>
+					<div class="d-flex flex-row w-100 align-items-center">
+						<span class="w-100 cl-muted fs-6">Estado:</span>
+						<span class="w-100 fs-6 text-black fw-medium">Pagado</span>
+					</div>
+				</div>
+				<div class="line w-100 bg-black opacity-25" *ngIf="i !== 9"></div>
+			</ng-container>
+		</div>
+	</div>
+</div>

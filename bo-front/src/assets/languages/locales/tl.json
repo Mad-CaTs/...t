@@ -1,0 +1,564 @@
+{
+	"header": {
+		"slogan": "Club ng Pamumuhunan",
+		"menuItems": [
+			{
+				"label": "Magsimula"
+			},
+			{
+				"label": "Mga produkto",
+				"subItems": [
+					{
+						"label": "Real Estate"
+					},
+					{
+						"label": "Teknolohikal"
+					},
+					{
+						"label": "Iba pang mga proyekto"
+					}
+				]
+			},
+			{
+				"label": "Pagkakataon"
+			},
+			{
+				"label": "Komunidad"
+			},
+			{
+				"label": "Mga update"
+			},
+			{
+				"label": "Kalendaryo"
+			},
+			{
+				"label": "Mga kaganapan"
+			}
+		],
+		"languageTitle": "Mga wika",
+		"languageInputPlaceholder": "Hanapin ang wika",
+		"languageInputLabel": "Naghahanap",
+		"languages": [
+			"Arabo ",
+			"Aleman ",
+			"Bengali ",
+			"Bulgarian ",
+			"Czech ",
+			"Tsina ",
+			"Espanyol ",
+			"Pranses ",
+			"Portuges ",
+			"Ingles ",
+			"Griyego ",
+			"Guarani ",
+			"Hindi ",
+			"Hungarian ",
+			"Indonesian ",
+			"Italyano ",
+			"Hapon ",
+			"Koreano ",
+			"Dutch ",
+			"Polish ",
+			"Ruso ",
+			"Telugu ",
+			"Thai ",
+			"Tagalog ",
+			"Turkish ",
+			"Ukrainian ",
+			"Vietnamese ",
+			"Romanian "
+		]
+	},
+	"footer": {
+		"contactInformation": {
+			"phone": "(01) 618 5118",
+			"email": "example@inclub.com.pe"
+		},
+		"sections": [
+			"Mga solusyon",
+			"InResorts Ribera del Rio",
+			"InResorts La Joya",
+			"KeOla",
+			"Ginamit na benta",
+			"Kami",
+			"Blog",
+			"Mga madalas na tanong",
+			"Access ng customer",
+			"Pagpapanatili",
+			"Makipag-ugnayan",
+			"Legal",
+			"Mga patakaran sa privacy",
+			"Mga Tuntunin at Kundisyon",
+			"Libro ng mga reklamo"
+		]
+	},
+	"home": {
+		"carousel": {
+			"carouselEntry": "HANDA NA SUMALI SA",
+			"carouselTitle": "UNIVERSE INCLUB?",
+			"carouselText": "Lahat ay pwede. ",
+			"carouselBtn1": "Sumali ka na!",
+			"carouselBtn2": "Access"
+		},
+		"keola": {
+			"cta": "At i-redeem ang code na \"UNETEKEOLA\" para makakuha ng mga puntos.",
+			"btn": "Google-play",
+			"titles": ["I-download ang Keola app", "Ang pinakabago", "Mag-imbita at manalo"]
+		},
+		"lastUpdates": {
+			"title": "Mga pinakabagong update",
+			"description": "Nais naming magtagumpay ka at palaguin ang iyong negosyo upang maging matagumpay na pioneer na alam naming ikaw ay! ",
+			"button": "Up date!"
+		},
+		"howWorks": {
+			"title": "Paano ito gumagana",
+			"subtitle": "Magsimula sa 3 Simpleng Hakbang",
+			"steps": [
+				{
+					"title": "Mag-sign up",
+					"description": "Ipasok ang iyong sponsor at kumpletuhin ang iyong impormasyon at gawin ang iyong password."
+				},
+				{
+					"title": "Galugarin ang Mga Produkto",
+					"description": "Galugarin ang mga produkto sa aming Inclub portal. "
+				},
+				{
+					"title": "manalo",
+					"description": "handa na! "
+				}
+			]
+		},
+		"cards": [
+			{
+				"title": "Lalagyan",
+				"description": "Sumali at maging bahagi ng aming real estate, mga teknolohikal na proyekto at marami pang iba.",
+				"button": "Mag-explore pa"
+			},
+			{
+				"title": "Komunidad",
+				"description": "Sumisid sa magagandang produkto na may malaking potensyal na kumita.",
+				"button": "Mag-explore pa"
+			},
+			{
+				"title": "Pagkakataon",
+				"description": "Kung handa kang magtrabaho, ang InClub ay ang sasakyan na magdadala sa iyo kung saan mo gustong pumunta.",
+				"button": "Mag-explore pa"
+			}
+		],
+		"testimonialsSection": {
+			"cardPrefix": "Miyembro mula noong",
+			"heading": "Ang kailangan mo lang ay isang telepono sa iyong kamay upang kumonekta sa pagkakataong pangnegosyo sa buong buhay.",
+			"button": "Mag-rehistro na ngayon",
+			"testimonials": [
+				{
+					"text": "Kapag pinagbubutihan mo at nagtatrabaho nang masigasig, babaguhin ng Inclub ang iyong buhay at tutuparin ang lahat ng iyong mga pangarap",
+					"name": "Elias Vargas",
+					"since": "2020"
+				},
+				{
+					"text": "Kailangan mo lang ng 3 bagay sa mundong ito upang maging masaya: Pananampalataya sa Diyos, Pananampalataya sa sarili, at Pananampalataya sa iyong mga pangarap",
+					"name": "Paul Villacorta",
+					"since": "2020"
+				},
+				{
+					"text": "Hindi masama ang maging dukha, ang masama ay ang hindi ito subukan kailanman, upang mamatay nang dukha at walang mga pangarap. Hindi kailanman huli upang magsimula",
+					"name": "Mery Livias",
+					"since": "2021"
+				},
+				{
+					"text": "Maaari mong bigkasin ang pinakamahusay na talumpati sa iyong buhay kaysa sa iyong mga salita",
+					"name": "Abel Meza",
+					"since": "2020"
+				}
+			]
+		}
+	},
+	"products": {
+		"navigation": ["Real Estate", "Tech", "Mga susunod na proyekto"],
+		"items": [
+			{
+				"title": "Inresorts Ribera del Rio",
+				"description": "Tangkilikin ang mga benepisyo ng aming Hotel Club Resort at maging isang miyembro. ",
+				"buttonText": "Karagdagang informasiyon"
+			},
+			{
+				"title": "Inresorts La Joya",
+				"description": "Kasiyahan ng pamilya, kalikasan at kita para sa buhay. ",
+				"buttonText": "Karagdagang informasiyon"
+			},
+			{
+				"title": "Mga Network ng Keola",
+				"description": "Mag-imbita at manalo, tuklasin ang mga benepisyo ng app. ",
+				"buttonText": "Karagdagang informasiyon"
+			}
+		],
+		"nextProjects": {
+			"title": "Nagtatrabaho kami",
+			"description": "Sa kasalukuyan ang koponan ng Inclub ay nasa proseso ng paglikha upang ipakita ang mga paparating na proyekto. ",
+			"buttonText": "Up date!"
+		}
+	},
+	"productDetail": {
+		"aboutUsTitle": "Tungkol sa atin",
+		"aboutBtnText": "Gusto kong malaman pa",
+		"products": [
+			{
+				"aboutTitle": "Tabi ng ilog",
+				"aboutDescription": "Kami ay isang Club Resort na matatagpuan sa Cieneguilla, 45 minuto mula sa Lima. ",
+				"perkPreTitle": "Samantalahin ang aming",
+				"perktitle": "Mga hindi malilimutang karanasan",
+				"perkDescription": "Ang perpektong retreat para sa mga naghahanap ng kakaibang getaway at adventure experience. ",
+				"cards": [
+					{
+						"title": "Mga hotel",
+						"description": "Ang bawat kuwarto sa Ribera del Río ay idinisenyo upang ibahagi sa iyong mga mahal sa buhay; "
+					},
+					{
+						"title": "Mga karanasan",
+						"description": "Nag-aalok kami ng malawak na hanay ng mga karanasan sa paglilibang at libangan na siguradong mabibighani ka. "
+					},
+					{
+						"title": "Mga restawran",
+						"description": "Laging magandang tratuhin ang iyong sarili, at para diyan, tinatanggap ka ng aming 'Ribera del Río Restaurant' at iniimbitahan kang tangkilikin ang iba't ibang tipikal na pambansa, rehiyonal at Creole na pagkain."
+					}
+				]
+			},
+			{
+				"aboutTitle": "Ang hiyas",
+				"aboutDescription": "Kami ay isang Club Resort na matatagpuan sa Arequipa, 45 minuto lamang mula sa lungsod ng Arequipa. ",
+				"perkPreTitle": "Samantalahin ang aming",
+				"perktitle": "Mga hindi malilimutang karanasan",
+				"perkDescription": "Ang perpektong retreat para sa mga naghahanap ng kakaibang getaway at adventure experience. ",
+				"cards": [
+					{
+						"title": "Palanguyan",
+						"description": "Ang bawat pool sa La Joya ay idinisenyo upang ibahagi sa iyong mga mahal sa buhay; "
+					},
+					{
+						"title": "Mga karanasan",
+						"description": "Nag-aalok kami ng malawak na hanay ng mga karanasan sa paglilibang at libangan na siguradong mabibighani ka. "
+					},
+					{
+						"title": "Resort Park",
+						"description": "Magandang water park na may mga makukulay na slide; "
+					}
+				]
+			},
+			{
+				"aboutTitle": "Keola",
+				"aboutDescription": "Maligayang pagdating sa Keola, ang pinakamahusay na app upang mahanap ang lahat ng iyong mga paboritong produkto sa isang lugar! ",
+				"perkPreTitle": "Samantalahin ang aming",
+				"perktitle": "Mga Benepisyo ng Keola",
+				"perkDescription": "Mag-imbita at kumita, tuklasin ang mga benepisyo ng application. ",
+				"cards": [
+					{
+						"title": "Mga produkto",
+						"description": "Tumuklas ng iba't ibang mga produkto at kategorya. "
+					},
+					{
+						"title": "Mga tindahan",
+						"description": "Pamahalaan ang iyong tindahan at pamahalaan ang iyong mga produkto, na nagbibigay ng kalidad at mahusay na serbisyo sa paghahatid."
+					},
+					{
+						"title": "Paghahatid",
+						"description": "Kailangan mo ba ng pagkain, gamot? "
+					}
+				]
+			}
+		]
+	},
+	"oportunity": {
+		"title": "Pagkakataon",
+		"description": "Ito ay bukas sa sinuman, anuman ang karanasan, lokasyon o mga pangyayari.",
+		"sections": [
+			{
+				"pre": "Kumita gamit ang iyong impluwensya",
+				"title": "Lahat ng tao ay micro influenced",
+				"content": "Ang lahat ay isang micro-influencer. "
+			},
+			{
+				"pre": "Inirerekomenda ko ang mga de-kalidad na produkto",
+				"title": "Mga makabagong produkto, na nagbibigay daan sa industriya",
+				"content": "Araw-araw inirerekumenda namin ang mga produkto at serbisyo sa aming mga kaibigan at pamilya. "
+			},
+			{
+				"pre": "Matuto mula sa iyong mga kapantay",
+				"title": "Lahat ng kailangan mo para magtagumpay",
+				"content": "Nagbabahagi kami ng kaalaman mula sa aming mga espesyalista, na inspirasyon ng pagnanais na gawing mas kumikita ang networking para sa lahat at para sa mga kaakibat na matutunan kung paano bumuo ng mga asset."
+			},
+			{
+				"pre": "Plano ng kompensasyon",
+				"title": "Ang aming Compensation Plan ay ang pinakamakapangyarihan sa industriya",
+				"content": "Tinutulungan namin ang mga tao na bumuo ng isang matalinong portfolio ng pamumuhunan at makamit ang pinakahihintay na kalayaan sa pananalapi na may malawak na hanay ng mga benepisyo, tulad ng walang ibang investment club."
+			}
+		],
+		"testimonials": {
+			"pre": "Mga testimonial",
+			"title": "Mga kwento ng tagumpay",
+			"items": [
+				{
+					"text": "Kung ang isang taong nabubuhay sa nakaraan ay hindi kailanman magtatagumpay sa kasalukuyan, lalo na sa hinaharap",
+					"name": "Elias Vargas",
+					"since": "2020"
+				},
+				{
+					"text": "3 bagay lang ang kailangan mo sa mundong ito para maging masaya: Faith in God, Faith in yourself and Faith in your dreams",
+					"name": "Paul Villacorta",
+					"since": "2020"
+				},
+				{
+					"text": "Hindi masamang maging Mahirap, ang masama ay ang hindi mo sinubukan, Mamatay na Mahirap at walang Pangarap, Hindi pa huli ang lahat para magsimula.",
+					"name": "Mery Livias",
+					"since": "2021"
+				},
+				{
+					"text": "Maaari kang magbigay ng pinakamahusay na pananalita sa iyong buhay kaysa sa iyong mga salita.",
+					"name": "Abel Meza",
+					"since": "2020"
+				}
+			]
+		}
+	},
+	"comunity": {
+		"title": "Ating kumunidad",
+		"description": "Mas maganda ang tagumpay kapag ito ay ibinahagi. ",
+		"sections": [
+			{
+				"pre": "LUMAGO AT SUMUNOD SA AMIN",
+				"title": "Mga kaakibat sa buong mundo",
+				"content": "Ang pinakamalaki at pinakamakapangyarihang network ng kaakibat ngayon sa Latin America ay, walang duda, ang Inclub. "
+			},
+			{
+				"pre": "Pagkilala at mga kaganapan",
+				"title": "Milyun-milyong tao ang ipagdiriwang ang iyong tagumpay.",
+				"content": "Hindi kapani-paniwalang ipinagmamalaki namin ang pagsusumikap at dedikasyon ng bawat negosyante sa kanilang negosyo. "
+			},
+			{
+				"pre": "EDUCATION AND LEARNING TOOLS",
+				"title": "Lahat ng kailangan mo para magtagumpay.",
+				"content": "Tinutulungan namin ang mga tao na lumikha ng isang matalinong portfolio ng pamumuhunan at makamit ang pinakahihintay na kalayaan sa pananalapi. "
+			}
+		],
+		"inspiration": {
+			"title": "Inspirasyon",
+			"subtitle": "Mga Boses ng Komunidad",
+			"testimonials": [
+				{
+					"text": "Inclub ang buhay ko kaya naman sineseryoso ko ito.",
+					"name": "Elias Vargas",
+					"since": "2020"
+				},
+				{
+					"text": "Nandito ang Inclub para baguhin ang buhay ng mga tao.",
+					"name": "Paul Villacorta",
+					"since": "2020"
+				},
+				{
+					"text": "Binigyan tayo ng Inclub ng pagkakataon na baguhin din ang buhay ng ibang tao.",
+					"name": "Mery Livias",
+					"since": "2021"
+				},
+				{
+					"text": "Ang mga kaakibat ay ginagantimpalaan para sa tagumpay salamat sa dami ng mga gumagamit.",
+					"name": "Abel Meza",
+					"since": "2020"
+				}
+			]
+		}
+	},
+	"news": {
+		"noticeLabel": "Balita",
+		"titleMain": "NOVELTY",
+		"descriptionMain": "Ang perpektong kanlungan upang masiyahan kasama ng pamilya at mga kaibigan",
+		"commonEventsCountry": "Lima, Peru",
+		"commonEventsBtn": "tingnan pa",
+		"content": [
+			{
+				"date": "SEP 14, 2023",
+				"title": "Matagumpay na makipag-usap, workshop sa komunikasyon sa wika at negosyo"
+			},
+			{
+				"title": "Ang iyong online shopping destination",
+				"description": "Mag-imbita at manalo, tuklasin ang mga benepisyo ng app. "
+			},
+			{
+				"title": "Proyekto sa real estate",
+				"description": "Ang mga pinuno ng Inclub ay nasiyahan sa isang hindi kapani-paniwalang paglulunsad ng Ribera del Rio real estate project sa Cieneguilla."
+			},
+			{
+				"title": "Paglulunsad ng Encumbra",
+				"description": "Ang mga pinuno ng Inclub ay nagbibigay ng kapangyarihan sa aming mga miyembro na maging mga pinuno sa industriya ng online networking."
+			},
+			{
+				"title": "Ang iyong online shopping destination",
+				"description": "Mag-imbita at manalo, tuklasin ang mga benepisyo ng app. "
+			},
+			{
+				"title": "Teknolohikal na proyekto",
+				"description": "Ang mga pinuno ng Inclub ay nasiyahan sa isang hindi kapani-paniwalang paglulunsad ng Ribera del Rio real estate project sa Cieneguilla."
+			},
+			{
+				"title": "Inresorts Ribera del Rio",
+				"description": "Ang mga pinuno ng Inclub ay nagbibigay ng kapangyarihan sa aming mga miyembro na maging mga pinuno sa industriya ng online networking."
+			}
+		]
+	},
+	"newsDetail": {
+		"date": "Setyembre 26, 2023",
+		"title": "Ang perpektong kanlungan upang masiyahan kasama ng pamilya at mga kaibigan",
+		"description": "60 minuto lamang ang La Joya park resort mula sa lungsod ng Arequipa sa distrito ng La Joya, dito maaari kang mag-enjoy sa mga araw sa beach o magsanay ng water sports. ",
+		"content": [
+			{
+				"date": "Setyembre 14, 2023",
+				"title": "Matagumpay na makipag-usap, workshop sa komunikasyon sa wika at negosyo"
+			},
+			{
+				"date": "Setyembre 29, 2023",
+				"title": "Inclub LEADERSHIP Educational System"
+			},
+			{
+				"date": "Setyembre 15, 2023",
+				"title": "Inclub educational system Mga Testimonial ng Tagumpay"
+			}
+		]
+	},
+	"calendar": {
+		"title": "Kalendaryo",
+		"subtitle": "Setyembre",
+		"filters": {
+			"searchLabel": "Naghahanap",
+			"searchPlaceholder": "Maghanap para sa kaganapan o workshop",
+			"options": ["Ngayong araw", "Linggu-linggo", "Buwan-buwan"]
+		}
+	},
+	"eventPage": {
+		"upcommingEventsTitle": "Mga paparating na kaganapan",
+		"upcomingEvents": [
+			{
+				"date": "SEP 14, 2023",
+				"title": "Matagumpay na makipag-usap, workshop sa komunikasyon sa wika at negosyo"
+			},
+			{
+				"date": "SEP 29, 2023",
+				"title": "Educational System Inclub LEADERSHIP"
+			},
+			{
+				"date": "SEP 15, 2023",
+				"title": "Inclub educational system Mga Testimonial ng Tagumpay"
+			}
+		],
+		"pastEventsTitle": "Mga nakaraang kaganapan",
+		"pastEvents": [
+			{
+				"date": "SEP 12, 2023",
+				"title": "Educational System Inclub Reading Club"
+			},
+			{
+				"date": "SEP 10, 2023",
+				"title": "Inclub LEADERSHIP Educational System"
+			},
+			{
+				"date": "SEP 8, 2023",
+				"title": "Mga Testimonial ng Tagumpay ng Inclub Educational System"
+			}
+		],
+		"trendsTitle": "Mga uso"
+	},
+	"eventsDetail": {
+		"backLabel": "Bumalik",
+		"resumeTitle": "Buod",
+		"learnTitle": "Ano ang matututunan mo?"
+	},
+	"events": [
+		{
+			"title": "Matagumpay na makipag-usap, workshop sa komunikasyon sa wika at negosyo",
+			"date": "SEP 14, 2023",
+			"type": "On-line",
+			"duration": "Tinatayang tagal: 22 minuto.",
+			"positiveReviews": "98% positibong mga review (567).",
+			"summary": "Nais mo bang pagbutihin ang iyong mga kasanayan sa komunikasyon sa larangan ng negosyo? ",
+			"learn": [
+				"Pagbutihin ang mga kasanayan sa pagtatanghal at negosasyon",
+				"Matutong magpahayag nang malinaw at mabisa",
+				"Hindi tulad ng iba pang teoretikal na workshop, ang workshop na ito ay nagbibigay-daan sa iyo na maisagawa kaagad ang iyong natutunan.",
+				"Sa pamamagitan ng mga pagsasanay at dynamics ng grupo, magagawa mong sanayin ang iyong mga kasanayan sa komunikasyon at makatanggap ng agarang feedback mula sa mga eksperto sa paksa. ",
+				"At iba pa."
+			]
+		},
+		{
+			"date": "SEP 29, 2023",
+			"title": "Inclub Educational System: Pamumuno",
+			"type": "On-line",
+			"duration": "Tinatayang tagal: 22 minuto.",
+			"positiveReviews": "98% positibong mga review (567).",
+			"summary": "Nais mo bang pagbutihin ang iyong mga kasanayan sa komunikasyon sa larangan ng negosyo? ",
+			"learn": [
+				"Pagbutihin ang mga kasanayan sa pagtatanghal at negosasyon",
+				"Matutong magpahayag nang malinaw at mabisa",
+				"Hindi tulad ng iba pang teoretikal na workshop, ang workshop na ito ay nagbibigay-daan sa iyo na maisagawa kaagad ang iyong natutunan.",
+				"Sa pamamagitan ng mga pagsasanay at dynamics ng grupo, magagawa mong sanayin ang iyong mga kasanayan sa komunikasyon at makatanggap ng agarang feedback mula sa mga eksperto sa paksa. ",
+				"At iba pa."
+			]
+		},
+		{
+			"date": "SEP 15, 2023",
+			"title": "Inclub Educational System: Mga Kwento ng Tagumpay",
+			"type": "On-line",
+			"duration": "Tinatayang tagal: 22 minuto.",
+			"positiveReviews": "98% positibong mga review (567).",
+			"summary": "Nais mo bang pagbutihin ang iyong mga kasanayan sa komunikasyon sa larangan ng negosyo? ",
+			"learn": [
+				"Pagbutihin ang mga kasanayan sa pagtatanghal at negosasyon",
+				"Matutong magpahayag nang malinaw at mabisa",
+				"Hindi tulad ng iba pang teoretikal na workshop, ang workshop na ito ay nagbibigay-daan sa iyo na maisagawa kaagad ang iyong natutunan.",
+				"Sa pamamagitan ng mga pagsasanay at dynamics ng grupo, magagawa mong sanayin ang iyong mga kasanayan sa komunikasyon at makatanggap ng agarang feedback mula sa mga eksperto sa paksa. ",
+				"At iba pa."
+			]
+		},
+		{
+			"date": "SEP 12, 2023",
+			"title": "Inclub Educational System: Book Club",
+			"type": "On-line",
+			"duration": "Tinatayang tagal: 22 minuto.",
+			"positiveReviews": "98% positibong mga review (567).",
+			"summary": "Nais mo bang pagbutihin ang iyong mga kasanayan sa komunikasyon sa larangan ng negosyo? ",
+			"learn": [
+				"Pagbutihin ang mga kasanayan sa pagtatanghal at negosasyon",
+				"Matutong magpahayag nang malinaw at mabisa",
+				"Hindi tulad ng iba pang teoretikal na workshop, ang workshop na ito ay nagbibigay-daan sa iyo na maisagawa kaagad ang iyong natutunan.",
+				"Sa pamamagitan ng mga pagsasanay at dynamics ng grupo, magagawa mong sanayin ang iyong mga kasanayan sa komunikasyon at makatanggap ng agarang feedback mula sa mga eksperto sa paksa. ",
+				"At iba pa."
+			]
+		},
+		{
+			"date": "SEP 10, 2023",
+			"title": "Inclub Educational System: Pamumuno",
+			"type": "On-line",
+			"duration": "Tinatayang tagal: 22 minuto.",
+			"positiveReviews": "98% positibong mga review (567).",
+			"summary": "Nais mo bang pagbutihin ang iyong mga kasanayan sa komunikasyon sa larangan ng negosyo? ",
+			"learn": [
+				"Pagbutihin ang mga kasanayan sa pagtatanghal at negosasyon",
+				"Matutong magpahayag nang malinaw at mabisa",
+				"Hindi tulad ng iba pang teoretikal na workshop, ang workshop na ito ay nagbibigay-daan sa iyo na maisagawa kaagad ang iyong natutunan.",
+				"Sa pamamagitan ng mga pagsasanay at dynamics ng grupo, magagawa mong sanayin ang iyong mga kasanayan sa komunikasyon at makatanggap ng agarang feedback mula sa mga eksperto sa paksa. ",
+				"At iba pa."
+			]
+		},
+		{
+			"date": "SEP 8, 2023",
+			"title": "Inclub Educational System: Mga Kwento ng Tagumpay",
+			"type": "On-line",
+			"duration": "Tinatayang tagal: 22 minuto.",
+			"positiveReviews": "98% positibong mga review (567).",
+			"summary": "Nais mo bang pagbutihin ang iyong mga kasanayan sa komunikasyon sa larangan ng negosyo? ",
+			"learn": [
+				"Pagbutihin ang mga kasanayan sa pagtatanghal at negosasyon",
+				"Matutong magpahayag nang malinaw at mabisa",
+				"Hindi tulad ng iba pang teoretikal na workshop, ang workshop na ito ay nagbibigay-daan sa iyo na maisagawa kaagad ang iyong natutunan.",
+				"Sa pamamagitan ng mga pagsasanay at dynamics ng grupo, magagawa mong sanayin ang iyong mga kasanayan sa komunikasyon at makatanggap ng agarang feedback mula sa mga eksperto sa paksa. ",
+				"At iba pa."
+			]
+		}
+	]
+}

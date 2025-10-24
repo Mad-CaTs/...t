@@ -1,0 +1,24 @@
+.not-found {
+	width: 100%;
+	height: 60vh; /* mejor que 100% para viewport */
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	padding: 1rem;
+	box-sizing: border-box;
+	font-family: sans-serif;
+	h1 {
+		font-size: 3rem;
+		color: #ff9800;
+		margin-bottom: 1rem;
+		text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+	}
+	p {
+		font-size: 1.25rem;
+		color: #666;
+		max-width: 500px;
+		line-height: 1.6;
+	}
+}

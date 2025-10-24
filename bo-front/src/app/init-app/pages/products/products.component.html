@@ -1,0 +1,41 @@
+<div class="d-flex flex-column gap-4 container-init-app">
+	<app-navigation [data]="navigation" [selected]="selected" (changeSelected)="navigateToSelected($event)" />
+	<!--Inmobiliario-->
+	<div class="d-flex flex-wrap gap-3 w-100" *ngIf="selected === 1">
+		<app-product-card
+			href="ribera"
+			cardBg="https://staticv1.inclub.site/images/ribera_card.png"
+			[title]="lang.items[0].title"
+			[description]="lang.items[0].description"
+		></app-product-card>
+		<app-product-card
+			href="la-joya"
+			cardBg="https://staticv1.inclub.site/images/la_joya_card.png"
+			[title]="lang.items[1].title"
+			[description]="lang.items[1].description"
+		></app-product-card>
+	</div>
+	<!--Tech-->
+	<div class="d-flex flex-wrap gap-3 w-100" *ngIf="selected === 2">
+		<app-product-card
+			href="keola"
+			cardBg="https://staticv1.inclub.site/images/kehola-card.png"
+			[title]="lang.items[2].title"
+			[description]="lang.items[2].description"
+		></app-product-card>
+	</div>
+	<!--Next projects-->
+	<div class="d-flex flex-column gap-3 w-100 align-items-center" *ngIf="selected === 3">
+		<img
+			src="https://staticv1.inclub.site/images/next_projects_bg.png"
+			class="w-100"
+			alt="Next projects image"
+			style="max-width: 573px"
+		/>
+		<h3 class="m-0 fs-5 fw-medium text-black w-100 text-center">{{ lang.nextProjects.title }}</h3>
+		<p class="m-0 cl-muted fs-6 fw-normal w-100 text-center">
+			{{ lang.nextProjects.description }}
+		</p>
+		<button class="btn btn-secondary">{{ lang.nextProjects.buttonText }}</button>
+	</div>
+</div>

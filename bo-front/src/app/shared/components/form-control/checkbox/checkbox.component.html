@@ -1,0 +1,12 @@
+<div>
+  <p-checkbox class="me-2"
+              [binary]="true"
+              [formControl]="form.get(controlName)"
+              (onChange)="changeCheckbox($event)"
+              [inputId]="controlName"
+              ></p-checkbox>
+  <label class="form-check-label cl-muted fs-6 fw-medium cursor-pointer user-select-none"
+         [for]="controlName">
+    {{ label }}
+  </label>
+</div>

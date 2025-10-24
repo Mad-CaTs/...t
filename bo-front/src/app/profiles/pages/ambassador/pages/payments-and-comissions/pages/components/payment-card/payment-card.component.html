@@ -1,0 +1,26 @@
+<div class="card p-4 border shadow-sm rounded w-100">
+  <span class="text-muted">Monto</span>
+
+  <div class="d-flex align-items-center mb-2">
+    <mat-icon fontIcon="monetization_on"
+              class="me-2"
+              style="font-size: 1.5em; color: #19809E;"></mat-icon>
+
+    <span class="fw-bold fs-5 text-black">USD {{ payment.amountTotal | number:'1.2-2' }}</span>
+  </div>
+
+  <div class="d-flex align-items-center text-muted">
+    <small>Actualización: {{ payment.modificationDate	 | date:'dd/MM/yyyy' }}</small>
+  </div>
+
+  <div class="text-muted">
+    <span>Periodo: Del {{ payment.initialDate | date:'dd/MM/yyyy' }} al {{ payment.endDate | date:'dd/MM/yyyy' }}</span>
+  </div>
+
+  <hr class="opacity-10 my-3" *ngIf="showDetailButton">
+
+  <div class="d-flex justify-content-end" *ngIf="showDetailButton">
+    <a [routerLink]="['/profile/ambassador/payments', payment.id]"
+       class="text-primary fw-semibold text-decoration-none">Ver detalle</a>
+  </div>
+</div>

@@ -1,0 +1,92 @@
+<!-- <div class="border-0 d-flex w-100"
+ [ngClass]="{'flex-row': horizontal, 'flex-column': !horizontal}"
+ (click)="onClick()">
+
+<div class="overflow-hidden"
+   [ngClass]="{'me-3': horizontal}"
+   [style.flex]="horizontal ? '0 0 40%' : '1 1 auto'"
+   style="border-radius: 16px; aspect-ratio: 1 / 1;">
+<img [src]="image"
+     alt="Imagen del evento"
+     class="w-100 h-100"
+     style="object-fit: cover;">
+</div>
+
+<div [ngClass]="{'ms-3': horizontal, 'card-body px-0': !horizontal}"
+   style="flex: 1;">
+
+<p *ngIf="date"
+   [ngClass]="{'text-primary': horizontal, 'text-orange': !horizontal}"
+   style="font-size: 13px;">
+  <strong>{{ date }}</strong>
+</p>
+
+<p *ngIf="title"
+   class="text-dark fw-medium mb-3"
+   style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+  <strong>{{ title }}</strong>
+</p>
+
+<p *ngIf="eventType"
+   class="event-type mb-1"
+   style="font-size: 13px;">
+  {{ eventType }}
+</p>
+
+<p *ngIf="description"
+   style="overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;">
+  {{ description }}
+</p>
+
+<div *ngIf="!horizontal  && !noMoreButton" class="btn-detail text-center mt-3">
+  <button type="button" mat-button color="accent" class="border-0">Ver más</button>
+</div>
+</div>
+</div>
+-->
+
+<div class="border-0 d-flex w-100"
+  [ngClass]="{'flex-row': horizontal, 'flex-column': !horizontal}"
+  (click)="onClick()">
+
+  <div class="overflow-hidden"
+    [ngClass]="{'me-3': horizontal, 'mb-3': !horizontal}" 
+    [style.flex]="horizontal ? '0 0 40%' : '1 1 auto'"
+    style="border-radius: 16px; aspect-ratio: 1 / 1;">
+    <img [src]="image"
+      alt="Imagen del evento"
+      class="w-100 h-100"
+      style="object-fit: cover;">
+  </div>
+
+  <div [ngClass]="{'ms-3': horizontal, 'card-body px-0': !horizontal}"
+    style="flex: 1;">
+
+    <p *ngIf="date"
+      [ngClass]="{'text-primary': horizontal, 'text-orange': !horizontal}"
+      style="font-size: 13px;">
+      <strong>{{ date }}</strong>
+    </p>
+
+    <p *ngIf="title"
+      class="text-dark fw-medium mb-3"
+      style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+      <strong>{{ title }}</strong>
+    </p>
+
+    <p *ngIf="eventType"
+      class="event-type mb-1"
+      style="font-size: 13px;">
+      {{ eventType }}
+    </p>
+
+    <p *ngIf="description"
+      style="overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;">
+      {{ description }}
+    </p>
+
+    <div *ngIf="!horizontal  && !noMoreButton" class="btn-detail text-center mt-3">
+      <button type="button" mat-button color="accent" class="border-0">Ver más</button>
+    </div>
+  </div>
+</div>

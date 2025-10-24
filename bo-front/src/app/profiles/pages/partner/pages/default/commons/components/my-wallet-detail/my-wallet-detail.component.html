@@ -1,0 +1,96 @@
+<div class="container shadow">
+  <div class="container">
+    <div class="border-0  rounded-4 p-4">
+      <div class="wallet-card text-white rounded-4 p-4 mt-4 position-relative">
+  
+  <!-- 		<div class="bg-primary text-white rounded-4 p-4 mt-4 position-relative">
+   -->			<div class="d-flex justify-content-between align-items-start">
+          <div>
+            <p class="mb-1 fw-light">Saldo total</p>
+            <h2 class="fw-bold">
+              <ng-container *ngIf="showBalance; else hiddenBalance">
+                $ {{ wallet?.availableBalance }} <span class="fs-5 fw-normal">USD</span>
+              </ng-container>
+              <ng-template #hiddenBalance>
+                •••• <span class="fs-5 fw-normal">USD</span>
+              </ng-template>
+            </h2>
+  
+            <p class="mb-0">Usuario:</p>
+            <p class="mb-0">{{userInfo?.name}}</p>
+          </div>
+          <div class="d-flex flex-column align-items-end">
+            <img
+              src="assets/icons/Inclub.svg"
+              alt="Adjunto"
+              class="mb-3"
+              style="width: 1.5rem; height: 1.5rem"
+            />
+            <img
+              src="assets/icons/Eye-on.svg"
+              alt="Ver"
+              style="width: 1.5rem; height: 1.5rem"
+              class="cursor-pointer"
+              (click)="toggleBalanceVisibility()"
+            />
+          </div>
+        </div>
+      </div>
+  
+      <!-- Transferencias -->
+      <div class="mt-4">
+        <h5 class="fw-semibold">Transferencias</h5>
+  
+      <!-- 	<ul class="nav nav-pills my-3" role="tablist">
+          <li class="nav-item" role="presentation"> -->
+            <button
+            class="nav-link active my-3 py-2 px-4 btn bg-primary text-white rounded-pill"
+            id="wallet-tab"
+            data-bs-toggle="pill"
+            data-bs-target="#wallet"
+            type="button"
+            role="tab"
+          >
+            Entre wallet
+          </button>
+          
+  
+            <ng-container>
+          <div class="mb-3">
+            <app-input
+              [form]="form"
+              controlName="user"
+              placeholder="Ingrese el destino"
+              label="Usuario:"
+              class="w-100"
+				      (focusout)="getUsername()"
+            ></app-input>
+          </div>
+  
+          <div class="mb-3 mt-3">
+            <app-input
+              type="dollar"
+              [form]="form"
+              controlName="amount"
+              placeholder="Ingrese el monto: $ 10.00"
+              label="Monto $:"
+              class="w-100"
+            ></app-input>
+          </div>
+        </ng-container>
+        <button
+          class="btn btn-secondary w-100 mb-3"
+          [disabled]="!isValidBtn"
+          (click)="goToWallet()"
+        >
+          <ng-container *ngIf="!isTransferring; else loading"> Ir a transferir </ng-container>
+          <ng-template #loading> <i class="pi pi-spin pi-spinner me-2"></i> Procesando... </ng-template>
+        </button>
+  
+        <!-- 			<button class="btn btn-secondary w-100 mb-3"  [disabled]="form.invalid" (click)="goToWallet()">Ir a transferir</button>
+   -->
+      </div>
+    </div>
+  </div>
+  
+</div>

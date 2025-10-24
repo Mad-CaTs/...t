@@ -1,0 +1,68 @@
+<p>exchange-history works!</p>
+
+<div class="p-4 card px-0 px-md-4 card-border-none">
+	<app-breadcrumb [breadcrumbs]="breadcrumbItems"></app-breadcrumb>
+
+	<div *ngIf="currentView === 'exchange-history'">
+		<app-release-points-card></app-release-points-card>
+
+		<!-- Filtros -->
+		<div class="filters d-flex gap-2 mt-3">
+			<div class="col-md-4">
+				<label for="checkInOut">Fecha de alojamiento</label>
+				<input type="date" placeholder="Check-in — Check-out" class="form-control" />
+			</div>
+
+			<div class="col-md-4">
+				<label for="tipoCanje">Tipo de canje</label>
+				<select class="form-control">
+					<option value="">Tipo de canje</option>
+					<option value="puntos">Canje de puntos</option>
+					<option value="cupon">Canje cupón</option>
+				</select>
+			</div>
+
+			<div class="col-md-4">
+				<label for="tipoServicio">Tipo de servicios</label>
+				<select class="form-control">
+					<option value="">Tipo de servicios</option>
+					<option value="alojamiento">Alojamiento</option>
+				</select>
+			</div>
+		</div>
+
+		<!-- Tabla de historial de canjes -->
+		<div class="table-responsive mt-3">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Fecha de uso</th>
+						<th>Tipo de canje</th>
+						<th>Cód. canje</th>
+						<th>Servicio</th>
+						<th>Descripción</th>
+						<th>Check-in</th>
+						<th>Check-out</th>
+						<th>Cant. puntos</th>
+						<th>Pts. usados</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let item of exchangeHistory">
+						<td>{{ item.fechaUso }}</td>
+						<td>{{ item.tipoCanje }}</td>
+						<td>{{ item.codigoCanje }}</td>
+						<td>{{ item.servicio }}</td>
+						<td>{{ item.descripcion }}</td>
+						<td>{{ item.checkIn }}</td>
+						<td>{{ item.checkOut }}</td>
+						<td>{{ item.cantidadPuntos }}</td>
+						<td>{{ item.puntosUsados }}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+<!-- (click)="goHistorico()"
+ -->

@@ -1,0 +1,27 @@
+.range {
+	width: 100%;
+}
+
+@media (min-width: 768px) {
+	.range {
+		width: calc((100% - 1rem) / 2);
+	}
+}
+
+@media (min-width: 1000px) {
+	.range {
+		width: calc((100% - 2rem) / 3);
+	}
+}
+
+@media (min-width: 1300px) {
+	.range {
+		width: calc((100% - 3rem) / 4);
+	}
+}
+
+.disabled-card {
+  pointer-events: none;  /* Deshabilita la interactividad con cualquier elemento dentro del card */
+  opacity: 0.5;          /* Baja la opacidad para hacer que el card se vea deshabilitado */
+  filter: grayscale(100%); /* Opcional: Puedes aplicar un filtro en escala de grises para hacerlo aún más obvio */
+}

@@ -1,0 +1,10 @@
+<div>
+    <i class="pi {{ state?.icon }}"></i>
+    <h1 class="title">{{ state?.title }}</h1>
+    <p class="message">{{ state?.message }}</p>
+    @if (state.link) {
+        <a [routerLink]="state?.link?.url">
+            {{ state?.link?.label }}
+        </a>
+    }
+</div>

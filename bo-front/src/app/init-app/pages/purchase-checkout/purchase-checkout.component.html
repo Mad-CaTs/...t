@@ -1,0 +1,141 @@
+<!-- ARRIBA: header (logo + usuario) -->
+<app-checkout-header class="section section--header" (logout)="onLogout()"></app-checkout-header>
+
+<!-- ARRIBA: temporizador / strip del evento -->
+<app-checkout-countdown
+	class="section section--timer"
+	[ttlSeconds]="900"
+	[imageUrl]="headerImage"
+	[title]="headerTitle"
+	[eventDateLabel]="headerDateLabel"
+	[eventTimeLabel]="headerTimeLabel"
+	(expired)="onTimerExpired()"
+></app-checkout-countdown>
+
+<!-- Grilla principal: izquierda (pasos) + derecha (resumen) -->
+<section class="main-grid">
+	<div class="container">
+		<div class="col-left">
+			<!-- PASO 1 -->
+			<app-checkout-step-attendee
+				*ngIf="step === 1"
+				[payload]="data"
+				(validChange)="onAttendeeValid($event)"
+				(valueChange)="onAttendeeValue($event)"
+			></app-checkout-step-attendee>
+
+			<!-- PASO 2 (omitido temporalmente) -->
+			<!-- <app-checkout-step-purchase ...> -->
+
+			<!-- PASO 3 (mostrado como Paso 2 por el momento) -->
+			<app-checkout-step-payment
+				*ngIf="step === 3"
+				[stepLabel]="'Paso 2 de 2'"
+				[methods]="paymentMethods"
+				[selectedId]="selectedPayment"
+				(valueChange)="onPaymentMethodChange($event)"
+			></app-checkout-step-payment>
+		</div>
+
+		<div class="col-right">
+			<app-checkout-order-summary
+				[payload]="data"
+				[purchaseOption]="purchaseOption"
+				[continueDisabled]="(step === 1 && !attendeeValid) || (step === 3 && !selectedPayment)"
+				[canGoBack]="step > 1"
+				[requireTerms]="step === 3"
+				[showNewsOptIn]="step === 3"
+				[eventDateLink]="summaryDateLink"
+				[venueLabel]="summaryVenueLabel"
+				[showFeeNotice]="step === 3"
+				(back)="onSummaryBack()"
+				(confirm)="onSummaryConfirm()"
+				(cancel)="cancelar()"
+			></app-checkout-order-summary>
+		</div>
+	</div>
+</section>
+
+<!-- bloque de depuración actual (no borrar)
+
+  <div class="checkout">
+    <h2>Checkout</h2>
+
+    <ng-container *ngIf="data; else noData">
+      <p>Resumen de la compra (payload guardado):</p>
+      <pre class="payload">{{ data | json }}</pre>
+
+      <div class="actions">
+        <button class="btn primary" (click)="confirmarMock()">Confirmar (mock)</button>
+        <button class="btn" (click)="cancelar()">Cancelar</button>
+      </div>
+    </ng-container>
+
+    <ng-template #noData>
+      <p>No hay compra pendiente.</p>
+      <button class="btn" (click)="cancelar()">Volver</button>
+    </ng-template>
+  </div>
+  -->
+
+<!-- Modales de Pago -->
+<app-billetera-modal
+	[isOpen]="showBilleteraModal"
+	(closeModal)="showBilleteraModal = false"
+	(paymentSuccess)="onBilleteraSuccess()"
+></app-billetera-modal>
+
+<app-transferencia-modal
+	[isOpen]="showTransferenciaModal"
+	[bankMethod]="currentBankMethod"
+	[totalSoles]="data?.totalSoles || 0"
+	[totalUSD]="data?.totalUSD || 0"
+	(closeModal)="showTransferenciaModal = false"
+	(paymentSuccess)="onTransferenciaSuccess($event)"
+></app-transferencia-modal>
+
+<app-wallet-modal
+	[isOpen]="showWalletModal"
+	[availableBalance]="walletAvailable"
+	[accountingBalance]="walletAccounting"
+	[loading]="walletLoading"
+	[amountUSD]="data?.totalUSD || 0"
+	(closeModal)="showWalletModal = false"
+	(paymentSuccess)="onWalletSuccess($event)"
+></app-wallet-modal>
+
+<app-tarjeta-modal
+	[isOpen]="showTarjetaModal"
+	(closeModal)="showTarjetaModal = false"
+	(paymentSuccess)="onTarjetaSuccess()"
+></app-tarjeta-modal>
+
+<app-paypal-modal
+	[isOpen]="showPaypalModal"
+	(closeModal)="showPaypalModal = false"
+	(paymentSuccess)="onPaypalSuccess()"
+></app-paypal-modal>
+
+<app-success-modal
+	[isOpen]="showSuccessModal"
+	[title]="successModalConfig.title"
+	[message]="successModalConfig.message"
+	[icon]="successModalConfig.icon"
+	[iconColor]="successModalConfig.iconColor"
+	(closeModal)="closeSuccessModal()"
+></app-success-modal>
+
+<app-logo-spinner
+	[show]="showGlobalSpinner"
+	[fullscreen]="true"
+	[delay]="150"
+	[minVisible]="500"
+></app-logo-spinner>
+
+<app-modal-notify
+	*ngIf="showNotify"
+	[title]="notifyTitle"
+	[message]="notifyMessage"
+	[iconType]="notifyIcon"
+	(closed)="onCloseNotify()"
+/>

@@ -1,0 +1,76 @@
+ <div class="d-flex flex-column gap-3 mt-3">
+	<div class="w-100 line"></div>
+	<div class="d-flex flex-column text-center">
+		<app-pagination-ng-prime [rows]="rows" [totalRecords]="totalRecords" [rowsPerPageOptions]="[10, 20, 30, 40, 50]"
+			[align]="align" (pageChange)="onPageChange($event)" (refresh)="onRefresh($event)">
+		</app-pagination-ng-prime>
+	</div>
+
+	<app-table class="w-100" [headers]="headers" [hasCheckbox]="false" [firstEmpty]="true" [customRows]="true"
+		[minWidth]="1200" [minWidthHeader]="minWidthHeaders" [hasData]="table.data.length > 0" [loading]="isLoading">
+
+		<tr class="w-100 d-flex flex-row align-items-center" *ngFor="let d of table.data; let i = index">
+			<td class="fs-6 py-2 px-2 w-100 text-center">
+				{{ i + 1 }}
+			</td>
+
+			<td class="fs-6 py-2 px-2 w-100 text-center">
+				{{ d.fullName }}
+			</td>
+
+			<td class="fs-6 py-2 px-2 w-100 text-center">
+				<div class="w-auto text-success rounded py-1 px-3"
+					[ngStyle]="{ 'background-color': getTransparentColor(d.color) }">
+					<span [ngStyle]="{ color: getSolidColor(d.color) }">{{ d.stateName }}</span>
+				</div>
+			</td>
+
+			<td class="fs-6 py-2 px-2 w-100 text-center">
+				{{ d.sponsorName }}
+			</td>
+
+			<td class="fs-6 py-2 px-2 w-100 text-center">
+				<app-select placeholder="Selecciona" [form]="form" [appendToBody]="true" [width]="'150px'"
+					[options]="getSubscriptionsForUser(d.idUser)" controlName="idSubscription"
+					(onChangeSelection)="onSelectionChange($event, d.idUser)">
+				</app-select>
+			</td>
+
+			<td class="fs-6 py-2 px-2 w-100 text-center">
+				{{ d.nextExpiration ? (d.nextExpiration | date:'dd/MM/yyyy'): '-' }}
+			</td>
+
+			<td class="fs-6 py-2 px-2 w-100 text-center">
+				<button type="button"
+					class="btn d-flex flex-row gap-2 align-items-center justify-content-center mx-auto px-4 py-1 rounded cl-link no-hover"
+					[ngClass]="{ 'btn-gray': d.flagColor != true }" (click)="onClickOpenCoAffiliateModal(d)">
+					<img src="assets/images/Eye-on.svg" alt="Ver" />
+					Ver
+				</button>
+			</td>
+
+			<td class="fs-6 py-2 px-2 w-100 text-center">
+				<button type="button"
+					class="btn d-flex flex-row gap-2 align-items-center justify-content-center mx-auto px-4 py-1 rounded cl-link no-hover"
+					[ngClass]="{ 'btn-gray': d.flagColor != true }" (click)="onClickOpenScheduleModal(d)">
+					<img src="assets/images/receipt-item.svg" alt="Ver" [ngClass]="{ 'grayscale-img': isDisabled }" />
+					Ver
+				</button>
+			</td>
+
+
+			<td class="w-100 text-center">
+				<button type="button" class="btn d-flex flex-row gap-2 align-items-center rounded cl-link no-hover"
+					[ngClass]="{ 'btn-gray': d.flagColor != true }" (click)="onNotify(d)">
+					<img src="assets/images/send-2.svg" alt="Notificar" />
+					Notificar
+				</button>
+			</td>
+
+			<td class="w-100 text-center">
+				<img src="assets/images/chat-socio-16px.svg" alt="Chat Socio" />
+			</td>
+		</tr>
+	</app-table>
+</div> 
+

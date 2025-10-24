@@ -1,0 +1,40 @@
+<div class="container">
+  <h5 class="fw-bold">Ver detalle</h5>
+  <p class="text-muted mb-3">Visualizaras información detallada de la suscripción.</p>
+  <div class="row py-2"
+       style="background-color: #f9fcff;">
+    <div class="col-6 fw-semibold">Fecha de registro</div>
+    <div class="col-6 text-end">{{ formatDate(data.createDate) }}</div>
+  </div>
+  <div class="row py-2">
+    <div class="col-6 fw-semibold">Nombre y Apellido</div>
+    <div class="col-6 text-end">{{data.fullName}}</div>
+  </div>
+
+  <div class="row py-2"
+       style="background-color: #f9fcff;">
+    <div class="col-6 fw-semibold">Estado</div>
+    <div class="col-6 text-end">{{data.stateName}}</div>
+  </div>
+  <div class="row py-2">
+    <div class="col-6 fw-semibold">Nivel patrocinio</div>
+    <div class="col-6 text-end">{{data.sponsorLevel}}</div>
+  </div>
+  <div class="row py-2"
+       style="background-color: #f9fcff;">
+    <div class="col-6 fw-semibold">Suscripción</div>
+    <div class="col-6 text-end">{{firstCuota.nameSuscription }}</div>
+  </div>
+  <div class="row py-2">
+    <div class="col-6 fw-semibold">Monto cuota</div>
+    <div class="col-6 text-end">{{ firstCuota.quoteUsd}} USD</div>
+  </div>
+  <div class="row py-2">
+    <div class="col-6 fw-semibold">Fecha de vencimiento</div>
+    <div class="col-6 text-end">{{ nextExpirationDate ? (nextExpirationDate | date:'dd/MM/yyyy') : '—' }}</div>
+  </div>
+  <div class="row py-2">
+    <div class="col-6 fw-semibold">Observación</div>
+    <div class="col-6 text-end">{{ observation}}</div>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+<div>
+    <p-table [columns]="columns" [value]="data" [rows]="10" [paginator]="true" [scrollable]="true" scrollHeight="470px"
+        styleClass="my-custom-table" [showCurrentPageReport]="true"
+        currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros">
+
+        <!-- Header Template -->
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                @for (col of columns; track col) {
+                <th [ngStyle]="{'width': col.width + '%'}">
+                    {{ col.header }}
+                </th>
+                }
+            </tr>
+        </ng-template>
+
+        <!-- Body Template -->
+        <ng-template *ngIf="bodyTemplate" pTemplate="body" let-rowData let-columns="columns">
+            <ng-container
+                *ngTemplateOutlet="bodyTemplate; context: { $implicit: rowData, columns: columns }"></ng-container>
+        </ng-template>
+        <!-- Paginator Templates -->
+        <ng-template pTemplate="paginatorleft">
+            <p-button type="button" icon="pi pi-plus" styleClass="p-button-text" />
+        </ng-template>
+
+        <ng-template pTemplate="paginatorright">
+            <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text" />
+        </ng-template>
+    </p-table>
+</div>

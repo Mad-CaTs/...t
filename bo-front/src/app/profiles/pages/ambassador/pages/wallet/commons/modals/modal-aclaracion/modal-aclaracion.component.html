@@ -1,0 +1,43 @@
+<div class="d-flex flex-column align-items-center w-100 ">
+    <div class="icon-container mb-3 w-100">
+        <div class="content-img">
+            <img class="info-circle" width="24" height="24" src="assets/icons/info_circle_24px.svg">
+        </div>
+    </div>
+    <h4 class="text-black fs-5 fw-bold text-start mb-3 w-100">Aclaración</h4>
+    <p class="text">
+        Los retiros hacia cuentas bancarias realizados durante el mes <br>
+        serán procesados y pagados dentro de los primeros 5 días del <br>
+        mes siguiente. Una vez solicitada la operación, el monto será <br>
+        descontado del saldo disponible en su wallet.
+    </p>
+    <p class="text">
+        <span class="text-black">Importante:</span> Verifique que el número de cuenta de destino sea <br>
+        correcto antes de confirmar la solicitud. Los retiros se <br>
+        realizarán únicamente a cuentas del
+        <span class="text-black">Banco de Crédito del Perú <br>(BCP).</span>
+    </p>
+    <p class="text">
+        En caso de demoras o inconvenientes, por favor comuníquese <br>
+        con el equipo de soporte de Inclub.
+    </p>
+
+</div>
+<div class="linea-separation"></div>
+
+<div class="row">
+
+    <div class="col-12 col-lg-6 mb-3">
+        <button class="btn-volver" (click)="closeModal()">
+            Volver
+        </button>
+    </div>
+    <div class="col-12 col-lg-6">
+        <button class="w-100" [ngClass]="{
+					btn: true,
+					'btn-secondary': true
+				}" type="button" [disabled]="(!isValidBtn || disabledUser)" (click)="confirmar()">
+            Siguiente
+        </button>
+    </div>
+</div>

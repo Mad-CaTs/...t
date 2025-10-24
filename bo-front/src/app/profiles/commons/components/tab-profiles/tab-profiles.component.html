@@ -1,0 +1,27 @@
+<div
+	class="d-flex align-items-center w-100 position-relative"
+	[ngClass]="{ 'bg-gray-100 rounded': styleType !== 'outlined', 'gap-0': styleType === 'outlined' }"
+>
+	@for (tab of tabs; track tab.label; let i = $index) {
+	<div
+		class="w-100 py-2 text-center cursor-pointer position-relative"
+		(click)="tab.tabAction()"
+		[class.border]="styleType === 'outlined'"
+		[class.rounded-pill]="styleType === 'outlined'"
+		[class.rounded]="styleType !== 'outlined'"
+		[ngStyle]="{
+			'margin-left': styleType === 'outlined' && i > 0 ? '-20px' : '0',
+			'z-index': styleType === 'outlined' ? (tab.isActive ? 2 : 1) : 'auto'
+		}"
+		[ngClass]="{
+			'border-secondary text-secondary fw-semibold shadow-sm bg-white':
+				styleType === 'outlined' && tab.isActive,
+			'clip-left': styleType === 'outlined' && !tab.isActive && i > 0,
+			'bg-primary text-white fw-600': styleType !== 'outlined' && tab.isActive,
+			'text-primary': styleType !== 'outlined' && !tab.isActive
+		}"
+	>
+		{{ tab.label }}
+	</div>
+	}
+</div>

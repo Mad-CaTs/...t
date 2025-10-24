@@ -1,0 +1,19 @@
+<div class="d-flex flex-column gap-2">
+  <app-navigation [data]="navigation"
+                  [selected]="currentTab"
+                  (changeSelected)="onTabChange($event)">
+  </app-navigation>
+  <div class="tab-content mt-0">
+    <div [ngClass]="{'d-block': currentTab === 1, 'd-none': currentTab !== 1}">
+      <app-promotional-guest-registration
+                                          [isPromotionalGuest]="isPromotionalGuest"></app-promotional-guest-registration>
+    </div>
+    <div [ngClass]="{'d-block': currentTab === 2, 'd-none': currentTab !== 2}">
+      <app-table-registered-list [dataBody]="tableData"
+                                 [totalRecords]="totalRecords"
+                                 (refresh)="onRefresh($event)"
+                                 (pageChange)="onPageChange($event)"
+                                 [isLoading]="isLoading"> </app-table-registered-list>
+    </div>
+  </div>
+</div>

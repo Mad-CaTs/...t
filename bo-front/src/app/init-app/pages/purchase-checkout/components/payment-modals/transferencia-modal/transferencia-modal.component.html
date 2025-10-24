@@ -1,0 +1,295 @@
+<!-- Modal de Transferencia Bancaria -->
+<div class="modal-overlay" *ngIf="isOpen">
+	<div class="modal-content bcp-modal" role="dialog" aria-modal="true" (click)="$event.stopPropagation()">
+		<!-- Header -->
+		<div class="bcp-modal-header header-stack with-logo">
+			<button class="close-button header-close" (click)="onClose()">×</button>
+			<div class="header-main">
+				<img src="assets/images/Inclub.svg" alt="Inclub" class="brand-logo" />
+				<div class="header-title-block left-under">
+					<span class="order-label-line1">Pago en transferencia</span>
+					<span class="order-label-line2"
+						>con
+						{{
+							bankMethod === 'bcp'
+								? 'BCP'
+								: bankMethod === 'interbank'
+								? 'Interbank'
+								: 'Otros Medios'
+						}}</span
+					>
+				</div>
+			</div>
+		</div>
+
+		<!-- Contenido en dos columnas -->
+		<div class="bcp-content-grid">
+			<!-- IZQUIERDA -->
+			<div class="bcp-info-column">
+				<!-- Cuentas -->
+				<div class="bcp-account-details card" *ngIf="getCurrentBankConfig() as cfg">
+					<h3>{{ cfg.companyName }}</h3>
+					<div class="account-info" *ngIf="cfg.accounts?.length">
+						<div class="account-item" *ngFor="let acc of cfg.accounts">
+							<span class="account-label">{{ acc.label }}</span>
+							<span class="account-number">{{ acc.number }}</span>
+						</div>
+					</div>
+				</div>
+
+				<!-- Layout específico por banco -->
+				<ng-container *ngIf="bankMethod === 'bcp'; else otherBanks">
+					<div class="bcp-payment-info card">
+						<h3>Información del pago</h3>
+						<div class="payment-info-grid">
+							<div class="info-item" *ngFor="let info of getPaymentInfo()">
+								<span class="info-label">{{ info.label }}</span>
+								<span class="info-value">{{ info.value }}</span>
+							</div>
+						</div>
+					</div>
+					<div class="bcp-payment-summary card">
+						<h3>Resumen del pago</h3>
+						<div class="summary-grid">
+							<div
+								class="summary-item"
+								*ngFor="let item of getPaymentSummary()"
+								[class.total]="item.isTotal"
+							>
+								<span class="summary-label">{{ item.label }}</span>
+								<span class="summary-value">{{ item.value }}</span>
+							</div>
+						</div>
+						<div class="info-badge">
+							<span class="i">i</span>
+							Los pagos a través de este medio tienen una comisión de acuerdo al tipo de
+							operación.
+						</div>
+					</div>
+				</ng-container>
+				<!-- Interbank y Otros Medios: tarjeta combinada -->
+				<ng-template #otherBanks>
+					<div class="bcp-payment-summary card combined-details">
+						<h3>Detalle del pago</h3>
+						<div class="summary-grid">
+							<div class="summary-item" *ngFor="let item of getPaymentInfo()">
+								<span class="summary-label">{{ item.label }}</span>
+								<span class="summary-value">{{ item.value }}</span>
+							</div>
+							<div
+								class="summary-item"
+								*ngFor="let item of getPaymentSummary()"
+								[class.total]="item.isTotal"
+							>
+								<!-- 🔧 Cambio: siempre mostramos item.value (ya viene con monto + comisión) -->
+								<span class="summary-label">{{ item.label }}</span>
+								<span class="summary-value">{{ item.value }}</span>
+							</div>
+						</div>
+						<div class="info-badge">
+							<span class="i">i</span>
+							Los pagos a través de este medio tienen una comisión de acuerdo al tipo de
+							operación.
+						</div>
+					</div>
+				</ng-template>
+			</div>
+
+			<!-- DERECHA (formulario resumido; tu lógica permanece) -->
+			<div class="bcp-form-column">
+				<h2 class="section-title">Registro del pago</h2>
+				<form class="payment-form" (ngSubmit)="addPaymentRecord()">
+					<div class="form-row">
+						<div class="form-field">
+							<label>Moneda</label>
+							<div
+								class="input-wrapper select-dropdown"
+								[ngClass]="{ error: (touched.currency || submitted) && getError('currency') }"
+							>
+								<select
+									class="form-select bare"
+									[(ngModel)]="bcpFormData.selectedCurrency"
+									name="currency"
+									(blur)="markTouched('currency')"
+								>
+									<option
+										*ngFor="let currency of bcpFormData.currencies"
+										[value]="currency"
+									>
+										{{ currency }}
+									</option>
+								</select>
+							</div>
+							<div
+								class="field-error"
+								*ngIf="(touched.currency || submitted) && getError('currency')"
+							>
+								{{ getError('currency') }}
+							</div>
+						</div>
+						<div class="form-field">
+							<label>Tipo de operación</label>
+							<div
+								class="input-wrapper select-dropdown"
+								[ngClass]="{
+									error: (touched.operationType || submitted) && getError('operationType')
+								}"
+							>
+								<select
+									class="form-select bare"
+									[(ngModel)]="bcpFormData.selectedOperationType"
+									name="operationType"
+									(blur)="markTouched('operationType')"
+									[class.is-invalid]="
+										(touched.operationType || submitted) && getError('operationType')
+									"
+								>
+									<option [value]="'Selecciona uno'">Selecciona uno</option>
+									<option
+										*ngFor="let type of getCurrentSubTypes()"
+										[value]="type.idPaymentSubType"
+									>
+										{{ type.description }}
+									</option>
+								</select>
+							</div>
+							<div
+								class="field-error"
+								*ngIf="(touched.operationType || submitted) && getError('operationType')"
+							>
+								{{ getError('operationType') }}
+							</div>
+						</div>
+					</div>
+
+					<div class="form-row">
+						<div class="form-field">
+							<label>Código de Operación</label>
+							<div
+								class="input-wrapper"
+								[ngClass]="{
+									error: (touched.operationCode || submitted) && getError('operationCode')
+								}"
+							>
+								<input
+									type="text"
+									placeholder="Ingrese el código"
+									class="form-control bare"
+									[(ngModel)]="bcpFormData.operationCode"
+									name="operationCode"
+									(blur)="markTouched('operationCode')"
+								/>
+							</div>
+							<div
+								class="field-error"
+								*ngIf="(touched.operationCode || submitted) && getError('operationCode')"
+							>
+								{{ getError('operationCode') }}
+							</div>
+						</div>
+						<div class="form-field amount-field">
+							<label>Monto</label>
+							<div class="currency-input-wrapper">
+								<span class="currency-prefix">{{ bcpFormData.selectedCurrency === 'Soles' ? 'S/' : '$' }}</span>
+								<input
+									type="text"
+									class="form-control"
+									[value]="getTotalToPay()"
+									name="amount"
+									[readonly]="true"
+									[attr.placeholder]="bcpFormData.selectedCurrency === 'Soles' ? 'Monto en soles' : 'Monto en dólares'"
+								/>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-field form-field-note">
+						<label>Nota</label>
+						<div
+							class="textarea-wrapper"
+							[ngClass]="{ error: (touched.note || submitted) && getError('note') }"
+						>
+							<textarea
+								placeholder="Escribe tu texto aquí"
+								class="form-control bare"
+								maxlength="250"
+								[(ngModel)]="bcpFormData.note"
+								name="note"
+								(blur)="markTouched('note')"
+							></textarea>
+						</div>
+						<span class="char-counter"
+							>{{ bcpFormData.note.length }}/{{ bcpFormData.noteMaxLength }}</span
+						>
+						<div class="field-error" *ngIf="(touched.note || submitted) && getError('note')">
+							{{ getError('note') }}
+						</div>
+					</div>
+
+					<div class="form-field">
+						<label class="file-label">Adjuntar evidencia bancaria:</label>
+						<div
+							class="evidence-dropzone"
+							(click)="fileEvidence.click()"
+							(drop)="onEvidenceDrop($event)"
+							(dragover)="allowEvidenceDrag($event)"
+							[class.filled]="evidenceFile"
+							[class.error]="(touched.evidence || submitted) && getError('evidence')"
+						>
+							<ng-container *ngIf="!evidenceFile; else evidenceTpl">
+								<span class="dz-instruction">Haz clic o arrastra la imagen (máx 1.2MB)</span>
+							</ng-container>
+							<ng-template #evidenceTpl>
+								<div class="evidence-item single">
+									<img
+										*ngIf="evidencePreview"
+										[src]="evidencePreview"
+										alt="Evidencia"
+										class="evidence-thumb"
+									/>
+									<button
+										type="button"
+										class="remove-evidence"
+										(click)="removeEvidence()"
+										title="Eliminar imagen"
+									>
+										✕
+									</button>
+								</div>
+							</ng-template>
+							<input
+								#fileEvidence
+								type="file"
+								accept="image/png,image/jpeg,image/jpg,image/webp"
+								hidden
+								(change)="onEvidenceSelected($event)"
+							/>
+						</div>
+						<div
+							class="field-error"
+							*ngIf="(touched.evidence || submitted) && getError('evidence')"
+						>
+							{{ getError('evidence') }}
+						</div>
+						<small class="evidence-help"
+							>Formatos: PNG, JPG, JPEG, WEBP. Tamaño máximo: 1.2 MB. Se requiere 1
+							imagen.</small
+						>
+					</div>
+
+					<div class="form-button-container">
+						<button type="button" class="btn cancel-button" (click)="onClose()">Cancelar</button>
+						<button
+							type="submit"
+							class="btn add-button"
+							[class.valid]="isFormValid()"
+							[disabled]="!isFormValid()"
+						>
+							Aceptar
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

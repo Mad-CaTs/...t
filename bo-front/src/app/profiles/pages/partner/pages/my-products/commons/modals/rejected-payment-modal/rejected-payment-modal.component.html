@@ -1,0 +1,40 @@
+<div>
+
+    @if (isLoading){
+    <div class="spinner-container fade-in">
+        <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="3" fill="var(--surface-ground)" animationDuration=".5s" />
+    </div>
+    } @else {
+    <div class="fade-in">
+        <div class="header">
+            <img src="assets/icons/Icon.svg" alt="Icono Info" width="48" height="48" />
+            <div>
+                @if (statusName === 'RECHAZO MIGRACION') {
+                    <h4 class="title">Migración Rechazada</h4>
+                    <p class="text">Lo sentimos, su migración fue rechazada.</p>
+                } @else {
+                    <h4 class="title">Pago Rechazado</h4>
+                    <p class="text">Lo sentimos, su pago fue rechazado.</p>
+                }
+            </div>
+        </div>
+        <p-divider />
+        <p-accordion>
+            <p-accordionTab header="Ver el motivo del rechazo">
+                <div class="content">
+                    <div>
+                        <span style="color: #EA4335;">Motivo del rechazo</span>
+                        <p style="color: #1E1E1E;">{{ rejected.rejectionReason.charAt(0).toUpperCase() +
+                            rejected.rejectionReason.slice(1).toLowerCase() }}</p>
+                    </div>
+                    <div>
+                        <span style="color: #5A7282;">Mensaje adicional o solución alternativa</span>
+                        <p style="color: #1E1E1E;">{{ rejected.rejectionDetail || 'No hay detalles adicionales disponibles.' }}</p>
+                    </div>
+                </div>
+            </p-accordionTab>
+        </p-accordion>
+    </div>
+    }
+
+</div>

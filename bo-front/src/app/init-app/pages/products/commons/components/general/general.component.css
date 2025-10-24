@@ -1,0 +1,25 @@
+.style-card{
+    box-shadow: 0px 4px 7px rgba(84, 81, 81, 0.25);
+    border-radius: 4px;
+}
+
+.style-card ::ng-deep .mat-mdc-card-content:last-child{
+    padding-top: 16px;
+}
+
+.style-card span{
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.style-card p{
+    font-size: 15px;
+    font-weight: 400;
+}
+
+@media ( max-width: 380px ){
+    .main-slider .sm-col-10{
+        flex: 0 0 auto;
+        width: 83.33333333%;
+    }
+}

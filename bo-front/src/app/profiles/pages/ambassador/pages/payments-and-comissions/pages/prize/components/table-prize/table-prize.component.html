@@ -1,0 +1,57 @@
+<div class="d-flex flex-column gap-3 mt-4">
+    <div class="d-flex flex-column text-center">
+        <h4 class="m-0 fs-6 fw-medium text-black">Histórico</h4>
+        <div class="w-100 line"></div>
+        <app-pagination-ng-prime [rows]="rows" [totalRecords]="totalRecords" [rowsPerPageOptions]="[10, 20, 30]"
+            [align]="align" (pageChange)="onPageChange($event)" (refresh)="onRefresh($event)">
+        </app-pagination-ng-prime>
+    </div>
+    <app-table class="w-100"
+        [headers]="['Usuario','Año','Monto a recibir','N° de operación','Estado']"
+        [minWidthHeader]="[184, 184, 184, 184, 184, 184, 184, 90]" [hasCheckbox]="false" [customRows]="true"
+        [minWidth]="1000" [loading]="isLoading" [hasData]="table.data.length > 0">
+        <tr class="w-100 d-flex flex-row align-items-center" *ngFor="let d of table.data; let i = index">
+            <th class="table__first__v1 d-flex flex-row justify-content-center align-items-center">
+                <label class="form-check-label fw-normal cl-muted m-0 mt-1">{{
+                    d.id
+                    }}</label>
+            </th>
+            <td class="fs-6 py-4 px-4 text-center w-100" style="min-width: 184px">
+                {{ userInfo.username }}
+            </td>
+            <td class="fs-6 py-4 px-4 w-100 text-center" style="min-width: 184px">
+                {{ d.year }}
+            </td>
+            <td class="fs-6 py-4 px-4 w-100 text-center" style="min-width: 180px">
+                {{ d.amount | currency : 'USD' : 'symbol' : '1.2-2' }}
+            </td>
+            <td class="fs-6 py-4 px-4 w-100 text-center" style="min-width: 184px">
+                {{ d.number }}
+            </td>
+            <td class="fs-6 py-4 px-4 w-100 text-center fw-medium" style="min-width: 184px">
+                {{ d.nroDocument }}
+            </td>
+            <td class="fs-6 py-4 px-4 w-100 text-center" style="min-width: 184px">
+                <button pButton icon="pi pi-eye" label="Ver más"
+                    class="btn btn-text text-primary d-flex align-items-center" (click)="viewFile(d.fileName)"></button>
+            </td>
+            <td class="fs-6 py-4 px-4 w-100 text-center" style="min-width: 184px">
+                {{ d.creationDate | date : 'dd/MM/yyyy' }}
+            </td>
+            <td class="w-100 d-flex flex-row justify-content-center align-items-center">
+                <span class="w-auto text-success rounded py-1 px-3" *ngIf="d.status == 2"
+                    style="background-color: #16a34a33;color:black">
+                    Aprobado
+                </span>
+                <span class="w-auto cl-muted rounded py-1 px-3" *ngIf="d.status == 3"
+                    style="background-color: #ecbf5e;color:black">
+                    Pendiente
+                </span>
+                <span class="w-auto cl-muted rounded py-1 px-3" *ngIf="d.status == 4"
+                    style="background-color: #de3d3d;color:black">
+                    Rechazado
+                </span>
+            </td>
+        </tr>
+    </app-table>
+</div>

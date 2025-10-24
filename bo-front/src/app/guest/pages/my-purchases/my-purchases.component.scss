@@ -1,0 +1,347 @@
+/* Centrar la tabla y sus contenidos */
+.purchases-table {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.purchases-table th,
+.purchases-table td {
+  text-align: center;
+  vertical-align: middle;
+  padding: 12px 8px;
+}
+
+.date{
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
+.total {
+    display: block;
+    width: 100%;
+    color: #27ae60; // Ejemplo de verde, cámbialo por el que prefieras
+    text-align: center;
+    white-space: nowrap;
+}
+
+.default {
+    text-align: center;
+}
+
+.document {
+    text-align: center;
+  color: #0052cc; /* Azul estándar, reemplaza si prefieres otro */
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  gap: 1rem;
+  
+  p {
+    color: #6c757d;
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .loading-container {
+    padding: 2rem 1rem;
+    
+    p {
+      font-size: 0.875rem;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .loading-container {
+    padding: 1.5rem 1rem;
+  }
+  
+  .total {
+    font-size: 0.875rem;
+  }
+}
+
+.status-pill {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 11px;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+  min-width: 80px;
+  border: 1px solid transparent;
+}
+
+.status-pill.pending {
+  background-color: #f8d7da;
+  color: #721c24;
+  border-color: #f5c6cb;
+}
+
+.status-pill.not-nominated {
+  background-color: #f8d7da;
+  color: #721c24;
+  border-color: #f5c6cb;
+}
+
+.status-pill.nominated {
+  background-color: #d4edda;
+  color: #155724;
+  border-color: #c3e6cb;
+}
+
+.status-pill.yellow {
+  background-color: #fff3cd;
+  color: #856404;
+  border-color: #ffeaa7;
+}
+
+/* Estilos adicionales para asegurar consistencia */
+.status-pill {
+  line-height: 1.2;
+  letter-spacing: 0.3px;
+}
+
+.btn-nominar {
+  background-color: #ff9800;
+  color: #fff;
+  border: none;
+  border-radius: 16px;
+  padding: 4px 12px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.btn-nominar:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* === Ocultamos header default === */
+:host ::ng-deep .nomination-dialog .p-dialog-header {
+  display: none;
+}
+
+/* === Contenido del modal === */
+.nomination-dialog .p-dialog-content {
+  padding: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* === Header personalizado === */
+.ticket-header {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 20px 28px;
+
+  div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .k {
+    font-size: 12px;
+    color: #6b7280;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+  .v {
+    font-size: 15px;
+    font-weight: 600;
+    color: #111827;
+    margin: 0;
+  }
+}
+
+/* === Formulario === */
+.ticket-form {
+  padding: 20px 28px;
+
+  .section-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: #111827;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .section-subtitle {
+    font-size: 15px;
+    font-weight: 600;
+    color: #111827;
+    margin: 18px 0 14px;
+  }
+}
+
+.ticket-form--wide {
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+.assistant-card {
+  border: 1px solid #e6e6e6;
+  border-radius: 10px;
+  padding: 14px;
+  background: #fff;
+  margin-bottom: 18px;
+}
+
+.assistant-title {
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0 0 12px 0;
+}
+
+.radio-row--compact { gap: 22px; margin-bottom: 20px }
+.checks--compact { margin-top: 12px }
+
+.btn-large { padding: 10px 26px; border-radius: 28px; }
+
+.actions--centered { display:flex; justify-content:flex-end; gap:16px; align-items:center }
+
+
+/* === Radios === */
+.radio-row {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 16px;
+
+  .radio {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    span {
+      font-size: 14px;
+      color: #111827;
+    }
+  }
+}
+
+/* === Grid de campos === */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px 28px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+
+  label {
+    margin-bottom: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #111827;
+  }
+}
+
+/* === Documento (dropdown + input) === */
+.doc-row {
+  display: flex;
+  gap: 10px;
+
+  .doc-type {
+    flex: 0 0 120px;
+  }
+
+  input {
+    flex: 1;
+  }
+}
+
+/* === Inputs uniformes === */
+:host ::ng-deep .nomination-dialog .p-inputtext,
+:host ::ng-deep .nomination-dialog .p-dropdown {
+  width: 100%;
+  height: 38px;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+/* === Checkboxes === */
+.checks {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.check {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+
+  span {
+    font-size: 13px;
+    color: #374151;
+    line-height: 1.4rem;
+  }
+}
+
+/* === Footer === */
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 28px;
+  border-top: 1px solid #e5e7eb;
+  background: #f9fafb;
+}
+
+.btn-cancel {
+  background: transparent;
+  border: 1px solid #d1d5db;
+  color: #374151;
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+
+  &:hover {
+    background: #f3f4f6;
+  }
+}
+
+.btn-accept {
+  background: #e5e7eb;
+  border: none;
+  color: #9ca3af;
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 14px;
+
+  &[disabled] {
+    cursor: not-allowed;
+  }
+
+  &:not([disabled]) {
+    background: #facc15;
+    color: #111827;
+    cursor: pointer;
+
+    &:hover {
+      background: #fbbf24;
+    }
+  }
+}

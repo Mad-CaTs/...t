@@ -1,0 +1,75 @@
+<div class="line bg-black opacity-50"></div>
+<form [formGroup]="prospectForm" class="d-flex flex-column gap-3 mt-3">
+    <div class="d-flex flex-column flex-md-row gap-2 gap-md-4 w-100">
+        <div class="d-flex flex-column w-50">
+            <app-input [form]="prospectForm" controlName="name" label="Nombres *" type="text"
+                placeholder="Ingrese sus nombres" buttons="true" class="w-100"></app-input>
+        </div>
+        <div class="d-flex flex-column w-50">
+            <app-input [form]="prospectForm" controlName="lastName" label="Apellidos *" type="text"
+                placeholder="Ingrese sus apellidos" buttons="true" class="w-100"></app-input>
+        </div>
+    </div>
+    <div class="d-flex flex-column flex-md-row gap-2 gap-md-4 w-100">
+        <div class="d-flex flex-column w-50">
+            <app-select class="w-100" label="Género" placeholder="Género *" [options]="optGenders" [form]="prospectForm"
+                controlName="gender"></app-select>
+        </div>
+        <div class="d-flex flex-column w-50">
+            <app-select class="w-100" [showImg]="true" label="Nacionalidad *" placeholder="Selecciona la nacionalidad"
+                [form]="prospectForm" [options]="nationalitiesList" controlName="residenceCountryId"
+                (onChangeSelection)="getDocumentType($event)"></app-select>
+        </div>
+    </div>
+    <div class="d-flex flex-column flex-md-row gap-2 gap-md-4 w-100 mt-4">
+        <div class="d-flex flex-column w-50">
+            <app-select class="w-100" [showImg]="false" label="Tipo de documento *"
+                placeholder="Seleccione su documento" [form]="prospectForm" [options]="documentTypes"
+                controlName="documentId"></app-select>
+        </div>
+        <div class="d-flex flex-column w-50">
+            <app-input [form]="prospectForm" controlName="nroDocument" label="Documento *" type="text"
+                placeholder="00000000" buttons="true" class="w-100"></app-input>
+        </div>
+    </div>
+    <div class="d-flex flex-column flex-md-row gap-2 gap-md-4 w-100">
+        <div class="d-flex flex-column w-50">
+            <app-input [form]="prospectForm" controlName="email" label="Correo electrónico *" type="text"
+                placeholder="corre@email.com" buttons="true" class="w-100"></app-input>
+        </div>
+        <div class="d-flex flex-column w-50">
+            <app-input [form]="prospectForm" controlName="nroPhone" label="Nro de celular *" type="text"
+                placeholder="00000000" buttons="true" class="w-100"></app-input>
+        </div>
+    </div>
+    <div class="question-container">
+        <label>¿Dónde conoció al usuario a registrar?</label>
+        <div class="radio-group">
+            <label>
+                <input type="radio" formControlName="prospectType" value="1" />
+                Eventos
+            </label>
+            <label>
+                <input type="radio" formControlName="prospectType" value="2" />
+                Zoom
+            </label>
+            <label>
+                <input type="radio" formControlName="prospectType" value="3" />
+                Presentación
+            </label>
+        </div>
+    </div>
+    <div class="d-flex flex-row justify-content-center gap-4 mt-3">
+        <button class="btn btn-outline-secondary" type="button" (click)="this.ref.close()">
+            Cancelar
+        </button>
+        <button class="btn btn-secondary button-width" type="button" [disabled]="isLoading || this.prospectForm.invalid"
+            (click)="editProspect()">
+            <span *ngIf="!isLoading">{{btnText}}</span>
+            <div class="d-flex justify-content-center align-items-center" *ngIf="isLoading">
+                <p-progressSpinner [style]="{ width: '1.5rem', height: '1rem' }" strokeWidth="8" fill="transparent"
+                    animationDuration=".5s"></p-progressSpinner>
+            </div>
+        </button>
+    </div>
+</form>

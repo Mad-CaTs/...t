@@ -1,0 +1,209 @@
+<div class="schedule-page">
+	<div class="page-header">
+		<h2 class="page-title">{{ pageTitle }}</h2>
+	</div>
+
+	<!-- Info cards -->
+	<div class="summary-grid">
+		<!-- Asignado -->
+		<div class="summary-card">
+			<div class="summary-title">Asignado</div>
+
+			<div class="summary-row">
+				<div class="summary-key">Modelo de Auto/marca:</div>
+				<div class="summary-value">{{ assigned.marcaModelo }}</div>
+			</div>
+
+			<ng-container *ngIf="isGeneral; else inicialAsignado">
+				<div class="summary-row">
+					<div class="summary-key">Precio del auto:</div>
+					<div class="summary-value">{{ assigned.precioAutoUSD | number : '1.0-0' }} USD</div>
+				</div>
+				<div class="summary-row">
+					<div class="summary-key">Bono asignado mensual:</div>
+					<div class="summary-value">{{ assigned.bonoMensualUSD || 0 }} USD</div>
+				</div>
+			</ng-container>
+
+			<ng-template #inicialAsignado>
+				<div class="summary-row">
+					<div class="summary-key">Cuota inicial total:</div>
+					<div class="summary-value">
+						{{ assigned.cuotaInicialTotalUSD | number : '1.0-0' }} USD
+					</div>
+				</div>
+				<div class="summary-row">
+					<div class="summary-key">Precio Total del Auto:</div>
+					<div class="summary-value">{{ assigned.precioTotalAutoUSD | number : '1.2-2' }} USD</div>
+				</div>
+			</ng-template>
+		</div>
+
+		<!-- Contabilizador -->
+		<div class="summary-card">
+			<div class="summary-title">Contabilizador</div>
+
+			<ng-container *ngIf="isGeneral; else inicialCounters">
+				<div class="summary-row">
+					<div class="summary-key">Cuotas Pagadas:</div>
+					<div class="summary-value">
+						{{ countersGeneral.cuotasPagadas }} –
+						{{ countersGeneral.montoPagadoUSD | number : '1.0-0' }} USD
+					</div>
+				</div>
+				<div class="summary-row">
+					<div class="summary-key">Cuotas Restantes:</div>
+					<div class="summary-value">
+						{{ countersGeneral.cuotasRestantes }} –
+						{{ countersGeneral.montoRestanteUSD | number : '1.0-0' }} USD
+					</div>
+				</div>
+				<div class="summary-row">
+					<div class="summary-key">Cuotas Totales:</div>
+					<div class="summary-value">
+						{{ countersGeneral.cuotasTotales }} –
+						{{ countersGeneral.montoTotalUSD | number : '1.0-0' }} USD
+					</div>
+				</div>
+			</ng-container>
+
+			<ng-template #inicialCounters>
+				<div class="summary-row">
+					<div class="summary-key">Cuota inicial total:</div>
+					<div class="summary-value">
+						{{ countersInicial.inicialTotalUSD | number : '1.0-0' }} USD
+					</div>
+				</div>
+				<div class="summary-row">
+					<div class="summary-key">Inicial Prepagada:</div>
+					<div class="summary-value">
+						{{ countersInicial.inicialPrepagadaUSD | number : '1.0-0' }} USD
+					</div>
+				</div>
+				<div class="summary-row">
+					<div class="summary-key">Cuotas Restantes:</div>
+					<div class="summary-value">
+						{{ countersInicial.cuotasRestantes }} –
+						{{ countersInicial.montoRestanteUSD | number : '1.0-0' }} USD
+					</div>
+				</div>
+			</ng-template>
+		</div>
+
+		<!-- Fechas -->
+		<div class="summary-card">
+			<div class="summary-title">{{ isGeneral ? 'Fecha – Interés' : 'Fecha – Entrega' }}</div>
+
+			<ng-container *ngIf="isGeneral; else inicialFechas">
+				<div class="summary-row">
+					<div class="summary-key">Inicio de Pago:</div>
+					<div class="summary-value">{{ datesGeneral.inicioPago }}</div>
+				</div>
+				<div class="summary-row">
+					<div class="summary-key">Fin de Pago:</div>
+					<div class="summary-value">{{ datesGeneral.finPago }}</div>
+				</div>
+				<div class="summary-row">
+					<div class="summary-key">% de Interés:</div>
+					<div class="summary-value">{{ datesGeneral.interesPct | number : '1.2-2' }}</div>
+				</div>
+			</ng-container>
+
+			<ng-template #inicialFechas>
+				<div class="summary-row">
+					<div class="summary-key">Inicio de Pago:</div>
+					<div class="summary-value">{{ datesInicial.inicioPago }}</div>
+				</div>
+				<div class="summary-row">
+					<div class="summary-key">Fin de Pago:</div>
+					<div class="summary-value">{{ datesInicial.finPago }}</div>
+				</div>
+				<div class="summary-row">
+					<div class="summary-key">Entrega en:</div>
+					<div class="summary-value">{{ datesInicial.entregaEn }}</div>
+				</div>
+			</ng-template>
+		</div>
+
+		<!-- Filtros -->
+		<filter-generic
+			*ngIf="isInicial"
+			[filters]="[]"
+			[values]="{}"
+			[showClearButton]="false"
+			[actionText]="'Pagar cuota'"
+			(action)="onPayClick()"
+			[columnsDesktop]="3"
+		></filter-generic>
+
+		<filter-generic
+			*ngIf="isGeneral"
+			[filters]="filtersGeneral"
+			[values]="filterValues"
+			[showActionButton]="false"
+			[extraButtons]="extraButtonsGeneral"
+			(valuesChange)="onFilterChange($event)"
+			(extraAction)="onExtraAction($event)"
+			[columnsDesktop]="3"
+		></filter-generic>
+	</div>
+
+	<!-- Tabla cronograma / Empty State -->
+	<ng-container *ngIf="displayedTableData?.length; else emptyState">
+		<app-table-generic
+			[columns]="tableColumns"
+			[keys]="tableKeys"
+			[data]="displayedTableData"
+			[statusKey]="'statusName'"
+			[columnWidths]="tableColumnWidths"
+			[freezeOverflow]="true"
+			[showActions]="false"
+			[showCheckboxes]="isInicial"
+			[checkboxMode]="isInicial ? 'select' : 'none'"
+			[rowSelectable]="rowSelectableHook"
+		></app-table-generic>
+	</ng-container>
+
+	<ng-template #emptyState>
+		<app-empty-state message="No hay datos para mostrar"></app-empty-state>
+	</ng-template>
+
+	<!-- Notify -->
+	<app-modal-notify
+		[hidden]="!modalState.showNotify"
+		[title]="modalState.notifyTitle"
+		[message]="modalState.notifyMessage"
+		iconType="info"
+		[oneButton]="true"
+		[closeOnConfirm]="true"
+		(closed)="onModalClosed('showNotify')"
+	></app-modal-notify>
+
+	<!-- Modal de Pagos (selección de método) -->
+	<app-payments-modal
+		[selectedIds]="modalState.selectedPaymentIds"
+		[open]="modalState.showPayments"
+		(methodSelected)="onMethodSelected($event)"
+		(closed)="onModalClosed('showPayments')"
+	></app-payments-modal>
+
+	<!-- Wallet -->
+	<app-wallet-modal
+		[isOpen]="modalState.showWallet"
+		[availableBalance]="2300"
+		[accountingBalance]="2500"
+		[amountUSD]="605"
+		(closeModal)="onModalClosed('showWallet')"
+		(paymentSuccess)="onWalletSuccess()"
+	></app-wallet-modal>
+
+	<!-- Transferencia (BCP/Interbank/Otros) -->
+	<app-transferencia-modal
+		[isOpen]="modalState.showTransfer"
+		[bankMethod]="modalState.transferBank"
+		[totalSoles]="2286.9"
+		[totalUSD]="605.0"
+		(closeModal)="onModalClosed('showTransfer')"
+		(paymentSuccess)="onTransferenciaSuccess($event)"
+	></app-transferencia-modal>
+</div>

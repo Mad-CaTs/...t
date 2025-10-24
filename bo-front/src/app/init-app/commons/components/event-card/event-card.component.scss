@@ -1,0 +1,51 @@
+.event-card {
+  width: 100%;
+  position: relative;
+
+  &__img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.event-card img.event-card_img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.event-card:hover .bg-hover,
+.event-card:hover .content-calender {
+  opacity: 1;
+}
+
+.bg-hover {
+  background-color: rgba(0, 0, 0, 0.75);
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transition: 0.3s;
+}
+
+.content-calender {
+  position: absolute;
+  opacity: 0;
+  bottom: 0;
+  padding: 15px 12px;
+  width: 100%;
+  color: #fff;
+
+  &__label {
+    font-weight: 400;
+  }
+}
+
+@media (min-width: 800px) {
+}
+
+@media (min-width: 1200px) {
+  .event-card {
+    min-width: 390px;
+  }
+}

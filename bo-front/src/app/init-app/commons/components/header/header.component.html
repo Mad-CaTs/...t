@@ -1,0 +1,6 @@
+<app-navbar
+	(isOpenDrawer)="showDrawer = $event"
+	[showOnlyLogoAndBackButton]="showOnlyLogoAndBackButton"
+	(backClick)="emitGoHome()"
+></app-navbar>
+<app-drawer [showDrawer]="showDrawer" (isCloseDrawer)="showDrawer = $event"></app-drawer>

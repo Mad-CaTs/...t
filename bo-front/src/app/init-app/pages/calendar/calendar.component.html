@@ -1,0 +1,49 @@
+<!--Header-->
+<div class="d-flex flex-column gap-1 align-items-center justify-content-center w-100 mt-4">
+	<span class="text-secondary text-uppercase fw-normal fs-4">{{ lang.title }}</span>
+	<span class="text-black fw-medium fs-1">{{ lang.subtitle }}</span>
+</div>
+<!--Filters-->
+<div
+	class="w-100 d-flex flex-column flex-md-row gap-4 gap-md-5 align-items-end px-3 mb-5 mx-auto"
+	style="max-width: 1500px"
+>
+  <!-- TODO: Corregir con nueva forma -->
+	<!-- <app-input
+		class="w-100"
+		[label]="lang.filters.searchLabel"
+		[placeholder]="lang.filters.searchPlaceholder"
+		type="text"
+		iconLeft="search"
+		[control]="search"
+		name="search"
+	/> -->
+	<div class="d-flex mx-auto mx-md-0 position-relative calendar-filter rounded">
+		<div
+			class="calendar-filter__wrapper h-100 rounded"
+			[style.transform]="'translateX(' + 100 * selectFilter + 'px)'"
+		></div>
+		<span
+			*ngFor="let opt of lang.filters.options; index as i"
+			class="fs-6 py-3 rounded calendar-filter__opt"
+			[class.cl-muted]="selectFilter !== i"
+			[class.text-secondary]="selectFilter === i"
+			[class.bg-white]="selectFilter === i"
+			(click)="selectFilter = i"
+		>
+			{{ opt }}
+		</span>
+	</div>
+</div>
+<!--Event Card-->
+<div class="card-container gap-4 mb-5 px-3 px-md-0">
+	<app-event-card
+		*ngFor="let event of events"
+		class="w-100 mx-auto"
+		[id]="event.id"
+		[img]="event.img"
+		[date]="event.date"
+		[title]="event.title"
+		[noBtn]="true"
+	/>
+</div>

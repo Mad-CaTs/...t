@@ -1,0 +1,100 @@
+<div class="container">
+  <h5 class="fw-bold">Ver cronograma</h5>
+  <p class="text-muted mb-3">Visualizarás el cronograma de pagos de tu suscripción.</p>
+  <div class="row mb-3">
+    <div class="col-12 col-md-6 mb-3">
+      <div class="card w-100 h-100 d-flex flex-column">
+        <div class="card-body">
+          <div class="d-flex gap-1 align-items-center mb-3">
+            <mat-icon fontIcon="account_tree"
+                      class="cl-muted"></mat-icon>
+            <span class="text-detail text-base">Detalle del cronograma</span>
+          </div>
+          <div class="d-flex flex-wrap justify-content-center gap-3">
+            <div class="d-flex flex-column align-items-center">
+              <span class="custom-text text-base">{{quotaCount || 0}}</span>
+              <span class="text-detail text-base">Cuotas</span>
+            </div>
+            <div class="d-flex flex-column align-items-center">
+              <span class="custom-text text-base">{{nextQuoteToPay.quoteDescription || 'Cuota Pagada'}}</span>
+              <span class="text-detail text-base">Proxima cuota</span>
+            </div>
+            <div class="d-flex flex-column align-items-center">
+              <span class="custom-text text-base">{{subscriptionName}}</span>
+              <span class="text-detail text-base">Membresía</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+       <div class="col-12 col-md-6 mb-3">
+      <div class="card w-100 h-100 d-flex flex-column">
+        <div class="card-body">
+          <div class="d-flex gap-1 align-items-center mb-3">
+            <i class="pi pi-calendar cl-muted"
+               style="font-size: 20px;"></i>
+            <span class="text-detail text-base">Fechas</span>
+          </div>
+          <div class="row g-2 text-center">
+            <div class="col-6 d-flex flex-column align-items-center">
+              <span class="custom-text text-base">
+                 {{ selectedProduct.formattedCreationDate }}
+              </span>
+              <span class="text-detail text-base">Fecha de afiliación</span>
+            </div>
+            <div class="col-6 d-flex flex-column align-items-center">
+              <span class="custom-text text-base">
+                {{ formatDate(data.row.createDate)}}
+
+              </span>
+              <span class="text-detail text-base">Fecha de registro</span>
+            </div> 
+          </div>
+        </div>
+      </div>
+    </div> 
+  </div>
+
+  <p-table [value]="dataSource"
+           scrollable="true"
+           scrollHeight="350px"
+           class="table-details">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Descripción</th>
+        <th class="text-center">Fecha de vencimiento</th>
+        <th class="text-center">Capital</th>
+        <th class="text-center">Amortización</th>
+        <th class="text-center">Días de mora</th>
+        <th class="text-center">Mora</th>
+        <th class="text-center">Cuota</th>
+        <th class="text-center">Fecha de pago</th>
+        <th class="text-center">Estado</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body"
+                 let-element>
+      <tr>
+        <td>{{ element.quoteDescription }}</td>
+        <td class="text-center">{{ element.nextExpirationDate | date: 'dd-MM-yyyy' }}</td>
+        <td class="text-center">{{ element.capitalBalanceUsd }} USD</td>
+        <td class="text-center">{{ element.amortizationUsd }} USD</td>
+        <td class="text-center">{{ element.daysOverdue || 0 }} días</td>
+        <td class="text-center">{{ element.totalOverdue || 0 }} USD</td>
+        <td class="text-center">{{ element.quoteUsd || 0 }} USD</td>
+        <td class="text-center">{{ element.payDate | date: 'dd-MM-yyyy' }}</td>
+        <td class="text-center">{{ element.statusName }}</td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <tr>
+        <td colspan="10">
+          <div class="table-footer-container">
+            <div class="p-datatable-scrollable-footer"></div>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

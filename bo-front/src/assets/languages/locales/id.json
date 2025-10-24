@@ -1,0 +1,564 @@
+{
+	"header": {
+		"slogan": "Klub Investasi",
+		"menuItems": [
+			{
+				"label": "Awal"
+			},
+			{
+				"label": "Produk",
+				"subItems": [
+					{
+						"label": "Perumahan"
+					},
+					{
+						"label": "Teknologi"
+					},
+					{
+						"label": "Proyek lainnya"
+					}
+				]
+			},
+			{
+				"label": "Peluang"
+			},
+			{
+				"label": "Masyarakat"
+			},
+			{
+				"label": "Pembaruan"
+			},
+			{
+				"label": "Kalender"
+			},
+			{
+				"label": "Acara"
+			}
+		],
+		"languageTitle": "Bahasa",
+		"languageInputPlaceholder": "Temukan bahasanya",
+		"languageInputLabel": "Pencari",
+		"languages": [
+			"Arab ",
+			"Jerman ",
+			"Benggala ",
+			"Bulgaria ",
+			"Ceko ",
+			"Cina ",
+			"Orang Spanyol ",
+			"Perancis ",
+			"Portugis ",
+			"Bahasa inggris ",
+			"Orang yunani ",
+			"Guarani ",
+			"Hindi ",
+			"Hongaria ",
+			"bahasa Indonesia ",
+			"Italia ",
+			"Jepang ",
+			"Korea ",
+			"Belanda ",
+			"Polandia ",
+			"Rusia ",
+			"Telugu ",
+			"Thai ",
+			"bahasa Tagalog ",
+			"Turki ",
+			"Orang Ukraina ",
+			"Orang Vietnam ",
+			"Rumania "
+		]
+	},
+	"footer": {
+		"contactInformation": {
+			"phone": "(01) 618 5118",
+			"email": "contoh@inclub.com.pe"
+		},
+		"sections": [
+			"Solusi",
+			"DiResor Ribera del Rio",
+			"DiResor La Joya",
+			"KeOla",
+			"Penjualan bekas",
+			"Kita",
+			"Blog",
+			"Pertanyaan yang sering diajukan",
+			"Akses pelanggan",
+			"Keberlanjutan",
+			"Kontak",
+			"Hukum",
+			"Kebijakan Privasi",
+			"syarat dan Ketentuan",
+			"Buku pengaduan"
+		]
+	},
+	"home": {
+		"carousel": {
+			"carouselEntry": "SIAP BERGABUNG DENGAN",
+			"carouselTitle": "INCLUB UNIVERSE?",
+			"carouselText": "Semua orang dipersilakan. ",
+			"carouselBtn1": "Bergabung sekarang!",
+			"carouselBtn2": "Mengakses"
+		},
+		"keola": {
+			"cta": "Dan tukarkan kode “UNETEKEOLA” untuk mendapatkan poin.",
+			"btn": "Google Play",
+			"titles": ["Unduh aplikasi Keola", "Yang paling baru", "Undang dan menangkan"]
+		},
+		"lastUpdates": {
+			"title": "Pembaruan terkini",
+			"description": "Kami ingin Anda sukses dan mengembangkan bisnis Anda menjadi pionir sukses seperti yang kami tahu! ",
+			"button": "Memperbarui!"
+		},
+		"howWorks": {
+			"title": "bagaimana cara kerjanya",
+			"subtitle": "Memulai dalam 3 Langkah Sederhana",
+			"steps": [
+				{
+					"title": "Mendaftar",
+					"description": "Masukkan sponsor Anda dan lengkapi informasi Anda dan buat kata sandi Anda."
+				},
+				{
+					"title": "Jelajahi Produk",
+					"description": "Jelajahi produk di portal Inclub kami. "
+				},
+				{
+					"title": "Menang",
+					"description": "Siap! "
+				}
+			]
+		},
+		"cards": [
+			{
+				"title": "Tas kantor",
+				"description": "Bergabunglah dan jadilah bagian dari real estat, proyek teknologi, dan banyak lagi lainnya.",
+				"button": "Jelajahi lebih lanjut"
+			},
+			{
+				"title": "Masyarakat",
+				"description": "Selami produk hebat dengan potensi penghasilan besar.",
+				"button": "Jelajahi lebih lanjut"
+			},
+			{
+				"title": "Peluang",
+				"description": "Jika Anda bersedia bekerja, InClub adalah kendaraan yang akan membawa Anda ke mana pun Anda ingin pergi.",
+				"button": "Jelajahi lebih lanjut"
+			}
+		],
+		"testimonialsSection": {
+			"cardPrefix": "Anggota Sejak",
+			"heading": "Yang Anda butuhkan hanyalah telepon di tangan Anda untuk terhubung dengan peluang bisnis seumur hidup.",
+			"button": "Daftar sekarang",
+			"testimonials": [
+				{
+					"text": "Jika Anda bekerja keras dan dengan tekun, Inclub akan mengubah hidup Anda dan mewujudkan semua mimpi Anda",
+					"name": "Elias Vargas",
+					"since": "2020"
+				},
+				{
+					"text": "Anda hanya memerlukan 3 hal di dunia ini untuk bahagia: Iman kepada Tuhan, iman pada diri sendiri, dan iman pada mimpi Anda",
+					"name": "Paul Villacorta",
+					"since": "2020"
+				},
+				{
+					"text": "Tidak apa-apa menjadi miskin, yang buruk adalah tidak pernah mencoba, mati miskin dan tanpa mimpi, tidak pernah terlambat untuk memulai",
+					"name": "Mery Livias",
+					"since": "2021"
+				},
+				{
+					"text": "Anda dapat menyampaikan pidato terbaik dengan hidup Anda daripada dengan kata-kata Anda",
+					"name": "Abel Meza",
+					"since": "2020"
+				}
+			]
+		}
+	},
+	"products": {
+		"navigation": ["Perumahan", "Teknologi", "Proyek berikutnya"],
+		"items": [
+			{
+				"title": "Di resor Ribera del Rio",
+				"description": "Nikmati manfaat Hotel Club Resort kami dan jadilah anggota. ",
+				"buttonText": "Informasi lebih lanjut"
+			},
+			{
+				"title": "Di resor La Joya",
+				"description": "Kegembiraan keluarga, alam, dan keuntungan seumur hidup. ",
+				"buttonText": "Informasi lebih lanjut"
+			},
+			{
+				"title": "Jaringan Keola",
+				"description": "Undang dan menangkan, temukan manfaat aplikasi. ",
+				"buttonText": "Informasi lebih lanjut"
+			}
+		],
+		"nextProjects": {
+			"title": "Kami sedang bekerja",
+			"description": "Saat ini tim Inclub sedang dalam proses kreatif untuk menunjukkan proyek yang akan datang. ",
+			"buttonText": "Memperbarui!"
+		}
+	},
+	"productDetail": {
+		"aboutUsTitle": "Tentang kami",
+		"aboutBtnText": "Saya ingin tahu lebih banyak",
+		"products": [
+			{
+				"aboutTitle": "Tepi sungai",
+				"aboutDescription": "Kami adalah Club Resort yang terletak di Cieneguilla, 45 menit dari Lima. ",
+				"perkPreTitle": "Manfaatkan kami",
+				"perktitle": "Pengalaman yang tak terlupakan",
+				"perkDescription": "Tempat peristirahatan yang sempurna bagi mereka yang mencari pengalaman liburan dan petualangan unik. ",
+				"cards": [
+					{
+						"title": "Hotel",
+						"description": "Setiap kamar di Ribera del Río dirancang untuk berbagi dengan orang yang Anda cintai; "
+					},
+					{
+						"title": "Pengalaman",
+						"description": "Kami menawarkan beragam pengalaman rekreasi dan rekreasi yang pasti akan memikat Anda. "
+					},
+					{
+						"title": "Restoran",
+						"description": "Manjakan diri Anda selalu menyenangkan, dan untuk itu, 'Restoran Ribera del Río' kami menyambut Anda dan mengundang Anda untuk menikmati berbagai hidangan khas nasional, regional, dan Kreol."
+					}
+				]
+			},
+			{
+				"aboutTitle": "Permata",
+				"aboutDescription": "Kami adalah Club Resort yang terletak di Arequipa, hanya 45 menit dari kota Arequipa. ",
+				"perkPreTitle": "Manfaatkan kami",
+				"perktitle": "Pengalaman yang tak terlupakan",
+				"perkDescription": "Tempat peristirahatan yang sempurna bagi mereka yang mencari pengalaman liburan dan petualangan unik. ",
+				"cards": [
+					{
+						"title": "Kolam renang",
+						"description": "Setiap kolam renang di La Joya dirancang untuk digunakan bersama orang yang Anda cintai; "
+					},
+					{
+						"title": "Pengalaman",
+						"description": "Kami menawarkan beragam pengalaman rekreasi dan rekreasi yang pasti akan memikat Anda. "
+					},
+					{
+						"title": "Taman Resor",
+						"description": "Taman air yang indah dengan seluncuran berwarna-warni; "
+					}
+				]
+			},
+			{
+				"aboutTitle": "Keola",
+				"aboutDescription": "Selamat datang di Keola, aplikasi terbaik untuk menemukan semua produk favorit Anda di satu tempat! ",
+				"perkPreTitle": "Manfaatkan kami",
+				"perktitle": "Manfaat Keola",
+				"perkDescription": "Undang dan dapatkan penghasilan, temukan manfaat aplikasi. ",
+				"cards": [
+					{
+						"title": "Produk",
+						"description": "Temukan berbagai produk dan kategori. "
+					},
+					{
+						"title": "Toko",
+						"description": "Kelola toko Anda dan kelola produk Anda, berikan layanan pengiriman yang berkualitas dan efisien."
+					},
+					{
+						"title": "Pengiriman",
+						"description": "Apakah Anda membutuhkan makanan, obat-obatan? "
+					}
+				]
+			}
+		]
+	},
+	"oportunity": {
+		"title": "Peluang",
+		"description": "Ini terbuka untuk siapa saja, tanpa memandang pengalaman, lokasi atau keadaan.",
+		"sections": [
+			{
+				"pre": "Hasilkan uang dengan pengaruh Anda",
+				"title": "Setiap orang dipengaruhi secara mikro",
+				"content": "Setiap orang adalah mikro-influencer. "
+			},
+			{
+				"pre": "Saya merekomendasikan produk berkualitas",
+				"title": "Produk mutakhir, membuka jalan di industri",
+				"content": "Setiap hari kami merekomendasikan produk dan layanan kepada teman dan keluarga kami. "
+			},
+			{
+				"pre": "Belajarlah dari rekan-rekan Anda",
+				"title": "Semua yang Anda butuhkan untuk sukses",
+				"content": "Kami berbagi pengetahuan dari para spesialis kami, yang terinspirasi oleh keinginan untuk menjadikan jaringan lebih menguntungkan bagi semua orang dan bagi afiliasi untuk mempelajari cara menghasilkan aset."
+			},
+			{
+				"pre": "Rencana kompensasi",
+				"title": "Skema Kompensasi kami adalah yang paling kuat di industri ini",
+				"content": "Kami membantu masyarakat membangun portofolio investasi yang cerdas dan mencapai kebebasan finansial yang telah lama ditunggu-tunggu dengan beragam manfaat, yang tiada duanya dari klub investasi lainnya."
+			}
+		],
+		"testimonials": {
+			"pre": "Testimonial",
+			"title": "Cerita-cerita sukses",
+			"items": [
+				{
+					"text": "Jika seseorang yang hidup di masa lalu tidak akan pernah sukses di masa sekarang, apalagi di masa depan",
+					"name": "Elias Vargas",
+					"since": "2020"
+				},
+				{
+					"text": "Anda hanya membutuhkan 3 hal di dunia ini untuk menjadi bahagia: Keyakinan pada Tuhan, Keyakinan pada diri sendiri, dan Keyakinan pada impian Anda",
+					"name": "Paul Villacorta",
+					"since": "2020"
+				},
+				{
+					"text": "Tidaklah buruk menjadi Miskin, yang buruknya adalah tidak pernah mencoba, Mati Miskin dan Tanpa Impian, Tidak ada kata terlambat untuk memulai",
+					"name": "Mery Livias",
+					"since": "2021"
+				},
+				{
+					"text": "Anda dapat memberikan pidato terbaik dalam hidup Anda dibandingkan dengan kata-kata Anda.",
+					"name": "Abel Meza",
+					"since": "2020"
+				}
+			]
+		}
+	},
+	"comunity": {
+		"title": "Komunitas kita",
+		"description": "Kesuksesan akan lebih baik bila dibagikan. ",
+		"sections": [
+			{
+				"pre": "TUMBUH DAN SEJAHTERA BERSAMA KAMI",
+				"title": "Afiliasi di seluruh dunia",
+				"content": "Jaringan afiliasi terbesar dan terkuat saat ini di Amerika Latin, tidak diragukan lagi, adalah Inclub. "
+			},
+			{
+				"pre": "Pengakuan dan peristiwa",
+				"title": "Jutaan orang akan merayakan kesuksesan Anda.",
+				"content": "Kami sangat bangga atas kerja keras dan dedikasi yang diberikan setiap pengusaha dalam bisnisnya. "
+			},
+			{
+				"pre": "ALAT PENDIDIKAN DAN BELAJAR",
+				"title": "Semua yang Anda butuhkan untuk sukses.",
+				"content": "Kami membantu masyarakat menciptakan portofolio investasi cerdas dan mencapai kebebasan finansial yang telah lama ditunggu-tunggu. "
+			}
+		],
+		"inspiration": {
+			"title": "Inspirasi",
+			"subtitle": "Suara Komunitas",
+			"testimonials": [
+				{
+					"text": "Inclub adalah hidup saya dan itulah mengapa saya menganggapnya sangat serius.",
+					"name": "Elias Vargas",
+					"since": "2020"
+				},
+				{
+					"text": "Inclub hadir untuk mengubah kehidupan masyarakat.",
+					"name": "Paul Villacorta",
+					"since": "2020"
+				},
+				{
+					"text": "Inclub telah memberi kami kesempatan untuk juga mengubah kehidupan orang lain.",
+					"name": "Mery Livias",
+					"since": "2021"
+				},
+				{
+					"text": "Afiliasi dihargai atas kesuksesannya berkat banyaknya pengguna.",
+					"name": "Abel Meza",
+					"since": "2020"
+				}
+			]
+		}
+	},
+	"news": {
+		"noticeLabel": "Berita",
+		"titleMain": "KEBARUAN",
+		"descriptionMain": "Tempat perlindungan yang sempurna untuk dinikmati bersama keluarga dan teman",
+		"commonEventsCountry": "Lima Peru",
+		"commonEventsBtn": "lihat lebih banyak",
+		"content": [
+			{
+				"date": "14 September 2023",
+				"title": "Berkomunikasi dengan sukses, lokakarya komunikasi bahasa dan bisnis"
+			},
+			{
+				"title": "Tujuan belanja online Anda",
+				"description": "Undang dan menangkan, temukan manfaat aplikasi. "
+			},
+			{
+				"title": "Proyek real estat",
+				"description": "Para pemimpin klub menikmati peluncuran proyek real estate Ribera del Rio yang luar biasa di Cieneguilla."
+			},
+			{
+				"title": "Peluncuran Encumbra",
+				"description": "Pemimpin inclub memberdayakan anggota kami untuk menjadi pemimpin dalam industri jaringan online."
+			},
+			{
+				"title": "Tujuan belanja online Anda",
+				"description": "Undang dan menangkan, temukan manfaat aplikasi. "
+			},
+			{
+				"title": "Proyek teknologi",
+				"description": "Para pemimpin klub menikmati peluncuran proyek real estate Ribera del Rio yang luar biasa di Cieneguilla."
+			},
+			{
+				"title": "Di resor Ribera del Rio",
+				"description": "Pemimpin inclub memberdayakan anggota kami untuk menjadi pemimpin dalam industri jaringan online."
+			}
+		]
+	},
+	"newsDetail": {
+		"date": "26 September 2023",
+		"title": "Tempat perlindungan yang sempurna untuk dinikmati bersama keluarga dan teman",
+		"description": "Resor taman La Joya hanya berjarak 60 menit dari kota Arequipa di distrik La Joya, di sini Anda dapat menikmati hari-hari di pantai atau berlatih olahraga air. ",
+		"content": [
+			{
+				"date": "14 September 2023",
+				"title": "Berkomunikasi dengan sukses, lokakarya komunikasi bahasa dan bisnis"
+			},
+			{
+				"date": "29 September 2023",
+				"title": "Sistem Pendidikan KEPEMIMPINAN Inclub"
+			},
+			{
+				"date": "15 September 2023",
+				"title": "Sistem pendidikan inclub Testimonial Kesuksesan"
+			}
+		]
+	},
+	"calendar": {
+		"title": "Kalender",
+		"subtitle": "September",
+		"filters": {
+			"searchLabel": "Pencari",
+			"searchPlaceholder": "Cari acara atau lokakarya",
+			"options": ["Hari ini", "Mingguan", "Bulanan"]
+		}
+	},
+	"eventPage": {
+		"upcommingEventsTitle": "Acara Mendatang",
+		"upcomingEvents": [
+			{
+				"date": "14 September 2023",
+				"title": "Berkomunikasi dengan sukses, lokakarya komunikasi bahasa dan bisnis"
+			},
+			{
+				"date": "29 September 2023",
+				"title": "KEPEMIMPINAN Inclub Sistem Pendidikan"
+			},
+			{
+				"date": "15 September 2023",
+				"title": "Sistem pendidikan inclub Testimonial Kesuksesan"
+			}
+		],
+		"pastEventsTitle": "Peristiwa sebelumnya",
+		"pastEvents": [
+			{
+				"date": "12 September 2023",
+				"title": "Klub Membaca Inclub Sistem Pendidikan"
+			},
+			{
+				"date": "10 September 2023",
+				"title": "Sistem Pendidikan KEPEMIMPINAN Inclub"
+			},
+			{
+				"date": "8 September 2023",
+				"title": "Testimoni Kesuksesan Sistem Pendidikan Inclub"
+			}
+		],
+		"trendsTitle": "Tren"
+	},
+	"eventsDetail": {
+		"backLabel": "Kembali",
+		"resumeTitle": "Ringkasan",
+		"learnTitle": "Apa yang akan kamu pelajari?"
+	},
+	"events": [
+		{
+			"title": "Berkomunikasi dengan sukses, lokakarya komunikasi bahasa dan bisnis",
+			"date": "14 September 2023",
+			"type": "On line",
+			"duration": "Perkiraan durasi: 22 menit.",
+			"positiveReviews": "98% ulasan positif (567).",
+			"summary": "Apakah Anda ingin meningkatkan keterampilan komunikasi Anda di bidang bisnis? ",
+			"learn": [
+				"Meningkatkan keterampilan presentasi dan negosiasi",
+				"Belajarlah untuk berekspresi dengan jelas dan efektif",
+				"Berbeda dengan lokakarya teori lainnya, lokakarya ini memungkinkan Anda untuk segera mempraktekkan apa yang telah Anda pelajari.",
+				"Melalui latihan dan dinamika kelompok, Anda akan dapat melatih keterampilan komunikasi Anda dan menerima umpan balik langsung dari para ahli di bidang tersebut. ",
+				"Dan banyak lagi."
+			]
+		},
+		{
+			"date": "29 September 2023",
+			"title": "Sistem Pendidikan Inclub: Kepemimpinan",
+			"type": "On line",
+			"duration": "Perkiraan durasi: 22 menit.",
+			"positiveReviews": "98% ulasan positif (567).",
+			"summary": "Apakah Anda ingin meningkatkan keterampilan komunikasi Anda di bidang bisnis? ",
+			"learn": [
+				"Meningkatkan keterampilan presentasi dan negosiasi",
+				"Belajarlah untuk berekspresi dengan jelas dan efektif",
+				"Berbeda dengan lokakarya teori lainnya, lokakarya ini memungkinkan Anda untuk segera mempraktekkan apa yang telah Anda pelajari.",
+				"Melalui latihan dan dinamika kelompok, Anda akan dapat melatih keterampilan komunikasi Anda dan menerima umpan balik langsung dari para ahli di bidang tersebut. ",
+				"Dan banyak lagi."
+			]
+		},
+		{
+			"date": "15 September 2023",
+			"title": "Sistem Pendidikan Inclub: Kisah Sukses",
+			"type": "On line",
+			"duration": "Perkiraan durasi: 22 menit.",
+			"positiveReviews": "98% ulasan positif (567).",
+			"summary": "Apakah Anda ingin meningkatkan keterampilan komunikasi Anda di bidang bisnis? ",
+			"learn": [
+				"Meningkatkan keterampilan presentasi dan negosiasi",
+				"Belajarlah untuk berekspresi dengan jelas dan efektif",
+				"Berbeda dengan lokakarya teori lainnya, lokakarya ini memungkinkan Anda untuk segera mempraktekkan apa yang telah Anda pelajari.",
+				"Melalui latihan dan dinamika kelompok, Anda akan dapat melatih keterampilan komunikasi Anda dan menerima umpan balik langsung dari para ahli di bidang tersebut. ",
+				"Dan banyak lagi."
+			]
+		},
+		{
+			"date": "12 September 2023",
+			"title": "Sistem Pendidikan Inclub: Klub Buku",
+			"type": "On line",
+			"duration": "Perkiraan durasi: 22 menit.",
+			"positiveReviews": "98% ulasan positif (567).",
+			"summary": "Apakah Anda ingin meningkatkan keterampilan komunikasi Anda di bidang bisnis? ",
+			"learn": [
+				"Meningkatkan keterampilan presentasi dan negosiasi",
+				"Belajarlah untuk berekspresi dengan jelas dan efektif",
+				"Berbeda dengan lokakarya teori lainnya, lokakarya ini memungkinkan Anda untuk segera mempraktekkan apa yang telah Anda pelajari.",
+				"Melalui latihan dan dinamika kelompok, Anda akan dapat melatih keterampilan komunikasi Anda dan menerima umpan balik langsung dari para ahli di bidang tersebut. ",
+				"Dan banyak lagi."
+			]
+		},
+		{
+			"date": "10 September 2023",
+			"title": "Sistem Pendidikan Inclub: Kepemimpinan",
+			"type": "On line",
+			"duration": "Perkiraan durasi: 22 menit.",
+			"positiveReviews": "98% ulasan positif (567).",
+			"summary": "Apakah Anda ingin meningkatkan keterampilan komunikasi Anda di bidang bisnis? ",
+			"learn": [
+				"Meningkatkan keterampilan presentasi dan negosiasi",
+				"Belajarlah untuk berekspresi dengan jelas dan efektif",
+				"Berbeda dengan lokakarya teori lainnya, lokakarya ini memungkinkan Anda untuk segera mempraktekkan apa yang telah Anda pelajari.",
+				"Melalui latihan dan dinamika kelompok, Anda akan dapat melatih keterampilan komunikasi Anda dan menerima umpan balik langsung dari para ahli di bidang tersebut. ",
+				"Dan banyak lagi."
+			]
+		},
+		{
+			"date": "8 September 2023",
+			"title": "Sistem Pendidikan Inclub: Kisah Sukses",
+			"type": "On line",
+			"duration": "Perkiraan durasi: 22 menit.",
+			"positiveReviews": "98% ulasan positif (567).",
+			"summary": "Apakah Anda ingin meningkatkan keterampilan komunikasi Anda di bidang bisnis? ",
+			"learn": [
+				"Meningkatkan keterampilan presentasi dan negosiasi",
+				"Belajarlah untuk berekspresi dengan jelas dan efektif",
+				"Berbeda dengan lokakarya teori lainnya, lokakarya ini memungkinkan Anda untuk segera mempraktekkan apa yang telah Anda pelajari.",
+				"Melalui latihan dan dinamika kelompok, Anda akan dapat melatih keterampilan komunikasi Anda dan menerima umpan balik langsung dari para ahli di bidang tersebut. ",
+				"Dan banyak lagi."
+			]
+		}
+	]
+}

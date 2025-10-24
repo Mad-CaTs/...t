@@ -1,0 +1,24 @@
+<div class="p-4 card px-0 px-md-4 card-border-none">
+	<div class="d-flex flex-column gap-3 card p-lg-4 border-0">
+		<app-navigation
+			[data]="stepNavigation"
+			[selected]="currentStep"
+			[noBgSecondary]="true"
+			(changeSelected)="onChangeStep($event)"
+		></app-navigation>
+	</div>
+	<div class="row">
+		<div class="col-6" *ngFor="let card of cardsData">
+			<mat-card class="card-proyect position-relative">
+				<img appConcatenateSrc="{{ card.imagePath }}" mat-card-image />
+
+				<div class="position-absolute top-0 start-0 m-2 text-white">
+					<p style="margin: 0">{{ card.title }}</p>
+				</div>
+				<a (click)="navigateToOverview(card.id)" class="bottom-button text-white"
+					>Soy un botón <span class="ms-2">&rarr;</span></a
+				>
+			</mat-card>
+		</div>
+	</div>
+</div>

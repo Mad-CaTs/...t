@@ -1,0 +1,95 @@
+<!-- Wallet Modal -->
+<div class="modal-overlay" *ngIf="isOpen">
+	<div
+		class="modal-content wallet-modal"
+		role="dialog"
+		aria-modal="true"
+		(click)="$event.stopPropagation()"
+	>
+		<div class="modal-header">
+			<img src="assets/images/Inclub.svg" alt="Inclub" class="brand-logo" />
+			<button class="close-button" (click)="onClose()">×</button>
+			<div class="order-info"><span class="order-label">Pago con Wallet</span></div>
+		</div>
+
+		<div class="wallet-content">
+			<!-- Saldos -->
+			<div class="balance-cards" *ngIf="!loading; else balancesLoading">
+				<div class="balance-card">
+					<div class="balance-main">
+						<img src="assets/icons/wallet-coin.svg" alt="Wallet" class="balance-icon" />
+						<span class="balance-amount">{{ getAvailableBalance() }}</span>
+					</div>
+					<div class="balance-label">{{ balanceLabel }}</div>
+				</div>
+				<div class="balance-card" *ngIf="showAccounting">
+					<div class="balance-main">
+						<img src="assets/icons/wallet-coin.svg" alt="Wallet" class="balance-icon" />
+						<span class="balance-amount">{{ getAccountingBalance() }}</span>
+					</div>
+					<div class="balance-label">{{ accountingLabel }}</div>
+				</div>
+			</div>
+			<ng-template #balancesLoading>
+				<div class="balance-cards">
+					<div class="balance-card skeleton"></div>
+					<div class="balance-card skeleton"></div>
+				</div>
+			</ng-template>
+
+			<!-- Detalle del pago -->
+			<div class="payment-details-section">
+				<h3>Detalle del pago</h3>
+				<div class="payment-info-grid">
+					<div class="info-item">
+						<span class="info-label">{{ amountLabel }}:</span
+						><span class="info-value">{{ getAmountInDollars() }}</span>
+					</div>
+					<div class="info-item total">
+						<span class="info-label">{{ totalLabel }}:</span
+						><span class="info-value">{{ getTotalToPay() }}</span>
+					</div>
+				</div>
+				<div class="info-bar" [class.error]="insufficientBalance">
+					<div class="info-icon" [class.error]="insufficientBalance">i</div>
+					<span>{{ infoBarMessage }}</span>
+				</div>
+			</div>
+
+			<!-- Formulario -->
+			<form (ngSubmit)="processPayment()" novalidate>
+				<!-- Campos 'Moneda' y 'Monto' eliminados según requerimiento -->
+
+				<!-- Motivo -->
+				<div
+					class="textarea-wrapper"
+					*ngIf="requireReason"
+					[class.error]="(touched.reason || submitted) && getError('reason')"
+				>
+					<label for="reason">Mensaje</label>
+					<textarea
+						id="reason"
+						name="reason"
+						rows="3"
+						[(ngModel)]="walletData.reason"
+						(blur)="markTouched('reason')"
+						placeholder="Pago de mi entrada"
+					></textarea>
+					<div class="field-error" *ngIf="(touched.reason || submitted) && getError('reason')">
+						{{ getError('reason') }}
+					</div>
+				</div>
+
+				<div class="actions">
+					<button type="button" class="btn secondary" (click)="onClose()" [disabled]="isProcessing">
+						{{ cancelLabel }}
+					</button>
+					<button type="submit" class="btn primary" [disabled]="!isFormValid() || isProcessing">
+						<span *ngIf="!isProcessing">{{ confirmLabel }}</span>
+						<span *ngIf="isProcessing" class="spinner"></span>
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

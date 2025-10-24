@@ -1,0 +1,59 @@
+<ng-container>
+	<div class="rounded bg-white w-100">
+		<div class="d-flex justify-content-between align-items-center mb-4">
+			<div class="icon-box">
+				<img src="assets/icons/personalcard@2x.svg" alt="Patrocinador" class="icon-img" />
+			</div>
+
+			<button class="btn p-0 border-0 bg-transparent" (click)="closeModal()" aria-label="Cerrar">
+				<mat-icon fontIcon="close" class="fs-4"></mat-icon>
+			</button>
+		</div>
+		<h3>Mis Documentos</h3>
+		<p class="mb-4 cl-gray-100">Elige una opción de donde realizas la legalización.</p>
+
+		<app-bordered-table [headers]="headers" [rows]="rows">
+			<ng-template #body let-element>
+				<tr>
+					<td class="text-center border-bottom py-3">{{ element[0] }}</td>
+					<td class="text-center border-bottom py-3">{{ element[1] }}</td>
+					<td class="text-center border-bottom py-3">{{ element[2] }}</td>
+
+					<td class="text-center border-bottom py-3">
+						<div class="d-flex justify-content-center">
+							<a
+								*ngIf="element[4] === 'ok'"
+								[href]="element[3]"
+								target="_blank"
+								rel="noopener noreferrer"
+								class="btn d-flex align-items-center px-2 py-1 rounded cl-link no-hover"
+							>
+								<img src="assets/icons/visibilite.svg" alt="Ver" width="20" height="20" />
+							</a>
+
+							<span
+								*ngIf="element[4] === 'error'"
+								class="d-flex align-items-center text-muted"
+								title="El documento aún no ha sido generado"
+								style="cursor: not-allowed; opacity: 0.5"
+							>
+								<img
+									src="assets/icons/visibilite.svg"
+									alt="No disponible"
+									width="20"
+									height="20"
+								/>
+							</span>
+
+							<span
+								*ngIf="element[4] === 'loading'"
+								class="spinner-border spinner-border-sm text-secondary"
+								role="status"
+							></span>
+						</div>
+					</td>
+				</tr>
+			</ng-template>
+		</app-bordered-table>
+	</div>
+</ng-container>

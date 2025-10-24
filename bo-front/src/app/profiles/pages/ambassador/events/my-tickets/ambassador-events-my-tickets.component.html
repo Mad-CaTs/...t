@@ -1,0 +1,75 @@
+<!-- <guest-panels [panel]="myTickets">
+    <div class="contact-card">
+        <i class="pi icon-exclamation-circle" [ngClass]="'pi-exclamation-circle'"></i>
+        En caso no puedas descargar la boleta de pago, contáctanos a través de Whatsapp al +51 950612210 para poder
+        guiarte.
+    </div>
+
+    <p-tabView>
+        <p-tabPanel header="Próximos">
+            @if (isLoadingGeneral) {
+            <app-logo-spinner [show]="isLoadingGeneral" size="80px"></app-logo-spinner>
+            }
+            @else if (errorUpcoming) {
+            <div class="error-message">{{ errorUpcoming }}</div>
+            }
+            @else if (!ticketsUpComing?.length) {
+            <guest-empty-state [state]="emptyPurchases" />
+            }
+            @else {
+            <guest-ticket-card [ticketList]="ticketsUpComing" (nominate)="goToNominate($event)"></guest-ticket-card>
+            }
+        </p-tabPanel>
+
+        <p-tabPanel header="Pasados">
+            @if (isLoadingGeneral) {
+            <app-logo-spinner [show]="isLoadingGeneral" size="80px"></app-logo-spinner>
+            }
+            @else if (errorPast) {
+            <div class="error-message">{{ errorPast }}</div>
+            }
+            @else if (!ticketsPast?.length) {
+            <guest-empty-state [state]="emptyPurchases" />
+            }
+            @else {
+            <guest-ticket-card [ticketList]="ticketsPast" (nominate)="goToNominate($event)"></guest-ticket-card>
+            }
+        </p-tabPanel>
+    </p-tabView>
+</guest-panels> -->
+
+
+<guest-panels [panel]="myTickets">
+  <div class="contact-card">
+    <i class="pi icon-exclamation-circle" [ngClass]="'pi-exclamation-circle'"></i>
+    En caso no puedas descargar la boleta de pago, contáctanos a través de Whatsapp al +51 950612210 para poder guiarte.
+  </div>
+
+  <!-- tabs uniformes -->
+  <app-tab-profiles [tabs]="profileTabs" styleType="outlined"></app-tab-profiles>
+
+  <!-- Contenido dinámico -->
+  <ng-container *ngIf="activeTab === 1">
+    <!-- Próximos -->
+    <app-logo-spinner *ngIf="isLoadingGeneral" [show]="true" size="80px"></app-logo-spinner>
+    <div *ngIf="errorUpcoming" class="error-message">{{ errorUpcoming }}</div>
+    <guest-empty-state *ngIf="!errorUpcoming && !ticketsUpComing?.length && !isLoadingGeneral" [state]="emptyPurchases" />
+    <guest-ticket-card
+      *ngIf="!errorUpcoming && ticketsUpComing?.length"
+      [ticketList]="ticketsUpComing"
+      (nominate)="goToNominate($event)">
+    </guest-ticket-card>
+  </ng-container>
+
+  <ng-container *ngIf="activeTab === 2">
+    <!-- Pasados -->
+    <app-logo-spinner *ngIf="isLoadingGeneral" [show]="true" size="80px"></app-logo-spinner>
+    <div *ngIf="errorPast" class="error-message">{{ errorPast }}</div>
+    <guest-empty-state *ngIf="!errorPast && !ticketsPast?.length && !isLoadingGeneral" [state]="emptyPurchases" />
+    <guest-ticket-card
+      *ngIf="!errorPast && ticketsPast?.length"
+      [ticketList]="ticketsPast"
+      (nominate)="goToNominate($event)">
+    </guest-ticket-card>
+  </ng-container>
+</guest-panels>

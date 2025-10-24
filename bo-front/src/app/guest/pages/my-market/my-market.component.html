@@ -1,0 +1,41 @@
+<guest-panels [panel]="myMarket">
+  <div class="card-container" (click)="openModal()">
+    <div class="card-header">
+      <div class="card-opcion">
+        Opción 1
+      </div>
+      <div class="card-title">
+        <span>Kit de Inicio</span>
+        <span>O</span>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="card-paragraph">
+        Paquete mínimo de Inicio, duración 1 mes.
+      </div>
+      
+      <div class="pricing-details">
+        <div class="pricing-row">
+          <span class="label">Precio</span>
+          <span class="value price">$ 15</span>
+        </div>
+        <div class="pricing-row">
+          <span class="label">N° cuotas</span>
+          <span class="value">1</span>
+        </div>
+        <div class="pricing-row">
+          <span class="label">Cuota inicial</span>
+          <span class="value price">$ 15</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-modal-notify
+    *ngIf="showModal"
+    [title]="modalTitle"
+    [message]="modalMessage"
+    iconType="info"
+    (closed)="onCloseModal()"
+  />
+</guest-panels>

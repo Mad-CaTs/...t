@@ -1,0 +1,198 @@
+<app-breadcrumb [breadcrumbs]="breadcrumbItems"></app-breadcrumb>
+<div class="d-flex flex-column flex-md-row align-items-start gap-3 mt-4">
+<div class="rounded-4 shadow col p-3 flex-fill">
+    <div class="col-12 col-md-12">
+        <div class="h-100">
+            <h4 class="mb-4">Estado del socio</h4>
+            <span class="text-white px-3 py-1 rounded-pill " style="background-color: #4CAF50;">
+                {{ stateName }}
+            </span>
+            <div class="mb-2">Socio Embajador</div>
+            <app-points-progress-card [investorPoints]="investorPoints" [isLoading]="isChildLoading"
+                [userStatus]="userStatus" [statusColor]="statusColor"
+                [rangoPeriodo]="rangoPeriodo"></app-points-progress-card>
+            <div class="mb-5"></div>
+
+            <div class="fw-bold">Datos del registro</div>
+
+            <div class="row py-2" style="background-color: #f9fcff;">
+                <div class="col-6 text-muted">DNI</div>
+                <div class="col-6 text-end text-muted">{{userDni}}</div>
+            </div>
+
+            <div class="row py-2">
+                <div class="col-6 text-muted">Nombre y Apellido</div>
+                <div class="col-6 text-end text-muted">{{managerUser.fullName}}</div>
+            </div>
+
+            <div class="line bg-black opacity-50"></div>
+
+            <div class="mt-3">
+                <span class="fw-bold mt-3">Estadísticas del socio</span>
+            </div>
+            <div class="row py-2" style="background-color: #f9fcff;">
+                <div class="col-6 text-muted">Volumen rama 1</div>
+                <div class="col-6 text-end text-muted">{{compuestoRama1}} pts</div>
+            </div>
+
+            <div class="row py-2">
+                <div class="col-6 text-muted">Fecha de actualización</div>
+                <div class="col-6 text-end text-muted">{{currentDateTime}}</div>
+            </div>
+            <div class="line bg-black opacity-50"></div>
+
+            <div class="mt-3">
+                <span class="fw-bold mt-3">Fechas de ciclo semanal</span>
+            </div>
+            <div class="row py-2" style="background-color: #f9fcff;">
+                <div class="col-6 text-muted">Fecha de inicio</div>
+                <div class="col-6 text-end text-muted"> {{initialDate}}</div>
+            </div>
+            <div class="row py-2">
+                <div class="col-6 text-muted">Fecha de finilización</div>
+                <div class="col-6 text-end text-muted">{{endDate}}</div>
+            </div>
+            <div class="row py-2" style="background-color: #f9fcff;">
+                <div class="col-6 text-muted">Estado</div>
+                <div class="col-6 text-end text-muted">
+                    <article class="d-flex flex-column align-items-end gap-1">
+                        <span class="rounded m-0">
+                            {{ userStatus }}
+                        </span>
+                    </article>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="col p-3 pt-0 flex-fill">
+    <div class="pt-0 position-relative">
+    <div class="container-primary col-12">
+    <div class="container-back-range">
+    <div class="container-range">
+
+      <ng-container *ngIf="isLoading">
+        <div class="progress-spinner-container">
+          <p-progressSpinner [style]="{ width: '2rem', height: '2rem' }"></p-progressSpinner>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="!isLoading">
+        <div class="d-flex flex-row justify-content-between align-items-center w-100 mt-5">
+          <h2 class="fs-3 fw-normal mb-0">Avence del rangos</h2>
+          <span class="p-1 rounded-4 px-2 custom-color-range">Rango {{ currentTabState ? 'Compuesto' : 'Residual'
+            }}</span>
+        </div>
+        <div class="d-flex flex-row justify-content-start gap-4 align-items-center p-3 rounded-4 shadow-sm"
+          [style.background]="getGradientColor(currentTabState ? rangeData?.idMaxCompoundRange : rangeData?.idMaxResidualRange)">
+
+          <img [src]="
+        'https://s3.us-east-2.amazonaws.com/backoffice.documents/Ranges/' +
+          formatRangeName(currentTabState ? rangeData?.maxCompoundRange : rangeData?.maxResidualRange)+ '.png'
+                    " alt="Maximo logro" class="img-custom" />
+          <div class="p-1 d-flex flex-column align-items-start">
+            <h2 class="fs-4"
+              [style.color]="getTextColorByRangeId(currentTabState ? rangeData?.idMaxCompoundRange : rangeData?.idMaxResidualRange)">
+              {{
+              currentTabState ? rangeData?.maxCompoundRange : rangeData?.maxResidualRange }} </h2>
+            <span
+              [style.color]="getTextColorByRangeId(currentTabState ? rangeData?.idMaxCompoundRange : rangeData?.idMaxResidualRange )">Maximo
+              logro</span>
+          </div>
+        </div>
+        <div class="d-flex flex-row justify-content-start gap-4 align-items-center p-3 rounded-4 shadow-sm"
+          [style.background]="getGradientColor(rangeData?.idRange)">
+          <img [src]="
+        'https://s3.us-east-2.amazonaws.com/backoffice.documents/Ranges/' +
+          formatRangeName(rangeData?.rango)+ '.png'
+                    " alt="Rango Actual" class="img-custom" />
+          <div class="p-1 d-flex flex-column align-items-start">
+            <h2 class="fs-4" [style.color]="getTextColorByRangeId(rangeData?.idRange)">{{ rangeData?.rango }}</h2>
+            <span [style.color]="getTextColorByRangeId(rangeData?.idRange)">Rango actual</span>
+          </div>
+        </div>
+
+        <div class="p-2 shadow-sm rounded-3 bg-white-lilac py-3 px-3">
+          <div class="d-flex flex-row justify-content-between align-items-center">
+            <h2 class="fs-6 fw-normal mb-0">Proximo logro</h2>
+            <div class="p-1 d-flex flex-row justify-content-center align-items-center gap-1 px-2 rounded-3"
+              [style.background]="getGradientColor(nextRangeData?.idNextCompoundRange)">
+              <h2 class="fs-6 mb-0 p-1" [style.color]="getTextColorByRangeId(nextRangeData?.idNextCompoundRange)">Rango
+                {{ nextRangeData?.nextCompoundRange }}</h2>
+              <img [src]="
+        'https://s3.us-east-2.amazonaws.com/backoffice.documents/Ranges/' +
+          formatRangeName(nextRangeData?.nextCompoundRange)+ '.png'
+                    " alt="Maximo logro" class="img-compound-range" />
+            </div>
+          </div>
+          <div class="container-progressbar">
+            <mat-progress-bar [value]="averagePercentage" mode="determinate" class="custom-progress-bar">
+            </mat-progress-bar>
+            <span class="average text-muted">
+              {{ averagePercentage }}%
+            </span>
+            <span class="meta text-muted">
+              Meta: 100%
+            </span>
+          </div>
+        </div>
+        <div class="border p-3 rounded-4">
+          <h3 class="mb-3 fw-normal fs-5 border-bottom p-2">Puntos totales</h3>
+
+          <div class="min-container">
+            <div class="volumen-rama-custom">
+              <span>Volumen Rama 1</span>
+              <span>{{ currentTabState ? compuestoRama1 : residualRama1 }} pts</span>
+            </div>
+            <mat-progress-bar [value]="currentTabState ? compuestoRama1 : residualRama1" mode="determinate" class="custom-progress-bar">
+            </mat-progress-bar>
+          </div>
+          <div class="min-container">
+            <div class="volumen-rama-custom">
+              <span>Volumen Rama 2</span>
+              <span>{{ currentTabState ?compuestoRama2 : residualRama2 }} pts</span>
+            </div>
+            <mat-progress-bar [value]="currentTabState ? compuestoRama2 : residualRama2" mode="determinate" class="custom-progress-bar">
+            </mat-progress-bar>
+          </div>
+          <div class="min-container">
+            <div class="d-flex justify-content-between align-items-center">
+              <span>Volumen Rama 3</span>
+              <span>{{ currentTabState ? compuestoRama3 : residualRama3 }} pts</span>
+            </div>
+            <mat-progress-bar [value]="currentTabState ? compuestoRama3 : residualRama3" mode="determinate" class="custom-progress-bar">
+            </mat-progress-bar>
+          </div>
+          <div class="min-container">
+            <div class="volumen-rama-custom">
+              <span>Volumen Directo</span>
+              <span>{{ currentTabState ? cTotal : rTotal}} pts</span>
+            </div>
+            <mat-progress-bar [value]="currentTabState ? cTotal : rTotal" mode="determinate" class="custom-progress-bar">
+            </mat-progress-bar>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+  <div class="container-description">
+    <!-- <app-profile-dashboard-header [isLoading]="isLoading" [memberships]="result?.products"
+      [allNearExpiration]="result?.allNearExpiration" [investorPoints]="investorPoints" [result]="result?.result"
+      profileTitle="Emabajador" [tabs]="tabs"></app-profile-dashboard-header> -->
+
+    <app-main-ambassador [colors]="colors" [pointRangesDataToChild]="pointRangesDataToChild"
+      [nextRangeData]="nextRangeData" [rangeData]="rangeData" [getColorByRangeId]="getColorByRangeId.bind(this)"
+      [getTextColorByRangeId]="getTextColorByRangeId.bind(this)" [getGradientColor]="getGradientColor.bind(this)"
+      [formatRangeName]="formatRangeName.bind(this)" [volTotal]="volCtotal"
+      [puntajeDeLaMembresia]="puntajeDeLaMembresia" [numberTotal]="numberOfUsers" [typePosition]="true"
+      (pointsUpdated)="onPointsUpdated($event)" (updateTab)="onTabChanged($event)" [cardLoading]="isLoading"></app-main-ambassador>
+  </div>
+  </div>
+</div>
+</div>

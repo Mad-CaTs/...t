@@ -1,0 +1,99 @@
+<div class="p-4 card px-0 px-md-4 card-border-none">
+	<app-breadcrumb [breadcrumbs]="breadcrumbItems"></app-breadcrumb>
+
+	<div *ngIf="currentView === 'points'" class="release-points-container card border-0">
+		<div class="release-points-container__points_container">
+			<div class="card shadow border-0">
+				<div class="card-body">
+					<div>
+						<h5>Mis recompensas</h5>
+						<p class="custom-text-min">
+							Aquí podrás usar USD Rewards y disfrutar de sus beneficios
+						</p>
+					</div>
+
+					<div *ngIf="isLoading" class="d-flex justify-content-center align-items-center my-4">
+						<p-progressSpinner
+							[style]="{ width: '5rem', height: '5rem' }"
+							strokeWidth="3"
+							fill="var(--surface-ground)"
+							animationDuration=".7s"
+						></p-progressSpinner>
+					</div>
+
+					<div *ngIf="!isLoading">
+						<div class="release-points-container__points_container_body mt-4">
+							<div *ngFor="let card of cards" class="small-card">
+								<div class="coin-image">
+									<img [src]="'assets/icons/' + card.iconSvg + '.svg'" alt="coin" />
+								</div>
+								<div class="points-info">
+									<p class="custom-text-points">{{ card.title }}</p>
+									<div class="d-flex align-items-center">
+										<strong class="point-total">{{ card.points }}</strong>
+										<div
+											*ngIf="
+												card.title !== 'Cuotas pagadas' &&
+												card.title !== 'Intervalo a liberar'
+											"
+											class="d-flex flex-column pts"
+										>
+											<strong>USD</strong>
+											<strong>Rewards</strong>
+										</div>
+										<strong
+											class="cts"
+											*ngIf="
+												card.title == 'Cuotas pagadas' ||
+												card.title == 'Intervalo a liberar'
+											"
+											>{{ card.points > 1 ? 'cuotas' : 'cuota' }}</strong
+										>
+									</div>
+									<p class="custom-text-points">
+										<span>Portafolio • {{ portfolio }}</span>
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<app-form-release-points
+						*ngIf="cards.length > 2"
+						[maxPoints]="cards[2]?.points"
+						[idUsuario]="idUsuario"
+						[idSuscription]="idSuscription"
+					></app-form-release-points>
+				</div>
+			</div>
+		</div>
+
+		<div class="release-points-container__points_history_container">
+			<div class="card">
+				<div class="card-body">
+					<h5>Movimientos</h5>
+					<app-historic-released-point
+						[idSuscription]="idSuscription"
+					></app-historic-released-point>
+				</div>
+			</div>
+
+			<div class="card-historic">
+				<img src="assets/icons/arrow-up-right_white.svg" alt="arrow-up-right_white" />
+				<div class="d-flex justify-content-between w-100">
+					<div>
+						<span>Histórico de liberación</span>
+						<p>Conoce el historial de tus puntos</p>
+					</div>
+
+					<a (click)="goHistorico()">
+						<p>Ver histórico</p>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div *ngIf="currentView === 'history'">
+		<app-release-points-card></app-release-points-card>
+	</div>
+</div>

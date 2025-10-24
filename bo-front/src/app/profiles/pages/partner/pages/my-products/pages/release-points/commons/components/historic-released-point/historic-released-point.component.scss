@@ -1,0 +1,82 @@
+.historic-released-point__container {
+	display: grid;
+	gap: 10px;
+	grid-template-columns: 1fr;
+	grid-template-areas:
+		'form'
+		'table';
+
+	.table > :not(caption) > * > * {
+		color: #454545;
+	}
+
+	@media (max-width: 768px) {
+		display: block;
+	}
+
+	&__form {
+		grid-area: form;
+		display: flex;
+		gap: 16px;
+		flex-wrap: wrap;
+	}
+
+	&__table {
+		grid-area: table;
+
+		&__info {
+			display: flex;
+			align-items: center;
+			color: #454545;
+			&__icon {
+				display: flex;
+				padding: 8px;
+				justify-content: center;
+				align-items: center;
+				width: 32px;
+				height: 32px;
+				background-color: #f6f7fb;
+				border-radius: 40px;
+				img {
+					width: 16px;
+					height: 16px;
+				}
+			}
+
+			&__text {
+				padding: 4px 8px;
+				flex-grow: 1;
+				font-weight: 400;
+				line-height: 24px;
+				letter-spacing: 0%;
+				vertical-align: middle;
+				p {
+					font-size: 16px;
+				}
+				span {
+					font-size: 14px;
+					color: #5f7081;
+				}
+			}
+		}
+	}
+
+	.chip {
+		padding: 4px 8px;
+		border-radius: 16px;
+		font-size: 12px;
+		font-weight: 400;
+		line-height: 16px;
+		text-align: center;
+
+		&--consumed {
+			color: #d92d20;
+			background-color: #ffefed;
+		}
+
+		&--success {
+			color: #1b7935;
+			background-color: #e6f2ed;
+		}
+	}
+}

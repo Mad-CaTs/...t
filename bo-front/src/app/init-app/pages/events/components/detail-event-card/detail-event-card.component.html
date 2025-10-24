@@ -1,0 +1,13 @@
+<div class="detail-card">
+  <div class="image-container">
+    <img [src]="imageUrl()" alt="Evento" />
+  </div>
+
+  <div class="info">
+    <span class="badge">{{ type() }}</span>
+    <h3 class="title">{{ title() }}</h3>
+    <a class="link" (click)="onClick()">
+      {{ linkText() }} <span class="arrow">↗</span>
+    </a>
+  </div>
+</div>

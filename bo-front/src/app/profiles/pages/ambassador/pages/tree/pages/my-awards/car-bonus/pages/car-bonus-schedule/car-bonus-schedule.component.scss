@@ -1,0 +1,89 @@
+.schedule-page {
+  background: #fff;
+  padding: 24px 28px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  min-height: calc(100vh - 100px);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─────────────── HEADER ─────────────── */
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.page-title {
+  font-size: 1.125rem;
+  color: #111827;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* ─────────────── CARDS ─────────────── */
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 0px;
+}
+
+.actions .btn {
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+}
+.actions .btn.primary {
+  background: #ff8a1f;
+  border-color: #ff8a1f;
+  color: #fff;
+}
+.actions .btn.primary:hover { background: #e87813; border-color: #e87813; }
+
+@media (max-width: 1024px) {
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.summary-card {
+  border: 1px solid #e6e6e6;
+  border-radius: 10px;
+  padding: 16px 18px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.summary-title {
+  font-weight: 700;
+  color: #0b7a57;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+}
+
+.summary-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 8px 12px;
+  font-size: 14px;
+  padding: 2px 0;
+}
+.summary-key {
+  color: #374151;
+  font-weight: 400;
+}
+.summary-value {
+  color: #111827;
+  font-weight: 500;
+}
+
+
+
+

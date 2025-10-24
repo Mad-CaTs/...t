@@ -1,0 +1,17 @@
+<div class="d-flex flex-column align-items-center w-100 gap-4 modal-alert-container">
+	<i class="{{ data.icon }}" [style.color]="getIconColor(data.icon)" style="font-size: 50px"></i>
+
+	<span class="text-black fs-5 fw-bold text-center w-100" style="word-wrap: break-word">{{
+		data.title
+	}}</span>
+
+	<span
+		class="text-black fs-6 fw-normal text-center w-100"
+		style="word-wrap: break-word; word-break: break-word; max-width: 90%"
+		>{{ data.message }}</span
+	>
+
+	<div class="d-flex justify-content-center">
+		<button class="btn btn-secondary" (click)="closeModal()">Entendido</button>
+	</div>
+</div>

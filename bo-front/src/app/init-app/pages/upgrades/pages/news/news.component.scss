@@ -1,0 +1,39 @@
+/* .notices-container {
+	display: grid;
+	grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+	.notices-container {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media (min-width: 1336px) {
+
+}
+
+ */
+ .prueba{
+  height: 100%;
+ }
+ .prueba1{
+  margin-left: 15px;
+
+ }
+
+ .positioned-box {
+  width: 400px;
+  left: 0;
+  top: 30%;
+  transform: translateY(-50%);
+  position: absolute;
+}
+
+.left-arrow {
+  color: #6b6b6b; 
+}
+
+.right-arrow {
+  color: #ff7f27; 
+}

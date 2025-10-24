@@ -1,0 +1,46 @@
+.table-rewards-historical {
+	border: 1px solid #d4d4d4;
+	border-radius: 8px;
+	border-width: 1px;
+	width: 100%;
+	thead {
+		background-color: #f6f7fb;
+		color: #575f6e;
+		font-weight: 400;
+		font-size: 14px;
+		line-height: 18px;
+		th {
+			padding: 18px 8px;
+			font-weight: 400;
+		}
+	}
+	tbody {
+		td {
+			padding: 19px 8px;
+			font-family: Roboto;
+			font-weight: 400;
+			font-size: 14px;
+			line-height: 24px;
+			vertical-align: middle;
+			color: #454545;
+		}
+	}
+}
+.chip {
+	padding: 4px 8px;
+	border-radius: 16px;
+	font-size: 12px;
+	font-weight: 400;
+	line-height: 16px;
+	text-align: center;
+
+	&--consumed {
+		color: #d92d20;
+		background-color: #ffefed;
+	}
+
+	&--success {
+		color: #1b7935;
+		background-color: #e6f2ed;
+	}
+}

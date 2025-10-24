@@ -1,0 +1,70 @@
+<ng-container class="w-100">
+	<app-header [showOnlyLogoAndBackButton]="true" (backClick)="goHome()"></app-header>
+
+	<div class="container-fluid d-flex flex-column">
+		<div class="row flex-grow-1">
+			<nav class="col-md-3 col-lg-2 d-none d-md-block bg-light p-3">
+				<ul class="nav flex-column p-5 content-title">
+					<li class="nav-item">
+						<a class="nav-link text-primary active fw-bold">Introducción </a>
+					</li>
+					<li class="nav-item">
+						<a (click)="scrollToSection('header')" class="nav-link text-dark cursor-pointer"
+							>Término A</a
+						>
+					</li>
+					<li class="nav-item">
+						<a (click)="scrollToSection('middle')" class="nav-link text-dark cursor-pointer"
+							>Término B</a
+						>
+					</li>
+					<li class="nav-item">
+						<a (click)="scrollToSection('footer')" class="nav-link text-dark cursor-pointer"
+							>Término C</a
+						>
+					</li>
+					<li class="nav-item">
+						<a (click)="scrollToSection('end')" class="nav-link text-dark cursor-pointer"
+							>Ver Más</a
+						>
+					</li>
+				</ul>
+			</nav>
+
+			<main class="col-12 col-md-9 col-lg-10 d-flex flex-column">
+				<div class="flex-column">
+					<div class="content-title text-center">
+						<a class="text-decoration-none text-primary fw-bold" [href]="pdfUrl" target="_blank">
+							Descargar <img src="assets/icons/Size=32px.svg" alt="Descargar" />
+						</a>
+					</div>
+					<pdf-viewer
+						[src]="pdfUrl"
+						[page]="currentPage"
+						[render-text]="true"
+						(after-load-complete)="afterLoadComplete($event)"
+						[original-size]="false"
+						[fit-to-page]="true"
+						[show-all]="false"
+						class="pdf-content"
+					></pdf-viewer>
+
+					<div class="d-flex justify-content-center align-items-center mt-5 gap-4 mb-5">
+						<button class="btn btn-outline-orange" (click)="prevPage()" *ngIf="currentPage !== 1">
+							<img src="assets/images/svg/arrow-bold-left.svg" class="me-2" alt="" />Anterior
+						</button>
+						<span class="btn-next">{{ currentPage }}/{{ pdf?._pdfInfo.numPages }}</span>
+						<button
+							class="btn btn-orange"
+							(click)="nextPage()"
+							*ngIf="currentPage < pdf?._pdfInfo.numPages"
+						>
+							Siguiente <img src="assets/images/svg/arrow-bold-right.svg" alt="" />
+						</button>
+					</div>
+				</div>
+			</main>
+		</div>
+	</div>
+	<app-footer class="w-100 mt-auto"></app-footer>
+</ng-container>

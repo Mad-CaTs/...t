@@ -1,0 +1,36 @@
+<div class="modal-container container-fluid">
+	<div class="row">
+		<div class="col-12 d-flex flex-column align-items-start">
+			<div class="icon-box">
+				<img src="assets/icons/personalcard@2x.svg" alt="Patrocinador" class="icon-img" />
+			</div>
+
+			<h4 class="fw-bold mt-3">Elige tu patrocinador</h4>
+		</div>
+
+		<p class="text-muted px-3 mt-2">Busca y selecciona a tu patrocinador para reactivar tu membresía.</p>
+
+		<div class="modal-content px-3 mt-3">
+			<h1 class="fs-6 fw-medium m-0 text-black pb-2">Buscador:</h1>
+			<app-search-select
+				[options]="optSponsors"
+				placeholder="Buscar patrocinador..."
+				(searchInput)="onSearchSponsor($event)"
+				(selected)="onSponsorSelected($event)"
+			></app-search-select>
+			<div class="alert alert-info d-flex align-items-center mt-3">
+				<i class="pi pi-info-circle me-2"></i>
+				<div>
+					<strong>Recuerda: </strong> Los socios deben estar activos para poder realizar el proceso
+					de reactivación.
+				</div>
+			</div>
+		</div>
+		<div class="d-flex flex-row justify-content-center gap-4 mt-2 w-100">
+			<button class="btn btn-outline-secondary" type="button" (click)="closeModal()">Volver</button>
+			<button class="btn btn-secondary" [disabled]="!selectedSponsorId" (click)="nextStep()">
+				Siguiente
+			</button>
+		</div>
+	</div>
+</div>

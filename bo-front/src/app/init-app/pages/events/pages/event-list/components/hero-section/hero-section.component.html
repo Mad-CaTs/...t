@@ -1,0 +1,91 @@
+<!-- src/app/.../hero/hero.component.html -->
+<section class="hero-stack">
+  <div class="hero-wrapper">
+    <svg width="0" height="0" aria-hidden="true" focusable="false">
+      <defs>
+        <filter id="clip-rounded">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur" />
+          <feColorMatrix in="blur" mode="matrix"
+            values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo" />
+          <feComposite in="SourceGraphic" in2="goo" operator="atop" />
+        </filter>
+      </defs>
+    </svg>
+
+    <div class="hero-bg">
+      <div class="hero-content">
+        <ng-container *ngIf="currentEvent; else staticHero">
+          <div class="left">
+            <span class="section-label">Eventos</span>
+            <h1>
+              <ng-container *ngFor="let line of titleLines; let last = last">
+                {{ line }}<br *ngIf="!last" />
+              </ng-container>
+            </h1>
+            <button class="cta-btn" type="button" (click)="goToBuy()">Comprar ahora</button>
+          </div>
+        </ng-container>
+
+        <ng-template #staticHero>
+          <div class="left">
+            <span class="section-label">Eventos</span>
+            <h1>Eleva tu talento<br />como líder y<br />crecimiento<br />personal</h1>
+            <button class="cta-btn" type="button">Comprar ahora</button>
+          </div>
+        </ng-template>
+      </div>
+
+      <!-- Póster posicionado por variables -->
+      <div class="event-overlay" role="region" aria-label="Evento destacado">
+        <ng-container *ngIf="loaded && currentEvent as ev">
+          <figure class="event-card">
+            <img
+              [src]="ev.flyerUrl"
+              [alt]="ev.eventName"
+              loading="lazy"
+              decoding="async"
+              width="300" height="400"
+              [attr.srcset]="ev.flyer2x ? ev.flyerUrl + ' 1x, ' + ev.flyer2x + ' 2x' : null"
+              sizes="(min-width:1600px) 340px, (min-width:1366px) 300px, (min-width:1024px) 26vw, (min-width:900px) 28vw, 82vw"
+            />
+            <figcaption class="caption">
+              <a (click)="goToBuy()" href="javascript:void(0)">Ir a ver más información</a>
+            </figcaption>
+          </figure>
+        </ng-container>
+
+        <ng-container *ngIf="loaded && loadError">
+          <figure class="event-card">
+            <img
+              src="assets/images/events/prueba_principalhero.png"
+              alt="Evento destacado"
+              loading="lazy"
+              decoding="async"
+              width="300" height="400"
+              sizes="(min-width:1600px) 340px, (min-width:1366px) 300px, (min-width:1024px) 26vw, (min-width:900px) 28vw, 82vw"
+            />
+            <figcaption class="caption">
+              <span class="event-info-text">Ir a ver más información</span>
+            </figcaption>
+          </figure>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats: ahora dentro del wrapper para anclar al héroe -->
+  <div class="stats-container">
+    <div class="stat-box" *ngFor="let stat of stats">
+      <div class="stat-info">
+        <h3
+          [innerHTML]="
+            stat.dynamicFirst
+              ? stat.displayValue + '<br>' + stat.line2Static
+              : stat.prefix + '<br>' + stat.displayValue
+          "
+        ></h3>
+        <p>{{ stat.description }}</p>
+      </div>
+    </div>
+  </div>
+</section>

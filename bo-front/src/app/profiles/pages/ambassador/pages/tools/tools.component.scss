@@ -1,0 +1,27 @@
+.tool {
+	width: 100%;
+}
+
+@media (min-width: 768px) {
+	.tool {
+		width: calc((100% - 1.5rem) / 2);
+	}
+}
+
+@media (min-width: 1400px) {
+	.tool {
+		width: calc((100% - 3rem) / 3);
+	}
+}
+
+.contenedor-imagen img {
+  width: 100%;
+  height: 216px;
+}
+.custom-border {
+  border-radius: 8px;
+  border: 1px solid var(--Gray300, #ACAFB3);
+  background: var(--White, #FFF);
+}
+
+

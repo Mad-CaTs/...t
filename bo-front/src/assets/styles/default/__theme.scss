@@ -1,0 +1,61 @@
+@use '@angular/material' as mat;
+@import url('../boostrap/__modal.scss');
+
+
+@include mat.core();
+
+// Color range
+
+$my-astral-color: (
+	100: #c1d6e2,
+	200: #9fa8da,
+	500: #31769f,
+	700: #3140a5,
+	contrast: (
+		100: #000000,
+		200: #000000,
+		300: #000000,
+		500: #ffffff,
+		700: #ffffff
+	)
+);
+
+$my-sorbus-color: (
+	100: #ffd8b4,
+	200: #ffbe82,
+	300: #fea34f,
+	400: #fe902a,
+	500: #fe7c04,
+	700: #fe6903,
+	contrast: (
+		200: #000000,
+		500: #000000,
+		700: #000000
+	)
+);
+
+// create palette
+
+$my-primary: mat.define-palette($my-astral-color);
+$my-accent: mat.define-palette($my-sorbus-color);
+
+// The "warn" palette is optional and defaults to red if not specified.
+$my-warn: mat.define-palette(mat.$red-palette);
+
+// My Theme
+
+$my-theme: mat.define-light-theme(
+	(
+		color: (
+			primary: $my-primary,
+			accent: $my-accent,
+			warn: $my-warn
+		)
+	)
+);
+
+// aplicate theme in Angular Material
+
+@include mat.core-theme($my-theme);
+
+@include mat.all-component-themes($my-theme);

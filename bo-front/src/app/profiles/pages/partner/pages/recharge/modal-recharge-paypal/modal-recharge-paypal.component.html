@@ -1,0 +1,114 @@
+<!-- Modal paypal View -->
+<ng-container *ngIf="paypalBankPresenter.paypalForm as form"  class="col-md-5 col-sm-12 pt-4">
+    <div class="modal-content pt-4">
+        <div class="modal-header flex justify-content-between">
+            <div class="">
+                <img [src]="inputData.pathPicture"
+                    style="border:1px solid #ececec; padding: 5px; border-radius: 6px; height:36px; width: 39px;  object-fit: cover; object-position: left;"
+                    [alt]="inputData.description">
+            </div>
+            <button type="button" class="close-btn" aria-label="Close" (click)="closeModal()">
+                x
+            </button>
+        </div>
+        <div class="mx-0 text-black">
+            <h4 class="modal-title">Recarga con PayPal</h4>
+            <p class="modal-subtitle text-muted">
+                Te redireccionaremos a PayPal para completar el pago de forma segura. El
+                monto de la recarga aparecerá en dólares.
+            </p>
+        </div>
+        <div class="modal-body ">
+            <form  [formGroup]="form" class="row">
+                <!-- Sección Monto a recargar -->
+                <div class="amount-section mb-4">
+                    <span class="text-black ">Monto a recargar</span>
+                    <div class="col-12 ">
+                        <div class="input-group mb-2">
+                            <span class="input-group-text border-right-0  no-border-right">$</span>
+                            <input formControlName="totalMount"  type="number" step="0.01"
+                                min="500" class="form-control border-1 border-left-0  no-border-left"
+                                placeholder="500.00" [class]="!isInvalid ? 'is-invalid' : ''" (blur)="formatDecimal()"
+                                (keyup)="validateInput($event)" required>
+                        </div>
+
+                        <div *ngIf="!isInvalid" class="text-danger">
+                            * Este campo es requerido
+                        </div>
+                        <div *ngIf="!isInvalid" class="text-danger">
+                            * solo números mayores a ${{ mountMin }}
+                        </div>
+
+                    </div>
+                    <div class="d-flex align-items-center small rounded-2 p-2 mt-3 justify-content-start"
+                        style="background:#E9F6FF;">
+                        <span class="me-2 mt-2">
+                            <mat-icon style="color: #7996eb;">info</mat-icon>
+                        </span>
+                        <span class="text-xs">
+                            El monto mínimo es de $ {{ mountMin }} dólares,
+                            Esta operación está sujeta a una comisión, la cual varía
+                            según el país de origen.
+                        </span>
+                    </div>
+                </div>
+
+                <hr class="py-0 border-secondary-1 my-4 mt-2 " />
+
+                <div class="conversion-section mb-4">
+
+                    <div class="d-flex justify-content-between py-2 rounded-2 p-2" style="background :#F8F9FB;">
+                        <span>Monto:</span>
+                        <span>{{ currency }} {{ subTotalMount }}</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between py-1 p-2 my-1">
+                        <span>Tasa:</span>
+                        <span>{{ currency }}  {{ tasaMount }}</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between py-1 p-2 my-1">
+                        <span>Comisión:</span>
+                        <span>{{ currency }}  {{ comisionMount }}</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between py-2 rounded-2 p-2" style="background :#F8F9FB;">
+                        <span>Total a pagar:</span>
+                        <span>{{ currency }}  {{ totalMount }}</span>
+                    </div>
+                </div>
+
+                <div class="modal-footer d-flex flex-column gap-1">
+                    <div class="d-flex justify-content-between w-100 gap-3">
+                        <button type="button" class="btn btn-outline-secondary w-50 py-3" (click)="closeModal()">
+                            Cancelar
+                        </button>
+                        <div class="w-50 pt-1 rounded-2" style="overflow: hidden;height: 52px; background: #FFC439; " title="Pagar con PayPal">
+                            <ngx-paypal [config]="payPalConfig"  
+                                class="paypal-button-container " title="Pagar con PayPal" >
+                            </ngx-paypal>
+                        </div>
+                        
+                    </div>
+                    <!-- btn btn-secondary w-50 text-white py-3 -->
+                    <div class="form-check mb-1 d-flex align-items-center justify-content-start text-center">
+                        <div class="me-2">
+                            <mat-icon class="text-muted ml-0  text-muted">security</mat-icon>
+                            <!-- <mat-icon class="ml-3 text-muted">credit_card</mat-icon> -->
+                        </div>
+                        <label class="form-check-label small text-xs text-center text-muted" for="securePayment">
+                            Pago 100% seguro, protegemos tus datos.
+                        </label>
+                    </div>
+                    <div class="w-100 text-center mt-0">
+                        <small class="text-muted">Powered by
+                            <img [src]="inputData.pathPicture"
+                                style="height:20px; width: auto;  object-fit: fill; object-position: center;"
+                                [alt]="inputData.description">
+                        </small>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</ng-container>

@@ -1,0 +1,138 @@
+/* Layout base */
+.filter-generic { margin-bottom: 12px; }
+
+/* Grid 12 cols + min width para que no se achiquen feo */
+.filters-row {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 16px;
+  align-items: end;
+}
+
+/* Por defecto cada field ocupa 4 columnas (3 por fila) */
+.field {
+  grid-column: span 4;
+  min-width: 260px; /* asegura tamaño mínimo decente */
+}
+
+/* Selector de columnas en desktop */
+.filter-generic.cols-4 .field { grid-column: span 3; } /* 4 por fila */
+.filter-generic.cols-3 .field { grid-column: span 4; } /* 3 por fila */
+
+/* Anchura opcional via className si lo necesitas (sobrescribe) */
+.col-2  { grid-column: span 2; }
+.col-3  { grid-column: span 3; }
+.col-4  { grid-column: span 4; }
+.col-6  { grid-column: span 6; }
+.col-12 { grid-column: span 12; }
+
+/* Acciones siempre a toda la fila */
+.actions {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+/* Estética de los campos */
+.label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #6c757d;
+  margin-bottom: 6px;
+}
+
+.control,
+.search-wrapper input,
+.select-wrapper select {
+  width: 100%;
+  height: 44px;
+  padding: 10px 16px;
+  font-size: 14px;
+  border: 1px solid #d9d9d9;
+  border-radius: 10px;
+  outline: none;
+  background: #fff;
+}
+
+.control:focus,
+.search-wrapper input:focus,
+.select-wrapper select:focus {
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 2px rgba(74,144,226,.2);
+}
+
+/* Input con ícono */
+.input-icon-wrapper { position: relative; }
+.input-icon-wrapper input { padding-right: 40px; }
+.search-icon {
+  position: absolute;
+  right: 12px; top: 50%; transform: translateY(-50%);
+  color: #5f7081; font-size: 16px; cursor: pointer;
+}
+
+/* Select flecha */
+.select-wrapper select {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg width='14' height='8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 8L0 .005h14L7 8z' fill='%235f7081'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+}
+
+/* Botones */
+.actions .btn {
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background-color .15s ease, color .15s ease, border-color .15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+
+  i { color: inherit; }
+
+  &.primary { background: #ff8a1f; color: #fff; border-color: #ff8a1f; }
+  &.primary:hover { background: #e87813; border-color: #e87813; }
+
+  &.ghost {
+    background: #fff;
+    color: #ff8a1f;
+    border: 2px solid #ff8a1f !important;
+    box-shadow: none;
+  }
+  &.ghost:hover { background: #fff6ee; }
+
+  &.secondary {
+    background: #fff;
+    color: #ff8a1f;
+    border: 2px solid #ff8a1f !important;
+    box-shadow: none;
+  }
+  &.secondary:hover { background: #fff6ee; }
+  &.danger { background: #ef4444; color: #fff; border-color: #ef4444; }
+  &.danger:hover { background: #dc2626; border-color: #dc2626; }
+  &.link { background: transparent; border-color: transparent; color: #2563eb; }
+  &.link:hover { text-decoration: underline; }
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .field { grid-column: span 6 !important; }
+  .actions { grid-column: 1 / -1; }
+}
+@media (max-width: 640px) {
+  .field { grid-column: span 12 !important; }
+  .actions { grid-column: 1 / -1; }
+}
+
+/* Dark mode */
+:host-context(.night-mode) .label { color: #ffffff !important; }
+
+.btn.secondary i,
+.btn.ghost i { color: #ff8a1f; }

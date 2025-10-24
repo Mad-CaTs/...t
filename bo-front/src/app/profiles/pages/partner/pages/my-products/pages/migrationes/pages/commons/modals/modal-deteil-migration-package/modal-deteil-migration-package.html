@@ -1,0 +1,74 @@
+<ng-container *ngIf="deteilMigration">
+	<form class="d-flex flex-column w-100 gap-4">
+		<div class="line bg-black opacity-50"></div>
+		<div class="fs-14">
+			<div class="d-flex flex-row w-100 justify-content-between align-items-center mt-2">
+				<span class="cl-gray-900 fw-500 mt-2">Datos de migración</span>
+			</div>
+			<div class="d-flex flex-row justify-content-between align-items-center mt-2">
+				<span class="cl-gray-100">Paquete a migrar:</span>
+				<span class="cl-gray-100">{{ deteilMigration.name }}</span>
+			</div>
+			<div class="d-flex flex-row justify-content-between align-items-center mt-2">
+				<span class="cl-gray-100">Precio total:</span>
+				<span class="cl-gray-100">{{ selectedPackage?.quoteUsd}} USD</span>
+			</div>
+			<div class="d-flex flex-row justify-content-between align-items-center mt-2">
+				<span class="cl-gray-100">Descripción:</span>
+				<span class="cl-gray-100">{{selectedPackage?.quoteDescription }} </span>
+			</div>
+			<div class="d-flex flex-row justify-content-between align-items-center mt-2">
+				<span class="cl-gray-100">Estado:</span>
+				<span class="cl-gray-100"
+					>{{ selectedPackage?.idStatePayment === 1 ?'PAGADO':'PENDIENTE' }}
+				</span>
+			</div>
+			<div class="d-flex flex-row justify-content-between align-items-center mt-2">
+				<span class="cl-gray-100">Mora:</span>
+				<span class="cl-gray-100">{{ selectedPackage?.totalOverdue || 0}} </span>
+			</div>
+			<div class="d-flex flex-row justify-content-between align-items-center mt-2">
+				<span class="cl-gray-100">Capital:</span>
+				<span class="cl-gray-100">{{ selectedPackage?.capitalBalanceUsd}} </span>
+			</div>
+			<div class="d-flex flex-row justify-content-between align-items-center mt-2">
+				<span class="cl-gray-100">Amortización:</span>
+				<span class="cl-gray-100">{{ selectedPackage?.amortizationUsd}} </span>
+			</div>
+
+			<div class="alert alert-info d-flex flex-row gap-2 mt-2 align-items-center" role="alert">
+				<mat-icon fontIcon="info"></mat-icon>
+				<span class="fw-medium">La migración de una membresía es de menor a mayor</span>
+			</div>
+			<div class="d-flex flex-row w-100 justify-content-center align-items-center mt-2 gap-3">
+				<div class="d-flex flex-row gap-2 justify-content-center mt-2">
+					<!--   <button class="btn btn-outline-secondary d-flex align-items-center px-3 py-1"
+                  type="button"
+                  (click)="onClickButton()"
+                  [disabled]="paymentDetails?.payed || isLoading">
+            <span *ngIf="isLoading"
+                  class="spinner-border spinner-border-sm me-2"
+                  role="status"
+                  aria-hidden="true"></span>
+            Continuar
+          </button> -->
+
+					<button
+						class="btn btn-outline-secondary d-flex align-items-center px-3 py-1"
+						type="button"
+						[disabled]="!config.data.canContinue"
+						(click)="onClickButton()"
+					>
+						<span
+							*ngIf="!isLoading"
+							class="spinner-border spinner-border-sm me-2"
+							role="status"
+							aria-hidden="true"
+						></span>
+						Continuar
+					</button>
+				</div>
+			</div>
+		</div>
+	</form>
+</ng-container>

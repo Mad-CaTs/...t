@@ -1,0 +1,31 @@
+<div class="table-container">
+	<table class="table-custom">
+		<thead>
+			<tr>
+				<th *ngFor="let header of headers" class="text-center">{{ header }}</th>
+			</tr>
+		</thead>
+		<tbody>
+			<ng-container *ngIf="rows.length > 0; else noDataTemplate">
+				<ng-container *ngFor="let row of rows; let i = index">
+					<ng-container
+						*ngTemplateOutlet="bodyTemplate; context: { $implicit: row, index: i }"
+					></ng-container>
+				</ng-container>
+			</ng-container>
+		</tbody>
+	</table>
+  <ng-template #noDataTemplate>
+    <tr>
+      <td [attr.colspan]="headers.length" class="text-center py-5 text-muted">
+        <img
+          src="assets/icons/copy1.svg"
+          alt="Sin documentos"
+          width="48"
+          class="mb-3"
+        />
+        <div class="fs-6">No hay documentos disponibles.</div>
+      </td>
+    </tr>
+  </ng-template>
+</div>

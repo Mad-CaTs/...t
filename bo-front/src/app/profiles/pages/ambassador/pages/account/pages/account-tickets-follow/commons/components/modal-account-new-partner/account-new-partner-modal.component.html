@@ -1,0 +1,153 @@
+<app-modal title="Bienvenido a Inclub">
+	<ng-container *ngIf="screen === 1">
+	<form [formGroup]="form" (submit)="onSubmit()" class="d-flex flex-column gap-3 w-100">
+		<p class="m-0 fs-6 fw-normal cl-muted text-center">Has sido invitado por {{currentUser.name+' '+currentUser.lastName}}</p>
+		<h4 class="m-0 fs-5 fw-medium text-black text-center">Datos del titular</h4>
+		<div class="d-flex flex-column flex-lg-row gap-2 w-100">
+			<app-input
+				[form]="form"
+				controlName="names"
+				label="Nombres"
+				placeholder="Ingrese nombres"
+				class="w-100"
+			></app-input>
+			<app-input
+				[form]="form"
+				controlName="lastnames"
+				label="Apellidos"
+				placeholder="Ingrese apellidos"
+				class="w-100"
+			></app-input>
+			<app-select
+				class="w-100"
+				[showImg]="true"
+				label="Nacionalidad"
+				placeholder="Seleccione nacionalidad"
+				[form]="form"
+				[options]="nationalityOpt"
+				controlName="nationality"
+				(onChangeSelection)="getDocumentType($event)"
+			></app-select>
+		</div>
+		<div class="d-flex flex-column flex-lg-row gap-2 w-100">
+			<app-select
+				class="w-100"
+				label="Tipo de documento de identidad"
+				placeholder="Seleccione"
+				[form]="form"
+				[options]="docTypeOpt"
+				controlName="docType"
+			></app-select>
+			<app-input
+				[form]="form"
+				controlName="docNumber"
+				label="Documento de identidad"
+				placeholder="Ingrese documento de identidad"
+				class="w-100"
+				(focusout)="checkDocument()"
+			></app-input>
+			<!--app-phone
+				class="w-100"
+				label="Celular"
+				placeholder="988847171"
+				[form]="form"
+				name="phone"
+			></app-phone-->
+			<app-input class="w-100"
+                   label="Nro. Celular"
+                   [form]="form"
+                   controlName="phone"
+                   placeholder="999999999"
+                   [iconName]="iconName"
+                   [phonecodeCountry]="phonecodeCountry"
+                   [isIconLeft]="true"
+                   [disabled]="isMultiUser">
+        	</app-input>
+		</div>
+		<div class="d-flex flex-column flex-lg-row gap-2 w-100">
+			<app-input
+				[form]="form"
+				controlName="email"
+				label="Correo electronico"
+				placeholder="example@gmail.com"
+				class="w-100"
+				(focusout)="checkEmail()"
+			></app-input>
+			<app-select class="w-100"
+				label="País de residencia"
+                showImg="true"
+                placeholder="Seleccione país de residencia"
+                [form]="form"
+                [options]="residentOpt"
+                controlName="country"
+                (onChangeSelection)="onChangeCountry($event)"
+                [disabled]="isMultiUser"
+			></app-select>
+			<!--app-select
+				class="w-100"
+				label="Distrito"
+				placeholder="Seleccione distrito"
+				[form]="form"
+				[options]="nationalityOpt"
+				controlName="district"
+			></app-select-->
+			<app-input
+				class="w-100"
+                label="Distrito"
+                [form]="form"
+                controlName="district"
+                placeholder="Ingresar su distrito"
+                [disabled]="isMultiUser"
+			></app-input>
+		</div>
+		<div class="d-flex flex-column flex-lg-row gap-2 w-100">
+			<app-input
+				[form]="form"
+				controlName="address"
+				label="Dirección"
+				placeholder="Ingrese dirección"
+				class="w-100"
+			></app-input>
+			
+			<app-select
+				class="w-100"
+				label="Sexo"
+				placeholder="Seleccione sexo"
+				[form]="form"
+				[options]="genderOpt"
+				controlName="gender"
+			></app-select>
+
+			<app-date class="w-100" label="Fecha de nacimiento" [form]="form" controlName="bornDate" readonly="true"></app-date>
+		</div>
+		<div class="d-flex flex-column flex-lg-row gap-2 w-100">
+			<app-select
+				class="w-100"
+				label="Estado Civil"
+				placeholder="Seleccione estado Civil"
+				[form]="form"
+				[options]="civilStateOpt"
+				controlName="civilState"
+			></app-select>
+			<div class="w-100 d-none d-lg-block"></div>
+			<div class="w-100 d-none d-lg-block"></div>
+		</div>
+		<div class="d-flex justify-content-center align-items-center gap-3">
+			<button class="btn btn-secondary" type="submit" [disabled]="form.invalid" click>Guardar cambios</button>
+		</div>
+	</form>
+	</ng-container>
+
+	<!--confirmiation message-->
+	<div class="d-flex flex-column gap-3" *ngIf="screen === 2">
+		<div class="d-flex flex-row gap-4" style="align-self: center;">
+			<h1 class="fs-6 fw-medium m-0 text-black pb-2">Notificación</h1>
+		</div>
+		<div class="w-100 d-flex flex-row justify-content-between align-items-center">
+			<img style="margin-left: 42%;" src="../../../../../../../../../../../assets/icons/success.svg" alt="">
+		</div>
+		<div class="w-100 d-flex flex-row justify-content-between align-items-center">
+			<h4 class="fs-6 fw-medium m-0 text-black pb-2">Tu solicitud de traspaso de {{typeTransfer}} está en verificación</h4>
+		</div>
+	</div>
+</app-modal>

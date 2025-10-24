@@ -1,0 +1,18 @@
+<app-new-partner-general-info-component 
+  [registerTypeList]="registerTypeList"
+  [nationalitiesList]="nationalitiesList"
+  [documentTypeList]="documentTypeList"
+  [civilStateList]="civilStateList"
+  [genderList]="genderList"
+  [isMultiUsuario]="isMultiUsuario"
+  [isDocumentLoading]="isDocumentLoading"
+  [isToken]="isToken"
+  [coRequesterData]="coRequesterData"
+  [form]="form"
+  (onChangeNationality)="getDocumentType($event)"
+  (familyPackagesChanged)="onFamilyPackagesChange($event)"
+  (openCoAffiliateModal)="onOpenCoAffiliateModal()"
+  (deleteCoRequester)="onDeleteCoRequester()"
+  (onCheckDocumentExists)="checkDocumentExists()"
+  (changeTypeUser)="onChangeTypeUser($event)">
+</app-new-partner-general-info-component>

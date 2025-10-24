@@ -1,0 +1,172 @@
+<div class="modal-container">
+    <div class="modal-content modal-fullscreen-sm-down">
+        <div class="modal-header">
+            <h5 class="text-black fw-medium family-font">Datos Personales</h5>
+        </div>
+        <p style="font-size: 14px" class="text-muted family-font">
+            Esta es la informacion que nos has proporcionado sobre ti.
+        </p>
+
+        <form [formGroup]="formUser">
+            <div class="d-flex flex-wrap gap-3">
+                <!-- Nombres y Apellidos -->
+                <div class="d-flex flex-column flex-md-row gap-1 gap-md-2 w-100">
+                    <div class="form-group w-100">
+                        <app-input class="size-14" label="Nombres" placeholder="Nombres" [form]="formUser"
+                            controlName="name"></app-input>
+                    </div>
+                    <div class="form-group w-100">
+                        <app-input class="size-14" label="Apellidos" placeholder="Apellidos" [form]="formUser"
+                            controlName="lastName"></app-input>
+                    </div>
+                </div>
+
+                <!-- Documento  -->
+                <div class="d-flex flex-column flex-md-row gap-1 gap-md-2 w-100">
+                    <!-- <div class="form-group w-100 custom-select">
+                        <app-select class="custom-select" [showImg]="false" label="Tipo de documento *"
+                            placeholder="Tipo de documento" [form]="formUser" [options]="documentTypes"
+                            controlName="idDocument"></app-select>
+                    </div> -->
+
+                    <div class="d-flex flex-column w-100 custom-select">
+                        <app-select class="w-100 " [showImg]="true" label="Tipo de documento *"
+                            placeholder="Seleccione su documento" [form]="formUser" [options]="documentTypes"
+                            controlName="idDocument"></app-select>
+                    </div>
+
+
+
+
+
+
+
+                    <div class="form-group w-100">
+                        <app-input label="Documento *" placeholder="Número de documento" [form]="formUser"
+                            controlName="nroDocument"></app-input>
+                    </div>
+                </div>
+
+                <!-- Correo y Nacionalidad -->
+
+                <div class="d-flex flex-column flex-md-row gap-1 gap-md-2 w-100">
+                    <div class="form-group w-100">
+                        <app-input label="Correo electrónico" placeholder="Correo" [form]="formUser" controlName="email"
+                            class="w-100"></app-input>
+                    </div>
+                    <div class=" form-group w-100">
+                        <app-select class="w-100" [showImg]="true" label="Nacionalidad"
+                            placeholder="Selecciona la nacionalidad" [form]="formUser" [options]="nationalitiesList"
+                            controlName="idNationality" (onChangeSelection)="getDocumentType($event)"></app-select>
+                    </div>
+                </div>
+
+                <!-- Cumpleaños y Telefono -->
+                <div class="d-flex flex-column flex-md-row gap-1 gap-md-2 w-100">
+                    <div class="form-group w-100">
+                        <app-date label="Fecha de cumpleaños" placeholder="Fecha de cumpleaños" [form]="formUser"
+                            controlName="bornDate" class="w-100" [config]="true"></app-date>
+                    </div>
+
+                    <div class="form-group  w-100">
+                        <app-input label="Teléfono" placeholder="Teléfono" [form]="formUser" controlName="cellphone"
+                            class="w-100"></app-input>
+                    </div>
+                </div>
+
+                <!-- Estado Civil y Genero -->
+                <div class="d-flex flex-column flex-md-row gap-1 gap-md-2 w-100 mt-1 mb-4">
+                    <div class="form-group w-100">
+                        <app-select label="Estado Civil" placeholder="Seleccione estado Civil" [form]="formUser"
+                            [options]="civilStateOpt" controlName="civilState"></app-select>
+                    </div>
+
+                    <div class="form-group  w-100">
+                        <app-select label="Género" placeholder="Género" [form]="formUser" [options]="optGenders"
+                            controlName="gender"></app-select>
+                    </div>
+                </div>
+
+                <!-- Estado Civil y Genero -->
+                <!-- <div class="d-flex flex-column flex-md-row gap-1 gap-md-2 w-100">
+                    <div class="form-group w-100">
+                        <app-select class="w-100" label="Estado Civil" placeholder="Seleccione estado Civil"
+                            [form]="formUser" [options]="civilStateOpt" controlName="civilState"></app-select>
+                    </div>
+
+                    <div class="form-group w-100">
+                        <app-select class="w-100" label="Género" placeholder="Género" [options]="optGenders"
+                            [form]="formUser" controlName="gender"></app-select>
+                    </div>
+                </div> -->
+
+                <!-- Pais y Distrito (OCULTOS) -->
+                <!-- 
+                <div class="d-flex flex-column flex-md-row gap-1 gap-md-2 w-100">
+                    <div class="form-group w-100">
+                        <app-select class="w-100" [showImg]="true" label="País" placeholder="Seleccione su país"
+                            [form]="formUser" [options]="nationalitiesList"
+                            controlName="idResidenceCountry"></app-select>
+                    </div>
+                    <div class="form-group w-100">
+                        <app-input label="Estado/Distrito" placeholder="Selecciona tu estado/distrito" [form]="formUser"
+                            controlName="districtAddress" class="w-100"></app-input>
+                    </div>
+                </div>
+                -->
+
+                <!-- Ubicación (cascada): País-residencia → Departamento → Provincia → Distrito -->
+                <div class="d-flex flex-column flex-md-row gap-1 gap-md-2 w-100">
+                    <div class="form-group w-100">
+                        <app-select class="w-100" label="País-residencia" placeholder="Selecciona"
+                            [form]="formUser" [options]="paisResidenciaOptions"
+                            controlName="paisResidencia"
+                            (onChangeSelection)="onCountryResidenceChange($event)"></app-select>
+                    </div>
+                    <div class="form-group w-100">
+                        <app-select class="w-100" label="Estado/Departamento" placeholder="Selecciona"
+                            [form]="formUser" [options]="departmentOptions"
+                            controlName="department"
+                            (onChangeSelection)="onRegionChange($event)"></app-select>
+                    </div>
+                </div>
+                <div class="d-flex flex-column flex-md-row gap-1 gap-md-2 w-100">
+                    <div class="form-group w-100">
+                        <app-select class="w-100" label="Provincia" placeholder="Selecciona"
+                            [form]="formUser" [options]="provinceOptions"
+                            controlName="province"
+                            (onChangeSelection)="onProvinceChange($event)"></app-select>
+                    </div>
+                    <div class="form-group w-100">
+                        <app-select class="w-100" label="Distrito" placeholder="Selecciona"
+                            [form]="formUser" [options]="districtOptions"
+                            controlName="district"
+                            (onChangeSelection)="onDistrictChange($event)"></app-select>
+                    </div>
+                </div>
+
+                <!-- Dirección  -->
+                <div class="form-group w-100">
+                    <app-input label="Dirección" placeholder="Tu dirección" [form]="formUser"
+                        controlName="address"></app-input>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-center gap-3 mt-4">
+                <div class="d-flex w-100">
+                    <button class="btn btn-outline-secondary size-btnn" type="button" (click)="this.ref.close()">
+                        Cancelar
+                    </button>
+                </div>
+
+                <div class="d-flex w-100">
+                    <button class="btn btn-secondary button-width size-btnn" type="button"
+                        [disabled]="(isLoading || this.formUser.invalid || disabledUser)" (click)="editPersonalData()">
+                        <span *ngIf="!isLoading">{{ btnText }}</span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- </div> -->
+</div>

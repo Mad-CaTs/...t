@@ -1,0 +1,29 @@
+.popular-events-section {
+  background-color: #f9faff;
+  padding: 4rem 2rem;
+  text-align: center;
+
+  .section-title {
+    margin-bottom: 2.5rem;
+
+    h2 {
+      font-size: 2rem;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 0.25rem;
+    }
+
+    p {
+      font-size: 1.2rem;
+      color: #6b7280;
+      margin: 0;
+    }
+  }
+
+  .event-card-list {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+}

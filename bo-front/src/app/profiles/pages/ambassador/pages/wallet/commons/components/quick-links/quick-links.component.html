@@ -1,0 +1,58 @@
+<div>
+  <div class="quick-actions">
+    <h6 class="section-title">Enlaces rápidos:</h6>
+
+    <div class="action-item"  (click)="enlaseRapidos(1)" [style.background]="walletBlock ? '#f1f0f0 !important' : 'white'">
+      <div class="h-100" style="margin-right: 8px; margin-top: 8px;">
+        <img src="/assets/wallet/transferir.svg" />
+
+      </div>
+      <div class="action-content">
+        <h6 class="mb-2">Transferir</h6>
+        <p>Aquí puedes transferir dinero a tu wallet o cuenta
+          bancaria</p>
+      </div>
+    </div>
+
+    <div class="action-item mouse-pointer"  (click)="enlaseRapidos(2)" [style.background]="walletBlock ? '#f1f0f0 !important' : 'white'">
+      <div class="h-100" style="margin-right: 8px; margin-top: 8px;">
+        <img src="/assets/wallet/recargar.svg" />
+
+      </div>
+      <div class="action-content">
+        <h6 class="mb-2">Recargar</h6>
+        <p>Realiza tu recarga a tu wallet u otras cuentas</p>
+      </div>
+    </div>
+
+    <div class="action-item"  (click)="enlaseRapidos(3)" [style.background]="walletBlock ? '#f1f0f0 !important' : 'white'">
+      <div class="h-100" style="margin-right: 8px; margin-top: 8px;">
+        <img src="/assets/wallet/retirar.svg" />
+
+      </div>
+      <div class="action-content">
+        <h6 class="mb-2">Retirar</h6>
+        <p>Dinero que enviarías a otra cuenta</p>
+      </div>
+    </div>
+
+    <div class="action-item"  (click)="enlaseRapidos(4)" [style.background]="walletBlock ? '#f1f0f0 !important' : 'white'">
+      <div class="h-100" style="margin-right: 8px; margin-top: 8px;">
+        <img src="/assets/wallet/metaAhorro.svg" />
+      </div>
+      <div class="action-content">
+        <h6 class="mb-2">Meta ahorro</h6>
+        <p>Dinero que ahorrarás para tu próximo viaje</p>
+      </div>
+    </div>
+    <div class="action-item"  (click)="enlaseRapidos(5)" [style.background]="walletBlock ? '#f1f0f0 !important' : 'white'">
+      <div class="h-100" style="margin-right: 8px; margin-top: 8px;">
+        <img src="/assets/wallet/excel.svg" />
+      </div>
+      <div class="action-content">
+        <h6 class="mb-2">Reporte Wallet</h6>
+        <p>Consulta el estado de tu wallet y transacciones</p>
+      </div>
+    </div>
+  </div>
+</div>

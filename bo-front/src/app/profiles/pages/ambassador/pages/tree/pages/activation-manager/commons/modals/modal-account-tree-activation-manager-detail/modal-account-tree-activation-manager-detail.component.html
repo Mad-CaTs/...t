@@ -1,0 +1,126 @@
+<app-modal [title]="title">
+	<!--Details-->
+	<div class="d-flex flex-column gap-2" *ngIf="view === 1">
+		<div class="d-flex flex-row w-100 align-items-center">
+			<span class="w-100 cl-muted fs-6">N°:</span>
+			<span class="w-100 fs-6 text-black fw-medium">{{ userData.id }}</span>
+		</div>
+		<div class="d-flex flex-row w-100 align-items-center">
+			<span class="w-100 cl-muted fs-6">F.Afiliación::</span>
+			<span class="w-100 fs-6 text-black fw-medium">{{ userData.afilationDate | date : 'short' }}</span>
+		</div>
+		<div class="d-flex flex-row w-100 align-items-center">
+			<span class="w-100 cl-muted fs-6">Nombre y Apellido:</span>
+			<span class="w-100 fs-6 text-black fw-medium">{{ userData.fullname }}</span>
+		</div>
+		<div class="d-flex flex-row w-100 align-items-center">
+			<span class="w-100 cl-muted fs-6">Documento:</span>
+			<span class="w-100 fs-6 text-black fw-medium">{{ userData.docNumber }}</span>
+		</div>
+		<div class="d-flex flex-row w-100 align-items-center">
+			<span class="w-100 cl-muted fs-6">Teléfono:</span>
+			<span class="w-100 fs-6 text-black fw-medium">{{ userData.phone }}</span>
+		</div>
+		<div class="d-flex flex-row w-100 align-items-center">
+			<span class="w-100 cl-muted fs-6">Estado:</span>
+			<span class="w-100 fs-6 text-success fw-medium" *ngIf="userData.active">Activo</span>
+			<span class="w-100 fs-6 text-danger fw-medium" *ngIf="!userData.active">Inactivo</span>
+		</div>
+		<div class="d-flex flex-row w-100 align-items-center">
+			<span class="w-100 cl-muted fs-6">Patrocinio:</span>
+			<span class="w-100 fs-6 text-black fw-medium">1</span>
+		</div>
+		<div class="d-flex flex-row w-100 align-items-center">
+			<span class="w-100 cl-muted fs-6">Suscripción:</span>
+			<app-select
+				class="w-100"
+				placeholder="Clasic"
+				[options]="optSubscription"
+				[form]="form"
+				name="subscription"
+			></app-select>
+		</div>
+		<div class="d-flex flex-row w-100 align-items-center">
+			<span class="w-100 cl-muted fs-6">Próxima Cuota:</span>
+			<span class="w-100 fs-6 text-black fw-medium">No tiene cuotas por pagar</span>
+		</div>
+		<div class="d-flex flex-row w-100 align-items-center">
+			<span class="w-100 cl-muted fs-6">Fecha:</span>
+			<span class="w-100 fs-6 text-black fw-medium">-</span>
+		</div>
+		<div class="d-flex flex-row w-100 align-items-center">
+			<span class="w-100 cl-muted fs-6">Monto Cuota:</span>
+			<span class="w-100 fs-6 text-black fw-medium">USD 0</span>
+		</div>
+		<div class="d-flex flex-row w-100 align-items-center">
+			<span class="w-100 cl-muted fs-6">Nota de bienvenida:</span>
+			<span class="w-100 fs-6 text-black fw-medium">-</span>
+		</div>
+		<div class="d-flex flex-row w-100 gap-3 justify-content-center">
+			<button class="btn btn-outline-secondary" (click)="view = 2">Alerta de pago</button>
+			<button class="btn btn-secondary" (click)="view = 3">Ver cronograma</button>
+		</div>
+	</div>
+	<!-- Payment alert -->
+	<div class="d-flex flex-column gap-2" *ngIf="view === 2">
+		<div class="d-flex flex-column gap-1">
+			<span class="fw-medium text-black">Seleccione Destinario</span>
+			<app-checkbox
+				class="w-100"
+				label="Correo de Suscripción"
+				[form]="form"
+				name="sendToEmailSubscription"
+			></app-checkbox>
+			<app-checkbox
+				class="w-100"
+				label="Patrocinador"
+				[form]="form"
+				name="sendToPartner"
+			></app-checkbox>
+			<app-checkbox class="w-100" label="Otro" [form]="form" name="sendToOther"></app-checkbox>
+		</div>
+
+		<app-input
+			*ngIf="sendToOther"
+			class="w-100 mb-2"
+			placeholder="Ingrese su correo electronico"
+			type="email"
+			iconRigth="mail-outline"
+			[form]="form"
+			name="sendToOtherEmail"
+		></app-input>
+
+		<div class="line bg-black opacity-25 w-100"></div>
+
+		<div class="d-flex flex-row w-100 align-items-center mt-2">
+			<span class="w-100 cl-muted fs-6">Suscripción:</span>
+			<span class="w-100 fs-6 text-black fw-medium">Gold</span>
+		</div>
+		<div class="d-flex flex-row w-100 align-items-center">
+			<span class="w-100 cl-muted fs-6">Descripción:</span>
+			<span class="w-100 fs-6 text-black fw-medium">No tiene cuotas por pagar</span>
+		</div>
+		<div class="d-flex flex-row w-100 align-items-center">
+			<span class="w-100 cl-muted fs-6">Fecha de pago:</span>
+			<span class="w-100 fs-6 text-black fw-medium">-</span>
+		</div>
+		<div class="d-flex flex-row w-100 align-items-center">
+			<span class="w-100 cl-muted fs-6">Monto USD:</span>
+			<span class="w-100 fs-6 text-black fw-medium">$0.00</span>
+		</div>
+
+		<div class="d-flex flex-row w-100 gap-3 justify-content-center">
+			<button class="btn btn-outline-secondary" (click)="view = 1">Atrás</button>
+			<button class="btn btn-secondary" (click)="onSendPaymentAlert()">Enviar</button>
+		</div>
+	</div>
+
+	<!--Payment cronogram-->
+	<div class="d-flex flex-column gap-3" *ngIf="view === 3">
+		<app-cronogram-template></app-cronogram-template>
+
+		<div class="d-flex flex-row w-100 gap-3 justify-content-center">
+			<button class="btn btn-secondary" type="button" (click)="view = 1">Volver atrás</button>
+		</div>
+	</div>
+</app-modal>

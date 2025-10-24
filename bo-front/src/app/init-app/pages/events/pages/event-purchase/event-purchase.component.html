@@ -1,0 +1,336 @@
+<!-- Spinner de carga -->
+<app-logo-spinner [show]="isLoading" [fullscreen]="true"></app-logo-spinner>
+
+<div class="purchase-detail">
+	<div class="grid-container">
+		<!-- CARD 1: Imagen del evento -->
+		<div class="purchase-image">
+			<img class="event-img" [src]="eventMock?.flyerUrl" alt="Flyer evento 1" />
+		</div>
+
+		<!-- CARD 2: Entradas (ubicada en top-right) -->
+		<div class="purchase-text">
+			<div class="ticket-card">
+				<div class="ticket-header">
+					<span class="mode-pill" [class.virtual]="isVirtual">
+						{{ isVirtual ? 'Modalidad virtual' : 'Presencial' }}
+					</span>
+					<h3 class="event-name">{{ eventMock?.eventName }}</h3>
+					<p class="date">
+						{{ eventMock?.eventDate | date : 'dd MMM' : 'es-PE' }},
+						{{ eventMock?.startDate | date : 'hh:mm a' }}
+					</p>
+					<!-- Info-banner solo para virtual -->
+					<div *ngIf="isVirtual" class="virtual-info-banner">
+						<span class="virtual-info-icon">
+							<img
+								src="assets/icons/video-speaker-icon.svg"
+								alt="Virtual"
+								class="virtual-info-icon-img"
+							/>
+						</span>
+						<span class="virtual-info-text">El link del zoom se le enviará por correo.</span>
+					</div>
+					<ng-container *ngIf="!isVirtual">
+						<p class="venue">
+							<mat-icon fontIcon="place"></mat-icon>
+							{{ eventMock?.venue?.nameVenue }}
+						</p>
+					</ng-container>
+				</div>
+
+				<h4 class="sub-title">Entradas</h4>
+
+				<!-- Presencial: múltiples zonas -->
+				<div *ngIf="!isVirtual" class="zone-table">
+					<div class="zone-header"><span>Zona</span><span>Restantes.</span><span>Precio</span></div>
+					<!-- Renderizamos por indices ordenados para no romper los índices de cantidades -->
+					<ng-container *ngFor="let idx of sortedZoneIndices; let i = index">
+						<ng-container *ngIf="eventMock?.zones?.[idx] as z">
+							<div class="zone-item">
+								<span
+									class="zone-pill"
+									[ngStyle]="{ 'background-color': pillColors[idx % pillColors.length], color: '#fff' }"
+								>
+									{{ z.zoneName }}
+								</span>
+								<!-- Capacidad / Agotado -->
+								<span class="zone-cap" [class.cap-soldout]="isSoldOut(z)">
+									{{
+										isSoldOut(z)
+											? 'Agotado'
+											: getRemainingCapacityForIndividualTickets(z.eventZoneId) +
+											  ' asientos'
+									}}
+								</span>
+								<!-- Precio (atenuado si está agotado) -->
+								<span class="zone-price" [class.price-disabled]="isSoldOut(z)">
+									S/ {{ z.priceSoles | number : '1.2-2' }}
+								</span>
+							</div>
+						</ng-container>
+					</ng-container>
+					<small class="map-note">*Mapa referencial</small>
+				</div>
+
+				<!-- Virtual: solo una zona -->
+				<div *ngIf="isVirtual" class="zone-single">
+					<p class="single-name">{{ eventMock?.zones?.[0]?.zoneName }} (Precio por persona)</p>
+					<p class="single-price">S/ {{ eventMock?.zones?.[0]?.priceSoles | number : '1.2-2' }}</p>
+				</div>
+
+				<div class="total-line divider"></div>
+				<!-- Preventa: selector de cantidades por zona -->
+								<div class="preventa-header">
+					<h4 class="sub-title">Preventa</h4>
+									<button type="button" class="discount-toggle-link" (click)="openDiscountModal()">
+						¿Tienes un código?
+					</button>
+				</div>
+				<div class="preventa-list">
+					<!-- Paquetes del evento -->
+					<ng-container *ngFor="let pkg of eventPackages; let i = index">
+						<div
+							class="preventa-item"
+							[class.sold-out]="packageQuantities[i] >= getMaxPackagesForPackage(i)"
+						>
+							<img
+								src="assets/icons/ticket-entry.svg"
+								alt="icono paquete"
+								class="preventa-zone-icon"
+							/>
+							<div class="preventa-info">
+								<span class="preventa-name"
+									>{{ getZoneNameById(pkg.items[0]?.eventZoneId) }} - {{ pkg.name }}</span
+								>
+								<span class="preventa-quantity-info">{{ getPackageQuantityInfo(pkg) }}</span>
+								<span class="preventa-price">S/ {{ pkg.pricePen | number : '1.2-2' }}</span>
+								<span
+									*ngIf="packageQuantities[i] >= getMaxPackagesForPackage(i)"
+									class="preventa-soldout-badge"
+									>Agotado</span
+								>
+								<!--<span class="preventa-expiration">Válido hasta: {{ pkg.expirationDate | date : 'dd/MM/yyyy' }}</span>-->
+							</div>
+							<div class="qty-selector">
+								<button
+									(click)="decreasePackage(i)"
+									(mousedown)="startHold('decrease', i, 'package')"
+									(mouseup)="stopHold()"
+									(mouseleave)="stopHold()"
+									[disabled]="packageQuantities[i] === 0"
+								>
+									−
+								</button>
+								<span>{{ packageQuantities[i] }}</span>
+								<button
+									(click)="increasePackage(i)"
+									(mousedown)="startHold('increase', i, 'package')"
+									(mouseup)="stopHold()"
+									(mouseleave)="stopHold()"
+									[disabled]="packageQuantities[i] >= getMaxPackagesForPackage(i)"
+								>
+									＋
+								</button>
+							</div>
+						</div>
+					</ng-container>
+
+					<!-- Zonas del evento -->
+					<ng-container *ngFor="let idx of sortedZoneIndices; let i = index">
+						<ng-container *ngIf="eventMock?.zones?.[idx] as z">
+						<div class="preventa-item" [class.sold-out]="isSoldOut(z)">
+							<img
+								src="assets/icons/ticket-entry.svg"
+								alt="icono preventa"
+								class="preventa-zone-icon"
+							/>
+							<div class="preventa-info">
+								<span class="preventa-name">{{ z.zoneName }}</span>
+								<span class="preventa-price">S/ {{ z.priceSoles | number : '1.2-2' }}</span>
+								<span *ngIf="isSoldOut(z)" class="preventa-soldout-badge">Agotado</span>
+							</div>
+							<div class="qty-selector">
+								<button
+									(click)="decrease(idx)"
+									(mousedown)="startHold('decrease', idx)"
+									(mouseup)="stopHold()"
+									(mouseleave)="stopHold()"
+									[disabled]="quantities[idx] === 0"
+								>
+									−
+								</button>
+								<span>{{ quantities[idx] }}</span>
+								<button
+									(click)="increase(idx)"
+									(mousedown)="startHold('increase', idx)"
+									(mouseup)="stopHold()"
+									(mouseleave)="stopHold()"
+									[disabled]="
+										isSoldOut(z) ||
+										quantities[idx] >= getMaxIndividualForZone(z.eventZoneId)
+									"
+								>
+									＋
+								</button>
+							</div>
+						</div>
+						</ng-container>
+					</ng-container>
+				</div>
+
+				<!-- Info azul de preventa vigente (oculto temporalmente)
+				<div class="preventa-info-banner" *ngIf="!isVirtual">
+					<span class="preventa-banner-title">Preventa</span>
+					<span class="preventa-banner-desc">
+						S/ 35.00 - S/85.00 <span class="vigencia">(Vigencia hasta el 30 de mayo)</span>
+					</span>
+				</div>
+				-->
+
+				<!-- Checkbox informativo (click en toda la barra) -->
+				<label class="info-checkbox">
+					<div class="info-checkbox-check">
+						<input type="checkbox" [(ngModel)]="acceptedTerms" />
+					</div>
+					<div class="info-checkbox-text">
+						<span>Te informamos que tus datos personales serán compartidos</span>
+						<span>con el organizador del evento</span>
+					</div>
+				</label>
+
+				<!-- Campo de código de descuento ya no se muestra; interacción solo por modal -->
+
+				<!-- Banner: los paquetes tienen entradas gratis -->
+				<div class="pack-promo" *ngIf="showPackPromo">
+					<img src="assets/images/events/regalo.gif" alt="regalo" class="pack-promo-icon" />
+					<span class="pack-promo-text">
+						Por la compra de un <b>pack promocional</b> te regalamos <b>entradas gratis</b>.
+					</span>
+				</div>
+				
+				<!-- Resumen de totales con diseño estable -->
+				<div class="summary-block" *ngIf="appliedDiscountPercent > 0; else noDiscountTpl">
+					<div class="summary-row small">
+						<span>Descuento ({{ appliedDiscountPercent | number:'1.0-0' }}% desc.)</span>
+						<span class="amount negative">- S/ {{ discountAmount() | number: '1.2-2' }}</span>
+					</div>
+					<div class="summary-row small">
+						<span>Subtotal</span>
+						<span class="amount muted">S/ {{ originalSubtotal | number : '1.2-2' }}</span>
+					</div>
+					<div class="summary-row total">
+						<span>Total ({{ totalEntriesSelected }} entrada{{ totalEntriesSelected === 1 ? '' : 's' }})</span>
+						<strong>S/ {{ totalPrice | number : '1.2-2' }}</strong>
+					</div>
+				</div>
+				<ng-template #noDiscountTpl>
+					<div class="summary-block">
+						<div class="summary-row total">
+							<span>Total</span>
+							<strong>S/ {{ totalPrice | number : '1.2-2' }}</strong>
+						</div>
+					</div>
+				</ng-template>
+				<button
+					class="buy-btn"
+					[disabled]="totalPrice === 0 || !acceptedTerms"
+					(click)="onBuyTickets()"
+				>
+					Comprar entradas
+				</button>
+			</div>
+		</div>
+
+		<!-- CARD 3: Título e info -->
+		<div class="left-title">
+			<h2 class="section-title">Más información y<br />detalle del evento</h2>
+		</div>
+
+		<!-- CARD 4: Info + compartir -->
+		<div class="right-info">
+			<p class="section-text">
+				Entérate de nuestras últimas noticias y novedades que sucede en la empresa Inclub, siempre
+				generando activos en Perú y a nivel mundial.
+			</p>
+			<div class="share-text-and-icons">
+				<p class="share-text">Compártelo en tus redes:</p>
+				<div class="social-share">
+					<a [href]="'https://www.instagram.com/?url=' + shareUrl" target="_blank" rel="noopener">
+						<img src="assets/icons/social/instagram-icon.svg" alt="Instagram" />
+					</a>
+					<a
+						[href]="'https://api.whatsapp.com/send?text=' + shareUrl"
+						target="_blank"
+						rel="noopener"
+					>
+						<img src="assets/icons/social/whatsapp-icon.svg" alt="WhatsApp" />
+					</a>
+					<a
+						[href]="'https://www.facebook.com/sharer/sharer.php?u=' + shareUrl"
+						target="_blank"
+						rel="noopener"
+					>
+						<img src="assets/icons/social/facebook-icon.svg" alt="Facebook" />
+					</a>
+					<a [href]="'https://x.com/intent/tweet?url=' + shareUrl" target="_blank" rel="noopener">
+						<img src="assets/icons/social/x-icon.svg" alt="X" />
+					</a>
+				</div>
+			</div>
+		</div>
+
+		<!-- CARD 5: Mapa o Virtual -->
+		<ng-container *ngIf="!isVirtual; else virtualTpl">
+			<div class="left-map">
+				<div class="map-overlay-wrapper">
+					<app-map
+						class="embedded-map no-interaction"
+						*ngIf="hasValidCoords"
+						[attr.data-key]="mapKey"
+						[coordinates]="mapCoordinates"
+						[mapType]="MapType.VIEW"
+						[address]="eventMock?.venue?.address"
+					></app-map>
+					<div class="map-overlay-glass">
+						<p class="label">Ubicación</p>
+						<p class="place">{{ eventMock?.venue?.nameVenue }}</p>
+						<button class="map-button" (click)="openInGoogleMaps()">Ir a Google Maps</button>
+					</div>
+				</div>
+			</div>
+		</ng-container>
+
+		<ng-template #virtualTpl>
+			<div class="left-map">
+				<div class="map-overlay-wrapper">
+					<img
+						class="embedded-map no-interaction virtual-img"
+						src="assets/images/events/virtual-event.webp"
+						alt="Evento Virtual"
+					/>
+					<div class="map-overlay-glass">
+						<p class="label">Organizado por Inclub</p>
+						<h5 class="event-title">{{ eventMock?.eventName }}</h5>
+						<button class="map-button" disabled>Evento Virtual</button>
+					</div>
+				</div>
+			</div>
+		</ng-template>
+
+		<!-- CARD 6: Flyer duplicado -->
+		<div class="right-flyer">
+			<img class="event-img" [src]="eventMock?.flyerUrl" alt="Flyer evento" />
+		</div>
+	</div>
+</div>
+
+<!-- Modal de notificación de error -->
+<app-modal-notify
+	*ngIf="showNotify"
+	[iconType]="notifyType"
+	[title]="notifyTitle"
+	[message]="notifyMessage"
+	(closed)="onNotifyClose()"
+>
+</app-modal-notify>

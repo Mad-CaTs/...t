@@ -1,0 +1,27 @@
+<app-modal title="Reportar Problema">
+	<form class="d-flex flex-column gap-3" [formGroup]="form" (submit)="onSubmit()">
+		<app-input
+			[form]="form"
+			name="subject"
+			type="text"
+			label="Asunto"
+			placeholder="Ingresar el Asunto"
+			class="w-100"
+		></app-input>
+
+		<app-text-area
+			[form]="form"
+			name="message"
+			label="Mensaje"
+			placeholder="Ingresar el mensaje"
+			class="w-100"
+		></app-text-area>
+
+		<div class="d-flex flex-row justify-content-center align-items-center gap-3">
+			<button class="btn btn-outline-secondary" type="button" (click)="instanceModal.close()">
+				Cancelar
+			</button>
+			<button class="btn btn-secondary" type="submit" [disabled]="form.invalid">Reportar</button>
+		</div>
+	</form>
+</app-modal>

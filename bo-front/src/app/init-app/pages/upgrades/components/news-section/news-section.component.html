@@ -1,0 +1,78 @@
+<!-- news-section.component.html -->
+<section class="news-section py-5">
+  <div class="container-fluid">
+    <!-- Header -->
+    <div class="row mb-5">
+      <div class="col-12">
+        <div class="news-section__header">
+          <h2 class="news-section__title">
+            {{ sectionTitle }}
+          </h2>
+          <p class="news-section__subtitle">
+            {{ sectionSubtitle }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- News Grid -->
+    <div class="row news-grid">
+      <!-- Main featured news (large card) -->
+      <div class="col-12 col-lg-8 featured-column" *ngIf="featuredNews">
+        <app-news-card
+          [id]="featuredNews.id"
+          [title]="featuredNews.title"
+          [description]="featuredNews.description"
+          [imageUrl]="featuredNews.imageUrl"
+          [date]="featuredNews.date"
+          [category]="featuredNews.category"
+          [isLarge]="true"
+          [imageWidth]="502"
+          [imageHeight]="732"
+          [showSizeInfo]="showDebugInfo"
+          (cardClick)="onNewsClick($event)">
+        </app-news-card>
+      </div>
+
+      <!-- Secondary news grid -->
+      <div class="col-12 col-lg-4 secondary-column">
+        <div class="secondary-news-container">
+          
+          <!-- Top right news -->
+          <div class="secondary-news-item" *ngIf="secondaryNews[0]">
+            <app-news-card
+              [id]="secondaryNews[0].id"
+              [title]="secondaryNews[0].title"
+              [description]="secondaryNews[0].description"
+              [imageUrl]="secondaryNews[0].imageUrl"
+              [date]="secondaryNews[0].date"
+              [category]="secondaryNews[0].category"
+              [isLarge]="false"
+              [imageWidth]="492"
+              [imageHeight]="285"
+              [showSizeInfo]="showDebugInfo"
+              (cardClick)="onNewsClick($event)">
+            </app-news-card>
+          </div>
+
+          <!-- Bottom right news -->
+          <div class="secondary-news-item" *ngIf="secondaryNews[1]">
+            <app-news-card
+              [id]="secondaryNews[1].id"
+              [title]="secondaryNews[1].title"
+              [description]="secondaryNews[1].description"
+              [imageUrl]="secondaryNews[1].imageUrl"
+              [date]="secondaryNews[1].date"
+              [category]="secondaryNews[1].category"
+              [isLarge]="false"
+              [imageWidth]="492"
+              [imageHeight]="285"
+              [showSizeInfo]="showDebugInfo"
+              (cardClick)="onNewsClick($event)">
+            </app-news-card>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

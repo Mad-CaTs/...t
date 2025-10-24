@@ -1,0 +1,24 @@
+<!-- <app-modal title="Ups!">
+	<div class="d-flex flex-column align-items-center w-100 gap-4">
+		<i
+			class="pi pi-exclamation-circle"
+			style="width: 87px; height: 87px; font-size: 87px; color: red"
+		></i>
+		<span class="text-black fs-6 fw-normal text-center w-100"
+			>Ocurrió un error, por favor, inténtalo nuevamente.</span
+		>
+	</div>
+</app-modal> -->
+<app-modal [title]="data?.title || 'Ups!'">
+	<div class="d-flex flex-column align-items-center w-100 gap-4">
+		<i
+			class="pi"
+			[ngClass]="data?.icon || 'pi-exclamation-circle'"
+			style="width: 87px; height: 87px; font-size: 87px; color: red"
+		></i>
+		<span class="text-black fs-6 fw-normal text-center w-100">
+			{{ data?.text || 'Ocurrió un error, por favor, inténtalo nuevamente.' }}
+		</span>
+	</div>
+</app-modal>
+

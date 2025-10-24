@@ -1,0 +1,40 @@
+<div class="d-flex flex-column gap-3 card p-lg-4 border-0">
+  <h1 class="m-0 fs-4 text-black fw-medium">Pagos y comisiones</h1>
+  <app-navigation [data]="navigation"
+                  [selected]="selectedTab"
+                  (changeSelected)="onNavigate($event)"></app-navigation>
+
+  <ng-container *ngIf="selectedTab === 1">
+    <app-pagination-ng-prime [rows]="rows"
+                             [totalRecords]="totalRecords"
+                             [rowsPerPageOptions]="[10, 20, 30]"
+                             [currentPage]="currentPage"
+                             [align]="'right'"
+                             [disabled]="isLoading"
+                             (pageChange)="onPageChange($event)"
+                             (refresh)="onRefresh($event)">
+    </app-pagination-ng-prime>
+    <div *ngIf="isLoading"
+         class="d-flex justify-content-center align-items-center"
+         style="min-height: 200px;">
+      <div class="spinner-border text-primary"
+           role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+    <ng-container *ngIf="!isLoading">
+      <div class="row row-cols-1 row-cols-md-3 g-3">
+        <div class="col"
+             *ngFor="let payment of payments">
+          <a [routerLink]="['/profile/ambassador/payments', payment.id]"
+             class="text-decoration-none">
+            <app-payment-card [payment]="payment"></app-payment-card>
+          </a>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+  <ng-container *ngIf="selectedTab === 2">
+    <app-wallet></app-wallet>
+  </ng-container>
+</div>

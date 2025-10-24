@@ -1,0 +1,22 @@
+<div class="border rounded p-3 mb-3 bg-white d-flex align-items-center gap-4">
+	<div class="icon-circle d-flex align-items-center justify-content-center">
+		<img *ngIf="iconPath" [src]="iconPath" alt="icon" class="img-fluid" />
+	</div>
+
+	<div class="d-flex flex-column w-100">
+		<span class="text-muted-bg mb-2 text-break">{{ title }}</span>
+
+		<app-select
+			*ngIf="title === 'País'; else normalText"
+			class="w-100"
+			placeholder="Selecciona uno"
+			[form]="form"
+			[options]="nationalitiesList"
+			controlName="idResidenceCountry"
+		></app-select>
+
+		<ng-template #normalText>
+			<span class="text-highlight mt-1 text-break">{{ descripcion }}</span>
+		</ng-template>
+	</div>
+</div>

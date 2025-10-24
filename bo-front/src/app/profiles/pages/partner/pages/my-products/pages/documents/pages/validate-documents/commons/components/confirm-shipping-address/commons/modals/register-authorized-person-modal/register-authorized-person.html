@@ -1,0 +1,93 @@
+<ng-container>
+	<div class="rounded bg-white w-100">
+		<div class="d-flex justify-content-between align-items-center mb-4">
+			<div class="icon-box">
+				<img src="assets/icons/personalcard@2x.svg" alt="Patrocinador" class="icon-img" />
+			</div>
+
+			<button class="btn p-0 border-0 bg-transparent" (click)="closeModal()" aria-label="Cerrar">
+				<mat-icon fontIcon="close" class="fs-4"></mat-icon>
+			</button>
+		</div>
+
+		<h3>Registro de persona autorizada</h3>
+		<p class="mb-4 cl-gray-100">Complete los campos del formulario.</p>
+
+		<form [formGroup]="form" class="d-flex flex-column gap-3 mt-4">
+			<div class="d-flex flex-column w-100">
+				<app-input
+					[form]="form"
+					controlName="name"
+					label="Nombres *"
+					type="text"
+					placeholder="Ingrese sus nombres"
+					buttons="true"
+					class="w-100"
+				></app-input>
+			</div>
+			<div class="d-flex flex-column w-100">
+				<app-input
+					[form]="form"
+					controlName="lastName"
+					label="Apellidos *"
+					type="text"
+					placeholder="Ingrese sus apellidos"
+					buttons="true"
+					class="w-100"
+				></app-input>
+			</div>
+			<div class="d-flex flex-column w-100">
+				<app-select
+					class="w-100"
+					[showImg]="false"
+					label="Tipo de documento *"
+					placeholder="Seleccione su documento"
+					[form]="form"
+					[options]="documentTypeList"
+					controlName="documentId"
+				>
+				</app-select>
+			</div>
+
+			<div class="d-flex flex-column w-100">
+				<app-input
+					[form]="form"
+					controlName="nroDocument"
+					label="Documento de identidad *"
+					type="text"
+					placeholder="Ingrese documento de identidad"
+					buttons="true"
+					class="w-100"
+				></app-input>
+			</div>
+
+			<app-date class="w-100" label="Fecha" [form]="form" controlName="fecha" [config]="true">
+			</app-date>
+
+			<div class="mb-3">
+				<label class="form-label"> {{'Adjuntar carta poder:'}} </label>
+				<app-file
+					[form]="form"
+					controlName="documentFile"
+					[sendAsBase64]="true"
+					[accept]="'.png, .jpg, .jpeg, .pdf, .doc, .docx'"
+				>
+				</app-file>
+			</div>
+		</form>
+
+		<div class="d-flex flex-row gap-3 justify-content-between mt-4">
+			<button class="btn btn-outline-secondary w-50" type="button" (click)="closeModal()">
+				Cancelar
+			</button>
+			<button
+				class="btn btn-secondary w-50"
+				type="button"
+				[disabled]="form.invalid"
+				(click)="beforeSubmit()"
+			>
+				{{ isEdit ? 'Actualizar' : 'Guardar' }}
+			</button>
+		</div>
+	</div>
+</ng-container>

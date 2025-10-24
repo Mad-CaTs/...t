@@ -1,0 +1,194 @@
+.rank-card {
+  border-radius: 16px;
+  padding: 16px;
+  background: linear-gradient(90deg, #fff, #ffeaea);
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.rank-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.rank-badge {
+  width: 120px;
+  height: 120px;
+}
+
+.rank-info {
+  flex: 1;
+  margin-left: 12px;
+}
+
+.rank-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.rank-subtitle {
+  margin: 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.rank-next {
+  border: 2.5px solid #ccc;
+  text-align: center;
+  font-size: 12px;
+}
+
+.rank-next-icon {
+  width: 55px;
+  height: 55px;
+}
+
+.rank-progress {
+  margin-top: 12px;
+}
+
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.custom-color-range {
+  background-color: #ffffff;
+  color: #3949ab;
+}
+
+::ng-deep .custom-progress {
+  height: 20px !important; // grosor deseado
+
+  .mdc-linear-progress {
+    height: 100% !important;
+  }
+  //   .mdc-linear-progress__bar-inner {
+  //     border-color: var(--progress-color) !important;
+  //     height: 100% !important;
+  // }
+}
+
+.bonus-container {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.bonus-card {
+  width: 31%;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+  .image-container {
+    position: relative;
+
+    img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+    }
+
+    .badge {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 60px;
+      background: white;
+      border-radius: 45%;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+      color: black;
+
+      img {
+        width: 28px;
+        height: 28px;
+      }
+    }
+  }
+
+  mat-card-content {
+    padding: 12px;
+
+    .title {
+      color: #0f4d5f;
+      font-size: 16px;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: #666;
+      margin: 0;
+    }
+  }
+}
+
+.custom-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 25px;
+  width: 17%;
+  background-color: #ffffff;
+  border: 1.5px solid #ff6600;
+  color: #ff6600;
+  font-weight: 400;
+  gap: 6px;
+}
+
+.custom-button .icon {
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-button-imag {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 25px;
+  background-color: #ffffff;
+  border: 0px solid #ffffff;
+  gap: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+
+.auto-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+:host {
+  --progress-color: #0d99c6;
+}
+
+:host .custom-progress {
+  --mdc-linear-progress-active-indicator-height: 15px;
+  --mdc-linear-progress-track-height: 15px;
+  --mdc-linear-progress-track-shape: 7;
+  border-radius: 10px;
+  --mdc-linear-progress-active-indicator-color: var(--progress-color);
+  --mdc-linear-progress-track-color: #ededed;
+}
+
+.cursor{
+  cursor: pointer;
+}

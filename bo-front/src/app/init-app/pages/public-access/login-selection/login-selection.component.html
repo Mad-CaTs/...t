@@ -1,0 +1,20 @@
+<div class="login-selection-container">
+  <div class="login-options">
+    <a routerLink="/home">
+      <img src="assets/images/Inclub.svg" alt="Logo InClub" class="logo" />
+    </a>
+    <h2>Ingresar al Backoffice InClub</h2>
+    <p>Elige la opción para iniciar sesión o registrarse</p>
+
+  <button class="btn primary" (click)="goSocio()">Socio (a) de InClub</button>
+  <button class="btn secondary" (click)="goPublic()">Público en general</button>
+
+    <a class="support-link" href="#">
+      ¿No puedes acceder? <span>Comunicarme con Soporte</span>
+    </a>
+  </div>
+
+  <div class="notched-wrapper">
+    <app-login-testimonial />
+  </div>
+</div>

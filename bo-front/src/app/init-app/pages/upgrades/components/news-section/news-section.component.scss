@@ -1,0 +1,269 @@
+/* news-section.component.scss */
+.news-section {
+  background-color: #ffffff; // Fondo blanco como en el diseño
+  padding: 80px 0; // Más padding vertical
+  
+  .container-fluid {
+    max-width: 1400px; // Controlar el ancho máximo
+    
+    @media (max-width: 1199.98px) {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+    
+    @media (max-width: 767.98px) {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+  }
+  
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+    padding: 48px;
+    
+    @media (max-width: 991.98px) {
+      flex-direction: column;
+      gap: 16px;
+    }
+  }
+
+  &__title {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 48px;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: #092D37;
+    margin-bottom: 0; // Cambié de 16px a 0
+    flex-shrink: 0;
+    max-width: 600px;
+    
+    @media (max-width: 991.98px) {
+      font-size: 40px;
+    }
+    
+    @media (max-width: 767.98px) {
+      font-size: 32px;
+    }
+    
+    @media (max-width: 575.98px) {
+      font-size: 28px;
+    }
+  }
+  
+  &__subtitle {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #6B7280;
+    margin-bottom: 0;
+    max-width: 600px; // Limitar el ancho del subtítulo
+    
+    @media (max-width: 767.98px) {
+      font-size: 14px;
+      line-height: 1.4;
+    }
+  }
+}
+
+// Grid principal de noticias
+.news-grid {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  justify-content: center;
+  
+  @media (max-width: 991.98px) {
+    gap: 20px;
+  }
+  
+  @media (max-width: 767.98px) {
+    flex-direction: column;
+    gap: 20px;
+    align-items: stretch;
+  }
+}
+
+// Columna principal (noticia destacada)
+.featured-column {
+  flex: 0 0 602px;
+  max-width: 602px;
+  
+  @media (max-width: 1199.98px) {
+    flex: 0 0 55%;
+    max-width: 55%;
+  }
+  
+  @media (max-width: 991.98px) {
+    flex: 0 0 52%;
+    max-width: 52%;
+  }
+  
+  @media (max-width: 767.98px) {
+    flex: 1;
+    max-width: 100%;
+    margin-bottom: 20px;
+  }
+
+  ::ng-deep app-news-card {
+    height: 732px; // Altura específica como en Figma
+    display: block;
+    
+    @media (max-width: 991.98px) {
+      height: 600px;
+    }
+    
+    @media (max-width: 767.98px) {
+      height: auto;
+      min-height: 400px;
+    }
+    
+    .card {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    
+    .card-img-top {
+      height: 438px; // Altura específica calculada para proporción 60%
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    
+    .card-body {
+      height: 294px; // Altura específica para el contenido
+      flex-grow: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+  }
+}
+
+// Columna secundaria (noticias pequeñas)
+.secondary-column {
+  flex: 0 0 492px;
+  max-width: 492px; 
+  
+  @media (max-width: 1199.98px) {
+    max-width: none;
+    flex: 1;
+  }
+  
+  @media (max-width: 767.98px) {
+    max-width: 100%;
+  }
+}
+
+// Container para las noticias secundarias
+.secondary-news-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 902px; 
+  
+  @media (max-width: 991.98px) {
+    height: 600px;
+    gap: 12px;
+  }
+  
+  @media (max-width: 767.98px) {
+    height: auto;
+    gap: 16px;
+  }
+}
+
+// Items individuales de noticias secundarias
+.secondary-news-item {
+  flex: 0 0 445px; // Altura fija según Figma
+  height: 445px; // Altura específica
+  
+  @media (max-width: 991.98px) {
+    flex: 0 0 calc(50% - 6px);
+    height: calc(50% - 6px);
+  }
+  
+  @media (max-width: 767.98px) {
+    flex: none;
+    height: auto;
+    min-height: 200px;
+  }
+  
+  // Asegurar que las cards ocupen toda la altura disponible
+  ::ng-deep app-news-card {
+    height: 100%;
+    display: block;
+    
+    .card {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    
+    .card-img-top {
+      height: 285px; // Altura específica según proporción de Figma
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    
+    .card-body {
+      height: 160px; // 445px - 285px imagen = 160px contenido
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 16px;
+    }
+    
+    .card-title {
+      font-size: 14px; // Título más pequeño para cards secundarias
+      line-height: 1.3;
+      margin-bottom: 8px;
+      
+      @media (max-width: 767.98px) {
+        font-size: 16px;
+      }
+    }
+    
+    .card-text {
+      font-size: 12px; // Texto más pequeño
+      line-height: 1.4;
+      
+      @media (max-width: 767.98px) {
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+// Ajustes responsivos adicionales
+@media (max-width: 991.98px) {
+  .news-section {
+    padding: 60px 0;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .news-section {
+    padding: 40px 0;
+    
+    .news-grid {
+      margin-top: 32px;
+    }
+  }
+}
+
+@media (max-width: 575.98px) {
+  .news-section {
+    padding: 32px 0;
+  }
+}
+

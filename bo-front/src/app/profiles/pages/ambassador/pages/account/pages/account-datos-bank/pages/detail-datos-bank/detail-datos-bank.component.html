@@ -1,0 +1,131 @@
+<div class="d-flex flex-column gap-4 p-lg-4 border-0"
+    style="padding-top: 5px; padding-bottom: 10px; padding-right: 5px;">
+    <div class="d-flex">
+        <p class="ruta-anterior" (click)="redirectCuenta()">Cuenta </p>
+        <p class="signo-mayor"> > </p>
+        <p class="ruta-anterior" (click)="redirectDatosBank()"> Datos bancarios </p>
+        <p class="signo-mayor"> > </p>
+        <p class="ruta-actual">Detalle</p>
+    </div>
+    <div *ngIf="isLoading" class="d-flex justify-content-center align-items-center" style="min-height: 150px">
+        <p-progressSpinner [style]="{ width: '2rem', height: '2rem' }" strokeWidth="3" fill="var(--surface-ground)"
+            animationDuration=".7s"></p-progressSpinner>
+        <span class="ms-2">Actualizando...</span>
+    </div>
+    <div *ngIf="!isLoading" class="row">
+        <div class="col-12 col-md-6 col-lg-6 col-xl-6 "
+            style="padding-top: 5px;  padding-bottom: 10px; padding-right: 5px;">
+            <div class="content-one">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <span class="text-num-cuenta">Número de cuenta</span>
+                    </div>
+                    <span class="text-activo">{{this.data.status}}</span>
+                </div>
+                <div>
+                    <img src="assets/wallet/Coins.svg" alt="">
+                    <span class="num-cuenta">{{this.data.numberAccount}}</span>
+                </div>
+                <div>
+                    <span class="text-num-cuenta">Nombre del Banco: {{this.data.nameBank}}</span>
+                </div>
+                <span class="text-cci">Código CCI: {{this.data.cci}}</span>
+                <div class="linea-separation"></div>
+                <!--Datos del banco-->
+                <div>
+                    <span class="datos-bank"> Datos del banco</span>
+                </div>
+                <div class="d-flex justify-content-between content-griss">
+                    <span class="datos-text">País de operaciones</span>
+                    <span class="datos-result">Perú</span>
+                </div>
+                <div class="d-flex justify-content-between content-normal">
+                    <span class="datos-text">Nombre del banco</span>
+                    <span class="datos-result">{{this.data.nameBank}}</span>
+                </div>
+                <div class="d-flex justify-content-between content-griss">
+                    <span class="datos-text">Dirección del banco</span>
+                    <span class="datos-result">{{this.data.bankAddress}}</span>
+                </div>
+                <div class="d-flex justify-content-between content-normal">
+                    <span class="datos-text">Código SWITF</span>
+                    <span class="datos-result">{{this.data.codeSwift}}</span>
+                </div>
+                <div class="d-flex justify-content-between content-griss">
+                    <span class="datos-text">Código IBAN</span>
+                    <span class="datos-result">{{this.data.codeIban}}</span>
+                </div>
+                <!--Datos de la cuenta bancaria-->
+                <div>
+                    <span class="datos-bank">Datos de la cuenta bancaria</span>
+                </div>
+                <div class="d-flex justify-content-between content-normal">
+                    <span class="datos-text">Tipo de cuenta</span>
+                    <span class="datos-result">{{this.data.nameTypeAccountBank}}</span>
+                </div>
+                <div class="d-flex justify-content-between content-griss">
+                    <span class="datos-text">N° de cuenta bancaria</span>
+                    <span class="datos-result">{{this.data.numberAccount}}</span>
+                </div>
+                <div class="d-flex justify-content-between content-normal">
+                    <span class="datos-text">N° de cuenta Interbancaria (CCI)</span>
+                    <span class="datos-result">{{this.data.cci}}</span>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+            <div class="content-one">
+                <div>
+                    <span class="datos-title">Datos del titular</span>
+                </div>
+                <div class="linea-separation"></div>
+                <div class="d-flex justify-content-between content-griss">
+                    <span class="datos-text">Nombres del titular de la cuenta</span>
+                    <span class="datos-result">{{this.data.nameHolder}}</span>
+                </div>
+                <div class="d-flex justify-content-between content-normal">
+                    <span class="datos-text">Apellidos del titular de la cuenta*</span>
+                    <span class="datos-result">{{this.data.lastNameHolder}}</span>
+                </div>
+                <div class="d-flex justify-content-between content-griss">
+                    <span class="datos-text">Tipo de documento</span>
+                    <span class="datos-result">DNI</span>
+                </div>
+                <div class="d-flex justify-content-between content-normal">
+                    <span class="datos-text">Número de documento*</span>
+                    <span class="datos-result">{{this.data.numDocument}}</span>
+                </div>
+                <div class="d-flex justify-content-between content-griss">
+                    <span class="datos-text">Correo electrónico*</span>
+                    <span class="datos-result">{{this.data.email}}</span>
+                </div>
+                <div class="d-flex justify-content-between content-normal">
+                    <span class="datos-text">Número de contribuyente o RUC*</span>
+                    <span class="datos-result">{{this.data.numberContribuyente}}</span>
+                </div>
+                <div class="d-flex justify-content-between content-griss">
+                    <span class="datos-text">Razón Social o Denominación</span>
+                    <span class="datos-result">{{this.data.razonSocial}}</span>
+                </div>
+                <div class="d-flex justify-content-between content-normal">
+                    <span class="datos-text">Dirección fiscal</span>
+                    <span class="datos-result">{{this.data.addressFiscal}}</span>
+                </div>
+                <div class="d-flex justify-content-between content-griss">
+                    <span class="datos-text">Titular </span>
+                    <span class="datos-result">{{this.data.titular == true ? 'Propio' : 'Socio'}}</span>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <button class="btn-edit" (click)="editDetalle()">Editar</button>
+                </div>
+                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <button class="btn-remove" (click)="deleteDetalle()">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<p-toast></p-toast>

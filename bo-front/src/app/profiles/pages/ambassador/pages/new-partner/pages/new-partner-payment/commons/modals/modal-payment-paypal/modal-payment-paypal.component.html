@@ -1,0 +1,53 @@
+<ng-container *ngIf="paypalBankPresenter.paypalForm as form">
+  <form class="d-flex flex-column gap-2 w-100"
+        [formGroup]="form">
+    <div class="d-flex flex-column">
+      <p class="m-0">1.- Seleccione el tipo de moneda</p>
+      <span class="text-secondary fw-normal fs-12">* Los pagos a través de este medio tienen una COMISIÓN.</span>
+    </div>
+    <div class="d-flex flex-row w-100 justify-content-between align-items-center">
+      <span>Moneda</span>
+      <app-select class="w-100"
+                  placeholder="Tipo de moneda"
+                  [form]="form"
+                  [options]="optCurrency"
+                  controlName="typeCurrency"
+                  style="max-width: 200px"></app-select>
+    </div>
+    <div class="d-flex flex-row w-100 justify-content-between align-items-center">
+      <span>Monto: </span>
+      <span class="text-black">{{currency}} {{inputData.amount}}</span>
+    </div>
+    <div class="d-flex flex-row w-100 justify-content-between align-items-center">
+      <span>Tasa: </span>
+      <span class="text-black">{{currency}} {{tasa}}</span>
+    </div>
+    <div class="d-flex flex-row w-100 justify-content-between align-items-center">
+      <span>Comisión: </span>
+      <span class="text-black">{{currency}} {{comision}}</span>
+    </div>
+    <ng-container *ngIf="inputData?.fromLegalization && inputData?.payTypeSelected !== 1">
+      <div class="d-flex flex-row w-100 justify-content-between align-items-center">
+        <span>Costo de envío de documentos:</span>
+        <span class="text-black">USD {{ inputData.montoLegalizacionUSD | number:'1.2-2' }}</span>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="inputData?.montoApostilladoExtraUSD">
+      <div class="d-flex flex-row w-100 justify-content-between align-items-center">
+        <span>Costo de servicio por apostillado:</span>
+        <span class="text-black">USD {{ inputData.montoApostilladoExtraUSD | number:'1.2-2' }}</span>
+      </div>
+    </ng-container>
+    
+    
+    <div class="d-flex flex-row w-100 justify-content-between align-items-center">
+      <span>Total:</span>
+      <span class="text-black">{{currency}} {{amountToPay}}</span>
+    </div>
+    <p class="m-0">2.- Seleccione una opción:</p>
+    <ngx-paypal [config]="payPalConfig"></ngx-paypal>
+    <button type="button" class="btn btn-outline-primary m-auto mt-2"
+            (click)="closeModal()">Cerrar</button>
+  </form>
+</ng-container>

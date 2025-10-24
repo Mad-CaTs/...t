@@ -1,0 +1,39 @@
+<mat-card class="card-proyect">
+  <img appConcatenateSrc="ef81cddc-6ef7-47ba-a21b-2c48e3a5bf86-rivera.png" mat-card-image />
+
+  <div class="title-container" [class.disabled]="true">
+    <app-chat-button (chatOpened)="openModal()"></app-chat-button>
+    <div class="px-3 py-2 bg-sorbus cl-white text-center fw-medium text-uppercase">
+      Ribera del Río
+    </div>
+  </div>
+
+  <mat-card-content>
+    <div class="pt-3 text-center">
+      <p class="fs-6 text-black text-uppercase mb-1">Cineguilla, Lima, Perú</p>
+      <span class="fs-5 text-black text-uppercase fw-medium">CLUB RESORT</span>
+    </div>
+    <div class="pt-2">
+      <p class="fs-6 text-success text-uppercase mb-1 fw-medium text-center">50%</p>
+      <mat-progress-bar [value]="50" [color]="'success'" class="mb-1 progress progess-success"></mat-progress-bar>
+      <div class="d-flex flex-row justify-content-between w-100">
+        <p class="fs-6 cl-gray mb-0">Objetivo</p>
+        <p class="fs-6 cl-gray mb-0">USD $167 000</p>
+      </div>
+    </div>
+    <div class="pt-2 text-center pb-3">
+      <span class="fs-5 text-black fw-medium">8.59%</span>
+      <p class="fs-6 cl-gray mb-0">Retorno neto anual estimado</p>
+    </div>
+  </mat-card-content>
+
+  <mat-divider></mat-divider>
+
+  <div class="px-3 py-2 text-center">
+    <button mat-button class="cl-gray text-secondary">Más detalles</button>
+  </div>
+</mat-card>
+
+
+
+

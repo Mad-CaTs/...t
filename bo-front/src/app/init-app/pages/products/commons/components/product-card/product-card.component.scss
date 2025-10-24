@@ -1,0 +1,19 @@
+.product-card {
+	box-shadow: 0px 4px 42px 0px #00000017;
+	max-width: 396px;
+	&__picture {
+		width: 100%;
+		height: 226px;
+		position: relative;
+		background-repeat: no-repeat;
+		background-size: cover;
+		background-position: center;
+	}
+
+	&__logo {
+		width: 105px;
+		position: absolute;
+		bottom: 2px;
+		left: 2px;
+	}
+}

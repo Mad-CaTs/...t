@@ -1,0 +1,29 @@
+<div class="cancel-dialog">
+    <div class="warning-icon">
+    <i class="pi pi-question-circle"></i>
+    </div>
+    
+    <div class="dialog-content">
+    <h3 class="dialog-title">
+        ¿Deseas cancelar tu afiliación de pago automático?
+    </h3>
+    <p class="dialog-message">
+        Pasarás de manera manual el {{dateActualal}} y perderás todos los beneficios.
+    </p>
+    </div>
+    
+    <div class="dialog-actions">
+    <button 
+        type="button" 
+        class="cancel-btn" 
+        (click)="onCancel()">
+        Cancelar
+    </button>
+    <button 
+        type="button" 
+        class="confirm-btn" 
+        (click)="onConfirm()">
+        Confirmar
+    </button>
+    </div>
+</div>

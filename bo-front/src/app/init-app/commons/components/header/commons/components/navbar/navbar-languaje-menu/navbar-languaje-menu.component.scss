@@ -1,0 +1,59 @@
+.menu {
+	width: 100vw;
+	top: 0;
+	box-shadow: 0px 4px 20px 0px #00000017;
+	animation: born ease-in-out 1000ms;
+
+	&__info {
+		width: 100%;
+		margin: auto;
+	}
+}
+
+.wrapper {
+	width: 100%;
+	max-width: 1080px;
+	margin: 0 auto;
+}
+
+.line {
+	width: 100%;
+	height: 1px;
+	background-color: #c9c9c9;
+}
+
+.countries {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 2rem;
+}
+
+@media (min-width: 768px) {
+	.menu {
+		top: 64px;
+
+		&__info {
+			padding: 0 2.5rem;
+		}
+	}
+
+	.countries {
+		grid-template-columns: repeat(4, 1fr);
+	}
+}
+
+@media (min-width: 1000px) {
+	.countries {
+		grid-template-columns: repeat(5, 1fr);
+	}
+}
+
+@keyframes born {
+	from {
+		transform: translateY(-60px);
+	}
+
+	to {
+		transform: translateY(0);
+	}
+}

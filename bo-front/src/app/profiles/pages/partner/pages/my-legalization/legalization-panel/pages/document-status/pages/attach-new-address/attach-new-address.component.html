@@ -1,0 +1,28 @@
+<app-validate-personal-data
+	[formUser]="formUser"
+	[optTypeLegalization]="legalizationTypes"
+	[nationalitiesList]="nationalitiesList"
+	[selectedProduct]="selectedProduct"
+	[showLoader]="showLoader"
+	(selectedBranchChange)="onselectedBranchChange($event)"
+	(sucursalesCercanasChange)="onSucursalesChange($event)"
+	(loadingSucursalesChange)="onLoadingSucursalesChange($event)"
+></app-validate-personal-data>
+<div class="footer-buttons d-flex justify-content-center w-100 gap-3 mt-4">
+	<button class="btn btn-outline-secondary flex-fill px-4" type="button" (click)="goBack()">Volver</button>
+
+	<button
+		class="btn btn-secondary flex-fill px-4 d-flex align-items-center justify-content-center"
+		[disabled]="isSaveDisabled || isSubmitting"
+		(click)="onSubmit()"
+	>
+		<span
+			*ngIf="isSubmitting"
+			class="spinner-border spinner-border-sm"
+			role="status"
+			aria-hidden="true"
+		></span>
+
+		Guardar
+	</button>
+</div>

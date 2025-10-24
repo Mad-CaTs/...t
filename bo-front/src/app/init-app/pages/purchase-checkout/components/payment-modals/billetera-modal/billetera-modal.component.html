@@ -1,0 +1,153 @@
+<!-- Modal de Pago QR/Yape -->
+<div class="modal-overlay" *ngIf="isOpen" (click)="onClose()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <!-- Header del Modal -->
+    <div class="modal-header">
+      <img src="assets/images/Inclub.svg" alt="Inclub" class="brand-logo" />
+      <button class="close-button" (click)="onClose()">×</button>
+      <div class="order-info">
+        <span class="order-label">Número de pedido</span>
+        <span class="order-number">123456</span>
+      </div>
+    </div>
+
+    <!-- Selector de Método -->
+    <div class="method-selector">
+      <div class="method-tab" [class.active]="selectedPaymentType === 'qr'" (click)="selectPaymentType('qr')">
+        <div class="tab-content">
+          <img src="assets/icons/qr.svg" alt="QR" class="tab-icon qr-icon" />
+          <span>Código QR</span>
+        </div>
+        <div class="check-icon" *ngIf="selectedPaymentType === 'qr'">✓</div>
+      </div>
+      <div class="method-tab" [class.active]="selectedPaymentType === 'yape'" (click)="selectPaymentType('yape')">
+        <div class="tab-content">
+          <img src="assets/icons/yape.svg" alt="Yape" class="tab-icon yape-logo" />
+          <span>Yape</span>
+        </div>
+        <div class="check-icon" *ngIf="selectedPaymentType === 'yape'">✓</div>
+      </div>
+    </div>
+
+    <!-- Contenido del Modal según el tipo seleccionado -->
+    
+    <!-- Modal QR -->
+    <div *ngIf="selectedPaymentType === 'qr'" class="qr-content">
+      <!-- Instrucciones -->
+      <div class="instructions">
+        <p>Escanea el código QR usando la billetera desde tu billetera favorita para finalizar el pago.</p>
+      </div>
+
+      <!-- Monto Total -->
+      <div class="total-amount">
+        <span class="amount-label">Monto total:</span>
+        <span class="amount-value">S/ 34.80 PEN</span>
+      </div>
+
+      <!-- Código QR -->
+      <div class="qr-container">
+        <div class="qr-code">
+          <div class="qr-frame">
+            <img [src]="qrUrl" alt="Código QR" class="qr-image" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Logos de Aplicaciones (assets) -->
+      <div class="app-logos">
+        <span class="app-logo" *ngFor="let logo of paymentAppLogos">
+          <img [src]="logo.src" [alt]="logo.alt" (error)="setFallback($event, logo)" />
+        </span>
+      </div>
+    </div>
+
+    <!-- Modal Yape - Instrucciones (Figma) -->
+    <div *ngIf="selectedPaymentType === 'yape' && !showYapeForm" class="yape-section">
+      <div class="yape-panel">
+        <img src="assets/icons/yape-out.svg" alt="Yape" class="yape-logo" />
+
+        <div class="yape-title">Paga con tu</div>
+        <div class="yape-subtitle">Código de aprobación</div>
+        <div class="yape-step-title">¿Dónde lo encuentro?</div>
+
+        <div class="yape-steps">
+          <div class="yape-step">
+            <div class="yape-step-icon">📱</div>
+            <div class="yape-step-text">
+              <div class="yape-step-desc">
+                <span>Encuéntralo en el<br></span>
+                <span>menú de tu app Yape</span>
+              </div>
+            </div>
+          </div>
+          <div class="yape-step">
+            <div class="yape-step-icon">📋</div>
+            <div class="yape-step-text">
+              <div class="yape-step-desc">
+                <span>Cópialo y regresa aquí<br></span>
+                <span>para continuar</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="continue-button yape-continue" (click)="processYapePayment()">
+        Continuar
+      </button>
+    </div>
+
+    <!-- Modal Yape - Formulario -->
+    <div *ngIf="selectedPaymentType === 'yape' && showYapeForm" class="yape-form-section">
+      <div class="yape-form-content">
+        <div class="yape-form-header">
+          <img src="assets/icons/yape.svg" alt="Yape" class="yape-form-logo" />
+          <h3>Paga con tu Código de aprobación</h3>
+        </div>
+
+        <div class="yape-instructions">
+          <div class="yape-instruction-step">
+            <div class="yape-instruction-icon">☰</div>
+            <span>Encuéntralo en el menú de tu app Yape</span>
+          </div>
+          <div class="yape-instruction-step">
+            <div class="yape-instruction-icon">📄</div>
+            <span>Cópialo y pégalo abajo.</span>
+          </div>
+        </div>
+
+        <div class="yape-form-fields">
+          <div class="form-field">
+            <label>Ingresa tu celular Yape</label>
+            <input type="tel" placeholder="999 999 999" class="yape-input" />
+          </div>
+
+          <div class="form-field">
+            <label>Código de aprobación</label>
+            <div class="approval-code-inputs">
+              <input type="text" maxlength="1" class="code-input" />
+              <input type="text" maxlength="1" class="code-input" />
+              <input type="text" maxlength="1" class="code-input" />
+              <input type="text" maxlength="1" class="code-input" />
+              <input type="text" maxlength="1" class="code-input" />
+              <input type="text" maxlength="1" class="code-input" />
+            </div>
+          </div>
+        </div>
+
+        <button class="yape-pay-button" (click)="submitYapePayment()">
+          Pagar S/.29.80
+        </button>
+      </div>
+    </div>
+
+    <!-- Footer Legal -->
+    <div class="legal-footer" *ngIf="selectedPaymentType === 'qr' || selectedPaymentType === 'yape'">
+      <p>
+        Al hacer clic en Pagar, aceptar 
+        <a href="#" class="legal-link">Términos y Condiciones</a> & 
+        <a href="#" class="legal-link">Políticas de protección de datos personales</a>.
+      </p>
+    </div>
+  </div>
+</div>

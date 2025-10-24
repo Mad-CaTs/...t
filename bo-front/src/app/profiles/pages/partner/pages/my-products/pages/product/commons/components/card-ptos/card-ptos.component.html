@@ -1,0 +1,13 @@
+<div class="card w-100">
+	<div class="card-body">
+		<div class="circle-icon d-flex align-items-center justify-content-center">
+			<img *ngIf="iconSvg" [src]="'assets/icons/' + iconSvg + '.svg'" />
+			<i *ngIf="iconClass" [class]="iconClass" class="fs-2 text-primary"></i>
+		</div>
+
+		<div class="d-flex flex-column point-text">
+			<span class="point-text__sub-title">{{ subtitle }}</span>
+			<span [ngClass]="customClass" class="point-text__title">{{ title }}</span>
+		</div>
+	</div>
+</div>

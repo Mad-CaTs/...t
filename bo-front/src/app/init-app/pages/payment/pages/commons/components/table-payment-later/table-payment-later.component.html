@@ -1,0 +1,23 @@
+<app-table
+	class="w-100"
+	[headers]="headers"
+	[hasCheckbox]="false"
+	[customRows]="true"
+	[minWidth]="700"
+	[firstEmpty]="true"
+	[hasData]="hasData"
+	[loading]="isLoading"
+>
+	<tr class="w-100 d-flex flex-row" *ngFor="let d of dataBody; let i = index">
+		<td class="fs-6 py-4 px-4 w-100 text-center">
+			{{ d.description }}
+		</td>
+		<td class="fs-6 py-4 px-4 w-100 text-center">
+			{{ d.duration }} {{ d.duration > 1 ? 'meses' : 'mes' }}
+		</td>
+		<td class="fs-6 py-4 px-4 w-100 text-center fw-medium" style="min-width: 150px">
+			{{ d.initialPrice | currency : 'USD' }}
+		</td>
+		<td class="fs-6 py-4 px-4 w-100 text-center fw-medium">{{ d.quotas }}</td>
+	</tr>
+</app-table>

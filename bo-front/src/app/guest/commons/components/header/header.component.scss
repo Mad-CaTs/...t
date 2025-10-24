@@ -1,0 +1,99 @@
+@use 'guest-global.scss' as *;
+@use 'guest-vars.scss' as var;
+
+.header-content {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem;
+    gap: 1rem;
+
+    @media screen and (max-width: var.$sm) {
+        padding: 1rem;
+    }
+}
+
+.header-left {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var.$gray-800;
+    margin: 0;
+
+    @media screen and (max-width: var.$md) {
+        display: none;
+    }
+}
+
+.logo {
+    width: 7rem;
+    height: auto;
+
+    @media screen and (max-width: var.$sm) {
+        width: 5rem;
+    }
+}
+
+.toggle-button {
+    display: none;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var.$gray-800;
+    transition: background 0.3s ease-in-out;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.25rem;
+
+    &:hover {
+        background: darken(var.$white, 10%);
+    }
+
+    @media screen and (max-width: var.$lg) {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    i {
+        color: var.$gray-800;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+button.btn.btn-secondary {
+    display: flex;
+    gap: 0.5rem;
+    border-radius: 1.5rem;
+    font-weight: 400;
+    font-size: 0.875rem;
+
+    * {
+        font-size: inherit;
+    }
+
+    i {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    @media screen and (max-width: var.$lg) {
+        display: none
+    }
+}
+
+.btn-text {
+    margin: 0;
+}

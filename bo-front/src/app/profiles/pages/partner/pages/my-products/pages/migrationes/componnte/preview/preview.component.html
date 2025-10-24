@@ -1,0 +1,165 @@
+<div class="card px-3 px-md-4 card-border-none">
+	<div class="container-fluid vh-100">
+		<h1 class="fs-5">
+			<a
+				(click)="goBack()"
+				class="nav-link cl-sorbus cursor-pointer d-flex align-items-center hover-custom"
+			>
+				<mat-icon class="me-2">arrow_back</mat-icon>
+				<span>Volver</span>
+			</a>
+		</h1>
+
+		<!-- <h1 class="fs-5">
+			<a (click)="goBack()" class="nav-link cl-sorbus align-items-center d-flex">
+				<mat-icon class="me-2">arrow_back</mat-icon>
+				<span>Volver</span>
+			</a>
+		</h1> -->
+		<div *ngIf="isLoading" class="d-flex justify-content-center align-items-center">
+			<div class="spinner-border text-orange" role="status" style="width: 5rem; height: 5rem"></div>
+		</div>
+
+		<div *ngIf="!isLoading">
+			<div class="row mb-3">
+				<div class="col"></div>
+			</div>
+
+			<div class="row mb-3">
+				<div class="col-12 col-md-4 mb-3">
+					<div class="card bg-light border-0 h-100">
+						<div class="card-body p-2 d-flex flex-column">
+							<h4 class="fs-6 fw-bold mb-0">Detalle del cronograma</h4>
+							<span class="fs-6 text-muted">Resumen</span>
+							<div class="d-flex justify-content-between align-items-center mt-2">
+								<!-- Volumen Personal -->
+								<div class="d-flex flex-column align-items-center">
+									<div class="d-flex gap-1 align-items-start">
+										<span class="fs-6 fw-bold">120</span>
+										<span class="fs-12 mt-1">pts</span>
+									</div>
+									<span class="fs-12 text-primary fw-medium text-center"
+										>Volumen Personal</span
+									>
+								</div>
+
+								<!-- Membresía -->
+								<div class="d-flex flex-column align-items-center">
+									<span class="fs-6 fw-bold">{{ firstWordPackageName }}</span>
+									<span class="text-primary fw-medium text-center">Membresía</span>
+								</div>
+
+								<!-- Cuotas -->
+								<div class="d-flex flex-column align-items-center">
+									<div class="d-flex gap-1 align-items-center">
+										<mat-icon fontIcon="account_tree" class="text-primary"></mat-icon>
+										<span class="fs-6 fw-bold">{{ quotasCount || 0 }}</span>
+									</div>
+									<span class="text-primary fw-medium text-center">Cuotas</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Card Fechas -->
+				<div class="col-12 col-md-4 mb-3">
+					<div class="card bg-light border-0 h-100">
+						<div class="card-body p-2 d-flex flex-column">
+							<h4 class="fs-6 fw-bold mb-0">Fechas</h4>
+							<span class="fs-6 text-muted">Resumen</span>
+							<div class="d-flex justify-content-between align-items-center mt-2">
+								<!-- Fecha de adquisición -->
+								<div class="d-flex flex-column align-items-center">
+									<div class="d-flex gap-1 align-items-start">
+										<i class="pi pi-calendar text-primary fs-4"></i>
+										<span class="fs-6 fw-bold">{{ todayDate }}</span>
+									</div>
+									<span class="text-primary fw-medium text-center"
+										>Fecha de adquisición</span
+									>
+								</div>
+
+								<!-- Fecha de migración -->
+								<div class="d-flex flex-column align-items-center">
+									<div class="d-flex gap-1 align-items-start">
+										<i class="pi pi-calendar text-primary fs-4"></i>
+										<span class="fs-6 fw-bold">{{ todayDate }}</span>
+									</div>
+									<span class="text-primary fw-medium text-center">Fecha de migración</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="table-responsive">
+				<p-table [value]="data" scrollable="true" scrollHeight="350px" class="table-details w-100">
+					<ng-template pTemplate="header">
+						<tr>
+							<th>Descripción</th>
+							<th class="text-center">Fecha de vencimiento</th>
+							<th class="text-center">Capital</th>
+							<th class="text-center">Amortización</th>
+
+							<th class="text-center">Mora</th>
+							<th class="text-center">Estado</th>
+
+							<th class="text-center">Acciones</th>
+						</tr>
+					</ng-template>
+
+					<ng-template pTemplate="body" let-element>
+						<tr
+							[ngStyle]="{
+								'background-color': element.displayColor
+									? element.displayColor
+									: 'transparent'
+							}"
+						>
+							<td>{{ element.quoteDescription }}</td>
+							<td class="text-center">
+								{{ element.nextExpirationDate | date : 'dd-MM-yyyy' }}
+							</td>
+							<td class="text-center">
+								{{ element.capitalBalanceUsd | currency : 'USD' : 'symbol' : '1.2-2' }}
+							</td>
+							<td class="text-center">
+								{{ element.amortizationUsd | currency : 'USD' : 'symbol' : '1.2-2' }}
+							</td>
+
+							<td class="text-center">{{ element.totalOverdue || 0 }}</td>
+
+							<td class="text-center">
+								{{ element?.idStatePayment === 1 ? 'PAGADO' : 'PENDIENTE' }}
+							</td>
+
+							<td class="text-center">
+								<div class="d-flex justify-content-center align-items-center">
+									<button
+										type="button"
+										class="btn d-flex flex-row gap-2 align-items-center px-4 py-1 rounded text-secondary no-hover"
+										(click)="openModalDeteilMigration(element)"
+									>
+										<mat-icon class="me-2">visibility</mat-icon>
+										Ver detalles
+									</button>
+								</div>
+							</td>
+						</tr>
+					</ng-template>
+					<ng-template pTemplate="footer">
+						<tr>
+							<td class="text-center" colspan="7">
+								<div class="table-footer-container">
+									<div class="p-datatable-scrollable-footer"></div>
+								</div>
+							</td>
+						</tr>
+					</ng-template>
+				</p-table>
+			</div>
+		</div>
+	</div>
+</div>

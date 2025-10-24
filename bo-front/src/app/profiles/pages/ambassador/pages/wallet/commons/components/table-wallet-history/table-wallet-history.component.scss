@@ -1,0 +1,215 @@
+//nuevo
+.accordion-section {
+    border-bottom: 1px solid rgba(235, 235, 235, 1);
+    background-color: #fff;
+}
+
+.accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.accordion-header:hover {
+    background-color: rgba(95, 112, 129, 0.05);
+}
+
+.category-title {
+    color: navy;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    color: rgba(95, 112, 129, 1);
+}
+
+.accordion-body {
+    overflow: hidden;
+    background-color: #fff;
+    padding: 1rem;
+    animation: slideDown 0.8s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        height: 0;
+        opacity: 0;
+    }
+
+    to {
+        height: auto;
+        opacity: 1;
+    }
+}
+
+/* Acordeón interno (Servicios) */
+.operaciones-container {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+
+    h2 {
+        color: #333;
+        margin-bottom: 20px;
+        font-size: 24px;
+    }
+}
+
+.operacion-price {
+    text-align: end;
+    font-family: 'Roboto';
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #363A3E;
+
+}
+
+.estado-completada {
+    background-color: #16A34A33;
+    color: #18B150  !important;
+}
+
+.estado-error {
+    background-color: #f51d1dbf;
+    color: #ed0202;
+}
+
+.operaciones-header {
+    display: flex;
+    padding: 10px 15px;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    font-weight: bold;
+
+    .header-operaciones {
+        flex: 3;
+        font-family: 'Roboto';
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 18px;
+        letter-spacing: 0%;
+        color: #575F6E;
+
+    }
+
+    .header-fecha {
+        flex: 1;
+        text-align: right;
+        font-family: 'Roboto';
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 18px;
+        letter-spacing: 0%;
+        text-align: right;
+        color: #575F6E;
+    }
+}
+
+.operacion-item {
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+
+    &:hover {
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+}
+
+.operacion-contenido {
+    display: flex;
+    padding: 15px;
+    cursor: pointer;
+    align-items: center;
+
+    .operacion-descripcion {
+        flex: 3;
+
+        .operacion-titulo {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .operacion-codigo {
+            color: #666;
+            font-size: 14px;
+        }
+    }
+
+    .operacion-fecha {
+        flex: 1;
+        text-align: right;
+        color: #19809E;
+    }
+}
+
+.operacion-detalle {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    background-color: #f9f9f9;
+    border-top: 1px solid #e0e0e0;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 15px;
+
+    &.abierto {
+        max-height: 500px;
+        padding: 15px;
+    }
+}
+
+.detalle-seccion {
+    margin-bottom: 15px;
+
+    .detalle-titulo {
+        font-family: 'Roboto';
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 20px;
+        letter-spacing: 0.2px;
+
+        color: #51565F;
+    }
+}
+
+.detalle-item {
+    display: flex;
+    margin-bottom: 8px;
+    justify-content: space-between;
+
+    .detalle-valor {
+        font-weight: bold;
+        color: #6E7378;
+        font-family: 'Roboto';
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 20px;
+        letter-spacing: 0.2px;
+
+    }
+}
+
+.detalle-info-adicional {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px dashed #ddd;
+    font-size: 14px;
+    color: #555;
+
+    div {
+        margin-bottom: 5px;
+    }
+}

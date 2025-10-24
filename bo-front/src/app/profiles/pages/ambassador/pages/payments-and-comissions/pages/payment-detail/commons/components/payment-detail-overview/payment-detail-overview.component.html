@@ -1,0 +1,39 @@
+<div class="d-flex flex-column gap-2 mt-md-2 gap-md-3">
+	<div class="d-flex flex-row justify-content-between align-items-center">
+		<span class="fw-normal cl-muted">Monto:</span>
+		<span class="text-black fw-normal">$ {{paymentDetail.amountTotal | number:'1.2-2'}}</span>
+	</div>
+	<div class="line bg-black opacity-25 rounded w-100"></div>
+	<div class="d-flex flex-row justify-content-between align-items-center">
+		<span class="fw-normal cl-muted">Bono de Recomendación Directa:</span>
+		<span class="text-black fw-normal">$ {{paymentDetail.amountDirectRecommendation | number:'1.2-2'}}</span>
+	</div>
+	<div class="d-flex flex-row justify-content-between align-items-center">
+		<span class="fw-normal cl-muted">Bono de Equipo:</span>
+		<span class="text-black fw-normal">$ {{paymentDetail.amountTeamRecommendation | number:'1.2-2'}}</span>
+	</div>
+	<!-- <div class="d-flex flex-row justify-content-between align-items-center">
+		<span class="fw-normal cl-muted">Bono de Pago de Cuota:</span>
+		<span class="text-black fw-normal">$ {{paymentDetail.amountQuotes}}</span>
+	</div> -->
+	<div class="d-flex flex-row justify-content-between align-items-center">
+		<span class="fw-normal cl-muted">Bono Membresías extras:</span>
+		<span class="text-black fw-normal">$ {{paymentDetail.amountExtraMemberships | number:'1.2-2'}}</span>
+	</div>
+	<div class="d-flex flex-row justify-content-between align-items-center">
+		<span class="fw-normal cl-muted">Bono de Migración:</span>
+		<span class="text-black fw-normal">$ {{paymentDetail.amountMigrations | number:'1.2-2'}}</span>
+	</div>
+	<div class="d-flex flex-row justify-content-between align-items-center">
+		<span class="fw-normal cl-muted">Bono de Logro de Rango:</span>
+		<span class="text-black fw-normal">$ {{paymentDetail.amountAwardRank | number:'1.2-2'}}</span>
+	</div>
+	<div class="d-flex flex-row justify-content-between align-items-center">
+		<span class="fw-normal cl-muted">Bono de marcas exclusivas:</span>
+		<span class="text-black fw-normal">$ {{paymentDetail.amountExclusiveBrands | number:'1.2-2'}}</span>
+	</div>
+	<div class="d-flex flex-row justify-content-between align-items-center">
+		<span class="fw-normal cl-muted">Regularización de Comisiones del ciclo Precedente:</span>
+		<span class="text-black fw-normal">$ {{paymentDetail.amountRegularization | number:'1.2-2' }}</span>
+	</div>
+</div>

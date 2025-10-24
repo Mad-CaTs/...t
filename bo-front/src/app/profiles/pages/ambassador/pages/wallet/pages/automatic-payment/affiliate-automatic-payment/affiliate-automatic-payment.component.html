@@ -1,0 +1,112 @@
+<div class="">
+  <div class="wallet-recharger">
+    <p class="goToWallet" (click)="goToWallet()">Wallet</p>
+    <p class="px-2"> <mat-icon class="arrow-down_av">keyboard_arrow_right</mat-icon> </p>
+    <p class="recharge">Afilar pago automático</p>
+  </div>
+</div>
+
+<div class="container  col-sm-12  col-md-10 col-lg-9 ">
+  <h1 class="main-title">Pagar automáticamente con wallet</h1>
+  <div class="membership-section">
+    <h2 class=" text-center section-title">Elige tu membresía para afiliar</h2>
+
+    <div class="carousel-container">
+      <div class="carousel-wrapper" #carouselWrapper>
+        <div *ngFor="let membership of memberships" class="membership-card" [class.selected]="membership.selected"
+          (click)="selectMembership(membership.id)">
+          <div class="radio-container">
+            <div class="radio-button" [class.checked]="membership.selected"></div>
+            <span class="membership-name">{{ membership.nameSuscription }}</span>
+            <span *ngIf="membership.status" class="status-badge" [class.active]="membership.status === 'Activo'"
+              [class.inactive]="membership.status === 'Inactivo'">
+              {{ membership.status }}
+            </span>
+          </div>
+          <div class="membership-details">
+            <div class="detail-line">Fecha de adquisición: {{ membership.creationDate | date: 'dd/MM/yyyy'}}</div>
+            <div class="detail-line">
+              Puntaje: {{ membership.volumen }} pts &nbsp;&nbsp;&nbsp;&nbsp;
+              Cuotas: Número {{ membership.numberQuotas }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="carousel-nav prev" [class.disabled]="currentSlide === 0" (click)="prevSlide()"
+        [disabled]="currentSlide === 0">
+        <svg viewBox="0 0 24 24">
+          <polyline points="15,18 9,12 15,6" fill="none" stroke="currentColor" stroke-width="2" />
+        </svg>
+      </button>
+
+      <button class="carousel-nav next" [class.disabled]="currentSlide >= maxSlides" (click)="nextSlide()"
+        [disabled]="currentSlide >= maxSlides">
+        <svg viewBox="0 0 24 24">
+          <polyline points="9,18 15,12 9,6" fill="none" stroke="currentColor" stroke-width="2" />
+        </svg>
+      </button>
+    </div>
+
+    <div class="carousel-dots">
+      <div *ngFor="let dot of dots; let i = index" class="dot" [class.active]="i === currentDot" (click)="goToSlide(i)">
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="selectMembresias" class="transaction-section">
+    <h2 class="section-title">Datos de la transacción</h2>
+
+    <div class="transaction-grid">
+      <div class="transaction-item">
+        <img src="/assets/wallet/money-send.svg" />
+        <div class="content">
+          <div class="label">Frecuencia de pago</div>
+          <div class="value">{{ requencyPay }}</div>
+        </div>
+      </div>
+
+      <div class="transaction-item">
+        <img src="/assets/wallet/Calendar.svg" />
+        <div class="content">
+          <div class="label">Próximo pago</div>
+          <div class="value">A partir de {{ dateFinalPago }}</div>
+        </div>
+      </div>
+
+      <div class="transaction-item">
+        <img src="/assets/wallet/Coins.svg" />
+        <div class="content">
+          <div class="label">Monto</div>
+          <div class="value">$ {{ totalMount }}</div>
+        </div>
+      </div>
+
+      <div class="transaction-item">
+        <img src="/assets/wallet/wallet-money.png" />
+        <div class="content">
+          <div class="label">Medio de pago</div>
+          <div class="value">{{ paymentMethod }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="warning-box">
+    <div class="warning-icon">⚠</div>
+    <div class="warning-text">
+      Recuerda para desafiliarte ingresar al link de desafiliación desde la vista principal 
+      <strong>wallet</strong>.
+    </div>
+  </div>
+
+  <div *ngIf="isLoading" class="spinner-overlay">
+    <div class="custom-spinner"></div>
+  </div>
+
+  <div class="action-buttons">
+    <button class="btn btn-secondary" (click)="goToWallet()">Volver</button>
+    <button class="btn btn-primary" [class.active]="isAffiliateButtonEnabled" [disabled]="!isAffiliateButtonEnabled"
+      (click)="onAffiliate()">Afiliar</button>
+  </div>
+</div>

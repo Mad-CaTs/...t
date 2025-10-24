@@ -1,0 +1,21 @@
+<div class="d-flex flex-column gap-3 p-0 bg-white shadow rounded event-card h-100">
+<div class=" p-4 card px-0 px-md-4 card-border-none">
+  <div class="d-flex flex-column gap-3 card p-lg-4 border-0">
+<app-navigation [data]="stepNavigation"
+                    [selected]="currentStep"
+                    [noBgSecondary]="true"
+                    (changeSelected)="onChangeStep($event)"></app-navigation>
+  </div>
+ <div class="row">
+    <div class="col-4" *ngFor="let video of videos">
+      <app-video-card 
+        [title]="video.title"
+        [date]="video.date"
+        [previewText]="video.previewText"
+        [videoUrl]="video.videoUrl"
+       >
+      </app-video-card>
+    </div>
+  </div>
+</div>
+</div>

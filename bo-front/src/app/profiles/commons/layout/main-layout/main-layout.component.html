@@ -1,0 +1,228 @@
+<mat-drawer-container class="main-layout_admin bg-white-lilac" [autosize]="isMedium == true ? false : true">
+	<!--Header-->
+	<mat-drawer-content class="body-main">
+		<div class="toolbar-header" [class.ms-3]="showDrawer">
+			<mat-toolbar color="#fff" class="p-0 container-header rounded">
+				<div class="container-fluid h-100">
+					<div class="wrap-toolbar">
+						<div class="d-flex align-items-center">
+							<!--Only option to open sidebar-->
+							<button
+								mat-flat-button
+								class="icon-header-item me-1"
+								(click)="onDrawer()"
+								type="button"
+							>
+								<mat-icon>menu</mat-icon>
+								<!--<span>Menu</span>-->
+							</button>
+							<!-- Welcome user -->
+							<div class="title-toolbar ms-2">
+								<h6 class="fs-4 fw-normal mb-0">{{ getGreeting() }}, {{ getFirstName() }}</h6>
+							</div>
+						</div>
+						<!-- Logo -->
+						<span class="navbar-brand logo">
+							<img src="./assets/logos/navologo.png" />
+						</span>
+						<!-- User menu -->
+						<div class="h-100 d-flex">
+							<button
+								*ngIf="userInfo as userData"
+								type="button"
+								[matMenuTriggerFor]="menu"
+								mat-flat-button
+								class="avatar-profile"
+							>
+								<div class="av-img">
+									<span>{{ userInfo.nameCode }}</span>
+								</div>
+								<div class="av-txt">
+									<span>{{ userData.headerName }}</span>
+									<p class="mb-0">{{ userInfo.username }}</p>
+								</div>
+
+								<mat-icon class="arrow-down_av">keyboard_arrow_down</mat-icon>
+							</button>
+
+							<!-- Extra items (Ambassador only) -->
+							<div class="d-none d-md-block my-auto ms-3" style="height: fit-content">
+								<div *ngTemplateOutlet="headerItemsTemplate"></div>
+							</div>
+
+							<!-- Icons -->
+							<div class="ms-3 d-none d-md-flex flex-row gap-4 my-auto">
+								<mat-icon
+									class="header-icon"
+									svgIcon="wallet"
+									(click)="openAccountInformation()"
+								></mat-icon>
+								<mat-icon 
+									class="header-icon" 
+									svgIcon="whatsapp"
+									(click)="openWhatsApp()"
+								></mat-icon>
+								<div class="notification-icon" (click)="openNotifications()">
+									<mat-icon class="header-icon">notifications_none</mat-icon>
+								
+									<span *ngIf="notificationCount > 0" class="notification-count">
+										{{ notificationCount }}
+									</span>
+
+								
+								</div>
+
+
+							</div>
+
+							<!-- Options for user -->
+							<mat-menu #menu="matMenu" xPosition="before">
+								<ul class="main-menu-drawer">
+									<li class="menu-main-item d-md-none">
+										<button
+											type="button"
+											class="w-100 nav-link link-drawer"
+											mat-flat-button
+										>
+											<mat-icon
+												class="me-2"
+												svgIcon="wallet"
+												style="font-size: 0"
+											></mat-icon>
+											<span class="title-drawer">Wallet</span>
+										</button>
+									</li>
+									<li class="menu-main-item d-md-none">
+										<button
+											type="button"
+											class="w-100 nav-link link-drawer"
+											mat-flat-button
+											(click)="openWhatsApp()"
+										>
+											<mat-icon
+												class="me-2"
+												svgIcon="whatsapp"
+												style="font-size: 0"
+											></mat-icon>
+											<span class="title-drawer">WhatsApp</span>
+										</button>
+									</li>
+									<li class="menu-main-item d-md-none">
+										<button
+											type="button"
+											class="w-100 nav-link link-drawer"
+											mat-flat-button
+										>
+											<mat-icon class="me-2">notifications_none</mat-icon>
+											<span class="title-drawer">Notificaciones</span>
+										</button>
+									</li>
+									<li class="menu-main-item">
+										<button
+											type="button"
+											class="w-100 nav-link link-drawer"
+											mat-flat-button
+											(click)="logout()"
+										>
+											<mat-icon class="me-2">logout</mat-icon>
+											<span class="title-drawer">Cerrar sesión</span>
+										</button>
+									</li>
+								</ul>
+							</mat-menu>
+						</div>
+					</div>
+				</div>
+			</mat-toolbar>
+		</div>
+		<div
+			class="main-view container-fluid py-4"
+			[class.ms-3]="showDrawer"
+			[class.main-view--no-drawner]="!showDrawer"
+		>
+			<router-outlet></router-outlet>
+		</div>
+	</mat-drawer-content>
+	<!--Side Bar-->
+	<mat-drawer class="drawer-sidenav rounded" [mode]="isMedium ? 'over' : 'side'" [opened]="showDrawer">
+		<!--Logo-->
+		<div [className]="isMedium ? 'header-drawer header-drawer-md' : 'header-drawer'">
+			<span class="navbar-brand logo">
+				<img src="./assets/logos/navologo.png" (click)="navigateToDashboard()" alt="Logo" />
+			</span>
+			<button type="button" class="icon-close_drawer" (click)="onDrawer()">
+				<mat-icon>close</mat-icon>
+			</button>
+		</div>
+		<!--Content-->
+		<div class="content-drawer main-menu-drawer">
+			<!--Menu icons (For ambassador only)-->
+			<div class="d-md-none">
+				<div *ngTemplateOutlet="headerItemsTemplate"></div>
+			</div>
+			<!--Routes iterations-->
+			<li *ngFor="let route of links; let i = index" class="menu-main-item" 
+				[class.menu-main-item--open]="expandedMenus['menu-' + i]"
+				[class.menu-main-item--has-children]="route.children && route.children.length"
+			>
+				<!-- Con hijos -->
+				<ng-container *ngIf="route.children && route.children.length; else singleLink">
+					<button
+						mat-flat-button
+						type="button"
+						class="w-100 nav-link link-drawer menu-parent"
+						(click)="toggleMenu('menu-' + i)"
+						[ngClass]="{ 'link-drawer--active': isChildActive(route) }"
+					>
+						<mat-icon class="menu-icon">{{ route.name_icon }}</mat-icon>
+						<span class="label-wrapper">
+							<span class="title-drawer">{{ route.name_link }}</span>
+							<mat-icon class="expand-icon" [class.expanded]="expandedMenus['menu-' + i]">expand_more</mat-icon>
+						</span>
+					</button>
+					<div class="submenu" [class.expanded]="expandedMenus['menu-' + i]">
+						<a
+							*ngFor="let child of route.children"
+							[routerLink]="child.url"
+							[routerLinkActiveOptions]="{ exact: true }"
+							class="w-100 nav-link link-drawer submenu-item"
+							mat-flat-button
+							routerLinkActive="link-drawer--active"
+						>
+							<mat-icon>{{ child.name_icon }}</mat-icon>
+							<span class="title-drawer">{{ child.name_link }}</span>
+						</a>
+					</div>
+				</ng-container>
+				<!-- Sin hijos -->
+				<ng-template #singleLink>
+					<a
+						[routerLink]="route.url"
+						routerLinkActive="link-drawer--active"
+						[routerLinkActiveOptions]="{ exact: true }"
+						class="w-100 nav-link link-drawer"
+						mat-flat-button
+					>
+						<mat-icon>{{ route.name_icon }}</mat-icon>
+						<span class="title-drawer">{{ route.name_link }}</span>
+					</a>
+				</ng-template>
+			</li>
+
+			<div class="my-3 border-bottom"></div>
+
+			<li class="menu-main-item">
+				<button type="button" class="w-100 nav-link link-drawer" mat-flat-button (click)="logout()">
+					<mat-icon class="me-2">logout</mat-icon>
+					<span class="title-drawer">Cerrar sesión</span>
+				</button>
+				<!-- <form action="/logout" method="post" (submit)="limpiarDatos()">
+					<button type="submit" class="w-100 nav-link link-drawer" mat-flat-button>
+						<mat-icon class="me-2">logout</mat-icon>
+						<span class="title-drawer"> Cerrar sesión </span>
+					</button>
+				</form> -->
+			</li>
+		</div>
+	</mat-drawer>
+</mat-drawer-container>

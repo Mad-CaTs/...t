@@ -1,0 +1,28 @@
+<div class="w-100  cursor-grab border-1 rounded p-4" (mousedown)="onMouseDown($event)" (mousemove)="onMouseMove($event)"
+	(mouseup)="scrollActivate = false" (mouseleave)="scrollActivate = false"
+	style="max-height: 600px; overflow-x: auto; overflow-y: auto;" #scroller>
+	<div class="spinner-container" *ngIf="isLoading">
+		<p-progressSpinner [style]="{ width: '2rem', height: '2rem' }" strokeWidth="3" fill="var(--surface-ground)"
+			animationDuration=".7s"></p-progressSpinner>
+	</div>
+	<section class="d-flex flex-row position-relative no-user-select tree-container"
+		[style.transform]="'scale(' + formatedZoomValue + ')'" style=" width: max-content">
+		<div class="d-flex flex-row align-items-center w-auto">
+			<div class="d-flex flex-column" style="min-width: 300px">
+				<div
+					class="w-100 py-2 rounded-top border-top border-start border-end border-black bg-primary d-flex flex-row justify-content-center align-items-center text-white">
+					{{ userInfoService?.userInfo?.headerName }}
+				</div>
+				<div
+					class="py-2 rounded-bottom border border-black w-100 text-black d-flex flex-row justify-content-center align-items-center">
+					Tú
+				</div>
+			</div>
+			<div class="line-tree"></div>
+		</div>
+
+		<div class="line-connector" id="connector-first"></div>
+
+		<div #container></div>
+	</section>
+</div>

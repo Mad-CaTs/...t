@@ -1,0 +1,78 @@
+<div class="">
+    <div class="wallet-recharger">
+        <p class="" (click)="onVolver()">Wallet</p>
+        <p class="px-2"> <mat-icon class="arrow-down_av">keyboard_arrow_right</mat-icon> </p>
+        <p class="recharge">Desafiliarme</p>
+    </div>
+</div>
+<div class="desafiliacion-container">
+  <div *ngIf="MembershipSelected" class="main-content">
+    <h1 class="page-title" >Solicitar desafiliación</h1>
+    <p class="subtitle">Selecciona la membresía a desafiliar</p>
+    <div ngClass="{'has-memberships': memberships.length > 0}" class="membership-list">
+      <div 
+        *ngFor="let membership of memberships" 
+        class="membership-card"
+        [class.disabled]="membership.idReason !== null"   
+        [class.selected]="membership.isSelected "
+        (click)="membership.idReason === null && onMembershipSelect(membership.idSuscription)">
+
+        <span class="alert alert-warning text-center d-flex justify-content-center" *ngIf="membership.idReason !== null">Pendiente de desafiliacion</span>
+
+        <div class="membership-header">
+          <div class="radio-container">
+            <input 
+              type="radio"
+              [id]="membership.idSuscription"
+              name="membership"
+              [value]="membership.idSuscription"
+              [checked]="membership.isSelected"
+              [disabled]="membership.idReason !== null"
+              (change)="membership.idReason === null && onMembershipSelect(membership)"
+              >
+            <div class="custom-radio" [class.checked]="membership.isSelected"></div>
+          </div>
+          
+          <div class="membership-info">
+            <div class="membership-name-container">
+              <span class="membership-name">{{ membership.namePackage }}</span>
+              <span *ngIf="membership.status" class="active-badge">Activo</span>
+            </div>
+            <div class="membership-price">${{ membership.amount }}/mes</div>
+          </div>
+        </div>
+
+        <div class="membership-details">
+          <div class="detail-item">
+            <span class="detail-label">Fecha del pedido:</span>
+            <span class="detail-value">{{ convertToDateArray(membership.dateAffiliate) | date:'dd/MM/yyyy'  }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Medio de pago:</span>
+            <span class="detail-value">Wallet</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="memberships.length === 0" class="membership-list" >
+      <h3 class="subtitle">No hay suscripciones</h3>
+    </div>
+
+    <div class="action-buttons">
+      <button type="button" class="btn btn-secondary" (click)="onVolver()">
+        Volver
+      </button>
+      <button type="button" class="btn btn-primary"
+      [class.active]="isAffiliateButtonEnabled"
+      [disabled]="!isAffiliateButtonEnabled"
+      (click)="onClickOpenCoAffiliateModal()">
+        Siguiente
+      </button>
+    </div>
+
+  </div>
+  
+  <div *ngIf="!MembershipSelected" class="main-content">
+    <app-disaffiliation-request [membershipInfo] ="selectedMembership"  (goToBackChild)="handleGoToBack($event)" />
+  </div>
+</div>

@@ -1,0 +1,11 @@
+<a [routerLink]="href" style="text-decoration: none">
+	<div class="d-flex flex-column rounded product-card">
+		<picture class="product-card__picture rounded-top" [style]="'background-image: url(' + cardBg + ')'">
+			<img src="assets/logos/logowhite.png" alt="" class="product-card__logo" />
+		</picture>
+		<h4 class="m-0 fs-5 fw-medium text-black w-100 text-start pt-4 px-4">{{ title }}</h4>
+		<p class="m-0 fs-6 fw-normal cl-muted w-100 text-start px-4 pb-4">
+			{{ description }}
+		</p>
+	</div>
+</a>

@@ -1,0 +1,211 @@
+<guest-panels [panel]="myPurchases">
+  <p-tabView [activeIndex]="activeTabIndex">
+        <p-tabPanel header="Compras">
+            @if (isLoadingResults) {
+            <div class="loading-container">
+                <app-logo-spinner [show]="isLoadingResults" size="80px">
+                </app-logo-spinner>
+            </div>
+            }
+            @else if (!purchases?.length) {
+            <guest-empty-state [state]="emptyPurchases" />
+            }
+            @else {
+            <app-simple-table [data]="purchases" [columns]="columns" [scrollHeight]="'400px'"
+                [tableStyleClass]="'p-datatable-sm purchases-table'" [showDebugInfo]="true">
+                <ng-template #bodyTemplate let-rowData let-columns="columns">
+                    <tr>
+                        @for (col of columns; track col) {
+                        @switch (col.field) {
+                        @case ('purchaseDate') {
+                        <td>
+                            <span class="date">{{rowData[(col.field)] | date: 'dd/MM/yyyy' }}</span>
+                        </td>
+                        }
+                        @case ('total') {
+                        <td>
+                            <span class="total"> {{ rowData[col.field] }}</span>
+                        </td>
+                        }
+                        @case ('document') {
+                        <td class="document">
+                            <a [href]="rowData[col.field]" target="_blank">{{ rowData[col.field] }}</a>
+                        </td>
+                        }
+                        @case ('status') {
+                        <td class="default">
+                            <span>{{ translatePaymentStatus(rowData[col.field]) }}</span>
+                        </td>
+                        }
+                        @default {
+                        <td class="default">
+                            {{ rowData[col.field] }}
+                        </td>
+                        }
+                        }
+                        }
+                    </tr>
+                </ng-template>
+            </app-simple-table>
+
+            <app-pagination [currentPage]="currentPage.value" [totalPages]="totalPages" [totalElements]="totalElements"
+                [pageSize]="pageSize" [hasNext]="hasNext" [hasPrevious]="hasPrevious" [isLoading]="isLoadingResults"
+                [showDebugInfo]="true" (pageChange)="changePage($event)" (firstPage)="firstPage()"
+                (lastPage)="lastPage()" (nextPage)="nextPage()" (previousPage)="previousPage()">
+            </app-pagination>
+            }
+        </p-tabPanel>
+
+        <p-tabPanel header="Rechazados">
+            @if (isLoadingResults) {
+            <div class="loading-container">
+                <app-logo-spinner [show]="isLoadingResults" size="80px">
+                </app-logo-spinner>
+            </div>
+            }
+            @else if (!rejected?.length) {
+            <guest-empty-state [state]="emptyPurchases" />
+            }
+            @else {
+            <app-simple-table [data]="rejected" [columns]="rejectedColumns" [scrollHeight]="'400px'"
+                [tableStyleClass]="'p-datatable-sm purchases-table'" [showDebugInfo]="true">
+                <ng-template #bodyTemplate let-rowData let-columns="columns">
+                    <tr>
+                        @for (col of columns; track col) {
+                        @switch (col.field) {
+                        @case ('purchaseDate') {
+                        <td>
+                            <span class="date">{{rowData[(col.field)] | date: 'dd/MM/yyyy' }}</span>
+                        </td>
+                        }
+                        @case ('total') {
+                        <td>
+                            <span class="total"> {{ rowData[col.field] }}</span>
+                        </td>
+                        }
+                        @case ('status') {
+                        <td class="default">
+                            <span>{{ translatePaymentStatus(rowData[col.field]) }}</span>
+                        </td>
+                        }
+                        @case ('document') {
+                        <td class="document">
+                            <a [href]="rowData[col.field]" target="_blank">{{ rowData[col.field] }}</a>
+                        </td>
+                        }
+                        @default {
+                        <td class="default">
+                            {{ rowData[col.field] }}
+                        </td>
+                        }
+                        @case('accions'){
+                        <td>
+                            <button class="btn btn-secondary btn-sm" type="button"
+                                (click)="openRestoreModal(rowData)" [disabled]="isLoadingResults || rowData.status === 'REJECTED'">
+                                <span>Restablecer</span>
+                            </button>
+                        </td>
+                        }
+                        }
+                        }
+                    </tr>
+                </ng-template>
+            </app-simple-table>
+
+            <app-pagination [currentPage]="currentPage.value" [totalPages]="totalPages" [totalElements]="totalElements"
+                [pageSize]="pageSize" [hasNext]="hasNext" [hasPrevious]="hasPrevious" [isLoading]="isLoadingResults"
+                [showDebugInfo]="true" (pageChange)="changePage($event)" (firstPage)="firstPage()"
+                (lastPage)="lastPage()" (nextPage)="nextPage()" (previousPage)="previousPage()">
+            </app-pagination>
+            }
+        </p-tabPanel>
+
+       <p-tabPanel header="Nominar">
+  @if (!nominations?.length) {
+    <guest-empty-state [state]="emptyNominations" />
+  }
+  @else {
+    <app-simple-table 
+      [data]="nominations" 
+      [columns]="nominationsColumns" 
+      [scrollHeight]="'400px'" 
+      [tableStyleClass]="'p-datatable-sm purchases-table'" 
+      [showDebugInfo]="true">
+
+      <ng-template #bodyTemplate let-rowData let-columns="columns">
+        <tr>
+          @for (col of columns; track col) {
+            @switch (col.field) {
+
+              @case ('orderNumber') {
+                <td>
+                  <span class="">{{ rowData[col.field] }}</span>
+                </td>
+              }
+
+              @case ('paymentDate') {
+                <td>
+                  <span class="date">{{ rowData[col.field] | date:'dd/MM/yyyy' }}</span>
+                </td>
+              }
+
+              @case ('eventName') {
+                <td>
+                  <span class="">{{ rowData[col.field] }}</span>
+                </td>
+              }
+
+              @case ('totalTickets') {
+                <td>
+                  <span class="">{{ rowData[col.field] }}</span>
+                </td>
+              }
+
+              @case ('status') {
+                <td>
+                  <span class="status-pill" [ngClass]="getNominationClass(rowData.status)">
+                    {{ formatNominationStatus(rowData.status) }}
+                  </span>
+                </td>
+              }
+
+              @case ('acciones') {
+                <td>
+                  <button class="btn-nominar" type="button"
+                          (click)="openNominationForTicket(rowData)">
+                    Nominar
+                  </button>
+                </td>
+              }
+
+              @default {
+                <td>{{ rowData[col.field] }}</td>
+              }
+
+            }
+          }
+        </tr>
+      </ng-template>
+    </app-simple-table>
+
+    <!-- Paginación -->
+    <app-pagination 
+      [currentPage]="currentPage.value" 
+      [totalPages]="totalPages" 
+      [totalElements]="nominations.length"
+      [pageSize]="pageSize" 
+      [hasNext]="hasNext" 
+      [hasPrevious]="hasPrevious" 
+      [isLoading]="isLoadingResults"
+      (pageChange)="changePage($event)" 
+      (firstPage)="firstPage()" 
+      (lastPage)="lastPage()" 
+      (nextPage)="nextPage()" 
+      (previousPage)="previousPage()">
+    </app-pagination>
+  }
+</p-tabPanel>
+
+
+    </p-tabView>
+</guest-panels>

@@ -1,0 +1,45 @@
+<label [for]="name" class="fs-6 mb-2 cl-muted" *ngIf="label">{{ label }}</label>
+
+<div
+	class="input position-relative"
+	[class.input--disabled]="disabled"
+	[class.border-danger]="errors && !disabled"
+	[formGroup]="form"
+>
+	<textarea
+		class="form-control p-0"
+		[placeholder]="placeholder"
+		[formControlName]="name"
+		[name]="name"
+		[id]="name"
+		[attr.aria-label]="label"
+		[attr.disabled]="disabled ? true : null"
+		[class.text-danger]="errors && !disabled"
+		*ngIf="!control"
+		style="height: 100px"
+	></textarea>
+
+	<textarea
+		class="form-control p-0"
+		[placeholder]="placeholder"
+		[formControl]="control"
+		[name]="name"
+		[id]="name"
+		[attr.aria-label]="label"
+		[attr.disabled]="disabled ? true : null"
+		[class.text-danger]="errors && !disabled"
+		*ngIf="control"
+		style="height: 100px"
+	></textarea>
+</div>
+
+<div
+	class="d-flex flex-row align-items-center gap-2 mt-3 ms-3"
+	[class.cl-muted]="!disabled"
+	[class.cl-disabled]="disabled"
+	[class.text-danger]="errors && !disabled"
+	*ngIf="helper"
+>
+	<mat-icon fontIcon="info" class="fs-5" style="width: 19px; height: 19px"></mat-icon>
+	<span class="fs-6 m-0">This is the description area</span>
+</div>

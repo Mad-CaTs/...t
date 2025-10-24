@@ -1,0 +1,97 @@
+<div *ngIf="isLoading" class="d-flex justify-content-center align-items-center" style="min-height: 150px">
+    <p-progressSpinner [style]="{ width: '2rem', height: '2rem' }" strokeWidth="3" fill="var(--surface-ground)"
+        animationDuration=".7s"></p-progressSpinner>
+    <span class="ms-2">Actualizando...</span>
+</div>
+<div class="d-flex flex-column gap-4 p-lg-4 border-0" *ngIf="!isLoading">
+    <div class="d-flex">
+        <p class="ruta-anterior" (click)="redirectWallet()">Wallet</p>
+        <p class="signo-mayor"> > </p>
+        <p class="ruta-actual">Retiros</p>
+    </div>
+</div>
+<div class="d-flex flex-column gap-4" *ngIf="!isLoading">
+    <div class="d-flex flex-column mx-auto w-100" style="max-width: 700px">
+        <h3 class="text-black m-0 fw-medium text-center text-uppercase fs-5 mb-4 mt-md-3">Retirar dinero a cuenta
+            bancaria</h3>
+
+        <div class="monto-container">
+            <label for="monto">Monto</label>
+            <div class="input-wrapper">
+                <app-input type="dollar" [form]="form" controlName="monto" placeholder="0.00" inputId="monto"
+                    class="custom-money-input w-100"></app-input>
+            </div>
+        </div>
+        <!--Nota -->
+        <div class="d-flex flex-column flex-sm-row justify-content-center align-items-center gap-2">
+            <div class="row content-nota mb-3 mt-3 mb-0 w-100 m-0" role="alert">
+                <div class="col-12 col-sm-1  d-flex justify-content-center"
+                    style="align-items: center;padding-right: 4px;">
+                    <img width="24" height="24" src="assets/icons/info_circle_24px.svg">
+                </div>
+                <div class="col-12 col-sm-11 d-flex ">
+                    <span class="fw-normal text-center text-sm-start  text-info">
+                        Los retiros a cuentas bancarias que se
+                        hagan dentro del mes serán pagados
+                        dentro de los 5 de cada mes.</span>
+                </div>
+            </div>
+            <div class="card-bcp-info">
+                <div class="card-icon">🏦</div>
+                <div class="card-text">Solo habilitado para<br>BCP</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-sm-6 col-md-6 col-lg-6 mb-3">
+                <app-select class="w-100" [showImg]="true" label="País de operaciones" placeholder="País de operaciones"
+                    [options]="nationalitiesList" [form]="form" [disabled]="true" controlName="pais"></app-select>
+            </div>
+            <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                <app-select [form]="form" controlName="cci" placeholder="cuenta Interbancaria"
+                    [options]="listAccountBank" (onChangeSelection)="onChangeAccountBank($event)"
+                    label="N° de cuenta Interbancaria (CCI)" class="w-100">
+                </app-select>
+            </div>
+            <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                <app-input [form]="form" controlName="name_bank" placeholder="nombre del banco" label="Nombre del banco"
+                    class="w-100">
+                </app-input>
+            </div>
+            <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                <app-select class="w-100" [showImg]="true" label="Tipo de Documento*" placeholder="Selecciona uno"
+                    [options]="documentTypes" [form]="form" controlName="tipDoc"></app-select>
+            </div>
+            <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                <app-input [form]="form" controlName="numDoc" placeholder="Numero del Documento"
+                    label="Numero de Documento*" class="w-100">
+                </app-input>
+            </div>
+            <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                <app-input [form]="form" controlName="name_account" placeholder="nombres del titular de la cuenta"
+                    label="Nombres del titular de la cuenta" class="w-100">
+                </app-input>
+            </div>
+            <div class="col-12 ">
+                <app-input [form]="form" controlName="lastName_Account" placeholder="apellido del titular de la cuenta"
+                    label="Apellidos del titular de la cuenta" class="w-100">
+                </app-input>
+            </div>
+            <div class="col-12 col-lg-6 mb-3">
+                <button class="btn-volver" (click)="redirectWallet()">
+                    Volver
+                </button>
+            </div>
+            <div class="col-12 col-lg-6">
+                <button class="w-100" [ngClass]="{
+					'ms-auto': step === 1,
+					btn: true,
+					'btn-secondary': true
+				}" type="button" [disabled]="(!isValidBtn || disabledUser)" (click)="nextPaso()">
+                    Siguiente
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p-toast></p-toast>

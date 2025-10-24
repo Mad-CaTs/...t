@@ -1,0 +1,37 @@
+<div class="d-flex gap-2 align-items-center cursor-pointer mb-3"
+     (click)="location.back()">
+  <mat-icon fontIcon="arrow_back" />
+  <span class="text-black fs-6 fw-normal">Volver</span>
+</div>
+<div class="d-flex flex-column flex-xl-row gap-4 w-100">
+  <div class="w-100 d-flex flex-column gap-4">
+    <app-fad class="w-100"
+             [title]="detail?.title"
+             [imageUrl]="detail?.img"
+             [hiddenTitle]="true" />
+    <div class="d-flex flex-column gap-1 mt-1 mt-md-3">
+      <span class="text-secondary fw-normal fs-6">{{ detail?.date }}</span>
+      <h4 class="m-0 text-black fw-medium fs-3">
+        {{ detail?.title }}
+      </h4>
+    </div>
+    <p class="fs-5 cl-muted fw-normal mt-md-5 mb-5">
+      {{ detail?.description }}
+    </p>
+    <app-video *ngIf="detail?.videoUri"
+               [preview]="detail?.img"
+               [videoUrl]="detail?.videoUri"
+               class="mx-auto" />
+  </div>
+  <div class="d-flex flex-column gap-4 mx-auto"
+       style="max-width: 320px">
+    <app-event-card class="w-100 mx-auto"
+                    *ngFor="let event of events"
+                    style="max-width: 500px"
+                    [img]="event.img"
+                    [date]="event.date"
+                    [title]="event.name"
+                    [noCalender]="true"
+                    [id]="event.id" />
+  </div>
+</div>

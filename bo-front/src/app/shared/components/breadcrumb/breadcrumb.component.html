@@ -1,0 +1,20 @@
+<div class="release-points-container__breadcrumps cursor-pointer">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb d-flex align-items-center">
+        <li *ngFor="let item of breadcrumbs; let last = last"
+            class="d-flex align-items-center"
+            [class.text-gray]="!last"
+            [class.cl-sorbus]="last">
+          
+          <a *ngIf="!last" (click)="item.action ? item.action() : null" class="breadcrumb-link">
+            {{ item.label }}
+          </a>
+          
+          <span *ngIf="last">{{ item.label }}</span>
+          
+          <i *ngIf="!last" class="pi pi-chevron-right mx-2 right-arrow" style="font-size: 0.8rem"></i>
+        </li>
+      </ol>
+    </nav>
+  </div>
+  

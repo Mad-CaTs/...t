@@ -1,0 +1,55 @@
+.strip{
+  width:100%;
+  border-bottom: 1px solid rgba(0,0,0,.06);
+  background: transparent; /* se verá un gris suave del fondo general */
+}
+.strip__inner{
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 12px 16px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 16px;
+}
+
+/* izquierda */
+.event{ display:flex; align-items:center; gap:16px; min-width:0; }
+.event__thumb{
+  width: 120px; height: 72px; object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.08);
+}
+.event__meta{ min-width:0; }
+.event__title{ font-weight: 700; font-size: 1.05rem; margin-bottom: 6px; color:#0f172a; }
+.event__chips{ display:flex; gap:14px; flex-wrap: wrap; }
+.chip{
+  display:inline-flex; align-items:center; gap:6px;
+  color:#0a6f86; /* teal oscuro */
+}
+
+/* derecha */
+.timer{ text-align:right; white-space:nowrap; }
+.timer__value{ font-size: 28px; font-weight: 800; line-height:1; color:#111; }
+.timer__hint{ font-size:.85rem; color:#6b7280; }
+
+/* barra inferior */
+.strip__track{
+  height: 6px;
+  background: rgba(0,0,0,.08);
+}
+.strip__bar{
+  height: 100%;
+  background: #0a9ac0; /* teal de tu paleta */
+  transition: width .25s linear;
+}
+
+/* Colores dinámicos por umbral */
+.strip.blue .timer__value{ color:#111; }
+.strip.blue .strip__bar{ background:#0a9ac0; }
+
+.strip.orange .timer__value{ color:#f59e0b; }
+.strip.orange .strip__bar{ background:#f59e0b; }
+
+.strip.red .timer__value{ color:#ef4444; }
+.strip.red .strip__bar{ background:#ef4444; }

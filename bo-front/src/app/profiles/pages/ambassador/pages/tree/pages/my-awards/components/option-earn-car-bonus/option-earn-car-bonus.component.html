@@ -1,0 +1,50 @@
+<app-breadcrumb class="p-2" [breadcrumbs]="breadcrumbItems"></app-breadcrumb>
+<h4 class="pb-2">Opciones para ganar el Bono Auto</h4>
+<div class="d-flex row">
+  <div class="flex-fill p-3 col-12 col-md-6">
+    <mat-accordion class="custom-accordion" multi>
+      <mat-expansion-panel *ngFor="let option of options">
+        <hr>
+        <mat-expansion-panel-header>
+          <mat-panel-title class="accordion-title">
+            {{ option.title }}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <div class="accordion-body text-center">
+          <p class="ciclos">{{option.cycles}} ciclos</p>
+          <h5 class="fechas">Día inicial - Día final</h5>
+
+          <div class="mt-3 progress-container">
+            <p class="text-muted small mb-1">Tus puntos actuales</p>
+
+            <mat-progress-bar class="custom-progress" mode="determinate"
+              [value]="(option.achievedPoints / option.requiredPoints) * 100" color="primary">
+            </mat-progress-bar>
+
+            <div class="puntos my-2">
+              {{ option.achievedPoints }}/{{ option.requiredPoints }}
+            </div>
+
+            <!-- <p class="faltan">
+              (Te quedan <span class="text-danger">x</span> para llegar a la meta)
+            </p> -->
+          </div>
+
+
+          <div class="alert alert-primary mt-3 info-box" role="alert">
+            <i class="bi bi-info-circle me-1"></i>
+            Recuerda que los puntos vencen al finalizar el año
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+
+
+  </div>
+  <div class="flex-fill p-3 col-12 col-md-6" style="flex: 3;">
+    <app-modal-car-bonus [cars]="car" [footer]="false" [flagProgressBar]="false" [flagTextInfo]="false"
+      [flagButtonPrefor]="true" [flagButtonSchedule]="true" [flagLink]="false">
+    </app-modal-car-bonus>
+  </div>
+</div>

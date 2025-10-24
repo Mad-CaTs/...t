@@ -1,0 +1,26 @@
+<section class="py-5 py-md-0 keola">
+	<article
+		*ngFor="let el of keOlaElements; index as i"
+		class="d-flex flex-column flex-md-row gap-4 justify-content-center align-items-md-center keola__item"
+		[class.z-1]="i !== current"
+		[class.z-2]="i === current"
+		[class.opacity-0]="i !== current"
+	>
+		<img [src]="el.img" [width]="el.imgW" [height]="el.imgH" alt="Keola image" loading="lazy" />
+
+		<div
+			class="d-flex flex-column align-items-md-center align-items-md-start gap-3 text-white keola__item__info"
+		>
+			<h3 class="m-0 fw-bold fs-3 text-start">{{ el.title }}</h3>
+			<p class="m-0 fs-5 text-start">{{ lang.cta }}</p>
+			<a
+				href="https://play.google.com/store/apps/details?id=com.appkeola"
+				target="_blank"
+				class="btn btn-dark gap-2 keola__button"
+			>
+				<img src="assets/icons/play_store.svg" alt="play store icon" />
+				<span class="fs-6">{{ lang.btn }}</span>
+			</a>
+		</div>
+	</article>
+</section>

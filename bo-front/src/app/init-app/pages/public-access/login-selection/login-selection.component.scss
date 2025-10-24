@@ -1,0 +1,144 @@
+/* ---------- layout base ---------- */
+.login-selection-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  min-height: 100vh;
+  padding: 4rem 6rem;
+  background: #fff;
+  gap: 6rem;
+}
+
+/* ---------- lado izquierdo ---------- */
+.login-options {
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.login-options .logo {
+  position: absolute;
+  top: 2rem;
+  left: 0;
+  width: 150px;
+  margin: 0;
+}
+
+.login-options h2 {
+  font-size: 1.8rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.login-options p {
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  color: #555;
+}
+
+.login-options .btn {
+  width: 100%;
+  max-width: 360px;
+  padding: 0.75rem;
+  border-radius: 2rem;
+  font-size: 1rem;
+  margin: 0 auto 1rem;
+  align-self: center;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.login-options .btn.primary {
+  background: #f97316;
+  color: #fff;
+}
+
+.login-options .btn.primary:hover {
+  background: #ea580c;
+}
+
+.login-options .btn.secondary {
+  background: transparent;
+  border: 1px solid #ccc;
+  color: #333;
+}
+
+.login-options .btn.secondary:hover {
+  background: #f3f3f3;
+}
+
+.login-options .support-link {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 1rem;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  span {
+    color: #0c74ad;
+    font-weight: 500;
+  }
+}
+
+/* ---------- lado derecho (envoltorio del componente testimonial) ---------- */
+.notched-wrapper {
+  flex: 1;
+  height: 100%;
+  filter: url('#clip-rounded');
+  border-radius: 2rem;
+  overflow: hidden;
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 768px) {
+  .login-selection-container {
+    flex-direction: column;
+    align-items: center;
+    padding: 3rem;
+    gap: 4rem;
+  }
+
+  .login-options,
+  .notched-wrapper {
+    flex: none;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .notched-wrapper {
+    height: auto;
+  }
+
+  .login-options .logo {
+    position: static;
+    display: block;
+    width: 120px;
+    margin: 0 auto 2rem;
+  }
+
+  .login-options h2 {
+    font-size: 1.5rem;
+    margin-top: 0;
+    margin-bottom: 1rem;
+  }
+
+  .login-options p {
+    margin-bottom: 3rem;
+  }
+
+  .login-options .btn {
+    margin-bottom: 2rem;
+  }
+
+  .login-options .support-link {
+    margin-top: 3rem;
+  }
+}

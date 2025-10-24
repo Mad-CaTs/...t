@@ -1,0 +1,89 @@
+<div class="">
+    <div class="wallet-recharger">
+        <p class="mouse-pointer" (click)="goToMyWallet()">Wallet</p>
+        <p class="px-2"> <mat-icon class="arrow-down_av">keyboard_arrow_right</mat-icon> </p>
+        <p class="recharge">Recargas</p>
+    </div>
+</div>
+
+<div class="recharge-container">
+    <div class="recharge-header">
+        <h2>Recargar dinero</h2>
+    </div>
+
+    <div class="recharge-timeline">
+        <div class="timeline-steps">
+            <div class="step" [class.active]="currentStep >= 1">
+                <div class="step-number">1</div>
+                <div class="step-label">Elige tu medio de pago</div>
+            </div>
+
+            <div class="step" [class.active]="currentStep >= 2">
+                <div class="step-number">2</div>
+                <div class="step-label">Formulario de recarga</div>
+            </div>
+
+            <div class="step" [class.active]="currentStep >= 3">
+                <div class="step-number">3</div>
+                <div class="step-label">Confirmación de solicitud</div>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex" *ngIf="loading">
+        <p class="text-warning">Cargando Tipos de recarga...</p>
+    </div>
+    <div class="container" *ngIf="paymentTypes.length > 0">
+        <div class="row recharge-content mt-4 p-2" [attr.disabled]="walletBlock ? true : null"
+            *ngFor="let item of paymentTypes" [class]="item.idPaymentType==selectIdType? 'paymentySelected' : ''"
+            (click)="selectPaymentType(item)">
+            <div class="d-flex justify-content-between align-items-center cursor-pointer" [data]="item.idPaymentType">
+                <div class="d-flex align-items-center">
+                    <img [src]="item.pathPicture" alt="" class="cropped-image-types"
+                        [style]="item.description==='BCP'? 'height:46px; width: 46px;  object-fit: fill; object-position: center;': '' " />
+                    <div class="mx-3 align-items-center cursor-pointer">
+                        <h5 class="mt-2">{{ item.description}}</h5>
+                        <p class="p-0 pt-0 pb-0">Recarga tu wallet con {{ capitalizeString(item.description) }}</p>
+                    </div>
+                </div>
+                <div class="">
+                    <mat-icon class="arrow-down_av">keyboard_arrow_right</mat-icon>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- modal confirm-->
+    <p-dialog [(visible)]="showPaymentModal" [modal]="true" [dismissableMask]="true"
+        (onHide)="closeModal({ reason: 'mask-click' })"
+        [style]="{ 'max-width': '350px','position':'absolute', 'left':'auto', 'right':'auto' }"
+        [contentStyle]="{ 'max-height': '80vh', overflow: 'auto' }">
+        <div class="alert-icon-container">
+            <span class="alert-icon p-1" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-check-fill" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5m8.854-9.646a.5.5 0 0 0-.708-.708L7.5 7.793 6.354 6.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0z"/>
+                </svg>
+            </span>
+        </div>
+        <div class="d-column gap-3 text-black">
+            <div>
+                <strong class="fw-bold">Recarga exitoso</strong>
+            </div>
+            <div>
+                <p class="fw-light fs-6">
+                    En breve visualizarás los detalles de la transacción en
+                    tu wallet.
+                </p>
+            </div>
+        </div>
+        <hr class="py-0 border-1 my-4 mt-4" />
+        <div class="d-flex flex-row justify-content-centr ">
+            <button type="button" class="btn btn-secondary w-100 confirm-btn mx-5" id="confirmBtn"
+                (click)="goToMyWallet()">
+                Confirmar
+            </button>
+        </div>
+    </p-dialog>
+
+
+</div>

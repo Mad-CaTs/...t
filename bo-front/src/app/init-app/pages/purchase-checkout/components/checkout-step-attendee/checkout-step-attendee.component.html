@@ -1,0 +1,108 @@
+<section class="left-wrap">
+  <p class="step">Paso 1 de 2</p> <!-- por el momento, era Paso 1 de 3 -->
+  <h2 class="title">Datos del asistente</h2>
+
+  <!-- Aviso naranja -->
+  <div class="info-box" role="alert" aria-live="polite">
+    <span class="info-icn" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="18" height="18">
+        <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"></circle>
+        <path d="M12 8v6m0 4h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+      </svg>
+    </span>
+    <div class="info-content">
+      <strong>Información importante</strong>
+      <p>Puedes omitir este paso, pero recuerda que para generar el código QR necesitaremos los datos del asistente.</p>
+      <p class="muted">Si completas los datos de una entrada, debes completar los de <b>todas</b> las entradas de esta compra. De lo contrario, no llenes ninguna.</p>
+    </div>
+  </div>
+  <!-- /Aviso naranja -->
+   
+
+  <ng-container *ngIf="attendeesFA.length > 0; else noTickets">
+    <div
+      class="attendee-card"
+      *ngFor="let grp of attendeesFA.controls; let i = index"
+      [class.collapsed]="collapsed[i]"
+    >
+      <!-- Cabecera -->
+      <button class="attendee-head" type="button" (click)="toggle(i)">
+        <div class="head-text">
+          <strong>Datos del asistente: Entrada #{{ i + 1 }}</strong>
+          <span class="zone">({{ zones[i] }})</span>
+        </div>
+        <span class="chev" [class.open]="!collapsed[i]">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+            <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2"/>
+          </svg>
+        </span>
+      </button>
+
+      <!-- Cuerpo -->
+      <div class="attendee-body" *ngIf="!collapsed[i]" [formGroup]="grp">
+        <div class="grid">
+          <div class="field">
+            <label>Tipo de documento</label>
+            <select formControlName="docType">
+              <option value="dni">DNI</option>
+              <option value="ce">CE</option>
+              <option value="passport">Pasaporte</option>
+              <option value="libAdol">Lib. Adol. Trab.</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>N° de documento</label>
+            <input
+              type="text"
+              formControlName="docNumber"
+              placeholder="xxxxxxxx"
+              (keydown)="handleDocKeydown($event, grp)"
+              (input)="sanitizeDocNumber($event, grp)"
+              (paste)="sanitizeDocNumber($event, grp)"
+              (blur)="sanitizeDocNumber($event, grp); trimSpaces($event)"
+            />
+            <div class="error" *ngIf="grp.get('docNumber')?.touched && grp.get('docNumber')?.invalid">
+              {{ getDocNumberErrorMessage(grp.get('docNumber')) }}
+            </div>
+          </div>
+          <div class="field">
+            <label>Nombre</label>
+            <input
+              type="text"
+              formControlName="firstName"
+              placeholder="Nombre(s)"
+              (keydown)="handleNameKeydown($event, grp, 'firstName')"
+              (input)="sanitizeName($event, grp, 'firstName')"
+              (paste)="sanitizeName($event, grp, 'firstName')"
+              (blur)="trimSpaces($event)"
+            />
+            <div class="error" *ngIf="grp.get('firstName')?.touched && grp.get('firstName')?.invalid">
+              {{ getFirstNameErrorMessage(grp.get('firstName')) }}
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Apellidos</label>
+            <input
+              type="text"
+              formControlName="lastName"
+              placeholder="Apellidos"
+              (keydown)="handleNameKeydown($event, grp, 'lastName')"
+              (input)="sanitizeName($event, grp, 'lastName')"
+              (paste)="sanitizeName($event, grp, 'lastName')"
+              (blur)="trimSpaces($event)"
+            />
+            <div class="error" *ngIf="grp.get('lastName')?.touched && grp.get('lastName')?.invalid">
+              {{ getLastNameErrorMessage(grp.get('lastName')) }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #noTickets>
+    <p class="no-tickets">No hay entradas seleccionadas.</p>
+  </ng-template>
+</section>

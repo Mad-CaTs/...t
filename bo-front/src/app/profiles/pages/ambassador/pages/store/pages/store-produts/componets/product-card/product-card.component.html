@@ -1,0 +1,52 @@
+<div class="card p-3 shadow-sm d-flex flex-column h-100">
+  <div class="row g-2 flex-grow-1">
+    <div class="col-4 d-flex justify-content-center align-items-center">
+      <img [src]="product.image" style="width: 42px; height: 61px; object-fit: cover;">
+   </div>
+    <div class="col-8 d-flex flex-column justify-content-between">
+      <div>
+        <h5 class="card-title"
+            style="font-size: 1rem;">{{ product.name }}</h5>
+        <p class="card-text"
+           style="font-size: 0.9rem;">{{ product.description }}</p>
+        <p class="card-text text-secondary fw-bold"
+           style="font-size: 1.2rem;">{{ product.price }}</p>
+      </div>
+      <div class="d-flex justify-content-center align-items-center mt-2">
+        <button class="btn buttonprod buttonprod:hover  btn-sm"
+                (click)="decrement()">-</button>
+        <input type="text"
+               class="form-control text-center mx-2"
+               [value]="product.quantity"
+               readonly
+               style="max-width: 50px;">
+        <button class="btn button-dark button-dark:hover btn-sm"
+                (click)="increment()">+</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <div class="card p-3 shadow-sm d-flex flex-column h-100">
+  <div class="row g-0 flex-grow-1">
+    <div class="col-4 d-flex justify-content-center align-items-start p-0">
+      <div style="display: flex; align-items: flex-start; height: 100%;">
+        <img [src]="product.image" style="width: 42px; height: 61px; object-fit: cover; margin-top: 0;">
+      </div>
+    </div>
+    <div class="col-8 d-flex flex-column justify-content-between p-0">
+      <div>
+        <h5 class="card-title" style="font-size: 1rem; margin-top: 0; margin-bottom: 0;">{{ product.name }}</h5>
+        <p class="card-text" style="font-size: 0.9rem; margin-bottom: 0;">{{ product.description }}</p>
+        <p class="card-text text-secondary fw-bold" style="font-size: 1.2rem; margin-bottom: 0;">{{ product.price }}</p>
+      </div>
+      <div class="d-flex justify-content-center align-items-center mt-2">
+        <button class="btn buttonprod buttonprod:hover btn-sm" (click)="decrement()">-</button>
+        <input type="text" class="form-control text-center mx-2" [value]="product.quantity" readonly style="max-width: 50px;">
+        <button class="btn button-dark button-dark:hover btn-sm" (click)="increment()">+</button>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+
+

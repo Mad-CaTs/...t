@@ -1,0 +1,38 @@
+<div class="d-flex flex-column gap-3 mt-3">
+  <div class="line"></div>
+  <div class="d-flex flex-column text-center">
+    <app-pagination-ng-prime [rows]="rows" [totalRecords]="totalRecords" [rowsPerPageOptions]="[10, 20, 30, 40, 50]"
+      [align]="align" (pageChange)="onPageChange($event)" (refresh)="onRefresh($event)">
+    </app-pagination-ng-prime>
+  </div>
+  <app-table class="w-100" [customRows]="true" [headers]="headers" [hasCheckbox]="false" [firstEmpty]="true"
+    [minWidth]="1000" [minWidthHeader]="minWidthHeaders" [loading]="isLoading" [hasData]="table.data.length > 0">
+    <tr class="w-100 d-flex flex-row align-items-center" *ngFor="let d of table.data; let i = index">
+      <td class="fs-6 py-2 px-2 w-100 text-center">
+        {{ i + 1 }}
+      </td>
+      <td class="fs-6 py-2 px-2 w-100 text-center text-break">{{ d.userName }}</td>
+      <td class="fs-6 py-2 px-2 w-100 text-center">{{ d.fullName }}</td>
+      <td class="fs-6 py-2 px-2 w-100 text-center">
+        <div class="w-auto text-success rounded py-2 px-2" [ngStyle]="{
+          'background-color': getTransparentColor(d.color),
+        }">
+          <span [ngStyle]="{ color: getSolidColor(d.color) }">{{ d.stateName }}</span>
+        </div>
+      </td>
+      <td class="fs-6 py-2 px-2 w-100 text-center">{{ d.rangeName }}</td>
+      <td class="fs-6 py-2 px-2 w-100 text-center">{{ d.sponsorLevel }}</td>
+      <td class="fs-6 py-2 px-2 w-100 text-center">{{ d.sponsorName }}</td>
+      <td class="fs-6 py-2 px-2 w-100 text-center">{{ d.branchName == 0 ? 'Sin posicionar' : d.branchName }}</td>
+      <td class="fs-6 py-2 px-2 w-100 text-center">
+        <button type="button" class="btn btn-link detail-link" (click)="detailModal.emit(d)">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path fill="currentColor"
+              d="M12 5c5.5 0 9.7 4.5 10.9 6-1.2 1.5-5.4 6-10.9 6S2.3 12.5 1.1 11C2.3 9.5 6.5 5 12 5zm0 3.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9zm0 2a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5z" />
+          </svg>
+          <span>Ver detalle</span>
+        </button>
+      </td>
+    </tr>
+  </app-table>
+</div>

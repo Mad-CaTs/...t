@@ -1,0 +1,230 @@
+
+.header {
+  padding: 32px 32px 24px;
+  text-align: center;
+  
+  h1 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 24px;
+  }
+  
+  .subtitle {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 20px;
+  }
+}
+
+.membership-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f8f9fa;
+  padding: 16px 24px;
+  margin: 0 32px 24px;
+  border-radius: 8px;
+  border: 2px solid #b9d5f1;
+  
+  .membership-details {
+    .label {
+      font-size: 1rem;
+      color: #666;
+      margin-bottom: 4px;
+    }
+    
+    .membership-type {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      
+      .type-text {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #1a1a1a;
+      }
+      
+      .active-badge {
+        background: #c9f5d4;
+        color: green;
+        font-size: 1rem;
+        font-weight: 500;
+        padding: 2px 6px;
+        border-radius: 4px;
+        text-transform: uppercase;
+      }
+    }
+  }
+  
+  .end-date {
+    text-align: right;
+    
+    .label {
+      font-size: 1rem;
+      color: #666;
+      margin-bottom: 4px;
+    }
+    
+    .date {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #1a1a1a;
+    }
+  }
+}
+
+.wallet-recharger {
+    display: flex;
+    align-items: start;
+    color: #8C9195;
+
+    .recharge {
+        color: #f18204;
+    }
+  }
+
+.content {
+  padding: 0 32px 32px;
+  
+  .cancellation-info {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 32px;
+    line-height: 1.5;
+  }
+  
+  .question {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 20px;
+  }
+}
+
+.radio-group {
+  margin-bottom: 24px;
+  
+  .radio-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px;
+    margin-bottom: 8px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    
+    &:hover {
+      border-color: #007bff;
+      background-color: #f8f9ff;
+    }
+    
+    &.selected {
+      border-color: #007bff;
+      background-color: #f0f7ff;
+    }
+    
+    &.other-reason.selected {
+      border: 2px solid #007bff;
+    }
+    
+    input[type="radio"] {
+      width: 18px;
+      height: 18px;
+      margin: 0;
+      accent-color: #007bff;
+      cursor: pointer;
+    }
+    
+    label {
+      font-size: 1rem;
+      color: #333;
+      cursor: pointer;
+      flex: 1;
+      line-height: 1.4;
+    }
+    
+    .reason-input {
+      width: 100%;
+      margin-top: 12px;
+      
+      .input-label {
+        font-size: 1rem;
+        color: #666;
+        margin-bottom: 8px;
+        display: block;
+      }
+      
+      textarea {
+        width: 100%;
+        min-height: 80px;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 1rem;
+        font-family: inherit;
+        resize: vertical;
+        background: white;
+        
+        &::placeholder {
+          color: #999;
+        }
+        
+        &:focus {
+          outline: none;
+          border-color: #007bff;
+          box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
+        }
+      }
+      
+      .char-count {
+        font-size: 1rem;
+        color: #999;
+        margin-top: 4px;
+      }
+    }
+  }
+}
+
+.button-group {
+  display: flex;
+  gap: 16px;
+  margin-top: 32px;
+  
+  button {
+    flex: 1;
+    padding: 14px 24px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    
+    &.secondary {
+      background: white;
+      color: #ff6b35;
+      border: 1px solid #ff6b35;
+      
+      &:hover {
+        background: #fff5f2;
+      }
+    }
+    
+    &.primary {
+      background: #ff6b35;
+      color: white;
+      
+      &:hover:not(:disabled) {
+        background: #e55a2b;
+      }
+      
+      &:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+      }
+    }
+  }
+}

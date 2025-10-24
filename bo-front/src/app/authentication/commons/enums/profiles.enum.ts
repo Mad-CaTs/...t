@@ -1,0 +1,6 @@
+export enum Profile {
+	PARTNER = 'PARTNER',
+	USER = 'USER',
+	PROMOTOR = 'PROMOTOR',
+  AMBASSADOR = 'AMBASSADOR',
+}

@@ -1,0 +1,49 @@
+<label [for]="controlName" class="fs-6 mb-2 cl-muted" *ngIf="label">{{ label }}</label>
+<div class="border border-2 p-4 rounded d-flex justify-content-between align-items-center h-100"
+	[class.flex-row]="inline" [class.flex-column]="!inline" [class.border-danger]="!disabled"
+	style="border-style: dashed !important">
+	<div class="d-flex flex-column" *ngIf="(multiple && files.length === 0) || (!multiple && !file)">
+		<h4 class="text-black fw-normal fs-6" [class.text-center]="!inline">Seleccionar Archivo</h4>
+		<span class="cl-muted fw-normal fs-6" [class.text-center]="!inline" [class.mb-2]="!inline"
+			[style.max-width]="inline ? '200px' : 'none'">{{placeholder}}</span>
+	</div>
+	<div class="d-flex flex-column justify-content-center align-items-center gap-2"
+		*ngIf="multiple && files.length > 0">
+		<div *ngFor="let file of files" class="d-flex flex-column justify-content-center align-items-center gap-2">
+			<img [src]="getImageUri(file)" alt="view" *ngIf="getImageUri(file)"
+				class="border border-primary border-2 rounded" style="width: auto; height: 48px" />
+			<img src="../../../../../assets/icons/file-pdf.svg" alt="view" *ngIf="!getImageUri(file)" />
+			<span class="cl-muted fw-normal fs-6 justify-content-between text-center text-truncate"
+				[style.max-width]="inline ? '200px' : 'none'"
+				style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+				{{ getFileName(file.name) }}...{{ getFileExtension(file.name) }}
+			</span>
+			<span class="cl-muted fw-normal fs-6 justify-content-center" [class.text-center]="!inline"
+				[class.mb-2]="!inline" [style.max-width]="inline ? '200px' : 'none'">
+				Tamaño: {{ (file.size / 1024 / 1024).toFixed(2) }} MB
+			</span>
+		</div>
+	</div>
+
+	<div class="d-flex flex-column justify-content-center align-items-center gap-2" *ngIf="!multiple && file">
+		<img [src]="imageUri" alt="view" *ngIf="imageUri" class="border border-primary border-2 rounded"
+			style="width: auto; height: 48px" />
+		<img src="../../../../../assets/icons/file-pdf.svg" alt="view" *ngIf="!imageUri" />
+		<span class="cl-muted fw-normal fs-6 justify-content-between text-center text-truncate"
+			[style.max-width]="inline ? '200px' : 'none'"
+			style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+			{{ getFileName(file?.name) }}...{{ getFileExtension(file?.name) }}
+		</span>
+		<span class="cl-muted fw-normal fs-6 justify-content-center" [class.text-center]="!inline"
+			[class.mb-2]="!inline" [style.max-width]="inline ? '200px' : 'none'">
+			Tamaño: {{ (file?.size / 1024 / 1024).toFixed(2) }} MB
+		</span>
+	</div>
+	<div>
+		<!-- [disabled]="disabledUser" -->
+		<button class="btn btn-outline-secondary px-4 py-1" (click)="onSelectFile()">
+			{{ multiple ? (files.length > 0 ? 'Cambiar Archivos' : 'Seleccionar Archivos') : (file ? 'Cambiar Archivo' :
+			'Seleccionar Archivo') }}
+		</button>
+	</div>
+</div>

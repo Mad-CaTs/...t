@@ -1,0 +1,48 @@
+.box-cycle-weekly {
+	&__title {
+		font-size: 1.05rem;
+	}
+
+	&__status {
+		font-size: 0.85rem;
+	}
+}
+
+.custom-color-text {
+	color: #FE7C04;
+}
+
+.custom-color-background {
+	background-color: #FE7C04;
+}
+
+.min-custom {
+	width: fit-content;
+	margin: 0 auto;
+}
+
+.custom-size-text {
+	font-size: 0.9rem;
+	padding-left: 0.8rem;
+	padding-right: 0.8rem;
+}
+
+.progress {
+	height: 20px;
+	background-color: #e9ecef;
+	border-radius: 10px;
+
+	.progress-bar {
+		background-color: #007bff;
+		border-radius: 10px;
+		transition: width 0.3s ease;
+	}
+}
+
+@media (min-width: 1440px) {
+	.custom-size-text {
+		font-size: 1rem;
+		padding-left: 2rem;
+		padding-right: 2rem;
+	}
+}

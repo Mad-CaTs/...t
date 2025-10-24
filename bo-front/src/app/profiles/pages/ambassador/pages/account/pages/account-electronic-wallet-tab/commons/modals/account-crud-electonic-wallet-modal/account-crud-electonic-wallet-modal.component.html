@@ -1,0 +1,51 @@
+<app-modal [title]="title">
+	<!--Create and edit-->
+	<form [formGroup]="form" class="d-flex flex-column gap-3 w-100" (submit)="onSubmit()" *ngIf="!isDelete">
+		<app-select
+			class="w-100"
+			label="Compañia"
+			placeholder="Seleccione compañia"
+			[form]="form"
+			[options]="businessOpt"
+			name="businessId"
+		></app-select>
+		<app-input
+			[form]="form"
+			name="ownerNames"
+			label="Nombre del titular"
+			placeholder="Ingrese Nombre del titular"
+			class="w-100"
+		></app-input>
+		<app-input
+			[form]="form"
+			name="ownerLastnames"
+			label="Apellido del titular"
+			placeholder="Ingrese Apellido del titular"
+			class="w-100"
+		></app-input>
+		<app-input
+			[form]="form"
+			name="user"
+			label="Usuario"
+			placeholder="Ingrese usuario"
+			class="w-100"
+		></app-input>
+
+		<div class="d-flex justify-content-center align-items-center gap-3">
+			<button class="btn btn-outline-secondary" type="button" (click)="instanceModal.close()">
+				Cancelar
+			</button>
+			<button class="btn btn-secondary" type="submit" [disabled]="form.invalid">Guardar</button>
+		</div>
+	</form>
+	<!--Delete-->
+	<div class="d-flex flex-column gap-3 w-100" *ngIf="data && isDelete">
+		<p class="m-0 fs-6 fw-medium text-black text-center">¿ Desea eliminar la billetera electrónica ?</p>
+		<div class="d-flex justify-content-center align-items-center gap-3">
+			<button class="btn btn-outline-secondary" type="button" (click)="instanceModal.close()">
+				Cancelar
+			</button>
+			<button class="btn btn-secondary" type="button" (click)="instanceModal.close()">Eliminar</button>
+		</div>
+	</div>
+</app-modal>

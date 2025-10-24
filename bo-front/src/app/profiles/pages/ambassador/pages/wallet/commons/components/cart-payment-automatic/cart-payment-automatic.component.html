@@ -1,0 +1,49 @@
+<div class="quick-actions mt-4">
+
+    <div *ngIf="memberships?.length > 0" class="membership-card mt-4 mb-4">
+        <div class="membership-card__header">
+            <div class="membership-card__content">
+                <div class="membership-card__icon">
+                    <img src="/assets/wallet/Spaceship.svg" />
+                </div>
+                <div class="membership-card__text">
+                    <h2 class="membership-card__title">¡Felicidades por afiliarte!</h2>
+                    <p class="membership-card__description">
+                        Ahora con tus pagos automáticos evitarás que tus membresías estén en deuda o mora.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="membership-card__footer">
+            <p class="membership-card__footer-text">
+                Si deseas desafiliarte puedes ingresar al siguiente link.
+                <a class="desaffilite-link" mau (click)="navigateToDisaffiliationRequest(2)">aquí</a>
+            </p>
+        </div>
+    </div>
+    
+    <div class="autopay-card mt-4 mb-4" >
+        <div class="card-content">
+            <div class="card-border-none mb-1">
+                <h2 class="card-title">Pago automático</h2>
+                <p class="card-description">
+                    Afíliate con tu wallet para pagar de manera automática tus membresías.
+                </p>
+            </div>
+            <div class="card-footer card-border-none mb-1">
+                <a (click)="navigateToDisaffiliationRequest(1)"  [style.background]="walletBlock ? '#f1f0f0 !important' : 'white'" class="affiliate-button">Afiliarme</a>
+                <div class="price-display">
+                    <img src="/assets/wallet/wallet-money.svg" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="help-section mt-4 mb-4 ">
+        <h6>¿Necesitas ayuda?</h6>
+        <p>Aquí puedes reportar algún problema y soporte de InClub te ayudará.</p>
+        <button class="btn btn-primary btn-sm">Reportar problema</button>
+    </div>
+
+</div>

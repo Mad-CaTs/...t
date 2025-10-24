@@ -1,0 +1,10 @@
+<div class="modal-transfer">
+    <div class="icon-container" [style.--bg-color]="data.icon.bgColor" [style.--border-color]="data.icon.borderColor">
+        <i [class]="data.icon.name" [style.color]="'rgb(' + data.icon.color + ')'"
+            style="font-size: 1.25rem; font-weight: bold;"></i>
+    </div>
+    <div>
+        <h2 class="title">{{data.title}}</h2>
+        <p class="description" [innerHTML]="data.message"></p>
+    </div>
+</div>

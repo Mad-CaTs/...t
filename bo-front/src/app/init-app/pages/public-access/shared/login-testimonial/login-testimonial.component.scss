@@ -1,0 +1,114 @@
+.notched-card {
+  flex: 0 0 560px;
+  height: 100%;
+  position: relative;
+  padding: 3.5rem 3rem 3rem;
+  color: #fff;
+  background: linear-gradient(135deg, rgba(13, 46, 85, 0.85), rgba(12, 56, 80, 0.9)),
+    url('/assets/images/bg-points.webp') center/cover no-repeat;
+  clip-path: polygon(0 0, 92% 0, 92% 8%, 100% 8%, 100% 100%, 0 100%);
+  border-radius: 2rem;
+}
+
+.notched-card h2 {
+  font-size: 2.5rem;
+  margin-top: 2rem;
+  margin-bottom: 3rem;
+}
+
+.notched-card blockquote {
+  font-size: 1.25rem;
+  line-height: 1.6;
+  font-style: italic;
+  color: #e2e8f0;
+  margin-bottom: 2rem;
+}
+
+.notched-card .user {
+  font-weight: 600;
+  font-size: 1.1rem;
+  min-height: 5rem;
+  margin-bottom: 2rem;
+
+  span {
+    display: block;
+    font-weight: 400;
+    color: #ccc;
+    font-size: 1rem;
+    margin-top: 0.5rem;
+  }
+}
+
+.notched-card .dots {
+  display: flex;
+  gap: 8px;
+  margin: 0.75rem 0 2rem;
+
+  span {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #2dd4bf;
+    opacity: 0.3;
+
+    &.active {
+      opacity: 1;
+    }
+  }
+}
+
+.investment-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  margin-top: 5rem;
+  padding: 1rem;
+  border-radius: 1rem;
+
+  img {
+    width: 100px;
+    border-radius: 0.5rem;
+    object-fit: cover;
+  }
+
+  span {
+    color: #fff;
+    font-weight: 500;
+  }
+
+  .launch-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 28px;
+    height: 28px;
+    border: none;
+    border-radius: 50%;
+    background: #fff;
+    color: #0c74ad;
+    font-size: 16px;
+    display: grid;
+    place-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+    transition: transform 0.2s ease;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+}
+
+/* ---------- responsive solo para notched-card ---------- */
+@media (max-width: 768px) {
+  .notched-card {
+    flex: none;
+    width: 100%;
+    max-width: 100%;
+    margin-top: 2rem;
+    height: auto;
+    padding: 3rem;
+  }
+}

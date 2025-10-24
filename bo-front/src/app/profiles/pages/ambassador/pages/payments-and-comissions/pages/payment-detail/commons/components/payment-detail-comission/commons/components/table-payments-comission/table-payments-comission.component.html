@@ -1,0 +1,110 @@
+<div class="d-flex flex-column gap-3">
+	<div class="d-flex flex-row justify-content-between align-items-center">
+		<button class="btn btn-secondary px-3 fs-12" style="height: fit-content" (click)="onClickBtn()">
+			Detalle de registro</button
+		><!-- 
+    <app-pagination [totalPages]="table.totalPages"
+                    [currentPage]="table.currentPage"
+                    (changePage)="tableService.changePage($event, id)"></app-pagination> -->
+	</div>
+	<!--  <app-table class="w-100"
+  [headers]="['Usuario','Año','Monto a recibir','N° de operación','RUC','Documento','Fecha de creación','Estado']"
+  [minWidthHeader]="[184, 184, 184, 184, 184, 184, 184, 90]" [hasCheckbox]="false" [customRows]="true"
+  [minWidth]="1520" [loading]="loading" [hasData]="table.data.length > 0"> -->
+
+	<app-table
+		class="w-100"
+		[headers]="headers"
+		[hasCheckbox]="false"
+		[customRows]="true"
+		[minWidth]="2100"
+		[minWidthHeader]="minWidthHeaders"
+		[hasData]="table.data.length > 0"
+		[loading]="isloading"
+	>
+		<tr class="w-100 d-flex flex-row" *ngFor="let d of table.data; let i = index">
+			<th class="table__first d-flex flex-row justify-content-center align-items-center">
+				<div class="form-check d-flex flex-row align-items-center gap-2">
+					<input
+						class="form-check-input cursor-pointer"
+						style="width: 18px; height: 18px"
+						type="radio"
+						[value]="d.id"
+						[name]="'radioGroup'"
+						[formControl]="selected"
+						(change)="onSelectionChange(d)"
+						[id]="'t-a-t-p-list-' + i"
+					/>
+				</div>
+			</th>
+			<td class="fs-6 py-4 px-4 w-100" style="min-width: 280px">
+				{{ d.nameSlave }} {{ d.lastNameSlave }}
+			</td>
+			<td class="fs-6 py-4 px-4 w-100 text-center" style="min-width: 300px">
+				{{ d.typeBonusDescription }}
+			</td>
+			<td class="fs-6 py-4 w-100">
+				{{ d.levelSponsor ? d.levelSponsor : '-' }}
+			</td>
+			<td class="fs-6 py-4 px-4 w-100 text-center">
+				{{ d.registerDate | date : 'dd/MM/yyyy' }}
+			</td>
+			<td class="fs-6 py-4 px-4 w-100 text-center fw-medium">
+				{{ d.points ? d.points : '-' }}
+			</td>
+			<td
+				class="fs-6 py-4 px-4 w-100 text-center fw-medium"
+				[ngClass]="d.percentage >= 0 ? '' : 'text-danger'"
+				style="min-width: 150px"
+			>
+				{{ d.percentage !== null && d.percentage !== undefined ? d.percentage + ' %' : '-' }}
+			</td>
+			<td
+				class="fs-6 py-4 px-4 w-100 text-center fw-medium"
+				[ngClass]="d.amount >= 0 ? '' : 'text-danger'"
+			>
+				$ {{ d.amount.toFixed(2) }}
+			</td>
+			<td
+				class="w-100 d-flex flex-row justify-content-center align-items-center"
+				*ngIf="d.isLevelQualified !== undefined"
+				style="min-width: 120px"
+			>
+				<span
+					class="w-auto text-success rounded py-1 px-3"
+					*ngIf="d.isLevelQualified"
+					style="background-color: #16a34a33"
+				>
+					Sí
+				</span>
+				<span
+					class="w-auto cl-muted rounded py-1 px-3"
+					*ngIf="!d.isLevelQualified"
+					style="background-color: #e3e3e3"
+				>
+					No
+				</span>
+			</td>
+
+			<td
+				class="w-100 d-flex flex-row justify-content-center align-items-center"
+				*ngIf="d.isConditionQualified !== undefined"
+			>
+				<span
+					class="w-auto text-success rounded py-1 px-3"
+					*ngIf="d.isConditionQualified"
+					style="background-color: #16a34a33"
+				>
+					Sí
+				</span>
+				<span
+					class="w-auto cl-muted rounded py-1 px-3"
+					*ngIf="!d.isConditionQualified"
+					style="background-color: #e3e3e3"
+				>
+					No
+				</span>
+			</td>
+		</tr>
+	</app-table>
+</div>

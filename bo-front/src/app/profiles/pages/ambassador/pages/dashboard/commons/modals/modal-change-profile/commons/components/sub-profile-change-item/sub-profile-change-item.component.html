@@ -1,0 +1,16 @@
+<div class="card" (click)="onSelectSubProfile()">
+  <div class="user-card">
+    <div class="user-icon">{{ profile.abbreviation }}</div>
+
+    <div class="user-info">
+      <span class="title">{{ profile.title }}</span>
+      <p class="description">
+        {{ profile.user.name + ' ' + profile.user.lastName }}
+        <span class="separator">|</span>
+        {{profile.user.username }}
+      </p>
+    </div>
+  </div>
+
+  <mat-icon class="arrow-icon">keyboard_arrow_right</mat-icon>
+</div>

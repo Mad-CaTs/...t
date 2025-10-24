@@ -1,0 +1,199 @@
+.ruta-anterior {
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 22px;
+    letter-spacing: 0%;
+    vertical-align: middle;
+    color: #8C9195;
+    padding-right: 10px;
+    cursor: pointer;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.signo-mayor {
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 22px;
+    letter-spacing: 0%;
+    vertical-align: middle;
+    color: #8C9195;
+    padding-right: 10px;
+    cursor: pointer;
+}
+
+.ruta-actual {
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 22px;
+    letter-spacing: 0%;
+    vertical-align: middle;
+    color: #FE7C04;
+}
+
+.content-one {
+
+    border-radius: 8px;
+    gap: 8px;
+    border-width: 1px;
+    padding: 24px;
+    border: 1px solid #EDEDED;
+    background: #FFFFFF;
+
+    &:hover {
+        box-shadow: 0px 4px 13px 0px #1B1D271F;
+
+    }
+}
+
+.text-num-cuenta {
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 0.2px;
+    vertical-align: middle;
+    color: #51565F;
+}
+
+.text-activo {
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 0%;
+    text-align: center;
+    vertical-align: middle;
+    color: #16A34A;
+
+    background: #16A34A33;
+    border-radius: 16px;
+    gap: 8px;
+    padding-top: 2px;
+    padding-right: 8px;
+    padding-bottom: 2px;
+    padding-left: 8px;
+
+}
+
+.num-cuenta {
+    font-family: 'Roboto';
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 32px;
+    letter-spacing: 0.2px;
+    vertical-align: middle;
+    color: #363A3E;
+}
+
+.text-cci {
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.2px;
+    vertical-align: middle;
+    color: #363A3E;
+}
+
+.linea-separation {
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #E9EAEB;
+}
+
+.datos-bank {
+    font-family: 'Roboto';
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.2px;
+
+    color: #6E7378;
+}
+
+.datos-text {
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.2px;
+    color: #51565F;
+}
+
+.datos-result {
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.2px;
+    text-align: right;
+    color: #51565F;
+}
+
+.content-griss {
+    background: #F8F9FB;
+    height: 30px;
+    align-items: center;
+}
+
+.content-normal {
+    height: 30px;
+    align-items: center;
+}
+
+.datos-title {
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 28px;
+    letter-spacing: 0px;
+    vertical-align: middle;
+    color: #363A3E;
+}
+
+.btn-edit {
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.2px;
+    text-align: center;
+    vertical-align: middle;
+    width: 100%;
+
+    border-radius: 4px;
+    gap: 8px;
+    padding-top: 8px;
+    padding-right: 16px;
+    padding-bottom: 8px;
+    padding-left: 16px;
+    background: #FE7C04;
+    color: white;
+}
+
+.btn-remove {
+    width: 100%;
+    border-radius: 4px;
+    gap: 8px;
+    padding-top: 8px;
+    padding-right: 16px;
+    padding-bottom: 8px;
+    padding-left: 16px;
+    border-width: 1px;
+    background: #FFFFFF;
+    border: 1px solid #FE7C04;
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.2px;
+    text-align: center;
+    vertical-align: middle;
+    color: #FE7C04;
+}

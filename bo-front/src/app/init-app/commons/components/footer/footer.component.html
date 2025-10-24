@@ -1,0 +1,57 @@
+<footer class="d-flex flex-column flex-md-row gap-4 gap-md-0 justify-content-between p-5 bg-charade">
+	<div class="d-flex flex-column align-items-center align-items-md-start gap-4">
+		<img src="assets/logos/logowhite.png" style="width: 12rem" />
+		<!--Social media container-->
+		<section class="d-flex gap-3">
+			<a *ngFor="let media of socialMedia" [href]="media.url" target="_blank">
+				<span
+					class="rounded-circle border border-2 border-white d-flex justify-content-center align-items-center text-white"
+					style="width: 42px; height: 42px"
+				>
+					<mat-icon [svgIcon]="media.icon" style="width: 22px; height: 22px" class="text-white" />
+				</span>
+			</a>
+		</section>
+		<!--Some information-->
+		<!--<span class="text-white fs-6 fw-normal">{{ lang.contactInformation.phon}}>-->
+		<span class="text-white fs-6 fw-normal">{{ lang.contactInformation.email }}</span>
+	</div>
+	<div class="info d-flex flex-column gap-4 gap-md-0 flex-md-row justify-content-between">
+		<div class="d-flex flex-column gap-3">
+			<span class="text-white fs-6 fw-bolder text-center text-md-start">{{ lang.sections[0] }}</span>
+			<a routerLink="/products/ribera" class="text-white fs-6 fw-normal text-center text-md-start">{{
+				lang.sections[1]
+			}}</a>
+			<a routerLink="/products/la-joya" class="text-white fs-6 fw-normal text-center text-md-start">{{
+				lang.sections[2]
+			}}</a>
+			<a routerLink="/products/keola" class="text-white fs-6 fw-normal text-center text-md-start">{{
+				lang.sections[3]
+			}}</a>
+			<a href="#" class="text-white fs-6 fw-bolder text-center text-md-start">{{ lang.sections[4] }}</a>
+			<a href="#" class="text-white fs-6 fw-bolder text-center text-md-start">{{ lang.sections[5] }}</a>
+			<a href="#" class="text-white fs-6 fw-bolder text-center text-md-start">{{ lang.sections[6] }}</a>
+			<a href="#" class="text-white fs-6 fw-bolder text-center text-md-start">{{ lang.sections[7] }}</a>
+		</div>
+		<div class="d-flex flex-column gap-3">
+			<a href="#" class="text-white fs-6 fw-bolder text-center text-md-start">{{ lang.sections[8] }}</a>
+			<a href="#" class="text-white fs-6 fw-bolder text-center text-md-start">{{ lang.sections[9] }}</a>
+			<a href="#" class="text-white fs-6 fw-bolder text-center text-md-start">{{
+				lang.sections[10]
+			}}</a>
+		</div>
+		<div class="d-flex flex-column gap-3">
+			<span class="text-white fs-6 fw-bolder text-center text-md-start">{{ lang.sections[11] }}</span>
+			<a routerLink="/privacy-policy" class="text-white fs-6 fw-normal text-center text-md-start"
+				>- {{ lang.sections[12] }}</a
+			>
+
+			<a routerLink="/terms-and-conditions" class="text-white fs-6 fw-normal text-center text-md-start">
+				- {{ lang.sections[13] }}</a
+			>
+			<a href="#" class="text-white fs-6 fw-bolder text-center text-md-start">{{
+				lang.sections[14]
+			}}</a>
+		</div>
+	</div>
+</footer>

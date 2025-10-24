@@ -1,0 +1,97 @@
+<div class="d-flex flex-column gap-3 w-100">
+	<div class="d-flex flex-column flex-md-row gap-4 w-100">
+		<div class="d-flex flex-column flex-fill">
+			<h1 class="fs-6 fw-medium m-0 text-black pb-2">Buscador:</h1>
+			<app-input
+				class="w-100"
+				type="text"
+				placeholder="Buscar por nombres, usuarios o membresia"
+				[form]="form"
+				controlName="searchBy"
+				[isIconRight]="true"
+				iconName="pi pi-search"
+			></app-input>
+		</div>
+		<!-- <div class="d-flex flex-column flex-fill">
+			<h1 class="fs-6 fw-medium m-0 text-black pb-2">Membresía:</h1>
+			<app-select
+				class="w-100"
+				placeholder="Seleccione una membresía"
+				[form]="form"
+				[options]="membershipOptions"
+				controlName="membership"
+			></app-select>
+		</div> -->
+		<div class="d-flex flex-column flex-fill">
+			<h1 class="fs-6 fw-medium m-0 text-black pb-2">Estado:</h1>
+			<app-select
+				class="w-100"
+				placeholder="Seleccione un estado"
+				[form]="form"
+				controlName="state"
+				[options]="statesOptions"
+			></app-select>
+		</div>
+	</div>
+
+	<div class="d-flex flex-row justify-content-between align-items-center">
+		<button
+			class="btn btn-secondary px-3 fs-12"
+			type="button"
+			style="height: fit-content"
+			(click)="onClickBtn()"
+			[disabled]="!selected.value"
+		>
+			{{ btnText }}
+		</button>
+		<!-- <app-pagination
+			[totalPages]="table.totalPages"
+			[currentPage]="table.currentPage"
+			(changePage)="tableService.changePage($event, id)"
+		></app-pagination> -->
+	</div>
+
+	<app-table
+		class="w-100"
+		[headers]="['Usuario', 'Nombre y Apellido', 'Fecha', 'Tipo de Membresía', 'Estado']"
+		[hasCheckbox]="false"
+		[customRows]="true"
+		[minWidth]="1000"
+		[loading]="loading"
+		[hasData]="filteredData.length > 0"
+	>
+		<tr class="w-100 d-flex flex-row align-items-center" *ngFor="let d of filteredData; let i = index">
+			<th class="table__first__v1 d-flex flex-row justify-content-center align-items-center">
+				<div class="form-check d-flex flex-row align-items-center gap-2">
+					<input
+						class="form-check-input cursor-pointer"
+						style="width: 18px; height: 18px"
+						type="radio"
+						[value]="d.id"
+						[name]="'t-a-t-p-group'"
+						[formControl]="selected"
+						[id]="'t-a-t-p-list-' + i"
+						(change)="updateBody(d.id)"
+					/>
+					<label class="form-check-label fw-normal cl-muted m-0 mt-1" [for]="'t-a-t-p-list-' + i">
+						{{ i + 1 }}
+					</label>
+				</div>
+			</th>
+			<td class="fs-6 py-2 px-2 w-100 text-center" >{{ d.username }}</td>
+			<td class="fs-6 py-2 px-2 w-100 text-center" >{{ d.fullname }}</td>
+			<td class="fs-6 py-2 px-2 w-100 text-center" >{{ d.date }}</td>
+			<td class="fs-6 py-2 px-2 w-100 text-center">{{ d.membership }}</td>
+			<td class="fs-6 py-2 px-2 w-100 text-center">
+				<div class="w-auto text-success rounded py-1 px-3"
+					[ngStyle]="{
+						'background-color': getTransparentColor(d.stateColor),
+						
+					}"
+				>
+					<span [ngStyle]="{ color: getSolidColor(d.stateColor) }">{{ d.stateContent }}</span>
+				</div>
+			</td>
+		</tr>
+	</app-table>
+</div>

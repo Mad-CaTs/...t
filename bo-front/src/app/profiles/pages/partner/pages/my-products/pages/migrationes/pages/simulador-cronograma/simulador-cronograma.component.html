@@ -1,0 +1,76 @@
+<div class="p-4 card px-0 px-md-4 card-border-none">
+	<div>
+		<app-navigation
+			[data]="tabs"
+			[selected]="currentTab"
+			[useNewDesign]="true"
+			(changeSelected)="setTab($event)"
+		></app-navigation>
+		<div *ngIf="currentTab !== undefined && currentTab !== null">
+			<ng-container>
+				<div class="row mb-3 p-3">
+					<div class="col">
+						<h4>{{ title }}</h4>
+						<p>{{ subtitle }}</p>
+					</div>
+				</div>
+
+				<div class="container">
+					<div *ngIf="isLoading" class="d-flex justify-content-center align-items-center">
+						<div class="d-flex flex-column align-items-center">
+							<div
+								class="spinner-border text-orange"
+								role="status"
+								style="width: 5rem; height: 5rem"
+							></div>
+						</div>
+					</div>
+
+					<div *ngIf="!isLoading && !isPreviewVisible">
+						<div class="row justify-content-center">
+							<div class="col-md-5 mb-4 mx-2" *ngFor="let option of migrationOptions">
+								<app-migration-option-card
+									[option]="option"
+									(optionSelected)="onOptionSelected($event)"
+									(previewClicked)="showPreview($event)"
+								></app-migration-option-card>
+							</div>
+						</div>
+
+						<div
+							*ngIf="isPreviewVisible"
+							class="d-flex flex-column flex-md-row justify-content-center p-4 gap-2"
+						>
+							<button
+								class="btn btn-outline-secondary custom-button"
+								type="button"
+								(click)="goBack()"
+							>
+								Atrás
+							</button>
+
+							<button
+								class="btn btn-secondary"
+								type="button"
+								[disabled]="isLoading"
+								(click)="onClickButton()"
+							>
+								<span>Siguiente</span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</ng-container>
+		</div>
+
+		<div *ngIf="!isPreviewVisible">
+			<app-preview
+				[option]="selectedPreviewOption"
+				[membershipIds]="selectedMembershipIds"
+				(closePreview)="hidePreview()"
+				[isPreviewVisible]="isPreviewVisible"
+				[currentTab]="currentTab"
+			></app-preview>
+		</div>
+	</div>
+</div>

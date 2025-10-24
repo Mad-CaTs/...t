@@ -1,0 +1,78 @@
+.pm {
+  padding-right: 12px;
+
+  &__step  { font-size: 18px; color:#374151; margin: 10px 0 0; }
+  &__title { margin: 6px 0 16px; font-size: 26px; font-weight: 450; color:#0f172a; }
+
+  &__list  { display: grid; gap: 14px; }
+
+  &__item{
+    display:grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+    background: #fff;
+    border: 1px solid #e6ebef;
+  border-radius: 14px;
+    box-shadow: 0 6px 18px rgba(15,23,42,.05);
+    cursor: pointer;
+  transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease;
+
+    &:hover { border-color:#cfd8df; }
+  }
+
+  &__item--selected{
+    border-color:#0a9ac0;
+    box-shadow: 0 0 0 2px rgba(10,154,192,.17);
+    background:#fff;
+  }
+
+  &__radio-native{
+    position:absolute; width:1px; height:1px; margin:-1px; overflow:hidden;
+    clip:rect(0 0 0 0); clip-path: inset(50%); border:0;
+  }
+
+  &__radio-dot{
+    width: 18px;
+    height: 18px;
+    border-radius:50%;
+    border: 2px solid #9ca3af;
+    display:inline-block;
+  }
+  &__radio-dot.on{
+    border-color:#0a9ac0;
+    box-shadow: inset 0 0 0 4px #0a9ac0;
+  }
+
+  &__info { display:flex; flex-direction:column; gap: 2px; }
+  &__title-sm{ color:#0f172a; font-weight:450; font-size: 15px; }
+  &__desc{ color:#6b7280; font-size: 13px; }
+
+  &__icons{
+    justify-self: end;
+    display:flex;
+  gap: var(--icon-gap, 12px);
+    align-items:center;
+
+  padding-right: 0;
+  }
+  &__icons img{
+  height: var(--icon-size, 22px);
+  width: auto;
+  display: block;
+  object-fit: contain;
+  }
+
+
+  &__radio{
+  width: 22px;
+  height: 22px;
+    display:flex; align-items:center; justify-content:center;
+  }
+
+  @media (max-width: 640px){
+    &__item{ grid-template-columns: auto 1fr; }
+    &__icons{ grid-column: 2 / -1; }
+  }
+}

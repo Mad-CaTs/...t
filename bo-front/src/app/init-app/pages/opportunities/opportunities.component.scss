@@ -1,0 +1,33 @@
+.img-bg {
+	min-height: 360px;
+	background-image: linear-gradient(rgba(0, 0, 0, 0.53), rgba(0, 0, 0, 0.3)),
+		url('https://staticv1.inclub.site/images/banner-oportunities.jpg');
+}
+
+.img-card {
+	width: 200px;
+	height: 200px;
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+.testimonials__container {
+	flex-direction: column;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+@media (min-width: 768px) {
+	.img-bg {
+		min-height: 480px;
+	}
+}
+
+@media (min-width: 1336px) {
+	.img-card {
+		width: 400px;
+		height: 400px;
+	}
+}

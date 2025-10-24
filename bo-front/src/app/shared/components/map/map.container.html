@@ -1,0 +1,8 @@
+<ng-container *ngIf="coordinates && coordinates.length === 2">
+  <app-map-component
+    [coordinates]="coordinates"
+    [address]="address"
+    [mapType]="mapType"
+    (addressEvent)="onClickMap($event)">
+  </app-map-component>
+</ng-container>

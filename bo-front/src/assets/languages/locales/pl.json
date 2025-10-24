@@ -1,0 +1,564 @@
+{
+	"header": {
+		"slogan": "Klub Inwestycyjny",
+		"menuItems": [
+			{
+				"label": "Początek"
+			},
+			{
+				"label": "Produkty",
+				"subItems": [
+					{
+						"label": "Nieruchomość"
+					},
+					{
+						"label": "Techniczny"
+					},
+					{
+						"label": "Inne projekty"
+					}
+				]
+			},
+			{
+				"label": "Szansa"
+			},
+			{
+				"label": "Wspólnota"
+			},
+			{
+				"label": "Aktualizacje"
+			},
+			{
+				"label": "Kalendarz"
+			},
+			{
+				"label": "Wydarzenia"
+			}
+		],
+		"languageTitle": "Języki",
+		"languageInputPlaceholder": "Znajdź język",
+		"languageInputLabel": "Osoba ubiegająca się o",
+		"languages": [
+			"Arab ",
+			"Niemiecki ",
+			"bengalski ",
+			"bułgarski ",
+			"Czech ",
+			"Chiny ",
+			"hiszpański ",
+			"Francuski ",
+			"portugalski ",
+			"język angielski ",
+			"grecki ",
+			"Guarani ",
+			"hinduski ",
+			"język węgierski ",
+			"indonezyjski ",
+			"Włoski ",
+			"język japoński ",
+			"koreański ",
+			"Holenderski ",
+			"Polski ",
+			"Rosyjski ",
+			"telugu ",
+			"tajski ",
+			"tagalski ",
+			"turecki ",
+			"ukraiński ",
+			"wietnamski ",
+			"rumuński "
+		]
+	},
+	"footer": {
+		"contactInformation": {
+			"phone": "(01) 618 5118",
+			"email": "przykład@inclub.com.pe"
+		},
+		"sections": [
+			"Rozwiązania",
+			"InResorts Ribera del Rio",
+			"InResorts La Joya",
+			"KeOla",
+			"Sprzedaż używanych",
+			"Nas",
+			"Blog",
+			"Częste pytania",
+			"Dostęp klienta",
+			"Zrównoważony rozwój",
+			"Kontakt",
+			"Prawny",
+			"Polityka prywatności",
+			"Regulamin",
+			"Książka Reklamacje"
+		]
+	},
+	"home": {
+		"carousel": {
+			"carouselEntry": "GOTOWY DO DOŁĄCZENIA",
+			"carouselTitle": "INCLUB WSZECHŚWIAT?",
+			"carouselText": "Wszyscy są mile widziani. ",
+			"carouselBtn1": "Dołącz teraz!",
+			"carouselBtn2": "Dostęp"
+		},
+		"keola": {
+			"cta": "I zrealizuj kod „UNETEKEOLA”, aby zdobyć punkty.",
+			"btn": "Google Play",
+			"titles": ["Pobierz aplikację Keola", "Najbardziej nowy", "Zaproś i wygraj"]
+		},
+		"lastUpdates": {
+			"title": "Najnowsze aktualizacje",
+			"description": "Chcemy, abyś odniósł sukces i rozwijał swoją firmę, aby stać się odnoszącym sukcesy pionierem, jakim jesteśmy! ",
+			"button": "Aktualizacja!"
+		},
+		"howWorks": {
+			"title": "Jak to działa",
+			"subtitle": "Rozpocznij w 3 prostych krokach",
+			"steps": [
+				{
+					"title": "Zapisać się",
+					"description": "Wpisz swojego sponsora, uzupełnij swoje dane i utwórz hasło."
+				},
+				{
+					"title": "Przeglądaj produkty",
+					"description": "Zapoznaj się z produktami na naszym portalu Inclub. "
+				},
+				{
+					"title": "Wygrać",
+					"description": "Gotowy! "
+				}
+			]
+		},
+		"cards": [
+			{
+				"title": "Aktówka",
+				"description": "Dołącz i bądź częścią naszych projektów nieruchomościowych, technologicznych i wielu innych.",
+				"button": "Odkryj więcej"
+			},
+			{
+				"title": "Wspólnota",
+				"description": "Zanurz się w świetnych produktach z ogromnym potencjałem zarobkowym.",
+				"button": "Odkryj więcej"
+			},
+			{
+				"title": "Szansa",
+				"description": "Jeśli jesteś gotowy do pracy, InClub to pojazd, który zabierze Cię tam, gdzie chcesz.",
+				"button": "Odkryj więcej"
+			}
+		],
+		"testimonialsSection": {
+			"cardPrefix": "Członek od",
+			"heading": "Wszystko, czego potrzebujesz, to telefon w dłoni, aby połączyć się z życiową szansą biznesową.",
+			"button": "Zarejestruj się teraz",
+			"testimonials": [
+				{
+					"text": "Jeśli bardzo się wysilisz i pracujesz sumiennie, Inclub zmieni twoje życie i spełni wszystkie twoje marzenia",
+					"name": "Elias Vargas",
+					"since": "2020"
+				},
+				{
+					"text": "Potrzebujesz tylko 3 rzeczy na tym świecie, aby być szczęśliwym: Wiara w Boga, Wiara w siebie i Wiara w swoje marzenia",
+					"name": "Paul Villacorta",
+					"since": "2020"
+				},
+				{
+					"text": "Nie jest źle być biednym, źle jest nigdy nie próbować, aby umrzeć biednym i bez marzeń. Nigdy nie jest za późno, aby zacząć",
+					"name": "Mery Livias",
+					"since": "2021"
+				},
+				{
+					"text": "Możesz wygłosić najlepsze przemówienie swoim życiem, a nie słowami",
+					"name": "Abel Meza",
+					"since": "2020"
+				}
+			]
+		}
+	},
+	"products": {
+		"navigation": ["Nieruchomość", "Tech", "Kolejne projekty"],
+		"items": [
+			{
+				"title": "Ośrodek wypoczynkowy Ribera del Rio",
+				"description": "Korzystaj z dobrodziejstw naszego Hotel Club Resort i zostań członkiem. ",
+				"buttonText": "Więcej informacji"
+			},
+			{
+				"title": "Ośrodek wypoczynkowy La Joya",
+				"description": "Rodzinna zabawa, przyroda i zyski na całe życie. ",
+				"buttonText": "Więcej informacji"
+			},
+			{
+				"title": "Sieci Keoli",
+				"description": "Zaproś i wygraj, odkryj zalety aplikacji. ",
+				"buttonText": "Więcej informacji"
+			}
+		],
+		"nextProjects": {
+			"title": "Pracujemy",
+			"description": "Obecnie zespół Inclubu jest w trakcie procesu twórczego, aby pokazać nadchodzące projekty. ",
+			"buttonText": "Aktualizacja!"
+		}
+	},
+	"productDetail": {
+		"aboutUsTitle": "O nas",
+		"aboutBtnText": "chcę wiedzieć więcej",
+		"products": [
+			{
+				"aboutTitle": "Nadrzecze",
+				"aboutDescription": "Jesteśmy Club Resort położony w Cieneguilla, 45 minut od Limy. ",
+				"perkPreTitle": "Skorzystaj z naszego",
+				"perktitle": "Niezapomniane przeżycia",
+				"perkDescription": "Idealne miejsce dla tych, którzy szukają wyjątkowej ucieczki i przygód. ",
+				"cards": [
+					{
+						"title": "Hotele",
+						"description": "Każdy pokój w Ribera del Río został zaprojektowany z myślą o dzieleniu się z bliskimi; "
+					},
+					{
+						"title": "Doświadczenie",
+						"description": "Oferujemy szeroką gamę atrakcji rekreacyjnych i rekreacyjnych, które z pewnością Cię urzekną. "
+					},
+					{
+						"title": "Restauracje",
+						"description": "Zawsze dobrze jest sprawić sobie przyjemność, dlatego nasza restauracja Ribera del Río wita Cię i zaprasza na różne typowe dania kuchni narodowej, regionalnej i kreolskiej."
+					}
+				]
+			},
+			{
+				"aboutTitle": "Klejnot",
+				"aboutDescription": "Jesteśmy Club Resort zlokalizowanym w Arequipie, zaledwie 45 minut od miasta Arequipa. ",
+				"perkPreTitle": "Skorzystaj z naszego",
+				"perktitle": "Niezapomniane przeżycia",
+				"perkDescription": "Idealne miejsce dla tych, którzy szukają wyjątkowej ucieczki i przygód. ",
+				"cards": [
+					{
+						"title": "Baseny",
+						"description": "Każdy basen w La Joya został zaprojektowany z myślą o dzieleniu się nim z bliskimi; "
+					},
+					{
+						"title": "Doświadczenie",
+						"description": "Oferujemy szeroką gamę atrakcji rekreacyjnych i rekreacyjnych, które z pewnością Cię urzekną. "
+					},
+					{
+						"title": "Park Zdrojowy",
+						"description": "Piękny park wodny z kolorowymi zjeżdżalniami; "
+					}
+				]
+			},
+			{
+				"aboutTitle": "Keola",
+				"aboutDescription": "Witamy w Keola, najlepszej aplikacji, dzięki której znajdziesz wszystkie swoje ulubione produkty w jednym miejscu! ",
+				"perkPreTitle": "Skorzystaj z naszego",
+				"perktitle": "Korzyści Keoli",
+				"perkDescription": "Zapraszaj i zarabiaj, odkrywaj zalety aplikacji. ",
+				"cards": [
+					{
+						"title": "Produkty",
+						"description": "Odkryj różnorodne produkty i kategorie. "
+					},
+					{
+						"title": "Sklepy",
+						"description": "Zarządzaj swoim sklepem i zarządzaj swoimi produktami, zapewniając wysoką jakość i sprawną usługę dostawy."
+					},
+					{
+						"title": "Dostawa",
+						"description": "Potrzebujesz jedzenia, lekarstw? "
+					}
+				]
+			}
+		]
+	},
+	"oportunity": {
+		"title": "Szansa",
+		"description": "Jest otwarty dla każdego, bez względu na doświadczenie, lokalizację i okoliczności.",
+		"sections": [
+			{
+				"pre": "Zarabiaj dzięki swoim wpływom",
+				"title": "Każdy jest pod wpływem mikro",
+				"content": "Każdy jest mikroinfluencerem. "
+			},
+			{
+				"pre": "Polecam produkty wysokiej jakości",
+				"title": "Najnowocześniejsze produkty, torujące drogę w branży",
+				"content": "Codziennie polecamy produkty i usługi naszym znajomym i rodzinie. "
+			},
+			{
+				"pre": "Ucz się od swoich rówieśników",
+				"title": "Wszystko, czego potrzebujesz, aby odnieść sukces",
+				"content": "Dzielimy się wiedzą naszych specjalistów, inspirowani chęcią uczynienia networkingu bardziej opłacalnym dla wszystkich, a afiliantom nauczenia się, jak generować aktywa."
+			},
+			{
+				"pre": "Plan wynagrodzeń",
+				"title": "Nasz Plan Wynagrodzeń jest najpotężniejszy w branży",
+				"content": "Jak żaden inny klub inwestycyjny pomagamy budować inteligentny portfel inwestycyjny i osiągać długo oczekiwaną wolność finansową wraz z szeroką gamą korzyści."
+			}
+		],
+		"testimonials": {
+			"pre": "Referencje",
+			"title": "Historie sukcesów",
+			"items": [
+				{
+					"text": "Jeśli osoba żyjąca przeszłością nigdy nie odniesie sukcesu w teraźniejszości, a tym bardziej w przyszłości",
+					"name": "Eliasa Vargasa",
+					"since": "2020"
+				},
+				{
+					"text": "Do szczęścia potrzebne są tylko 3 rzeczy na tym świecie: Wiara w Boga, Wiara w siebie i Wiara w swoje marzenia",
+					"name": "Paula Villacortę",
+					"since": "2020"
+				},
+				{
+					"text": "Nie jest źle być biednym, złe jest to, że nigdy nie próbowałeś, umrzeć biednym i bez marzeń. Nigdy nie jest za późno, aby zacząć",
+					"name": "Wesołej Liwii",
+					"since": "2020"
+				},
+				{
+					"text": "Najlepsze przemówienie możesz wygłosić swoim życiem niż słowami.",
+					"name": "Abel Meza",
+					"since": "2020"
+				}
+			]
+		}
+	},
+	"comunity": {
+		"title": "Nasza społeczność",
+		"description": "Sukces jest lepszy, gdy się nim dzielimy. ",
+		"sections": [
+			{
+				"pre": "ROZWIJAJ SIĘ I PROsperuj Z NAMI",
+				"title": "Oddziały na całym świecie",
+				"content": "Największą i najpotężniejszą obecnie siecią afiliacyjną w Ameryce Łacińskiej jest bez wątpienia Inclub. "
+			},
+			{
+				"pre": "Uznanie i wydarzenia",
+				"title": "Miliony ludzi będą świętować Twój sukces.",
+				"content": "Jesteśmy niesamowicie dumni z ciężkiej pracy i zaangażowania, jakie każdy przedsiębiorca wkłada w swoją działalność. "
+			},
+			{
+				"pre": "NARZĘDZIA DO EDUKACJI I NAUKI",
+				"title": "Wszystko, czego potrzebujesz, aby odnieść sukces.",
+				"content": "Pomagamy ludziom stworzyć inteligentny portfel inwestycyjny i osiągnąć długo oczekiwaną wolność finansową. "
+			}
+		],
+		"inspiration": {
+			"title": "Inspiracja",
+			"subtitle": "Głosy społeczności",
+			"testimonials": [
+				{
+					"text": "Inclub to moje życie i dlatego traktuję go bardzo poważnie.",
+					"name": "Eliasa Vargasa",
+					"since": "2020"
+				},
+				{
+					"text": "Inclub jest tutaj, aby zmieniać życie ludzi.",
+					"name": "Paula Villacortę",
+					"since": "2020"
+				},
+				{
+					"text": "Inclub dał nam możliwość zmiany życia innych ludzi.",
+					"name": "Wesołej Liwii",
+					"since": "2020"
+				},
+				{
+					"text": "Partnerzy są nagradzani za sukces dzięki masie użytkowników.",
+					"name": "Abel Meza",
+					"since": "2020"
+				}
+			]
+		}
+	},
+	"news": {
+		"noticeLabel": "Aktualności",
+		"titleMain": "NOWOŚĆ",
+		"descriptionMain": "Idealne schronienie, w którym możesz cieszyć się rodziną i przyjaciółmi",
+		"commonEventsCountry": "Lima Peru",
+		"commonEventsBtn": "Zobacz więcej",
+		"content": [
+			{
+				"date": "14 września 2023 r",
+				"title": "Komunikuj się skutecznie, warsztaty językowe i komunikacji biznesowej"
+			},
+			{
+				"title": "Twoje miejsce zakupów online",
+				"description": "Zaproś i wygraj, odkryj zalety aplikacji. "
+			},
+			{
+				"title": "Projekt nieruchomości",
+				"description": "Liderzy klubu cieszyli się niesamowitym uruchomieniem projektu nieruchomościowego Ribera del Rio w Cieneguilla."
+			},
+			{
+				"title": "Uruchomienie Encubry",
+				"description": "Liderzy klubu umożliwiają naszym członkom bycie liderami w branży sieci internetowych."
+			},
+			{
+				"title": "Twoje miejsce zakupów online",
+				"description": "Zaproś i wygraj, odkryj zalety aplikacji. "
+			},
+			{
+				"title": "Projekt technologiczny",
+				"description": "Liderzy klubu cieszyli się niesamowitym uruchomieniem projektu nieruchomościowego Ribera del Rio w Cieneguilla."
+			},
+			{
+				"title": "Ośrodek wypoczynkowy Ribera del Rio",
+				"description": "Liderzy klubu umożliwiają naszym członkom bycie liderami w branży sieci internetowych."
+			}
+		]
+	},
+	"newsDetail": {
+		"date": "26 września 2023 r",
+		"title": "Idealne schronienie, w którym możesz cieszyć się rodziną i przyjaciółmi",
+		"description": "Ośrodek La Joya Park położony jest zaledwie 60 minut od miasta Arequipa w dzielnicy La Joya. Można tu spędzać dni na plaży lub uprawiać sporty wodne. ",
+		"content": [
+			{
+				"date": "14 września 2023 r",
+				"title": "Komunikuj się skutecznie, warsztaty językowe i komunikacji biznesowej"
+			},
+			{
+				"date": "29 września 2023 r",
+				"title": "System edukacyjny Inclub LEADERSHIP"
+			},
+			{
+				"date": "15 września 2023 r",
+				"title": "System edukacyjny Inclub Referencje sukcesu"
+			}
+		]
+	},
+	"calendar": {
+		"title": "Kalendarz",
+		"subtitle": "Wrzesień",
+		"filters": {
+			"searchLabel": "Osoba ubiegająca się o",
+			"searchPlaceholder": "Wyszukaj wydarzenie lub warsztat",
+			"options": ["Dzisiaj", "Co tydzień", "Miesięczny"]
+		}
+	},
+	"eventPage": {
+		"upcommingEventsTitle": "Nadchodzące wydarzenia",
+		"upcomingEvents": [
+			{
+				"date": "14 września 2023 r",
+				"title": "Komunikuj się skutecznie, warsztaty językowe i komunikacji biznesowej"
+			},
+			{
+				"date": "29 września 2023 r",
+				"title": "System Edukacyjny Inclub LEADERSHIP"
+			},
+			{
+				"date": "15 września 2023 r",
+				"title": "System edukacyjny Inclub Referencje sukcesu"
+			}
+		],
+		"pastEventsTitle": "Poprzednie wydarzenia",
+		"pastEvents": [
+			{
+				"date": "12 września 2023 r",
+				"title": "Klub Czytelniczy Systemu Edukacji"
+			},
+			{
+				"date": "10 września 2023 r",
+				"title": "System edukacyjny Inclub LEADERSHIP"
+			},
+			{
+				"date": "8 września 2023 r",
+				"title": "Referencje dotyczące sukcesu systemu edukacyjnego Inclub"
+			}
+		],
+		"trendsTitle": "Trendy"
+	},
+	"eventsDetail": {
+		"backLabel": "Powrót",
+		"resumeTitle": "Streszczenie",
+		"learnTitle": "Czego się nauczysz?"
+	},
+	"events": [
+		{
+			"title": "Komunikuj się skutecznie, warsztaty językowe i komunikacji biznesowej",
+			"date": "14 września 2023 r",
+			"type": "Online",
+			"duration": "Przybliżony czas trwania: 22 minuty.",
+			"positiveReviews": "98% pozytywnych recenzji (567).",
+			"summary": "Chcesz udoskonalić swoje umiejętności komunikacyjne w obszarze biznesowym? ",
+			"learn": [
+				"Popraw umiejętności prezentacji i negocjacji",
+				"Naucz się wyrażać jasno i skutecznie",
+				"W przeciwieństwie do innych warsztatów teoretycznych, ten warsztat pozwala natychmiast zastosować zdobytą wiedzę w praktyce.",
+				"Dzięki ćwiczeniom i dynamice grupy będziesz mógł ćwiczyć swoje umiejętności komunikacyjne i otrzymywać natychmiastową informację zwrotną od ekspertów w danej dziedzinie. ",
+				"I więcej."
+			]
+		},
+		{
+			"date": "29 września 2023 r",
+			"title": "System edukacyjny Inclub: Przywództwo",
+			"type": "Online",
+			"duration": "Przybliżony czas trwania: 22 minuty.",
+			"positiveReviews": "98% pozytywnych recenzji (567).",
+			"summary": "Chcesz udoskonalić swoje umiejętności komunikacyjne w obszarze biznesowym? ",
+			"learn": [
+				"Popraw umiejętności prezentacji i negocjacji",
+				"Naucz się wyrażać jasno i skutecznie",
+				"W przeciwieństwie do innych warsztatów teoretycznych, ten warsztat pozwala natychmiast zastosować zdobytą wiedzę w praktyce.",
+				"Dzięki ćwiczeniom i dynamice grupy będziesz mógł ćwiczyć swoje umiejętności komunikacyjne i otrzymywać natychmiastową informację zwrotną od ekspertów w danej dziedzinie. ",
+				"I więcej."
+			]
+		},
+		{
+			"date": "15 września 2023 r",
+			"title": "System edukacyjny Inclub: Historie sukcesu",
+			"type": "Online",
+			"duration": "Przybliżony czas trwania: 22 minuty.",
+			"positiveReviews": "98% pozytywnych recenzji (567).",
+			"summary": "Chcesz udoskonalić swoje umiejętności komunikacyjne w obszarze biznesowym? ",
+			"learn": [
+				"Popraw umiejętności prezentacji i negocjacji",
+				"Naucz się wyrażać jasno i skutecznie",
+				"W przeciwieństwie do innych warsztatów teoretycznych, ten warsztat pozwala natychmiast zastosować zdobytą wiedzę w praktyce.",
+				"Dzięki ćwiczeniom i dynamice grupy będziesz mógł ćwiczyć swoje umiejętności komunikacyjne i otrzymywać natychmiastową informację zwrotną od ekspertów w danej dziedzinie. ",
+				"I więcej."
+			]
+		},
+		{
+			"date": "12 września 2023 r",
+			"title": "System edukacyjny Inclub: Klub Książki",
+			"type": "Online",
+			"duration": "Przybliżony czas trwania: 22 minuty.",
+			"positiveReviews": "98% pozytywnych recenzji (567).",
+			"summary": "Chcesz udoskonalić swoje umiejętności komunikacyjne w obszarze biznesowym? ",
+			"learn": [
+				"Popraw umiejętności prezentacji i negocjacji",
+				"Naucz się wyrażać jasno i skutecznie",
+				"W przeciwieństwie do innych warsztatów teoretycznych, ten warsztat pozwala natychmiast zastosować zdobytą wiedzę w praktyce.",
+				"Dzięki ćwiczeniom i dynamice grupy będziesz mógł ćwiczyć swoje umiejętności komunikacyjne i otrzymywać natychmiastową informację zwrotną od ekspertów w danej dziedzinie. ",
+				"I więcej."
+			]
+		},
+		{
+			"date": "10 września 2023 r",
+			"title": "System edukacyjny Inclub: Przywództwo",
+			"type": "Online",
+			"duration": "Przybliżony czas trwania: 22 minuty.",
+			"positiveReviews": "98% pozytywnych recenzji (567).",
+			"summary": "Chcesz udoskonalić swoje umiejętności komunikacyjne w obszarze biznesowym? ",
+			"learn": [
+				"Popraw umiejętności prezentacji i negocjacji",
+				"Naucz się wyrażać jasno i skutecznie",
+				"W przeciwieństwie do innych warsztatów teoretycznych, ten warsztat pozwala natychmiast zastosować zdobytą wiedzę w praktyce.",
+				"Dzięki ćwiczeniom i dynamice grupy będziesz mógł ćwiczyć swoje umiejętności komunikacyjne i otrzymywać natychmiastową informację zwrotną od ekspertów w danej dziedzinie. ",
+				"I więcej."
+			]
+		},
+		{
+			"date": "8 września 2023 r",
+			"title": "System edukacyjny Inclub: Historie sukcesu",
+			"type": "Online",
+			"duration": "Przybliżony czas trwania: 22 minuty.",
+			"positiveReviews": "98% pozytywnych recenzji (567).",
+			"summary": "Chcesz udoskonalić swoje umiejętności komunikacyjne w obszarze biznesowym? ",
+			"learn": [
+				"Popraw umiejętności prezentacji i negocjacji",
+				"Naucz się wyrażać jasno i skutecznie",
+				"W przeciwieństwie do innych warsztatów teoretycznych, ten warsztat pozwala natychmiast zastosować zdobytą wiedzę w praktyce.",
+				"Dzięki ćwiczeniom i dynamice grupy będziesz mógł ćwiczyć swoje umiejętności komunikacyjne i otrzymywać natychmiastową informację zwrotną od ekspertów w danej dziedzinie. ",
+				"I więcej."
+			]
+		}
+	]
+}

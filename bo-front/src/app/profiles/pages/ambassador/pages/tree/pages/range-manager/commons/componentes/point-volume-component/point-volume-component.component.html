@@ -1,0 +1,383 @@
+<ng-container>
+  <h4 class="m-0 text-black fw-medium point-title pb-4">Compuesto</h4>
+  <div class="w-100 d-flex flex-column flex-md-row gap-3">
+    <article class="d-flex flex-column w-100 rounded-article">
+      <h5 class="m-0 text-secondary py-3 text-center fw-medium point-subtitle">Puntos Totales</h5>
+      <div class="d-flex flex-column w-100 gap-2 gap-lg-4 px-2 pb-2">
+        <div *ngIf="isLoading"
+             class="d-flex justify-content-center align-items-center py-4">
+          <p-progressSpinner></p-progressSpinner>
+        </div>
+        <ng-container *ngIf="!isLoading">
+          <div class="point-container bg-white-lilac d-flex flex-row justify-content-between p-4 rounded">
+            <div class="d-flex flex-column">
+              <h6 class="m-0 fs-6 fw-medium text-black">Volumen Rama 1</h6>
+              <span class="cl-muted fs-6 fw-medium"> {{ dataPoints.compuestoRama1 }} pts</span>
+            </div>
+            <div class="d-flex flex-row justify-content-center align-items-center rounded-circle"
+                 style="background-color: #ffbe0a1a; width: 42px; height: 42px">
+              <mat-icon svgIcon="award"></mat-icon>
+
+            </div>
+          </div>
+          <div class="point-container bg-white-lilac d-flex flex-row justify-content-between p-4 rounded">
+            <div class="d-flex flex-column">
+              <h6 class="m-0 fs-6 fw-medium text-black">Volumen Rama 2</h6>
+              <span class="cl-muted fs-6 fw-medium"> {{ dataPoints.compuestoRama2 }} pts</span>
+            </div>
+            <div class="d-flex flex-row justify-content-center align-items-center rounded-circle"
+                 style="background-color: #ffbe0a1a; width: 42px; height: 42px">
+              <mat-icon svgIcon="award"></mat-icon>
+            </div>
+          </div>
+          <div class="point-container bg-white-lilac d-flex flex-row justify-content-between p-4 rounded">
+            <div class="d-flex flex-column">
+              <h6 class="m-0 fs-6 fw-medium text-black">Volumen Rama 3</h6>
+              <span class="cl-muted fs-6 fw-medium"> {{ dataPoints.compuestoRama3 }} pts</span>
+            </div>
+            <div class="d-flex flex-row justify-content-center align-items-center rounded-circle"
+                 style="background-color: #ffbe0a1a; width: 42px; height: 42px">
+              <mat-icon svgIcon="award"></mat-icon>
+            </div>
+          </div>
+          <div class="point-container bg-white-lilac d-flex flex-row justify-content-between p-4 rounded">
+            <div class="d-flex flex-column">
+              <h6 class="m-0 fs-6 fw-medium text-black">Volumen Directo</h6>
+              <span class="cl-muted fs-6 fw-medium"> {{ dataPoints.directoCTotal }} pts</span>
+            </div>
+            <div class="d-flex flex-row justify-content-center align-items-center rounded-circle"
+                 style="background-color: #ffbe0a1a; width: 42px; height: 42px">
+              <mat-icon svgIcon="award"></mat-icon>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </article>
+
+    <article class="d-flex flex-column w-100 rounded-article">
+      <h5 class="m-0 text-secondary py-3 text-center fw-medium point-subtitle">Rango Actual</h5>
+      <div class="d-flex flex-column w-100 gap-2 gap-lg-4 px-2 pb-2">
+        <div *ngIf="isLoading"
+             class="d-flex justify-content-center align-items-center py-4">
+          <p-progressSpinner></p-progressSpinner>
+        </div>
+        <ng-container *ngIf="!isLoading">
+          <div class="point-container bg-white-lilac d-flex flex-row justify-content-between p-4 rounded">
+            <div class="d-flex flex-column">
+              <h6 class="m-0 fs-6 fw-medium text-black">Volumen Rama 1</h6>
+              <span class="cl-muted fs-6 fw-medium">
+                {{ pointRangesData[0]?.percentagesActualRange?.pointsRama1CompundRange }} pts
+              </span>
+            </div>
+
+            <div class="d-flex flex-row justify-content-center align-items-center rounded-circle">
+              <app-progress-icon [percentage]="pointRangesData[0]?.percentagesActualRange?.percetangeRama1CompoundRange"
+                                 style="width: 35px; height: 35px;"></app-progress-icon>
+            </div>
+          </div>
+          <div class="point-container bg-white-lilac d-flex flex-row justify-content-between p-4 rounded">
+            <div class="d-flex flex-column">
+              <h6 class="m-0 fs-6 fw-medium text-black">Volumen Rama 2</h6>
+              <span class="cl-muted fs-6 fw-medium">
+                {{ pointRangesData[0]?.percentagesActualRange?.pointsRama2CompundRange }} pts
+              </span>
+            </div>
+            <div class="d-flex flex-row justify-content-center align-items-center rounded-circle">
+              <app-progress-icon [percentage]="pointRangesData[0]?.percentagesActualRange?.percetangeRama2CompoundRange"
+                                 style="width: 35px; height: 35px;"></app-progress-icon>
+            </div>
+          </div>
+          <div class="point-container bg-white-lilac d-flex flex-row justify-content-between p-4 rounded">
+            <div class="d-flex flex-column">
+              <h6 class="m-0 fs-6 fw-medium text-black">Volumen Rama 3</h6>
+              <span class="cl-muted fs-6 fw-medium">
+                {{ pointRangesData[0]?.percentagesActualRange?.pointsRama3CompundRange }} pts
+              </span>
+            </div>
+            <div class="d-flex flex-row justify-content-center align-items-center rounded-circle">
+              <app-progress-icon [percentage]="pointRangesData[0]?.percentagesActualRange?.percetangeRama3CompoundRange"
+                                 style="width: 35px; height: 35px;"></app-progress-icon>
+            </div>
+          </div>
+          <div class="point-container bg-white-lilac d-flex flex-row justify-content-between p-4 rounded">
+            <div class="d-flex flex-column">
+              <h6 class="m-0 fs-6 fw-medium text-black">Volumen Directo</h6>
+              <span class="cl-muted fs-6 fw-medium">
+                {{ pointRangesData[0]?.percentagesActualRange?.volumeDirectCompoundRange }} pts
+              </span>
+            </div>
+
+          </div>
+        </ng-container>
+      </div>
+    </article>
+    <article class="d-flex flex-column w-100 rounded-article">
+      <h5 class="m-0 fw-medium text-center py-3 point-subtitle"
+          style="color: #ff4f79">
+        Próximo rango
+      </h5>
+      <div class="d-flex flex-column w-100 gap-2 gap-lg-4 px-2 pb-2">
+        <div *ngIf="isLoading"
+             class="d-flex justify-content-center align-items-center py-4">
+          <p-progressSpinner></p-progressSpinner>
+        </div>
+        <ng-container *ngIf="!isLoading">
+          <div class="point-container d-flex flex-row justify-content-between p-4 rounded"
+               style="background-color: #4169e112">
+            <div class="d-flex flex-column">
+              <h6 class="m-0 fs-6 fw-medium text-black">Volumen Rama 1</h6>
+              <span class="cl-muted fs-6 fw-medium"> {{
+                pointRangesData[0]?.percentagesNextRange?.pointsRama1CompundRange }} pts</span>
+            </div>
+            <div class="d-flex flex-row justify-content-center align-items-center rounded-circle">
+              <div class="d-flex flex-row justify-content-center align-items-center rounded-circle">
+                <app-progress-icon [percentage]="pointRangesData[0]?.percentagesNextRange?.percetangeRama1CompoundRange"
+                                   style="width: 35px; height: 35px;"></app-progress-icon>
+              </div>
+
+            </div>
+          </div>
+          <div class="point-container d-flex flex-row justify-content-between p-4 rounded"
+               style="background-color: #4169e112">
+            <div class="d-flex flex-column">
+              <h6 class="m-0 fs-6 fw-medium text-black">Volumen Rama 2</h6>
+              <span class="cl-muted fs-6 fw-medium"> {{
+                pointRangesData[0]?.percentagesNextRange?.pointsRama2CompundRange
+                }} pts</span>
+            </div>
+            <div class="d-flex flex-row justify-content-center align-items-center rounded-circle">
+              <div class="d-flex flex-row justify-content-center align-items-center rounded-circle">
+                <app-progress-icon [percentage]="pointRangesData[0]?.percentagesNextRange?.percetangeRama2CompoundRange"
+                                   style="width: 35px; height: 35px;"></app-progress-icon>
+              </div>
+
+            </div>
+          </div>
+          <div class="point-container d-flex flex-row justify-content-between p-4 rounded"
+               style="background-color: #4169e112">
+            <div class="d-flex flex-column">
+              <h6 class="m-0 fs-6 fw-medium text-black">Volumen Rama 3</h6>
+              <span class="cl-muted fs-6 fw-medium"> {{
+                pointRangesData[0]?.percentagesNextRange?.pointsRama3CompundRange
+                }} pts</span>
+            </div>
+            <div class="d-flex flex-row justify-content-center align-items-center rounded-circle">
+              <app-progress-icon [percentage]="pointRangesData[0]?.percentagesNextRange?.percetangeRama3CompoundRange"
+                                 style="width: 35px; height: 35px;"></app-progress-icon>
+            </div>
+
+          </div>
+          <div class="point-container d-flex flex-row justify-content-between p-4 rounded"
+               style="background-color: #4169e112">
+            <div class="d-flex flex-column">
+              <h6 class="m-0 fs-6 fw-medium text-black">Volumen Directo</h6>
+              <span class="cl-muted fs-6 fw-medium"> {{
+                pointRangesData[0]?.percentagesNextRange?.volumeDirectCompoundRange }} pts</span>
+            </div>
+            <div class="d-flex flex-row justify-content-center align-items-center rounded-circle">
+
+            </div>
+          </div>
+        </ng-container>
+
+      </div>
+
+    </article>
+
+  </div>
+
+  <h4 class="m-0 text-black fw-medium point-title py-4">Residual</h4>
+  <div class="w-100 d-flex flex-column flex-md-row gap-3">
+    <article class="d-flex flex-column w-100 rounded-article">
+      <h5 class="m-0 py-3 text-secondary text-center fw-medium point-subtitle">Puntos Totales</h5>
+      <div class="d-flex flex-column w-100 gap-2 gap-lg-4 px-2 pb-2">
+        <div class="point-container d-flex flex-row justify-content-between p-4 rounded"
+             style="background-color: #4169e112">
+          <div class="d-flex flex-column">
+            <h6 class="m-0 fs-6 fw-medium text-black">Volumen Rama 1</h6>
+            <span class="cl-muted fs-6 fw-medium"> {{ dataPoints.residualRama1 }} pts</span>
+          </div>
+          <div class="d-flex flex-row justify-content-center align-items-center rounded-circle"
+               style="background-color: #ffbe0a1a; width: 42px; height: 42px">
+            <mat-icon svgIcon="award"></mat-icon>
+          </div>
+        </div>
+        <div class="point-container d-flex flex-row justify-content-between p-4 rounded"
+             style="background-color: #4169e112">
+          <div class="d-flex flex-column">
+            <h6 class="m-0 fs-6 fw-medium text-black">Volumen Rama 2</h6>
+            <span class="cl-muted fs-6 fw-medium"> {{ dataPoints.residualRama2 }} pts</span>
+          </div>
+          <div class="d-flex flex-row justify-content-center align-items-center rounded-circle"
+               style="background-color: #ffbe0a1a; width: 42px; height: 42px">
+            <mat-icon svgIcon="award"></mat-icon>
+          </div>
+        </div>
+        <div class="point-container d-flex flex-row justify-content-between p-4 rounded"
+             style="background-color: #4169e112">
+          <div class="d-flex flex-column">
+            <h6 class="m-0 fs-6 fw-medium text-black">Volumen Rama 3</h6>
+            <span class="cl-muted fs-6 fw-medium"> {{ dataPoints.residualRama3 }} pts</span>
+          </div>
+          <div class="d-flex flex-row justify-content-center align-items-center rounded-circle"
+               style="background-color: #ffbe0a1a; width: 42px; height: 42px">
+            <mat-icon svgIcon="award"></mat-icon>
+          </div>
+        </div>
+        <div class="point-container d-flex flex-row justify-content-between p-4 rounded"
+             style="background-color: #4169e112">
+          <div class="d-flex flex-column">
+            <h6 class="m-0 fs-6 fw-medium text-black">Volumen Directo</h6>
+            <span class="cl-muted fs-6 fw-medium"> {{ dataPoints.directoRTotal }} pts</span>
+          </div>
+          <div class="d-flex flex-row justify-content-center align-items-center rounded-circle"
+               style="background-color: #ffbe0a1a; width: 42px; height: 42px">
+            <mat-icon svgIcon="award"></mat-icon>
+          </div>
+        </div>
+      </div>
+    </article>
+    <article class="d-flex flex-column w-100 rounded-article">
+      <h5 class="m-0 text-primary text-center py-3 fw-medium point-subtitle">Rango Actual</h5>
+      <div class="d-flex flex-column w-100 gap-2 gap-lg-4 px-2 pb-2">
+        <div *ngIf="isLoading"
+             class="d-flex justify-content-center align-items-center py-4">
+          <p-progressSpinner></p-progressSpinner>
+        </div>
+        <ng-container *ngIf="!isLoading">
+          <div class="point-container bg-white-lilac d-flex flex-row justify-content-between p-4 rounded">
+            <div class="d-flex flex-column">
+              <h6 class="m-0 fs-6 fw-medium text-black">Volumen Rama 1</h6>
+              <span class="cl-muted fs-6 fw-medium">
+                {{ pointRangesData[0]?.percentagesActualRange?.pointsRama1ResidualRange }} pts
+              </span>
+            </div>
+            <div class="d-flex flex-row justify-content-center align-items-center rounded-circle">
+              <app-progress-icon [percentage]="pointRangesData[0]?.percentagesActualRange?.percetangeRama1ResidualRange"
+                                 style="width: 35px; height: 35px;"></app-progress-icon>
+            </div>
+
+
+
+          </div>
+
+          <div class="point-container bg-white-lilac d-flex flex-row justify-content-between p-4 rounded">
+            <div class="d-flex flex-column">
+              <h6 class="m-0 fs-6 fw-medium text-black">Volumen Rama 2</h6>
+              <span class="cl-muted fs-6 fw-medium">
+                {{ pointRangesData[0]?.percentagesActualRange?.pointsRama2ResidualRange }} pts
+              </span>
+            </div>
+            <div class="d-flex flex-row justify-content-center align-items-center rounded-circle">
+              <app-progress-icon [percentage]="pointRangesData[0]?.percentagesActualRange?.percetangeRama2ResidualRange"
+                                 style="width: 35px; height: 35px;"></app-progress-icon>
+            </div>
+
+
+          </div>
+
+          <div class="point-container bg-white-lilac d-flex flex-row justify-content-between p-4 rounded">
+            <div class="d-flex flex-column">
+              <h6 class="m-0 fs-6 fw-medium text-black">Volumen Rama 3</h6>
+              <span class="cl-muted fs-6 fw-medium">
+                {{ pointRangesData[0]?.percentagesActualRange?.pointsRama3ResidualRange }} pts
+              </span>
+            </div>
+
+            <div class="d-flex flex-row justify-content-center align-items-center rounded-circle">
+              <app-progress-icon [percentage]="pointRangesData[0]?.percentagesActualRange?.percetangeRama3ResidualRange"
+                                 style="width: 35px; height: 35px;"></app-progress-icon>
+            </div>
+
+          </div>
+
+          <div class="point-container bg-white-lilac d-flex flex-row justify-content-between p-4 rounded">
+            <div class="d-flex flex-column">
+              <h6 class="m-0 fs-6 fw-medium text-black">Volumen Directo</h6>
+              <span class="cl-muted fs-6 fw-medium">
+                {{ pointRangesData[0]?.percentagesActualRange?.volumeDirectResidualRange }} pts
+              </span>
+            </div>
+
+          </div>
+        </ng-container>
+      </div>
+
+
+    </article>
+    <article class="d-flex flex-column w-100 rounded-article">
+      <h5 class="m-0 fw-medium text-center py-3 point-subtitle"
+          style="color: #ff4f79">
+        Próximo rango
+      </h5>
+      <div class="d-flex flex-column w-100 gap-2 gap-lg-4 px-2 pb-2">
+        <div *ngIf="isLoading"
+             class="d-flex justify-content-center align-items-center py-4">
+          <p-progressSpinner></p-progressSpinner>
+        </div>
+        <ng-container *ngIf="!isLoading">
+
+          <div class="point-container d-flex flex-row justify-content-between p-4 rounded"
+               style="background-color: #4169e112">
+            <div class="d-flex flex-column">
+              <h6 class="m-0 fs-6 fw-medium text-black">Volumen Rama 1</h6>
+              <span class="cl-muted fs-6 fw-medium"> {{
+                pointRangesData[0]?.percentagesNextRange?.pointsRama1ResidualRange }}
+                pts</span>
+            </div>
+            <div class="d-flex flex-row justify-content-center align-items-center rounded-circle">
+              <app-progress-icon [percentage]="pointRangesData[0]?.percentagesNextRange?.percetangeRama1ResidualRange"
+                                 style="width: 35px; height: 35px;"></app-progress-icon>
+            </div>
+
+
+          </div>
+          <div class="point-container d-flex flex-row justify-content-between p-4 rounded"
+               style="background-color: #4169e112">
+            <div class="d-flex flex-column">
+              <h6 class="m-0 fs-6 fw-medium text-black">Volumen Rama 2</h6>
+              <span class="cl-muted fs-6 fw-medium"> {{
+                pointRangesData[0]?.percentagesNextRange?.pointsRama2ResidualRange
+                }} pts</span>
+            </div>
+            <div class="d-flex flex-row justify-content-center align-items-center rounded-circle">
+              <app-progress-icon [percentage]="pointRangesData[0]?.percentagesNextRange?.percetangeRama2ResidualRange"
+                                 style="width: 35px; height: 35px;"></app-progress-icon>
+            </div>
+
+
+          </div>
+          <div class="point-container d-flex flex-row justify-content-between p-4 rounded"
+               style="background-color: #4169e112">
+            <div class="d-flex flex-column">
+              <h6 class="m-0 fs-6 fw-medium text-black">Volumen Rama 3</h6>
+              <span class="cl-muted fs-6 fw-medium"> {{
+                pointRangesData[0]?.percentagesNextRange?.pointsRama3ResidualRange
+                }} pts</span>
+            </div>
+
+            <div class="d-flex flex-row justify-content-center align-items-center rounded-circle">
+              <app-progress-icon [percentage]="pointRangesData[0]?.percentagesNextRange?.percetangeRama3ResidualRange"
+                                 style="width: 35px; height: 35px;"></app-progress-icon>
+            </div>
+
+
+          </div>
+          <div class="point-container d-flex flex-row justify-content-between p-4 rounded"
+               style="background-color: #4169e112">
+            <div class="d-flex flex-column">
+              <h6 class="m-0 fs-6 fw-medium text-black">Volumen Directo</h6>
+              <span class="cl-muted fs-6 fw-medium"> {{
+                pointRangesData[0]?.percentagesNextRange?.volumeDirectResidualRange }} pts</span>
+            </div>
+            <div class="d-flex flex-row justify-content-center align-items-center rounded-circle">
+
+            </div>
+          </div>
+        </ng-container>
+
+      </div>
+
+    </article>
+  </div>
+</ng-container>

@@ -1,0 +1,56 @@
+<div *ngIf="showModal" class="modal fade show d-block" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content" style="font-size: 12px">
+        <div class="modal-header">
+          <h5 class="modal-title">Documentos Generados</h5>
+          <button type="button" class="btn-close" aria-label="Close" (click)="handleClose()"></button>
+        </div>
+        <div class="modal-body">
+          <div *ngIf="idFamilyPackage === 1 || idFamilyPackage === 2 || idFamilyPackage === 50 || idFamilyPackage === 28">
+            <div class="row">
+              <div class="col">
+                <table class="table table-responsive">
+                  <thead class="table-head">
+                    <tr>
+                      <th>N° Item</th>
+                      <th>Tipo de Documento</th>
+                      <th>Ver Documento</th>
+                      <th>Subir Documentos</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Paquete ID 1 -->
+                    <ng-container *ngIf="idFamilyPackage === 1">
+                      <tr>
+                        <td>1°</td>
+                        <td>Certificado</td>
+                        <td><button class="btn btn-primary btn-sm" (click)="jsPdfGenerator()">Ver Documento</button></td>
+                        <td><button class="btn btn-primary btn-sm" disabled>Subir Documento</button></td>
+                      </tr>
+                      <!-- Más elementos -->
+                    </ng-container>
+  
+                    <!-- Paquete ID 50 -->
+                    <ng-container *ngIf="idFamilyPackage === 50">
+                      <tr>
+                        <td>1°</td>
+                        <td>Plan de Compensación Inresorts</td>
+                        <td><button class="btn btn-primary btn-sm" (click)="jsPdfGenerator6()">Ver Documento</button></td>
+                        <td><button class="btn btn-primary btn-sm" disabled>Subir Documento</button></td>
+                      </tr>
+                    </ng-container>
+  
+                    <!-- Ajusta los elementos para otros paquetes -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" (click)="handleClose()">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

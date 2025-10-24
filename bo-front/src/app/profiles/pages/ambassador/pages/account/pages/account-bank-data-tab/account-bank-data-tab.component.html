@@ -1,0 +1,71 @@
+<div class="d-flex flex-column gap-3">
+	<h2 class="m-0 fs-5">Cuentas registradas</h2>
+
+	<div class="d-flex flex-wrap justify-content-center justify-content-md-end align-items-center gap-2">
+		<button class="btn btn-secondary d-flex gap-2 align-items-center" (click)="onAdd()">
+			<mat-icon fontIcon="add_circle_outline" />
+			<span>Nuevo</span>
+		</button>
+		<button class="btn btn-outline-secondary d-flex gap-2 align-items-center" (click)="onEdit()">
+			<mat-icon fontIcon="edit" />
+			<span>Editar</span>
+		</button>
+		<button class="btn btn-outline-secondary d-flex gap-2 align-items-center" (click)="onDelete()">
+			<mat-icon fontIcon="delete_outline" />
+			<span>Eliminar</span>
+		</button>
+	</div>
+
+	<div class="d-flex flex-row justify-content-between align-items-center">
+		<button class="btn btn-secondary px-3 fs-12" style="height: fit-content" (click)="onClickDetails()">
+			Detalle de registro
+		</button>
+		<app-pagination
+			[totalPages]="table.totalPages"
+			[currentPage]="table.currentPage"
+			(changePage)="tableService.changePage($event, id)"
+		></app-pagination>
+	</div>
+
+	<app-table
+		class="w-100"
+		[headers]="[
+			'País de Operaciones',
+			'Nombre del Banco',
+			'Dirección del Banco',
+			'Número de cuenta',
+			'Código CCI',
+			'Nombre del Titular'
+		]"
+		[hasCheckbox]="false"
+		[customRows]="true"
+	>
+		<tr class="w-100 d-flex flex-row" *ngFor="let d of table.data; let i = index">
+			<th class="table__first d-flex flex-row justify-content-center align-items-center">
+				<div class="form-check d-flex flex-row align-items-center gap-2">
+					<input
+						class="form-check-input cursor-pointer"
+						style="width: 18px; height: 18px"
+						type="radio"
+						[value]="d.id"
+						[formControl]="selected"
+						[id]="'t-a-t-p-list-' + i"
+					/>
+					<label
+						class="form-check-label fw-normal cl-muted m-0 mt-1"
+						[for]="'t-a-t-p-list-' + d.id"
+						>{{ d.id }}</label
+					>
+				</div>
+			</th>
+			<td class="fs-6 py-4 px-4 w-100 text-center">
+				{{ d.opCountry }}
+			</td>
+			<td class="fs-6 py-4 px-4 w-100 text-center">{{ d.bankName }}</td>
+			<td class="fs-6 py-4 px-4 w-100 text-center">{{ d.bankAddress }}</td>
+			<td class="fs-6 py-4 px-4 w-100 text-center">{{ d.accountNumber }}</td>
+			<td class="fs-6 py-4 px-4 w-100 text-center">{{ d.cci }}</td>
+			<td class="fs-6 py-4 px-4 w-100 text-center">{{ d.ownerFullname }}</td>
+		</tr>
+	</app-table>
+</div>

@@ -1,0 +1,173 @@
+<mat-stepper labelPosition="bottom" #stepper>
+	<mat-step [stepControl]="firstFormGroup">
+		<form [formGroup]="firstFormGroup" style="text-align: center">
+			<div class="items-card">
+				<mat-card class="followment-card" *ngIf="!showNewCards" appearance="outlined">
+					<mat-card-header>
+						<mat-card-title class="title-card">
+							<img src="../../../../../../../../assets/icons/eye.png" alt="" />
+							<br />
+							Seguimiento de Ticket</mat-card-title
+						>
+					</mat-card-header>
+					<mat-card-content>
+						<p>Aquí podrás realizar el seguimiento de tu ticket</p>
+					</mat-card-content>
+					<mat-card-footer class="card-footer">
+						<mat-chip style="background: #fe7c04" (click)="toggleCards()">
+							<label disabled="true" style="color: #fff">Continuar</label>
+						</mat-chip>
+					</mat-card-footer>
+				</mat-card>
+				<mat-card class="new-card" *ngIf="!showNewCards" appearance="outlined">
+					<mat-card-header>
+						<mat-card-title class="title-card">
+							<img src="../../../../../../../../assets/icons/tag.png" alt="" />
+							<br />Nuevo Ticket</mat-card-title
+						>
+					</mat-card-header>
+					<mat-card-content>
+						<p>Aquí podrás realizar el trapaso, actualización fecha y datos</p>
+					</mat-card-content>
+					<mat-card-footer class="card-footer">
+						<mat-chip-set aria-label="Continuar">
+							<mat-chip style="background: #fe7c04" (click)="secondSteep(stepper)"
+								><label style="color: #fff">Continuar</label></mat-chip
+							>
+						</mat-chip-set>
+					</mat-card-footer>
+				</mat-card>
+			</div>
+		</form>
+	</mat-step>
+
+	<mat-step [stepControl]="secondFormGroup">
+		<form [formGroup]="secondFormGroup" style="text-align: center">
+			<div class="items-card">
+				<mat-card class="ticket-card" appearance="outlined">
+					<mat-card-header>
+						<mat-card-title class="title-card">
+							<img src="../../../../../../../../assets/icons/calendar.png" alt="" />
+							<br />
+							Cambio de fecha</mat-card-title
+						>
+					</mat-card-header>
+					<mat-card-content>
+						<p>Aquí podrás realizar el cambio de fecha</p>
+					</mat-card-content>
+					<mat-card-footer class="card-footer">
+						<mat-chip-set aria-label="Continuar">
+							<mat-chip style="background: #fe7c04"
+								><label style="color: #fff">Continuar</label></mat-chip
+							>
+						</mat-chip-set>
+					</mat-card-footer>
+				</mat-card>
+				<mat-card class="ticket-card" appearance="outlined">
+					<mat-card-header>
+						<mat-card-title class="title-card">
+							<img src="../../../../../../../../assets/icons/compare-arrows.svg" alt="" />
+							<br />Traspaso</mat-card-title
+						>
+					</mat-card-header>
+					<mat-card-content>
+						<p>Aquí podrás realizar el trapaso de suscripción y membresia</p>
+					</mat-card-content>
+					<mat-card-footer class="card-footer">
+						<mat-chip-set aria-label="Continuar">
+							<mat-chip style="background: #fe7c04" (click)="thirdSteep(stepper, 2)"
+								><label style="color: #fff">Continuar</label></mat-chip
+							>
+						</mat-chip-set>
+					</mat-card-footer>
+				</mat-card>
+				<mat-card class="ticket-card" appearance="outlined">
+					<mat-card-header>
+						<mat-card-title class="title-card">
+							<img src="../../../../../../../../assets/icons/ok.png" alt="" />
+							<br />Actualización de datos</mat-card-title
+						>
+					</mat-card-header>
+					<mat-card-content>
+						<p>Aquí podrás realizar la actualización de datos</p>
+					</mat-card-content>
+					<mat-card-footer class="card-footer">
+						<mat-chip-set aria-label="Continuar">
+							<mat-chip style="background: #fe7c04"
+								><label style="color: #fff">Continuar</label></mat-chip
+							>
+						</mat-chip-set>
+					</mat-card-footer>
+				</mat-card>
+				<mat-card class="ticket-card" appearance="outlined">
+					<mat-card-header>
+						<mat-card-title class="title-card">
+							<img src="../../../../../../../../assets/icons/liquidation.svg" alt="" />
+							<br />Liquidación</mat-card-title
+						>
+					</mat-card-header>
+					<mat-card-content>
+						<p>Aquí podrás realizar la liquidación de tu suscripción o membresia</p>
+					</mat-card-content>
+					<mat-card-footer class="card-footer">
+						<mat-chip-set aria-label="Continuar">
+							<mat-chip style="background: #fe7c04" (click)="thirdSteep(stepper, 4)"
+								><label style="color: #fff">Continuar</label></mat-chip
+							>
+						</mat-chip-set>
+					</mat-card-footer>
+				</mat-card>
+			</div>
+		</form>
+	</mat-step>
+	<mat-step>
+		<form [formGroup]="secondFormGroup" style="text-align: center">
+			<div class="items-card">
+				<ng-container *ngFor="let type of typeTransfer">
+					<mat-card class="type-card" appearance="outlined">
+						<mat-card-header>
+							<mat-card-title class="title-card">
+								<img src="../../../../../../../../assets/icons/{{ type.icon }}" alt="" />
+								<br />
+								{{ type.name }}</mat-card-title
+							>
+						</mat-card-header>
+						<mat-card-content>
+							<p>{{ type.description }}</p>
+						</mat-card-content>
+						<mat-card-footer class="card-footer">
+							<mat-chip-set aria-label="Continuar">
+								<mat-chip style="background: #fe7c04" (click)="onSwithModal(type)"
+									><label style="color: #fff">Continuar</label></mat-chip
+								>
+							</mat-chip-set>
+						</mat-card-footer>
+					</mat-card>
+				</ng-container>
+			</div>
+		</form>
+	</mat-step>
+</mat-stepper>
+
+<div class="container" *ngIf="showNewCards">
+	<div class="row justify-content-center g-3">
+		<div class="col-md-5 d-flex">
+			<app-chat-card
+				iconSrc="assets/icons/Message_circle.svg"
+				title="Enviar un mensaje"
+				description="Chatea con el Asistente de Inclub o deja un mensaje para un agente"
+				buttonText="Chatear"
+				(buttonClick)=" shouldOpenModal && openModal()"
+			></app-chat-card>
+		</div>
+
+		<div class="col-md-5 d-flex">
+			<app-chat-card
+				iconSrc="assets/icons/user-tag.svg"
+				title="Centro de mensajes"
+				description="Transfiera la conversación, puedes cerrar la ventana y volver con ella cuando resulte conveniente"
+				buttonText="Seleccionar"
+			></app-chat-card>
+		</div>
+	</div>
+</div>

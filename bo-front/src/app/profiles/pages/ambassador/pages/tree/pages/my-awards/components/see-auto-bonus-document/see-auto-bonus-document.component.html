@@ -1,0 +1,9 @@
+<app-breadcrumb class="p-2" [breadcrumbs]="breadcrumbItems"></app-breadcrumb>
+<div class="partner-documents-card flex flex-column gap-6 p-6 bg-white w-100">
+<h3>Documentos</h3>
+	<div class="toolbar-card">
+		<div class="pdf-container" *ngIf="pdfUrl">
+			<iframe title="Documento PDF" [src]="pdfUrl" class="pdf-frame"></iframe>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,11 @@
+<div class="content card">
+    <div class="side-header">
+    <span class="icon">{{ (profileData?.firstName?.charAt(0) || '') + (profileData?.lastName?.charAt(0) || '') }}</span>
+        <h1 class="title">¡Hola! {{this.profileData?.firstName + " " + this.profileData?.lastName }} </h1>
+    </div>
+    <div class="nav-links">
+        @for (nav of navLinks; track nav) {
+        <guest-nav-link [button]="nav" />
+        }
+    </div>
+</div>

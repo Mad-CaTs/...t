@@ -1,0 +1,67 @@
+<div class="w-100 rounded d-flex flex-column gap-4 card border-0">
+  <h1 class="m-0 fs-4 text-black fw-medium p-3">Comunicados</h1>
+  
+  <div class="row mb-3">
+    <div class="col-lg-8 mr-4">
+      <app-full-width-image></app-full-width-image>
+      <div class="position-absolute positioned-box">
+        <div class="bg-white p-4 rounded-3">
+          <h5 class="fw-bold text-orange fs-5">{{ contenidoActual.titulo }}</h5>
+          <p class="fw-semibold custom-text-style">{{ contenidoActual.contenido }}</p>
+          <p class="">{{ contenidoActual.detalle }}</p>
+          <div class="d-flex justify-content-between align-items-center">
+            <a (click)="toggleDetalles()"
+               class="text-orange"
+               style="font-size: 1rem; text-decoration: none; display: flex; align-items: center;">
+              {{ mostrarDetalles ? 'Ver menos' : 'Ver más' }} <span class="ms-2">&rarr;</span>
+            </a>
+            <div class="arrow-buttons">
+              <i class="pi pi-chevron-left left-arrow"></i>
+              <i class="pi pi-chevron-right right-arrow"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4">
+      <div class="row align-items-start">
+        <div *ngFor="let comunicado of comunicados" class="col-12 mb-3">
+          <card-communicated 
+            [image]="comunicado.imagen"
+            [title]="comunicado.titulo"
+            [date]="comunicado.fecha"
+            [description]="comunicado.descripcion"
+            [horizontal]="true">
+          </card-communicated>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between align-items-center">
+    <h2 class="mb-0">Nuestros eventos</h2>
+    <a (click)="navigateToOverview()"
+       class="text-orange"
+       style="font-size: 1rem; text-decoration: none;">
+      Ver todo <span class="ms-2">&rarr;</span>
+    </a>
+  </div>
+
+  <div class="row">
+    <div class="col-12 col-md-6 col-lg-3" *ngFor="let evento of eventos">
+      <card-communicated 
+        [image]="evento.imagen"
+        [title]="evento.titulo"
+        [eventType]="evento.tipo"
+        [date]="evento.fecha"
+        (clickDetail)="navigateToOverview()"
+        >
+      </card-communicated>
+    </div>
+  </div>
+</div>
+<!-- 
+
+        (clickDetail)="onDetail(evento.id)"
+ -->

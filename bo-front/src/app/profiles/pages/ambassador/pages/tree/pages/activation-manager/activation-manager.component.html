@@ -1,0 +1,39 @@
+<div class="d-flex flex-column gap-3">
+	<!--<app-navigation [data]="navigation" [selected]="currentTab" (changeSelected)="onTabChange($event)"></app-navigation>-->
+<h4 class="mb-2">Gestión de Activación</h4>
+	<form [formGroup]="form" (ngSubmit)="onSearch()" class="m-0 p-0">
+		<div class="d-flex flex-wrap gap-3">
+			<!-- Buscador -->
+
+			<div class="d-flex flex-column flex-fill">
+				<h1 class="fs-6 fw-medium m-0 text-black pb-2">Buscador</h1>
+				<app-input class="w-100" type="text" placeholder="Buscar por usuario o nombre" [form]="form"
+					controlName="searchBy" [isIconRight]="true" iconName="pi pi-search"></app-input>
+			</div>
+
+			<!-- Estados -->
+			<div class="flex-fill">
+				<h3 class="fs-6 fw-medium text-center text-md-start">Estados</h3>
+				<app-select class="account-tree-activation-manager-input" placeholder="Todos" [options]="optStatus"
+					[form]="form" controlName="status"></app-select>
+			</div>
+
+			<!-- Niveles -->
+			<div class="flex-fill">
+				<h3 class="fs-6 fw-medium text-center text-md-start">Niveles</h3>
+				<app-select class="account-tree-activation-manager-input" placeholder="Todos" [options]="optLevels"
+					[form]="form" controlName="sponsorLevel"></app-select>
+			</div>
+
+			<div class="mt-4">
+				<button class="btn btn-secondary" type="submit" [disabled]="isLoading || disabledUser">
+					Filtrar
+				</button>
+			</div>
+		</div>
+	</form>
+
+	<app-table-account-tree-activation-manager class="w-100" [dataBody]="tableData" (detailModal)="onDetail($event)"
+		[totalRecords]="totalRecords" (pageChange)="onPageChange($event)" [isLoading]="isLoading"
+		(refresh)="onRefresh($event)"></app-table-account-tree-activation-manager>
+</div>

@@ -1,0 +1,63 @@
+<article class="d-flex flex-column  gap-3 p-0 bg-white shadow rounded event-card h-100">
+  <img [src]="img"
+       class="event-card_img"
+       [ngClass]="noCalender ? 'px-3 pt-3' : ''"
+       alt="Event image" />
+  <div class="d-flex flex-column align-items-end px-3 pb-3"
+       *ngIf="noCalender">
+    <span class="text-secondary fw-normal text-uppercase fs-6 w-100">{{ date }}</span>
+    <h5 class="m-0 text-black w-100 fw-medium fs-5">
+      {{ title }}
+    </h5>
+    <div class="d-flex align-items-center w-100 mt-3">
+      <img src="assets/icons/peru-flag.svg"
+           alt="peru flag" />
+      <span class="fw-normal text-black fs-6 ms-2">{{ lang.commonEventsCountry }}</span>
+    </div>
+  </div>
+
+  <div class="bg-hover"
+       *ngIf="!noCalender"></div>
+  <div class="content-calender gap-2 d-flex flex-column align-items-start justify-content-center"
+       *ngIf="!noCalender">
+    <div class="label">Evento/Virtual</div>
+    <div class="label-date text-secondary">{{ date }}</div>
+    <h5 class="m-0 w-100 fw-medium fs-5">
+      {{ title }}
+    </h5>
+    <div class="d-flex flex-row mb-2">
+      <mat-icon fontIcon="videocam"
+                class="icon" />
+      <span class="ms-2">Zoom</span>
+    </div>
+    <a [routerLink]="'/home/events/' + id">
+      <button class="btn btn-secondary bg-sorbus mt-auto ms-auto"
+              style="width: fit-content">
+        {{ lang.commonEventsBtn }}
+      </button>
+    </a>
+  </div>
+
+  <div class="px-3 pb-3"
+       *ngIf="!showBuy">
+    <a [routerLink]="'/home/events/' + id">
+      <button class="btn btn-secondary mt-auto ms-auto"
+              style="width: fit-content">
+        {{ lang.commonEventsBtn }}
+      </button>
+    </a>
+  </div>
+
+  <div class="d-flex flex-row justify-content-between pb-3 px-3 align-items-center"
+       *ngIf="showBuy">
+    <span class="fw-medium text-black fs-6">
+      {{ entry }}
+    </span>
+    <a [routerLink]="'/home/events/buy/' + id">
+      <button class="btn btn-secondary"
+              style="width: fit-content">
+        Comprar
+      </button>
+    </a>
+  </div>
+</article>

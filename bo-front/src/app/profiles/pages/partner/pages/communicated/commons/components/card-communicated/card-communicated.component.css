@@ -1,0 +1,64 @@
+/* Para pantallas más pequeñas (móviles) */
+@media (max-width: 576px) {
+  .flex-row {
+    flex-direction: column !important; /* Cambiar la dirección a columna en móviles */
+  }
+
+  /* Asegurarse de que la imagen ocupe todo el ancho */
+  .overflow-hidden img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Espaciado entre la imagen y el contenido */
+  .overflow-hidden {
+    margin-bottom: 15px;
+  }
+
+  /* Ajustar el tamaño de la fuente de los párrafos */
+  .event-type,
+  p {
+    font-size: 12px;
+  }
+
+  /* Ajuste del botón de ver más */
+  .btn-detail {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* Para pantallas medianas (tabletas) */
+@media (max-width: 768px) {
+  .overflow-hidden {
+    margin-bottom: 20px; /* Asegura un espaciado adecuado */
+  }
+
+  .flex-row {
+    flex-direction: column !important; /* Cambiar a columna para tabletas pequeñas */
+  }
+
+  .overflow-hidden img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+/* Para pantallas grandes (desktops) */
+@media (min-width: 769px) {
+  .flex-row {
+    flex-direction: row; /* Mantener la fila en pantallas grandes */
+  }
+
+  /* Ajustar el tamaño de la imagen */
+  .overflow-hidden {
+    margin-right: 20px; /* Añadir espacio entre imagen y texto */
+  }
+
+  .overflow-hidden img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+}

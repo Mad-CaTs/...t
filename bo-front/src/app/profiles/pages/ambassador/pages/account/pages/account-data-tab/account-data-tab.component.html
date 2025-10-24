@@ -1,0 +1,284 @@
+<!--Nueva Seccion Cuenta -->
+<!-- <div class="d-flex">
+
+	<div class="flex-grow-1">
+		<div class="card p-4">
+			<h1 class="fs-5 text-black fw-medium">Cuenta</h1>
+			<ul class="list-unstyled"> -->
+
+				<!-- <li class="py-2 d-flex align-items-center justify-content-between border-bottom lista"
+					(click)="openAccountSocioModal()">
+					<div class="d-flex align-items-center">
+						<i class="pi pi-user m-2"></i> Datos del Socio
+					</div>
+					<i class="pi pi-arrow-right"></i>
+				</li> -->
+				<!-- <li class="py-2 d-flex align-items-center justify-content-between border-bottom"
+					(click)="openAccountImageSocioModal()">
+					<div class="d-flex align-items-center">
+						<i class="pi pi-camera m-2"></i> Imagen de Perfil de Socio
+					</div>
+					<i class="pi pi-arrow-right"></i>
+				</li> -->
+			<!-- 	<li class="py-2 d-flex align-items-center justify-content-between border-bottom"
+					(click)="openAccountPersonalDataModal()">
+					<div class="d-flex align-items-center">
+						<i class="pi pi-id-card m-2"></i> Datos Personales
+					</div>
+					<i class="pi pi-arrow-right"></i>
+				</li>
+
+			</ul>
+		</div>
+
+		<div class="card p-4 mt-4">
+			<h1 class="fs-5 text-black fw-medium">Inicio de sesión y seguridad</h1>
+			<ul>
+				<li class="py-2 d-flex align-items-center justify-content-between border-bottom"
+					(click)="openAccountChangePasswordModal()">
+
+					<div class="d-flex align-items-center ">
+						<i class="pi pi-lock m-2"></i> Cambiar Contraseña
+					</div>
+					<i class="pi pi-arrow-right"></i>
+
+				</li> -->
+				<!-- <li class="py-2 d-flex align-items-center justify-content-between border-bottom">
+
+					<div class="d-flex align-items-center">
+						<i class="pi pi-unlock m-2"></i> Dispositivos que recuerdan tu contraseña
+					</div>
+					<i class="pi pi-arrow-right"></i>
+
+				</li> -->
+		<!-- 	</ul>
+		</div>
+		<div class="card p-4 mt-4">
+			<h1 class="fs-5 text-black fw-medium">Datos bancarios</h1>
+			<ul>
+				<li class="py-2 d-flex align-items-center justify-content-between border-bottom"
+				(click)="openAccountnDatosBancarios()">
+					<div class="d-flex align-items-center ">
+						 Administrar cuentas bancarias
+					</div>
+					<i class="pi pi-arrow-right"></i>
+
+				</li>
+			</ul>
+		</div>
+	</div>
+
+</div> -->
+
+<div class="d-flex">
+  <div class="flex-grow-1">
+    
+    <!-- Bloque Cuenta -->
+    <div class="card p-4 shadow-sm rounded-3">
+      <h1 class="fs-5 text-black fw-medium">Cuenta</h1>
+      <ul class="list-unstyled m-0">
+        <li class="py-2 d-flex align-items-center justify-content-between border-bottom" 
+            (click)="openAccountPersonalDataModal()">
+          <div class="d-flex align-items-center">
+            <i class="pi pi-id-card me-2"></i> Datos Personales
+          </div>
+          <i class="pi pi-arrow-right"></i>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Bloque Seguridad -->
+    <div class="card p-4 mt-4 shadow-sm rounded-3">
+      <h1 class="fs-5 text-black fw-medium">Inicio de sesión y seguridad</h1>
+      <ul class="list-unstyled m-0">
+        <li class="py-2 d-flex align-items-center justify-content-between border-bottom" 
+            (click)="openAccountChangePasswordModal()">
+          <div class="d-flex align-items-center">
+            <i class="pi pi-lock me-2"></i> Cambiar Contraseña
+          </div>
+          <i class="pi pi-arrow-right"></i>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Bloque Bancario -->
+    <div class="card p-4 mt-4 shadow-sm rounded-3">
+      <h1 class="fs-5 text-black fw-medium">Datos bancarios</h1>
+      <ul class="list-unstyled m-0">
+        <li class="py-2 d-flex align-items-center justify-content-between border-bottom" 
+            (click)="openAccountnDatosBancarios()">
+          <div class="d-flex align-items-center">
+            Administrar cuentas bancarias
+          </div>
+          <i class="pi pi-arrow-right"></i>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+
+
+<!-- <div class="d-flex flex-column gap-4">
+	<h2 class="m-0 fs-5 text-black fw-medium">Usuario</h2>
+	<form [formGroup]="formUser" *ngIf="!isLoading; else skeletonTemplate">
+		<div class="d-flex flex-column flex-md-row gap-2 gap-md-4 w-100 mt-2">
+			<div class="d-flex flex-column w-50">
+				<app-input label="Nombres" placeholder="Nombres" [form]="formUser" controlName="name"
+					class="w-100"></app-input>
+			</div>
+			<div class="d-flex flex-column w-50">
+				<app-input label="Apellidos" placeholder="Apellidos" [form]="formUser" controlName="lastName"
+					class="w-100"></app-input>
+			</div>
+		</div>
+		<div class="d-flex flex-column flex-md-row gap-2 gap-md-4 w-100 mt-2">
+			<div class="d-flex flex-column w-50">
+				<app-input label="Telefono" placeholder="Telefono" [form]="formUser" controlName="cellphone"
+					class="w-100"></app-input>
+			</div>
+			<div class="d-flex flex-column w-50">
+				<app-input label="Correo electrónico" placeholder="Correo" [form]="formUser" controlName="email"
+					class="w-100"></app-input>
+			</div>
+		</div>
+		<div class="d-flex flex-column flex-md-row gap-2 gap-md-4 w-100 mt-2">
+			<div class="d-flex flex-column w-50">
+				<app-select class="w-100" label="Género" placeholder="Género" [options]="optGenders" [form]="formUser"
+					controlName="gender"></app-select>
+			</div>
+			<div class="d-flex flex-column w-50">
+				<app-select class="w-100" [showImg]="true" label="Nacionalidad" placeholder="Selecciona la nacionalidad"
+					[form]="formUser" [options]="nationalitiesList" controlName="idNationality"
+					(onChangeSelection)="getDocumentType($event)"></app-select>
+			</div>
+		</div>
+		<div class="d-flex flex-column flex-md-row gap-2 gap-md-4 w-100 mt-4">
+			<div class="d-flex flex-column w-50">
+				<app-select class="w-100" label="Estado Civil" placeholder="Seleccione estado Civil" [form]="formUser"
+					[options]="civilStateOpt" controlName="civilState"></app-select>
+			</div>
+			<div class="d-flex flex-column w-50">
+				<app-date label="Fecha de cumpleaños" placeholder="Fecha de cumpleaños" [form]="formUser"
+					controlName="bornDate" class="w-100" [config]="true"></app-date>
+			</div>
+		</div>
+		<div class="d-flex flex-column flex-md-row gap-2 gap-md-4 w-100 mt-4">
+			<div class="d-flex flex-column w-50">
+				<app-select class="w-100" [showImg]="true" label="Tipo de documento *"
+					placeholder="Seleccione su documento" [form]="formUser" [options]="documentTypes"
+					controlName="idDocument"></app-select>
+			</div>
+			<div class="d-flex flex-column w-50">
+				<app-input [form]="formUser" controlName="nroDocument" label="Documento *" type="text"
+					placeholder="00000000" buttons="true" class="w-100"></app-input>
+			</div>
+		</div>
+		<div class="d-flex flex-column flex-md-row gap-2 gap-md-4 w-100 mt-2">
+			<div class="d-flex flex-column w-50">
+				<app-select class="w-100" [showImg]="true" label="País" placeholder="Seleccione su país"
+					[form]="formUser" [options]="nationalitiesList" controlName="idResidenceCountry"></app-select>
+			</div>
+			<div class="d-flex flex-column w-50">
+				<app-input label="Estado/Distrito" placeholder="Selecciona tu estado/distrito" [form]="formUser"
+					controlName="districtAddress" class="w-100"></app-input>
+			</div>
+		</div>
+		<app-input label="Dirección" placeholder="Tu dirección" [form]="formUser" controlName="address"
+			class="w-100"></app-input>
+		<div class="d-flex flex-row justify-content-center mt-3">
+			<button class="btn btn-secondary" style="min-width: 220px" [disabled]="this.formUser.invalid"
+				(click)="editPersonalData()">
+				Actualizar
+			</button>
+		</div>
+	</form>
+	<ng-template #skeletonTemplate>
+		<div class="d-flex flex-column gap-4">
+			<div *ngFor="let i of [1, 2, 3, 4]" class="d-flex flex-column flex-md-row gap-2 gap-md-4 w-100 mt-2">
+				<div class="d-flex flex-column w-50">
+					<p-skeleton class="w-100" height="2rem"></p-skeleton>
+				</div>
+				<div class="d-flex flex-column w-50">
+					<p-skeleton class="w-100" height="2rem"></p-skeleton>
+				</div>
+			</div>
+			<div class="d-flex flex-row justify-content-center mt-3">
+				<p-skeleton class="w-25" height="2.5rem"></p-skeleton>
+			</div>
+		</div>
+	</ng-template> -->
+
+
+<!-- 	<h2 class="m-0 fs-5 text-black fw-medium">Cambio de Contraseña</h2>
+	<div class="d-flex flex-column flex-md-row gap-4">
+
+		<app-input name="oldPassword" [type]="showOldPassword ? 'text' : 'password'" placeholder="Contraseña anterior"
+			label="Ingrese su contraseña anterior" [isIconRight]="showOldPassword ? 'visibility_off' : 'remove_red_eye'"
+			(clickIconRight)="showOldPassword = !showOldPassword" class="w-100"></app-input>
+
+		<app-input name="newPassword" [type]="showNewPassword ? 'text' : 'password'" placeholder="Nueva contraseña"
+			label="Ingrese su nueva contraseña" [isIconRight]="showNewPassword ? 'visibility_off' : 'remove_red_eye'"
+			(clickIconRight)="showNewPassword = !showNewPassword" class="w-100"></app-input>
+
+		<app-input name="repeatPassword" [type]="showRepeatPassword ? 'text' : 'password'"
+			placeholder="Repita la contraseña" label="Repetir su nueva contraseña"
+			[isIconRight]="showRepeatPassword ? 'visibility_off' : 'remove_red_eye'"
+			(clickIconRight)="showRepeatPassword = !showRepeatPassword" class="w-100"></app-input>
+	</div>
+	<div class="d-flex flex-row justify-content-center">
+		<button class="btn btn-secondary" style="min-width: 220px" [disabled]="formPasswordInValid">
+			Actualizar
+		</button>
+	</div>
+	<div class="d-flex flex-column flex-md-row gap-4">
+		<div class="w-100 d-flex flex-column gap-4">
+			<h3 class="m-0 fs-6 text-black fw-medium">Actualizar Foto de perfil</h3>
+			<div class="d-flex flex-column flex-xl-row gap-4 w-100 align-items-center">
+				<div class="rounded-circle mx-auto" style="
+						min-width: 121px;
+						max-width: 121px;
+						height: 121px;
+						background-position: center;
+						background-size: cover;
+					" [style.background-image]="profileUrl"></div>
+				<app-file placeholder="JPG, PNG or PDF, file size no more than 10MB" [form]="formFlyer" name="profile"
+					accept=".png, .jpg, .jpeg, .pdf" [maxLength]="10000000" [inline]="false" class="w-100"></app-file>
+			</div>
+		</div>
+		<div class="w-100 d-flex flex-column gap-4">
+			<h3 class="m-0 fs-6 text-black fw-medium">Actualizar Foto de perfil</h3>
+			<div class="d-flex flex-column flex-xl-row gap-4 w-100 align-items-center">
+				<div class="rounded-circle mx-auto" style="
+						min-width: 121px;
+						max-width: 121px;
+						height: 121px;
+						background-position: center;
+						background-size: cover;
+					" [style.background-image]="flyerUrl"></div>
+				<app-file placeholder="JPG, PNG or PDF, file size no more than 10MB" [form]="formFlyer" name="flyer"
+					accept=".png, .jpg, .jpeg, .pdf" [maxLength]="10000000" [inline]="false" class="w-100"></app-file>
+			</div>
+			<div class="d-flex flex-column gap-2 w-100 d-xl-flex">
+				<div class="d-flex flex-row">
+					<span class="cl-muted w-100">Fecha de Foto</span>
+					<span class="cl-muted w-100 text-end">-</span>
+				</div>
+				<div class="d-flex flex-row">
+					<span class="cl-muted w-100">N° veces adjunta foto</span>
+					<span class="cl-muted w-100 text-end">-</span>
+				</div>
+				<div class="d-flex flex-row">
+					<span class="cl-muted w-100">Estado</span>
+					<span class="cl-muted w-100 text-end">-</span>
+				</div>
+				<div class="d-flex flex-row">
+					<span class="cl-muted w-100">Observación</span>
+					<span class="cl-muted w-100 text-end">-</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<app-account-progress></app-account-progress> -->
+<!-- </div> -->

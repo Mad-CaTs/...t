@@ -1,0 +1,7 @@
+<div class="w-100 bg-white shadow p-4 rounded">
+	<div class="picture-new" [style.background-image]="'url(' + imageUrl + ')'"></div>
+	<div class="mt-4" *ngIf="!hiddenTitle">
+		<span class="text-uppercase text-secondary fs-6 fw-normal">{{ lang.titleMain }}</span>
+		<h4 class="m-0 text-black fs-4 fw-medium">{{ title }}</h4>
+	</div>
+</div>

@@ -1,0 +1,314 @@
+{
+	"events": [
+		{
+			"id": 1,
+			"name": "Proyecto inmobiliario",
+			"days": [1, 2, 3, 4, 5, 6],
+			"startTime": "15:00",
+			"duration": "1 hora",
+			"link": "https://us02web.zoom.us/j/85848811523",
+			"description": "Construye activos inmobiliarios con InClub\n\nInvertir en bienes raíces o inmuebles es una estrategia financiera sólida, es por eso que en nuestras presentaciones te informamos más acerca los proyectos inmobiliarios que tenemos actualmente y los proyectos que vienen en camino. Conocerás nuestros distintos programas que tenemos disponibles y te informarás sobre los bonos y ventajas disponibles para aquellos que eligen formar parte de InClub. Podrás Interactuar directamente con el equipo y realizar o profundizar en los detalles de cada proyecto.\n\naNo te pierdas de ninguna presentación! Mantente actualizado con nuestras presentaciones diarias. Estamos comprometidos a proporcionarte la información que necesitas para tomar decisiones exitosas. ",
+			"benefits": [
+				"Entérate sobre los últimos lanzamientos",
+				"Precios exclusivos",
+				"Oportunidades de inversión y distintos tipos de bonos",
+				"Eventos especiales y presentaciones exclusivas"
+			]
+		},
+		{
+			"id": 2,
+			"name": "Proyecto inmobiliario",
+			"days": [1, 3, 5],
+			"startTime": "20:00",
+			"duration": "1 hora",
+			"link": "https://us02web.zoom.us/j/85848811523",
+			"description": "Construye activos inmobiliarios con InClub\n\nInvertir en bienes raíces o inmuebles es una estrategia financiera sólida, es por eso que en nuestras presentaciones te informamos más acerca los proyectos inmobiliarios que tenemos actualmente y los proyectos que vienen en camino. Conocerás nuestros distintos programas que tenemos disponibles y te informarás sobre los bonos y ventajas para aquellos que eligen formar parte de InClub. Podrás Interactuar directamente con el equipo y realizar o profundizar en los detalles de cada proyecto.\n\n¡No te pierdas de ninguna presentación! Mantente actualizado con nuestras presentaciones diarias. Estamos comprometidos a proporcionarte la información que necesitas para tomar decisiones exitosas. ",
+			"benefits": [
+				"Entérate sobre los últimos lanzamientos",
+				"Precios exclusivos",
+				"Oportunidades de inversión y distintos tipos de bonos",
+				"Eventos especiales y presentaciones exclusivas"
+			]
+		},
+		{
+			"id": 3,
+			"name": "Proyecto tecnológico",
+			"days": [2, 4, 6],
+			"startTime": "20:00",
+			"duration": "1 hora",
+			"link": "https://us02web.zoom.us/j/85848811523",
+			"description": "Te invitamos a ser protagonista de este proyecto tecnológico siendo copropietario de una red social y ganar dinero para toda la vida. Te informamos más acerca los proyectos actuales y los que están por llegar. Conocerás nuestros distintos programas que tenemos disponibles y te informarás sobre los bonos y ventajas para aquellos que eligen formar parte de InClub. \n\nPara obtener más información y explorar cómo puedes convertirte en copropietario, asiste a nuestras sesiones informativas en línea. Estamos encantados de responder a tus preguntas y darte la bienvenida a esta emocionante aventura.\n\n¡Únete a Nuestra Revolución Tecnológica!  ",
+			"benefits": [
+				"Entérate sobre los últimos lanzamientos",
+				"Precios exclusivos",
+				"Oportunidades de inversión y distintos tipos de bonos",
+				"Eventos especiales y presentaciones exclusivas"
+			]
+		},
+		{
+			"id": 4,
+			"name": "CLUB DE LECTURA",
+			"days": [2],
+			"startTime": "19:00",
+			"duration": "1 hora",
+			"link": "https://us02web.zoom.us/j/85848811523",
+			"description": "Unirse a un Club de Lectura va más allá de simplemente compartir opiniones sobre libros; es una experiencia enriquecedora que ofrece una serie de beneficios tanto personales como intelectuales. Te ofrecemos un espacio para la comunidad, el crecimiento intelectual y la apreciación más profunda de la literatura. Esto fomenta la disciplina de lectura y la responsabilidad, ayudándote a mantener hábitos de lectura consistentes, En este espacio no solo se trata de hablar de libros; es un foro para la expresión y el aprendizaje continuo. ",
+			"benefits": [
+				"Comprensión profunda de los libros",
+				"Discusiones reflexivas ",
+				"Descubrimientos de autores ",
+				"Desarrollo de habilidades de comunicación ",
+				"Desarrollo de habilidades de Análisis"
+			]
+		},
+		{
+			"id": 5,
+			"name": "Comunica con Éxito",
+			"days": [4],
+			"startTime": "19:00",
+			"duration": "1 hora",
+			"link": "https://us02web.zoom.us/j/85848811523",
+			"description": "¿Estás buscando potenciar tus habilidades de comunicación en el entorno empresarial? \n\n\"Comunica con Éxito\" está diseñado para aquellos que desean elevar su capacidad de comunicación dentro del entorno empresarial. Este taller ofrece una experiencia adaptable, ajustándose a tus necesidades específicas y nivel de experiencia. Si buscas potenciar tu capacidad de comunicación en el ámbito empresarial, este es el taller práctico que necesitas, te brindará las herramientas y conocimientos necesarios para destacar en el mundo de los negocios. ¡Prepárate para elevar tu comunicación empresarial al próximo nivel! ",
+			"benefits": [
+				"Mejorar habilidades de presentación ",
+				"Desarrollo de habilidades de comunicación ",
+				"Aprender a expresar de manera clara y efectiva ",
+				"A diferencia de otros talleres teóricos, este taller te permite poner en práctica lo aprendido de inmediato"
+			]
+		},
+		{
+			"id": 6,
+			"name": "Sistema educativo",
+			"days": [1, 3, 5],
+			"startTime": "21:30",
+			"duration": "1 hora",
+			"link": "https://us02web.zoom.us/j/85848811523",
+			"description": "Dentro de nuestro sistema educativo, te ofrecemos una amplia variedad de talleres diseñados para potenciar tu desarrollo integral. Estos talleres se centran en áreas clave para tu crecimiento personal y profesional. Este sistema fomenta un entorno colaborativo donde puedes interactuar con otros socios.\nLos testimonios dentro de nuestro sistema educativo son piezas clave que reflejan la impactante transformación y el crecimiento experimentado por nuestros socios. Estas experiencias personales ofrecen una visión real y concreta de cómo los talleres y programas han influido en su vida. \n\nEstamos comprometidos a brindarte las herramientas y el conocimiento necesario para prosperar en tu camino educativo y más allá. ",
+			"benefits": []
+		}
+	],
+	"nextEvents": [
+		{
+			"id": 1,
+			"name": "Construyendo activos con bienes raíces (Lima)",
+			"date": "02/03/2024",
+			"day": "Sabado",
+			"dayNumber": 6,
+			"preTime": "18:00",
+			"startTime": "18:30",
+			"prices": [
+				{
+					"name": "Entrada general",
+					"amount": 15
+				}
+			],
+			"address": "CENTRO DE NEGOCIOS SAN BORJA Av. Rosa Toro 1193, San Borja",
+			"imgCard": "https://staticv1.inclub.site/images/events/event-marzo-02-2023.png",
+			"img":	"https://staticv1.inclub.site/vertical.png",
+			"link": "https://docs.google.com/forms/d/1yZwdN1PBo6FeI-THy0qMLj81QNxJ4wi47AwFO8SWPR4/viewform?edit_requested=true",
+			"center": [-77.0484636, -12.0950282]
+		}
+	],
+	"oldEvents": [
+		{
+			"id": 1,
+			"name": "Construyendo Activos con Bienes Raíces",
+			"description": "",
+			"date": "03 FEB, 2024",
+			"overview": [
+				{
+					"key": "Resumen",
+					"content": "Nuestro último evento del año 2023 ENCUMBRA, estuvo lleno de momentos emocionantes, donde también realizamos la gran inauguración del apart hotel de Ribera del Rio Club Resort. No queremos dejar de destacar que, durante este evento, nuestro diamante, Elías Vargas, fue merecedor de su segunda camioneta 0KM como reconocimiento a su arduo trabajo y dedicación. Esto es solo una muestra de cómo en INCLUB celebramos y recompensamos el esfuerzo sobresaliente. Queremos expresar nuestro sincero agradecimiento a todos los participantes por su entusiasmo y dedicación. En INCLUB, nos emociona seguir cumpliendo metas en conjunto con nuestro equipo. Valoramos la colaboración y la energía positiva que aportas a nuestra comunidad. Juntos, construiremos un futuro lleno de logros y celebraciones."
+				},
+				{
+					"key": "",
+					"content": "Durante las capacitaciones, nos sumergimos en el mundo de los bienes raíces, explorando estrategias de inversión, análisis de mercado, financiamiento y gestión de propiedades. Expertos en el campo compartieron sus conocimientos y experiencias, proporcionando información valiosa que nos permitió comprender mejor el mercado y tomar decisiones informadas."
+				},
+				{
+					"key": "",
+					"content": "En resumen, fue una experiencia transformadora que nos equipó con los conocimientos, habilidades y conexiones necesarias para tener éxito en el emocionante mundo de los bienes raíces. Estamos emocionados de aplicar lo que hemos aprendido y continuar construyendo activos y oportunidades para un futuro próspero."
+				}
+			],
+			"videoUri": "insert-event-video-url",
+			"img": "https://staticv1.inclub.site/images/events/event-febrero-03-2024.jpg"
+		},
+		{
+			"id": 2,
+			"name": "Encumbra juntos hacia la cima",
+			"description": "",
+			"date": "16 DIC, 2023",
+			"overview": [
+				{
+					"key": "Resumen",
+					"content": "Nuestro último evento del año 2023 ENCUMBRA, estuvo lleno de momentos emocionantes, donde también realizamos la gran inauguración del apart hotel de Ribera del Rio Club Resort. No queremos dejar de destacar que, durante este evento, nuestro diamante, Elías Vargas, fue merecedor de su segunda camioneta 0KM como reconocimiento a su arduo trabajo y dedicación. Esto es solo una muestra de cómo en INCLUB celebramos y recompensamos el esfuerzo sobresaliente. Queremos expresar nuestro sincero agradecimiento a todos los participantes por su entusiasmo y dedicación. En INCLUB, nos emociona seguir cumpliendo metas en conjunto con nuestro equipo. Valoramos la colaboración y la energía positiva que aportas a nuestra comunidad. Juntos, construiremos un futuro lleno de logros y celebraciones."
+				}
+			],
+			"videoUri": "insert-event-video-url",
+			"img": "https://staticv1.inclub.site/images/events/event-2.png"
+		},
+		{
+			"id": 3,
+			"name": "Encumbra juntos hacia la cima",
+			"description": "",
+			"date": "07 OCT, 2023",
+			"overview": [
+				{
+					"key": "Resumen",
+					"content": "Revivamos juntos la emoción y la grandeza de nuestro extraordinario Evento ENCUMBRA que fue el 7 de octubre de 2023. Fue un día lleno de momentos inolvidables, donde celebramos y reconocimos el excepcional liderazgo de nuestros líderes."
+				},
+				{
+					"key": "",
+					"content": "Agradecemos sinceramente a todos los participantes por su entusiasmo, dedicación y contribuciones. En INCLUB, estamos emocionados por el viaje continuo hacia el éxito y la prosperidad compartida. ¡El cielo no es límite!"
+				},
+				{
+					"key": "",
+					"content": "Para obtener más información sobre este emocionante evento y las próximas oportunidades en INCLUB, no dudes en ponerte en contacto con nosotros."
+				}
+			],
+			"videoUri": "https://staticv1.inclub.site/videos/event-octubre.mp4",
+			"img": "https://staticv1.inclub.site/images/events/event-5.png"
+		},
+		{
+			"id": 4,
+			"name": "Encumbra juntos hacia la cima",
+			"description": "",
+			"date": "24 JUN, 2023",
+			"overview": [
+				{
+					"key": "Resumen",
+					"content": "Nuestro primer evento Encumbra, juntos hacia la cima. Fue una jornada llena de momentos inolvidables, donde celebramos y reconocimos el extraordinario liderazgo de nuestros líderes."
+				},
+				{
+					"key": "",
+					"content": "Queremos expresar un sincero agradecimiento a todos los participantes por su entusiasmo, dedicación y contribuciones. En INCLUB, estamos emocionados de continuar este emocionante viaje hacia el éxito."
+				},
+				{
+					"key": "",
+					"content": "Además, no podemos dejar de destacar el emocionante momento de la entrega de la camioneta a nuestra líder platino, Mery Llivias. Este momento marcó un triunfo extraordinario que elevó aún más el brillo de este evento espectacular."
+				}
+			],
+			"videoUri": "https://staticv1.inclub.site/videos/event-junio.mp4",
+			"img": "https://staticv1.inclub.site/images/events/24-DEJUNIO.png"
+		},
+		{
+			"id": 5,
+			"name": "Camino a la Libertad",
+			"description": "",
+			"date": "25 MAR, 2023",
+			"overview": [
+				{
+					"key": "Resumen",
+					"content": "Celebremos juntos el destacado logro de nuestro líder esmeralda, Hugo Blanco, con la emocionante entrega de una camioneta 0KM. Durante este especial evento, compartimos los avances y logros del año, reconociendo el esfuerzo y dedicación de cada miembro de nuestra comunidad. También honramos los diferentes rangos alcanzados por nuestros dedicados socios, destacando sus logros individuales y contribuciones al equipo. La entrega de cheques fue un momento significativo para recompensar el arduo trabajo y compromiso demostrado. Además de las celebraciones, realizamos capacitaciones que buscan impulsar el crecimiento y desarrollo continuo de nuestros miembros. Estamos comprometidos en brindar herramientas y conocimientos que fortalezcan las habilidades de nuestra comunidad. Estamos emocionados por lo que el futuro tiene reservado para cada uno de nosotros en este emocionante camino."
+				}
+			],
+			"videoUri": "https://staticv1.inclub.site/images/events/event-marzo-2023.mp4",
+			"img": "https://staticv1.inclub.site/images/events/event-marzo-2023-1.png"
+		},
+		{
+			"id": 6,
+			"name": "Camino a la libertad – Nuevo lanzamiento",
+			"description": "",
+			"date": "22 OCT, 2022",
+			"overview": [
+				{
+					"key": "Resumen",
+					"content": "Este evento fue una experiencia enriquecedora y diversa que abarcó múltiples aspectos para brindarle lo mejor a nuestro equipo."
+				},
+				{
+					"key": "",
+					"content": "Las capacitaciones ofrecieron una oportunidad valiosa para adquirir perspectivas nuevas. Fueron diseñadas para potenciar el crecimiento individual y colectivo, proporcionando herramientas prácticas para el éxito."
+				},
+				{
+					"key": "",
+					"content": "La exhibición de productos exclusivos agregó un toque especial al evento. Nuestros socios tuvieron la oportunidad de explorar y conocer de cerca las novedades y exclusividades que nuestra marca tiene para ofrecer."
+				},
+				{
+					"key": "",
+					"content": "Llegó el momento de la presentación de nuestro próximo lanzamiento, la Joya Park Resort en la ciudad de Arequipa. Esta revelación marco un momento importante en el evento y nuestro compromiso con la innovación y la expansión."
+				}
+			],
+			"videoUri": "https://staticv1.inclub.site/images/events/event-octubre-2022.mp4",
+			"img": "https://staticv1.inclub.site/images/events/event-octubre-2022-1.png"
+		},
+		{
+			"id": 7,
+			"name": "Camino a la Libertad",
+			"description": "",
+			"date": "17 JUN, 2022",
+			"overview": [
+				{
+					"key": "Resumen",
+					"content": "La celebración de los logros de nuestro equipo es cada vez más emocionante, en esta oportunidad realizamos la entrega de nuestra segunda camioneta."
+				},
+				{
+					"key": "",
+					"content": "Además de la entrega, el evento estuvo repleto de momentos especiales, desde palabras inspiradoras hasta muestras de gratitud. La unidad de nuestro equipo se fortaleció aún más, creando lazos que trascienden la rutina diaria y se transforman en recuerdos duraderos."
+				},
+				{
+					"key": "",
+					"content": "En resumen, este día no solo fue una celebración de logros y la entrega de un vehículo, sino también un esfuerzo en conjunto. Que este evento sea recordado como un momento de triunfo, unidad y un paso más hacia el éxito continuo."
+				}
+			],
+			"videoUri": "https://staticv1.inclub.site/images/events/event-junio-2022.mp4",
+			"img": "https://staticv1.inclub.site/images/events/event-junio-2022-1.png"
+		},
+		{
+			"id": 8,
+			"name": "Camino a la libertad",
+			"description": "",
+			"date": "03 ABR, 2022",
+			"overview": [
+				{
+					"key": "Resumen",
+					"content": "El evento fue una verdadera celebración de aprendizaje y crecimiento. Se entregaron certificados a nuestros socios además realizamos un reconocimiento a nuestro equipo de liderazgo InClub."
+				},
+				{
+					"key": "",
+					"content": "La interacción entre los socios, compartiendo experiencias de aprendizaje y celebrando los logros, creó un ambiente de apoyo mutuo. Este evento no solo fue una entrega de certificados, sino una afirmación de nuestro compromiso continuo con el crecimiento."
+				},
+				{
+					"key": "",
+					"content": "En definitiva, fue un día memorable, donde celebramos los logros de nuestro equipo y realizamos la entrega de nuestra segunda camioneta. La sensación de alcanzar este logró no solo resaltó el éxito de nuestro líder, sino que también simbolizó el crecimiento y la prosperidad de toda la comunidad. Fue un testimonio tangible de cómo el esfuerzo y la dedicación generan recompensas significativas."
+				}
+			],
+			"videoUri": "https://staticv1.inclub.site/images/events/event-abril-2022.mp4",
+			"img": "https://staticv1.inclub.site/images/events/event-abril-2022-1.png"
+		},
+		{
+			"id": 9,
+			"name": "Camino a la libertad",
+			"description": "",
+			"date": "10 OCT, 2021",
+			"overview": [
+				{
+					"key": "Resumen",
+					"content": "El evento fue mucho más que una simple entrega; fue una experiencia emocionante y llena de sorpresas. La protagonista de la noche fue nuestra líder, Yesenia Machaca, quien recibió las llaves de su camioneta, un símbolo del reconocimiento a su dedicación y liderazgo."
+				},
+				{
+					"key": "",
+					"content": "El evento estuvo repleto de sorpresas. Desde momentos de reconocimiento hasta actuaciones especiales, cada detalle estaba diseñado para hacer que esta noche fuera verdaderamente única."
+				},
+				{
+					"key": "",
+					"content": "En resumen, este evento no solo fue la entrega de un vehículo, sino una experiencia que unió aún más a nuestra comunidad. Fue una celebración de éxitos compartidos, un reconocimiento a la dedicación y un recordatorio de que juntos, podemos alcanzar grandes alturas. ¡Con InClub el cielo no es limite!"
+				}
+			],
+			"videoUri": "https://staticv1.inclub.site/images/events/event-octubre-2021.mp4",
+			"img": "https://staticv1.inclub.site/images/events/event-octubre-2021-1.png"
+		},
+		{
+			"id": 10,
+			"name": "Camino a la libertad",
+			"description": "",
+			"date": "10 AGO, 2021",
+			"overview": [
+				{
+					"key": "Resumen",
+					"content": "El evento fue mucho más que una simple entrega; fue una experiencia emocionante y llena de sorpresas. La protagonista de la noche fue nuestra líder, Yesenia Machaca, quien recibió las llaves de su camioneta, un símbolo del reconocimiento a su dedicación y liderazgo. El evento estuvo repleto de sorpresas. Desde momentos de reconocimiento hasta actuaciones especiales, cada detalle estaba diseñado para hacer que esta noche fuera verdaderamente única.  En resumen, este día no solo fue una celebración de logros y la entrega de un vehículo, sino también un esfuerzo en conjunto. Que este evento sea recordado como un momento de triunfo, unidad y un paso más hacia el éxito continuo."
+				}
+			],
+			"videoUri": "https://staticv1.inclub.site/images/events/event-agosto-2021.mp4",
+			"img": "https://staticv1.inclub.site/images/events/event-agosto-2021.png"
+		}
+	]
+}

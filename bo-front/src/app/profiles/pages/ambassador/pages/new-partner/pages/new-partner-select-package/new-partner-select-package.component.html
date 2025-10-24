@@ -1,0 +1,127 @@
+<ng-container *ngIf="getForm('packageData') as form">
+
+  @if(isMultiUser && isAvailableForTransfer) {
+    <h4 class="header">
+      Elige la opción para el registro
+    </h4>
+    <div class="existing-package" (click)="openMultiCodePackages()">
+      <p>Paquete existente</p>
+      <mat-icon fontIcon="chevron_right" class="cl-muted"></mat-icon>
+    </div>
+  }
+
+  <form class="d-flex flex-column w-100 gap-4 position-relative"
+        [formGroup]="form"
+        (submit)="onSubmit()">
+    
+    <div *ngIf="showPromotionalCode" class="d-flex flex-column w-100 gap-2 m-auto m-md-0"
+         style="max-width: 400px">
+      <h4 class="m-0 fs-6 fw-medium text-center text-md-start d-md-none d-lg-block text-uppercase">
+        Paquetes de Suscripción
+      </h4>
+      <div *ngIf="showPromotionalCode" 
+           class="bg-light px-1 py-2 rounded-4 border d-flex flex-row align-items-center justify-content-between w-100 px-md-4 py-md-3"
+           style="border-style: dashed !important; border-color: #0a0909 !important">
+        <input type="text"
+               class="m-0 fw-medium cl-muted form-control"
+               style="border: none; background: none !important; outline: none !important"
+               placeholder="Código Promocional"
+               formControlName="promotionalCodeVersion" />
+        <button class="btn btn-secondary me-2 me-md-0" 
+                [disabled]="disabledUser"
+                type="button">
+          Aplicar
+        </button>
+      </div>
+    </div>
+    
+    <h4 *ngIf="showPromotionalCode" class="m-0 fs-6 fw-medium text-uppercase">
+      SELECCIONE UN PAQUETE:
+    </h4>
+
+    <div class="w-100 d-flex flex-column" ngbAccordion>
+      <div ngbAccordionItem
+           *ngFor="let package of packages; let i = index">
+        <h2 ngbAccordionHeader>
+          <button type="button"
+                  ngbAccordionButton>
+            {{ package.name }}
+          </button>
+        </h2>
+        <div ngbAccordionCollapse class="p-2 w-100">
+          <div class="w-100 overflow-x-auto py-4" ngbAccordionBody>
+            <ng-template>
+              <div class="bg-white rounded d-flex flex-column gap-4"
+                   style="min-width: 1100px">
+                
+                <div class="d-flex flex-row gap-5 bg-light py-2 rounded-top border">
+                  <div style="width: 40px">
+                    <mat-checkbox class="opacity-0"></mat-checkbox>
+                  </div>
+                  <div class="d-flex flex-row align-items-center justify-content-center gap-4 w-100">
+                    <span class="fs-6 cl-muted">Nombre</span>
+                    <mat-icon fontIcon="keyboard_arrow_down" class="cl-muted"></mat-icon>
+                  </div>
+                  <div class="d-flex flex-row align-items-center justify-content-center gap-4 w-100">
+                    <span class="fs-6 cl-muted">Descripción</span>
+                    <mat-icon fontIcon="keyboard_arrow_down" class="cl-muted"></mat-icon>
+                  </div>
+                  <div class="d-flex flex-row align-items-center justify-content-center gap-4 w-100">
+                    <span class="fs-6 cl-muted">Precio</span>
+                    <mat-icon fontIcon="keyboard_arrow_down" class="cl-muted"></mat-icon>
+                  </div>
+                  <div class="d-flex flex-row align-items-center justify-content-center gap-4 w-100">
+                    <span class="fs-6 cl-muted">N° Cuotas</span>
+                    <mat-icon fontIcon="keyboard_arrow_down" class="cl-muted"></mat-icon>
+                  </div>
+                  <div class="d-flex flex-row align-items-center justify-content-center gap-4 w-100">
+                    <span class="fs-6 cl-muted">Cuota Inicial</span>
+                    <mat-icon fontIcon="keyboard_arrow_down" class="cl-muted"></mat-icon>
+                  </div>
+                </div>
+
+                <div class="d-flex flex-row align-items-center justify-content-center gap-4 w-100 m-2"
+                     *ngFor="let pkg of package.packageList">
+                  <div class="d-flex justify-content-center align-items-center"
+                       style="min-width: 40px; height: 40px">
+
+                    <app-radios class="w-100 align-items-center "
+                                [form]="form"
+                                controlName="packageDetailId"
+                                [verticalLayout]="true"
+                                [horizontalLayout]="true"
+                                [options]="[{conent: '', value: pkg.idPackage}]"
+                                [idFamilyPackage]="'pkg-list-' + i"
+                                (changeSelection)="onPackageSelection($event)">
+                    </app-radios>
+                  </div>
+                  <span class="w-100 text-center">{{ pkg.name }}</span>
+                  <span class="w-100 text-center">{{ pkg.description }}</span>
+                  <span class="w-100 text-center">$&nbsp;{{ pkg.packageDetail[0].price }}</span>
+
+                  <!--  <span class="w-100 text-center">${{ pkg.price.toFixed(2) }}</span> -->
+                  <span class="w-100 text-center">{{ pkg.packageDetail[0].numberQuotas }}</span>
+                  <span class="w-100 text-center">$&nbsp;{{ pkg.packageDetail[0].initialPrice}}</span>
+                </div>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="showPromotionalCode" class="d-flex flex-column flex-md-row justify-content-md-between gap-2">
+      <button class="btn btn-outline-secondary"
+              type="button"
+              [disabled]="disabledUser"
+              (click)="prevState.emit()">
+        Atrás
+      </button>
+      <button class="btn btn-secondary"
+              [disabled]="disabledUser"
+              type="submit">
+        Siguiente
+      </button>
+    </div>
+  </form>
+</ng-container>

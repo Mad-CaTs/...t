@@ -1,0 +1,112 @@
+
+
+  /*  .chat-floating-button {
+    position: fixed;
+    bottom: 20px;
+    right: 40px;
+    width: 60px;
+    height: 60px;
+    background-color: white;
+    border-radius: 50%;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: 2px solid #ddd;
+    z-index: 1000;
+    position: relative;
+  }
+  
+  .chat-floating-button::after {
+    content: "";
+    position: absolute;
+    bottom: 1px; 
+    right: -4px; 
+    width: 22px;
+    height: 22px;
+    background-color: white;
+    clip-path: ellipse(50% 60% at 50% 100%);
+    box-shadow: -2px 2px 0px 1px #ddd;
+  }
+  
+  .chat-icon {
+    width: 24px;
+    height: 24px;
+    position: absolute;
+  }
+  
+  .chat-icon-1 {
+    top: 10px;
+    left: 12px;
+    z-index: 2; 
+  }
+  
+  .chat-icon-2 {
+    top: 15px; 
+    left: 20px; 
+    z-index: 1; 
+    opacity: 0.9; 
+  } */
+  
+
+  .chat-floating-button {
+    position: fixed;
+    bottom: 20px;
+    right: 40px;
+    width: 60px;
+    height: 60px;
+    background-color: white;
+    border-radius: 50%;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: 2px solid #ddd;
+    z-index: 1000;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  }
+  
+  /* Efecto de agrandar al hacer clic */
+  .chat-floating-button:active {
+    transform: scale(1.1);
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Punta en forma de hoja */
+  .chat-floating-button::after {
+    content: "";
+    position: absolute;
+    bottom: 2px; /* Ajuste fino */
+    right: -6px; /* Ligeramente más a la derecha */
+    width: 22px;
+    height: 22px;
+    background-color: white;
+    clip-path: ellipse(50% 60% at 50% 100%);
+    box-shadow: -2px 2px 0px 1px #ddd;
+  }
+  
+  /* Iconos */
+  .chat-icon {
+    width: 30px; /* Tamaño más grande */
+    height: 30px;
+    position: absolute;
+  }
+  
+ /* Primer icono (frontal) */
+.chat-icon-1 {
+  top: 8px;  /* Súbelo un poco */
+  left: 10px; /* Mueve a la izquierda */
+  z-index: 2; /* Adelante */
+}
+
+/* Segundo icono (detrás) */
+.chat-icon-2 {
+  top: 16px; /* Bájalo más */
+  left: 22px; /* Muévelo más a la derecha */
+  z-index: 1; /* Detrás */
+  transform: scale(0.9); /* Lo hace un poco más pequeño */
+}
+
+  

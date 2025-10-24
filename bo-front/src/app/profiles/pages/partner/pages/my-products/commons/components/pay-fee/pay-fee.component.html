@@ -1,0 +1,237 @@
+<div *ngIf="isLoading"
+     class="d-flex justify-content-center align-items-center position-fixed top-50 start-50 translate-middle">
+  <div class="spinner-border text-orange"
+       role="status"
+       style="width: 5rem; height: 5rem;">
+  </div>
+</div>
+<div class="p-4 card px-3 px-md-4 card-border-none">
+  <ng-container *ngIf="quoteDetail">
+    <form [formGroup]="form"
+          class="d-flex flex-column w-100 gap-4">
+      <div class="fs-14">
+        <div class="d-flex flex-row justify-content-between align-items-center mt-2">
+          <h4 class="m-0 fs-5 fw-medium">Pagar cuota</h4>
+
+          <div *ngIf="quoteDetail?.daysOverdue && !payMultiple"
+               class="d-flex flex-wrap gap-4 align-items-center">
+            <button class="btn d-flex flex-row gap-2 align-items-center px-0 py-1 rounded text-secondary"
+                    type="button"
+                    style="border: none; background-color: transparent;"
+                    (click)="openGracePeriod()" [disabled]="(gracePeriodParameter?.valueDays - graceDebt) <= 0">
+              <i class="pi pi-clock"
+                 style="font-size: 1.5rem;"></i>
+              <span>Aplicar periodo de gracia</span>
+            </button>
+          </div>
+        </div>
+        <!-- <div class="d-flex flex-row justify-content-between align-items-center mt-2">
+          <span class="cl-gray-100">Tiempo restante periodo de gracia:</span>
+          <span class="cl-gray-100">{{gracePeriodParameter?.valueDays}} días</span>
+        </div> -->
+        <div class="d-flex flex-row justify-content-between align-items-center mt-2">
+          <span class="cl-gray-100">Días restantes de periodo de gracia:</span>
+          <span class="cl-gray-100">{{gracePeriodParameter?.valueDays - graceDebt}} días</span>
+        </div>
+
+        <div class="line bg-black opacity-50 mt-2"></div>
+        <div class="d-flex flex-row w-100 justify-content-between align-items-center mt-2">
+          <span class="cl-gray-900 fw-500 mt-2">Datos de inversión</span>
+        </div>
+        <div class="d-flex flex-row justify-content-between align-items-center mt-2">
+          <span class="cl-gray-100">Suscripción</span>
+          <span class="cl-gray-100">{{ quoteDetail?.nameSuscription }}</span>
+        </div>
+
+        <div class="d-flex flex-row justify-content-between align-items-center mt-2">
+          <span class="cl-gray-100">Cuota</span>
+          <span class="cl-gray-100">{{quoteDetail?.quoteUsd}} USD</span>
+
+        </div>
+        <div *ngIf="!payMultiple">
+          <div class="d-flex flex-row justify-content-between align-items-center mt-2">
+            <span class="cl-gray-100">Total de días de mora</span>
+            <span class="cl-gray-100">{{ quoteDetail?.daysOverdue}}</span>
+          </div>
+          <div class="d-flex flex-row justify-content-between align-items-center mt-2">
+            <span class="cl-gray-100">Descripción</span>
+            <span class="cl-gray-100">{{ quoteDetail?.quoteDescription }}</span>
+          </div>
+          <div class="d-flex flex-row justify-content-between align-items-center mt-2">
+            <span class="cl-gray-100">Mora</span>
+            <span class="cl-gray-100">{{quoteDetail?.totalOverdue}} USD</span>
+          </div>
+          
+          <!-- ⭐ Mostrar descuento del cupón si está activo -->
+          <div *ngIf="hasCoupon && couponDiscountAmount > 0"
+               class="d-flex flex-row justify-content-between align-items-center mt-2"
+               style="color: #28a745;">
+            <span class="fw-bold">
+              <i class="pi pi-ticket"></i> Descuento por cupón ({{ subscriptionCoupon.discountPercentage }}%)
+            </span>
+            <span class="fw-bold">- ${{ couponDiscountAmount | number:'1.2-2' }}</span>
+          </div>
+          
+          <div class="d-flex flex-row justify-content-between align-items-center mt-2">
+            <span class="cl-gray-100 fw-bold">Total{{ hasCoupon ? ' con descuento' : '' }}</span>
+            <span class="cl-gray-100 fw-bold">{{ hasCoupon ? totalWithDiscount : quoteDetail?.total | number:'1.2-2' }} USD</span>
+          </div>
+          
+          <!-- ⭐ Badge informativo del cupón -->
+          <div *ngIf="hasCoupon" class="mt-3 p-3 border rounded" style="background-color: #e7f5ff;">
+            <div class="d-flex align-items-center gap-2">
+              <i class="pi pi-info-circle" style="color: #0277bd; font-size: 1.2rem;"></i>
+              <span style="color: #0277bd;">
+                Cupón <strong>{{ subscriptionCoupon.code }}</strong> aplicado automáticamente 
+                ({{ subscriptionCoupon.discountPercentage }}% de descuento en todas tus cuotas)
+              </span>
+            </div>
+          </div>
+          
+          <div *ngIf="isGracePeriodApplied"
+               class="d-flex flex-row justify-content-between align-items-center mt-2">
+            <span class="cl-gray-100">Dias de uso de periodo de gracia </span>
+            <span class="cl-gray-100">{{appliedGracePeriodData?.daysUsed}}</span>
+          </div>
+          <div *ngIf="isGracePeriodApplied"
+               class="d-flex flex-row justify-content-between align-items-center mt-2">
+            <span class="cl-gray-100">Total a pagar (con periodo de gracia) </span>
+            <span class="cl-gray-100">{{appliedGracePeriodData?.totalPay}} USD</span>
+          </div>
+        </div>
+
+        <div class="line bg-black opacity-50 mt-2"></div>
+        <div *ngIf="payMultiple"
+             class="row mt-2">
+          <div class="col-12 col-md-5 mb-3 mb-md-0">
+            <label class="fs-6 mb-2 cl-muted">Número de cuotas a pagar</label>
+            <p-inputNumber [showButtons]="true"
+                           [min]="1"
+                           [max]="cronograma.length"
+                           mode="decimal"
+                           [formControl]="form.get('numberQuotes')"
+                           [placeholder]="'Ingrese número de cuotas'"></p-inputNumber>
+          </div>
+
+          <div class="col-12 col-md-7">
+            <label class="fs-6 mb-2 cl-muted">Total a pagar</label>
+            <p-inputNumber mode="currency"
+                           [formControl]="form.get('totalAmount')"
+                           currencyDisplay="symbol"
+                           currency="USD"
+                           locale="en-US"
+                           [readonly]="true"></p-inputNumber>
+          </div>
+        </div>
+
+
+      </div>
+      <div class="d-flex flex-row w-100 justify-content-between align-items-center">
+        <span class="cl-gray-900 fw-500 mt-0">Método de pagos</span>
+      </div>
+
+
+      <div class="d-flex flex-wrap gap-4 align-items-center">
+        <button *ngFor="let payment of paymentTypeListaFiltered"
+                class="d-flex flex-row gap-2 align-items-center px-4 py-1 rounded"
+                type="button"
+                style="height: 55px"
+                [disabled]="diablePaymentMethods || (payment.description === 'WALLET' && (walletBlock===true))"
+                [class.border]="methodSelected !== 'bcp'"
+                [style.background-color]="methodSelected === 'bcp' ? '#EBF3FF' : 'transparent'"
+                (click)="onMedioPago(payment)">
+          <img [src]="payment.pathPicture"
+               style="width: 92px"
+               alt="Pay Method"
+               (click)="onPaypal" />
+        </button>
+      </div>
+      <div class="w-100 overflow-x-auto"
+           *ngIf="dataTableToShow !== ''">
+        <p-table [value]="dataTableToShow"
+                 [tableStyle]="{ 'min-width': '50rem' }">
+          <ng-template pTemplate="header">
+            <tr>
+              <th class="debug">Medio de pago</th>
+              <th class="debug">Operacion</th>
+              <th class="debug">Nota</th>
+              <th class="debug">Archivo</th>
+              <th class="debug">Moneda</th>
+              <th class="debug">Comision</th>
+              <th class="debug">Monto</th>
+              <th class="debug">Acciones</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body"
+                       let-voucher
+                       let-i="rowIndex">
+            <tr>
+            <!--   <td class="debug">
+                {{ voucher.paymentMethod === 'wallet' ? 'Wallet' : voucher.bankName }}
+              </td> -->
+              <td class="debug text-center">
+                <!-- ⭐ Mostrar ícono especial para cupones -->
+                <span *ngIf="voucher.paymentMethod === 'coupon'" style="color: #ff6f00;">
+                  <i class="pi pi-ticket" style="font-size: 1.2rem;"></i>
+                  <strong>{{ voucher.bankName }}</strong>
+                </span>
+                <span *ngIf="voucher.paymentMethod !== 'coupon'">
+                  {{ voucher.paymentMethod === 'wallet' ? 'Wallet' : voucher.bankName }}
+                </span>
+              </td>
+
+              <td class="debug">{{ voucher.operationDescription }}</td>
+              <td class="debug">{{ voucher.note || '-' }}</td>
+              <td class="debug">
+                <!-- ⭐ Cupones no tienen archivo adjunto -->
+                <span *ngIf="voucher.paymentMethod === 'coupon'" class="badge bg-success">Automático</span>
+                <span *ngIf="voucher.paymentMethod !== 'coupon' && voucher.img">
+                  <span *ngIf="voucher.img==='-'">{{voucher.img}}</span>
+                  <span *ngIf="voucher.img!=='-'"> {{ voucher.img.name }}.{{ voucher.img.extension }} ({{
+                    voucher.img.size.toFixed(2) }} MB)</span>
+                </span>
+              </td>
+              <td class="debug">{{ voucher.currencyDescription || 'USD' }}</td>
+              <td class="debug">{{ voucher.comision || '-' }}</td>
+              <td class="debug">{{ voucher.totalAmount }}</td>
+              <td class="debug">
+                <div>
+                  <!-- ⭐ No permitir editar/eliminar cupones automáticos -->
+                  <ng-container *ngIf="voucher.paymentMethod !== 'coupon'">
+                    <mat-icon class="cursor-pointer me-2 text-secondary"
+                              fontIcon="edit"
+                              (click)="editPayItem(i,voucher)"></mat-icon>
+                    <mat-icon class="cursor-pointer text-secondary"
+                              fontIcon="delete"
+                              (click)="deletePayItem(i)"></mat-icon>
+                  </ng-container>
+                  <ng-container *ngIf="voucher.paymentMethod === 'coupon'">
+                    <span class="badge bg-info">No editable</span>
+                  </ng-container>
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+      <div class="d-flex flex-column flex-md-row justify-content-md-between gap-2">
+        <button class="btn btn-outline-secondary custom-button"
+                type="button"
+                (click)="goBack()">
+          Atras
+        </button>
+
+        <button class="btn btn-secondary custom-button"
+                type="button"
+                [disabled]="isLoading"
+                (click)="onSubmit(1)">
+          <span *ngIf="isLoading"
+                class="spinner-border spinner-border-sm"
+                role="status"
+                aria-hidden="true"></span>
+          Registrar
+        </button>
+      </div>
+    </form>
+  </ng-container>
+</div>

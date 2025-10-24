@@ -1,0 +1,63 @@
+@use 'guest-vars.scss' as var;
+
+.card {
+    background-color: var.$white;
+    border-radius: 1rem;
+    border: 1px solid transparent;
+}
+
+::ng-deep .p-tabview-nav {
+    border: 1px solid var.$gray-100;
+    border-radius: 0.75rem;
+    color: var.$gray-100;
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+
+    * {
+        width: 100%;
+    }
+
+    .p-tabview-nav-link {
+        background-color: transparent;
+        width: 100%;
+        text-align: center;
+        font-size: 1rem;
+        font-weight: 500;
+        color: var.$gray-800;
+        border: 1px solid var.$white;
+        text-decoration: none;
+        padding: 0;
+
+        &:hover {
+            border: 1px solid var.$orange;
+            border-radius: 0.75rem;
+            color: var.$orange;
+        }
+
+        .p-tabview-title {
+            width: 100%;
+            border-radius: 0.75rem;
+            text-align: center;
+            padding: 0.375rem 0;
+            font-size: 0.875rem;
+            font-weight: 400;
+            margin: 0;
+        }
+
+    }
+}
+
+::ng-deep li.p-highlight .p-tabview-nav-link {
+    border: 1px solid var.$orange;
+    border-radius: 0.75rem;
+    color: var.$orange;
+    padding: 0;
+    margin: 0;
+}
+
+::ng-deep .p-tabview-panels {
+    padding: 0;
+    margin: 0;
+    margin-top: 1.5rem;
+}

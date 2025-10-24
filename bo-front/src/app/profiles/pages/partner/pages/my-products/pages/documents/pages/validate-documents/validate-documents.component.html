@@ -1,0 +1,101 @@
+<div class="p-4 card px-0 px-md-4 card-border-none d-flex flex-column h-100">
+	<div class="row flex-grow-1">
+		<div class="col-lg-9 col-12 d-flex flex-column">
+			<div class="row mb-4 justify-content-center">
+				<div class="col-12 col-md-10 col-lg-8">
+					<app-step-progress
+						class="w-100"
+						[stepLabels]="stepLabels"
+						[activeIndex]="stepProcess - 1"
+					>
+					</app-step-progress>
+				</div>
+			</div>
+			<mat-divider class="w-100 my-3"></mat-divider>
+			<div class="w-100 flex-grow-1">
+				<div
+					*ngIf="!fromLegalization"
+					class="d-flex justify-content-between align-items-center flex-wrap"
+				>
+					<div>
+						<h4 class="mb-1">Validar documentos</h4>
+						<p class="mb-0">
+							Los documentos deben estar validados para realizar la firma digital
+						</p>
+					</div>
+					<button
+						class="btn btn-secondary px-3 text-nowrap"
+						type="button"
+						(click)="validarDocumentos()"
+					>
+						Validar documentos
+					</button>
+				</div>
+				<div class="row mt-4">
+					<ng-container *ngIf="stepProcess === 1">
+						<app-confirm-shipping-address
+							[isForeign]="isForeign"
+							(formDataChanged)="onShippingAddressChanged($event)"
+							(branchDataChanged)="onbranchDataChanged($event)"
+							(sucursalesCercanasChange)="handleSucursalesCercanasChange($event)"
+							(loadingSucursalesChange)="handleLoadingSucursalesChange($event)"
+							(authorizedPersonRegistered)="onAuthorizedPersonRegistered($event)"
+							[nationalitiesList]="nationalitiesList"
+							[pickupInfo]="pickupInfo"
+							[shippingInfo]="shippingInfo"
+							[payTypeSelected]="selectedPayTypeOption?.value"
+							[optTypeLegalization]="legalizationTypes"
+							[legalizationDocList]="legalizationDocList"
+							[selectedProduct]="selectedProduct"
+							[shippingAddressData]="shippingAddressData"
+						></app-confirm-shipping-address>
+					</ng-container>
+
+					<ng-container *ngIf="stepProcess === 2">
+						<app-confirm-legalization-payment
+							#confirmLegalizationRef
+							(montoSolesChanged)="onMontoSolesChanged($event)"
+							(montoLegalizacionChanged)="onMontoLegalizacionChanged($event)"
+							[payTypeSelected]="selectedPayTypeOption?.value"
+							(formValidityChanged)="onFormValidityChange($event)"
+							(paymentCompleted)="onPaymentStepCompleted($event)"
+							[shippingAddressData]="shippingAddressData"
+							[selectedProduct]="selectedProduct"
+						></app-confirm-legalization-payment>
+					</ng-container>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-3 col-12 mt-3 mt-lg-0">
+			<app-document-detail-card
+				[isLegalization]="fromLegalization"
+				[typeDocument]="typeDocument"
+				[date]="date"
+				[typeDocument]="selectedProduct.data"
+				[userInfo]="userInfo"
+				[nationalitiesList]="nationalitiesList"
+			>
+			</app-document-detail-card>
+		</div>
+	</div>
+
+	<div class="footer-buttons d-flex justify-content-center w-100 gap-3 mt-4">
+		<button class="btn btn-outline-secondary flex-fill px-4" type="button" (click)="goBack()">
+			Volver
+		</button>
+		<button
+			class="btn btn-secondary flex-fill px-4 d-flex align-items-center justify-content-center"
+			type="button"
+			[disabled]="loadingSubmit || !formsValid"
+			(click)="stepProcess === 4 && isPaymentReady ? registerRequest() : siguientePaso()"
+		>
+			<ng-container *ngIf="loadingSubmit; else textoNormal">
+				<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+				Procesando...
+			</ng-container>
+			<ng-template #textoNormal>
+				{{ stepProcess === 4 && isPaymentReady ? 'Registrar' : 'Siguiente' }}
+			</ng-template>
+		</button>
+	</div>
+</div>

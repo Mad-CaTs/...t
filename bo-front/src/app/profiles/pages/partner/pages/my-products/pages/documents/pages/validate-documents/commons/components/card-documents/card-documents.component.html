@@ -1,0 +1,23 @@
+<div class="card p-3 shadow rounded-4 border border-light p-4">
+    <div class="d-flex justify-content-between align-items-start">
+      <div>
+        <h6 class="fw-bold">{{ document.title }}</h6>
+        <p class="mb-1 text-muted">Detalle: {{ document.detail }}</p>
+        <p class="mb-0 fw-semibold">Fecha: {{ document.date }}</p>
+      </div>
+      <div class="d-flex align-items-center gap-2">
+        <i class="bi bi-check-circle text-primary fs-5" *ngIf="document.status === 'Validado'"></i>
+        <span class="badge" 
+          [ngClass]="{
+            'bg-success bg-opacity-10 text-success': document.status === 'Validado',
+            'bg-warning bg-opacity-25 text-warning': document.status === 'Pendiente'
+          }">
+          {{ document.status }}
+        </span>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  

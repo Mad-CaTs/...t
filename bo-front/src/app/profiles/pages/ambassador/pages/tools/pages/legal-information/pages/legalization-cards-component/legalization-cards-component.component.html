@@ -1,0 +1,18 @@
+<div class="p-4 card px-0 px-md-4 card-border-none">
+  <div class="d-flex flex-column gap-3 card p-lg-4 border-0">
+    <app-navigation [data]="stepNavigation"
+                    [selected]="currentStep"
+                    [noBgSecondary]="true"
+                    (changeSelected)="onChangeStep($event)"></app-navigation>
+  </div>
+
+  <div class="row g-4 ">
+    <app-card *ngFor="let data of cardsData"
+              class="col-4"
+              [title]="data.title"
+              [content]="data.content"
+              [headerIcon]="data.icon"
+              (buttonClick)="navigateToComponent(data.prueba)">
+    </app-card>
+  </div>
+  </div>

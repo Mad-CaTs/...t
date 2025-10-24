@@ -1,0 +1,36 @@
+
+<div class="event-list-page" [class.blocked]="isLoading">
+  <!-- Button -->
+  <div class="login-btn-wrapper">
+  <button class="login-btn" (click)="redirectToLoginSelection()">
+    <span>Inicia sesión</span>
+  </button>
+</div>
+  <!-- Sección Hero -->
+  <app-hero-section
+    (loadComplete)="onSectionComplete()"
+    (loadErrorEvent)="onSectionError($event)">
+  </app-hero-section>
+
+  <!-- Filtros de eventos -->
+  <app-event-filters
+    (loadComplete)="onSectionComplete()"
+    (loadErrorEvent)="onSectionError($event)">
+  </app-event-filters>
+
+  <!-- Eventos más vistos -->
+  <app-popular-events
+    (loadComplete)="onSectionComplete()"
+    (loadErrorEvent)="onSectionError($event)">
+  </app-popular-events>
+
+</div>
+<!-- Spinner fullscreen -->
+<app-logo-spinner [show]="isLoading" [fullscreen]="true"></app-logo-spinner>
+<!-- Modal de notificación de errores -->
+<app-modal-notify *ngIf="showNotify"
+  [iconType]="notifyType"
+  [title]="notifyTitle"
+  [message]="notifyMessage"
+  (closed)="onNotifyClose()">
+</app-modal-notify>

@@ -1,0 +1,131 @@
+<ng-container *ngIf="paymentForm as form">
+  <form [formGroup]="form"
+        class="d-flex flex-column w-100 gap-4">
+    <div class="modal-content d-flex flex-column align-items-center">
+      <div *ngIf="isLoading"
+           class="d-flex justify-content-center align-items-center">
+        <div class="spinner-border text-primary"
+             role="status"
+             role="status">
+          <span class="sr-only">Cargando...</span>
+        </div>
+      </div>
+      <div *ngIf="!isLoading"
+           class="card w-100"
+           style="max-width: 90vw;">
+        <div class="row no-gutters justify-content-center">
+          <div class="col-md-6 col-12 d-flex flex-column align-items-center p-3">
+            <div class="d-flex align-items-center w-100 justify-content-center">
+              <i class="pi pi-plus-circle fs-2 text-primary me-2"
+                 style="transform: translateY(-2px);"></i>
+              <div class="d-flex flex-column align-items-center">
+                <h5 *ngIf="walletData"
+                    class="fs-4 mb-2 text-truncate text-center">${{ walletData.availableBalance | number : '1.2-2' }}</h5>
+                <span class="text-primary cl-muted fs-12 fw-normal text-center">Saldo disponible</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-12 d-flex flex-column align-items-center p-3">
+            <div class="d-flex align-items-center w-100 justify-content-center">
+              <i class="pi pi-plus-circle fs-2 text-primary me-2"
+                 style="transform: translateY(-2px);"></i>
+              <div class="d-flex flex-column align-items-center">
+                <h5 *ngIf="walletData"
+                    class="fs-4 mb-2 text-truncate text-center">${{ walletData.accountingBalance | number : '1.2-2' }}</h5>
+                <span class="text-primary cl-muted fs-12 fw-normal text-center">Saldo contable</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex flex-column w-100">
+      <div class="d-flex flex-row justify-content-between align-items-center Cloud-White"
+           style="max-width: 80vw;">
+        <span class="cl-gray-100">Monto a pagar</span>
+        <span class="cl-gray-100">{{totalAmountPaid}} USD</span>
+
+      </div>
+      <div class="d-flex flex-row justify-content-between align-items-center mt-2 Cloud-White"
+           style="max-width: 80vw;">
+        <span class="cl-gray-100">Total</span>
+
+        <span class="cl-gray-100">{{totalAmountPaid}} USD</span>
+      </div>
+    </div>
+
+    <div class="d-flex flex-row justify-content-between align-items-center"
+         style="max-width: 80vw;">
+      <app-select class="w-100 mt-2"
+                  label="Tipo de moneda"
+                  placeholder="Seleccione el tipo"
+                  [form]="form"
+                  [options]="data.operationCurrency"
+                  controlName="currency"
+                  (onChangeSelection)="changeSelectionCurrency($event)">
+      </app-select>
+    </div>
+
+    <div class="d-flex flex-column w-100"
+         style="max-width: 80vw;">
+      <label class="fs-6 cl-muted mb-0">Monto a pagar</label>
+
+      <p-inputNumber class="mt-0"
+                     [showButtons]="true"
+                     inputId="totalAmount"
+                     mode="currency"
+                     [formControlName]="'totalAmount'"
+                     placeholder=" USD 0.00"
+                     currency="USD"
+                     locale="en-US" 
+                     (onInput)="onAmountChange($event)"/>
+    </div>
+
+    <div class="d-flex flex-row justify-content-between align-items-center"
+         style="max-width: 80vw;">
+      <app-input class="w-100"
+                 label="Motivo"
+                 [form]="form"
+                 controlName="note"
+                 placeholder="Describa brevemente">
+      </app-input>
+    </div>
+    <div class="alert alert-info d-flex flex-column flex-sm-row gap-2 align-items-center text-center text-sm-start p-2"
+         role="alert">
+      <mat-icon class="fs-4 flex-shrink-0">info</mat-icon>
+      <span class="fw-normal fs-6 text-wrap">Los montos son en dólares. El tipo de cambio es de {{ exchangeType
+        }}</span>
+    </div>
+    <div class="d-flex justify-content-center gap-4">
+      <button class="btn btn-outline-secondary"
+              type="button"
+              (click)="closeModal()">Cerrar</button>
+      <button type="button"
+              class="btn btn-outline-secondary"
+              [disabled]="form.invalid || 
+                    payMultiple ? totalAmountPaid <= 0 : form.controls.totalAmount.value <= 0 || form.controls.totalAmount.value > totalAmountPaid"
+              (click)="onSubmit()">
+
+        {{ form.controls.totalAmount.value === totalAmountPaid ? 'Pagar Aquí' : data.voucherToEdit ? 'Actualizar' :
+        'Agregar' }}
+
+
+      </button>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+  </form>
+</ng-container>

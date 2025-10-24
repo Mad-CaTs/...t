@@ -1,0 +1,50 @@
+<div class="card border-1 rounded bg-white p-4">
+	<h3 class="custom-text">Detalle del documentooo</h3>
+	<p class="fs-6 cl-gray mb-4">Resumen</p>
+	<app-document-detail-item
+		iconPath="assets/icons/document-text.svg"
+		title="Portafolio:"
+		[descripcion]="typeDocument?.familyPackageName"
+	></app-document-detail-item>
+
+	<app-document-detail-item
+		iconPath="assets/icons/user-octagon.svg"
+		title="Membresía:"
+		[descripcion]="typeDocument?.nameSuscription"
+	></app-document-detail-item>
+
+	<app-document-detail-item
+		iconPath="assets/icons/Calendar_24px.svg"
+		title="Fecha de adquisición:"
+		[descripcion]="typeDocument?.creationDate | date : 'dd/MM/yyyy'"
+	></app-document-detail-item>
+
+	<app-document-detail-item
+  [iconPath]="'assets/icons/flag.svg'"
+  [title]="'País'"
+  [idResidenceCountry]="userInfo?.idResidenceCountry"
+  [nationalitiesList]="nationalitiesList"
+
+></app-document-detail-item>
+
+
+<!-- 	<app-document-detail-item
+		iconPath="assets/icons/flag.svg"
+		title="País:"
+		[descripcion]="userInfo?.idResidenceCountry"
+		></app-document-detail-item> -->
+	<div *ngIf="!isLegalization" class="p-4 rounded custom bg-light-blue top-regular">
+		<div class="d-flex flex-column text-center text-md-start">
+			<h6 class="text-bold-dark">Estado de legalización</h6>
+
+			<p class="text-bold-dark2">Conoce el estado de tu solicitud</p>
+
+			<div class="d-flex align-items-center justify-content-center justify-content-md-start">
+				<a class="nav-link text-decoration-none hover-custom d-flex align-items-center">
+					<span class="me-2">Ver estado</span>
+					<mat-icon class="ms-1" style="font-size: 16px; line-height: 1.5">arrow_forward</mat-icon>
+				</a>
+			</div>
+		</div>
+	</div>
+</div>

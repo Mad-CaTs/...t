@@ -1,0 +1,51 @@
+<div class="p-4 card px-0 px-md-4 card-border-none">
+	<app-navigation
+		[data]="stepNavigation"
+		[selected]="currentStep"
+		[noBgSecondary]="true"
+		(changeSelected)="onChangeStep($event)"
+	></app-navigation>
+
+	<!-- profile small tab control (Videos / Imagenes) -->
+	<app-tab-profiles [tabs]="profileTabs" styleType="outlined"></app-tab-profiles>
+	<!-- Use the small profile tabs to control which panel is visible -->
+	<div class="mt-3">
+		<!-- Videos panel -->
+		<div *ngIf="activeTab === 1">
+			<div class="row g-4">
+                <app-folder
+					*ngFor="let data of primaryCards"
+					class="col-4"
+					[title]="data.title"
+					[content]="data.content"
+					[headerIcon]="data.icon"
+					[buttonText]="data.buttonText"
+				[link]="data.link"
+					[fileType]="data.fileType"
+					[fileCategory]="data.fileCategory"
+				(buttonClick)="onDownload($event)"
+				>
+				</app-folder>
+			</div>
+		</div>
+
+		<!-- Imagenes panel -->
+		<div *ngIf="activeTab === 2">
+			<div class="row g-4">
+                <app-folder
+					*ngFor="let data of secondaryCards"
+					class="col-4"
+					[title]="data.title"
+					[content]="data.content"
+					[headerIcon]="data.icon"
+					[buttonText]="data.buttonText"
+				[link]="data.link"
+					[fileType]="data.fileType"
+					[fileCategory]="data.fileCategory"
+				(buttonClick)="onDownload($event)"
+				>
+				</app-folder>
+			</div>
+		</div>
+	</div>
+</div>

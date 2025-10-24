@@ -1,0 +1,31 @@
+<div class="position-absolute z-3 fade-in-up" *ngIf="showReminder ">
+	<app-payment-reminder-notification
+		[daysLeft]="daysLeft"
+		[isExpired]="isExpired"
+		[expiredCount]="expiredSubscriptions.length"
+		[expiringSoonCount]="expiringSoonSubscriptions.length"
+		[subscriptionId]="nearestSubscriptionId"
+		[notificationDate]="nearestDateNotification"
+	></app-payment-reminder-notification>
+</div>
+
+<div class="d-lg-flex flex-column w-100 flex-xl-row gap-2 gap-lg-4 position-relative">
+	<div class="w-100 height-fit-content p-lg-4 rounded d-flex flex-column gap-4 card border-0">
+		<app-default-component
+			[investorPoints]="investorPoints"
+			[userStatus]="userStatus"
+			[statusColor]="statusColor"
+			[isLoading]="isLoading"
+			[rangoPeriodo]="rangoPeriodo"
+		></app-default-component>
+	</div>
+
+	<div
+		class="w-100 rounded flex-row gap-4 height-fit-content sticky-top portfolio-col d-md-flex border-info flex-lg-column smooth-transition"
+		[ngStyle]="showReminder  ? {'margin-top': '80px'} : {}"
+	>
+		<app-my-wallet-detail class="w-100" [wallet]="walletData"></app-my-wallet-detail>
+	</div>
+
+	
+</div>

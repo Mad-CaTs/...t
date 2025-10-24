@@ -1,0 +1,23 @@
+<div class="card p-3 shadow rounded-2 border border-1 text-start h-100 d-flex flex-column">
+	<div class="card-body d-flex flex-column">
+		<div class="d-flex align-items-center mb-3">
+			<div
+				class="bg-white border rounded-2 p-2 d-flex justify-content-center align-items-center"
+				style="width: 50px; height: 50px"
+			>
+				<img [src]="iconSrc" alt="Chat Icon" class="w-75" />
+			</div>
+		</div>
+		<h5 class="fw-bold">{{ title }}</h5>
+		<div class="description-container">
+			<p class="text-muted text-break description">
+				{{ description }}
+			</p>
+		</div>
+		<div class="mt-5">
+			<button class="btn btn-secondary w-100 fw-semibold" (click)="onButtonClick()">
+				{{ buttonText }}
+			</button>
+		</div>
+	</div>
+</div>

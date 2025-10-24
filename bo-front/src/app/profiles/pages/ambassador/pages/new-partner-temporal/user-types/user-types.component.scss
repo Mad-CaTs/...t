@@ -1,0 +1,56 @@
+.w-40 {
+    width: 45%;
+    height: auto;
+}
+
+.user-type:hover {
+    cursor: pointer;
+    border: solid 1px #007c1f;
+}
+
+.selected {
+    border: solid 1.5px #19809E !important;
+    background-color: rgba(255, 255, 255, 0.05);
+    box-shadow: -3px 4px 8px rgb(181 180 180 / 53%);
+}
+
+/* En el archivo .css del componente */
+::ng-deep .modal-content {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    /* Asegura que ocupe todo el espacio disponible */
+}
+
+::ng-deep .modal-dialog {
+    display: flex;
+    align-items: center;
+    /* Centrado vertical */
+    min-height: calc(100% - 1rem);
+    /* Considera el margen del modal */
+}
+
+::ng-deep .border-decorate{
+    border-radius: 50%;
+    border:  1.5px #fcebb7 !important;
+    background-color: #FEF0C7;
+    box-shadow: 0px 1px 11px #FEF0C7;
+}
+
+::ng-deep .border-decorate-span{
+    border-radius: 50%;
+    border:  1.5px #faefd0 !important;
+    background-color: #FFFAEB;
+    box-shadow: 0px 1px 11px #FFFAEB;
+}
+
+::ng-deep .btn{
+    border: solid 2px #FE7C04 !important;
+    color: #FE7C04 !important;
+}
+
+::ng-deep .btn:hover{
+    border: solid 2px #FE7C04 !important;
+    background: #FE7C04 !important;
+    color: #fdfdfd !important;
+}

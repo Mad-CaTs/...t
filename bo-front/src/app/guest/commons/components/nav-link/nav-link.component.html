@@ -1,0 +1,4 @@
+<button [class]="button.type" [routerLink]="button.link" [class.active]="isActive(button.link)" (click)="linkClickedHandler()">
+    <i class="pi {{button.icon}}"></i>
+    <label>{{button.label}}</label>
+</button>

@@ -1,0 +1,9 @@
+.modal-header {
+	border-bottom: hidden !important;
+
+	& .filled-side {
+		width: 30px;
+		height: 30px;
+		margin-right: auto;
+	}
+}

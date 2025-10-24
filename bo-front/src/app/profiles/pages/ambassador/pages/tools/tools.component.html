@@ -1,0 +1,32 @@
+<div class="card p-4 border-0">
+	<h1 class="m-0 fs-4 text-black fw-medium">Herramientas</h1>
+
+	<div class="row mt-3 g-4 align-items-stretch">
+		<!-- Imagen (30%) -->
+		<div class="col-12 col-lg-4">
+			<div class="shadow rounded overflow-hidden h-100">
+				<img
+					appConcatenateSrc="ef81cddc-6ef7-47ba-a21b-2c48e3a5bf86-Sin&título&1.png"
+					mat-card-image
+					class="w-100 h-100 object-fit-cover"
+					style="max-height: 100%; object-position: center"
+				/>
+			</div>
+		</div>
+
+		<!-- Cards (70%) -->
+		<div class="col-12 col-lg-8">
+			<div class="row g-3">
+				<div class="col-12 col-md-6" *ngFor="let data of cardsData">
+					<app-card
+						[title]="data.title"
+						[content]="data.content"
+						[headerIcon]="data.icon"
+						(buttonClick)="navigateToComponent(data.prueba)"
+					>
+					</app-card>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

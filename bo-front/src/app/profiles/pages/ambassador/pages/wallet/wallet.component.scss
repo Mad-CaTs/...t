@@ -1,0 +1,57 @@
+:host ::ng-deep .navigation.navigation-bar {
+  transform: translateX(140px) !important;
+  width: 71px !important;
+}
+
+.content-1 {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.content-details {
+  background: #FBFBFB;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.content1-text-detalle {
+  color: #5F7081;
+  font-family: 'Roboto';
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: 0%;
+
+}
+
+.content-1-saldo {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.content1-text-saldo {
+  font-family: 'Roboto';
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  text-align: center;
+  color: #5F7081;
+
+}
+
+.nota {
+  text-align: center;
+}
+
+@media (min-width:1500px) {
+  .info-icon {
+    width: 4% !important;
+  }
+}
+
+@media (min-width:576px) {
+  .nota {
+    text-align: start !important;
+  }
+}

@@ -1,0 +1,634 @@
+// Estilos para el modal de billetera (copiados de event-test.component.scss)
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  max-width: 480px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+  display: flex;
+  flex-direction: column; // X arriba, número debajo
+  justify-content: flex-start;
+  align-items: flex-end; // alineado a la derecha
+  gap: 0.25rem;
+  padding-bottom: 0.75rem;
+  margin-bottom: 1rem;
+  // Línea separadora de ancho completo
+  border-bottom: none;
+  position: relative;
+  padding-right: 0;
+
+  .brand-logo {
+    position: absolute;
+    top: -4px; // leve ajuste visual
+    left: 0;
+    height: 36px;
+    width: auto;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background: #e5e7eb; // gris sutil
+  }
+
+  .close-button {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #666;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: #f5f5f5;
+    }
+  }
+
+  .order-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+    text-align: right; // alineado a la derecha
+
+    .order-label {
+      font-size: 0.85rem; // más pequeño
+      font-weight: 500;
+      color: #696d75; // color solicitado
+    }
+
+    .order-number {
+      font-size: 0.85rem; // más pequeño
+      color: #93969d; // color solicitado
+    }
+  }
+}
+
+.method-selector {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+
+  .method-tab {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    border: 2px solid #e5e7eb; // borde base más suave
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+
+    .tab-content {
+      display: inline-flex;
+      align-items: center;
+      justify-content: flex-start; // alinear a la izquierda
+      gap: 0.5rem;
+      width: 100%;
+      text-align: left;
+    }
+
+    &.active {
+      // Color solicitado por Figma
+      border-color: #19809e;
+      background-color: #eef5ff; // fondo sutil
+
+      .check-icon {
+        display: flex;
+      }
+    }
+
+    .tab-icon {
+      font-size: 1.25rem;
+      &.qr-icon { color: #0070e0; }
+    }
+    .yape-logo {
+      height: 18px;
+      width: auto;
+      display: inline-block;
+    }
+
+    span {
+      font-weight: 500;
+      color: #333;
+    }
+
+    .check-icon {
+      display: none;
+      position: absolute;
+      top: 8px; // dentro del rectángulo
+      right: 8px; // dentro del rectángulo
+      background: #19809e; // color solicitado
+      color: white;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: bold;
+      box-shadow: 0 0 0 2px #fff; // halo para separarlo del borde
+    }
+  }
+}
+
+.instructions {
+  margin-bottom: 1.5rem;
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+
+  p {
+    color: #666;
+    font-size: 1rem;
+    line-height: 1.5;
+    text-align: center; // texto centrado
+  }
+}
+
+.total-amount {
+  background-color: #ddecf0; // solicitado
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  margin: 1rem auto 1.5rem auto; // centrado como en Figma
+  display: flex;
+  width: max-content; // se ajusta al contenido
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+
+  .amount-label {
+    font-size: 0.75rem;
+    color: #136077; // solicitado
+    opacity: 0.8;
+  }
+
+  .amount-value {
+    font-size: 1rem;
+    font-weight: 400; // normal
+    color: #136077; // solicitado
+  }
+}
+
+.qr-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+
+  .qr-code {
+    width: 232px; // contenedor externo según Figma
+    height: 232px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    // borde doble (outer + inner) con sombras suaves
+    .qr-frame {
+      width: 216px;
+      height: 216px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow:
+        0 1px 1px rgba(16, 24, 40, 0.06), /* sutil */
+        0 0 0 2px #f2f4f7, /* borde gris claro */
+        inset 0 0 0 1px #e5e7eb; /* borde interno */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .qr-image {
+      width: 200px; // área de la imagen QR
+      height: 200px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+  }
+}
+
+.app-logos {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem; // más compacto
+  margin: 0.5rem 0 1.25rem 0; // acercarlo al QR
+
+  .app-logo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0; // sin fondo ni padding
+    border-radius: 0;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+  }
+  .app-logo img {
+    height: 24px; // tamaño más pequeño
+    width: auto;
+    display: block;
+  }
+}
+
+.yape-panel {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.yape-logo {
+  height: 60px;
+  width: auto;
+  margin-bottom: 15px;
+}
+
+.yape-title, .yape-subtitle {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.yape-step-title {
+  font-size: 16px;
+  color: #666;
+  margin: 20px 0 15px 0;
+}
+
+.yape-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.yape-step {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+
+.yape-step-icon {
+  font-size: 24px;
+  width: 40px;
+  text-align: center;
+}
+
+.yape-step-desc {
+  font-size: 14px;
+  color: #333;
+}
+
+.continue-button {
+  width: 100%;
+  padding: 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+}
+
+.yape-form-content {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.yape-form-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.yape-form-logo {
+  height: 50px;
+  width: auto;
+  margin-bottom: 10px;
+}
+
+.yape-instructions {
+  margin-bottom: 20px;
+}
+
+.yape-instruction-step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #666;
+}
+
+.yape-instruction-icon {
+  font-size: 18px;
+  width: 30px;
+  text-align: center;
+}
+
+.yape-form-fields {
+  margin-bottom: 20px;
+}
+
+.form-field {
+  margin-bottom: 15px;
+}
+
+.form-field label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #333;
+}
+
+.yape-input {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #eee;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.approval-code-inputs {
+  display: flex;
+  gap: 8px;
+}
+
+.code-input {
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  border: 2px solid #eee;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.yape-pay-button {
+  width: 100%;
+  padding: 15px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #218838;
+  }
+}
+
+// Estilos para el contenido Yape
+
+// Yape design per Figma
+.yape-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.yape-panel {
+  background: #f6f2fa; // leve lavanda
+  border: 1px solid #ece7f4;
+  border-radius: 12px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+}
+
+.yape-logo {
+  height: 40px;
+  width: auto;
+  margin-bottom: 1rem;
+}
+
+.yape-title {
+  color: #6b7280;
+  font-size: 1rem;
+}
+
+.yape-subtitle {
+  color: #6b21a8;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.yape-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: center; // centrar el bloque como en Figma
+}
+
+.yape-step {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: transparent; // sin fondo
+  border: none; // sin borde
+  border-radius: 0;
+  padding: 0.25rem 0; // espaciado mínimo
+  width: 360px; // ancho del bloque para centrar el texto con el icono
+  max-width: 90%;
+}
+
+.yape-step-icon {
+  font-size: 1.25rem;
+}
+
+.yape-step-title {
+  font-weight: 600;
+  color: #374151;
+}
+
+.yape-step-desc {
+  color: #6b7280;
+  font-size: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+  text-align: left;
+}
+
+.yape-step-text { text-align: left; }
+
+.yape-continue {
+  background: #8C3D99;
+  border-radius: 4px;
+  color: white;
+  padding: 0.5rem 1rem;
+  height: 35px;
+  font-size: 1rem;
+}
+
+// Yape Form Section
+.yape-form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.yape-form-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.yape-form-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.yape-form-logo {
+  height: 32px;
+  width: auto;
+}
+
+.yape-form-header h3 {
+  color: #374151;
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.yape-instructions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.yape-instruction-step {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+}
+
+.yape-instruction-icon {
+  font-size: 1rem;
+  color: #6b21a8;
+  width: 20px;
+  text-align: center;
+}
+
+.yape-instruction-step span {
+  color: #6b7280;
+  font-size: 0.875rem;
+}
+
+.yape-form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  
+  label {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: #374151;
+  }
+}
+
+.yape-input {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #eee;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.approval-code-inputs {
+  display: flex;
+  gap: 8px;
+}
+
+.code-input {
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  border: 2px solid #eee;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.yape-pay-button {
+  width: 100%;
+  padding: 15px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #218838;
+  }
+}
+
+.legal-footer {
+  text-align: center;
+
+  p {
+    font-size: 0.75rem;
+    color: #666; // color uniforme para todo el texto
+    line-height: 1.4;
+    margin: 0;
+
+    .legal-link {
+      color: inherit; // mismo color que el texto
+      text-decoration: underline; // siempre subrayado
+      font-weight: 500;
+    }
+  }
+}

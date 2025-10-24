@@ -1,0 +1,35 @@
+export interface Environment {
+	URL_API: string;
+	URL_API_CALENDAR: string;
+	LOGIN_USER_CLIENT: string;
+	LOGIN_USER_SECRET: string;
+	CODE_CHALLENGE: string;
+	CODE_CHALLENGE_METHOD: string;
+	TOKEN_PAYPAL: string;
+	CLIENT_ID: string;
+	CLIENT_SECRET: string;
+	URL_AUTH_SERVER: string;
+	LOGIN_URL: string;
+	SHOW_IMAGES_COMPONENT: boolean;
+	URL_IMG: string;
+	LOCAL_LOGIN: boolean;
+	URL_ADMIN: string;
+	URL_ADMIN_LOCAL?: string;
+	URL_API_PAYMENT: string;
+	URL_API_GRACE_PERIOD?: string;
+	URL_API_VALIDA_SPONSOR: string;
+	URL_API_TRANSFER_LIQUIDATION: string;
+	URL_API_REGISTER_MIGRATION: string;
+	URL_API_COMMISSION: string;
+	URL_API_PDF: string;
+	URL_ACCOUNT: string;
+	URL_GATEWEY: string;
+	URL_GATEWAY_LOCAL?: string;
+	URL_WALLET: string;
+	URL_JOBSTATUSAPI: string;
+	URL_API_LEGAL: string;
+	URL_BONUS_API: string;
+	URL_API_REWARDS: string;
+	URL_API_TicketApi: string;
+	URL_API_TRANSFER: string;
+}

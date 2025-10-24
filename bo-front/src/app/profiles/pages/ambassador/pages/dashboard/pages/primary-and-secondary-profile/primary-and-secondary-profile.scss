@@ -1,0 +1,135 @@
+.container-primary {
+	position: relative;
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	border-radius: 0.25rem;
+	gap: 1.5rem;
+	border: 0;
+
+	@media (min-width: 768px) {
+	}
+	
+	@media (min-width: 992px) {
+		align-items: flex-start;
+		padding: 2rem !important;
+		flex-direction: row;
+	}
+
+	.ranges-col {
+		top: 1rem;
+		width: 100%;
+	}
+
+	.container-description {
+		flex-grow: 1;
+		flex-basis: 70%;
+	}
+
+	.container-back-range {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		margin-top: 2rem;
+		flex-basis: 30%;
+		width: 100%;
+
+
+		.container-range {
+			display: flex;
+			flex-direction: column;
+			margin-top: 1.5rem;
+			gap: 1.5rem;
+			padding-left: 1rem;
+			padding-right: 1rem;
+			padding-bottom: 1.5rem;
+			padding-top: 1.5rem;
+			width: 100%;
+			border-radius: 1.5rem;
+			box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+
+			.progress-spinner-container {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				height: 30rem;
+			}
+
+			.img-custom {
+				width: 64px;
+				height: 64px;
+			}
+
+			.img-compound-range {
+				width: 24px;
+				height: 24px;
+			}
+
+			.min-container {
+				padding-left: 1rem;
+				padding-right: 1rem;
+				margin-bottom: 2rem;
+
+				.volumen-rama-custom {
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+				}
+			}
+
+			.container-progressbar {
+				display: flex;
+				justify-content: start;
+				align-items: center;
+				padding-top: 1.5rem;
+				padding-bottom: 1.5rem;
+				gap: 1rem;
+				position: relative;
+
+				.average {
+					position: absolute;
+					bottom: 0px;
+					width: 6rem;
+					font-size: 0.85rem;
+				}
+
+				.meta {
+					font-size: 0.875rem;
+					position: absolute;
+					right: 0;
+					width: 6rem;
+					bottom: -10px;
+				}
+			}
+
+		}
+
+
+		@media (min-width: 1000px) {
+			gap: 1.5rem;
+			margin-top: 10rem;
+			flex-basis: 30%;
+			width: 100%;
+
+			.container-range {
+				margin-top: 0;
+			}
+		}
+	}
+
+
+
+	@media (min-width: 1000px) {
+		.ranges-col {
+			background-color: #e9f5ff;
+			border-style: solid;
+			border-width: 1px;
+		}
+	}
+
+	.custom-color-range {
+		background-color: #13607733;
+		color: #3949AB;
+	}
+}

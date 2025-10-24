@@ -1,0 +1,65 @@
+.icon-container {
+	background-color: #ddecf0; /* Fondo celeste claro */
+	width: 45px; /* Tamaño del fondo un poco mayor */
+	height: 45px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+::ng-deep .p-dialog {
+	background-color: transparent;
+	border-radius: 40px;
+}
+
+::ng-deep .p-dialog .p-dialog-header {
+	border-top-right-radius: 40px;
+	border-top-left-radius: 40px;
+}
+
+::ng-deep .p-dialog .p-dialog-content:last-of-type {
+	border-bottom-left-radius: 40px;
+	border-bottom-right-radius: 40px;
+}
+/* .icon-img {
+  width: 26px; 
+  height: 26px;
+}
+
+h4 {
+  font-size: 1.3rem;
+  text-align: left;
+}
+
+span {
+  line-height: 20px; 
+}
+
+@media (max-width: 768px) {
+  .w-100 {
+    width: 90%;
+    max-width: 360px; 
+    padding: 15px;
+    min-height: 220px; 
+  }
+
+  h4 {
+    font-size: 1.1rem;  
+  }
+
+  span {
+    font-size: 10px; 
+  }
+
+  .icon-container {
+    width: 40px;
+    height: 40px;
+  }
+
+  .icon-img {
+    width: 22px;
+    height: 22px;
+  }
+}
+ */

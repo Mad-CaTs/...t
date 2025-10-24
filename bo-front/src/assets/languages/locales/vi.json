@@ -1,0 +1,564 @@
+{
+	"header": {
+		"slogan": "Câu Lạc Bộ Đầu Tư",
+		"menuItems": [
+			{
+				"label": "Bắt đầu"
+			},
+			{
+				"label": "Các sản phẩm",
+				"subItems": [
+					{
+						"label": "Địa ốc"
+					},
+					{
+						"label": "công nghệ"
+					},
+					{
+						"label": "Các dự án khác"
+					}
+				]
+			},
+			{
+				"label": "Cơ hội"
+			},
+			{
+				"label": "Cộng đồng"
+			},
+			{
+				"label": "Cập nhật"
+			},
+			{
+				"label": "Lịch"
+			},
+			{
+				"label": "Sự kiện"
+			}
+		],
+		"languageTitle": "Ngôn ngữ",
+		"languageInputPlaceholder": "Tìm ngôn ngữ",
+		"languageInputLabel": "Người tìm kiếm",
+		"languages": [
+			"Ả Rập ",
+			"tiếng Đức ",
+			"tiếng Bengali ",
+			"tiếng Bungari ",
+			"tiếng Séc ",
+			"Trung Quốc ",
+			"người Tây Ban Nha ",
+			"người Pháp ",
+			"tiếng Bồ Đào Nha ",
+			"Tiếng Anh ",
+			"người Hy Lạp ",
+			"Guarani ",
+			"Tiếng Hindi ",
+			"người Hungary ",
+			"tiếng Indonesia ",
+			"người Ý ",
+			"tiếng Nhật ",
+			"Hàn Quốc ",
+			"tiếng Hà Lan ",
+			"Đánh bóng ",
+			"tiếng Nga ",
+			"tiếng Telugu ",
+			"tiếng Thái ",
+			"tiếng Tagalog ",
+			"tiếng Thổ Nhĩ Kỳ ",
+			"tiếng Ukraina ",
+			"Tiếng Việt ",
+			"người Rumani "
+		]
+	},
+	"footer": {
+		"contactInformation": {
+			"phone": "(01) 618 5118",
+			"email": "example@inclub.com.pe"
+		},
+		"sections": [
+			"Các giải pháp",
+			"InResorts Ribera del Rio",
+			"InResorts La Joya",
+			"KeOla",
+			"Bán hàng đã qua sử dụng",
+			"Chúng ta",
+			"Blog",
+			"Câu hỏi thường gặp",
+			"Quyền truy cập của khách hàng",
+			"Sự bền vững",
+			"Liên hệ",
+			"Hợp pháp",
+			"Chính sách bảo mật",
+			"Các điều khoản và điều kiện",
+			"Sổ khiếu nại"
+		]
+	},
+	"home": {
+		"carousel": {
+			"carouselEntry": "SẴN SÀNG THAM GIA VÀO",
+			"carouselTitle": "VŨ TRỤ INCLUB?",
+			"carouselText": "Mọi người đều được chào đón. ",
+			"carouselBtn1": "Tham gia ngay!",
+			"carouselBtn2": "Truy cập"
+		},
+		"keola": {
+			"cta": "Và đổi mã “UNETEKEOLA” để kiếm điểm.",
+			"btn": "Google Play",
+			"titles": ["Tải xuống ứng dụng Keola", "Mới nhất", "Mời và giành chiến thắng"]
+		},
+		"lastUpdates": {
+			"title": "Cập nhật mới nhất",
+			"description": "Chúng tôi muốn bạn thành công và phát triển doanh nghiệp của mình để trở thành người tiên phong thành công mà chúng tôi biết bạn là như vậy! ",
+			"button": "Cập nhật!"
+		},
+		"howWorks": {
+			"title": "Làm thế nào nó hoạt động",
+			"subtitle": "Bắt đầu với 3 bước đơn giản",
+			"steps": [
+				{
+					"title": "Đăng ký",
+					"description": "Nhập nhà tài trợ của bạn và điền thông tin của bạn và tạo mật khẩu của bạn."
+				},
+				{
+					"title": "Khám phá sản phẩm",
+					"description": "Khám phá các sản phẩm trên cổng thông tin Inclub của chúng tôi. "
+				},
+				{
+					"title": "Thắng",
+					"description": "Sẵn sàng! "
+				}
+			]
+		},
+		"cards": [
+			{
+				"title": "Va li công tác",
+				"description": "Tham gia và trở thành một phần của các dự án bất động sản, công nghệ của chúng tôi và hơn thế nữa.",
+				"button": "Tìm hiểu thêm"
+			},
+			{
+				"title": "Cộng đồng",
+				"description": "Đi sâu vào những sản phẩm tuyệt vời có tiềm năng thu nhập khổng lồ.",
+				"button": "Tìm hiểu thêm"
+			},
+			{
+				"title": "Cơ hội",
+				"description": "Nếu bạn sẵn sàng bắt tay vào công việc, InClub chính là phương tiện sẽ đưa bạn đến bất cứ nơi nào bạn muốn.",
+				"button": "Tìm hiểu thêm"
+			}
+		],
+		"testimonialsSection": {
+			"cardPrefix": "Thành viên kể từ",
+			"heading": "Tất cả những gì bạn cần là một chiếc điện thoại trong tay để kết nối với cơ hội kinh doanh có một không hai.",
+			"button": "Đăng ký ngay bây giờ",
+			"testimonials": [
+				{
+					"text": "Nếu bạn cố gắng nhiều và làm việc chăm chỉ, Inclub sẽ thay đổi cuộc sống của bạn và thực hiện mọi ước mơ của bạn.",
+					"name": "Elias Vargas",
+					"since": "2020"
+				},
+				{
+					"text": "Chỉ cần có 3 điều trên thế giới này để hạnh phúc: Niềm tin vào Chúa, Niềm tin vào chính mình và Niềm tin vào ước mơ của bạn.",
+					"name": "Paul Villacorta",
+					"since": "2020"
+				},
+				{
+					"text": "Không có gì xấu khi nghèo, điều xấu là chưa bao giờ thử. Để chết nghèo và không có ước mơ, không bao giờ là quá muộn để bắt đầu.",
+					"name": "Mery Livias",
+					"since": "2021"
+				},
+				{
+					"text": "Bạn có thể đưa ra bài diễn thuyết tốt nhất thông qua cuộc sống của mình, chứ không phải bằng lời nói.",
+					"name": "Abel Meza",
+					"since": "2020"
+				}
+			]
+		}
+	},
+	"products": {
+		"navigation": ["Địa ốc", "công nghệ", "Dự án tiếp theo"],
+		"items": [
+			{
+				"title": "Khu nghỉ dưỡng Ribera del Rio",
+				"description": "Hãy tận hưởng những lợi ích của Hotel Club Resort và trở thành thành viên. ",
+				"buttonText": "Thêm thông tin"
+			},
+			{
+				"title": "Khu nghỉ dưỡng La Joya",
+				"description": "Gia đình vui vẻ, thiên nhiên và lợi ích cho cuộc sống. ",
+				"buttonText": "Thêm thông tin"
+			},
+			{
+				"title": "Mạng Keola",
+				"description": "Mời và giành chiến thắng, khám phá những lợi ích của ứng dụng. ",
+				"buttonText": "Thêm thông tin"
+			}
+		],
+		"nextProjects": {
+			"title": "Chúng tôi đang làm việc",
+			"description": "Hiện tại đội ngũ Inclub đang trong quá trình sáng tạo để giới thiệu những dự án sắp tới. ",
+			"buttonText": "Cập nhật!"
+		}
+	},
+	"productDetail": {
+		"aboutUsTitle": "Về chúng tôi",
+		"aboutBtnText": "tôi muốn biết nhiều hơn",
+		"products": [
+			{
+				"aboutTitle": "Ven sông",
+				"aboutDescription": "Chúng tôi là Club Resort nằm ở Cieneguilla, cách Lima 45 phút. ",
+				"perkPreTitle": "Tận dụng lợi thế của chúng tôi",
+				"perktitle": "Những trải nghiệm khó quên",
+				"perkDescription": "Nơi nghỉ dưỡng hoàn hảo cho những ai đang tìm kiếm một trải nghiệm phiêu lưu và nghỉ ngơi độc đáo. ",
+				"cards": [
+					{
+						"title": "Nhiều khách sạn",
+						"description": "Mỗi phòng tại Ribera del Río đều được thiết kế để chia sẻ với những người thân yêu của bạn; "
+					},
+					{
+						"title": "Kinh nghiệm",
+						"description": "Chúng tôi cung cấp một loạt các trải nghiệm thư giãn và giải trí chắc chắn sẽ làm bạn say mê. "
+					},
+					{
+						"title": "Nhà hàng",
+						"description": "Việc chiêu đãi bản thân luôn là điều tốt và vì điều đó, 'Nhà hàng Ribera del Río' của chúng tôi chào đón bạn và mời bạn thưởng thức nhiều món ăn đặc trưng của quốc gia, khu vực và Creole."
+					}
+				]
+			},
+			{
+				"aboutTitle": "Viên ngọc quý",
+				"aboutDescription": "Chúng tôi là Club Resort nằm ở Arequipa, chỉ cách thành phố Arequipa 45 phút. ",
+				"perkPreTitle": "Tận dụng lợi thế của chúng tôi",
+				"perktitle": "Những trải nghiệm khó quên",
+				"perkDescription": "Nơi nghỉ dưỡng hoàn hảo cho những ai đang tìm kiếm một trải nghiệm phiêu lưu và nghỉ ngơi độc đáo. ",
+				"cards": [
+					{
+						"title": "Bể bơi",
+						"description": "Mỗi hồ bơi tại La Joya đều được thiết kế để chia sẻ cùng những người thân yêu của bạn; "
+					},
+					{
+						"title": "Kinh nghiệm",
+						"description": "Chúng tôi cung cấp một loạt các trải nghiệm thư giãn và giải trí chắc chắn sẽ làm bạn say mê. "
+					},
+					{
+						"title": "Công viên nghỉ dưỡng",
+						"description": "Công viên nước tuyệt đẹp với những đường trượt đầy màu sắc; "
+					}
+				]
+			},
+			{
+				"aboutTitle": "keola",
+				"aboutDescription": "Chào mừng bạn đến với Keola, ứng dụng tối ưu để tìm thấy tất cả các sản phẩm yêu thích của bạn ở một nơi! ",
+				"perkPreTitle": "Tận dụng lợi thế của chúng tôi",
+				"perktitle": "Lợi ích Keola",
+				"perkDescription": "Mời và kiếm tiền, khám phá những lợi ích của ứng dụng. ",
+				"cards": [
+					{
+						"title": "Các sản phẩm",
+						"description": "Khám phá nhiều loại sản phẩm và chủng loại. "
+					},
+					{
+						"title": "Cửa hàng",
+						"description": "Quản lý cửa hàng và quản lý sản phẩm của bạn, cung cấp dịch vụ giao hàng chất lượng và hiệu quả."
+					},
+					{
+						"title": "Vận chuyển",
+						"description": "Bạn có cần thức ăn, thuốc men không? "
+					}
+				]
+			}
+		]
+	},
+	"oportunity": {
+		"title": "Cơ hội",
+		"description": "Nó mở cửa cho bất kỳ ai, bất kể kinh nghiệm, vị trí hoặc hoàn cảnh.",
+		"sections": [
+			{
+				"pre": "Kiếm tiền bằng tầm ảnh hưởng của bạn",
+				"title": "Mọi người đều bị ảnh hưởng vi mô",
+				"content": "Mọi người đều là người có ảnh hưởng vi mô. "
+			},
+			{
+				"pre": "Tôi giới thiệu sản phẩm chất lượng",
+				"title": "Sản phẩm tiên tiến, mở đường cho ngành",
+				"content": "Mỗi ngày chúng tôi giới thiệu các sản phẩm và dịch vụ cho bạn bè và gia đình của mình. "
+			},
+			{
+				"pre": "Học hỏi từ đồng nghiệp của bạn",
+				"title": "Mọi thứ bạn cần để thành công",
+				"content": "Chúng tôi chia sẻ kiến ​​thức từ các chuyên gia của mình, được truyền cảm hứng từ mong muốn tạo ra mạng lưới mang lại nhiều lợi nhuận hơn cho mọi người và cho các chi nhánh để học cách tạo ra tài sản."
+			},
+			{
+				"pre": "Kế hoạch bồi thường",
+				"title": "Kế hoạch trả thưởng của chúng tôi là mạnh mẽ nhất trong ngành",
+				"content": "Chúng tôi giúp mọi người xây dựng danh mục đầu tư thông minh và đạt được sự tự do tài chính đã mong đợi từ lâu với nhiều lợi ích mà không có câu lạc bộ đầu tư nào khác có được."
+			}
+		],
+		"testimonials": {
+			"pre": "Lời chứng thực",
+			"title": "Câu chuyện thành công",
+			"items": [
+				{
+					"text": "Nếu một người sống trong quá khứ sẽ không bao giờ thành công ở hiện tại, càng không thành công ở tương lai",
+					"name": "Elias Vargas",
+					"since": "2020"
+				},
+				{
+					"text": "Trên đời này bạn chỉ cần 3 điều để hạnh phúc: Niềm tin vào Chúa, Niềm tin vào bản thân và Niềm tin vào ước mơ của mình",
+					"name": "Paul Villacorta",
+					"since": "2020"
+				},
+				{
+					"text": "Nghèo không tệ, tệ là chưa bao giờ cố gắng, Chết nghèo mà không có Ước mơ, Bắt đầu không bao giờ là quá muộn",
+					"name": "Mery Livias",
+					"since": "2021"
+				},
+				{
+					"text": "Bạn có thể đưa ra bài phát biểu hay nhất bằng cuộc sống của mình hơn là bằng lời nói.",
+					"name": "Abel Meza",
+					"since": "2020"
+				}
+			]
+		}
+	},
+	"comunity": {
+		"title": "Cộng đồng của chúng tôi",
+		"description": "Thành công sẽ tốt hơn khi nó được chia sẻ. ",
+		"sections": [
+			{
+				"pre": "PHÁT TRIỂN VÀ THỊNH VƯỢNG CÙNG CHÚNG TÔI",
+				"title": "Các chi nhánh trên toàn thế giới",
+				"content": "Mạng liên kết lớn nhất và mạnh nhất hiện nay ở Mỹ Latinh chắc chắn là Inclub. "
+			},
+			{
+				"pre": "Sự công nhận và sự kiện",
+				"title": "Hàng triệu người sẽ ăn mừng thành công của bạn.",
+				"content": "Chúng tôi vô cùng tự hào về sự chăm chỉ và cống hiến của mỗi doanh nhân trong công việc kinh doanh của mình. "
+			},
+			{
+				"pre": "CÔNG CỤ GIÁO DỤC VÀ HỌC TẬP",
+				"title": "Tất cả mọi thứ bạn cần để thành công.",
+				"content": "Chúng tôi giúp mọi người tạo danh mục đầu tư thông minh và đạt được sự tự do tài chính đã mong đợi từ lâu. "
+			}
+		],
+		"inspiration": {
+			"title": "Cảm hứng",
+			"subtitle": "Tiếng nói cộng đồng",
+			"testimonials": [
+				{
+					"text": "Inclub là cuộc sống của tôi và đó là lý do tại sao tôi rất coi trọng nó.",
+					"name": "Elias Vargas",
+					"since": "2020"
+				},
+				{
+					"text": "Inclub ở đây để thay đổi cuộc sống của mọi người.",
+					"name": "Paul Villacorta",
+					"since": "2020"
+				},
+				{
+					"text": "Inclub đã cho chúng tôi cơ hội để thay đổi cuộc sống của người khác.",
+					"name": "Mery Livias",
+					"since": "2021"
+				},
+				{
+					"text": "Các chi nhánh được khen thưởng khi thành công nhờ vào lượng lớn người dùng.",
+					"name": "Abel Meza",
+					"since": "2020"
+				}
+			]
+		}
+	},
+	"news": {
+		"noticeLabel": "Tin tức",
+		"titleMain": "MỚI NHẤT",
+		"descriptionMain": "Nơi trú ẩn hoàn hảo để tận hưởng cùng gia đình và bạn bè",
+		"commonEventsCountry": "Thành phố Lima, nước Peru",
+		"commonEventsBtn": "xem thêm",
+		"content": [
+			{
+				"date": "Ngày 14 tháng 9 năm 2023",
+				"title": "Hội thảo giao tiếp thành công, ngôn ngữ và giao tiếp kinh doanh"
+			},
+			{
+				"title": "Điểm đến mua sắm trực tuyến của bạn",
+				"description": "Mời và giành chiến thắng, khám phá những lợi ích của ứng dụng. "
+			},
+			{
+				"title": "Dự án bất động sản",
+				"description": "Các nhà lãnh đạo Inclub đã tận hưởng buổi ra mắt đáng kinh ngạc của dự án bất động sản Ribera del Rio ở Cieneguilla."
+			},
+			{
+				"title": "Ra mắt Encumbra",
+				"description": "Các nhà lãnh đạo Inclub trao quyền cho các thành viên của chúng tôi trở thành những nhà lãnh đạo trong ngành mạng trực tuyến."
+			},
+			{
+				"title": "Điểm đến mua sắm trực tuyến của bạn",
+				"description": "Mời và giành chiến thắng, khám phá những lợi ích của ứng dụng. "
+			},
+			{
+				"title": "Dự án công nghệ",
+				"description": "Các nhà lãnh đạo Inclub đã tận hưởng buổi ra mắt đáng kinh ngạc của dự án bất động sản Ribera del Rio ở Cieneguilla."
+			},
+			{
+				"title": "Khu nghỉ dưỡng Ribera del Rio",
+				"description": "Các nhà lãnh đạo Inclub trao quyền cho các thành viên của chúng tôi trở thành những nhà lãnh đạo trong ngành mạng trực tuyến."
+			}
+		]
+	},
+	"newsDetail": {
+		"date": "Ngày 26 tháng 9 năm 2023",
+		"title": "Nơi trú ẩn hoàn hảo để tận hưởng cùng gia đình và bạn bè",
+		"description": "Khu nghỉ dưỡng công viên La Joya chỉ cách thành phố Arequipa thuộc quận La Joya 60 phút, tại đây bạn có thể tận hưởng những ngày trên bãi biển hoặc luyện tập các môn thể thao dưới nước. ",
+		"content": [
+			{
+				"date": "Ngày 14 tháng 9 năm 2023",
+				"title": "Hội thảo giao tiếp thành công, ngôn ngữ và giao tiếp kinh doanh"
+			},
+			{
+				"date": "Ngày 29 tháng 9 năm 2023",
+				"title": "Hệ thống giáo dục LÃNH ĐẠO Inclub"
+			},
+			{
+				"date": "Ngày 15 tháng 9 năm 2023",
+				"title": "Hệ thống giáo dục Inclub Lời chứng thực thành công"
+			}
+		]
+	},
+	"calendar": {
+		"title": "Lịch",
+		"subtitle": "Tháng 9",
+		"filters": {
+			"searchLabel": "Người tìm kiếm",
+			"searchPlaceholder": "Tìm kiếm sự kiện hoặc hội thảo",
+			"options": ["Hôm nay", "hàng tuần", "hàng tháng"]
+		}
+	},
+	"eventPage": {
+		"upcommingEventsTitle": "Sự kiện sắp tới",
+		"upcomingEvents": [
+			{
+				"date": "Ngày 14 tháng 9 năm 2023",
+				"title": "Hội thảo giao tiếp thành công, ngôn ngữ và giao tiếp kinh doanh"
+			},
+			{
+				"date": "Ngày 29 tháng 9 năm 2023",
+				"title": "Hệ thống giáo dục Inclub LÃNH ĐẠO"
+			},
+			{
+				"date": "Ngày 15 tháng 9 năm 2023",
+				"title": "Hệ thống giáo dục Inclub Lời chứng thực thành công"
+			}
+		],
+		"pastEventsTitle": "Sự kiện trước đó",
+		"pastEvents": [
+			{
+				"date": "Ngày 12 tháng 9 năm 2023",
+				"title": "Hệ thống giáo dục Câu lạc bộ đọc sách Inclub"
+			},
+			{
+				"date": "Ngày 10 tháng 9 năm 2023",
+				"title": "Hệ thống giáo dục LÃNH ĐẠO Inclub"
+			},
+			{
+				"date": "Ngày 8 tháng 9 năm 2023",
+				"title": "Hệ thống giáo dục Inclub Lời chứng thực thành công"
+			}
+		],
+		"trendsTitle": "Xu hướng"
+	},
+	"eventsDetail": {
+		"backLabel": "Trở lại",
+		"resumeTitle": "Bản tóm tắt",
+		"learnTitle": "Bạn sẽ học cái gì?"
+	},
+	"events": [
+		{
+			"title": "Hội thảo giao tiếp thành công, ngôn ngữ và giao tiếp kinh doanh",
+			"date": "Ngày 14 tháng 9 năm 2023",
+			"type": "Trực tuyến",
+			"duration": "Thời lượng ước tính: 22 phút.",
+			"positiveReviews": "98% đánh giá tích cực (567).",
+			"summary": "Bạn muốn nâng cao kỹ năng giao tiếp trong lĩnh vực kinh doanh? ",
+			"learn": [
+				"Cải thiện kỹ năng thuyết trình và đàm phán",
+				"Học cách diễn đạt rõ ràng và hiệu quả",
+				"Không giống như các hội thảo lý thuyết khác, hội thảo này cho phép bạn áp dụng những gì đã học vào thực tế ngay lập tức.",
+				"Thông qua các bài tập và hoạt động nhóm, bạn sẽ có thể rèn luyện kỹ năng giao tiếp của mình và nhận được phản hồi ngay lập tức từ các chuyên gia về chủ đề này. ",
+				"Và hơn thế nữa."
+			]
+		},
+		{
+			"date": "Ngày 29 tháng 9 năm 2023",
+			"title": "Hệ thống giáo dục Inclub: Lãnh đạo",
+			"type": "Trực tuyến",
+			"duration": "Thời lượng ước tính: 22 phút.",
+			"positiveReviews": "98% đánh giá tích cực (567).",
+			"summary": "Bạn muốn nâng cao kỹ năng giao tiếp trong lĩnh vực kinh doanh? ",
+			"learn": [
+				"Cải thiện kỹ năng thuyết trình và đàm phán",
+				"Học cách diễn đạt rõ ràng và hiệu quả",
+				"Không giống như các hội thảo lý thuyết khác, hội thảo này cho phép bạn áp dụng những gì đã học vào thực tế ngay lập tức.",
+				"Thông qua các bài tập và hoạt động nhóm, bạn sẽ có thể rèn luyện kỹ năng giao tiếp của mình và nhận được phản hồi ngay lập tức từ các chuyên gia về chủ đề này. ",
+				"Và hơn thế nữa."
+			]
+		},
+		{
+			"date": "Ngày 15 tháng 9 năm 2023",
+			"title": "Hệ thống giáo dục Inclub: Câu chuyện thành công",
+			"type": "Trực tuyến",
+			"duration": "Thời lượng ước tính: 22 phút.",
+			"positiveReviews": "98% đánh giá tích cực (567).",
+			"summary": "Bạn muốn nâng cao kỹ năng giao tiếp trong lĩnh vực kinh doanh? ",
+			"learn": [
+				"Cải thiện kỹ năng thuyết trình và đàm phán",
+				"Học cách diễn đạt rõ ràng và hiệu quả",
+				"Không giống như các hội thảo lý thuyết khác, hội thảo này cho phép bạn áp dụng những gì đã học vào thực tế ngay lập tức.",
+				"Thông qua các bài tập và hoạt động nhóm, bạn sẽ có thể rèn luyện kỹ năng giao tiếp của mình và nhận được phản hồi ngay lập tức từ các chuyên gia về chủ đề này. ",
+				"Và hơn thế nữa."
+			]
+		},
+		{
+			"date": "Ngày 12 tháng 9 năm 2023",
+			"title": "Hệ thống giáo dục Inclub: Câu lạc bộ sách",
+			"type": "Trực tuyến",
+			"duration": "Thời lượng ước tính: 22 phút.",
+			"positiveReviews": "98% đánh giá tích cực (567).",
+			"summary": "Bạn muốn nâng cao kỹ năng giao tiếp trong lĩnh vực kinh doanh? ",
+			"learn": [
+				"Cải thiện kỹ năng thuyết trình và đàm phán",
+				"Học cách diễn đạt rõ ràng và hiệu quả",
+				"Không giống như các hội thảo lý thuyết khác, hội thảo này cho phép bạn áp dụng những gì đã học vào thực tế ngay lập tức.",
+				"Thông qua các bài tập và hoạt động nhóm, bạn sẽ có thể rèn luyện kỹ năng giao tiếp của mình và nhận được phản hồi ngay lập tức từ các chuyên gia về chủ đề này. ",
+				"Và hơn thế nữa."
+			]
+		},
+		{
+			"date": "Ngày 10 tháng 9 năm 2023",
+			"title": "Hệ thống giáo dục Inclub: Lãnh đạo",
+			"type": "Trực tuyến",
+			"duration": "Thời lượng ước tính: 22 phút.",
+			"positiveReviews": "98% đánh giá tích cực (567).",
+			"summary": "Bạn muốn nâng cao kỹ năng giao tiếp trong lĩnh vực kinh doanh? ",
+			"learn": [
+				"Cải thiện kỹ năng thuyết trình và đàm phán",
+				"Học cách diễn đạt rõ ràng và hiệu quả",
+				"Không giống như các hội thảo lý thuyết khác, hội thảo này cho phép bạn áp dụng những gì đã học vào thực tế ngay lập tức.",
+				"Thông qua các bài tập và hoạt động nhóm, bạn sẽ có thể rèn luyện kỹ năng giao tiếp của mình và nhận được phản hồi ngay lập tức từ các chuyên gia về chủ đề này. ",
+				"Và hơn thế nữa."
+			]
+		},
+		{
+			"date": "Ngày 8 tháng 9 năm 2023",
+			"title": "Hệ thống giáo dục Inclub: Câu chuyện thành công",
+			"type": "Trực tuyến",
+			"duration": "Thời lượng ước tính: 22 phút.",
+			"positiveReviews": "98% đánh giá tích cực (567).",
+			"summary": "Bạn muốn nâng cao kỹ năng giao tiếp trong lĩnh vực kinh doanh? ",
+			"learn": [
+				"Cải thiện kỹ năng thuyết trình và đàm phán",
+				"Học cách diễn đạt rõ ràng và hiệu quả",
+				"Không giống như các hội thảo lý thuyết khác, hội thảo này cho phép bạn áp dụng những gì đã học vào thực tế ngay lập tức.",
+				"Thông qua các bài tập và hoạt động nhóm, bạn sẽ có thể rèn luyện kỹ năng giao tiếp của mình và nhận được phản hồi ngay lập tức từ các chuyên gia về chủ đề này. ",
+				"Và hơn thế nữa."
+			]
+		}
+	]
+}

@@ -1,0 +1,311 @@
+.desafiliacion-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+    font-size: 14px;
+    color: #6c757d;
+
+    .breadcrumb-item {
+      &.active {
+        color: #ff6600;
+        font-weight: 500;
+      }
+    }
+
+    .breadcrumb-separator {
+      margin: 0 8px;
+      color: #dee2e6;
+    }
+  }
+
+  .main-content {
+    border-radius: 12px;
+    padding: 40px;
+
+    .page-title {
+      font-size: 28px;
+      font-weight: 600;
+      color: #333;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .subtitle {
+      color: #666;
+      text-align: center;
+      margin-bottom: 40px;
+      font-size: 16px;
+    }
+
+    .membership-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 40px;
+
+      .membership-card {
+        border: 2px solid #e9ecef;
+        border-radius: 12px;
+        padding: 24px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        background: #fff;
+
+        &:hover {
+          border-color: #4a90e2;
+          box-shadow: 0 4px 12px rgba(255, 102, 0, 0.1);
+        }
+
+        &.selected {
+          border-color: #4a90e2;
+          background-color: #fff;
+          box-shadow: 0 4px 12px rgba(255, 102, 0, 0.15);
+        }
+
+        .membership-header {
+          display: flex;
+          align-items: flex-start;
+          gap: 16px;
+          margin-bottom: 20px;
+
+          .radio-container {
+            position: relative;
+            flex-shrink: 0;
+
+            input[type="radio"] {
+              opacity: 0;
+              position: absolute;
+              width: 20px;
+              height: 20px;
+              margin: 0;
+            }
+
+            .custom-radio {
+              width: 20px;
+              height: 20px;
+              border: 2px solid #dee2e6;
+              border-radius: 50%;
+              background: white;
+              position: relative;
+              transition: all 0.2s ease;
+
+              &::after {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 8px;
+                height: 8px;
+                background: white;
+                border-radius: 50%;
+                transform: translate(-50%, -50%);
+                opacity: 0;
+                transition: opacity 0.2s ease;
+              }
+
+              &.checked {
+                border-color: #4a90e2;
+                background-color: #4a90e2;
+
+                &::after {
+                  opacity: 1;
+                }
+              }
+            }
+          }
+
+          .membership-info {
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+
+            .membership-name-container {
+              display: flex;
+              align-items: center;
+              gap: 12px;
+
+              .membership-name {
+                font-size: 18px;
+                font-weight: 600;
+                color: #333;
+              }
+
+              .active-badge {
+                background: #c9f5d4;
+                color: green;
+                padding: 4px 12px;
+                border-radius: 3px;
+                font-size: 12px;
+                font-weight: 500;
+                text-transform: uppercase;
+              }
+            }
+
+            .membership-price {
+              font-size: 20px;
+              font-weight: 700;
+              color: #333;
+            }
+          }
+        }
+
+        .membership-details {
+          display: flex;
+          gap: 40px;
+          padding-left: 36px;
+
+          .detail-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+
+            .detail-label {
+              font-size: 14px;
+              color: #666;
+              font-weight: 500;
+            }
+
+            .detail-value {
+              font-size: 14px;
+              color: #333;
+            }
+          }
+        }
+      }
+    }
+
+    .action-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+
+    .btn {
+      padding: 12px 32px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+      min-width: 120px;
+      width: 700px;
+
+      &:active {
+        transform: scale(0.98);
+      }
+
+      &.btn-secondary {
+        background-color: #fff;
+        color: #FE7C04;
+        border-color: #FE7C04;
+      }
+
+      &.btn-primary {
+        background-color: #e5e5e5;
+        color: #999;
+        border-color: #e5e5e5;
+        cursor: not-allowed;
+        transition: all 0.3s ease;
+
+        &:hover:not(:disabled) {
+          background-color: #d5d5d5;
+        }
+
+        &:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+
+        // Estado activo cuando hay selección
+        &.active {
+          background-color: #FE7C04;
+          color: #fff;
+          border-color: #FE7C04;
+          cursor: pointer;
+          opacity: 1;
+
+          &:hover {
+            background-color: #FE7C04;
+            border-color: #FE7C04;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(255, 102, 0, 0.3);
+          }
+
+          &:active {
+            background-color: #FE7C04;
+            border-color: #FE7C04;
+          }
+        }
+      }
+    }
+  }
+  }
+}
+
+.wallet-recharger {
+    display: flex;
+    align-items: start;
+    color: #8C9195;
+
+    .recharge {
+        color: #f18204;
+    }
+  }
+
+// Responsive design
+@media (max-width: 768px) {
+  .desafiliacion-container {
+    padding: 16px;
+
+    .main-content {
+      padding: 24px 20px;
+
+      .membership-list {
+        .membership-card {
+          padding: 20px;
+
+          .membership-header {
+            .membership-info {
+              flex-direction: column;
+              gap: 8px;
+
+              .membership-name-container {
+                .membership-name {
+                  font-size: 16px;
+                }
+              }
+
+              .membership-price {
+                font-size: 18px;
+                align-self: flex-start;
+              }
+            }
+          }
+
+          .membership-details {
+            gap: 20px;
+            flex-direction: column;
+            padding-left: 36px;
+          }
+        }
+      }
+
+      .action-buttons {
+        flex-direction: column;
+
+        .btn {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

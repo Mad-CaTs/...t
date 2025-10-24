@@ -1,0 +1,76 @@
+<div class="p-4 card px-0 px-md-4 card-border-none">
+	<div class="d-flex flex-column flex-md-row gap-2 w-100 gap-md-4 mt-5">
+		<app-select
+			class="w-100"
+			label="Fecha de alojamiento "
+			[options]="optStates"
+			placeholder="check-in — check-out"
+			[form]="form"
+			controlName="status"
+		></app-select>
+		<app-select
+			class="w-100"
+			label="Tipo de canje "
+			[options]="optBrands"
+			placeholder="Seleccione uno"
+			[form]="form"
+			controlName="brand"
+		></app-select>
+		<app-select
+			class="w-100"
+			label="Tipo de servicios "
+			[options]="optBrands"
+			placeholder="Seleccione uno"
+			[form]="form"
+			controlName="brand"
+		></app-select>
+	</div>
+	<div class="mt-5">
+		<app-table
+			class="w-100"
+			[headers]="headers"
+			[hasCheckbox]="false"
+			[firstEmpty]="true"
+			[customRows]="true"
+			[minWidthHeader]="minWidthHeaders"
+			[hasData]="table.data.length > 0"
+			[loading]="isLoading"
+			style="table-layout: fixed"
+		>
+			<tr
+				class="w-100 d-flex flex-row text-center align-items-center"
+				*ngFor="let d of table.data; let i = index"
+				style="gap: 2px"
+			>
+				<td class="fs-6 py-2 px-0 w-100 text-left" style="min-width: 100px; max-width: 200px">
+					{{ d.usageDate }}
+				</td>
+				<td class="fs-6 py-2 px-2 w-100 text-center" style="min-width: 100px">
+					{{ d.redemptionType }}
+				</td>
+
+				<td class="fs-6 py-2 w-100 text-center" style="min-width: 100px">
+					{{ d.redemptionCode }}
+				</td>
+				<td class="fs-6 py-2 px-2 w-100 text-center" style="min-width: 100px">
+					{{ d.serviceType }}
+				</td>
+				<td class="fs-6 py-2 px-2 w-100 text-center" style="min-width: 100px">
+					{{ d.description }}
+				</td>
+				<td class="fs-6 py-2 px-2 w-100 text-center" style="min-width: 100px">
+					{{ d.checkInDate }}
+				</td>
+				<td class="fs-6 py-2 px-2 w-100 text-center" style="min-width: 100px">
+					{{ d.checkOutDate }}
+				</td>
+				<td class="fs-6 py-2 px-2 w-100 text-center" style="min-width: 100px">
+					{{ d.rewards }}
+				</td>
+				<td class="fs-6 py-2 px-2 w-100 text-center" style="min-width: 100px">
+					{{ d.usedPoints }}
+				</td>
+			</tr>
+		</app-table>
+	</div>
+</div>

@@ -1,0 +1,218 @@
+<div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(102, 102, 102, 0.3); display: flex; justify-content: center; align-items: center; z-index: 1000;">
+  <div [style.width]="confirming ? '500px' : '550px'" [style.max-width]="confirming ? '80%' : '90%'" style="background-color: white; padding: 20px; border-radius: 8px; max-height: 90%; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); position: relative; display: flex; flex-direction: column;">
+    <button type="button" style="position: absolute; top: 10px; right: 10px; background: none; border: none; font-size: 20px; cursor: pointer; color: #6c757d;" (click)="onCancel()">×</button>
+    <div *ngIf="!paying && !confirming && !isLoading" style="margin-bottom: 20px; flex-shrink: 0;">
+      <div style="margin-bottom: 15px;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6c757d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+          <line x1="10" y1="9" x2="8" y2="9"></line>
+        </svg>
+      </div>
+      <div>
+        <h3 style="color: #000; font-size: 16px; margin: 0 0 5px 0;">Ver detalle</h3>
+        <p style="color: #6c757d; font-size: 16px; margin: 0 0 15px;">Visualizarás información detallada del Pago</p>
+      </div>
+    </div>
+
+    <div *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center; height: 200px; margin-top: 50px;">
+      <div style="text-align: center;">
+        <div class="spinner"></div>
+        <p style="color: #6c757d; font-size: 16px;">Procesando...</p>
+      </div>
+    </div>
+
+    <div *ngIf="!isLoading && !paying && !confirming" style="display: flex; flex-direction: column; gap: 10px; overflow-y: auto; padding-bottom: 10px;">
+      <div *ngIf="status === 'Por Pagar' && isFutureMonthPayment()" style="display: flex; flex-direction: column; gap: 10px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="color: #6c757d; font-size: 16px; max-width: 50%;">Fecha y hora del movimiento</span>
+          <span style="color: #6c757d; font-size: 16px; text-align: right;">-</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="color: #6c757d; font-size: 16px; max-width: 50%;">Tipo de operación</span>
+          <span style="color: #6c757d; font-size: 16px; text-align: right;">-</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="color: #6c757d; font-size: 16px; max-width: 50%;">Cód. de Operación</span>
+          <span style="color: #6c757d; font-size: 16px; text-align: right;">-</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+          <span style="color: #6c757d; font-size: 16px; max-width: 50%;">Descripción</span>
+          <div style="display: flex; flex-direction: column; color: #6c757d; font-size: 16px; text-align: right; margin-left: 20px; word-wrap: break-word; max-width: 45%;">
+            <span>-</span>
+          </div>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="color: #6c757d; font-size: 16px; max-width: 50%;">Monto</span>
+          <span style="color: #6c757d; font-size: 16px; text-align: right;">-</span>
+        </div>
+        <div style="text-align: right; background-color: #e1f5fe; padding: 10px; border-radius: 4px; display: flex; align-items: center;">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="#0288d1" style="margin-right: 5px;">
+            <circle cx="12" cy="12" r="12" fill="#0288d1"/>
+            <text x="12" y="15" font-size="20" fill="white" text-anchor="middle">¡</text>
+          </svg>
+          <span style="color: #6c757d; font-size: 14px;">El pago automático se realizará el {{ getPaymentDate() }}. Vuelve en esa fecha para visualizar la información correspondiente al pago</span>
+        </div>
+      </div>
+
+      <div *ngIf="status === 'Por Pagar' && !isFutureMonthPayment()" style="display: flex; flex-direction: column; gap: 10px; overflow-y: auto; padding-bottom: 10px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="color: #6c757d; font-size: 16px; max-width: 50%;">Fecha y hora del movimiento</span>
+          <span style="color: #6c757d; font-size: 16px; text-align: right;">{{ getFormattedDateTime() }}</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="color: #6c757d; font-size: 16px; max-width: 50%;">Tipo de operación</span>
+          <span style="color: #6c757d; font-size: 16px; text-align: right;">{{ data?.operationType || '-' }}</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="color: #6c757d; font-size: 16px; max-width: 50%;">Cód. de Operación</span>
+          <span style="color: #6c757d; font-size: 16px; text-align: right;">{{ data?.operationCode || '-' }}</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+          <span style="color: #6c757d; font-size: 16px; max-width: 50%;">Descripción</span>
+          <div style="display: flex; flex-direction: column; color: #6c757d; font-size: 16px; text-align: right; margin-left: 20px; word-wrap: break-word; max-width: 45%;">
+            <span>{{ data?.description || '-' }}</span>
+          </div>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="color: #6c757d; font-size: 16px; max-width: 50%;">Monto</span>
+          <div style="display: flex; align-items: center;">
+            <div style="flex: 1; text-align: right;">
+              <span style="color: #6c757d; font-size: 16px; text-align: right;">$ {{ getAbsoluteAmount(data?.amount) }}</span>
+            </div>
+            <div style="display: flex; align-items: center; margin-left: 5px;">
+              <svg *ngIf="!showDetails" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" (click)="toggleDetails()">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+              <svg *ngIf="showDetails" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" (click)="toggleDetails()">
+                <polyline points="18 15 12 9 6 15"></polyline>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="showDetails" style="display: flex; flex-direction: column; gap: 10px;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="color: #6c757d; font-size: 16px; max-width: 50%;">Pago Financiado</span>
+            <span style="color: #6c757d; font-size: 16px; text-align: right;">$ {{ getAbsoluteAmount(data?.financedPayment) }}</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="color: #6c757d; font-size: 16px; max-width: 50%;">Inicial Fraccionado</span>
+            <span style="color: #6c757d; font-size: 16px; text-align: right;">$ {{ getAbsoluteAmount(data?.fractionatedInitial) }}</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="color: #6c757d; font-size: 16px; max-width: 50%;">Servicio de Gps</span>
+            <span style="color: #6c757d; font-size: 16px; text-align: right;">$ {{ getAbsoluteAmount(data?.gpsService) }}</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="color: #6c757d; font-size: 16px; max-width: 50%;">Seguro</span>
+            <span style="color: #6c757d; font-size: 16px; text-align: right;">$ {{ getAbsoluteAmount(data?.insurance) }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="data && (status === 'Pagado' || status === 'Pago por Validar' || status === 'Rechazado')" style="display: flex; flex-direction: column; gap: 10px; overflow-y: auto; padding-bottom: 10px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="color: #6c757d; font-size: 16px; max-width: 50%;">Fecha y hora del movimiento</span>
+          <span style="color: #6c757d; font-size: 16px; text-align: right;">{{ getFormattedDateTime() }}</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="color: #6c757d; font-size: 16px; max-width: 50%;">Tipo de operación</span>
+          <span style="color: #6c757d; font-size: 16px; text-align: right;">{{ data?.operationType }}</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="color: #6c757d; font-size: 16px; max-width: 50%;">Cód. de Operación</span>
+          <span style="color: #6c757d; font-size: 16px; text-align: right;">{{ data?.operationCode }}</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+          <span style="color: #6c757d; font-size: 16px; max-width: 50%;">Descripción</span>
+          <div style="display: flex; flex-direction: column; color: #6c757d; font-size: 16px; text-align: right; margin-left: 20px; word-wrap: break-word; max-width: 45%;">
+            <span>{{ data?.description }}</span>
+          </div>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="color: #6c757d; font-size: 16px; max-width: 50%;">Monto</span>
+          <div style="display: flex; align-items: center;">
+            <div style="flex: 1; text-align: right;">
+              <span style="color: #6c757d; font-size: 16px; text-align: right;">$ {{ getAbsoluteAmount(data?.amount) }}</span>
+            </div>
+            <div style="display: flex; align-items: center; margin-left: 5px;">
+              <svg *ngIf="!showDetails" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" (click)="toggleDetails()">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+              <svg *ngIf="showDetails" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" (click)="toggleDetails()">
+                <polyline points="18 15 12 9 6 15"></polyline>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="showDetails" style="display: flex; flex-direction: column; gap: 10px;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="color: #6c757d; font-size: 16px; max-width: 50%;">Pago Financiado</span>
+            <span style="color: #6c757d; font-size: 16px; text-align: right;">$ {{ getAbsoluteAmount(data?.financedPayment) }}</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="color: #6c757d; font-size: 16px; max-width: 50%;">Inicial Fraccionado</span>
+            <span style="color: #6c757d; font-size: 16px; text-align: right;">$ {{ getAbsoluteAmount(data?.fractionatedInitial) }}</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="color: #6c757d; font-size: 16px; max-width: 50%;">Servicio de Gps</span>
+            <span style="color: #6c757d; font-size: 16px; text-align: right;">$ {{ getAbsoluteAmount(data?.gpsService) }}</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="color: #6c757d; font-size: 16px; max-width: 50%;">Seguro</span>
+            <span style="color: #6c757d; font-size: 16px; text-align: right;">$ {{ getAbsoluteAmount(data?.insurance) }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="paying" style="display: flex; flex-direction: column; gap: 10px; overflow-y: auto; padding-bottom: 10px;">
+      <ng-container *ngIf="paymentForm as form">
+        <form [formGroup]="form" class="d-flex flex-column w-100">
+          <div style="text-align: center; margin: 20px 0 10px 0;">
+            <h4 class="m-0 fw-medium" style="font-size: 19px; color: #000;">Confirmar pago de Inicial</h4>
+            <p style="color: #6c757d; font-size: 16px; margin: 5px 0;">{{ extractPaymentDescription(data?.description, true) }}</p>
+          </div>
+          <div style="background-color: white; padding: 15px; border-radius: 8px; display: flex; align-items: center; margin-bottom: 10px;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="#d3d3d3" stroke="#d3d3d3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
+            </svg>
+            <div style="margin-left: 10px;">
+              <span style="color: #6c757d; font-size: 16px;">Monto</span>
+              <p style="color: #6c757d; font-size: 16px; margin: 5px 0;">$ {{ getAbsoluteAmount(data?.amount) }}</p>
+              <p style="color: #6c757d; font-size: 16px; margin: 0;">{{ extractPaymentDescription(data?.description, false, true) }}</p>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 10px; padding: 0;">
+            <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
+              <button
+                *ngFor="let payment of paymentTypeListaFiltered"
+                class="d-flex flex-row gap-2 align-items-center justify-content-center rounded"
+                type="button"
+                style="height: 50px; width: 120px; border: 1px solid #ccc; background-color: white; cursor: pointer; font-size: 14px; padding: 5px;"
+                [disabled]="disablePaymentMethods"
+                [class.border]="methodSelected?.description !== payment.description"
+                [style.background-color]="methodSelected?.description === payment.description ? '#EBF3FF' : 'transparent'"
+                (click)="onMedioPago(payment)"
+              >
+                <img
+                  [src]="payment.pathPicture"
+                  style="width: 80px; height: auto; object-fit: contain;"
+                  alt="Pay Method"
+                />
+              </button>
+            </div>
+          </div>
+        </form>
+      </ng-container>
+    </div>
+
+    <div *ngIf="!isLoading" style="display: flex; justify-content: center; gap: 10px; margin-top: 10px; padding-top: 10px;">
+      <button *ngIf="!confirming && status !== 'Pagado' && status !== 'Pago por Validar' && status !== 'Rechazado' && !isFutureMonthPayment()" type="button" style="background-color: #ff9800; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer;" (click)="onCancel()">Cancelar</button>
+      <button *ngIf="!paying && !confirming && status !== 'Pagado' && status !== 'Pago por Validar' && status !== 'Rechazado' && !isFutureMonthPayment()" type="button" style="background-color: #ff9800; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer;" (click)="onPay()">Pagar</button>
+      <button *ngIf="paying" type="button" style="background-color: #ff9800; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer;" (click)="onConfirm()" [disabled]="!methodSelected || !paymentConfirmedFlag">Confirmar</button>
+    </div>
+  </div>
+</div>

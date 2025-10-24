@@ -1,0 +1,155 @@
+<div class="text-center bg-body-tertiary overflow-hidden py-5 img-bg d-flex align-items-center">
+	<div class="container h-100">
+		<div class="col-md-6 p-lg-5 mx-auto">
+			<h1 class="cl-white">{{ lang.title }}</h1>
+			<h3 class="fw-normal cl-white fs-6">
+				{{ lang.description }}
+			</h3>
+		</div>
+	</div>
+</div>
+
+<div class="d-flex flex-column gap-5 mt-5 container-init-app">
+	<article
+		class="d-flex flex-column flex-md-row justify-content-center align-items-center"
+		style="column-gap: 7rem; row-gap: 2rem"
+	>
+		<picture
+			class="rounded-circle img-card"
+			style="background-image: url('https://staticv1.inclub.site/images/triunfar.png')"
+		></picture>
+		<div class="d-flex flex-column" style="max-width: 446px">
+			<span class="text-uppercase fs-6 fw-medium text-secondary">{{ lang.sections[0].pre }}</span>
+			<h4 class="m-0 fs-4 fw-medium text-black test-start">{{ lang.sections[0].title }}</h4>
+			<p class="m-0 fs-6 cl-muted mt-2 fw-normal">
+				{{ lang.sections[0].content }}
+			</p>
+		</div>
+	</article>
+	<article
+		class="d-flex flex-column flex-md-row-reverse justify-content-center align-items-center"
+		style="column-gap: 7rem; row-gap: 2rem"
+	>
+		<picture
+			class="rounded-circle img-card"
+			style="background-image: url('https://staticv1.inclub.site/images/celebran.png')"
+		></picture>
+		<div class="d-flex flex-column" style="max-width: 446px">
+			<span class="text-uppercase fs-6 fw-medium text-secondary">{{ lang.sections[1].pre }}</span>
+			<h4 class="m-0 fs-4 fw-medium text-black test-start">{{ lang.sections[1].title }}</h4>
+			<p class="m-0 fs-6 cl-muted mt-2 fw-normal">
+				{{ lang.sections[1].content }}
+			</p>
+		</div>
+	</article>
+	<article
+		class="d-flex flex-column flex-md-row justify-content-center align-items-center"
+		style="column-gap: 7rem; row-gap: 2rem"
+	>
+		<picture
+			class="rounded-circle img-card"
+			style="background-image: url('https://staticv1.inclub.site/images/oportunities-1.png')"
+		></picture>
+
+		<div class="d-flex flex-column" style="max-width: 446px">
+			<span class="text-uppercase fs-6 fw-medium text-secondary">{{ lang.sections[2].pre }}</span>
+			<h4 class="m-0 fs-4 fw-medium text-black test-start">{{ lang.sections[2].title }}</h4>
+			<p class="m-0 fs-6 cl-muted mt-2 fw-normal">
+				{{ lang.sections[2].content }}
+			</p>
+		</div>
+	</article>
+</div>
+
+<div class="text-center py-5" style="background-color: #111111">
+	<div class="container h-100">
+		<div class="col-md-6 mb-3 px-lg-5 pb-3 mx-auto">
+			<span class="fs-5 fw-bold text-white">{{ lang.inspiration.subtitle }}</span>
+			<h2 class="fw-bold fs-1 mb-3 text-white">{{ lang.inspiration.title }}</h2>
+		</div>
+
+		<ngb-carousel
+			[interval]="3000"
+			[pauseOnHover]="false"
+			[pauseOnFocus]="false"
+			[showNavigationArrows]="false"
+			[showNavigationIndicators]="false"
+			class="d-xl-none"
+		>
+			<ng-template ngbSlide>
+				<div class="w-100 d-flex justify-content-center align-items-center">
+					<app-testimonial-card
+						class="mx-auto"
+						urlImage="https://staticv1.inclub.site/images/comunity-1.png"
+						[text]="lang.inspiration.testimonials[0].text"
+						[name]="lang.inspiration.testimonials[0].name"
+						[since]="lang.inspiration.testimonials[0].since"
+					/>
+				</div>
+			</ng-template>
+			<ng-template ngbSlide>
+				<div class="w-100 d-flex justify-content-center align-items-center">
+					<app-testimonial-card
+						class="mx-auto"
+						urlImage="https://staticv1.inclub.site/images/comunity-2.png"
+						[text]="lang.inspiration.testimonials[1].text"
+						[name]="lang.inspiration.testimonials[1].name"
+						[since]="lang.inspiration.testimonials[1].since"
+					/>
+				</div>
+			</ng-template>
+			<ng-template ngbSlide>
+				<div class="w-100 d-flex justify-content-center align-items-center">
+					<app-testimonial-card
+						class="mx-auto"
+						urlImage="https://staticv1.inclub.site/images/comunity-3.png"
+						[text]="lang.inspiration.testimonials[2].text"
+						[name]="lang.inspiration.testimonials[2].name"
+						[since]="lang.inspiration.testimonials[2].since"
+					/>
+				</div>
+			</ng-template>
+			<ng-template ngbSlide>
+				<div class="w-100 d-flex justify-content-center align-items-center">
+					<app-testimonial-card
+						class="mx-auto"
+						urlImage="https://staticv1.inclub.site/images/comunity-4.png"
+						[text]="lang.inspiration.testimonials[3].text"
+						[name]="lang.inspiration.testimonials[3].name"
+						[since]="lang.inspiration.testimonials[3].since"
+					/>
+				</div>
+			</ng-template>
+		</ngb-carousel>
+		<div class="d-none d-xl-flex flex-row overflow-y-visible justify-content-center gap-3 w-100">
+			<app-testimonial-card
+				class="mx-auto"
+				urlImage="https://staticv1.inclub.site/images/comunity-1.png"
+				[text]="lang.inspiration.testimonials[0].text"
+				[name]="lang.inspiration.testimonials[0].name"
+				[since]="lang.inspiration.testimonials[0].since"
+			/>
+			<app-testimonial-card
+				class="mx-auto"
+				urlImage="https://staticv1.inclub.site/images/comunity-2.png"
+				[text]="lang.inspiration.testimonials[1].text"
+				[name]="lang.inspiration.testimonials[1].name"
+				[since]="lang.inspiration.testimonials[1].since"
+			/>
+			<app-testimonial-card
+				class="mx-auto"
+				urlImage="https://staticv1.inclub.site/images/comunity-3.png"
+				[text]="lang.inspiration.testimonials[2].text"
+				[name]="lang.inspiration.testimonials[2].name"
+				[since]="lang.inspiration.testimonials[2].since"
+			/>
+			<app-testimonial-card
+				class="mx-auto"
+				urlImage="https://staticv1.inclub.site/images/comunity-4.png"
+				[text]="lang.inspiration.testimonials[3].text"
+				[name]="lang.inspiration.testimonials[3].name"
+				[since]="lang.inspiration.testimonials[3].since"
+			/>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,21 @@
+/* secciones superiores */
+.section { width: 100%; }
+.section--header { background:#fff; border-bottom: 1px solid rgba(0,0,0,.06); }
+.section--timer  { background: transparent; }
+
+/* grilla principal */
+.main-grid .container{
+  max-width:1120px;
+  margin:0 auto;
+  padding: 18px 16px 8px;
+  display:grid;
+  grid-template-columns: 1.2fr .8fr;
+  gap: 24px;
+}
+.col-left { min-width: 0; }
+.col-right{ display:flex; justify-content:flex-end; }
+
+/* bloque de depuración existente */
+.checkout { padding: 16px; }
+.payload { background: #111; color: #0f0; padding: 12px; border-radius: 8px; max-height: 260px; overflow: auto; }
+.actions { margin-top: 12px; display: flex; gap: 8px; }

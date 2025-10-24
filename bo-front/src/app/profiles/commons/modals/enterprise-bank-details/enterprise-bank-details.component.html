@@ -1,0 +1,79 @@
+
+<div class="loader" *ngIf="isLoading">
+  <i class="pi pi-spin pi-spinner" style="font-size: 3rem;"></i>
+</div>
+<div  *ngIf="!isLoading" class="container" >
+
+  <h5 class="fw-bold">Información de la empresa</h5>
+  <p class="text-muted mb-3">Datos importantes que te pueden servir.</p>
+
+  <div class="row gy-3">
+    <p class="fw-bold mb-1">Datos de la empresa</p>
+
+    <div class="col-md-6 mt-0">
+      <div class="bg-light p-2 rounded">
+        <span class="fs-12 cl-muted">Razón social</span>
+        <div class="fs-6 mb-2 cl-muted">{{ company?.companyName }}</div>
+      </div>
+    </div>
+
+    <div class="col-md-6 mt-0">
+      <div class="bg-light p-2 rounded">
+        <span class="fs-12 cl-muted">RUC</span>
+        <div class="fs-6 mb-2 cl-muted">{{ company?.ruc }}</div>
+      </div>
+    </div>
+  </div>
+  <div class="row gy-3 mt-2">
+    <p class="fw-bold mb-0">Datos del banco a debitar</p>
+    <div class="col-md-6 mt-2"
+         *ngFor="let account of bussinesAccounts">
+      <div class="bg-light p-2  rounded d-flex flex-column justify-content-between position-relative">
+        <span class="fs-12 cl-muted">{{ account.description }}</span>
+        <div class="fs-6 mb-2 cl-muted">{{ account.accountNumber }}</div>
+        <div class="position-absolute cursor-pointer"
+             style="top: 8px; right: 8px;"
+             (click)="copyToClipboard(account.accountNumber)">
+          <i *ngIf="copiedAccount !== account.accountNumber"
+             class="pi pi-copy text-primary"
+             style="font-size: 1.2rem;"></i>
+          <span *ngIf="copiedAccount === account.accountNumber"
+                class="text-success fs-12">Copiado</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row gy-3 mt-2">
+    <p class="fw-bold mb-0">Tipo de cambio</p>
+
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="bg-light p-2 rounded">
+            <span class="fs-12 cl-muted">Compra</span>
+            <div class="fs-6 mb-0 cl-muted">{{exchangePurchase}}</div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="bg-light p-2 rounded">
+            <span class="fs-12 cl-muted">Venta</span>
+            <div class="fs-6 mb-0 cl-muted">{{exchangeSale}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="alert alert-info d-flex flex-column flex-sm-row gap-2 align-items-center text-center text-sm-start p-3"
+           role="alert">
+        <mat-icon class="mt-2 cl-muted fs-5">schedule</mat-icon>
+        <span class="fw-normal fs-6 cl-muted"> {{ formattedDate }}</span>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+

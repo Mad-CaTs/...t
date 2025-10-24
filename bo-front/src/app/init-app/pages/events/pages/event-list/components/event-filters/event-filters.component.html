@@ -1,0 +1,45 @@
+<section class="event-filters">
+  <div class="tabs" role="tablist" aria-label="Filtros de eventos">
+    <button
+      class="tab tab--favorites"
+      [class.active]="selectedTab === 'favorites'"
+      [attr.aria-selected]="selectedTab === 'favorites'"
+      (click)="selectTab('favorites')">
+      <img src="assets/icons/events/evento_favorito.svg" alt="Favoritos" class="tab-icon" />
+      <span>Favoritos</span>
+    </button>
+
+    <button
+      class="tab tab--past"
+      [class.active]="selectedTab === 'past'"
+      [attr.aria-selected]="selectedTab === 'past'"
+      (click)="selectTab('past')">
+      <img src="assets/icons/events/evento_pasado.svg" alt="Eventos pasados" class="tab-icon" />
+      <span>Eventos pasados</span>
+    </button>
+
+    <button
+      class="tab tab--upcoming"
+      [class.active]="selectedTab === 'upcoming'"
+      [attr.aria-selected]="selectedTab === 'upcoming'"
+      (click)="selectTab('upcoming')">
+      <img src="assets/icons/events/proximo_evento.svg" alt="Próximos eventos" class="tab-icon" />
+      <span>Próximos eventos</span>
+    </button>
+  </div>
+
+  <div class="event-list">
+    <app-event-card
+      *ngFor="let event of events"
+      [imageUrl]="event.imageUrl"
+      [type]="event.type"
+      [title]="event.title"
+      [date]="event.date"
+      [price]="event.price"
+      [isMainEvent]="event.isMainEvent"
+      buttonText="Comprar"
+      [showBuy]="selectedTab !== 'past'"
+      (buy)="onBuy(event)">
+    </app-event-card>
+  </div>
+</section>

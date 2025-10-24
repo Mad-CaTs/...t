@@ -1,0 +1,10 @@
+<app-modal-payment-bank-component
+	[data]="getInputData"
+	[pkgDetail]="selectedPackageService.selectedPackageDetail"
+	[bussinesAccounts]="bussinesAccounts"
+	[companyName]="companyName"
+	[methodSelected]="methodSelected"
+	(onCloseModal)="closeModal()"
+	(onAddVouchers)="addVouchers($event)"
+>
+</app-modal-payment-bank-component>

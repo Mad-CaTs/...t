@@ -1,0 +1,29 @@
+<div
+	(click)="onClick()"
+	class="cursor-pointer d-flex align-items-center border rounded-3 p-3 mb-3 shadow-sm bg-white"
+	[class.border-primary]="selected"
+	[class.bg-light]="selected"
+>
+	<div
+		class="d-flex align-items-center justify-content-center rounded-circle bg-primary text-white me-3"
+		style="width: 48px; height: 48px"
+	>
+		<i class="bi bi-geo-alt-fill fs-5"></i>
+	</div>
+
+	<div class="flex-grow-1">
+		<div class="fw-semibold text-dark">
+			{{ sucursal.tags?.alt_name || sucursal.tags?.name || sucursal.tags?.brand }}
+		</div>
+		<div class="text-muted small">
+			{{ sucursal?.tags?.['addr:street'] }}
+		</div>
+	</div>
+
+	<div
+		class="rounded-circle border d-flex align-items-center justify-content-center"
+		style="width: 20px; height: 20px"
+	>
+		<div *ngIf="selected" class="bg-primary rounded-circle" style="width: 10px; height: 10px"></div>
+	</div>
+</div>

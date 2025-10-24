@@ -1,0 +1,98 @@
+<div class="summary-card">
+  <div class="chip">{{ eventType }}</div>
+  <h3 class="title">{{ payload?.eventName || 'Evento' }}</h3>
+
+  <div class="row meta">
+    <div class="meta__left">Fecha del evento</div>
+    <div class="meta__right link">{{ eventDateLink }}</div>
+  </div>
+
+  <div class="row meta">
+    <div class="meta__left with-icon">
+      <ng-container *ngIf="!isVirtual">
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+          <path d="M12 22s8-6.2 8-12a8 8 0 1 0-16 0c0 5.8 8 12 8 12z" fill="none" stroke="currentColor" stroke-width="2"/>
+          <circle cx="12" cy="10" r="3" fill="none" stroke="currentColor" stroke-width="2"/>
+        </svg>
+      </ng-container>
+      {{ venueLabel }}
+    </div>
+  </div>
+
+  <div class="section-title">
+    <span>Mi compra</span>
+    <span class="bubble">{{ badgeCount }}</span>
+  </div>
+
+  <ul class="lines" *ngIf="lines.length; else empty">
+    <li class="item" *ngFor="let l of lines">
+      <ng-container *ngIf="l['packageId'] || l['packageName']; else single">
+        <div class="left">
+          <span class="pkg-title">{{ l.quantity }} × paquete - {{ l['packageName'] }}</span>
+          <div class="pkg-desc">{{ l['description'] }} ({{ l.zoneName }})</div>
+        </div>
+        <strong>S/ {{ l.subtotal | number:'1.2-2' }}</strong>
+      </ng-container>
+      <ng-template #single>
+        <div class="left">
+          <span>{{ l.quantity }} × entrada ({{ l.zoneName }})</span>
+        </div>
+        <strong>S/ {{ l.subtotal | number:'1.2-2' }}</strong>
+      </ng-template>
+    </li>
+
+    <li class="item" *ngIf="extraFee > 0">
+      <span>Compra reembolsable</span>
+      <strong>S/ {{ extraFee | number:'1.2-2' }}</strong>
+    </li>
+  </ul>
+  <ng-template #empty><p class="empty">No hay ítems.</p></ng-template>
+    <!-- Nota de posible comisión -->
+  <div class="fee-note" *ngIf="showFeeNotice">
+    <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+      <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"></circle>
+      <line x1="12" y1="8" x2="12" y2="12" stroke="currentColor" stroke-width="2"></line>
+      <circle cx="12" cy="16" r="1" fill="currentColor"></circle>
+    </svg>
+    <span>{{ computedFeeNotice }}</span>
+  </div>
+
+  <!-- Descuento aplicado (encima de Total) -->
+  <div class="discount-block" *ngIf="hasDiscount">
+    <div class="row small">
+      <span>Descuento ({{ discountPercent | number:'1.0-0' }}% desc.)</span>
+      <strong class="neg">- S/ {{ discountAmount | number:'1.2-2' }}</strong>
+    </div>
+    <div class="row small muted">
+      <span>Subtotal</span>
+      <span>S/ {{ originalSubtotal | number:'1.2-2' }}</span>
+    </div>
+  </div>
+
+  <div class="total" [class.no-top-border]="hasDiscount">
+    <span>Total ({{ tickets }} entrada{{ tickets === 1 ? '' : 's' }})</span>
+    <strong>S/ {{ total | number:'1.2-2' }}</strong>
+  </div>
+
+
+
+  <!-- Checkboxes -->
+  <div class="agreements" *ngIf="requireTerms || showNewsOptIn">
+    <label class="chk">
+      <input type="checkbox" [checked]="acceptTerms" (change)="toggleTerms($event)" />
+      <span>He leído y acepto los Términos y Condiciones</span>
+    </label>
+
+    <label class="chk" *ngIf="showNewsOptIn">
+      <input type="checkbox" [checked]="newsOptIn" (change)="toggleNews($event)" />
+      <span>¿Usted desea que Inclub envíe información sobre eventos y/o promociones que ofrece?</span>
+    </label>
+  </div>
+
+  <div class="btn-row">
+    <button *ngIf="canGoBack" class="btn secondary" (click)="back.emit()">Atrás</button>
+    <button class="btn primary" [disabled]="isContinueDisabled" (click)="onConfirm()">Continuar</button>
+  </div>
+
+  <button class="btn link w-100" (click)="onCancel()">Cancelar mi compra</button>
+</div>

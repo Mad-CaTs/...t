@@ -1,0 +1,80 @@
+<app-modal [title]="title">
+	<div class="d-flex flex-column gap-3" *ngIf="isDetail && data">
+		<div class="d-flex flex-row gap-4">
+			<span class="fw-normal cl-muted fs-6 w-100">País de Operaciones</span>
+			<span class="fw-medium text-black fs-6 w-100">{{ data.opCountry }}</span>
+		</div>
+		<div class="d-flex flex-row gap-4">
+			<span class="fw-normal cl-muted fs-6 w-100">Nombre del banco</span>
+			<span class="fw-medium text-black fs-6 w-100">{{ data.bankName }}</span>
+		</div>
+		<div class="d-flex flex-row gap-4">
+			<span class="fw-normal cl-muted fs-6 w-100">Dirección del banco</span>
+			<span class="fw-medium text-black fs-6 w-100">{{ data.bankAddress }}</span>
+		</div>
+		<div class="d-flex flex-row gap-4">
+			<span class="fw-normal cl-muted fs-6 w-100">Código SWIFT</span>
+			<span class="fw-medium text-black fs-6 w-100">-</span>
+		</div>
+		<div class="d-flex flex-row gap-4">
+			<span class="fw-normal cl-muted fs-6 w-100">Código IBAN</span>
+			<span class="fw-medium text-black fs-6 w-100">-</span>
+		</div>
+		<div class="d-flex flex-row gap-4">
+			<span class="fw-normal cl-muted fs-6 w-100">Número de cuenta</span>
+			<span class="fw-medium text-black fs-6 w-100">{{ data.accountNumber }}</span>
+		</div>
+		<div class="d-flex flex-row gap-4">
+			<span class="fw-normal cl-muted fs-6 w-100">Código CCI</span>
+			<span class="fw-medium text-black fs-6 w-100">{{ data.cci }}</span>
+		</div>
+		<div class="d-flex flex-row gap-4">
+			<span class="fw-normal cl-muted fs-6 w-100">Tipo de Cuenta</span>
+			<span class="fw-medium text-black fs-6 w-100">Ahorros</span>
+		</div>
+		<div class="d-flex flex-row gap-4">
+			<span class="fw-normal cl-muted fs-6 w-100">Nombre del Titular</span>
+			<span class="fw-medium text-black fs-6 w-100">{{ data.ownerFullname }}</span>
+		</div>
+		<div class="d-flex flex-row gap-4">
+			<span class="fw-normal cl-muted fs-6 w-100">Número de Contribuyente</span>
+			<span class="fw-medium text-black fs-6 w-100">-</span>
+		</div>
+		<div class="d-flex flex-row gap-4">
+			<span class="fw-normal cl-muted fs-6 w-100">Razón Social</span>
+			<span class="fw-medium text-black fs-6 w-100">-</span>
+		</div>
+		<div class="d-flex flex-row gap-4">
+			<span class="fw-normal cl-muted fs-6 w-100">Dirección Fiscal</span>
+			<span class="fw-medium text-black fs-6 w-100">-</span>
+		</div>
+		<div class="d-flex flex-row gap-4">
+			<span class="fw-normal cl-muted fs-6 w-100">Estado</span>
+			<span class="fw-medium text-black fs-6 w-100">Activo</span>
+		</div>
+		<div class="d-flex flex-row justify-content-center gap-4">
+			<button class="btn btn-outline-secondary" type="button" (click)="instanceModal.close()">
+				Cancelar
+			</button>
+			<button class="btn btn-secondary" type="button">Enviar</button>
+		</div>
+	</div>
+	<div class="d-flex flex-column gap-3" *ngIf="!isDetail && data">
+		<mat-icon
+			fontIcon="delete_outline"
+			class="text-danger m-auto"
+			style="font-size: 64px; width: 64px; height: 64px"
+		/>
+		<h4 class="m-0 fs-5 text-center text-black">¿Desea eliminar la cuenta ?</h4>
+		<div class="d-flex flex-row justify-content-center gap-4">
+			<span class="fw-normal cl-muted fs-6">Número de cuenta</span>
+			<span class="fw-medium text-black fs-6">{{ data.accountNumber }}</span>
+		</div>
+		<div class="d-flex flex-row justify-content-center gap-4">
+			<button class="btn btn-outline-secondary" type="button" (click)="instanceModal.close()">
+				Cancelar
+			</button>
+			<button class="btn btn-secondary" type="button" (click)="instanceModal.close()">Eliminar</button>
+		</div>
+	</div>
+</app-modal>

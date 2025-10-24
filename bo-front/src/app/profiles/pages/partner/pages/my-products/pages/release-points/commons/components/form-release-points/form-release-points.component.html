@@ -1,0 +1,64 @@
+<!--
+<form [formGroup]="form" class="form-release-points">
+	<div class="alert alert-info d-flex flex-row gap-2 mt-4 align-items-center w-100" role="alert">
+		<mat-icon fontIcon="info"></mat-icon>
+		<span style="font-size: 14px">Usted puede liberar {{ maxPoints }} USD a usar.</span>
+	</div>
+
+	<app-input
+		[form]="form"
+		controlName="pointsReleased"
+		label="Usar USD rewards"
+		type="number"
+		placeholder="0pts"
+		class="w-100"
+	></app-input>
+
+	<button
+		class="btn btn-secondary w-75"
+		type="submit"
+		[disabled]="form.invalid || isLoading"
+		(click)="onReleasePoints()"
+	>
+		<span
+			*ngIf="isLoading"
+			class="spinner-border spinner-border-sm"
+			role="status"
+			aria-hidden="true"
+		></span>
+		Confirmar
+	</button>
+</form>
+-->
+
+<div class="alert alert-info d-flex flex-row gap-2 mt-4 align-items-center w-100" role="alert">
+	<mat-icon fontIcon="info"></mat-icon>
+	<span style="font-size: 14px">Ud Tiene {{ maxPoints }} USD rewards a usar.</span>
+</div>
+
+<p-dialog
+	styleClass="dialog-success"
+	[baseZIndex]="3"
+	[draggable]="false"
+	[modal]="true"
+	[(visible)]="showDialogSuccessProcess"
+>
+	<div class="container-icon">
+		<img src="/assets/icons/check-circle.svg" alt="Check" />
+	</div>
+	<p>
+		<strong>Confirmación exitosa</strong>
+	</p>
+	<p>Tus USD rewards se registro de manera correcta. Ahora podrás disfrutar de sus beneficios.</p>
+
+	<div class="d-flex justify-content-center">
+		<button
+			color="accent"
+			type="button"
+			(click)="showDialogSuccessProcess = false"
+			class="btn btn-secondary w-50"
+		>
+			Entendido
+		</button>
+	</div>
+</p-dialog>
