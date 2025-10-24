@@ -1,13 +1,9 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ApiResponse } from '@shared/services/location.service';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.dev';
-import { 
-  PagedData,
-  PaymentListView, 
-  PaymentSearchParams, 
-  RejectPaymentRequest } from '@app/manage-prize/models/payments/payment.model';
+import { IPaymentSearchParams, IRejectPaymentRequest, IRejectPaymentResponse } from '@app/manage-prize/interface/payment-request';
+import { IPaymentListViewResponse } from '@app/manage-prize/interface/payment-list-view';
 
 const BASE_URL = `${environment.BonusApi}/car-bonus/payments`;
 
@@ -20,45 +16,18 @@ export class PaymentService {
   private endpointCorrect = 'correct';
   constructor(private http: HttpClient) {}
 
-  createPayment(paymentData: FormData): Observable<ApiResponse<string>> {
-    return this.http.post<ApiResponse<string>>(BASE_URL, paymentData);
-  }
-  approvePayment(paymentId: string): Observable<ApiResponse<any>> {
-    return this.http.put<ApiResponse<any>>(`${BASE_URL}/${paymentId}/${this.endpointApprove}`, {});
-  }
-  rejectPayment(paymentId: string, request: RejectPaymentRequest): Observable<ApiResponse<any>> {
-    return this.http.put<ApiResponse<any>>(`${BASE_URL}/${paymentId}/${this.endpointReject}`, request);
-  }
-  correctRejectedPayment(
-    paymentId: string, 
-    voucherFile: File, 
-    operationNumber: string, 
-    note: string
-  ): Observable<ApiResponse<any>> {
-    const formData = new FormData();
-    formData.append('voucherFile', voucherFile);
-    formData.append('operationNumber', operationNumber);
-    formData.append('note', note);
-
-    return this.http.put<ApiResponse<any>>(
-      `${BASE_URL}/${paymentId}/${this.endpointCorrect}`, 
-      formData
-    );
-  }
-
-  getPendingPayments(params: PaymentSearchParams): Observable<ApiResponse<PagedData<PaymentListView>>> {
+  getPendingPayments(params: IPaymentSearchParams): Observable<IPaymentListViewResponse> {
     let httpParams = new HttpParams();
     
     if (params.member) {
       httpParams = httpParams.set('member', params.member);
     }
-    if (params.bonusType !== undefined && params.bonusType !== null) {
-      httpParams = httpParams.set('bonusType', params.bonusType.toString());
+    if (params.bonusType) {
+      httpParams = httpParams.set('bonusType', params.bonusType);
     }
     if (params.paymentDate) {
       httpParams = httpParams.set('paymentDate', params.paymentDate);
     }
-    
     if (params.page !== undefined) {
       httpParams = httpParams.set('page', params.page.toString());
     }
@@ -72,19 +41,18 @@ export class PaymentService {
       httpParams = httpParams.set('asc', params.asc.toString());
     }
 
-    return this.http.get<ApiResponse<PagedData<PaymentListView>>>(
-      `${BASE_URL}/${this.endpointList}`, 
-      { params: httpParams }
-    );
+    return this.http.get<IPaymentListViewResponse>(`${BASE_URL}/${this.endpointList}`, 
+      { params: httpParams });
   }
-  exportPendingPayments(params: PaymentSearchParams): Observable<Blob> {
+
+  exportPendingPayments(params: IPaymentSearchParams): Observable<Blob> {
     let httpParams = new HttpParams();
     
     if (params.member) {
       httpParams = httpParams.set('member', params.member);
     }
-    if (params.bonusType !== undefined && params.bonusType !== null) {
-      httpParams = httpParams.set('bonusType', params.bonusType.toString());
+    if (params.bonusType) {
+      httpParams = httpParams.set('bonusType', params.bonusType);
     }
     if (params.paymentDate) {
       httpParams = httpParams.set('paymentDate', params.paymentDate);
@@ -95,7 +63,26 @@ export class PaymentService {
       responseType: 'blob'
     });
   }
+
+  approvePayment(paymentId: string): Observable<IRejectPaymentResponse> {
+    return this.http.put<IRejectPaymentResponse>(`${BASE_URL}/${paymentId}/${this.endpointApprove}`, {});
+  }
+
+  rejectPayment(paymentId: string, request: IRejectPaymentRequest): Observable<IRejectPaymentResponse> {
+    return this.http.put<IRejectPaymentResponse>(`${BASE_URL}/${paymentId}/${this.endpointReject}`, request);
+  }
+
+  correctRejectedPayment(
+    paymentId: string, 
+    formData: FormData
+  ): Observable<IRejectPaymentResponse> {
+    return this.http.put<IRejectPaymentResponse>(
+      `${BASE_URL}/${paymentId}/${this.endpointCorrect}`, 
+      formData
+    );
+  }
 }
+
 
 
 

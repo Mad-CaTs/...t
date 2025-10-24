@@ -14,30 +14,31 @@ type Reason = { id: number | string; label: string };
   styleUrls: ['./modal-reject.component.scss'],
 })
 export class ModalRejectComponent {
-  /* Shell */
+
   @Input() show = true;
 
-  /* Header */
-  @Input() icon = 'bi bi-trash3'; // cualquier clase de Bootstrap Icons
+  @Input() icon = 'bi bi-trash3';
   @Input() title = 'Rechazar';
   @Input() subtitle = 'Al rechazar deberás indicar el motivo.';
 
-  /* Form */
+
   @Input() reasons: Reason[] = [];
   @Input() maxLength = 250;
   @Input() placeholder = 'e.j.: Detalla brevemente el motivo y la alternativa.';
 
-  /* Buttons */
+
   @Input() cancelLabel = 'Cancelar';
   @Input() confirmLabel = 'Rechazar';
+  
+  @Input() loading = false;
 
   @Output() close = new EventEmitter<void>();
   @Output() reject = new EventEmitter<{ reasonId: number | string; detail: string }>();
 
   selectedReasonId: number | string | null = null;
   detail = '';
-  loading = false;
 
+  
   trackByReason = (_: number, r: Reason) => r.id;
 
   get counter(): string {
@@ -59,16 +60,11 @@ export class ModalRejectComponent {
 
   onConfirm() {
     if (!this.canSubmit) return;
-    this.loading = true;
-    // Simula breve loading; en padres reales harás la llamada y luego setearás loading=false
-    setTimeout(() => {
-      this.loading = false;
-      this.reject.emit({
-        reasonId: this.selectedReasonId as number | string,
-        detail: this.detail.trim(),
-      });
-      this.onClose();
-    }, 0);
+    
+    this.reject.emit({
+      reasonId: this.selectedReasonId as number | string,
+      detail: this.detail.trim(),
+    });
   }
 
   @HostListener('document:keydown.escape')

@@ -1,22 +1,17 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Subject } from 'rxjs';
+import { finalize, takeUntil } from 'rxjs/operators';
 import { FilterGenericComponent, FilterGenericConfig, FilterExtraButton } from '@shared/components/filters/filter-generic/filter-generic.component';
 import { TableGenericComponent } from '@shared/components/tables/table-generic/table-generic.component';
 import { TablePaginatorComponent } from '@shared/components/tables/table-paginator/table-paginator.component';
 import { EmptyStateComponent } from '@app/event/components/shared/empty-state/empty-state.component';
-import { INITIAL_PAYMENTS_MOCK } from './mock';
 import { ModalDetailPreviewComponent, DetailItem } from '@app/manage-prize/components/modals/payments/modal-detail-preview/modal-detail-preview.component';
 import { ModalNotifyComponent } from '@shared/components/modals/modal-notify/modal-notify.component';
 import { ModalRejectComponent } from '@app/manage-prize/components/modals/payments/modal-reject/modal-reject.component';
-import { 
-  PaymentListView, 
-  PaymentSearchParams, 
-  BonusType 
-} from '@app/manage-prize/models/payments/payment.model';
-import { Subject } from 'rxjs';
 import { PaymentService } from '@app/manage-prize/services/payments/payment.service';
-import { finalize, takeUntil } from 'rxjs/operators';
-import * as saveAs from 'file-saver';
+import { IPaymentListView } from '@app/manage-prize/interface/payment-list-view';
+import { IPaymentSearchParams } from '@app/manage-prize/interface/payment-request';
 
 @Component({
   selector: 'app-initial-payments',
@@ -36,40 +31,46 @@ import * as saveAs from 'file-saver';
 })
 export class InitialPaymentsComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
+
   loading = false;
-  loadingExport = false;
+  loadingApprove = false;
+  loadingReject = false;
+
   showDetailModal = false;
   showNotify = false;
   showReject = false;
+
   notifyTitle = '';
   notifyMessage = '';
   notifyIconType: 'success' | 'info' | 'warning' | 'error' = 'success';
+
   modalTitle = 'Detalle de pago inicial';
   modalSubtitle = '';
   detailItems: DetailItem[] = [];
   detailPreviewSrc: string | null = null;
-  private selectedPayment: PaymentListView | null = null;
+
+  private selectedPayment: IPaymentListView | null = null;
 
   rejectionReasons: { id: number; label: string }[] = [
-  { id: 1, label: 'EL CÓDIGO DE OPERACIÓN ES INCORRECTO O NO EXISTE' },
-  { id: 2, label: 'PAGO POR BANCA MOVIL - FALTA COMISIÓN POR OPERACIÓN' },
-  { id: 3, label: 'PAGO POR BANCA POR INTERNET - FALTA COMISIÓN POR OPERACIÓN' },
-  { id: 4, label: 'PAGÓ POR AGENTE BCP LIMA - FALTA COMISIÓN POR OPERACIÓN' },
-  { id: 5, label: 'PAGÓ POR AGENTE BCP PROVINCIA - FALTA COMISIÓN POR OPERACIÓN' },
-  { id: 6, label: 'PAGÓ POR VENTANILLA BCP LIMA - FALTA COMISIÓN POR OPERACIÓN' },
-  { id: 7, label: 'PAGÓ POR VENTANILLA BCP PROVINCIA - FALTA COMISIÓN POR OPERACIÓN' },
-  { id: 8, label: 'PAGÓ POR CAJERO BCP - FALTA COMISIÓN POR OPERACIÓN' },
-  { id: 9, label: 'HIZO TRANSFERENCIA INTERBANCARIA' },
-  { id: 10, label: 'PAGÓ DESDE AGENTE INTERBANK' },
-  { id: 11, label: 'PAGÓ DESDE VENTANILLA INTERBANK LIMA' },
-  { id: 12, label: 'PAGÓ DESDE VENTANILLA INTERBANK PROVINCIA' },
-  { id: 13, label: 'PAGÓ DESDE CAJERO INTERBANK' },
-  { id: 14, label: 'LA CUENTA YAPE NO ESTA VINCULADA A UNA CUENTA DEL BCP' },
-  { id: 15, label: 'EL MONTO PAGADO NO COINCIDE CON LO QUE DEBIÓ PAGAR SEGÚN EL TIPO DE CAMBIO DEL DÍA' },
-  { id: 16, label: 'VOUCHER DUPLICADO' },
-  { id: 17, label: 'SU PAGO NO HA INGRESADO A LA CUENTA DE LA EMPRESA' },
-  { id: 18, label: 'OTROS' }
-];
+    { id: 1, label: 'EL CÓDIGO DE OPERACIÓN ES INCORRECTO O NO EXISTE' },
+    { id: 2, label: 'PAGO POR BANCA MOVIL - FALTA COMISIÓN POR OPERACIÓN' },
+    { id: 3, label: 'PAGO POR BANCA POR INTERNET - FALTA COMISIÓN POR OPERACIÓN' },
+    { id: 4, label: 'PAGÓ POR AGENTE BCP LIMA - FALTA COMISIÓN POR OPERACIÓN' },
+    { id: 5, label: 'PAGÓ POR AGENTE BCP PROVINCIA - FALTA COMISIÓN POR OPERACIÓN' },
+    { id: 6, label: 'PAGÓ POR VENTANILLA BCP LIMA - FALTA COMISIÓN POR OPERACIÓN' },
+    { id: 7, label: 'PAGÓ POR VENTANILLA BCP PROVINCIA - FALTA COMISIÓN POR OPERACIÓN' },
+    { id: 8, label: 'PAGÓ POR CAJERO BCP - FALTA COMISIÓN POR OPERACIÓN' },
+    { id: 9, label: 'HIZO TRANSFERENCIA INTERBANCARIA' },
+    { id: 10, label: 'PAGÓ DESDE AGENTE INTERBANK' },
+    { id: 11, label: 'PAGÓ DESDE VENTANILLA INTERBANK LIMA' },
+    { id: 12, label: 'PAGÓ DESDE VENTANILLA INTERBANK PROVINCIA' },
+    { id: 13, label: 'PAGÓ DESDE CAJERO INTERBANK' },
+    { id: 14, label: 'LA CUENTA YAPE NO ESTA VINCULADA A UNA CUENTA DEL BCP' },
+    { id: 15, label: 'EL MONTO PAGADO NO COINCIDE CON LO QUE DEBIÓ PAGAR SEGÚN EL TIPO DE CAMBIO DEL DÍA' },
+    { id: 16, label: 'VOUCHER DUPLICADO' },
+    { id: 17, label: 'SU PAGO NO HA INGRESADO A LA CUENTA DE LA EMPRESA' },
+    { id: 18, label: 'OTROS' }
+  ];
 
   filters: FilterGenericConfig[] = [
     { 
@@ -86,9 +87,9 @@ export class InitialPaymentsComponent implements OnInit, OnDestroy {
       label: 'Tipo de bono', 
       order: 2, 
       options: [
-        { label: 'Auto', value: BonusType.CAR.toString() },
-        { label: 'Viajes', value: BonusType.TRAVEL.toString() },
-        { label: 'Inmuebles', value: BonusType.PROPERTY.toString() }
+        { label: 'Auto', value: 'CAR' },
+        { label: 'Viajes', value: 'TRAVEL' },
+        { label: 'Inmuebles', value: 'PROPERTY' }
       ], 
       showAllOption: true 
     },
@@ -132,7 +133,8 @@ export class InitialPaymentsComponent implements OnInit, OnDestroy {
   ];
   
   imageKeys: string[] = ['voucherImageUrl'];
-  payments: PaymentListView[] = [];
+
+  payments: IPaymentListView[] = [];
   pageSize = 8;
   pageIndex = 0;
   totalElements = 0;
@@ -161,6 +163,7 @@ export class InitialPaymentsComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
+
   onValuesChange(values: Record<string, any>) {
     this.filterValues = {
       solicitante: values.solicitante ?? '',
@@ -177,6 +180,7 @@ export class InitialPaymentsComponent implements OnInit, OnDestroy {
     }
   }
 
+
   onPageChange(index: number) { 
     this.pageIndex = index - 1; 
     this.loadPayments();
@@ -188,20 +192,24 @@ export class InitialPaymentsComponent implements OnInit, OnDestroy {
     this.loadPayments();
   }
 
-  onDeny(payment: PaymentListView) {
-    this.selectedPayment = payment;
+
+  onDeny(payment: any) {
+    this.selectedPayment = this.payments.find(p => p.paymentId === payment.paymentId) || null;
     this.showReject = true;
   }
 
-  onAccept(payment: PaymentListView) {
-    this.selectedPayment = payment;
-    this.openDetailModal(payment);
+  onAccept(payment: any) {
+    this.selectedPayment = this.payments.find(p => p.paymentId === payment.paymentId) || null;
+    if (this.selectedPayment) {
+      this.openDetailModal(this.selectedPayment);
+    }
   }
+
 
   private loadPayments() {
     this.loading = true;
     
-    const params: PaymentSearchParams = {
+    const params: IPaymentSearchParams = {
       page: this.pageIndex,
       size: this.pageSize,
       sortBy: 'payment_date',
@@ -212,7 +220,7 @@ export class InitialPaymentsComponent implements OnInit, OnDestroy {
       params.member = this.filterValues.solicitante;
     }
     if (this.filterValues.bonoAsignado) {
-      params.bonusType = parseInt(this.filterValues.bonoAsignado) as BonusType;
+      params.bonusType = parseInt(this.filterValues.bonoAsignado) as any;
     }
     if (this.filterValues.fechaSolicitud) {
       params.paymentDate = this.filterValues.fechaSolicitud;
@@ -228,80 +236,98 @@ export class InitialPaymentsComponent implements OnInit, OnDestroy {
           if (response.result && response.data) {
             this.payments = response.data.content;
             this.totalElements = response.data.totalElements;
+          } else {
+            this.payments = [];
+            this.totalElements = 0;
           }
         },
         error: (error) => {
           console.error('Error loading payments:', error);
-          this.notifyTitle = 'Error';
-          this.notifyMessage = 'No se pudieron cargar los pagos';
-          this.notifyIconType = 'error';
-          this.showNotify = true;
+          this.payments = [];
+          this.totalElements = 0;
+          this.showNotifyMessage('Error', 'No se pudieron cargar los pagos', 'error');
         }
       });
   }
 
   private exportData() {
-    this.loadingExport = true;
-    
-    const params: PaymentSearchParams = {};
+    const params: IPaymentSearchParams = {};
     
     if (this.filterValues.solicitante) {
       params.member = this.filterValues.solicitante;
     }
     if (this.filterValues.bonoAsignado) {
-      params.bonusType = parseInt(this.filterValues.bonoAsignado) as BonusType;
+      params.bonusType = parseInt(this.filterValues.bonoAsignado) as any;
     }
     if (this.filterValues.fechaSolicitud) {
       params.paymentDate = this.filterValues.fechaSolicitud;
     }
 
     this.paymentService.exportPendingPayments(params)
-      .pipe(
-        takeUntil(this.destroy$),
-        finalize(() => this.loadingExport = false)
-      )
+      .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (blob) => {
           const fileName = `pagos_pendientes_${new Date().toISOString().slice(0, 10)}.xlsx`;
-          saveAs(blob, fileName);
+          const url = window.URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = fileName;
+          link.click();
+          window.URL.revokeObjectURL(url);
+          
+          this.showNotifyMessage('Éxito', 'Archivo exportado correctamente', 'success');
         },
         error: (error) => {
           console.error('Error exporting payments:', error);
-          this.notifyTitle = 'Error';
-          this.notifyMessage = 'No se pudo exportar el archivo';
-          this.notifyIconType = 'error';
-          this.showNotify = true;
+          this.showNotifyMessage('Error', 'No se pudo exportar el archivo', 'error');
         }
       });
   }
 
-  private openDetailModal(payment: PaymentListView) {
+  private openDetailModal(payment: IPaymentListView) {
     this.modalSubtitle = payment.operationNumber 
       ? `Código de operación: ${payment.operationNumber}` 
-      : '';
+      : 'Sin código de operación';
 
-    this.detailPreviewSrc = payment.voucherImageUrl;
+    this.detailPreviewSrc = payment.voucherImageUrl || null;
 
     const formatCurrency = (amount: number) => {
-      return new Intl.NumberFormat('en-US', {
+      return new Intl.NumberFormat('es-PE', {
         style: 'currency',
-        currency: 'USD'
+        currency: 'USD',
+        minimumFractionDigits: 2
       }).format(amount);
     };
 
     this.detailItems = [
       { 
+        label: 'Usuario socio', 
+        value: payment.username || '-'
+      },
+      { 
+        label: 'Solicitante', 
+        value: payment.memberFullName || '-'
+      },
+      { 
+        label: 'DNI', 
+        value: payment.nrodocument || '-'
+      },
+      { 
         label: 'Cód. de operación', 
-        value: payment.operationNumber, 
+        value: payment.operationNumber || '-', 
         copy: true 
       },
       { 
         label: 'Fecha de Pago', 
-        value: this.formatDate(payment.paymentDate) 
+        value: this.formatDateForDisplay(payment.paymentDate) 
+      },
+      { 
+        label: 'Tipo de bono', 
+        value: payment.bonusTypeName || '-'
       },
       { 
         label: 'N° de cuota', 
-        value: `Cuota ${payment.installmentNum}` 
+        value: `Cuota ${payment.installmentNum || 1}` 
       },
       { 
         label: 'Subtotal', 
@@ -321,11 +347,11 @@ export class InitialPaymentsComponent implements OnInit, OnDestroy {
       },
       { 
         label: 'Fecha de vencimiento', 
-        value: payment.dueDate ? this.formatDate(payment.dueDate) : '-' 
+        value: payment.dueDate ? this.formatDateForDisplay(payment.dueDate) : '-' 
       },
       { 
         label: 'Estado', 
-        value: payment.paymentStatusName || 'Pago por Validar', 
+        value: payment.paymentStatusName || 'Pendiente de revisión', 
         badge: 'info' 
       }
     ];
@@ -336,29 +362,30 @@ export class InitialPaymentsComponent implements OnInit, OnDestroy {
   onModalPrimary() {
     if (!this.selectedPayment) return;
     
-    this.loading = true;
+    this.loadingApprove = true;
     this.paymentService.approvePayment(this.selectedPayment.paymentId)
       .pipe(
         takeUntil(this.destroy$),
-        finalize(() => this.loading = false)
+        finalize(() => this.loadingApprove = false)
       )
       .subscribe({
         next: (response) => {
           if (response.result) {
             this.showDetailModal = false;
-            this.notifyTitle = 'Pago aprobado';
-            this.notifyMessage = 'El pago ha sido aprobado exitosamente';
-            this.notifyIconType = 'success';
-            this.showNotify = true;
-            this.loadPayments();
+            this.selectedPayment = null;
+            this.showNotifyMessage('Pago aprobado', 'El pago ha sido aprobado exitosamente', 'success');
+            this.loadPayments(); 
+          } else {
+            this.showNotifyMessage('Error', 'No se pudo aprobar el pago', 'error');
           }
         },
         error: (error) => {
           console.error('Error approving payment:', error);
-          this.notifyTitle = 'Error';
-          this.notifyMessage = 'No se pudo aprobar el pago';
-          this.notifyIconType = 'error';
-          this.showNotify = true;
+          this.showNotifyMessage(
+            'Error', 
+            error.error?.message || 'No se pudo aprobar el pago', 
+            'error'
+          );
         }
       });
   }
@@ -373,6 +400,7 @@ export class InitialPaymentsComponent implements OnInit, OnDestroy {
     this.selectedPayment = null;
   }
 
+
   onReject(evt: { reasonId: number | string; detail: string }) {
     if (!this.selectedPayment) return;
     
@@ -381,29 +409,34 @@ export class InitialPaymentsComponent implements OnInit, OnDestroy {
       detail: evt.detail
     };
 
-    this.loading = true;
+    this.loadingReject = true;
     this.paymentService.rejectPayment(this.selectedPayment.paymentId, request)
       .pipe(
         takeUntil(this.destroy$),
-        finalize(() => this.loading = false)
+        finalize(() => this.loadingReject = false)
       )
       .subscribe({
         next: (response) => {
           if (response.result) {
             this.showReject = false;
-            this.notifyTitle = 'Pago rechazado';
-            this.notifyMessage = 'Se ha notificado al usuario sobre el rechazo del pago';
-            this.notifyIconType = 'success';
-            this.showNotify = true;
-            this.loadPayments(); 
+            this.selectedPayment = null;
+            this.showNotifyMessage(
+              'Pago rechazado', 
+              'Se ha notificado al usuario sobre el rechazo del pago', 
+              'success'
+            );
+            this.loadPayments();
+          } else {
+            this.showNotifyMessage('Error', 'No se pudo rechazar el pago', 'error');
           }
         },
         error: (error) => {
           console.error('Error rejecting payment:', error);
-          this.notifyTitle = 'Error';
-          this.notifyMessage = 'No se pudo rechazar el pago';
-          this.notifyIconType = 'error';
-          this.showNotify = true;
+          this.showNotifyMessage(
+            'Error', 
+            error.error?.message || 'No se pudo rechazar el pago', 
+            'error'
+          );
         }
       });
   }
@@ -413,7 +446,23 @@ export class InitialPaymentsComponent implements OnInit, OnDestroy {
     this.selectedPayment = null;
   }
 
+
   private formatDate(dateString: string): string {
+    if (!dateString) return '-';
+    
+    try {
+      const date = new Date(dateString);
+      return new Intl.DateTimeFormat('es-PE', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+      }).format(date);
+    } catch (error) {
+      return dateString;
+    }
+  }
+
+  private formatDateForDisplay(dateString: string): string {
     if (!dateString) return '-';
     
     try {
@@ -423,11 +472,22 @@ export class InitialPaymentsComponent implements OnInit, OnDestroy {
         month: '2-digit',
         year: 'numeric',
         hour: '2-digit',
-        minute: '2-digit'
+        minute: '2-digit',
+        hour12: false
       }).format(date);
     } catch (error) {
       return dateString;
     }
+  }
 
+  private showNotifyMessage(
+    title: string, 
+    message: string, 
+    type: 'success' | 'info' | 'warning' | 'error'
+  ) {
+    this.notifyTitle = title;
+    this.notifyMessage = message;
+    this.notifyIconType = type;
+    this.showNotify = true;
   }
 }
