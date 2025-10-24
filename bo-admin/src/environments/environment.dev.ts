@@ -18,7 +18,7 @@ export const environment = {
 	SubscriptionApi: 'https://inclub-world-subscription-nevbnjzxaq-uc.a.run.app/api/v1',
 	CommonApi: 'https://commonapi-dev.inclub.world/api/v1',
 	apiUrlTransfer: 'https://transferapi-dev.inclub.world/api/v1',
-	BonusApi: 'https://bonusesrewardsapi-dev.inclub.world/api/v1',
+	BonusApi: 'http://localhost:8716/api/v1',
 	TicketApi: 'https://ticketapi-dev.inclub.world',
 	production: false,
 	appVersion: 'v8.0.34',
