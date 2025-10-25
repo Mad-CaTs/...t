@@ -1,4 +1,4 @@
-import { Component, EventEmitter, HostListener, Input, Output, ElementRef, Renderer2, OnInit, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, Output, ElementRef, Renderer2, OnInit, OnDestroy, SimpleChanges, OnChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -9,7 +9,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './wallet-modal.component.html',
   styleUrls: ['./wallet-modal.component.scss']
 })
-export class WalletModalComponent implements OnInit, OnDestroy {
+export class WalletModalComponent implements OnInit, OnDestroy, OnChanges {
   @Input() isOpen = false;
   // balances provistos por el padre (componente presentacional)
   @Input() availableBalance: number = 0;
@@ -98,7 +98,13 @@ export class WalletModalComponent implements OnInit, OnDestroy {
       this.appendedToBody = true;
     }
   }
-
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['isOpen']) {
+      if (!changes['isOpen'].currentValue && changes['isOpen'].previousValue) {
+        this.resetForm();
+      }
+    }
+  }
   ngOnDestroy(): void {
     if (this.appendedToBody) {
       const host = this.el.nativeElement;

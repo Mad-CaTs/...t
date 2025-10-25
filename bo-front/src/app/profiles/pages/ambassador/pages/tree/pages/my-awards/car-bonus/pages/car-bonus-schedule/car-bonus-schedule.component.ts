@@ -37,6 +37,8 @@ import { ICarBonusScheduleExtraData, ICarBonusScheduleExtraResponse } from '../.
 import { IExchangeRate, ModalPaymentService } from 'src/app/profiles/pages/ambassador/pages/new-partner/pages/new-partner-payment/commons/sevices/modal-payment.service';
 import { OperationTypeService } from 'src/app/init-app/pages/purchase-checkout/services/operation-type.service';
 import { UserInfoService } from 'src/app/profiles/commons/services/user-info/user-info.service';
+import { WalletService } from 'src/app/profiles/pages/ambassador/pages/wallet/commons/services/wallet.service';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-car-bonus-schedule',
@@ -110,6 +112,10 @@ export class CarBonusScheduleComponent implements OnInit {
   // Estado de modales 
   modalState: ModalState = createModalState();
   private userId: number;
+  walletAvailable = 0;
+  walletAccounting = 0;
+  walletLoading = false;
+  isSubmitting = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -120,10 +126,14 @@ export class CarBonusScheduleComponent implements OnInit {
     private _myAwardsService: MyAwardsService,
     private operationTypeService: OperationTypeService,
     private modalPaymentService: ModalPaymentService,
-    private userInfoService: UserInfoService
+    private userInfoService: UserInfoService,
+    private walletService: WalletService
 
   ) { }
 
+  get showGlobalSpinner(): boolean {
+    return this.walletLoading || this.isSubmitting;
+  }
   get isInicial() { return this.tipo === 'inicial'; }
   get isGeneral() { return this.tipo === 'general'; }
   get pageTitle() { return this.isInicial ? 'Cronograma Inicial' : 'Cronograma General'; }
@@ -476,8 +486,9 @@ export class CarBonusScheduleComponent implements OnInit {
     };
 
     this.modalState = ModalsController.closePayments(this.modalState);
-
+    
     if (method === 'wallet') {
+      this.loadWalletBalances();
       this.modalState = ModalsController.openWallet(this.modalState);
     } else if (method === 'bcp') {
       this.modalState = ModalsController.openTransfer(this.modalState, 'bcp');
@@ -523,18 +534,155 @@ export class CarBonusScheduleComponent implements OnInit {
     this.cdr.markForCheck();
   }
     onModalClosed(kind: keyof ModalState) {
-    if (kind === 'showNotify') this.modalState = ModalsController.closeNotify(this.modalState);
-    if (kind === 'showPayments') this.modalState = ModalsController.closePayments(this.modalState);
-    if (kind === 'showWallet') this.modalState = ModalsController.closeWallet(this.modalState);
-    if (kind === 'showTransfer') this.modalState = ModalsController.closeTransfer(this.modalState);
+      if (kind === 'showNotify') this.modalState = ModalsController.closeNotify(this.modalState);
+      if (kind === 'showPayments') this.modalState = ModalsController.closePayments(this.modalState);
+      if (kind === 'showWallet') {
+        this.modalState = ModalsController.closeWallet(this.modalState);
+      }
+      if (kind === 'showTransfer') this.modalState = ModalsController.closeTransfer(this.modalState);
+      
+      this.cdr.markForCheck();
+    }
+
+  onWalletSuccess(event: { totalAmount: number; note: string } | undefined) {
+    console.log('🎯 onWalletSuccess llamado con:', event);
+
+    if (!event || !event.totalAmount || !event.note) {
+      console.log('❌ Evento inválido:', event);
+      this.modalState = ModalsController.closeWallet(this.modalState);
+      this.cdr.markForCheck();
+      return;
+    }
+
+    const data = event; // Ya viene como objeto
+    const formData = new FormData();
+    const details = this.modalState.paymentDetails;
+    
+    if (!details) {
+      console.log('❌ No hay detalles del pago');
+      this.modalState = ModalsController.closeWallet(this.modalState);
+      this.modalState = ModalsController.openNotify(
+        this.modalState,
+        'Error',
+        'No se encontraron los detalles del pago.'
+      );
+      this.cdr.markForCheck();
+      return;
+    }
+
+    console.log('✅ Construyendo FormData con:', {
+      scheduleId: details.scheduleId,
+      memberId: this.userId,
+      totalAmount: data.totalAmount,
+      note: data.note
+    });
+
+    formData.append('scheduleId', details.scheduleId);
+    formData.append('memberId', this.userId.toString());
+    formData.append('bonusType', 'CAR');
+    formData.append('paymentType', 'WALLET');
+    
+    const walletCommission = this.getCommissionForMethod('wallet');
+    formData.append('paymentSubTypeId', walletCommission.subTypeId.toString());
+    formData.append('currencyType', 'USD');
+    
+    const totalAmount = parseFloat(data.totalAmount.toString().replace(/,/g, ''));
+    formData.append('totalAmount', totalAmount.toString());
+
+    formData.append('voucher.operationNumber', 'wallet');
+    formData.append('voucher.note', data.note);
+
+    // Cerrar modal antes de enviar
+    this.modalState = ModalsController.closeWallet(this.modalState);
+    this.isSubmitting = true;
     this.cdr.markForCheck();
+
+    console.log('📤 Enviando pago...');
+
+    this.paymentService.makePayment(formData)
+      .pipe(
+        finalize(() => {
+          this.isSubmitting = false;
+          this.cdr.markForCheck();
+        })
+      )
+      .subscribe({
+        next: (response) => {
+          console.log('✅ Pago exitoso:', response);
+          this.modalState = ModalsController.openNotify(
+            this.modalState,
+            'Éxito',
+            'Pago con Wallet registrado correctamente. Será revisado por el equipo.'
+          );
+          
+          if (this.isGeneral) {
+            this.getCarBonusScheduleGene();
+          } else {
+            this.getCarBonusSchedule();
+          }
+          
+          this.cdr.markForCheck();
+        },
+        error: (error) => {
+          console.error('❌ Error al registrar pago:', error);
+          
+          let errorMessage = 'Ocurrió un error al registrar el pago con Wallet. Intenta nuevamente.';
+          
+          if (error.error?.error && Array.isArray(error.error.error)) {
+            const messages = error.error.error.map((e: any) => e.message).join('\n');
+            errorMessage = messages;
+          } else if (error.error?.message) {
+            errorMessage = error.error.message;
+          }
+          
+          this.modalState = ModalsController.openNotify(
+            this.modalState,
+            'Error',
+            errorMessage
+          );
+          
+          this.cdr.markForCheck();
+        }
+      });
   }
 
-  // Éxitos
-  onWalletSuccess() {
-    this.modalState = ModalsController.closeWallet(this.modalState);
-    this.modalState = ModalsController.openNotify(this.modalState, 'Éxito', 'Pago con Wallet registrado correctamente.');
+  private loadWalletBalances(): void {
+  if (!Number.isFinite(this.userId)) {
+    this.walletAvailable = 0;
+    this.walletAccounting = 0;
+    this.modalState = ModalsController.openWallet(this.modalState);
     this.cdr.markForCheck();
+    return;
+  }
+
+  this.walletLoading = true;
+    this.cdr.markForCheck();
+
+    this.walletService.getWalletById(this.userId)
+      .pipe(
+        finalize(() => {
+          this.walletLoading = false;
+          this.cdr.markForCheck();
+        })
+      )
+      .subscribe({
+        next: (data) => {
+          this.walletAvailable = Number(data?.availableBalance) || 0;
+          this.walletAccounting = Number(data?.accountingBalance) || 0;
+          
+          this.modalState = ModalsController.openWallet(this.modalState);
+          this.cdr.markForCheck();
+        },
+        error: (err) => {
+          console.error('Error al cargar wallet:', err);
+          
+          this.walletAvailable = 0;
+          this.walletAccounting = 0;
+          
+          this.modalState = ModalsController.openWallet(this.modalState);
+          this.cdr.markForCheck();
+        }
+      });
   }
 
   onTransferenciaSuccess(payload: any) {    

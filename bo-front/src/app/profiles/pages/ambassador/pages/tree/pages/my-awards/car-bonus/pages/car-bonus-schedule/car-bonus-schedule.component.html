@@ -184,11 +184,12 @@
 
 	<app-wallet-modal
 		[isOpen]="modalState.showWallet"
-		[availableBalance]="2300"
-		[accountingBalance]="2500"
+		[availableBalance]="walletAvailable"
+		[accountingBalance]="walletAccounting"
 		[amountUSD]="modalState.paymentDetails?.amountUSD || 0"
+		[loading]="walletLoading"
 		(closeModal)="onModalClosed('showWallet')"
-		(paymentSuccess)="onWalletSuccess()"
+		(paymentSuccess)="onWalletSuccess($event)"
 	></app-wallet-modal>
 
 	<app-transferencia-modal
@@ -199,4 +200,12 @@
 		(closeModal)="onModalClosed('showTransfer')"
 		(paymentSuccess)="onTransferenciaSuccess($event)"
 	></app-transferencia-modal>
+
+	<app-logo-spinner 
+		*ngIf="showGlobalSpinner" 
+		[show]="true" 
+		[fullscreen]="true" 
+		[delay]="0"
+		[minVisible]="300">
+	</app-logo-spinner>
 </div>
