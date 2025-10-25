@@ -140,6 +140,11 @@ export class CarBonusScheduleComponent implements OnInit {
     
     this.loadPaymentTypes();
     this.loadExchangeRate();
+
+    setTimeout(() => {
+      console.log('🔍 Payment types after load:', this.paymentTypes);
+      console.log('🔍 Exchange rate:', this.exchangeRateData);
+    }, 2000);
     
     this.loadData();
     this.cdr.markForCheck();
@@ -198,6 +203,12 @@ export class CarBonusScheduleComponent implements OnInit {
     this.operationTypeService.getOperationTypes().subscribe({
       next: (types) => {
         this.paymentTypes = types;
+        console.log('✅ Payment types loaded:', this.paymentTypes); 
+        this.cdr.markForCheck();
+      },
+      error: (err) => {
+        console.error('❌ Error loading payment types:', err);
+        this.paymentTypes = [];
       }
     });
   }
@@ -229,7 +240,7 @@ export class CarBonusScheduleComponent implements OnInit {
     const methodMapping: Record<string, number> = {
       'bcp': 1,
       'interbank': 2,
-      'paypal': 3,
+      'paypal': 3,  // ✅ Este es el ID correcto para PayPal
       'wallet': 4,
       'otros': 5
     };
@@ -237,13 +248,39 @@ export class CarBonusScheduleComponent implements OnInit {
     const paymentTypeId = methodMapping[methodKey];
     
     if (!paymentTypeId) {
+      console.warn(`⚠️ Method key '${methodKey}' not found in mapping`);
       return { commissionSoles: 0, commissionDollars: 0, ratePercentage: 0, subTypeId: 0 };
     }
 
+    // Buscar el tipo de pago en los datos de la API
     const paymentType = this.paymentTypes.find(pt => pt.idPaymentType === paymentTypeId);
-    const activeSubTypes = paymentType.paymentSubTypeList.filter(sub => sub.statusSoles === true);
-    const defaultSubType = activeSubTypes.length > 0 ? activeSubTypes[0] : paymentType.paymentSubTypeList[0];
     
+    if (!paymentType) {
+      console.warn(`⚠️ Payment type with id ${paymentTypeId} not found in API data`);
+      return { commissionSoles: 0, commissionDollars: 0, ratePercentage: 0, subTypeId: 0 };
+    }
+
+    // Filtrar subtipos activos (statusDollar true para pagos en USD)
+    const activeSubTypes = paymentType.paymentSubTypeList.filter(
+      sub => sub.statusDollar === true // ✅ Cambiado de statusSoles a statusDollar
+    );
+    
+    // Si no hay activos en USD, usar el primero disponible
+    const defaultSubType = activeSubTypes.length > 0 
+      ? activeSubTypes[0] 
+      : paymentType.paymentSubTypeList[0];
+    
+    if (!defaultSubType) {
+      console.warn(`⚠️ No subtype found for payment type ${paymentTypeId}`);
+      return { commissionSoles: 0, commissionDollars: 0, ratePercentage: 0, subTypeId: 0 };
+    }
+
+    console.log(`✅ Commission data for ${methodKey}:`, {
+      subTypeId: defaultSubType.idPaymentSubType,
+      commissionDollars: defaultSubType.commissionDollars,
+      ratePercentage: defaultSubType.ratePercentage
+    });
+
     return {
       commissionSoles: defaultSubType.commissionSoles || 0,
       commissionDollars: defaultSubType.commissionDollars || 0,
@@ -256,21 +293,34 @@ export class CarBonusScheduleComponent implements OnInit {
     const exchangeRate = this.exchangeRateData?.buys || 3.445;
     const amountPEN = amountUSD * exchangeRate;
     
-    const { commissionSoles, commissionDollars, ratePercentage, subTypeId } = this.getCommissionForMethod(methodKey);
+    const { commissionSoles, commissionDollars, ratePercentage, subTypeId } = 
+      this.getCommissionForMethod(methodKey);
     
     let totalCommission = 0;
     
+    // Calcular comisión base
     if (commissionSoles > 0) {
       totalCommission = commissionSoles;
     } else if (commissionDollars > 0) {
       totalCommission = commissionDollars * exchangeRate;
     }
     
+    // ✅ CRÍTICO: Aplicar el porcentaje de tasa sobre el monto en USD (no en PEN)
     if (ratePercentage > 0) {
-      totalCommission += (amountPEN * ratePercentage) / 100;
+      const rateFee = (amountUSD * ratePercentage) / 100;
+      totalCommission += (rateFee * exchangeRate); // Convertir a PEN
     }
     
     const totalPEN = amountPEN + totalCommission;
+
+    console.log(`💰 Payment calculation for ${methodKey}:`, {
+      amountUSD: amountUSD.toFixed(2),
+      amountPEN: amountPEN.toFixed(2),
+      commissionDollars: commissionDollars.toFixed(2),
+      ratePercentage: ratePercentage.toFixed(2),
+      totalCommission: totalCommission.toFixed(2),
+      totalPEN: totalPEN.toFixed(2)
+    });
 
     return {
       amountUSD: Number(amountUSD.toFixed(2)),
@@ -486,17 +536,23 @@ export class CarBonusScheduleComponent implements OnInit {
   private openPaypalModalAndProcess(paymentDetails: any): void {
     const commissionData = this.getCommissionForMethod('paypal');
     
+    // ✅ Calcular correctamente la tasa en USD (no en PEN)
+    const rateAmountUSD = (paymentDetails.amountUSD * commissionData.ratePercentage) / 100;
+    
     const dataToModal: any = {
       description: paymentDetails.concept,
       amount: paymentDetails.amountUSD,
-      ratePercentage: commissionData.ratePercentage,
-      commissionDollars: commissionData.commissionDollars,
+      ratePercentage: commissionData.ratePercentage, // ✅ 5.4
+      commissionDollars: commissionData.commissionDollars, // ✅ 0.3
+      rateAmountUSD: rateAmountUSD, // ✅ Agregar el monto calculado de la tasa
       payTypeSelected: 1,
       fromLegalization: false,
       montoLegalizacionUSD: 0,
       montoApostilladoExtraUSD: 0,
       idPaymentSubType: commissionData.subTypeId
     };
+
+    console.log('📤 Data sent to PayPal modal:', dataToModal);
 
     this.dialogService
       .open(ModalPaymentPaypalComponent, {
@@ -535,7 +591,8 @@ export class CarBonusScheduleComponent implements OnInit {
     formData.append('paymentSubTypeId', paymentDetails.subTypeId.toString());
     formData.append('currencyType', 'USD');
     
-    const totalAmount = parseFloat(paymentDetails.amountUSD.toString());
+    // ✅ CRÍTICO: Usar el monto que viene del payload de PayPal (que incluye tasa + comisión)
+    const totalAmount = parseFloat(paypalPayload.amount?.toString() || paymentDetails.amountUSD.toString());
     formData.append('totalAmount', totalAmount.toString());
 
     formData.append('voucher.operationNumber', paypalPayload.operationNumber);
@@ -544,7 +601,7 @@ export class CarBonusScheduleComponent implements OnInit {
     formData.append('paypal.orderId', paypalPayload.operationNumber);
     formData.append('paypal.transactionId', paypalPayload.operationNumber);
     formData.append('paypal.status', 'COMPLETED');
-    formData.append('paypal.amount', paymentDetails.amountUSD.toString());
+    formData.append('paypal.amount', totalAmount.toString()); // ✅ También actualizar aquí
     formData.append('paypal.currency', 'USD');
     formData.append('paypal.createTime', new Date().toISOString());
     
@@ -559,6 +616,8 @@ export class CarBonusScheduleComponent implements OnInit {
     if (paypalPayload.apostillaUSD) {
       formData.append('paypal.apostillaUSD', paypalPayload.apostillaUSD.toString());
     }
+
+    console.log('📤 Sending PayPal payment with totalAmount:', totalAmount);
 
     this.isSubmitting = true;
     this.cdr.markForCheck();
@@ -605,6 +664,7 @@ export class CarBonusScheduleComponent implements OnInit {
         }
       });
   }
+
   onWalletSuccess(event: { totalAmount: number; note: string } | undefined) {
     if (!event || !event.totalAmount || !event.note) {
       this.modalState = ModalsController.closeWallet(this.modalState);

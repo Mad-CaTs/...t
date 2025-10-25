@@ -12,6 +12,8 @@ import { OperationTypeService } from '../../../services/operation-type.service';
   styleUrls: ['./transferencia-modal.component.scss']
 })
 export class TransferenciaModalComponent implements OnInit, OnDestroy {
+  isPayPalSelected = false;
+  isCurrencyDisabled = false;
   /** Devuelve el total a pagar en tiempo real según moneda y comisión */
   getTotalToPay(): string {
     // Base por moneda
@@ -346,8 +348,38 @@ export class TransferenciaModalComponent implements OnInit, OnDestroy {
     ];
   }
   // Forzar actualización de la comisión al cambiar tipo de operación o moneda
-  onOperationTypeChange() {
+  onOperationTypeChange(): void {
     this.getPaymentInfo();
+    
+    console.log('🔍 Operation type changed to:', this.bcpFormData.selectedOperationType);
+    
+    const types = this.getCurrentSubTypes();
+    console.log('📋 Available types:', types);
+    
+    // ✅ Comparación flexible (string o número)
+    const selectedType = types.find(t => 
+      t.idPaymentSubType == this.bcpFormData.selectedOperationType // Usar == en lugar de ===
+    );
+    
+    console.log('🎯 Selected type found:', selectedType);
+    
+    if (selectedType) {
+      const description = String(selectedType.description || '').toLowerCase();
+      this.isPayPalSelected = description.includes('paypal');
+      
+      console.log('💳 Is PayPal?', this.isPayPalSelected, '| Description:', selectedType.description);
+      
+      if (this.isPayPalSelected) {
+        this.bcpFormData.selectedCurrency = 'Dolares';
+        this.isCurrencyDisabled = true;
+        console.log('✅ PayPal selected - Currency locked to USD');
+      } else {
+        this.isCurrencyDisabled = false;
+        console.log('ℹ️ Non-PayPal selected - Currency unlocked');
+      }
+    } else {
+      console.warn('⚠️ No matching type found for:', this.bcpFormData.selectedOperationType);
+    }
   }
   onCurrencyChange() {
     this.getPaymentInfo();

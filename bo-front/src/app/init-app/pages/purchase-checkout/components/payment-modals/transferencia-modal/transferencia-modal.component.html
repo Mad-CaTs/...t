@@ -140,9 +140,8 @@
 									[(ngModel)]="bcpFormData.selectedOperationType"
 									name="operationType"
 									(blur)="markTouched('operationType')"
-									[class.is-invalid]="
-										(touched.operationType || submitted) && getError('operationType')
-									"
+									(ngModelChange)="onOperationTypeChange()"
+									[class.is-invalid]="(touched.operationType || submitted) && getError('operationType')"
 								>
 									<option [value]="'Selecciona uno'">Selecciona uno</option>
 									<option
