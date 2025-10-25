@@ -241,25 +241,27 @@ export class TransferenciaModalComponent implements OnInit, OnDestroy {
     if (!/^\d+$/.test(text)) ev.preventDefault();
   }
 
-  addPaymentRecord(): void {
+  addPaymentRecord() {
     this.submitted = true;
-    for (const f of this.allTouchedFields) this.touched[f] = true;
-    if (this.isFormValid()) {
-      // Construir el payload para el endpoint
-      const payload = {
-        method: this.bankMethod === 'bcp' ? 'VOUCHER' : (this.bankMethod === 'interbank' ? 'VOUCHER' : 'OTROS'),
-        paymentSubTypeId: this.bcpFormData.selectedOperationType,
-        currencyType: this.bcpFormData.selectedCurrency === 'Soles' ? 'PEN' : 'USD',
-        operationNumber: this.bcpFormData.operationCode,
-        note: this.bcpFormData.note,
-        image: this.evidenceFile,
-        totalAmount: this.getTotalToPay()
-      };
-      console.log('Payload para API:', payload);
-      this.paymentSuccess.emit(payload);
-      this.onClose();
+    if (!this.isFormValid()) {
+      return;
     }
+
+    const payload = {
+      method: 'VOUCHER',
+      paymentSubTypeId: this.bcpFormData.selectedOperationType, // Ya es number
+      currencyType: this.bcpFormData.selectedCurrency === 'Soles' ? 'PEN' : 'USD',
+      operationNumber: this.bcpFormData.operationCode,
+      totalAmount: this.getTotalToPay(), // Ya está calculado
+      note: this.bcpFormData.note,
+      image: this.evidenceFile // El File object
+    };
+
+    console.log('🟢 Emitiendo payload:', payload);
+    this.paymentSuccess.emit(payload);
+    this.resetForm();
   }
+  
 
   resetForm(): void {
   this.bcpFormData.selectedCurrency = 'Soles';

@@ -194,7 +194,7 @@
 	<app-transferencia-modal
 		[isOpen]="modalState.showTransfer"
 		[bankMethod]="modalState.transferBank"
-		[totalSoles]="modalState.paymentDetails?.totalPEN || 0"
+		[totalSoles]="modalState.paymentDetails?.amountPEN || 0"
 		[totalUSD]="modalState.paymentDetails?.amountUSD || 0"
 		(closeModal)="onModalClosed('showTransfer')"
 		(paymentSuccess)="onTransferenciaSuccess($event)"

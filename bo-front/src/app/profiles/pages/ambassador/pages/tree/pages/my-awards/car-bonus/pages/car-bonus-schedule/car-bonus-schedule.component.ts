@@ -28,6 +28,7 @@ import { ModalPaymentPaypalComponent } from 'src/app/profiles/pages/ambassador/p
 // Controlador de modales centralizado
 import { createModalState, ModalsController, ModalState, BankMethod } from './car-bonus-schedule.modals';
 import { CarBonusScheduleService } from '../service/car-bonus-schedule.service';
+import { CarBonusPaymentService } from 'src/app/profiles/pages/ambassador/pages/tree/pages/my-awards/car-bonus/pages/service/car-bonus-payment.service';
 import { MyAwardsService } from '../../../components/service/my-awards.service';
 import { ICarBonusScheduleContent } from '../../interface/car-bonus-schedule';
 import { PaymentStatus } from './data/paymentStatus';
@@ -35,6 +36,7 @@ import { ICarBonusScheduleExtraData, ICarBonusScheduleExtraResponse } from '../.
 
 import { IExchangeRate, ModalPaymentService } from 'src/app/profiles/pages/ambassador/pages/new-partner/pages/new-partner-payment/commons/sevices/modal-payment.service';
 import { OperationTypeService } from 'src/app/init-app/pages/purchase-checkout/services/operation-type.service';
+import { UserInfoService } from 'src/app/profiles/commons/services/user-info/user-info.service';
 
 @Component({
   selector: 'app-car-bonus-schedule',
@@ -107,15 +109,18 @@ export class CarBonusScheduleComponent implements OnInit {
 
   // Estado de modales 
   modalState: ModalState = createModalState();
+  private userId: number;
 
   constructor(
     private route: ActivatedRoute,
     private cdr: ChangeDetectorRef,
     private dialogService: DialogService,
     private _carBonusScheduleService: CarBonusScheduleService,
+    private paymentService: CarBonusPaymentService,
     private _myAwardsService: MyAwardsService,
     private operationTypeService: OperationTypeService,
-    private modalPaymentService: ModalPaymentService
+    private modalPaymentService: ModalPaymentService,
+    private userInfoService: UserInfoService
 
   ) { }
 
@@ -129,6 +134,7 @@ export class CarBonusScheduleComponent implements OnInit {
     this.proformaId = pId ? +pId : 0;
     this.tipo = (t === 'inicial' || t === 'general') ? (t as ScheduleType) : 'general';
     
+    this.userId = this.userInfoService.userInfo.id;
     this.getScheduleExtra();
     this.filterValues = this.isGeneral ? { cuotas: '', estado: '' } : {};
     
@@ -196,7 +202,6 @@ export class CarBonusScheduleComponent implements OnInit {
   }
 
   private loadPaymentTypes(): void {
-    console.log('🔵 Cargando tipos de pago...');
     this.operationTypeService.getOperationTypes().subscribe({
       next: (types) => {
         this.paymentTypes = types;
@@ -207,7 +212,6 @@ export class CarBonusScheduleComponent implements OnInit {
     });
   }
   private loadExchangeRate(): void {
-    console.log('🔵 Cargando tipo de cambio...');
     this.modalPaymentService.getTipoCambio().subscribe({
       next: (exchangeRate) => {
         this.exchangeRateData = exchangeRate;
@@ -224,9 +228,6 @@ export class CarBonusScheduleComponent implements OnInit {
         this.cdr.markForCheck();
       }
     });
-  }
-  private get currentExchangeRate(): number {
-    return this.exchangeRateData?.sale || 3.47;
   }
 
   private getCommissionForMethod(methodKey: string): { 
@@ -287,7 +288,7 @@ export class CarBonusScheduleComponent implements OnInit {
       exchangeRate: Number(exchangeRate.toFixed(3)),
       commission: Number(totalCommission.toFixed(2)),
       totalPEN: Number(totalPEN.toFixed(2)),
-      concept: row.concepto || `Cuota N° ${row.installmentNum}`,
+      concept: row.concepto || `Inicial Fraccionada N° ${row.installmentNum}`,
       dueDate: row.dueDate,
       installmentNum: row.installmentNum,
       scheduleId: row.id,
@@ -355,6 +356,7 @@ export class CarBonusScheduleComponent implements OnInit {
     }
     return converted;
   }
+
   getCarBonusSchedule(): void {
     if (this._myAwardsService.getCarAssinmentId) {
       const id = this._myAwardsService.getCarAssinmentId;
@@ -401,14 +403,6 @@ export class CarBonusScheduleComponent implements OnInit {
     });
 
   }
-  private getCuotaNumero(concepto: string | undefined): number | null {
-    if (!concepto) return null;
-    const m = concepto.match(/Cuota\s*N°\s*(\d+)/i);
-    if (!m) return null;
-    const n = parseInt(m[1], 10);
-    return isNaN(n) ? null : n;
-  }
-
   private applyFilters(): void {
     if (this.isInicial) return;
 
@@ -439,22 +433,6 @@ export class CarBonusScheduleComponent implements OnInit {
     if (btn.key === 'exportar') alert('Exportando datos...');
     if (btn.key === 'limpiar') this.filterValues = {};
   }
-
-  private createPayButton(row: ICarBonusScheduleContent): string {
-    const isDisabled = row.statusName === 'Pagado' || row.statusName === 'Pendiente de Revisión';
-    const disabledAttr = isDisabled ? 'disabled' : '';
-    const disabledClass = isDisabled ? 'disabled' : '';
-    
-    return `
-      <button 
-        class="btn-pagar ${disabledClass}" 
-        ${disabledAttr}
-        onclick="window.paymentAction('${row.id}')">
-        <i class="bi bi-credit-card-fill"></i> PAGAR
-      </button>
-    `;
-  }
-
   isPayable(row: ICarBonusScheduleContent): boolean {
     return row?.status?.name === 'PENDING';
   }
@@ -481,7 +459,7 @@ export class CarBonusScheduleComponent implements OnInit {
     
     this.cdr.markForCheck();
   }
-  
+
   onMethodSelected(method: string) {
     const selectedId = this.modalState.selectedPaymentIds[0];
     const row = this.displayedTableData.find(r => r.id === selectedId);
@@ -491,10 +469,10 @@ export class CarBonusScheduleComponent implements OnInit {
     }
 
     const paymentDetails = this.calculatePaymentDetails(row, method);
-    
+        
     this.modalState = {
       ...this.modalState,
-      paymentDetails: paymentDetails
+      paymentDetails: paymentDetails  
     };
 
     this.modalState = ModalsController.closePayments(this.modalState);
@@ -559,10 +537,65 @@ export class CarBonusScheduleComponent implements OnInit {
     this.cdr.markForCheck();
   }
 
-  onTransferenciaSuccess(payload: any) {
-    this.modalState = ModalsController.closeTransfer(this.modalState);
-    this.modalState = ModalsController.openNotify(this.modalState, 'Éxito', 'Pago por transferencia registrado correctamente.');
-    this.cdr.markForCheck();
+  onTransferenciaSuccess(payload: any) {    
+    const formData = new FormData();
+    const details = this.modalState.paymentDetails;
+    
+    formData.append('scheduleId', details.scheduleId);
+    formData.append('memberId', this.userId.toString());
+    formData.append('bonusType', 'CAR');
+
+    const paymentTypeMap: Record<string, string> = {
+      'bcp': 'BCP',
+      'interbank': 'INTERBANK',
+      'otrosMedios': 'OTHERS'
+    };
+    const paymentType = paymentTypeMap[this.modalState.transferBank] || 'OTHERS';
+    formData.append('paymentType', paymentType);
+    formData.append('paymentSubTypeId', payload.paymentSubTypeId.toString());
+    formData.append('currencyType', payload.currencyType);
+
+    const totalAmount = parseFloat(payload.totalAmount.replace(/,/g, ''));
+    formData.append('totalAmount', totalAmount.toString());
+
+    formData.append('voucher.operationNumber', payload.operationNumber);
+    formData.append('voucher.note', payload.note);
+    formData.append('voucher.image', payload.image, payload.image.name);
+
+    this.paymentService.makePayment(formData).subscribe({
+      next: (response) => {
+        this.modalState = ModalsController.closeTransfer(this.modalState);
+        this.modalState = ModalsController.openNotify(
+          this.modalState,
+          'Éxito',
+          'Pago registrado correctamente. Será revisado por el equipo.'             
+        );
+        if (this.isGeneral) {
+          this.getCarBonusScheduleGene();
+        } else {
+          this.getCarBonusSchedule();
+        }
+        this.cdr.markForCheck();
+      },
+      error: (error) => {
+        console.error('Error al registrar pago:', error);
+        
+        let errorMessage = 'Ocurrió un error al registrar el pago. Intenta nuevamente.';
+        
+        if (error.error?.error && Array.isArray(error.error.error)) {
+          const messages = error.error.error.map((e: any) => e.message).join('\n');
+          errorMessage = messages;
+        }
+        
+        this.modalState = ModalsController.closeTransfer(this.modalState);
+        this.modalState = ModalsController.openNotify(
+          this.modalState,
+          'Error',
+          errorMessage
+        );
+        this.cdr.markForCheck();
+      }
+    });
   }
 
   translate(status: string): string {

@@ -70,8 +70,7 @@ export const ModalsController = {
     return {
       ...state,
       showPayments: false,
-      selectedPaymentIds: [],
-      paymentDetails: null,
+      selectedPaymentIds: []
     };
   },
 
@@ -85,8 +84,13 @@ export const ModalsController = {
 
   // -------- Transferencia ----------
   openTransfer(state: ModalState, bank: BankMethod): ModalState {
-    return { ...state, showTransfer: true, transferBank: bank };
+    return { 
+      ...state,  
+      showTransfer: true, 
+      transferBank: bank
+    };
   },
+
   closeTransfer(state: ModalState): ModalState {
     return { ...state, showTransfer: false };
   },
