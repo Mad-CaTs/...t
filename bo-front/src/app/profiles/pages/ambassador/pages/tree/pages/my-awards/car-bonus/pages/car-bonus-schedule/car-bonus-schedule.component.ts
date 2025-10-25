@@ -33,6 +33,9 @@ import { ICarBonusScheduleContent } from '../../interface/car-bonus-schedule';
 import { PaymentStatus } from './data/paymentStatus';
 import { ICarBonusScheduleExtraData, ICarBonusScheduleExtraResponse } from '../../interface/car-bonus-schedule-extra';
 
+import { IExchangeRate, ModalPaymentService } from 'src/app/profiles/pages/ambassador/pages/new-partner/pages/new-partner-payment/commons/sevices/modal-payment.service';
+import { OperationTypeService } from 'src/app/init-app/pages/purchase-checkout/services/operation-type.service';
+
 @Component({
   selector: 'app-car-bonus-schedule',
   standalone: true,
@@ -99,6 +102,9 @@ export class CarBonusScheduleComponent implements OnInit {
   filterValues: Record<string, any> = {};
   extraButtonsGeneral: FilterExtraButton[] = [{ key: 'exportar', label: 'Exportar', variant: 'primary' }];
 
+  paymentTypes: any[] = []; 
+  exchangeRateData: IExchangeRate | null = null;
+
   // Estado de modales 
   modalState: ModalState = createModalState();
 
@@ -107,7 +113,11 @@ export class CarBonusScheduleComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private dialogService: DialogService,
     private _carBonusScheduleService: CarBonusScheduleService,
-    private _myAwardsService: MyAwardsService) { }
+    private _myAwardsService: MyAwardsService,
+    private operationTypeService: OperationTypeService,
+    private modalPaymentService: ModalPaymentService
+
+  ) { }
 
   get isInicial() { return this.tipo === 'inicial'; }
   get isGeneral() { return this.tipo === 'general'; }
@@ -118,14 +128,15 @@ export class CarBonusScheduleComponent implements OnInit {
     const t = (this.route.snapshot.paramMap.get('tipo') || '').toLowerCase();
     this.proformaId = pId ? +pId : 0;
     this.tipo = (t === 'inicial' || t === 'general') ? (t as ScheduleType) : 'general';
+    
     this.getScheduleExtra();
     this.filterValues = this.isGeneral ? { cuotas: '', estado: '' } : {};
+    
+    this.loadPaymentTypes();
+    this.loadExchangeRate();
+    
     this.loadData();
     this.cdr.markForCheck();
-
-    (window as any).paymentAction = (id: string) => {
-      this.onPaySingle(id);
-    };
   }
 
   private loadData() {
@@ -182,6 +193,107 @@ export class CarBonusScheduleComponent implements OnInit {
       ];
       this.tableColumnWidths = ['20%', '20%', '15%', '15%', '15%', '15%'];
     }
+  }
+
+  private loadPaymentTypes(): void {
+    console.log('🔵 Cargando tipos de pago...');
+    this.operationTypeService.getOperationTypes().subscribe({
+      next: (types) => {
+        this.paymentTypes = types;
+      },
+      error: (err) => {
+        console.error('Error al cargar tipos de pago:', err);
+      }
+    });
+  }
+  private loadExchangeRate(): void {
+    console.log('🔵 Cargando tipo de cambio...');
+    this.modalPaymentService.getTipoCambio().subscribe({
+      next: (exchangeRate) => {
+        this.exchangeRateData = exchangeRate;
+        this.cdr.markForCheck();
+      },
+      error: (err) => {
+        this.exchangeRateData = {
+          idExchangeRate: 0,
+          buys: 3.445,
+          sale: 3.47,
+          date: [],
+          modificationDate: []
+        };
+        this.cdr.markForCheck();
+      }
+    });
+  }
+  private get currentExchangeRate(): number {
+    return this.exchangeRateData?.sale || 3.47;
+  }
+
+  private getCommissionForMethod(methodKey: string): { 
+    commissionSoles: number; 
+    commissionDollars: number; 
+    ratePercentage: number;
+    subTypeId: number;
+  } {
+    const methodMapping: Record<string, number> = {
+      'bcp': 1,
+      'interbank': 2,
+      'paypal': 3,
+      'wallet': 4,
+      'otros': 5
+    };
+
+    const paymentTypeId = methodMapping[methodKey];
+    
+    if (!paymentTypeId) {
+      return { commissionSoles: 0, commissionDollars: 0, ratePercentage: 0, subTypeId: 0 };
+    }
+
+    const paymentType = this.paymentTypes.find(pt => pt.idPaymentType === paymentTypeId);
+    const activeSubTypes = paymentType.paymentSubTypeList.filter(sub => sub.statusSoles === true);
+    const defaultSubType = activeSubTypes.length > 0 ? activeSubTypes[0] : paymentType.paymentSubTypeList[0];
+    
+    return {
+      commissionSoles: defaultSubType.commissionSoles || 0,
+      commissionDollars: defaultSubType.commissionDollars || 0,
+      ratePercentage: defaultSubType.ratePercentage || 0,
+      subTypeId: defaultSubType.idPaymentSubType || 0
+    };
+  }
+  private calculatePaymentDetails(row: ICarBonusScheduleContent, methodKey: string = 'bcp') {
+    const amountUSD = row.memberAssumedPayment || row.total || 0;
+    const exchangeRate = this.exchangeRateData?.buys || 3.445;
+    const amountPEN = amountUSD * exchangeRate;
+    
+    const { commissionSoles, commissionDollars, ratePercentage, subTypeId } = this.getCommissionForMethod(methodKey);
+    
+    let totalCommission = 0;
+    
+    if (commissionSoles > 0) {
+      totalCommission = commissionSoles;
+    } else if (commissionDollars > 0) {
+      totalCommission = commissionDollars * exchangeRate;
+    }
+    
+    if (ratePercentage > 0) {
+      totalCommission += (amountPEN * ratePercentage) / 100;
+    }
+    
+    const totalPEN = amountPEN + totalCommission;
+
+    return {
+      amountUSD: Number(amountUSD.toFixed(2)),
+      amountPEN: Number(amountPEN.toFixed(2)),
+      exchangeRate: Number(exchangeRate.toFixed(3)),
+      commission: Number(totalCommission.toFixed(2)),
+      totalPEN: Number(totalPEN.toFixed(2)),
+      concept: row.concepto || `Cuota N° ${row.installmentNum}`,
+      dueDate: row.dueDate,
+      installmentNum: row.installmentNum,
+      scheduleId: row.id,
+      methodKey: methodKey,
+      subTypeId: subTypeId,
+    };
   }
   convertAssigned(assigned: ICarBonusScheduleExtraData): AssignedInfo {
     const converted: AssignedInfo = {
@@ -344,8 +456,7 @@ export class CarBonusScheduleComponent implements OnInit {
   }
 
   isPayable(row: ICarBonusScheduleContent): boolean {
-    const estado = row?.statusName ?? '';
-    return !(estado === 'Pagado' || estado === 'Pendiente de Revisión');
+    return row?.status?.name === 'PENDING';
   }
 
   onPaySingle(scheduleId: string) {
@@ -354,14 +465,38 @@ export class CarBonusScheduleComponent implements OnInit {
     
     this.modalState = ModalsController.openPayments(
       this.modalState, 
-      [Number(scheduleId)]
+      [scheduleId]
     );
     this.cdr.markForCheck();
   }
 
-  // Escucha selección de método en el modal de pagos
+  onPay(row: ICarBonusScheduleContent) {
+    const paymentDetails = this.calculatePaymentDetails(row, 'bcp');
+
+    this.modalState = ModalsController.openPayments(
+      this.modalState,
+      [row.id],
+      paymentDetails
+    );
+    
+    this.cdr.markForCheck();
+  }
+  
   onMethodSelected(method: string) {
-    // Cierra Payments antes de abrir otro
+    const selectedId = this.modalState.selectedPaymentIds[0];
+    const row = this.displayedTableData.find(r => r.id === selectedId);
+    
+    if (!row) {
+      return;
+    }
+
+    const paymentDetails = this.calculatePaymentDetails(row, method);
+    
+    this.modalState = {
+      ...this.modalState,
+      paymentDetails: paymentDetails
+    };
+
     this.modalState = ModalsController.closePayments(this.modalState);
 
     if (method === 'wallet') {
@@ -373,18 +508,18 @@ export class CarBonusScheduleComponent implements OnInit {
     } else if (method === 'otros') {
       this.modalState = ModalsController.openTransfer(this.modalState, 'otrosMedios');
     } else if (method === 'paypal') {
-      const usdTotal = this.getSelectedUsdTotal();
+      const commissionData = this.getCommissionForMethod(method);
+      
       const dataToModal: any = {
-        description: 'Pago de cuotas',
-        amount: usdTotal,
-        // Valores por defecto si no contamos con catálogo de comisiones/tasas aquí
-        ratePercentage: 0, // tasa 0% por defecto
-        commissionDollars: 0, // comisión base 0 por defecto
+        description: paymentDetails.concept,
+        amount: paymentDetails.amountUSD,
+        ratePercentage: commissionData.ratePercentage,
+        commissionDollars: commissionData.commissionDollars,
         payTypeSelected: 1,
         fromLegalization: false,
         montoLegalizacionUSD: 0,
         montoApostilladoExtraUSD: 0,
-        idPaymentSubType: 9 // fallback común para PayPal
+        idPaymentSubType: commissionData.subTypeId
       };
 
       this.dialogService
@@ -406,26 +541,10 @@ export class CarBonusScheduleComponent implements OnInit {
           }
         });
     }
+    
     this.cdr.markForCheck();
   }
-
-  // Suma en USD de filas seleccionadas; usa 'montoPagar' o 'totalCuota' si existen
-  private getSelectedUsdTotal(): number {
-    const rows = (this.displayedTableData || []).filter(r => !!r.id);
-    const toNumber = (v: any) => {
-      if (v == null) return 0;
-      if (typeof v === 'number') return v;
-      const s = String(v).replace(/[^0-9.\-]/g, '');
-      const n = parseFloat(s);
-      return isNaN(n) ? 0 : n;
-    };
-    return rows.reduce((sum, r) => {
-      const val = r?.memberAssumedPayment ?? r?.total ?? 0;
-      return sum + toNumber(val);
-    }, 0);
-  }
-
-  onModalClosed(kind: keyof ModalState) {
+    onModalClosed(kind: keyof ModalState) {
     if (kind === 'showNotify') this.modalState = ModalsController.closeNotify(this.modalState);
     if (kind === 'showPayments') this.modalState = ModalsController.closePayments(this.modalState);
     if (kind === 'showWallet') this.modalState = ModalsController.closeWallet(this.modalState);
@@ -441,7 +560,6 @@ export class CarBonusScheduleComponent implements OnInit {
   }
 
   onTransferenciaSuccess(payload: any) {
-    console.log('✅ Pago por transferencia registrado:', payload);
     this.modalState = ModalsController.closeTransfer(this.modalState);
     this.modalState = ModalsController.openNotify(this.modalState, 'Éxito', 'Pago por transferencia registrado correctamente.');
     this.cdr.markForCheck();

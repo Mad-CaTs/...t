@@ -1,6 +1,4 @@
-// car-bonus-schedule.modals.ts
-
-export type BankMethod = 'bcp' | 'interbank' | 'otrosMedios';
+export type BankMethod = 'bcp' | 'interbank' | 'otrosMedios' | 'wallet' | 'paypal';
 
 export interface ModalState {
   // Notify
@@ -10,7 +8,7 @@ export interface ModalState {
 
   // Payments
   showPayments: boolean;
-  selectedPaymentIds: number[];
+  selectedPaymentIds: string[]; 
 
   // Wallet
   showWallet: boolean;
@@ -18,6 +16,20 @@ export interface ModalState {
   // Transferencia
   showTransfer: boolean;
   transferBank: BankMethod;
+
+  paymentDetails: {
+    amountUSD: number;
+    amountPEN: number;
+    exchangeRate: number;
+    commission: number;
+    totalPEN: number;
+    concept: string;
+    dueDate: string;
+    installmentNum: number;
+    scheduleId: string; 
+    methodKey: string;
+    subTypeId?: number;
+  } | null;
 }
 
 export const createModalState = (): ModalState => ({
@@ -32,6 +44,8 @@ export const createModalState = (): ModalState => ({
 
   showTransfer: false,
   transferBank: 'bcp',
+
+  paymentDetails: null,
 });
 
 export const ModalsController = {
@@ -44,11 +58,21 @@ export const ModalsController = {
   },
 
   // -------- Payments ----------
-  openPayments(state: ModalState, ids: number[]): ModalState {
-    return { ...state, showPayments: true, selectedPaymentIds: ids };
+  openPayments(state: ModalState, ids: string[], details?: any): ModalState { 
+    return {
+      ...state,
+      showPayments: true,
+      selectedPaymentIds: ids,
+      paymentDetails: details || null,
+    };
   },
   closePayments(state: ModalState): ModalState {
-    return { ...state, showPayments: false, selectedPaymentIds: [] };
+    return {
+      ...state,
+      showPayments: false,
+      selectedPaymentIds: [],
+      paymentDetails: null,
+    };
   },
 
   // -------- Wallet ----------
@@ -75,6 +99,7 @@ export const ModalsController = {
       showPayments: false,
       showWallet: false,
       showTransfer: false,
+      paymentDetails: null,
     };
   },
 };

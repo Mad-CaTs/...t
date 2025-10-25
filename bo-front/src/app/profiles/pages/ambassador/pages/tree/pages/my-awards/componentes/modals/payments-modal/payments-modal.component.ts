@@ -1,5 +1,4 @@
-// payments-modal.component.ts
-import { Component, EventEmitter, Input, Output, ElementRef, Renderer2, OnInit, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ElementRef, Renderer2, OnInit, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 type PaymentKey =
@@ -15,7 +14,7 @@ interface PaymentMethod {
   key: PaymentKey;
   label: string;
   logo?: string;
-  visible?: boolean; // default: true
+  visible?: boolean;
 }
 
 @Component({
@@ -28,12 +27,12 @@ interface PaymentMethod {
 export class PaymentsModalComponent implements OnInit, OnDestroy {
   @Input() open = true;
   @Input() selectedIds: number[] = [];
+  @Input() paymentDetails?: any;
   @Output() closed = new EventEmitter<void>();
-
-  // 🆕 nuevo evento
   @Output() methodSelected = new EventEmitter<PaymentKey>();
 
   private appendedToBody = false;
+
   constructor(private el: ElementRef<HTMLElement>, private renderer: Renderer2) {}
 
   ngOnInit(): void {
@@ -56,14 +55,13 @@ export class PaymentsModalComponent implements OnInit, OnDestroy {
   title = 'Medio de pago';
 
   methods: PaymentMethod[] = [
-    { key: 'bcp',        label: 'BCP',       logo: 'https://s3.us-east-2.amazonaws.com/backoffice.documents/iconos/047b90bc-73fa-4819-ace3-660e0392d64c-bcp.svg' },
-    { key: 'interbank',  label: 'Interbank', logo: 'https://s3.us-east-2.amazonaws.com/backoffice.documents/iconos/047b90bc-73fa-4819-ace3-660e0392d64c-interbank.svg' },
-    { key: 'paypal',     label: 'PayPal',    logo: 'https://s3.us-east-2.amazonaws.com/backoffice.documents/iconos/047b90bc-73fa-4819-ace3-660e0392d64c-paypal.svg' },
-    { key: 'keolapay',   label: 'KeolaPay',  visible: false  },
-    //{ key: 'keolapay',   label: 'KeolaPay' },
+    { key: 'bcp', label: 'BCP', logo: 'https://s3.us-east-2.amazonaws.com/backoffice.documents/iconos/047b90bc-73fa-4819-ace3-660e0392d64c-bcp.svg' },
+    { key: 'interbank', label: 'Interbank', logo: 'https://s3.us-east-2.amazonaws.com/backoffice.documents/iconos/047b90bc-73fa-4819-ace3-660e0392d64c-interbank.svg' },
+    { key: 'paypal', label: 'PayPal', logo: 'https://s3.us-east-2.amazonaws.com/backoffice.documents/iconos/047b90bc-73fa-4819-ace3-660e0392d64c-paypal.svg' },
+    { key: 'keolapay', label: 'KeolaPay', visible: false },
     { key: 'davivienda', label: 'Davivienda', visible: false },
-    { key: 'wallet',     label: 'Mi Wallet', logo: 'https://s3.us-east-2.amazonaws.com/backoffice.documents/iconos/047b90bc-73fa-4819-ace3-660e0392d64c-mi%26wallet.svg' },
-    { key: 'otros',      label: 'Otros',     logo: 'https://s3.us-east-2.amazonaws.com/backoffice.documents/iconos/047b90bc-73fa-4819-ace3-660e0392d64c-otros.svg' },
+    { key: 'wallet', label: 'Mi Wallet', logo: 'https://s3.us-east-2.amazonaws.com/backoffice.documents/iconos/047b90bc-73fa-4819-ace3-660e0392d64c-mi%26wallet.svg' },
+    { key: 'otros', label: 'Otros', logo: 'https://s3.us-east-2.amazonaws.com/backoffice.documents/iconos/047b90bc-73fa-4819-ace3-660e0392d64c-otros.svg' },
   ];
 
   get visibleMethods() {
@@ -79,5 +77,22 @@ export class PaymentsModalComponent implements OnInit, OnDestroy {
 
   onClose() {
     this.closed.emit();
+  }
+
+  get displayExchangeRate(): string {
+    return this.paymentDetails?.exchangeRate?.toFixed(3) || '0.000';
+  }
+
+  get displayAmountUSD(): string {
+    return this.paymentDetails?.amountUSD?.toFixed(2) || '0.00';
+  }
+
+  get displayAmountPEN(): string {
+    return this.paymentDetails?.amountPEN?.toFixed(2) || '0.00';
+  }
+
+  get displayMethodName(): string {
+    const method = this.methods.find(m => m.key === this.selected);
+    return method?.label || 'BCP';
   }
 }

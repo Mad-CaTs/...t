@@ -153,6 +153,7 @@
 			[showDelete]="false"
 			[showDeny]="false"
 			[showAccept]="false"
+			[rowPayable]="isPayable.bind(this)"
 			(pay)="onPay($event)"
 		></app-table-generic>
 	</ng-container>
@@ -176,26 +177,25 @@
 	<app-payments-modal
 		[selectedIds]="modalState.selectedPaymentIds"
 		[open]="modalState.showPayments"
+		[paymentDetails]="modalState.paymentDetails"
 		(methodSelected)="onMethodSelected($event)"
 		(closed)="onModalClosed('showPayments')"
 	></app-payments-modal>
 
-	<!-- Wallet -->
 	<app-wallet-modal
 		[isOpen]="modalState.showWallet"
 		[availableBalance]="2300"
 		[accountingBalance]="2500"
-		[amountUSD]="605"
+		[amountUSD]="modalState.paymentDetails?.amountUSD || 0"
 		(closeModal)="onModalClosed('showWallet')"
 		(paymentSuccess)="onWalletSuccess()"
 	></app-wallet-modal>
 
-	<!-- Transferencia (BCP/Interbank/Otros) -->
 	<app-transferencia-modal
 		[isOpen]="modalState.showTransfer"
 		[bankMethod]="modalState.transferBank"
-		[totalSoles]="2286.9"
-		[totalUSD]="605.0"
+		[totalSoles]="modalState.paymentDetails?.totalPEN || 0"
+		[totalUSD]="modalState.paymentDetails?.amountUSD || 0"
 		(closeModal)="onModalClosed('showTransfer')"
 		(paymentSuccess)="onTransferenciaSuccess($event)"
 	></app-transferencia-modal>

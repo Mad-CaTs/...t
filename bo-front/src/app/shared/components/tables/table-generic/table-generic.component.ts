@@ -40,7 +40,7 @@ export class TableGenericComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() showAccept = false;
   @Input() showActions = true;
   @Input() showPay = false;
-  
+
   @Input() onlyViewLabel: string = 'Detalle del evento';
 
   @Input() imageKeys: string[] = [];
@@ -48,6 +48,8 @@ export class TableGenericComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() showCheckboxes = false;
   @Input() checkboxMode: CheckboxMode = 'none';
   @Input() rowSelectable?: (row: any) => boolean;
+
+  @Input() rowPayable?: (row: any) => boolean;
   @Input() freezeOverflow = false;
   @Input() rowEditSwitchKey: string | null = null;
   @Input() editTrueIconClass: string = 'bi bi-person-fill';
@@ -191,6 +193,14 @@ export class TableGenericComponent implements OnInit, OnChanges, AfterViewInit {
     if (!row) return false;
     if (typeof this.rowSelectable === 'function') {
       return !!this.rowSelectable(row);
+    }
+    return true;
+  }
+
+  isRowPayable(row: any): boolean {
+    if (!row) return false;
+    if (typeof this.rowPayable === 'function') {
+      return !!this.rowPayable(row);
     }
     return true;
   }
