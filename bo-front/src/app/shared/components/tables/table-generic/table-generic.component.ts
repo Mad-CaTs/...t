@@ -39,6 +39,8 @@ export class TableGenericComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() showDeny = false;
   @Input() showAccept = false;
   @Input() showActions = true;
+  @Input() showPay = false;
+  
   @Input() onlyViewLabel: string = 'Detalle del evento';
 
   @Input() imageKeys: string[] = [];
@@ -54,6 +56,7 @@ export class TableGenericComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() editFalseTooltip: string = 'Editar';
   @Input() rowDetailTemplate?: TemplateRef<any>;
 
+  @Output() pay = new EventEmitter<any>();
   @Output() view = new EventEmitter<any>();
   @Output() edit = new EventEmitter<any>();
   @Output() delete = new EventEmitter<any>();

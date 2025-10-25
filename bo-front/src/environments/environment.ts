@@ -30,7 +30,7 @@ export const environment: Environment = {
 	URL_GATEWAY_LOCAL: 'http://localhost:8777/api/v1',
 	URL_WALLET: 'https://walletapi.inclub.world/api/v1',
 	URL_API_LEGAL: 'https://legalapi.inclub.world/api/v1',
-	URL_BONUS_API: 'http://localhost:8716/api/v1',
+	URL_BONUS_API: 'https://bonusesrewardsapi-dev.inclub.world/api/v1',
 	URL_API_REWARDS: 'https://rewardsapi-dev.inclub.world/api/v1',
 	URL_API_TicketApi: 'https://ticketapi-dev.inclub.world',
 	URL_API_TRANSFER: 'https://transferapi-dev.inclub.world/api/v1'

@@ -122,13 +122,14 @@ export class CarBonusScheduleComponent implements OnInit {
     this.filterValues = this.isGeneral ? { cuotas: '', estado: '' } : {};
     this.loadData();
     this.cdr.markForCheck();
+
+    (window as any).paymentAction = (id: string) => {
+      this.onPaySingle(id);
+    };
   }
 
   private loadData() {
     if (this.isGeneral) {
-      // this.assigned = scheduleGeneralMock.assigned;
-      // this.countersGeneral = scheduleGeneralMock.counters;
-      // this.datesGeneral = scheduleGeneralMock.dates;
       this.getCarBonusScheduleGene();
       this.tableColumns = [
         'Fecha registro de pago',
@@ -140,20 +141,22 @@ export class CarBonusScheduleComponent implements OnInit {
         'Bono mensual (USD)',
         'Monto a Pagar (USD)',
         'Fecha límite de pago',
-        'Estado'
+        'Estado',
+        'Acciones'
       ];
       this.tableKeys = [
         'paymentDate',
         'concepto',
-        'financingInstallment',
-        'insurance',
-        'total',
-        'initialBonus',
-        'monthlyBonus',
+        'financingInstallment', 
+        'insurance',           
+        'total',              
+        'initialBonus',        
+        'monthlyBonus',          
         'memberAssumedPayment',
         'dueDate',
         'statusName'
       ];
+
       // this.tableData = mockCronogramaGeneral.map(r => ({ ...r }));
       this.tableColumnWidths = ['12%', '17%', '12%', '8%', '12%', '12%', '12%', '10%', '4%'];
       this.applyFilters();
@@ -162,11 +165,22 @@ export class CarBonusScheduleComponent implements OnInit {
       // this.countersInicial = scheduleInicialMock.counters;
       // this.datesInicial = scheduleInicialMock.dates;
       this.getCarBonusSchedule();
-      this.tableColumns = ['Fecha registro pago', 'Concepto', 'Monto a pagar (USD)', 'Fecha límite pago', 'Estado'];
-      this.tableKeys = ['paymentDate', 'concepto', 'memberAssumedPayment', 'dueDate', 'statusName'];
-      // this.tableData = mockCronogramaInicial.map(r => ({ ...r }));
-      this.tableColumnWidths = ['25%', '25%', '20%', '20%', '10%'];
-
+      this.tableColumns = [
+        'Fecha registro pago', 
+        'Concepto', 
+        'Monto a pagar (USD)', 
+        'Fecha límite pago', 
+        'Estado',
+        'Acciones'
+      ];
+      this.tableKeys = [
+        'paymentDate', 
+        'concepto', 
+        'memberAssumedPayment', 
+        'dueDate', 
+        'statusName'
+      ];
+      this.tableColumnWidths = ['20%', '20%', '15%', '15%', '15%', '15%'];
     }
   }
   convertAssigned(assigned: ICarBonusScheduleExtraData): AssignedInfo {
@@ -234,13 +248,12 @@ export class CarBonusScheduleComponent implements OnInit {
       const id = this._myAwardsService.getCarAssinmentId;
       this._carBonusScheduleService.getCarBonusSchedule(id, 0, 10).subscribe(response => {
         this.tableData = response.data.content;
-        this.displayedTableData = response.data.content.map(r => {
-          r.statusName = this.translate(r.status.name);
-          r.concepto = this.getConcepto(r);
-          return r;
-        });
+        this.displayedTableData = response.data.content.map(r => ({
+          ...r,
+          statusName: this.translate(r.status.name),
+          concepto: this.getConcepto(r)
+        }));
         this.cdr.markForCheck();
-        console.log('Car Bonus Schedule Response:', response);
       });
     }
   }
@@ -250,11 +263,11 @@ export class CarBonusScheduleComponent implements OnInit {
       const id = this._myAwardsService.getCarAssinmentId;
       this._carBonusScheduleService.getCarBonusScheduleGene(id, 0, 10).subscribe(response => {
         this.tableData = response.data.content;
-        this.displayedTableData = response.data.content.map(r => {
-          r.statusName = this.translate(r.status.name);
-          r.concepto = this.getConcepto(r);
-          return r;
-        });
+        this.displayedTableData = response.data.content.map(r => ({
+          ...r,
+          statusName: this.translate(r.status.name),
+          concepto: this.getConcepto(r)
+        }));
         this.cdr.markForCheck();
       });
     }
@@ -284,29 +297,25 @@ export class CarBonusScheduleComponent implements OnInit {
     return isNaN(n) ? null : n;
   }
 
-  public rowSelectableHook = (row: any): boolean => {
-    const estado = (row?.statusName ?? '').toString();
-    return !(estado === 'Pagado' || estado === 'Pendiente de Revisión');
-  };
-private applyFilters(): void {
-  if (this.isInicial) return;
+  private applyFilters(): void {
+    if (this.isInicial) return;
 
-  const { cuotas, estado } = this.filterValues || {};
-  const hasCuotas = cuotas !== undefined && cuotas !== null && cuotas !== '';
-  const hasEstado = !!estado;
+    const { cuotas, estado } = this.filterValues || {};
+    const hasCuotas = cuotas !== undefined && cuotas !== null && cuotas !== '';
+    const hasEstado = !!estado;
 
-  let filteredData = [...this.tableData];
+    let filteredData = [...this.tableData];
 
-  if (hasEstado || hasCuotas) {
-    filteredData = this.tableData.filter(row => {
-      const matchEstado = hasEstado ? row.status?.name === estado : true;
-      const matchCuotas = hasCuotas ? row.installmentNum === Number(cuotas) : true;
-      return matchEstado && matchCuotas;
-    });
+    if (hasEstado || hasCuotas) {
+      filteredData = this.tableData.filter(row => {
+        const matchEstado = hasEstado ? row.status?.name === estado : true;
+        const matchCuotas = hasCuotas ? row.installmentNum === Number(cuotas) : true;
+        return matchEstado && matchCuotas;
+      });
+    }
+    this.displayedTableData = filteredData;
+    this.cdr.markForCheck();
   }
-  this.displayedTableData = filteredData;
-  this.cdr.markForCheck();
-}
 
   onFilterChange(values: Record<string, any>) {
     this.filterValues = values;
@@ -319,18 +328,34 @@ private applyFilters(): void {
     if (btn.key === 'limpiar') this.filterValues = {};
   }
 
-  // =========== Acciones ===========
-  onPayClick() {
-    const selected = (this.displayedTableData || [])
-      .filter(r => !!r.id)
-      .map(r => r.id)
-      .filter(Boolean);
+  private createPayButton(row: ICarBonusScheduleContent): string {
+    const isDisabled = row.statusName === 'Pagado' || row.statusName === 'Pendiente de Revisión';
+    const disabledAttr = isDisabled ? 'disabled' : '';
+    const disabledClass = isDisabled ? 'disabled' : '';
+    
+    return `
+      <button 
+        class="btn-pagar ${disabledClass}" 
+        ${disabledAttr}
+        onclick="window.paymentAction('${row.id}')">
+        <i class="bi bi-credit-card-fill"></i> PAGAR
+      </button>
+    `;
+  }
 
-    if (!selected.length) {
-      this.modalState = ModalsController.openNotify(this.modalState, 'Atención', 'No hay filas seleccionadas');
-    } else {
-      this.modalState = ModalsController.openPayments(this.modalState, selected.map(Number));
-    }
+  isPayable(row: ICarBonusScheduleContent): boolean {
+    const estado = row?.statusName ?? '';
+    return !(estado === 'Pagado' || estado === 'Pendiente de Revisión');
+  }
+
+  onPaySingle(scheduleId: string) {
+    const row = this.displayedTableData.find(r => r.id === scheduleId);
+    if (!row) return;
+    
+    this.modalState = ModalsController.openPayments(
+      this.modalState, 
+      [Number(scheduleId)]
+    );
     this.cdr.markForCheck();
   }
 

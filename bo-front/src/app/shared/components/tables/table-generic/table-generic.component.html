@@ -165,6 +165,16 @@
 								<button *ngIf="showAccept" (click)="accept.emit(row)" title="Aceptar">
 									<i class="bi bi-check"></i>
 								</button>
+								<button
+									*ngIf="showPay"
+									[disabled]="row.statusName === 'Pagado' || row.statusName === 'Pendiente de Revisión'"
+									class="btn-pagar"
+									(click)="pay.emit(row)"
+									title="Pagar"
+								>
+									<i class="bi bi-credit-card-fill"></i> PAGAR
+								</button>
+
 							</ng-template>
 						</div>
 					</td>

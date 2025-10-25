@@ -125,17 +125,6 @@
 			</ng-template>
 		</div>
 
-		<!-- Filtros -->
-		<filter-generic
-			*ngIf="isInicial"
-			[filters]="[]"
-			[values]="{}"
-			[showClearButton]="false"
-			[actionText]="'Pagar cuota'"
-			(action)="onPayClick()"
-			[columnsDesktop]="3"
-		></filter-generic>
-
 		<filter-generic
 			*ngIf="isGeneral"
 			[filters]="filtersGeneral"
@@ -157,10 +146,14 @@
 			[statusKey]="'statusName'"
 			[columnWidths]="tableColumnWidths"
 			[freezeOverflow]="true"
-			[showActions]="false"
-			[showCheckboxes]="isInicial"
-			[checkboxMode]="isInicial ? 'select' : 'none'"
-			[rowSelectable]="rowSelectableHook"
+			[showActions]="true"
+			[showPay]="true"
+			[showView]="false"
+			[showEdit]="false"
+			[showDelete]="false"
+			[showDeny]="false"
+			[showAccept]="false"
+			(pay)="onPay($event)"
 		></app-table-generic>
 	</ng-container>
 
