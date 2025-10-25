@@ -166,7 +166,7 @@
 									<i class="bi bi-check"></i>
 								</button>
 								<button
-									*ngIf="showPay && isRowPayable(row)"
+									*ngIf="showPay && rowPayable && isRowPayable(row)"
 									class="btn-pagar"
 									(click)="pay.emit(row)"
 									title="Pagar"

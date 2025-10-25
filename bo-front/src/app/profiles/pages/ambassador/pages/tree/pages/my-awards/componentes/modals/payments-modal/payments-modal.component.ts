@@ -93,6 +93,6 @@ export class PaymentsModalComponent implements OnInit, OnDestroy {
 
   get displayMethodName(): string {
     const method = this.methods.find(m => m.key === this.selected);
-    return method?.label || 'BCP';
+    return method?.label || '';
   }
 }

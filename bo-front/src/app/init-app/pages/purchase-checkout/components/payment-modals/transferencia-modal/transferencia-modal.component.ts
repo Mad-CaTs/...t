@@ -249,29 +249,28 @@ export class TransferenciaModalComponent implements OnInit, OnDestroy {
 
     const payload = {
       method: 'VOUCHER',
-      paymentSubTypeId: this.bcpFormData.selectedOperationType, // Ya es number
+      paymentSubTypeId: this.bcpFormData.selectedOperationType, 
       currencyType: this.bcpFormData.selectedCurrency === 'Soles' ? 'PEN' : 'USD',
       operationNumber: this.bcpFormData.operationCode,
-      totalAmount: this.getTotalToPay(), // Ya está calculado
+      totalAmount: this.getTotalToPay(), 
       note: this.bcpFormData.note,
-      image: this.evidenceFile // El File object
+      image: this.evidenceFile 
     };
 
-    console.log('🟢 Emitiendo payload:', payload);
     this.paymentSuccess.emit(payload);
     this.resetForm();
   }
   
 
   resetForm(): void {
-  this.bcpFormData.selectedCurrency = 'Soles';
-  this.bcpFormData.selectedOperationType = 'Selecciona uno';
-  this.bcpFormData.operationCode = '';
-  this.setAmountToTotal();
-  this.bcpFormData.note = '';
-  this.submitted = false;
-  for (const f of this.allTouchedFields) this.touched[f] = false;
-  this.clearEvidence();
+    this.bcpFormData.selectedCurrency = 'Soles';
+    this.bcpFormData.selectedOperationType = 'Selecciona uno';
+    this.bcpFormData.operationCode = '';
+    this.setAmountToTotal();
+    this.bcpFormData.note = '';
+    this.submitted = false;
+    for (const f of this.allTouchedFields) this.touched[f] = false;
+    this.clearEvidence();
   }
 
   onClose(): void {
