@@ -1,7 +1,9 @@
 <div *ngIf="
 !activetionOptionEarnCarBonus() && 
 !activetionCarBonusDocument() &&
-!activetionCarBonusSeeDocument()">
+!activetionCarBonusSeeDocument() && 
+!activetionCarBonusSchedule() && 
+!activetionCarBonusProforma()">
   <mat-card class="rank-card"
     [style.background]="getGradientColor(currentTabState ? rangeData?.idRange : rangeData?.idMaxResidualRange)">
     <div class="rank-header">
@@ -11,21 +13,22 @@
         class="rank-badge">
 
       <div class="rank-info">
-        <h3 class="rank-title">Embajador de Marca</h3>
-        <p class="rank-subtitle">Socio - Embajador</p>
+        <h3 class="rank-title">{{ currentTabState ? rangeData?.rango : rangeData?.rangoResidual }}</h3>
+        <p class="rank-subtitle">Rango actual</p>
       </div>
 
       <!-- Próximo rango -->
       <div class="rank-next rounded-4 shadow p-2 custom-color-range">
         <div class="rank-next-text">Próximo rango</div>
         <img [src]="'https://s3.us-east-2.amazonaws.com/backoffice.documents/Ranges/' +
-          formatRangeName(currentTabState ? rangeData?.maxResidualRange : rangeData?.maxResidualRange)+ '.png'"
+          formatRangeName(currentTabState ? nextRangeData?.nextCompoundRange : nextRangeData?.nextResidualRange)+ '.png'"
           alt="Próximo rango" class="rank-next-icon">
 
       </div>
     </div>
 
     <!-- Barras de progreso -->
+    <!--
     <div class="rank-progress">
       <div class="progress-label">
         <span>600/1080 cantidad de puntos Totales</span>
@@ -44,6 +47,16 @@
       </div>
       <mat-progress-bar mode="determinate" [value]="currentTabState ? compuestoRama3 : residualRama3"
         class="custom-progress" [ngStyle]="getBarStyle(rangeData.idRange)">
+      </mat-progress-bar>
+    </div>
+    -->
+    <div class="rank-progress">
+      <div class="progress-label">
+        <span>Avance hacia el próximo rango</span>
+        <span>{{ averagePercentage ?? 0 }}%</span>
+      </div>
+      <mat-progress-bar class="custom-progress" mode="determinate"
+        [value]="averagePercentage ?? 0" [ngStyle]="getBarStyle(rangeData?.idRange)">
       </mat-progress-bar>
     </div>
 
@@ -73,8 +86,8 @@
     </mat-card>
   </div>
 
-  <app-modal-notify 
-    *ngIf="showNotify" 
+  <!-- <app-modal-notify 
+    *ngIf="showNotify && IdAssignment" 
     [title]="notifyTitle" 
     [message]="notifyMessage" 
     [iconType]="notifyIcon"
@@ -84,7 +97,7 @@
         [oneButton]="false"
     (closed)="onCloseNotify()"
     (confirmed)="confirmed()">
-  </app-modal-notify>
+  </app-modal-notify> -->
 
 </div>
 <div class="d-flex flex-column ms-5">
@@ -99,4 +112,9 @@
 </app-car-bond-document>
 
 <app-see-auto-bonus-document [url]="pdfUrl" *ngIf="activetionCarBonusSeeDocument()"></app-see-auto-bonus-document>
+
+<app-car-bonus-schedule *ngIf="activetionCarBonusSchedule()"></app-car-bonus-schedule>
+<app-proforma *ngIf="activetionCarBonusProforma()"></app-proforma>
 </div>
+
+

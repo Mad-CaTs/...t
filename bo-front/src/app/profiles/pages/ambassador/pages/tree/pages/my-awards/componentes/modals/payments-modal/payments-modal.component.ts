@@ -29,6 +29,8 @@ export class PaymentsModalComponent implements OnInit, OnDestroy {
   @Input() selectedIds: number[] = [];
   @Input() paymentDetails?: any;
   @Output() closed = new EventEmitter<void>();
+
+  // 🆕 nuevo evento
   @Output() methodSelected = new EventEmitter<PaymentKey>();
 
   private appendedToBody = false;

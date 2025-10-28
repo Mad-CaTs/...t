@@ -1,3 +1,4 @@
+// car-bonus-schedule.modals.ts
 export type BankMethod = 'bcp' | 'interbank' | 'otrosMedios' | 'wallet' | 'paypal';
 
 export interface ModalState {

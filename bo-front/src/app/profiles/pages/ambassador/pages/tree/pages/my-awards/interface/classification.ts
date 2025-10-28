@@ -11,7 +11,7 @@ export interface IRankBonusData {
   rankId: number;
   rankName: string;
   maxAchievedPoints: number;
-  requiredPoints: number;
+  requiredPoints: number | string;
   initialBonus: number;
   monthlyBonus: number;
   bonusPrice: number;

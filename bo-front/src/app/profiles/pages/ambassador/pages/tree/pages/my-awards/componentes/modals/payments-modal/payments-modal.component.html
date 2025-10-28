@@ -1,5 +1,6 @@
 <div class="modal-backdrop" *ngIf="open" role="dialog" aria-modal="true">
   <div class="modal-box" role="document" aria-labelledby="modal-title">
+    <!-- Header -->
     <header class="modal-header">
       <h2 id="modal-title" class="modal-title">{{ title }}</h2>
       <button type="button" class="close-btn" (click)="onClose()" aria-label="Cerrar">
@@ -7,6 +8,7 @@
       </button>
     </header>
 
+    <!-- Métodos -->
     <section class="section">
       <h4 class="section-title">Método de pagos</h4>
 
@@ -28,6 +30,7 @@
       </div>
     </section>
 
+    <!-- Detalle del pago -->
     <section class="section">
       <h4 class="section-title">Detalle del pago</h4>
 

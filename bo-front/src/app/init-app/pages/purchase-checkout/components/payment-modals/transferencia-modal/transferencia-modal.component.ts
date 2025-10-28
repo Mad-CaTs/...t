@@ -14,6 +14,10 @@ import { OperationTypeService } from '../../../services/operation-type.service';
 export class TransferenciaModalComponent implements OnInit, OnDestroy {
   isPayPalSelected = false;
   isCurrencyDisabled = false;
+  
+  @Input() correctionMode = false;
+  @Input() paymentId: string | null = null;
+  
   /** Devuelve el total a pagar en tiempo real según moneda y comisión */
   getTotalToPay(): string {
     // Base por moneda
@@ -39,8 +43,15 @@ export class TransferenciaModalComponent implements OnInit, OnDestroy {
     // Use integer-cent style rounding to avoid floating point off-by-one-cent issues
     const percentAmount = this.roundToTwo(base * pctFactor);
 
-    const total = this.roundToTwo(base + fixed + percentAmount);
-    return total.toFixed(2);
+    let total;
+    if (pct > 0) {
+      const temp = base + fixed;
+      total = temp / (1 - pct / 100); 
+    } else {
+      total = base + fixed;
+    }
+
+    return this.roundToTwo(total).toFixed(2);
   }
 
   @Input() isOpen = false;
@@ -196,6 +207,14 @@ export class TransferenciaModalComponent implements OnInit, OnDestroy {
 
   isFormValid(): boolean {
     const monto = this.getTotalToPay();
+    
+    if (this.correctionMode) {
+      return this.bcpFormData.operationCode.trim() !== '' &&
+             this.bcpFormData.note.trim() !== '' &&
+             !!this.evidenceFile && !this.evidenceError;
+    }
+    
+    // Validación normal
     const baseValidation = this.bcpFormData.selectedCurrency !== '' &&
       this.bcpFormData.selectedCurrency !== 'Selecciona uno' &&
       this.bcpFormData.selectedOperationType !== 'Selecciona uno' &&
@@ -243,24 +262,37 @@ export class TransferenciaModalComponent implements OnInit, OnDestroy {
     if (!/^\d+$/.test(text)) ev.preventDefault();
   }
 
-  addPaymentRecord() {
+  addPaymentRecord(): void {
     this.submitted = true;
-    if (!this.isFormValid()) {
+    for (const f of this.allTouchedFields) this.touched[f] = true;
+    if (!this.isFormValid()) return;
+
+    if (this.correctionMode) {
+      // Construir el payload para el endpoint if correction = true
+      const payload = {
+        mode: 'correction',
+        paymentId: this.paymentId,
+        operationNumber: this.bcpFormData.operationCode,
+        note: this.bcpFormData.note,
+        image: this.evidenceFile
+      };
+      this.paymentSuccess.emit(payload);
+      this.onClose();
       return;
     }
-
+    // Construir el payload para el endpoint
     const payload = {
-      method: 'VOUCHER',
-      paymentSubTypeId: this.bcpFormData.selectedOperationType, 
+      method: this.bankMethod === 'bcp' ? 'VOUCHER' : (this.bankMethod === 'interbank' ? 'VOUCHER' : 'OTROS'),
+      paymentSubTypeId: this.bcpFormData.selectedOperationType,
       currencyType: this.bcpFormData.selectedCurrency === 'Soles' ? 'PEN' : 'USD',
       operationNumber: this.bcpFormData.operationCode,
-      totalAmount: this.getTotalToPay(), 
       note: this.bcpFormData.note,
-      image: this.evidenceFile 
+      image: this.evidenceFile,
+      totalAmount: this.getTotalToPay()
     };
-
+    console.log('Payload para API:', payload);
     this.paymentSuccess.emit(payload);
-    this.resetForm();
+    this.onClose();
   }
   
 
@@ -272,6 +304,8 @@ export class TransferenciaModalComponent implements OnInit, OnDestroy {
     this.bcpFormData.note = '';
     this.submitted = false;
     for (const f of this.allTouchedFields) this.touched[f] = false;
+    this.isPayPalSelected = false;
+    this.isCurrencyDisabled = false;
     this.clearEvidence();
   }
 
@@ -325,7 +359,7 @@ export class TransferenciaModalComponent implements OnInit, OnDestroy {
 
     if (this.bankMethod === 'bcp') {
       return [
-        { label: 'Comisión fija:', value: `${symbol} ${comision}` },
+        { label: 'Comisión fija:', value: `${symbol} ${comision.toFixed(2)}` },
         ...pctLabel,
         { label: 'Monto BCP en soles:', value: soles },
         { label: 'Monto BCP en dólares:', value: usd }
@@ -333,7 +367,7 @@ export class TransferenciaModalComponent implements OnInit, OnDestroy {
     }
     if (this.bankMethod === 'interbank') {
       return [
-        { label: 'Comisión fija:', value: `${symbol} ${comision}` },
+        { label: 'Comisión fija:', value: `${symbol} ${comision.toFixed(2)}` },
         ...pctLabel,
         { label: 'Monto Interbank en dólares:', value: usd },
         { label: 'Monto Interbank en soles:', value: soles }
@@ -343,47 +377,44 @@ export class TransferenciaModalComponent implements OnInit, OnDestroy {
     return [
       { label: 'Monto en dólares:', value: usd },
       { label: 'Monto en soles:', value: soles },
-      { label: 'Comisión fija:', value: `${symbol} ${comision}` },
+      { label: 'Comisión fija:', value: `${symbol} ${comision.toFixed(2)}` },
       ...pctLabel,
     ];
   }
-  // Forzar actualización de la comisión al cambiar tipo de operación o moneda
-  onOperationTypeChange(): void {
-    this.getPaymentInfo();
-    
-    console.log('🔍 Operation type changed to:', this.bcpFormData.selectedOperationType);
-    
+  
+  onOperationTypeChange(): void {    
     const types = this.getCurrentSubTypes();
-    console.log('📋 Available types:', types);
-    
-    // ✅ Comparación flexible (string o número)
     const selectedType = types.find(t => 
-      t.idPaymentSubType == this.bcpFormData.selectedOperationType // Usar == en lugar de ===
+      t.idPaymentSubType == this.bcpFormData.selectedOperationType
     );
-    
-    console.log('🎯 Selected type found:', selectedType);
     
     if (selectedType) {
       const description = String(selectedType.description || '').toLowerCase();
       this.isPayPalSelected = description.includes('paypal');
       
-      console.log('💳 Is PayPal?', this.isPayPalSelected, '| Description:', selectedType.description);
-      
       if (this.isPayPalSelected) {
-        this.bcpFormData.selectedCurrency = 'Dolares';
+        this.bcpFormData.selectedCurrency = 'Dólares';
         this.isCurrencyDisabled = true;
-        console.log('✅ PayPal selected - Currency locked to USD');
       } else {
         this.isCurrencyDisabled = false;
-        console.log('ℹ️ Non-PayPal selected - Currency unlocked');
+        if (this.bcpFormData.selectedCurrency === 'Dólares' && !this.isPayPalSelected) {
+          this.bcpFormData.selectedCurrency = 'Selecciona uno';
+        }
       }
     } else {
-      console.warn('⚠️ No matching type found for:', this.bcpFormData.selectedOperationType);
+      this.isPayPalSelected = false;
+      this.isCurrencyDisabled = false;
     }
-  }
-  onCurrencyChange() {
+    
     this.getPaymentInfo();
-    this.setAmountToTotal();
+    this.cdr.markForCheck();
+  }
+  
+  onCurrencyChange() {
+    if (!this.isPayPalSelected) {
+      this.getPaymentInfo();
+      this.setAmountToTotal();
+    }
   }
 
   /** Actualiza el monto con el total a pagar según la moneda seleccionada */
@@ -415,25 +446,28 @@ export class TransferenciaModalComponent implements OnInit, OnDestroy {
       }
       ratePct = Number(selectedSubType.ratePercentage) || 0;
     }
-  const percentAmount = this.roundToTwo(amountValue * (ratePct > 0 ? ratePct / 100 : 0));
-  let totalValue = this.roundToTwo(amountValue + comision + percentAmount);
-  let totalValueStr = `${symbol} ${totalValue.toFixed(2)}`;
 
     let montoOriginal = symbol === 'S/' ? `S/ ${this.totalSoles.toFixed(2)}` : `$ ${this.totalUSD.toFixed(2)}`;
     let montoUsuario = symbol === 'S/' ? this.totalSoles : this.totalUSD;
-  let totalPagar = this.roundToTwo(montoUsuario + comision + (montoUsuario * (ratePct > 0 ? ratePct / 100 : 0)));
+    let totalPagar;
+    if (ratePct > 0) {
+      const temp = montoUsuario + comision;
+      totalPagar = temp / (1 - ratePct / 100);  
+    } else {
+      totalPagar = montoUsuario + comision;
+    }
   let totalPagarStr = `${symbol} ${totalPagar.toFixed(2)}`;
     if (this.bankMethod === 'bcp') {
       return [
         { label: 'Monto a pagar:', value: montoOriginal },
-        { label: 'Comisión fija:', value: `${symbol} ${comision}` },
+        { label: 'Comisión fija:', value: `${symbol} ${comision.toFixed(2)}` },
         ...(ratePct > 0 ? [{ label: 'Porcentaje (%):', value: `${ratePct}%` }] : []),
         { label: 'Total a pagar:', value: totalPagarStr, isTotal: true }
       ];
     }
     if (this.bankMethod === 'interbank') {
       return [
-        { label: 'Comisión fija:', value: `${symbol} ${comision}` },
+        { label: 'Comisión fija:', value: `${symbol} ${comision.toFixed(2)}` },
         ...(ratePct > 0 ? [{ label: 'Porcentaje (%):', value: `${ratePct}%` }] : []),
         { label: 'Total a pagar:', value: totalPagarStr, isTotal: true }
       ];
@@ -449,15 +483,18 @@ export class TransferenciaModalComponent implements OnInit, OnDestroy {
   getError(field: string): string {
     switch (field) {
       case 'currency':
+        if (this.correctionMode) return ''; 
         if (this.bcpFormData.selectedCurrency === 'Selecciona uno') return 'Selecciona una moneda';
         return '';
       case 'operationType':
+        if (this.correctionMode) return ''; 
         if (!this.bcpFormData.selectedOperationType || this.bcpFormData.selectedOperationType === 'Selecciona uno') return 'Selecciona un tipo de operación';
         return '';
       case 'operationCode':
         if (!this.bcpFormData.operationCode.trim()) return 'Código de operación requerido';
         return '';
       case 'amount':
+        if (this.correctionMode) return ''; 
         if (!this.bcpFormData.amount.trim()) return 'Monto requerido';
         if (!/^[0-9]+$/.test(this.bcpFormData.amount.trim())) return 'Solo dígitos';
         if (parseInt(this.bcpFormData.amount.trim(), 10) === 0) return 'Monto debe ser mayor a 0';

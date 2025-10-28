@@ -7,8 +7,8 @@
 			<div class="header-main">
 				<img src="assets/images/Inclub.svg" alt="Inclub" class="brand-logo" />
 				<div class="header-title-block left-under">
-					<span class="order-label-line1">Pago en transferencia</span>
-					<span class="order-label-line2"
+					<span class="order-label-line1">{{ correctionMode ? 'Corregir pago rechazado' : 'Pago en transferencia' }}</span>
+					<span class="order-label-line2" *ngIf="!correctionMode"
 						>con
 						{{
 							bankMethod === 'bcp'
@@ -24,8 +24,8 @@
 
 		<!-- Contenido en dos columnas -->
 		<div class="bcp-content-grid">
-			<!-- IZQUIERDA -->
-			<div class="bcp-info-column">
+			<!-- IZQUIERDA - Ocultar en modo corrección -->
+			<div class="bcp-info-column" *ngIf="!correctionMode">
 				<!-- Cuentas -->
 				<div class="bcp-account-details card" *ngIf="getCurrentBankConfig() as cfg">
 					<h3>{{ cfg.companyName }}</h3>
@@ -95,22 +95,33 @@
 				</ng-template>
 			</div>
 
-			<!-- DERECHA (formulario resumido; tu lógica permanece) -->
-			<div class="bcp-form-column">
-				<h2 class="section-title">Registro del pago</h2>
+			<!-- DERECHA (formulario) - Ocupar todo el ancho en modo corrección -->
+			<div class="bcp-form-column" [class.full-width]="correctionMode">
+				<h2 class="section-title">{{ correctionMode ? 'Actualizar comprobante' : 'Registro del pago' }}</h2>
+				
+				<div class="correction-notice" *ngIf="correctionMode">
+					<span class="notice-icon">ℹ</span>
+					<span class="notice-text">Por favor actualiza el código de operación, nota y voucher para enviar nuevamente a revisión</span>
+				</div>
+				
 				<form class="payment-form" (ngSubmit)="addPaymentRecord()">
-					<div class="form-row">
+					<div class="form-row" *ngIf="!correctionMode">
 						<div class="form-field">
 							<label>Moneda</label>
 							<div
 								class="input-wrapper select-dropdown"
-								[ngClass]="{ error: (touched.currency || submitted) && getError('currency') }"
+								[ngClass]="{ 
+									error: (touched.currency || submitted) && getError('currency'),
+									disabled: isCurrencyDisabled 
+								}"
 							>
 								<select
 									class="form-select bare"
 									[(ngModel)]="bcpFormData.selectedCurrency"
 									name="currency"
 									(blur)="markTouched('currency')"
+									(ngModelChange)="onCurrencyChange()"
+									[disabled]="isCurrencyDisabled"
 								>
 									<option
 										*ngFor="let currency of bcpFormData.currencies"
@@ -186,7 +197,8 @@
 								{{ getError('operationCode') }}
 							</div>
 						</div>
-						<div class="form-field amount-field">
+						
+						<div class="form-field amount-field" *ngIf="!correctionMode">
 							<label>Monto</label>
 							<div class="currency-input-wrapper">
 								<span class="currency-prefix">{{ bcpFormData.selectedCurrency === 'Soles' ? 'S/' : '$' }}</span>
@@ -226,7 +238,7 @@
 					</div>
 
 					<div class="form-field">
-						<label class="file-label">Adjuntar evidencia bancaria:</label>
+						<label class="file-label">{{ correctionMode ? 'Actualizar evidencia bancaria:' : 'Adjuntar evidencia bancaria:' }}</label>
 						<div
 							class="evidence-dropzone"
 							(click)="fileEvidence.click()"
@@ -284,7 +296,7 @@
 							[class.valid]="isFormValid()"
 							[disabled]="!isFormValid()"
 						>
-							Aceptar
+							{{ correctionMode ? 'Enviar corrección' : 'Aceptar' }}
 						</button>
 					</div>
 				</form>

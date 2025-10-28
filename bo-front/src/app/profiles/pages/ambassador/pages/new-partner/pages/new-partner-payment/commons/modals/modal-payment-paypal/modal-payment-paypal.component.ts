@@ -113,20 +113,21 @@ export class ModalPaymentPaypalComponent implements OnInit {
 			.valueChanges.pipe(
 				tap((currency) => {
 					this.currency = 'USD';
-					
-					const baseAmount = Number(this.inputData.amount || 0);
-					const commissionDollars = Number(this.inputData.commissionDollars || 0);
-					const ratePercentage = Number(this.inputData.ratePercentage || 0);
-					const legalizacionAmount = this.inputData.fromLegalization && this.inputData.payTypeSelected !== 1
-						? Number(this.inputData.montoLegalizacionUSD || 0)
-						: 0;
-					const apostilladoAmount = Number(this.inputData.montoApostilladoExtraUSD || 0);
-					const tasaAmount = (baseAmount * ratePercentage) / 100;
-					const total = baseAmount + tasaAmount + commissionDollars + legalizacionAmount + apostilladoAmount;
+					this.comision = this.inputData.commissionDollars;
+					let temp =
+						this.inputData.commissionDollars +
+						this.inputData.amount +
+						(this.inputData.fromLegalization && this.inputData.payTypeSelected !== 1
+							? this.inputData.montoLegalizacionUSD || 0
+							: 0) +
+						(this.inputData.montoApostilladoExtraUSD || 0);
 
-					this.tasa = Math.round((tasaAmount + Number.EPSILON) * 100) / 100;
-					this.comision = Math.round((commissionDollars + Number.EPSILON) * 100) / 100;
-					this.amountToPay = Math.round((total + Number.EPSILON) * 100) / 100;				
+					let total = temp / (1 - this.inputData.ratePercentage / 100);
+					total = Math.round((total + Number.EPSILON) * 100) / 100;
+					this.amountToPay = total;
+					let tasa = (total * this.inputData.ratePercentage) / 100;
+					this.amountToPay = total;
+					this.tasa = Math.round((tasa + Number.EPSILON) * 100) / 100;
 				})
 			)
 			.subscribe();

@@ -609,7 +609,7 @@ export default class PayFeeComponent implements OnInit {
 			...this.payload(),
 			listaVouches:
 				this.listVochersToSave
-					?.filter((voucher) => voucher.paymentMethod !== 'wallet')
+					?.filter((voucher) => voucher.paymentMethod !== 'wallet' && voucher.paymentMethod !== 'coupon')
 					.map((voucher) => ({
 						idMethodPaymentSubType: voucher.methodSubTipoPagoId,
 						operationNumber: voucher.operationNumber,
@@ -620,10 +620,12 @@ export default class PayFeeComponent implements OnInit {
 						imagenBase64: voucher.imagen?.base64 || null
 					})) || [],
 			walletTransaction: this.payloadToSave?.walletTransaction || null,
+			couponTransaction: this.hasCoupon && this.subscriptionCoupon ? {
+				amount: this.couponDiscountAmount
+			} : null,
 			paypalDTO: this.payloadToSave?.paypalDTO || null,
 			...(this.hasCoupon && this.subscriptionCoupon && {
-				idCoupon: this.subscriptionCoupon.idCoupon,
-				discountMont: this.couponDiscountAmount
+				idCoupon: this.subscriptionCoupon.idCoupon
 			})
 		};
 
@@ -637,7 +639,8 @@ export default class PayFeeComponent implements OnInit {
 		if (
 			(!this.payloadToSave.listaVouches || this.payloadToSave.listaVouches.length === 0) &&
 			!this.payloadToSave.paypalDTO &&
-			!this.payloadToSave.walletTransaction
+			!this.payloadToSave.walletTransaction &&
+			!this.payloadToSave.couponTransaction
 		) {
 			alert('Debe registrar un pago');
 			return;
@@ -657,7 +660,8 @@ export default class PayFeeComponent implements OnInit {
 			this.payloadToSave.listaVouches,
 			this.payloadToSave.walletTransaction?.amount,
 			amountToCompare,
-			exchangeRate
+			exchangeRate,
+			this.payloadToSave.couponTransaction?.amount
 		);
 
 		if (!isTotalValid && !this.payloadToSave.paypalDTO) {

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
   ScheduleType,
@@ -16,8 +16,10 @@ import { ModalNotifyComponent } from '@shared/components/modal/modal-notify/moda
 import { PaymentsModalComponent } from '../../../componentes/modals/payments-modal/payments-modal.component';
 import { WalletModalComponent } from 'src/app/init-app/pages/purchase-checkout/components/payment-modals/wallet-modal/wallet-modal.component';
 import { TransferenciaModalComponent } from 'src/app/init-app/pages/purchase-checkout/components/payment-modals/transferencia-modal/transferencia-modal.component';
-import { DialogService } from 'primeng/dynamicdialog';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ModalPaymentPaypalComponent } from 'src/app/profiles/pages/ambassador/pages/new-partner/pages/new-partner-payment/commons/modals/modal-payment-paypal/modal-payment-paypal.component';
+
+// Controlador de modales centralizado
 import { createModalState, ModalsController, ModalState, BankMethod } from './car-bonus-schedule.modals';
 import { CarBonusScheduleService } from '../service/car-bonus-schedule.service';
 import { CarBonusPaymentService } from 'src/app/profiles/pages/ambassador/pages/tree/pages/my-awards/car-bonus/pages/service/car-bonus-payment.service';
@@ -25,12 +27,24 @@ import { MyAwardsService } from '../../../components/service/my-awards.service';
 import { ICarBonusScheduleContent } from '../../interface/car-bonus-schedule';
 import { PaymentStatus } from './data/paymentStatus';
 import { ICarBonusScheduleExtraData, ICarBonusScheduleExtraResponse } from '../../interface/car-bonus-schedule-extra';
+import { BreadcrumbComponent } from '@shared/components/breadcrumb/breadcrumb.component';
+import { BreadcrumbItem } from '@shared/interfaces/breadcrumb';
+import { IRankBonusData } from '../../../interface/classification';
+import { ClassificationsService } from '../../../components/service/classifications.service';
+import { UserInfoService } from 'src/app/profiles/commons/services/user-info/user-info.service';
+import { ModalCarBonusComponent } from '../../../components/modal-car-bonus/modal-car-bonus.component';
+import { TablePaginatorComponent } from '@shared/components/tables/table-paginator/table-paginator.component';
 import { IExchangeRate, ModalPaymentService } from 'src/app/profiles/pages/ambassador/pages/new-partner/pages/new-partner-payment/commons/sevices/modal-payment.service';
 import { OperationTypeService } from 'src/app/init-app/pages/purchase-checkout/services/operation-type.service';
-import { UserInfoService } from 'src/app/profiles/commons/services/user-info/user-info.service';
 import { WalletService } from 'src/app/profiles/pages/ambassador/pages/wallet/commons/services/wallet.service';
 import { finalize } from 'rxjs';
 
+interface ScheduleState {
+  tipo: ScheduleType;
+  isInicial: boolean;
+  isGeneral: boolean;
+  pageTitle: string;
+}
 @Component({
   selector: 'app-car-bonus-schedule',
   standalone: true,
@@ -42,7 +56,9 @@ import { finalize } from 'rxjs';
     ModalNotifyComponent,
     PaymentsModalComponent,
     WalletModalComponent,
-    TransferenciaModalComponent
+    TransferenciaModalComponent,
+    BreadcrumbComponent,
+    TablePaginatorComponent
   ],
   templateUrl: './car-bonus-schedule.component.html',
   styleUrls: ['./car-bonus-schedule.component.scss'],
@@ -50,9 +66,10 @@ import { finalize } from 'rxjs';
   providers: [DialogService]
 })
 export class CarBonusScheduleComponent implements OnInit {
+  schedule!: ScheduleState;
   proformaId!: number;
   tipo: ScheduleType = 'general';
-
+  private dialogRef: DynamicDialogRef;
   assigned: AssignedInfo = {} as AssignedInfo;
   countersGeneral: CountersGeneral = {} as CountersGeneral;
   countersInicial: CountersInicial = {} as CountersInicial;
@@ -63,6 +80,10 @@ export class CarBonusScheduleComponent implements OnInit {
   tableData: ICarBonusScheduleContent[] = [];
   tableColumnWidths: string[] = [];
   displayedTableData: ICarBonusScheduleContent[] = [];
+  breadcrumbItems: BreadcrumbItem[] = [];
+  totalElements = 0;
+  pageSize = 10;
+  pageIndex = 1;
 
   filtersGeneral: FilterGenericConfig[] = [
     {
@@ -107,18 +128,22 @@ export class CarBonusScheduleComponent implements OnInit {
   walletLoading = false;
   isSubmitting = false;
 
+  rejectedPaymentData: any = null;
+
   constructor(
     private route: ActivatedRoute,
     private cdr: ChangeDetectorRef,
     private dialogService: DialogService,
     private _carBonusScheduleService: CarBonusScheduleService,
+    private classificationsService: ClassificationsService,
+    private userInfoService: UserInfoService,
+    public _myAwardsService: MyAwardsService,
     private paymentService: CarBonusPaymentService,
-    private _myAwardsService: MyAwardsService,
     private operationTypeService: OperationTypeService,
     private modalPaymentService: ModalPaymentService,
-    private userInfoService: UserInfoService,
     private walletService: WalletService
 
+  
   ) { }
 
   get showGlobalSpinner(): boolean {
@@ -136,22 +161,36 @@ export class CarBonusScheduleComponent implements OnInit {
     
     this.userId = this.userInfoService.userInfo.id;
     this.getScheduleExtra();
-    this.filterValues = this.isGeneral ? { cuotas: '', estado: '' } : {};
     
+    this.isGeneralInicial();
+
+    this.filterValues = this.schedule.isGeneral ? { cuotas: '', estado: '' } : {};
+
     this.loadPaymentTypes();
     this.loadExchangeRate();
-
-    setTimeout(() => {
-      console.log('🔍 Payment types after load:', this.paymentTypes);
-      console.log('🔍 Exchange rate:', this.exchangeRateData);
-    }, 2000);
     
     this.loadData();
     this.cdr.markForCheck();
+    this.initBreadcrumb();
+  }
+  isGeneralInicial(): void {
+    this._myAwardsService.getStatusSchedule().subscribe(t => {
+      const tipo: ScheduleType = (t === 'inicial' || t === 'general') ? t : 'general';
+      this.schedule = {
+        tipo,
+        isInicial: tipo === 'inicial',
+        isGeneral: tipo === 'general',
+        pageTitle: tipo === 'inicial' ? 'Cronograma Inicial' : 'Cronograma General'
+      };
+      this.filterValues = this.schedule.isGeneral ? { cuotas: '', estado: '' } : {};
+      this.cdr.markForCheck();
+      this.getScheduleExtra();
+      this.loadData();
+    });
   }
 
   private loadData() {
-    if (this.isGeneral) {
+    if (this.schedule.isGeneral) {
       this.getCarBonusScheduleGene();
       this.tableColumns = [
         'Fecha registro de pago',
@@ -199,15 +238,31 @@ export class CarBonusScheduleComponent implements OnInit {
     }
   }
 
+  public initBreadcrumb(): void {
+    this.breadcrumbItems = [
+      {
+        label: 'Mis premios',
+        action: () => this._myAwardsService.setRouterTap('')
+      },
+      {
+        label: 'Bonos Auto',
+        action: () => this.getClassification()
+      },
+      {
+        label: 'Cronograma inicial',
+        action: () => { }
+      }
+    ];
+  }
+
   private loadPaymentTypes(): void {
     this.operationTypeService.getOperationTypes().subscribe({
       next: (types) => {
         this.paymentTypes = types;
-        console.log('✅ Payment types loaded:', this.paymentTypes); 
         this.cdr.markForCheck();
       },
       error: (err) => {
-        console.error('❌ Error loading payment types:', err);
+        console.error('Error loading payment types:', err);
         this.paymentTypes = [];
       }
     });
@@ -240,7 +295,7 @@ export class CarBonusScheduleComponent implements OnInit {
     const methodMapping: Record<string, number> = {
       'bcp': 1,
       'interbank': 2,
-      'paypal': 3,  // ✅ Este es el ID correcto para PayPal
+      'paypal': 3,  
       'wallet': 4,
       'otros': 5
     };
@@ -248,38 +303,26 @@ export class CarBonusScheduleComponent implements OnInit {
     const paymentTypeId = methodMapping[methodKey];
     
     if (!paymentTypeId) {
-      console.warn(`⚠️ Method key '${methodKey}' not found in mapping`);
       return { commissionSoles: 0, commissionDollars: 0, ratePercentage: 0, subTypeId: 0 };
     }
 
-    // Buscar el tipo de pago en los datos de la API
     const paymentType = this.paymentTypes.find(pt => pt.idPaymentType === paymentTypeId);
     
     if (!paymentType) {
-      console.warn(`⚠️ Payment type with id ${paymentTypeId} not found in API data`);
       return { commissionSoles: 0, commissionDollars: 0, ratePercentage: 0, subTypeId: 0 };
     }
 
-    // Filtrar subtipos activos (statusDollar true para pagos en USD)
     const activeSubTypes = paymentType.paymentSubTypeList.filter(
-      sub => sub.statusDollar === true // ✅ Cambiado de statusSoles a statusDollar
+      sub => sub.statusDollar === true 
     );
     
-    // Si no hay activos en USD, usar el primero disponible
     const defaultSubType = activeSubTypes.length > 0 
       ? activeSubTypes[0] 
       : paymentType.paymentSubTypeList[0];
     
     if (!defaultSubType) {
-      console.warn(`⚠️ No subtype found for payment type ${paymentTypeId}`);
       return { commissionSoles: 0, commissionDollars: 0, ratePercentage: 0, subTypeId: 0 };
     }
-
-    console.log(`✅ Commission data for ${methodKey}:`, {
-      subTypeId: defaultSubType.idPaymentSubType,
-      commissionDollars: defaultSubType.commissionDollars,
-      ratePercentage: defaultSubType.ratePercentage
-    });
 
     return {
       commissionSoles: defaultSubType.commissionSoles || 0,
@@ -290,7 +333,7 @@ export class CarBonusScheduleComponent implements OnInit {
   }
   private calculatePaymentDetails(row: ICarBonusScheduleContent, methodKey: string = 'bcp') {
     const amountUSD = row.memberAssumedPayment || row.total || 0;
-    const exchangeRate = this.exchangeRateData?.buys || 3.445;
+    const exchangeRate = this.exchangeRateData?.sale || 3.47;
     const amountPEN = amountUSD * exchangeRate;
     
     const { commissionSoles, commissionDollars, ratePercentage, subTypeId } = 
@@ -298,29 +341,18 @@ export class CarBonusScheduleComponent implements OnInit {
     
     let totalCommission = 0;
     
-    // Calcular comisión base
     if (commissionSoles > 0) {
       totalCommission = commissionSoles;
     } else if (commissionDollars > 0) {
       totalCommission = commissionDollars * exchangeRate;
     }
     
-    // ✅ CRÍTICO: Aplicar el porcentaje de tasa sobre el monto en USD (no en PEN)
     if (ratePercentage > 0) {
       const rateFee = (amountUSD * ratePercentage) / 100;
-      totalCommission += (rateFee * exchangeRate); // Convertir a PEN
+      totalCommission += (rateFee * exchangeRate); 
     }
     
     const totalPEN = amountPEN + totalCommission;
-
-    console.log(`💰 Payment calculation for ${methodKey}:`, {
-      amountUSD: amountUSD.toFixed(2),
-      amountPEN: amountPEN.toFixed(2),
-      commissionDollars: commissionDollars.toFixed(2),
-      ratePercentage: ratePercentage.toFixed(2),
-      totalCommission: totalCommission.toFixed(2),
-      totalPEN: totalPEN.toFixed(2)
-    });
 
     return {
       amountUSD: Number(amountUSD.toFixed(2)),
@@ -400,37 +432,49 @@ export class CarBonusScheduleComponent implements OnInit {
   getCarBonusSchedule(): void {
     if (this._myAwardsService.getCarAssinmentId) {
       const id = this._myAwardsService.getCarAssinmentId;
-      this._carBonusScheduleService.getCarBonusSchedule(id, 0, 10).subscribe(response => {
-        this.tableData = response.data.content;
-        this.displayedTableData = response.data.content.map(r => ({
-          ...r,
-          statusName: this.translate(r.status.name),
-          concepto: this.getConcepto(r)
-        }));
-        this.cdr.markForCheck();
-      });
+      this._carBonusScheduleService
+        .getCarBonusSchedule(id, this.pageIndex - 1, this.pageSize)
+        .subscribe(response => {
+          this.tableData = response.data.content.map(r => ({
+            ...r,
+            statusName: this.translate(r.status.name),
+            concepto: this.getConcepto(r)
+          }));
+          this.applyFilters();
+
+          this.totalElements = response.data.totalElements ?? this.tableData.length;
+          this.pageSize = response.data.pageSize ?? this.pageSize;
+          this.pageIndex = (response.data.currentPage ?? 0) + 1;
+          this.cdr.markForCheck();
+        });
     }
   }
 
   getCarBonusScheduleGene(): void {
     if (this._myAwardsService.getCarAssinmentId) {
       const id = this._myAwardsService.getCarAssinmentId;
-      this._carBonusScheduleService.getCarBonusScheduleGene(id, 0, 10).subscribe(response => {
-        this.tableData = response.data.content;
-        this.displayedTableData = response.data.content.map(r => ({
-          ...r,
-          statusName: this.translate(r.status.name),
-          concepto: this.getConcepto(r)
-        }));
-        this.cdr.markForCheck();
-      });
+      this._carBonusScheduleService
+        .getCarBonusScheduleGene(id, this.pageIndex - 1, this.pageSize)
+        .subscribe(response => {
+          this.tableData = response.data.content.map(r => ({
+            ...r,
+            statusName: this.translate(r.status.name),
+            concepto: this.getConcepto(r)
+          }));
+          this.applyFilters();
+
+          this.totalElements = response.data.totalElements ?? this.tableData.length;
+          this.pageSize = response.data.pageSize ?? this.pageSize;
+          this.pageIndex = (response.data.currentPage ?? 0) + 1;
+          this.cdr.markForCheck();
+        });
     }
   }
 
   getScheduleExtra(): void {
     const id = this._myAwardsService.getCarAssinmentId;
     this._carBonusScheduleService.getScheduleExtra(id).subscribe(response => {
-      if (this.isGeneral) {
+      if (this.schedule.isGeneral) {
         this.assigned = this.convertAssignedGene(response.data);
         this.countersGeneral = this.convertCounterGene(response.data);
         this.datesGeneral = this.convertDatesDeliveryGene(response.data);
@@ -443,9 +487,38 @@ export class CarBonusScheduleComponent implements OnInit {
       this.cdr.markForCheck();
     });
   }
+  onPageChange(p: number) {
+    this.pageIndex = p;
+    if (this.schedule?.isGeneral) {
+      this.getCarBonusScheduleGene();
+    } else {
+      this.getCarBonusSchedule();
+    }
+  }
 
+  onPageSizeChange(size: number) {
+    this.pageSize = size;
+    this.pageIndex = 1; 
+    if (this.schedule?.isGeneral) {
+      this.getCarBonusScheduleGene();
+    } else {
+      this.getCarBonusSchedule();
+    }
+  }
+  private getCuotaNumero(concepto: string | undefined): number | null {
+    if (!concepto) return null;
+    const m = concepto.match(/Cuota\s*N°\s*(\d+)/i);
+    if (!m) return null;
+    const n = parseInt(m[1], 10);
+    return isNaN(n) ? null : n;
+  }
+
+  public rowSelectableHook = (row: any): boolean => {
+    const estado = (row?.statusName ?? '').toString();
+    return !(estado === 'Pagado' || estado === 'Pendiente de Revisión');
+  };
   private applyFilters(): void {
-    if (this.isInicial) return;
+    if (this.schedule.isInicial) return;
 
     const { cuotas, estado } = this.filterValues || {};
     const hasCuotas = cuotas !== undefined && cuotas !== null && cuotas !== '';
@@ -471,11 +544,12 @@ export class CarBonusScheduleComponent implements OnInit {
   }
 
   onExtraAction(btn: FilterExtraButton) {
-    if (btn.key === 'exportar') alert('Exportando datos...');
+    if (btn.key === 'exportar') this.downloadSchedule();
     if (btn.key === 'limpiar') this.filterValues = {};
   }
+
   isPayable(row: ICarBonusScheduleContent): boolean {
-    return row?.status?.name === 'PENDING';
+    return row?.status?.name === 'PENDING' || row?.status?.name === 'REJECTED';
   }
 
   onPaySingle(scheduleId: string) {
@@ -490,17 +564,26 @@ export class CarBonusScheduleComponent implements OnInit {
   }
 
   onPay(row: ICarBonusScheduleContent) {
-    const paymentDetails = this.calculatePaymentDetails(row, 'bcp');
+    if (row?.status?.name === 'REJECTED') {
+      this.rejectedPaymentData = {
+        paymentId: row.id,
+      };
+      
+      this.modalState = ModalsController.openTransfer(this.modalState, 'otrosMedios');
+      this.cdr.markForCheck();
+      return;
+    }
 
+    const paymentDetails = this.calculatePaymentDetails(row, 'bcp');
     this.modalState = ModalsController.openPayments(
       this.modalState,
       [row.id],
       paymentDetails
     );
-    
     this.cdr.markForCheck();
   }
 
+  // Escucha selección de método en el modal de pagos
   onMethodSelected(method: string) {
     const selectedId = this.modalState.selectedPaymentIds[0];
     const row = this.displayedTableData.find(r => r.id === selectedId);
@@ -535,24 +618,20 @@ export class CarBonusScheduleComponent implements OnInit {
   }
   private openPaypalModalAndProcess(paymentDetails: any): void {
     const commissionData = this.getCommissionForMethod('paypal');
-    
-    // ✅ Calcular correctamente la tasa en USD (no en PEN)
     const rateAmountUSD = (paymentDetails.amountUSD * commissionData.ratePercentage) / 100;
     
     const dataToModal: any = {
       description: paymentDetails.concept,
       amount: paymentDetails.amountUSD,
-      ratePercentage: commissionData.ratePercentage, // ✅ 5.4
-      commissionDollars: commissionData.commissionDollars, // ✅ 0.3
-      rateAmountUSD: rateAmountUSD, // ✅ Agregar el monto calculado de la tasa
+      ratePercentage: commissionData.ratePercentage, 
+      commissionDollars: commissionData.commissionDollars,
+      rateAmountUSD: rateAmountUSD,
       payTypeSelected: 1,
       fromLegalization: false,
       montoLegalizacionUSD: 0,
       montoApostilladoExtraUSD: 0,
       idPaymentSubType: commissionData.subTypeId
     };
-
-    console.log('📤 Data sent to PayPal modal:', dataToModal);
 
     this.dialogService
       .open(ModalPaymentPaypalComponent, {
@@ -577,6 +656,7 @@ export class CarBonusScheduleComponent implements OnInit {
     }
     if (kind === 'showTransfer') {
       this.modalState = ModalsController.closeTransfer(this.modalState);
+      this.rejectedPaymentData = null; 
     }
     this.cdr.markForCheck();
   }
@@ -591,7 +671,6 @@ export class CarBonusScheduleComponent implements OnInit {
     formData.append('paymentSubTypeId', paymentDetails.subTypeId.toString());
     formData.append('currencyType', 'USD');
     
-    // ✅ CRÍTICO: Usar el monto que viene del payload de PayPal (que incluye tasa + comisión)
     const totalAmount = parseFloat(paypalPayload.amount?.toString() || paymentDetails.amountUSD.toString());
     formData.append('totalAmount', totalAmount.toString());
 
@@ -601,7 +680,7 @@ export class CarBonusScheduleComponent implements OnInit {
     formData.append('paypal.orderId', paypalPayload.operationNumber);
     formData.append('paypal.transactionId', paypalPayload.operationNumber);
     formData.append('paypal.status', 'COMPLETED');
-    formData.append('paypal.amount', totalAmount.toString()); // ✅ También actualizar aquí
+    formData.append('paypal.amount', totalAmount.toString()); 
     formData.append('paypal.currency', 'USD');
     formData.append('paypal.createTime', new Date().toISOString());
     
@@ -616,8 +695,6 @@ export class CarBonusScheduleComponent implements OnInit {
     if (paypalPayload.apostillaUSD) {
       formData.append('paypal.apostillaUSD', paypalPayload.apostillaUSD.toString());
     }
-
-    console.log('📤 Sending PayPal payment with totalAmount:', totalAmount);
 
     this.isSubmitting = true;
     this.cdr.markForCheck();
@@ -786,7 +863,65 @@ export class CarBonusScheduleComponent implements OnInit {
       });
   }
 
-  onTransferenciaSuccess(payload: any) {    
+  onTransferenciaSuccess(payload: any) {
+    if (payload.mode === 'correction') {
+      const formData = new FormData();
+      formData.append('operationNumber', payload.operationNumber);
+      formData.append('note', payload.note);
+      formData.append('voucherFile', payload.image, payload.image.name);
+
+      this.isSubmitting = true;
+      this.cdr.markForCheck();
+
+      this.paymentService.correctPayment(payload.paymentId, formData)
+        .pipe(
+          finalize(() => {
+            this.isSubmitting = false;
+            this.rejectedPaymentData = null; 
+            this.cdr.markForCheck();
+          })
+        )
+        .subscribe({
+          next: (response) => {
+            this.modalState = ModalsController.closeTransfer(this.modalState);
+            this.modalState = ModalsController.openNotify(
+              this.modalState,
+              'Éxito',
+              'Pago corregido y enviado a revisión correctamente.'
+            );
+            
+            if (this.isGeneral) {
+              this.getCarBonusScheduleGene();
+            } else {
+              this.getCarBonusSchedule();
+            }
+            
+            this.cdr.markForCheck();
+          },
+          error: (error) => {
+            let errorMessage = 'Ocurrió un error al corregir el pago. Intenta nuevamente.';
+            
+            if (error.error?.error && Array.isArray(error.error.error)) {
+              const messages = error.error.error.map((e: any) => e.message).join('\n');
+              errorMessage = messages;
+            } else if (error.error?.message) {
+              errorMessage = error.error.message;
+            }
+            
+            this.modalState = ModalsController.closeTransfer(this.modalState);
+            this.modalState = ModalsController.openNotify(
+              this.modalState,
+              'Error',
+              errorMessage
+            );
+            
+            this.cdr.markForCheck();
+          }
+        });
+      
+      return;
+    }
+
     const formData = new FormData();
     const details = this.modalState.paymentDetails;
     
@@ -811,38 +946,48 @@ export class CarBonusScheduleComponent implements OnInit {
     formData.append('voucher.note', payload.note);
     formData.append('voucher.image', payload.image, payload.image.name);
 
-    this.paymentService.makePayment(formData).subscribe({
-      next: (response) => {
-        this.modalState = ModalsController.closeTransfer(this.modalState);
-        this.modalState = ModalsController.openNotify(
-          this.modalState,
-          'Éxito',
-          'Pago registrado correctamente. Será revisado por el equipo.'             
-        );
-        if (this.isGeneral) {
-          this.getCarBonusScheduleGene();
-        } else {
-          this.getCarBonusSchedule();
+    this.isSubmitting = true;
+    this.cdr.markForCheck();
+
+    this.paymentService.makePayment(formData)
+      .pipe(
+        finalize(() => {
+          this.isSubmitting = false;
+          this.cdr.markForCheck();
+        })
+      )
+      .subscribe({
+        next: (response) => {
+          this.modalState = ModalsController.closeTransfer(this.modalState);
+          this.modalState = ModalsController.openNotify(
+            this.modalState,
+            'Éxito',
+            'Pago registrado correctamente. Será revisado por el equipo.'             
+          );
+          if (this.isGeneral) {
+            this.getCarBonusScheduleGene();
+          } else {
+            this.getCarBonusSchedule();
+          }
+          this.cdr.markForCheck();
+        },
+        error: (error) => {
+          let errorMessage = 'Ocurrió un error al registrar el pago. Intenta nuevamente.';
+          
+          if (error.error?.error && Array.isArray(error.error.error)) {
+            const messages = error.error.error.map((e: any) => e.message).join('\n');
+            errorMessage = messages;
+          }
+          
+          this.modalState = ModalsController.closeTransfer(this.modalState);
+          this.modalState = ModalsController.openNotify(
+            this.modalState,
+            'Error',
+            errorMessage
+          );
+          this.cdr.markForCheck();
         }
-        this.cdr.markForCheck();
-      },
-      error: (error) => {
-        let errorMessage = 'Ocurrió un error al registrar el pago. Intenta nuevamente.';
-        
-        if (error.error?.error && Array.isArray(error.error.error)) {
-          const messages = error.error.error.map((e: any) => e.message).join('\n');
-          errorMessage = messages;
-        }
-        
-        this.modalState = ModalsController.closeTransfer(this.modalState);
-        this.modalState = ModalsController.openNotify(
-          this.modalState,
-          'Error',
-          errorMessage
-        );
-        this.cdr.markForCheck();
-      }
-    });
+      });
   }
 
   translate(status: string): string {
@@ -863,7 +1008,7 @@ export class CarBonusScheduleComponent implements OnInit {
   }
 
   getConcepto(row: ICarBonusScheduleContent): string {
-    const text = row.installmentNum === 1 && row.isInitial === true ?
+    const text = row.isInitial === true ?
       `Inicial fraccionada ${row.installmentNum}` : `Cuota N° ${row.installmentNum}`;
     return text;
   }
@@ -874,6 +1019,46 @@ export class CarBonusScheduleComponent implements OnInit {
     const dd = String(day).padStart(2, '0');
     const mm = String(month).padStart(2, '0');
     return `${dd}/${mm}/${year}`;
+  }
+
+  getClassification() {
+    this._myAwardsService.completeCarBonusList();
+    this.openModalCarBonus({} as IRankBonusData[]);
+    const userId = this.userInfoService.userInfo.id;
+    this.classificationsService.getClassification(userId).subscribe({
+      next: (response) => {
+        this._myAwardsService.setCarBonusList(response.data);
+      },
+      error: (error) => { console.error('Error fetching document:', error); }
+    });
+  }
+
+  openModalCarBonus(data: IRankBonusData[]) {
+    this.dialogRef = this.dialogService.open(ModalCarBonusComponent, {
+      data: data
+    });
+    this.dialogRef.onClose.subscribe(() => {
+    });
+  }
+
+  downloadSchedule() {
+    const id = this._myAwardsService.getCarAssinmentId;
+    this._carBonusScheduleService.exportSchedule(id).subscribe({
+      next: (blob) => {
+        const url = window.URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'cronograma_general.xlsx';
+        a.click();
+
+        // Liberar el objeto URL
+        window.URL.revokeObjectURL(url);
+      },
+      error: (err) => {
+        console.error('Error al exportar los datos:', err);
+      },
+    });
   }
 
 }

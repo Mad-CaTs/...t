@@ -11,8 +11,11 @@ import { CAR_BONUS_DOCUMENTS } from '../mock/document';
 import { CommonModule } from '@angular/common';
 import { RouterTap } from '../enum/router-tap';
 import { HttpClient } from '@angular/common/http';
-import { DocumentService } from '../service/document.service';
 import { UserInfoService } from 'src/app/profiles/commons/services/user-info/user-info.service';
+import { IRankBonusData } from '../../interface/classification';
+import { ClassificationsService } from '../service/classifications.service';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { ModalCarBonusComponent } from '../modal-car-bonus/modal-car-bonus.component';
 
 @Component({
   selector: 'app-car-bond-document',
@@ -32,6 +35,7 @@ export class CarBondDocumentComponent implements OnInit, OnDestroy {
   @Input() isLoading: boolean = true;
   @Output() pageChange: EventEmitter<any> = new EventEmitter();
   @Output() refresh: EventEmitter<any> = new EventEmitter();
+  private dialogRef: DynamicDialogRef;
   public userId: any;
   breadcrumbItems: BreadcrumbItem[] = [];
   public rows: number = 10;
@@ -41,8 +45,9 @@ export class CarBondDocumentComponent implements OnInit, OnDestroy {
   constructor(
     private _myAwardsService: MyAwardsService,
     public tableService: TablePaginationService,
-    private _documentService: DocumentService,
     private _userInfoService: UserInfoService,
+    private _classificationsService: ClassificationsService,
+    private dialogService: DialogService,
     private http: HttpClient) {
 
   }
@@ -57,6 +62,10 @@ export class CarBondDocumentComponent implements OnInit, OnDestroy {
       {
         label: 'Mis premios',
         action: () => this._myAwardsService.setRouterTap('')
+      },
+      {
+        label: 'Bonos Auto',
+        action: () => this.getClassification()
       },
       {
         label: 'Documentos',
@@ -93,7 +102,7 @@ export class CarBondDocumentComponent implements OnInit, OnDestroy {
       'Tipo de Documento',
       'Nombre del Archivo',
       'Fecha de Registro',
-      'Vehículo',
+      // 'Vehículo',
       'Tamaño',
       'Acciones'
     ];
@@ -128,4 +137,23 @@ export class CarBondDocumentComponent implements OnInit, OnDestroy {
     }
   }
 
+  getClassification() {
+    this._myAwardsService.completeCarBonusList();
+    this.openModalCarBonus({} as IRankBonusData[]);
+    const userId = this._userInfoService.userInfo.id;
+    this._classificationsService.getClassification(userId).subscribe({
+      next: (response) => {
+        this._myAwardsService.setCarBonusList(response.data);
+      },
+      error: (error) => { console.error('Error fetching document:', error); }
+    });
+  }
+
+  openModalCarBonus(data: IRankBonusData[]) {
+    this.dialogRef = this.dialogService.open(ModalCarBonusComponent, {
+      data: data
+    });
+    this.dialogRef.onClose.subscribe(() => {
+    });
+  }
 }

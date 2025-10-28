@@ -153,7 +153,6 @@ ngOnDestroy(): void {
 	}
 
 	onSubmitGodfatherStep(godfatherData: any) {
-		// Guardar datos del padrino en el formulario
 		this.newPartnerFormPresenter.multiStepForm.get('godfatherData').patchValue({
 			idGodfather: godfatherData.idGodfather,
 			godfatherLevel: godfatherData.godfatherLevel,
@@ -186,7 +185,6 @@ ngOnDestroy(): void {
 		const exchangeRate = dataToSave.exchangeRate;
 		let totalComisionInDollars = 0;
 
-		// Filtrar cupones de los vouchers generales - el cupón no es un método de pago
 		const generalVouchers = dataToSave.listVochers
 			.filter((voucher) => voucher.paymentMethod !== 'wallet' && voucher.paymentMethod !== 'coupon')
 			.map((voucher) => {
@@ -243,7 +241,8 @@ ngOnDestroy(): void {
 				walletTransaction?.amount,
 				(isSpecialFractional ? value.paymentData.amountPaid : value.paymentData.amountPaid) +
 					totalComisionInDollars,
-				exchangeRate
+				exchangeRate,
+				dataToSave.discountMont || 0
 			) &&
 			!this.paypalData &&
 			!value.paymentData.isPayLater
@@ -286,7 +285,7 @@ ngOnDestroy(): void {
 		console.log('🚀 Payload final para registro de socio:', {
 			hasIdCoupon: !!payload.idCoupon,
 			idCoupon: payload.idCoupon,
-			discountMont: payload.discountMont,
+			couponTransaction: payload.couponTransaction,
 			fullPayload: payload
 		});
 

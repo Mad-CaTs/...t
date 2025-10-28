@@ -1,0 +1,86 @@
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.dropzone {
+  border: 2px dashed #cfd4dc;
+  border-radius: 12px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: #fafafa;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 0 12px;
+  font-size: 12px;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+
+  &.dragover {
+    border-color: #009ef6;
+    background: #e6f4fa;
+    color: #009ef6;
+  }
+  &.has-file {
+    justify-content: flex-start;
+    gap: 12px;
+  }
+}
+
+.dz-empty {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  .dz-title {
+    font-weight: 400;
+    font-size: 12px;
+  }
+}
+
+.attach-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.pdf-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 28px;
+  padding: 0 10px;
+  border-radius: 10px;
+  font-weight: 400;
+  font-size: 12px;
+  background: #e8f5e9;
+  color: #1b5e20;
+  border: 1px solid #2e7d32;
+}
+
+.reupload {
+  border: 0;
+  background: transparent;
+  color: #6b6b6b;
+  font-weight: 400;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.remove {
+  border: 0;
+  background: transparent;
+  color: #6b7280;
+  cursor: pointer;
+
+  &:hover {
+    color: #d9534f;
+  }
+}

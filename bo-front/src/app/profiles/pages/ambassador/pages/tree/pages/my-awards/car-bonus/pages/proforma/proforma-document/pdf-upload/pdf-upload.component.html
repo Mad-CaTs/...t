@@ -1,0 +1,46 @@
+<div
+  class="dropzone"
+  [class.dragover]="dragOver"
+  [class.has-file]="!!file || !!externalUrl"
+  (dragover)="onDragOver($event, true)"
+  (dragleave)="onDragOver($event, false)"
+  (drop)="onDrop($event)"
+  (click)="onPickClick($event)"
+>
+  <ng-container *ngIf="!file && !externalUrl; else selected">
+    <div class="dz-empty">
+      <span class="dz-title">Subir un PDF</span>
+    </div>
+  </ng-container>
+
+  <ng-template #selected>
+    <div class="attach-row">
+      <span class="pdf-chip">
+        <i class="bi bi-file-earmark-pdf"></i>
+        {{ displayPdfName }}
+      </span>
+
+      <button type="button" class="reupload" (click)="onPickClick($event)">
+        Volver a subir
+      </button>
+
+      <button
+        class="remove"
+        type="button"
+        (click)="removeFile($event)"
+        title="Eliminar archivo"
+      >
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+  </ng-template>
+
+  <input
+    #fileInput
+    type="file"
+    class="sr-only"
+    accept=".pdf,application/pdf"
+    (change)="onSelected($event)"
+    [disabled]="disabled"
+  />
+</div>

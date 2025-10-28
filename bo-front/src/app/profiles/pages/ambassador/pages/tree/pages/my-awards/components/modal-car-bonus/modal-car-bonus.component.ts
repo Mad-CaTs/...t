@@ -45,6 +45,7 @@ export class ModalCarBonusComponent implements OnInit {
       this.cars = res.map((car, index) => {
         car.imagenCar = this.getImage(car.rankId);
         car.titleBonus = titleBonus[index] || '';
+        car.requiredPoints = car.requiredPoints === 0 ? 'Próximamente' : car.requiredPoints;
         return car;
       }
       )
@@ -69,43 +70,53 @@ export class ModalCarBonusComponent implements OnInit {
   }
   activetionTabCarBonus(car: IRankBonusData): void {
     if (this.flagLink && car.maxAchievedPoints > 0) {
+      this._myAwardsService.setCarBonusList([car]);
       const router = car.maxAchievedPoints > 0 ? RouterTap.BONUS_CAR : '';
       this._myAwardsService.setRouterTap(router);
-      this._myAwardsService.setCarBonusList([car]);
       this._myAwardsService.setCarAssinmentId(car.carAssignmentId);
       router != '' ? this.ref.close() : '';
     }
   }
 
   goToInitialSchedule(car: IRankBonusData): void {
-    if (!car?.rankId) return;
-    this.ref?.close();
+
+    this._myAwardsService.setStatusSchedule('inicial');
+    this._myAwardsService.setRouterTap(RouterTap.BONUS_CAR_SEE_SCHEDULE);
     this._myAwardsService.setCarAssinmentId(car.carAssignmentId);
-    this.router.navigate([
-      '/profile/ambassador/my-awards/car-bonus/cronograma',
-      1,
-      'inicial',
-    ]);
+
+    this.ref?.close();
+    // this.router.navigate([
+    //   '/profile/ambassador/my-awards/car-bonus/cronograma',
+    //   1,
+    //   'inicial',
+    // ]);
   }
 
   goToGeneralSchedule(car: IRankBonusData): void {
-    if (!car?.rankId) return;
-    this.ref?.close();
+
+    this._myAwardsService.setStatusSchedule('general');
+    this._myAwardsService.setRouterTap(RouterTap.BONUS_CAR_SEE_SCHEDULE);
     this._myAwardsService.setCarAssinmentId(car.carAssignmentId);
-    this.router.navigate([
-      '/profile/ambassador/my-awards/car-bonus/cronograma',
-      1,
-      'general',
-    ]);
+
+    this.ref?.close();
+    // this.router.navigate([
+    //   '/profile/ambassador/my-awards/car-bonus/cronograma',
+    //   1,
+    //   'general',
+    // ]);
   }
 
-  goToProformas(): void {
+  goToProformas(car: IRankBonusData): void {
+    this._myAwardsService.setRouterTap(RouterTap.BONUS_CAR_SEE_PROFORMA);
+    this._myAwardsService.setCarBonus(car);
     this.ref?.close();
-    this.router.navigate([
-      '/profile/ambassador/my-awards',
-      'car-bonus',
-      'proforma',
-    ]);
+    // this._myAwardsService.setCarBonus(this.cars?.[0]);
+    // this.router.navigate([
+    //   '/profile/ambassador/my-awards',
+    //   'car-bonus',
+    //   'proforma',
+    //   this.cars?.[0]?.classificationId
+    // ]);
   }
 
   goToDocument() {

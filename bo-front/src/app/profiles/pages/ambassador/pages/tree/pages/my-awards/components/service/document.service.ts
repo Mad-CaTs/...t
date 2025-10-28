@@ -11,7 +11,7 @@ const BASE_URL = environment.URL_BONUS_API;
 @Injectable({
     providedIn: 'root'
 })
-export class DocumentService {
+export class DocumentBonusService {
     private endpoint = 'car-bonus/assignment-documents/details/';
 
     constructor(private http: HttpClient) { }

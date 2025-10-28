@@ -3,190 +3,108 @@
 		<!-- IZQUIERDA -->
 		<div class="left">
 			<div class="page-header">
-				<h2 class="doc-title">Proforma {{ proformaId ?? (mode === 'create' ? 'Nuevo' : '') }}</h2>
+				<h2 class="doc-title">Proforma {{ mode === 'edit' ? '' : 'Nueva' }}</h2>
 			</div>
 			<form [formGroup]="form" class="form-grid">
-				<!-- Marca / Modelo -->
-				<div class="field">
-					<label class="label">Marca</label>
-					<input
-						class="control"
-						type="text"
-						formControlName="marca"
-						placeholder="Ingresa la marca"
-					/>
-					<div class="error" *ngIf="isInvalid('marca')">{{ errorText('marca') }}</div>
-				</div>
-				<div class="field">
-					<label class="label">Modelo</label>
-					<input
-						class="control"
-						type="text"
-						formControlName="modelo"
-						placeholder="Ingresa el modelo"
-					/>
-					<div class="error" *ngIf="isInvalid('modelo')">{{ errorText('modelo') }}</div>
-				</div>
-
-				<!-- Color / Precio -->
-				<div class="field">
-					<label class="label">Color</label>
-					<input class="control" type="text" formControlName="color" placeholder="Ej. AZUL" />
-					<div class="error" *ngIf="isInvalid('color')">{{ errorText('color') }}</div>
-				</div>
-				<div class="field">
-					<label class="label">Precio</label>
-					<div class="group">
-						<span class="addon">$</span>
-						<input
-							class="control no-left"
-							type="number"
-							formControlName="precioUSD"
-							placeholder="0.00"
-						/>
+				<div class="field-row">
+					<div class="field">
+						<label class="label">Marca</label>
+						<input class="control" type="text" formControlName="brandName" placeholder="Ingresa la marca"
+							tabindex="1" />
+						<div class="error" *ngIf="isInvalid('brandName')">{{ errorText('brandName') }}</div>
 					</div>
-					<div class="error" *ngIf="isInvalid('precioUSD')">{{ errorText('precioUSD') }}</div>
-				</div>
-
-				<!-- Concesionaria / Ejecutivo -->
-				<div class="field">
-					<label class="label">Concesionaria</label>
-					<input
-						class="control"
-						type="text"
-						formControlName="concesionaria"
-						placeholder="Ingresa la concesionaria"
-					/>
-					<div class="error" *ngIf="isInvalid('concesionaria')">
-						{{ errorText('concesionaria') }}
+					<div class="field">
+						<label class="label">Modelo</label>
+						<input class="control" type="text" formControlName="modelName" placeholder="Ingresa el modelo"
+							tabindex="2" />
+						<div class="error" *ngIf="isInvalid('modelName')">{{ errorText('modelName') }}</div>
 					</div>
 				</div>
-				<div class="field">
-					<label class="label">Ejecutivo de ventas</label>
-					<input
-						class="control"
-						type="text"
-						formControlName="ejecutivoVentas"
-						placeholder="Ingresa el nombre del ejecutivo"
-					/>
-					<div class="error" *ngIf="isInvalid('ejecutivoVentas')">
-						{{ errorText('ejecutivoVentas') }}
+				<div class="field-row">
+					<div class="field">
+						<label class="label">Color</label>
+						<input class="control" type="text" formControlName="color" placeholder="Ej. AZUL"
+							tabindex="3" />
+						<div class="error" *ngIf="isInvalid('color')">{{ errorText('color') }}</div>
 					</div>
-				</div>
-
-				<!-- Teléfono / Adjuntar PDF -->
-				<div class="field">
-					<label class="label">Celular del ejecutivo de ventas</label>
-
-					<div class="phone-combo" [class.invalid]="isInvalid('telefono')">
-						<div
-							class="prefix"
-							role="button"
-							tabindex="0"
-							(click)="toggleCountryMenu($event)"
-							(keydown.enter)="toggleCountryMenu($event)"
-							(keydown.space)="toggleCountryMenu($event)"
-						>
-							<img
-								*ngIf="selectedCountry"
-								class="flag-icon"
-								[src]="selectedCountry.flag"
-								[alt]="selectedCountry.iso + ' flag'"
-							/>
-							<span class="iso">{{ selectedCountry?.iso }}</span>
-							<span class="code">{{ selectedCountry?.dial }}</span>
-							<i
-								class="bi bi-chevron-down chevron"
-								[class.open]="countryMenuOpen"
-								aria-hidden="true"
-							></i>
-							<span class="sep" aria-hidden="true"></span>
+					<div class="field">
+						<label class="label">Precio</label>
+						<div class="group">
+							<span class="addon">$</span>
+							<input class="control no-left" type="number" formControlName="price" placeholder="0.00"
+								tabindex="4" />
 						</div>
-						<ul class="country-menu" *ngIf="countryMenuOpen">
-							<li
-								class="country-option"
-								*ngFor="let country of countries"
-								(click)="selectCountry(country, $event)"
-								[class.active]="country.dial === form.value.telefonoPais"
-							>
-								<img class="flag-icon" [src]="country.flag" [alt]="country.iso + ' flag'" />
-								<span class="name">{{ country.name }}</span>
-								<span class="dial">{{ country.dial }}</span>
-							</li>
-						</ul>
-						<input
-							class="phone-input"
-							type="text"
-							formControlName="telefono"
-							placeholder="987 456 125"
-							inputmode="tel"
-							autocomplete="tel"
-						/>
+						<div class="error" *ngIf="isInvalid('price')">{{ errorText('price') }}</div>
 					</div>
-
-					<div class="error" *ngIf="isInvalid('telefono')">{{ errorText('telefono') }}</div>
 				</div>
-
-				<div class="field">
-					<div class="label-row">
-						<label class="label">Adjuntar proforma:</label>
-						<i class="bi bi-info-circle info"></i>
+				<div class="field-row">
+					<div class="field">
+						<label class="label">Concesionaria</label>
+						<input class="control" type="text" formControlName="dealershipName"
+							placeholder="Ingresa la concesionaria" tabindex="5" />
+						<div class="error" *ngIf="isInvalid('dealershipName')">
+							{{ errorText('dealershipName') }}
+						</div>
 					</div>
+					<div class="field">
+						<label class="label">Ejecutivo de ventas</label>
+						<input class="control" type="text" formControlName="salesExecutiveName"
+							placeholder="Ingresa el nombre del ejecutivo" tabindex="6" />
+						<div class="error" *ngIf="isInvalid('salesExecutiveName')">
+							{{ errorText('salesExecutiveName') }}
+						</div>
+					</div>
+				</div>
+				<div class="field-row">
+					<div class="field">
+						<label class="label">Celular del ejecutivo de ventas</label>
 
-					<div
-						class="dropzone"
-						[class.dragover]="dragOver"
-						[class.has-file]="!!form.value.file"
-						(dragover)="onDragOver($event, true)"
-						(dragleave)="onDragOver($event, false)"
-						(drop)="onDrop($event)"
-						(click)="onPickClick($event)"
-					>
-						<ng-container *ngIf="!form.value.file; else selected">
-							<div class="dz-empty">
-								<span class="dz-title">Subir un PDF</span>
+						<div class="phone-combo" [class.invalid]="isInvalid('salesExecutivePhone')">
+							<div class="prefix" role="button" tabindex="-1" (click)="toggleCountryMenu($event)"
+								(keydown.enter)="toggleCountryMenu($event)" (keydown.space)="toggleCountryMenu($event)">
+								<img *ngIf="selectedCountry" class="flag-icon" [src]="selectedCountry.flag"
+									[alt]="selectedCountry.iso + ' flag'" />
+								<span class="iso">{{ selectedCountry?.iso }}</span>
+								<span class="code">{{ selectedCountry?.dial }}</span>
+								<i class="bi bi-chevron-down chevron" [class.open]="countryMenuOpen"
+									aria-hidden="true"></i>
+								<span class="sep" aria-hidden="true"></span>
 							</div>
-						</ng-container>
+							<ul class="country-menu" *ngIf="countryMenuOpen">
+								<li class="country-search-row">
+									<input class="country-search" placeholder="Buscar país" (input)="onCountrySearch($event.target.value)" (click)="$event.stopPropagation()" />
+								</li>
+								<li class="country-option" *ngFor="let country of filteredCountries" (click)="selectCountry(country, $event)" [class.active]="country.idCountry === form.value.executiveCountryId">
+									<img class="flag-icon" [src]="country.flag" [alt]="country.iso + ' flag'" />
+									<span class="name">{{ country.name }}</span>
+									<span class="dial">{{ country.dial }}</span>
+								</li>
+							</ul>
+							<input class="phone-input" type="text" formControlName="salesExecutivePhone" inputmode="tel"
+								autocomplete="tel" tabindex="7" />
+						</div>
 
-						<ng-template #selected>
-							<div class="attach-row">
-								<span class="pdf-chip">
-									<i class="bi bi-file-earmark-pdf"></i>
-									{{ displayPdfName }}
-								</span>
-
-								<button type="button" class="reupload" (click)="onPickClick($event)">
-									Volver a subir
-								</button>
-
-								<button
-									class="remove"
-									type="button"
-									(click)="removeFile($event)"
-									title="Eliminar archivo"
-								>
-									<i class="bi bi-x-lg"></i>
-								</button>
-							</div>
-						</ng-template>
-
-						<input
-							#fileInput
-							type="file"
-							class="sr-only"
-							accept=".pdf,application/pdf"
-							(change)="onSelected($event)"
-						/>
+						<div class="error" *ngIf="isInvalid('salesExecutivePhone')">{{ errorText('salesExecutivePhone')
+							}}
+						</div>
 					</div>
+					<div class="field">
+						<div class="label-row">
+							<label class="label">Adjuntar proforma:</label>
+							<i class="bi bi-info-circle info"></i>
+						</div>
+						<app-pdf-upload (urlChange)="onPdfUrlChange($event)" formControlName="quotationFile"
+							[externalUrl]="quotation?.quotationUrl" tabindex="8"></app-pdf-upload>
+						<div class="error" *ngIf="isInvalid('quotationFile')">{{ errorText('quotationFile') }}</div>
+						<div class="error" *ngIf="form.get('quotationFile')?.errors?.['invalidType']">
+							Formato no válido. Solo PDF.
+						</div>
+						<div class="error" *ngIf="form.get('quotationFile')?.errors?.['maxSize']">
+							El archivo supera el tamaño máximo ({{ maxSizeMB }} MB).
+						</div>
 
-					<div class="error" *ngIf="form.get('file')?.errors?.['invalidType']">
-						Formato no válido. Solo PDF.
+						<small class="hint">Formatos admitidos: PDF. Tamaño máximo: {{ maxSizeMB }}MB.</small>
 					</div>
-					<div class="error" *ngIf="form.get('file')?.errors?.['maxSize']">
-						El archivo supera el tamaño máximo ({{ maxSizeMB }} MB).
-					</div>
-
-					<small class="hint">Formatos admitidos: PDF. Tamaño máximo: {{ maxSizeMB }}MB.</small>
 				</div>
 
 				<!-- Cuota Inicial -->
@@ -196,11 +114,20 @@
 
 				<div class="field col-12">
 					<label class="label">¿En qué evento deseas recibir tu auto?</label>
-					<select class="control" formControlName="evento">
-						<option value="" disabled>Selecciona uno</option>
-						<option *ngFor="let e of eventos" [value]="e">{{ e }}</option>
-					</select>
-					<div class="error" *ngIf="isInvalid('evento')">{{ errorText('evento') }}</div>
+					<div class="event-combo" [class.invalid]="isInvalid('eventId')">
+						<div class="event-selector" role="button" tabindex="-1" (click)="toggleEventMenu($event)"
+							(keydown.enter)="toggleEventMenu($event)" (keydown.space)="toggleEventMenu($event)">
+							<span class="event-name">{{ selectedEvent?.eventName || 'Selecciona uno' }}</span>
+							<i class="bi bi-chevron-down chevron" [class.open]="eventMenuOpen" aria-hidden="true"></i>
+						</div>
+						<ul class="event-menu" *ngIf="eventMenuOpen">
+							<li class="event-option" *ngFor="let e of events" (click)="selectEvent(e, $event)"
+								[class.active]="e.eventId === form.value.eventId">
+								<span class="name">{{ e.eventName }}</span>
+							</li>
+						</ul>
+					</div>
+					<div class="error" *ngIf="isInvalid('eventId')">{{ errorText('eventId') }}</div>
 				</div>
 
 				<div class="initial-grid col-12">
@@ -209,13 +136,11 @@
 						<div class="cuotas-row">
 							<div class="price-inline">
 								<span class="money">{{
-									valorCuota | currency : 'USD' : 'symbol' : '1.2-2'
-								}}</span
-								><span class="suffix">&nbsp;cada cuota</span>
+									installmentAmount | currency : 'USD' : 'symbol' : '1.2-2'
+									}}</span><span class="suffix">&nbsp;cada cuota</span>
 							</div>
-							<select class="control compact" formControlName="cuotasInicial">
-								<option *ngFor="let c of cuotasOpts" [value]="c">{{ c }} Cuotas</option>
-							</select>
+							<input class="control compact" type="number" min="1" max="99" maxlength="2"
+								formControlName="initialInstallments" (input)="limitDigits($event)" tabindex="10" />
 						</div>
 					</div>
 
@@ -224,78 +149,44 @@
 						<div class="pd-item">
 							<div>Inicial Total</div>
 							<div class="val">
-								{{ form.value.inicialTotal | currency : 'USD' : 'symbol' : '1.2-2' }}
+								{{ initialAmount | currency : 'USD' : 'symbol' : '1.2-2' }}
 							</div>
 						</div>
 						<div class="pd-item">
 							<div>Bono Empresa</div>
 							<div class="val">
-								{{ form.value.bonoEmpresa | currency : 'USD' : 'symbol' : '1.2-2' }}
+								{{ initialBonus | currency : 'USD' : 'symbol' : '1.2-2' }}
 							</div>
 						</div>
 						<div class="pd-item total">
 							<div>Total a pagar</div>
-							<div class="val">{{ totalAPagar | currency : 'USD' : 'symbol' : '1.2-2' }}</div>
+							<div class="val">{{ totalAmount | currency : 'USD' : 'symbol' : '1.2-2' }}</div>
 						</div>
 					</div>
 				</div>
 
 				<!-- Campos de inicial y bono eliminados por requerimiento -->
-			</form>
 
-			<div class="actions">
-				<button class="btn ghost" type="button" (click)="onBack()">Atrás</button>
-				<button class="btn primary" type="button" (click)="onSave()">Guardar</button>
-			</div>
+				<div class="actions col-12">
+					<button class="btn ghost" type="button" (click)="onBack()" tabindex="11">Atrás</button>
+					<button class="btn primary" type="button" (click)="onSave()" tabindex="12">Guardar</button>
+				</div>
+			</form>
 		</div>
 
-		<!-- DERECHA: visor PDF -->
+		<!-- DERECHA -->
 		<div class="right">
-			<div class="viewer-header" *ngIf="mode === 'edit' && proformaId">
-				<button class="btn primary viewer-add" type="button" (click)="onAddDocument()">
-					Añadir proforma
-				</button>
-			</div>
-
 			<div class="viewer">
-				<div class="pdf-container" *ngIf="pdfSafeUrl; else empty">
-					<iframe class="pdf-frame" title="Proforma PDF" [src]="pdfSafeUrl"></iframe>
+				<object *ngIf="pdfUrl" [data]="pdfUrl" type="application/pdf" class="pdf-frame"></object>
+				<div class="pdf-empty" *ngIf="!pdfUrl">
+					<span>Selecciona un PDF para previsualizar</span>
 				</div>
-				<ng-template #empty>
-					<div class="pdf-empty">
-						<i class="bi bi-file-earmark-pdf"></i>
-						<p>Adjunta un PDF para previsualizarlo.</p>
-					</div>
-				</ng-template>
 			</div>
 		</div>
 	</div>
 </div>
 
-<app-modal-notify
-	*ngIf="confirmOpen"
-	[title]="'¿Estás seguro?'"
-	[message]="confirmMessage"
-	[iconType]="'warning'"
-	[oneButton]="false"
-	[secondaryText]="'Revisar'"
-	[primaryText]="'Sí, enviar'"
-	[showBullets]="true"
-	[bulletItems]="confirmBullets"
-	[closeOnConfirm]="true"
-	(confirmed)="confirmSend()"
-	(canceled)="closeConfirm()"
-	(closed)="closeConfirm()"
-></app-modal-notify>
-
-<app-modal-notify
-	*ngIf="resultOpen"
-	[title]="resultTitle"
-	[message]="resultMessage"
-	[iconType]="resultIcon"
-	[oneButton]="true"
-	[showInfoBox]="true"
-	[infoBoxMessage]="resultInfoMessage"
-	[primaryText]="'Entendido'"
-	(closed)="resultOpen = false"
-></app-modal-notify>
+<app-modal-notify *ngIf="confirmOpen" [title]="'¿Estás seguro?'" [message]="confirmMessage" [iconType]="'warning'"
+	[oneButton]="false" [secondaryText]="'Revisar'" [primaryText]="'Sí, enviar'" [showBullets]="true"
+	[bulletItems]="confirmBullets" [closeOnConfirm]="true" (confirmed)="confirmSend()" (canceled)="closeConfirm()"
+	(closed)="closeConfirm()"></app-modal-notify>

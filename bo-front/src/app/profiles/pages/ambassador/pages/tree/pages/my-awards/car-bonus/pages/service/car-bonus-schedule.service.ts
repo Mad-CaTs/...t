@@ -14,6 +14,7 @@ export class CarBonusScheduleService {
     private endponitGene = 'car-bonus/schedules/search/';
     private endpoint = 'car-bonus/schedules/initials/';
     private endpointExtra = 'car-bonus/schedules/extra-info/';
+    private endpointExport = 'car-bonus/schedules/export/';
 
     constructor(private http: HttpClient) { }
 
@@ -28,5 +29,10 @@ export class CarBonusScheduleService {
     getScheduleExtra(carAssignmentId: string): Observable<ICarBonusScheduleExtraResponse> {
         const url = `${BASE_URL}/${this.endpointExtra}${carAssignmentId}`;
         return this.http.get<ICarBonusScheduleExtraResponse>(url);
+    }
+
+    exportSchedule(carAssignmentId: string): Observable<Blob> {
+        const url = `${BASE_URL}/${this.endpointExport}${carAssignmentId}`;
+        return this.http.get(url, { responseType: 'blob' });
     }
 }

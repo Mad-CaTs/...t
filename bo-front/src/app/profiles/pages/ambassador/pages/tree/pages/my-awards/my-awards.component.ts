@@ -27,9 +27,11 @@ import { SeeAutoBonusDocumentComponent } from './components/see-auto-bonus-docum
 import { ClassificationsService } from './components/service/classifications.service';
 import { IRankBonusData } from './interface/classification';
 import { UserInfoService } from 'src/app/profiles/commons/services/user-info/user-info.service';
-import { DocumentService } from './components/service/document.service';
+import { DocumentBonusService } from './components/service/document.service';
 import { DocumentData } from './interface/document';
 import { take } from 'rxjs';
+import { CarBonusScheduleComponent } from './car-bonus/pages/car-bonus-schedule/car-bonus-schedule.component';
+import { ProformaComponent } from './car-bonus/pages/proforma/proforma.component';
 
 
 @Component({
@@ -45,7 +47,9 @@ import { take } from 'rxjs';
 		MatCardModule,
 		MatIconModule,
 		MatInputModule,
-		ModalNotifyComponent],
+		ModalNotifyComponent,
+		CarBonusScheduleComponent,
+		ProformaComponent],
 	templateUrl: './my-awards.component.html',
 	styleUrl: './my-awards.component.scss',
 	encapsulation: ViewEncapsulation.Emulated
@@ -86,7 +90,7 @@ export class MyAwardsComponent implements OnInit {
 		private dialogService: DialogService,
 		private _classificationsService: ClassificationsService,
 		private _userInfoService: UserInfoService,
-		private _documentService: DocumentService,
+		private _documentService: DocumentBonusService,
 		private treeService: TreeService,) {
 	}
 
@@ -95,8 +99,8 @@ export class MyAwardsComponent implements OnInit {
 		this.getStates();
 		this.loadData(1, 10);
 		this.getRangeData();
-		// this.getNextRangeData();
-		// this.getPointRanges();
+		this.getNextRangeData();
+		this.getPointRanges();
 		this.getPoints();
 		this.getColors();
 
@@ -197,6 +201,76 @@ export class MyAwardsComponent implements OnInit {
 			}
 		})
 	}
+	getNextRangeData(): void {
+		this.dashboardService.getNextRanges(this.userId).subscribe({
+			next: (response) => {
+				if (response?.data) {
+					this.nextRangeData = response.data;
+					this.setPointsRangeData();
+				}
+			},
+			error: (err) => {
+				console.error('Error al obtener el próximo rango:', err);
+			}
+		});
+	}
+
+	getPointRanges(): void {
+		this.dashboardService.getPointRangesPercentages(this.userId).subscribe({
+			next: (response) => {
+				if (response?.data) {
+					this.pointRangesDataToChild = [response.data];
+					this.setPointsRangeData();
+				} else {
+					this.pointRangesDataToChild = [];
+					this.averagePercentage = null;
+				}
+			},
+			error: (error) => {
+				console.error('Error al obtener porcentajes de rangos:', error);
+				this.pointRangesDataToChild = [];
+				this.averagePercentage = null;
+			}
+		});
+	}
+
+	setPointsRangeData(): void {
+		if (this.pointRangesDataToChild && this.pointRangesDataToChild.length && this.nextRangeData) {
+			const data = Array.isArray(this.pointRangesDataToChild) ? this.pointRangesDataToChild[0] : this.pointRangesDataToChild;
+			const percentagesNextRange = (data as any)?.percentagesNextRange;
+
+			if (!percentagesNextRange) {
+				this.averagePercentage = null;
+				return;
+			}
+
+			let totalPuntosActuales = 0;
+			let volumenRangoSiguiente = 0;
+
+			if (this.currentTabState) {
+				const rama1 = percentagesNextRange.pointsRama1CompundRange || 0;
+				const rama2 = percentagesNextRange.pointsRama2CompundRange || 0;
+				const rama3 = percentagesNextRange.pointsRama3CompundRange || 0;
+				totalPuntosActuales = rama1 + rama2 + rama3;
+				volumenRangoSiguiente = this.nextRangeData?.volumenRangoCompound || 0;
+			} else {
+				const rama1 = percentagesNextRange.pointsRama1ResidualRange || 0;
+				const rama2 = percentagesNextRange.pointsRama2ResidualRange || 0;
+				const rama3 = percentagesNextRange.pointsRama3ResidualRange || 0;
+				totalPuntosActuales = rama1 + rama2 + rama3;
+				volumenRangoSiguiente = this.nextRangeData?.volumenRangoResidual || 0;
+			}
+
+			if (volumenRangoSiguiente > 0) {
+				const porcentaje = (totalPuntosActuales / volumenRangoSiguiente) * 100;
+				this.averagePercentage = parseFloat(porcentaje.toFixed(2));
+			} else {
+				this.averagePercentage = 0;
+			}
+		} else {
+			this.averagePercentage = null;
+		}
+	}
 
 	openModal() {
 		this.dialogRef = this.dialogService.open(HowToEarnPonitsComponent, {
@@ -238,13 +312,21 @@ export class MyAwardsComponent implements OnInit {
 		return this._myAwardsService.getRouterTap === RouterTap.BONUS_CAR_SEE_DOCUMENT;
 	}
 
+	activetionCarBonusSchedule(): boolean {
+		return this._myAwardsService.getRouterTap === RouterTap.BONUS_CAR_SEE_SCHEDULE;
+	}
+
+	activetionCarBonusProforma(): boolean {
+		return this._myAwardsService.getRouterTap === RouterTap.BONUS_CAR_SEE_PROFORMA;
+	}
+
 	onCloseNotify() {
 		this.showNotify = false;
 	}
 
 	confirmed() {
 		this.showNotify = false;
-		this._myAwardsService.setRouterTap(RouterTap.BONUS_CAR_DOCUMENT);
+		this.getClassification();
 	}
 
 	onRefresh(event: any): void {
@@ -259,21 +341,22 @@ export class MyAwardsComponent implements OnInit {
 			next: (response) => {
 				if (response.length > 0) {
 					this.IdAssignment = response[0].carAssignmentId;
+					if (this.IdAssignment) {
+						this._documentService.getDocument(this.IdAssignment).pipe(take(1)).subscribe({
+							next: (result) => {
+								const mapped: DocumentData[] = result.data.map((item: any) => this.mapItemWithState(item));
+								this.tableData = mapped;
+								this.pdfUrl = mapped[0]?.fileUrl || '';
+								this.totalRecords = result.data.length ?? mapped.length;
+								this.isLoading = false;
+							},
+							error: (err) => {
+								console.error('Error en getListPartners:', err);
+								this.isLoading = false;
+							}
+						});
 
-					this._documentService.getDocument(this.IdAssignment).pipe(take(1)).subscribe({
-						next: (result) => {
-							const mapped: DocumentData[] = result.data.map((item: any) => this.mapItemWithState(item));
-							this.tableData = mapped;
-							this.pdfUrl = mapped[0]?.fileUrl || '';
-							this.totalRecords = result.data.length ?? mapped.length;
-							this.isLoading = false;
-						},
-						error: (err) => {
-							console.error('Error en getListPartners:', err);
-							this.isLoading = false;
-						}
-					});
-
+					}
 				}
 			}
 		});

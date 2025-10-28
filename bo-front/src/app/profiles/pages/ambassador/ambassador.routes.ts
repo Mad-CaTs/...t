@@ -65,17 +65,17 @@ const routes: Routes = [
               .then(m => m.CarBonusComponent)
           },
           {
-            path: 'car-bonus/proforma',
+            path: 'car-bonus/proforma/:classificationId',
             loadComponent: () => import('./pages/tree/pages/my-awards/car-bonus/pages/proforma/proforma.component')
               .then(m => m.ProformaComponent)
           },
           {
-            path: 'car-bonus/proforma/:proformaId/document/new',
+            path: 'car-bonus/proforma/:classificationId/document/new',
             loadComponent: () => import('./pages/tree/pages/my-awards/car-bonus/pages/proforma/proforma-document/proforma-document.component')
               .then(m => m.ProformaDocumentComponent)
           },
           {
-            path: 'car-bonus/proforma/:proformaId/document/:documentId',
+            path: 'car-bonus/proforma/:classificationId/document/:quotationId',
             loadComponent: () => import('./pages/tree/pages/my-awards/car-bonus/pages/proforma/proforma-document/proforma-document.component')
               .then(m => m.ProformaDocumentComponent)
           },

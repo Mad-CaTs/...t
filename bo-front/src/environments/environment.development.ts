@@ -24,7 +24,7 @@ export const environment: Environment = {
 	URL_API_COMMISSION: 'https://commissionsapi-dev.inclub.world/api/v1',
 	URL_GATEWEY: 'https://opengateway-dev.inclub.world/api/v1',
 	URL_GATEWAY_LOCAL: 'http://localhost:8777/api/v1',
-	URL_BONUS_API: 'http://localhost:8716/api/v1',
+	URL_BONUS_API: 'https://bonusesrewardsapi-dev.inclub.world/api/v1',
 
 	URL_API_PDF: 'https://pdfapi-dev.inclub.world/api/v1',
 	URL_ACCOUNT: 'https://account-dev.inclub.world/api/v1',

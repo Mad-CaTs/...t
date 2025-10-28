@@ -33,11 +33,17 @@ export const getNewPartnerPayload = (value: any) => {
 			operationNumber: value?.operationNumber,
 			totalNumberPaymentPaid: value.paymentData.totalNumberPaymentPaid,
 			discountPercent: value.discountPercent,
-		listaVouches: value.listVochers,
-		...(value.idCoupon && { idCoupon: value.idCoupon }),
-		...(value.discountMont && { discountMont: value.discountMont })
+			listaVouches: value.listVochers,
+			...(value.idCoupon && value.discountMont && {
+				couponTransaction: {
+					amount: value.discountMont
+				},
+				idCoupon: value.idCoupon
+			})
+		};
 	}
-}	return {
+	
+	return {
 		user: {
 			name: value.personalData.name.trim(),
 			lastName: value.personalData.lastname.trim(),
@@ -80,10 +86,14 @@ export const getNewPartnerPayload = (value: any) => {
 		operationNumber: value?.operationNumber, // Null solo en voucher, setear para los otros medios de pago
 		totalNumberPaymentPaid: value.paymentData.totalNumberPaymentPaid,
 		discountPercent: value.discountPercent,
-	listaVouches: value.listVochers,
-	...(value.idCoupon && { idCoupon: value.idCoupon }),
-	...(value.discountMont && { discountMont: value.discountMont })
-};
+		listaVouches: value.listVochers,
+		...(value.idCoupon && value.discountMont && {
+			couponTransaction: {
+				amount: value.discountMont
+			},
+			idCoupon: value.idCoupon
+		})
+	};
 };export function normalizeAmount(amount) {
 	if (amount === null || amount === undefined) return 0;
 
@@ -98,12 +108,13 @@ export const getNewPartnerPayload = (value: any) => {
 	return 0;
 }
 
-export const isEqualToTotalToPaid = (listaVouches, walletAmount, amountPaid, exchangeRate) => {
+export const isEqualToTotalToPaid = (listaVouches, walletAmount, amountPaid, exchangeRate, couponAmount = 0) => {
 
 	const vouchersWithoutCoupons = listaVouches?.filter(voucher => voucher.paymentMethod !== 'coupon') || [];
 
 	const userTryPayAmount =
 		(walletAmount || 0) +
+		(couponAmount || 0) +
 		(vouchersWithoutCoupons.reduce((sum, voucher) => {
 			const voucherAmount = voucher.totalAmount ? normalizeAmount(voucher.totalAmount) : 0;
 
@@ -121,7 +132,8 @@ export const isEqualToTotalToPaid = (listaVouches, walletAmount, amountPaid, exc
 		vouchersConCupon: listaVouches?.length || 0,
 		vouchersSinCupon: vouchersWithoutCoupons.length,
 		walletAmount,
-		totalVouchers: roundedUserTryPayAmount - (walletAmount || 0),
+		couponAmount,
+		totalVouchers: roundedUserTryPayAmount - (walletAmount || 0) - (couponAmount || 0),
 		userTryPayAmount: roundedUserTryPayAmount,
 		amountPaid: roundedAmountPaid,
 		isEqual: roundedUserTryPayAmount === roundedAmountPaid

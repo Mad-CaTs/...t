@@ -9,15 +9,16 @@
 	margin-bottom: 12px;
 }
 .doc-title {
-	font-size: 1.125rem;
+	font-size: 1.5rem;
 	margin: 0 0 8px 0;
-	color: #111827;
-	font-weight: 700;
+	color: #363A3E;
+	font-weight: 500;
+	line-height: 1.0;
 }
 
 .grid {
 	display: grid;
-	grid-template-columns: 1.15fr 0.85fr;
+	grid-template-columns: 1fr 1fr;
 	gap: 24px;
 }
 @media (max-width: 1024px) {
@@ -47,21 +48,32 @@
 }
 
 .form-grid {
-	display: grid;
-	grid-template-columns: repeat(12, 1fr);
+	display: flex;
+	flex-direction: column;
 	gap: 14px;
 }
+.field-row {
+	display: flex;
+	gap: 24px;
+	.field {
+		flex: 1;
+	}
+}
+@media (max-width: 768px) {
+	.field-row {
+		flex-direction: column;
+	}
+}
 .field {
-	grid-column: span 6;
 	min-width: 220px;
 }
 .col-12 {
-	grid-column: span 12;
+	grid-column: span 2;
 }
 
 .label {
 	font-size: 14px;
-	font-weight: 400;
+	font-weight: 500;
 	color: #2e2e2e;
 	margin-bottom: 6px;
 	display: block;
@@ -109,7 +121,7 @@
 	border-radius: 12px;
 	background: #fff;
 	padding-right: 10px;
-	z-index: 1;
+	z-index: 10;
 	&.invalid {
 		border-color: #d9534f;
 	}
@@ -158,6 +170,8 @@
 		list-style: none;
 		padding: 6px 0;
 		z-index: 10;
+		max-height: 200px;
+		overflow-y: auto;
 	}
 	.country-option {
 		display: flex;
@@ -295,8 +309,9 @@
 }
 
 .section-title {
-	font-weight: 600;
-	margin: 10px 0 6px;
+	font-weight: 500;
+	font-size: 1.25rem;
+	margin: 0;
 }
 .price-hint {
 	margin-top: 6px;
@@ -375,7 +390,7 @@
 	min-width: 160px;
 }
 .cuotas-row .label {
-	font-weight: 700;
+	font-weight: 500;
 }
 .price-inline {
 	display: flex;
@@ -401,8 +416,8 @@
 
 .actions {
 	margin-top: auto;
-	display: flex;
-	justify-content: center;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
 	gap: 16px;
 }
 .btn {
@@ -476,4 +491,68 @@
 	display: grid;
 	place-items: center;
 	color: #9aa0a6;
+}
+
+.event-combo {
+	position: relative;
+	height: 44px;
+	border: 1px solid #dcdcdc;
+	border-radius: 10px;
+	background: #fff;
+	z-index: 1;
+	&.invalid {
+		border-color: #d9534f;
+	}
+	.event-selector {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 10px 14px;
+		cursor: pointer;
+		user-select: none;
+		height: 100%;
+	}
+	.event-name {
+		font-size: 14px;
+		color: #363A3E;
+	}
+	.chevron {
+		font-size: 12px;
+		color: #6b7280;
+		transition: transform 0.2s ease;
+	}
+	.chevron.open {
+		transform: rotate(180deg);
+	}
+	.event-menu {
+		position: absolute;
+		top: 100%;
+		left: 0;
+		right: 0;
+		margin-top: 4px;
+		background: #fff;
+		border: 1px solid #e5e7eb;
+		border-radius: 10px;
+		box-shadow: 0 8px 20px rgba(15, 23, 42, 0.1);
+		list-style: none;
+		padding: 6px 0;
+		z-index: 10;
+		max-height: 200px;
+		overflow-y: auto;
+	}
+	.event-option {
+		display: flex;
+		align-items: center;
+		padding: 8px 12px;
+		cursor: pointer;
+		font-size: 14px;
+		color: #111827;
+	}
+	.event-option .name {
+		flex: 1;
+	}
+	.event-option:hover,
+	.event-option.active {
+		background: #f3f4f6;
+	}
 }

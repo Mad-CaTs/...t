@@ -269,7 +269,13 @@ export default class PaymentLaterComponent implements OnInit {
 	public getCountry(): void {
 		if (this.residenceContry) {
 			const country = this.residenceContry;
+			console.log(' Filtrando métodos de pago por país:', {
+				idPais: country,
+				nombrePais: country === 169 ? 'Perú' : country === 45 ? 'Colombia' : 'Otro',
+				metodosDisponibles: this.paymentTypeList.map(p => p.description)
+			});
 			let filteredList = getPaymentListByContry(this.paymentTypeList, country);
+			console.log(' Métodos de pago filtrados:', filteredList.map(p => p.description));
 			this.paymentTypeListaFiltered = filteredList;
 		}
 	}

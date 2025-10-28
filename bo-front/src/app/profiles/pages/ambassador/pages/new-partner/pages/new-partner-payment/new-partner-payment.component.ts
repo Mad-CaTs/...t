@@ -811,6 +811,11 @@ private changePackageSelection() {
 			} else {
 				totalNumberPaymentPaidControl.enable();
 			}
+			
+			// 🔧 Recalcular descuento del cupón si está aplicado
+			if (this.isCouponValid && this.appliedDiscountPercent > 0) {
+				this.recalculateCouponDiscount();
+			}
 			/* 		this.setAmountPaid(); */
 		}
 
@@ -872,6 +877,11 @@ private changePackageSelection() {
 			);
 			this.selectedNumberQuotes = this.paymentForm.get('numberPaymentInitials').value;
 		}
+		
+		// 🔧 Recalcular descuento del cupón cuando cambia el tipo de pago
+		if (this.isCouponValid && this.appliedDiscountPercent > 0) {
+			this.recalculateCouponDiscount();
+		}
 	}
 
 	get getTotalAmountPaid(): number {
@@ -880,11 +890,13 @@ private changePackageSelection() {
 			? this.amount1Value + parseFloat(this.getAmountPaid)
 			: parseFloat(this.getAmountPaid) + initialPrice;
 
+		const totalWithoutDiscount = totalAmountPaid;
+
 		if (this.isCouponValid && this.discountAmount > 0) {
 			totalAmountPaid = Math.max(0, totalAmountPaid - this.discountAmount);
 		}
 
-		this.paymentForm.get('amountPaid').setValue(totalAmountPaid);
+		this.paymentForm.get('amountPaid').setValue(totalWithoutDiscount);
 		return totalAmountPaid;
 	}		    public get getAmountPaid() {
         let { value } = this.paymentForm.get('totalNumberPaymentPaid');
@@ -976,16 +988,36 @@ private changePackageSelection() {
 					return;
 				}
 
-			this.isCouponValid = true;
-			this.couponError = '';
-			this.appliedDiscountPercent = response.discountPercentage || 0;
-			this.validatedCouponId = response.idCoupon;
-			const initialPrice = parseFloat(this.pkgDetail?.initialPrice || '0');
-			this.discountAmount = +(initialPrice * (this.appliedDiscountPercent / 100)).toFixed(2);
-			
-			this.addCouponAsPaymentMethod();
-						
-			this.dialogService.open(ModalSuccessComponent, {
+		this.isCouponValid = true;
+		this.couponError = '';
+		this.appliedDiscountPercent = response.discountPercentage || 0;
+		this.validatedCouponId = response.idCoupon;
+		
+		// 🔧 CORRECCIÓN: Calcular descuento según el fraccionamiento
+		const initialPrice = parseFloat(this.pkgDetail?.initialPrice || '0');
+		const selectedQuotes = this.paymentForm.get('numberPaymentInitials')?.value || 1;
+		const payType = this.paymentForm.get('payType')?.value || 1;
+		
+		// Si está en modo "Fraccionar pago" (payType === 2) y tiene fraccionamiento
+		let baseAmountForDiscount = initialPrice;
+		if (payType === 2 && selectedQuotes > 1) {
+			// El descuento se aplica sobre el monto de cada cuota, no sobre el total
+			baseAmountForDiscount = initialPrice / selectedQuotes;
+			console.log(`📊 Aplicando descuento sobre cuota fraccionada: $${initialPrice} / ${selectedQuotes} = $${baseAmountForDiscount}`);
+		}
+		
+		this.discountAmount = +(baseAmountForDiscount * (this.appliedDiscountPercent / 100)).toFixed(2);
+		
+		console.log(`💰 Cálculo de descuento:`, {
+			precioInicial: initialPrice,
+			cuotasSeleccionadas: selectedQuotes,
+			tipoPago: payType === 1 ? 'Contado' : 'Fraccionado',
+			baseParaDescuento: baseAmountForDiscount,
+			porcentajeDescuento: this.appliedDiscountPercent + '%',
+			montoDescuento: this.discountAmount
+		});
+		
+		this.addCouponAsPaymentMethod();			this.dialogService.open(ModalSuccessComponent, {
 				header: '',
 				width: '40%',
 				data: {
@@ -1018,6 +1050,40 @@ private changePackageSelection() {
 					}
 				});
 			}
+		});
+	}
+
+	/**
+	 * Recalcula el descuento del cupón cuando cambia el número de cuotas
+	 */
+	private recalculateCouponDiscount(): void {
+		if (!this.isCouponValid || this.appliedDiscountPercent === 0) {
+			return;
+		}
+
+		const initialPrice = parseFloat(this.pkgDetail?.initialPrice || '0');
+		const selectedQuotes = this.paymentForm.get('numberPaymentInitials')?.value || 1;
+		const payType = this.paymentForm.get('payType')?.value || 1;
+		
+		let baseAmountForDiscount = initialPrice;
+		if (payType === 2 && selectedQuotes > 1) {
+			baseAmountForDiscount = initialPrice / selectedQuotes;
+		}
+		
+		this.discountAmount = +(baseAmountForDiscount * (this.appliedDiscountPercent / 100)).toFixed(2);
+		
+		// Actualizar el voucher del cupón en la lista
+		const couponIndex = this.listVochersToSave.findIndex(v => v.paymentMethod === 'coupon');
+		if (couponIndex !== -1) {
+			this.listVochersToSave[couponIndex].totalAmount = this.discountAmount;
+			this.listVochersToSave[couponIndex].operationDescription = `Descuento del ${this.appliedDiscountPercent}%`;
+			this.listVochersToSave = [...this.listVochersToSave]; // Forzar detección de cambios
+		}
+		
+		console.log(`🔄 Descuento recalculado:`, {
+			cuotasSeleccionadas: selectedQuotes,
+			baseParaDescuento: baseAmountForDiscount,
+			nuevoMontoDescuento: this.discountAmount
 		});
 	}
 

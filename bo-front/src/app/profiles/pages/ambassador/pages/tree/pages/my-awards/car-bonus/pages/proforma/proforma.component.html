@@ -1,64 +1,32 @@
+<app-breadcrumb class="p-2" [breadcrumbs]="breadcrumbItems"></app-breadcrumb>
 <div class="proforma-card">
 	<div class="proforma-header">
 		<h1 class="proforma-heading">Proforma</h1>
-		<button class="add-proforma-btn" (click)="onAdd()">
+		<button class="add-proforma-btn" (click)="onAdd()" [disabled]="quotations.length >= 2">
 			<span class="plus">+</span>
 			<span class="label">Añadir proforma</span>
 		</button>
 	</div>
 
 	<div class="toolbar-card">
-		<ng-container *ngIf="proformas?.length; else noProformas">
-			<ng-container *ngFor="let p of proformas; let i = index">
-				<ng-container *ngIf="p.items?.length">
-					<div class="proforma-item">
-						<div class="proforma-title">{{ p.nombre || 'Proforma ' + p.id }}</div>
-						<div class="proforma-table-wrapper" [class.with-gap]="i < proformas.length - 1">
-							<app-table-generic
-								[columns]="columns"
-								[keys]="keys"
-								[data]="p.items"
-								[columnWidths]="columnWidths"
-								[showEdit]="true"
-								[showDelete]="true"
-								(edit)="onEdit(p, $event)"
-								(delete)="onDelete(p, $event)"
-								(view)="onView(p, $event)"
-							></app-table-generic>
-						</div>
+		<ng-container *ngIf="quotations?.length; else notFound">
+			<ng-container *ngFor="let q of quotations; let i = index">
+				<div class="proforma-item">
+					<div class="proforma-title">Proforma {{ i + 1 }}</div>
+					<div class="table-container">
+						<app-table-generic [columns]="columns" [keys]="keys" [data]="[q]" [columnWidths]="columnWidths"
+							[showEdit]="canEdit" [showDelete]="canEdit" (edit)="onEdit(q)" (delete)="onDelete(q)"
+							(view)="onView(q)"></app-table-generic>
 					</div>
-				</ng-container>
+				</div>
 			</ng-container>
 		</ng-container>
 
-		<ng-template #noProformas>
+		<ng-template #notFound>
 			<div class="no-proformas">No hay proformas disponibles.</div>
 		</ng-template>
 
-			<div class="informative-banner">
-				<div class="banner-inner">
-					<div class="info-icon">i</div>
-					<div class="info-text">
-						Recuerda: Puedes eliminar o editar tus proformas hasta el 30 de septiembre de 2025.
-					</div>
-				</div>
-			</div>
-
-				<!-- Modales: confirm delete y notify -->
-				<app-modal-confirm-delete
-					*ngIf="showConfirm"
-					[title]="confirmTitle"
-					[message]="confirmMessage"
-					(confirm)="onConfirmDelete()"
-					(cancel)="onCancelDelete()"
-				></app-modal-confirm-delete>
-
-				<app-modal-notify
-					*ngIf="showNotify"
-					[title]="notifyTitle"
-					[message]="notifyMessage"
-					[iconType]="notifyIcon"
-					(closed)="onCloseNotify()"
-				></app-modal-notify>
+		<app-modal-confirm-delete *ngIf="showConfirm" [title]="confirmTitle" [message]="confirmMessage"
+			(confirm)="onConfirmDelete()" (cancel)="onCancelDelete()"></app-modal-confirm-delete>
 	</div>
 </div>

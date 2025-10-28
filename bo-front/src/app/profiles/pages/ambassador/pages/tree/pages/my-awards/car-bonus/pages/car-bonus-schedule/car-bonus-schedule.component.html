@@ -1,8 +1,10 @@
+<app-breadcrumb class="p-2" [breadcrumbs]="breadcrumbItems"></app-breadcrumb>
+
 <div class="schedule-page">
 	<div class="page-header">
-		<h2 class="page-title">{{ pageTitle }}</h2>
+		<h2 class="page-title">{{ schedule.pageTitle }}</h2>
 	</div>
-
+	
 	<!-- Info cards -->
 	<div class="summary-grid">
 		<!-- Asignado -->
@@ -14,7 +16,7 @@
 				<div class="summary-value">{{ assigned.marcaModelo }}</div>
 			</div>
 
-			<ng-container *ngIf="isGeneral; else inicialAsignado">
+			<ng-container *ngIf="schedule.isGeneral; else inicialAsignado">
 				<div class="summary-row">
 					<div class="summary-key">Precio del auto:</div>
 					<div class="summary-value">{{ assigned.precioAutoUSD | number : '1.0-0' }} USD</div>
@@ -43,7 +45,7 @@
 		<div class="summary-card">
 			<div class="summary-title">Contabilizador</div>
 
-			<ng-container *ngIf="isGeneral; else inicialCounters">
+			<ng-container *ngIf="schedule.isGeneral; else inicialCounters">
 				<div class="summary-row">
 					<div class="summary-key">Cuotas Pagadas:</div>
 					<div class="summary-value">
@@ -92,9 +94,9 @@
 
 		<!-- Fechas -->
 		<div class="summary-card">
-			<div class="summary-title">{{ isGeneral ? 'Fecha – Interés' : 'Fecha – Entrega' }}</div>
+			<div class="summary-title">{{ schedule.isGeneral ? 'Fecha – Interés' : 'Fecha – Entrega' }}</div>
 
-			<ng-container *ngIf="isGeneral; else inicialFechas">
+			<ng-container *ngIf="schedule.isGeneral; else inicialFechas">
 				<div class="summary-row">
 					<div class="summary-key">Inicio de Pago:</div>
 					<div class="summary-value">{{ datesGeneral.inicioPago }}</div>
@@ -126,7 +128,7 @@
 		</div>
 
 		<filter-generic
-			*ngIf="isGeneral"
+			*ngIf="schedule.isGeneral"
 			[filters]="filtersGeneral"
 			[values]="filterValues"
 			[showActionButton]="false"
@@ -146,8 +148,8 @@
 			[statusKey]="'statusName'"
 			[columnWidths]="tableColumnWidths"
 			[freezeOverflow]="true"
-			[showActions]="isInicial"
-			[showPay]="isInicial"
+			[showActions]="schedule.isInicial"
+			[showPay]="schedule.isInicial"
 			[showView]="false"
 			[showEdit]="false"
 			[showDelete]="false"
@@ -157,6 +159,16 @@
 			(pay)="onPay($event)"
 		></app-table-generic>
 	</ng-container>
+
+	<!-- Paginación -->
+	<app-table-paginator
+		*ngIf="totalElements > 0"
+		[length]="totalElements"
+		[pageSize]="pageSize"
+		[pageIndex]="pageIndex"
+		(pageChange)="onPageChange($event)"
+		(pageSizeChange)="onPageSizeChange($event)"
+	></app-table-paginator>
 
 	<ng-template #emptyState>
 		<app-empty-state message="No hay datos para mostrar"></app-empty-state>
@@ -182,6 +194,7 @@
 		(closed)="onModalClosed('showPayments')"
 	></app-payments-modal>
 
+	<!-- Wallet -->
 	<app-wallet-modal
 		[isOpen]="modalState.showWallet"
 		[availableBalance]="walletAvailable"
@@ -192,11 +205,14 @@
 		(paymentSuccess)="onWalletSuccess($event)"
 	></app-wallet-modal>
 
+	<!-- Transferencia (BCP/Interbank/Otros) -->
 	<app-transferencia-modal
 		[isOpen]="modalState.showTransfer"
 		[bankMethod]="modalState.transferBank"
 		[totalSoles]="modalState.paymentDetails?.amountPEN || 0"
 		[totalUSD]="modalState.paymentDetails?.amountUSD || 0"
+		[correctionMode]="!!rejectedPaymentData"
+		[paymentId]="rejectedPaymentData?.paymentId || null"
 		(closeModal)="onModalClosed('showTransfer')"
 		(paymentSuccess)="onTransferenciaSuccess($event)"
 	></app-transferencia-modal>

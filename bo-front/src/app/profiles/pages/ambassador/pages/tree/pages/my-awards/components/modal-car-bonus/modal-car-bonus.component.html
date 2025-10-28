@@ -3,21 +3,21 @@
   <div class="car-image" [ngClass]="{'cursor': car.maxAchievedPoints > 0}" (click)="activetionTabCarBonus(car)">
       <img [src]="car.imagenCar" [alt]="car.titleBonus" [ngClass]="{ 'skewed': true }" />
       <div class="price-tag">$ {{ car.bonusPrice | number:'1.0-3' }}</div>
-      <div class="badge">
+      <div class="badge parent">
         <img [src]="getMedalImage(car.rankName)" [alt]="car.rankName" />
       </div>
     </div>
-    <div *ngIf="flagTextInfo" class="text-end me-3">
-      <img [src]="'assets/images/Eye-on.svg'" class="pb-1">
-      <span class="text-info-imag ms-2">Más Info</span>
-    </div>
+    <!-- <div *ngIf="flagTextInfo" class="text-end me-3"> -->
+      <!-- <img [src]="'assets/images/Eye-on.svg'" class="pb-1"> -->
+      <!-- <span class="text-info-imag ms-2">Más Info</span> -->
+    <!-- </div> -->
     <div class="car-content title-car">
       <h3 [ngClass]="{ 'title-car-active': car.maxAchievedPoints > 0, 'title-car': car.maxAchievedPoints <= 0 }">
         {{ car.titleBonus }}
       </h3>
       <div *ngIf="flagProgressBar">
         <p class="label">Tus puntos actuales</p>
-        <div class="progress-bar">
+        <div class="progress-bar" *ngIf="car.requiredPoints > 0">
           <div class="progress" [style.width.%]="(car.maxAchievedPoints / car.requiredPoints) * 100" [bufferValue]="car.requiredPoints">
           </div>
         </div>
@@ -29,13 +29,13 @@
        <p class="details m-0">{{ car.requiredPoints }} PV</p>
     </div>
 
-    <div *ngIf="car.classificationId && flagButtonSchedule" class="d-flex gap-2 pb-2 parent">
+    <div *ngIf="car.carAssignmentId && flagButtonSchedule" class="d-flex gap-2 pb-2 parent">
       <button class="btn btn-outline-secondary text-button p-2 ms-2" (click)="goToInitialSchedule(car)">Cronograma Inicial</button>
       <button class="btn btn-outline-secondary text-button p-2 me-2" (click)="goToGeneralSchedule(car)">Cronograma General</button>
     </div>
 
     <div *ngIf="car.classificationId && flagButtonPrefor" class="d-flex gap-2 justify-content-center mb-3 parent">
-      <button class="btn btn-outline-secondary text-button" type="button" (click)="goToProformas()">
+      <button class="btn btn-outline-secondary text-button" type="button" (click)="goToProformas(car)">
         Proformas
       </button>
       <button class="btn btn-outline-secondary text-button" type="submit" (click)="goToDocument()">

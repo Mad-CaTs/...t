@@ -19,6 +19,16 @@ export class ModalPaymentService {
   
   constructor(private http: HttpClient) { }
 
+  /* 	getCurrency(): Observable<any> {
+      return this.http.get<any>(`${this.url}/currency/`).pipe(
+        map((currency) =>
+          currency.map((cu) => {
+            return { content: cu.name, value: cu.idCurrency + 0, ...cu };
+          })
+        )
+      );
+    } */
+
   getCurrency(): Observable<any> {
     return this.http.get<any>(`${this.url}/currency/`).pipe(
       map((response: any) =>
