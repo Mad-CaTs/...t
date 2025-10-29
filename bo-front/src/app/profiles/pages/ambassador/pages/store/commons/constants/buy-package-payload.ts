@@ -21,12 +21,19 @@ console.log("paymentData",value.paymentData);
 		amountPaidPayment: numberFormat(value.paymentData.amountPaid),
 		idPackageDetailPayment: value.idPackageDetailPayment,
 		isEditedInitial: value.isEditedInitial,
-    listInitialAmounts: value.listQuotes,
+		listInitialAmounts: value.listQuotes,
 		applyGracePeriod: 0, //TODO: Se realizará en otro momento
 		numberPaymentInitials: value.paymentData.numberPaymentInitials,
 		numberAdvancePaymentPaid:  value.paymentData.totalNumberPaymentPaid,
 		listaVouches: value.listVochers,
 		paypalDTO: value.paypalDTO,
-		walletTransaction: value.walletTransaction
+		walletTransaction: value.walletTransaction,
+		discountPercent: value.discountPercent || 0,
+		...(value.idCoupon && value.discountMont && {
+			couponTransaction: {
+				amount: Math.round(value.discountMont),
+				idCoupon: value.idCoupon
+			}
+		})
 	};
 };

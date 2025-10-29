@@ -20,6 +20,8 @@ import { getBuyPackagePayload } from '../../commons/constants';
 import { Router } from '@angular/router';
 import { BuyPackageService } from '../../services/buy-package.service';
 import { Location } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { VariableSharingService } from 'src/app/profiles/pages/partner/pages/my-products/commons/services/variable-sharing.service';
 
 @Component({
 	selector: 'app-store-packages',
@@ -54,11 +56,14 @@ export default class StorePackagesComponent implements OnInit {
 		private dialogService: DialogService,
 		private router: Router,
 		private buyPackageService: BuyPackageService,
-		private location: Location
+		private location: Location,
+		private http: HttpClient,
+		private variableSharingService: VariableSharingService
 	) { }
 
 	ngOnInit(): void {
 		this.getUserInfoAndSetResidenceCountry();
+		this.checkIfUserIsCollaborator();
 	}
 
 	goToNextSection(): void {
@@ -84,6 +89,42 @@ export default class StorePackagesComponent implements OnInit {
 		this.residenceContry = userInfo.idResidenceCountry;
 	}
 
+	/**
+	 * Verifica si el usuario autenticado es colaborador
+	 * consultando el endpoint de validación con su DNI
+	 */
+	checkIfUserIsCollaborator(): void {
+		const userInfo = this.userInfoService.userInfo;
+		const dni = userInfo.documentNumber;
+
+		if (!dni || String(dni).trim().length !== 8) {
+			console.log('📋 El usuario no tiene DNI válido (longitud !== 8)');
+			this.variableSharingService.setData({ collaboratorData: null });
+			return;
+		}
+
+		console.log(`🔍 Verificando si el usuario con DNI ${dni} es colaborador...`);
+		
+		const url = `https://collaboratorsapi-dev.inclub.world/api/collaborators/validate/${dni.trim()}`;
+		
+		this.http.get<any>(url).pipe(
+			tap((response) => {
+				if (response && response.collaborator === true) {
+					console.log('✅ ¡Usuario colaborador detectado!', response);
+					this.variableSharingService.setData({ collaboratorData: response });
+				} else {
+					console.log('ℹ️ El usuario no es colaborador');
+					this.variableSharingService.setData({ collaboratorData: null });
+				}
+			}),
+			catchError((error) => {
+				console.error('❌ Error al verificar colaborador:', error);
+				this.variableSharingService.setData({ collaboratorData: null });
+				return of(null);
+			})
+		).subscribe();
+	}
+
 	onNavigateStep() {
 		this.goToPreviousSection();
 	}
@@ -103,7 +144,7 @@ export default class StorePackagesComponent implements OnInit {
 		let totalComisionInDollars = 0;
 
 		const generalVouchers = dataToSave.listVochers
-			.filter((voucher) => voucher.paymentMethod !== 'wallet')
+			.filter((voucher) => voucher.paymentMethod !== 'wallet' && voucher.paymentMethod !== 'coupon')
 			.map((voucher) => {
 				let comisionInDollars = 0;
 				if (voucher.currency === 2) {
@@ -149,13 +190,25 @@ export default class StorePackagesComponent implements OnInit {
 			return;
 		}
 
+		const couponAmount = dataToSave.discountMont || 0;
+		const amountToValidate = (isSpecialFractional ? value.paymentData.amountPaid : value.paymentData.amountPaid) + totalComisionInDollars;
+		
+		console.log('🧮 Validación de pago con cupón:', {
+			amountPaid: value.paymentData.amountPaid,
+			totalComision: totalComisionInDollars,
+			couponDiscount: couponAmount,
+			amountToValidate: amountToValidate,
+			walletAmount: walletTransaction?.amount || 0,
+			vouchersCount: generalVouchers.length
+		});
+
 		if (
 			!isEqualToTotalToPaid(
 				generalVouchers,
 				walletTransaction?.amount,
-				(isSpecialFractional ? value.paymentData.amountPaid : value.paymentData.amountPaid) +
-				totalComisionInDollars,
-				dataToSave.exchangeRate
+				amountToValidate,
+				dataToSave.exchangeRate,
+				couponAmount
 			) &&
 			!this.paypalData
 		) {
@@ -170,6 +223,14 @@ export default class StorePackagesComponent implements OnInit {
 		if (value.paymentData.amount3 && value.paymentData.amount3 > 0)
 			listQuotes.push(numberFormat(value.paymentData.amount3));
 
+		if (dataToSave.idCoupon) {
+			console.log('Datos del cupón payload:', {
+				idCoupon: dataToSave.idCoupon,
+				discountPercent: dataToSave.discountPercent,
+				discountMont: dataToSave.discountMont
+			});
+		}
+
 		const payload = getBuyPackagePayload({
 			...dataToSave,
 			listVochers: generalVouchers,
@@ -179,8 +240,15 @@ export default class StorePackagesComponent implements OnInit {
 			id,
 			isEditedInitial: isSpecialFractional,
 			listQuotes,
-			paypalDTO: this.paypalData
+			paypalDTO: this.paypalData,
+			...(dataToSave.idCoupon && { 
+				idCoupon: dataToSave.idCoupon,
+				discountPercent: dataToSave.discountPercent,
+				discountMont: dataToSave.discountMont
+			})
 		});
+
+		console.log('Payload compra de paquete:', payload);
 
 		this.isLoading = true;
 		this.buyPackageService

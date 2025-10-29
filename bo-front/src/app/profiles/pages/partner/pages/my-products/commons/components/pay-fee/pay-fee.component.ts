@@ -617,26 +617,19 @@ export default class PayFeeComponent implements OnInit {
 						note: voucher.note,
 						totalAmount: normalizeAmount(voucher.totalAmount).toFixed(2),
 						idPaymentCoinCurrency: voucher.currency,
-						imagenBase64: voucher.imagen?.base64 || null
-					})) || [],
-			walletTransaction: this.payloadToSave?.walletTransaction || null,
-			couponTransaction: this.hasCoupon && this.subscriptionCoupon ? {
-				amount: this.couponDiscountAmount
-			} : null,
-			paypalDTO: this.payloadToSave?.paypalDTO || null,
-			...(this.hasCoupon && this.subscriptionCoupon && {
-				idCoupon: this.subscriptionCoupon.idCoupon
-			})
-		};
-
-		console.log('🎫 Payload con cupón automático:', {
-			hasCoupon: this.hasCoupon,
-			idCoupon: this.payloadToSave.idCoupon,
-			discountMont: this.payloadToSave.discountMont,
-			fullPayload: this.payloadToSave
-		});
-
-		if (
+			imagenBase64: voucher.imagen?.base64 || null
+		})) || [],
+	walletTransaction: this.payloadToSave?.walletTransaction || null,
+	couponTransaction: this.hasCoupon && this.subscriptionCoupon ? {
+		amount: Math.round(this.couponDiscountAmount),
+		idCoupon: this.subscriptionCoupon.idCoupon
+	} : null,
+	paypalDTO: this.payloadToSave?.paypalDTO || null
+};	console.log('🎫 Payload con cupón automático:', {
+		hasCoupon: this.hasCoupon,
+		couponTransaction: this.payloadToSave.couponTransaction,
+		fullPayload: this.payloadToSave
+	});		if (
 			(!this.payloadToSave.listaVouches || this.payloadToSave.listaVouches.length === 0) &&
 			!this.payloadToSave.paypalDTO &&
 			!this.payloadToSave.walletTransaction &&

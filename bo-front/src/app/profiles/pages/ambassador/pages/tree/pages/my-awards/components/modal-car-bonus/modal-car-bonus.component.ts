@@ -119,9 +119,10 @@ export class ModalCarBonusComponent implements OnInit {
     // ]);
   }
 
-  goToDocument() {
-    this.ref?.close();
+  goToDocument(car: IRankBonusData) {
+    this._myAwardsService.setCarBonusList([car]);
     this._myAwardsService.setRouterTap(RouterTap.BONUS_CAR_DOCUMENT);
+    this.ref?.close();
   }
 
 }

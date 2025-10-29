@@ -89,9 +89,9 @@ export const getNewPartnerPayload = (value: any) => {
 		listaVouches: value.listVochers,
 		...(value.idCoupon && value.discountMont && {
 			couponTransaction: {
-				amount: value.discountMont
-			},
-			idCoupon: value.idCoupon
+				amount: Math.round(value.discountMont),
+				idCoupon: value.idCoupon
+			}
 		})
 	};
 };export function normalizeAmount(amount) {

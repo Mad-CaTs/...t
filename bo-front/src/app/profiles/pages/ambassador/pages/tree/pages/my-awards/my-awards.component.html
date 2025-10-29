@@ -67,18 +67,28 @@
   </mat-card>
 
 
-  <div class="bonus-container mt-5">
-    <mat-card class="bonus-card" *ngFor="let bono of carBonus">
+    <div class="bonus-container mt-5">
+    <mat-card
+      class="bonus-card"
+      [class.inactive-card]="bono.id !== 2"
+      [class.cursor]="bono.id === 2"
+      *ngFor="let bono of carBonus"
+      (click)="bono.id === 2 && getClassification()"
+      [attr.tabindex]="bono.id === 2 ? 0 : -1"
+      [attr.role]="bono.id === 2 ? 'button' : null"
+      (keydown.enter)="bono.id === 2 && getClassification()"
+      (keydown.space)="$event.preventDefault(); bono.id === 2 && getClassification()"
+    >
       <div class="image-container">
-        <img mat-card-image [src]="bono.image" alt="{{bono.title}}">
+        <img mat-card-image [src]="bono.image" [class.inactive]="bono.id !== 2" alt="{{bono.title}}">
 
-        <button mat-stroked-button color="accent" class="custom-button-imag">
-          <img src="assets/images/Frame1686561909.svg" [style]="'width: 20px; height: 20px'" alt="medalla">
-        </button>
+        <div class="badge" aria-hidden="true">
+          <img src="assets/images/Frame1686561909.svg" style="width:20px; height:20px" alt="medalla">
+        </div>
 
 
       </div>
-      <mat-card-content class="cursor" [class.cursor]="bono.id === 2" (click)="bono.id === 2 && getClassification()">
+      <mat-card-content>
         <h3 class="title">{{ bono.title }}</h3>
         <p class="subtitle">Rango Mínimo: {{ bono.rango }}</p>
       </mat-card-content>

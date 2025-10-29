@@ -282,14 +282,11 @@ ngOnDestroy(): void {
 			...(dataToSave.discountMont !== undefined && { discountMont: dataToSave.discountMont })
 		});
 
-		console.log('🚀 Payload final para registro de socio:', {
-			hasIdCoupon: !!payload.idCoupon,
-			idCoupon: payload.idCoupon,
-			couponTransaction: payload.couponTransaction,
-			fullPayload: payload
-		});
-
-		this.newPartnerService.validateUserId(id).subscribe((isValid) => {
+	console.log('Payload registro de socio:', {
+		hasCoupon: !!payload.couponTransaction,
+		couponTransaction: payload.couponTransaction,
+		fullPayload: payload
+	});		this.newPartnerService.validateUserId(id).subscribe((isValid) => {
 			if (!isValid) {
 				alert('El usuario no existe, ¡Contacte a soporte!');
 				this.router.navigate(['/profile/partner']);

@@ -86,6 +86,10 @@
   position: relative;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 
+  &.inactive-card {
+    opacity: 0.95;
+  }
+
   .image-container {
     position: relative;
 
@@ -108,6 +112,9 @@
       justify-content: center;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
       color: black;
+
+      cursor: default;
+      pointer-events: none;
 
       img {
         width: 28px;
@@ -132,6 +139,16 @@
       margin: 0;
     }
   }
+}
+
+.inactive {
+  filter: grayscale(100%) brightness(80%);
+  opacity: 0.8;
+}
+
+.inactive-card mat-card-content .title,
+.inactive-card mat-card-content .subtitle {
+  color: rgba(15, 77, 95, 0.45);
 }
 
 .custom-button {
@@ -191,4 +208,20 @@
 
 .cursor{
   cursor: pointer;
+}
+
+.bonus-card.cursor {
+  cursor: pointer;
+  transition: transform 150ms ease, box-shadow 150ms ease;
+}
+
+.bonus-card.cursor:focus,
+.bonus-card.cursor:focus-visible {
+  outline: none;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+
+.bonus-card.cursor:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.12);
 }
