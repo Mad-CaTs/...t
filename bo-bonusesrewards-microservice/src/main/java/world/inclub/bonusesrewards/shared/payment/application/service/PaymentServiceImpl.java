@@ -363,56 +363,61 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     @Transactional
-    public Mono<PaymentResponseDto> correctRejectedPayment(UUID paymentId, FilePart voucherFile, String operationNumber, String note) {
-        return paymentRejectionRepositoryPort.findByPaymentId(paymentId)
-                .switchIfEmpty(Mono.error(new NotFoundException("Payment rejection not found for payment: " + paymentId)))
-                .flatMap(rejection ->
-                        paymentRepositoryPort.findById(paymentId)
-                                .filter(payment -> payment.getStatus() == PaymentStatus.REJECTED)
-                                .switchIfEmpty(Mono.error(new BadRequestException("Payment is not in REJECTED status")))
+    public Mono<PaymentResponseDto> correctRejectedPayment(UUID scheduleId,
+                                                                     FilePart voucherFile,
+                                                                     String operationNumber,
+                                                                     String note) {
+        return carPaymentScheduleRepositoryPort.findById(scheduleId)
+                .switchIfEmpty(Mono.error(new NotFoundException("Car payment schedule not found: " + scheduleId)))
+                .flatMap(schedule ->
+                        paymentRepositoryPort.findByScheduleId(scheduleId)
+                                .switchIfEmpty(Mono.error(new NotFoundException("Payment not found for schedule: " + scheduleId)))
                                 .flatMap(payment -> {
-                                    LocalDateTime now = TimeLima.getLimaTime();
-                                    LocalDateTime rejectedAt = rejection.getCreatedAt();
-
-                                    if (rejectedAt == null) {
-                                        return Mono.error(new BadRequestException("Payment does not have rejection timestamp"));
+                                    if (payment.getStatus() != PaymentStatus.REJECTED) {
+                                        return Mono.error(new BadRequestException("Payment is not in REJECTED status"));
                                     }
 
-                                    return voucherStorageService.saveVoucher(voucherFile)
-                                            .flatMap(voucherUrl -> {
-                                                payment.setStatus(PaymentStatus.PENDING_REVIEW);
-                                                payment.setUpdatedAt(now);
+                                    return paymentRejectionRepositoryPort.findByPaymentId(payment.getId())
+                                            .switchIfEmpty(Mono.error(new NotFoundException("Payment rejection not found for payment: " + payment.getId())))
+                                            .flatMap(rejection -> {
+                                                LocalDateTime now = TimeLima.getLimaTime();
 
-                                                return paymentRepositoryPort.save(payment)
-                                                        .flatMap(savedPayment -> {
-                                                            return paymentVoucherRepositoryPort.findByPaymentId(paymentId)
-                                                                    .next()
-                                                                    .flatMap(existingVoucher -> {
-                                                                        existingVoucher.setImageUrl(voucherUrl);
-                                                                        existingVoucher.setOperationNumber(operationNumber);
-                                                                        existingVoucher.setNote(note);
-                                                                        existingVoucher.setCreatedAt(now);
-                                                                        return paymentVoucherRepositoryPort.save(existingVoucher);
-                                                                    })
-                                                                    .switchIfEmpty(Mono.defer(() -> {
-                                                                        PaymentVoucher newVoucher = PaymentVoucher.builder()
-                                                                                .id(null)
-                                                                                .paymentId(paymentId)
-                                                                                .operationNumber(operationNumber)
-                                                                                .note(note)
-                                                                                .imageUrl(voucherUrl)
-                                                                                .createdAt(now)
-                                                                                .build();
-                                                                        return paymentVoucherRepositoryPort.save(newVoucher);
-                                                                    }))
-                                                                    .thenReturn(savedPayment);
-                                                        });
+                                                return voucherStorageService.saveVoucher(voucherFile)
+                                                        .flatMap(voucherUrl -> {
+                                                            payment.setStatus(PaymentStatus.PENDING_REVIEW);
+                                                            payment.setUpdatedAt(now);
+
+                                                            return paymentRepositoryPort.save(payment)
+                                                                    .flatMap(savedPayment ->
+                                                                            paymentVoucherRepositoryPort.findByPaymentId(payment.getId())
+                                                                                    .next()
+                                                                                    .flatMap(existingVoucher -> {
+                                                                                        existingVoucher.setImageUrl(voucherUrl);
+                                                                                        existingVoucher.setOperationNumber(operationNumber);
+                                                                                        existingVoucher.setNote(note);
+                                                                                        existingVoucher.setCreatedAt(now);
+                                                                                        return paymentVoucherRepositoryPort.save(existingVoucher);
+                                                                                    })
+                                                                                    .switchIfEmpty(Mono.defer(() -> {
+                                                                                        PaymentVoucher newVoucher = PaymentVoucher.builder()
+                                                                                                .id(null)
+                                                                                                .paymentId(payment.getId())
+                                                                                                .operationNumber(operationNumber)
+                                                                                                .note(note)
+                                                                                                .imageUrl(voucherUrl)
+                                                                                                .createdAt(now)
+                                                                                                .build();
+                                                                                        return paymentVoucherRepositoryPort.save(newVoucher);
+                                                                                    }))
+                                                                                    .thenReturn(savedPayment)
+                                                                    );
+                                                        })
+                                                        .flatMap(updatedPayment ->
+                                                                paymentNotification(updatedPayment)
+                                                                        .then(updateScheduleStatus(updatedPayment))
+                                                                        .thenReturn(updatedPayment)
+                                                        );
                                             });
-                                })
-                                .flatMap(payment -> {
-                                    return paymentNotification(payment)
-                                            .then(updateScheduleStatus(payment))
-                                            .thenReturn(payment);
                                 })
                 )
                 .map(paymentMapper::toResponseDto);

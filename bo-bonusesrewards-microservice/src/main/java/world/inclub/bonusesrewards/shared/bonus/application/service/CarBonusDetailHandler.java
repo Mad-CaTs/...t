@@ -89,6 +89,12 @@ public class CarBonusDetailHandler {
                                                                             .findFirst()
                                                                             .orElse(Rank.empty());
 
+                                                                    Integer maxAchievedPoints =
+                                                                            classification.achievedPoints() != null
+                                                                            ? classification.achievedPoints().intValue()
+                                                                            : (prequalification.totalDirectPoints() == null
+                                                                            ? 0 : prequalification.totalDirectPoints());
+
                                                                     BonusRequirement maxBonusRequirementAchieved =
                                                                             reqMap.containsKey(rankId) ?
                                                                                     BonusRequirementFinder.findMatchingRequirement(
@@ -114,9 +120,7 @@ public class CarBonusDetailHandler {
                                                                             rankId,
                                                                             rank.name() == null ? "Unknown Rank" :
                                                                                     rank.name(),
-                                                                            prequalification.totalDirectPoints() == null
-                                                                                    ? 0 :
-                                                                                    prequalification.totalDirectPoints(),
+                                                                            maxAchievedPoints,
                                                                             maxBonusRequirementAchieved != null ?
                                                                                     maxBonusRequirementAchieved.directPoints() : 0,
                                                                             getBonus(carRankBonuses, rankId,
@@ -171,17 +175,27 @@ public class CarBonusDetailHandler {
             BonusRequirement achieved
     ) {
         return reqs.stream()
-                .map(r -> new ClassificationDetailSummary.Option(
-                        r.optionNumber(),
-                        r.cycles(),
-                        classification.achievedPoints() != null
-                                ? (isAchieved(classification, r, achieved)
-                                ? Optional.of(classification.achievedPoints()).orElse(0L).intValue() : 0)
-                                : (isAchieved(classification, r, achieved)
-                                ? Optional.ofNullable(prequalification.totalDirectPoints()).orElse(0) : 0),
-                        r.directPoints(),
-                        isAchieved(classification, r, achieved)
-                ))
+                .map(r -> {
+                    boolean hasClassification = classification.achievedPoints() != null;
+
+                    int points = hasClassification
+                            ? (isAchieved(classification, r, achieved)
+                            ? Optional.of(classification.achievedPoints()).orElse(0L).intValue() : 0)
+                            : (isAchieved(prequalification, r, achieved)
+                            ? Optional.ofNullable(prequalification.totalDirectPoints()).orElse(0) : 0);
+
+                    boolean achievedFlag = hasClassification
+                            ? isAchieved(classification, r, achieved)
+                            : isAchieved(prequalification, r, achieved);
+
+                    return new ClassificationDetailSummary.Option(
+                            r.optionNumber(),
+                            r.cycles(),
+                            points,
+                            r.directPoints(),
+                            achievedFlag
+                    );
+                })
                 .toList();
     }
 
@@ -190,6 +204,18 @@ public class CarBonusDetailHandler {
                 achieved != null &&
                 Objects.equals(requirement.optionNumber(), achieved.optionNumber()) &&
                 Objects.equals(classification.requiredPoints(), achieved.directPoints().longValue());
+    }
+
+    private Boolean isAchieved(
+            Prequalification prequalification,
+            BonusRequirement requirement,
+            BonusRequirement achieved
+    ) {
+        return requirement != null &&
+                achieved != null &&
+                Objects.equals(requirement.optionNumber(), achieved.optionNumber()) &&
+                prequalification.totalDirectPoints() != null && achieved.directPoints() != null &&
+                prequalification.totalDirectPoints() >= achieved.directPoints();
     }
 
     private Integer getPosition(Long rankId, List<Rank> ranks) {

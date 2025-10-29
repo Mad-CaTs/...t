@@ -2,6 +2,7 @@ package world.inclub.bonusesrewards.shared.payment.infrastructure.persistence.ad
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import world.inclub.bonusesrewards.shared.payment.domain.model.PaymentRejectionReason;
 import world.inclub.bonusesrewards.shared.payment.domain.port.PaymentRejectionReasonRepositoryPort;
@@ -18,6 +19,12 @@ public class PaymentRejectionReasonRepositoryAdapter implements PaymentRejection
     @Override
     public Mono<PaymentRejectionReason> findById(Long reasonId) {
         return repository.findById(reasonId)
+                .map(mapper::toDomain);
+    }
+
+    @Override
+    public Flux<PaymentRejectionReason> findAll() {
+        return repository.findAll()
                 .map(mapper::toDomain);
     }
 }

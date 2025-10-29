@@ -65,10 +65,17 @@ public class CarPaymentScheduleRepositoryAdapter
     }
 
     @Override
-    public Flux<CarPaymentSchedule> findAllByCarAssignmentIdWithPagination(UUID carAssignmentId, Pageable pageable) {
+    public Flux<CarPaymentSchedule> findAllByCarAssignmentIdWithPagination(
+            UUID carAssignmentId,
+            Integer numberOfInstallments,
+            Long statusId,
+            Pageable pageable
+    ) {
         return carPaymentScheduleR2dbcRepository
                 .findAllByCarAssignmentIdWithPagination(
                         carAssignmentId,
+                        numberOfInstallments,
+                        statusId,
                         pageable.limit(),
                         pageable.offset()
                 )
@@ -76,8 +83,12 @@ public class CarPaymentScheduleRepositoryAdapter
     }
 
     @Override
-    public Mono<Long> countByCarAssignmentId(UUID carAssignmentId) {
-        return carPaymentScheduleR2dbcRepository.countByCarAssignmentId(carAssignmentId);
+    public Mono<Long> countByCarAssignmentId(
+            UUID carAssignmentId,
+            Integer numberOfInstallments,
+            Long statusId
+    ) {
+        return carPaymentScheduleR2dbcRepository.countByCarAssignmentId(carAssignmentId, numberOfInstallments, statusId);
     }
 
     @Override

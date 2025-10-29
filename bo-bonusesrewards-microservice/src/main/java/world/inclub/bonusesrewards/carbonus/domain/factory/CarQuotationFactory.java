@@ -37,6 +37,7 @@ public class CarQuotationFactory {
                 .salesExecutive(carQuotation.salesExecutive())
                 .salesExecutivePhone(carQuotation.salesExecutivePhone())
                 .quotationUrl(imageUrl != null ? imageUrl : existingQuotation.quotationUrl())
+                .eventId(carQuotation.eventId())
                 .initialInstallments(carQuotation.initialInstallments())
                 .isAccepted(false)
                 .build();

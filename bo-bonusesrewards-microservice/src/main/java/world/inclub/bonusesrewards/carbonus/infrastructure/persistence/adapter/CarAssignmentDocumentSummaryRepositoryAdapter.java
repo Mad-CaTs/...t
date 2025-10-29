@@ -42,20 +42,13 @@ public class CarAssignmentDocumentSummaryRepositoryAdapter
     }
 
     private Flux<CarAssignmentDocumentSummary> findSummaries(Flux<CarAssignmentDocumentSummaryViewEntity> source) {
-        return source
-                .collectMap(CarAssignmentDocumentSummaryViewEntity::getMemberId)
-                .flatMapMany(memberMap -> rankRepositoryPort
-                        .findByIds(
-                                memberMap.values().stream()
-                                        .map(CarAssignmentDocumentSummaryViewEntity::getMemberRankId)
-                                        .distinct()
-                                        .toList()
-                        )
-                        .collectMap(Rank::id)
-                        .flatMapMany(rankMap -> Flux.fromIterable(memberMap.values())
-                                .map(entity -> carAssignmentDocumentSummaryViewEntityMapper
-                                        .toDomain(entity, rankMap.get(entity.getMemberRankId()))))
-                );
+        return RankMappingUtil .mapEntitiesWithRanks(
+                source,
+                CarAssignmentDocumentSummaryViewEntity::getMemberId,
+                CarAssignmentDocumentSummaryViewEntity::getMemberRankId,
+                carAssignmentDocumentSummaryViewEntityMapper::toDomain,
+                rankRepositoryPort
+        );
     }
 
 }

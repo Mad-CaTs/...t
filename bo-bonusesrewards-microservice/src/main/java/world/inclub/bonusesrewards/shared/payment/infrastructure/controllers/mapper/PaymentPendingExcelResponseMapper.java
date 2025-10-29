@@ -35,7 +35,7 @@ public class PaymentPendingExcelResponseMapper {
         if (installmentNum == null) {
             return "";
         }
-        return "Cuota " + installmentNum;
+        return "Inicial Fraccionada " + installmentNum;
     }
 
     private String formatDate(LocalDateTime dateTime) {

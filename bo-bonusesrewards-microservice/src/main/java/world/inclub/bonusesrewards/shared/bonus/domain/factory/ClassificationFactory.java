@@ -30,4 +30,10 @@ public class ClassificationFactory {
                 .build();
     }
 
+    public Classification markNotified(Classification existingClassification) {
+        return existingClassification.toBuilder()
+                .notificationStatus(true)
+                .build();
+    }
+
 }

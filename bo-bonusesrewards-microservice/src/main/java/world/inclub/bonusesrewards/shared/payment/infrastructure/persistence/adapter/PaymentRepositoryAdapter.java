@@ -8,7 +8,6 @@ import world.inclub.bonusesrewards.shared.payment.domain.port.PaymentRepositoryP
 import world.inclub.bonusesrewards.shared.payment.infrastructure.persistence.mapper.PaymentEntityMapper;
 import world.inclub.bonusesrewards.shared.payment.infrastructure.persistence.repository.PaymentR2dbcRepository;
 
-import java.time.Instant;
 import java.util.UUID;
 
 @Repository
@@ -27,6 +26,12 @@ public class PaymentRepositoryAdapter implements PaymentRepositoryPort {
     @Override
     public Mono<Payment> findById(UUID id) {
         return paymentRepository.findById(id)
+                .map(paymentEntityMapper::toDomain);
+    }
+
+    @Override
+    public Mono<Payment> findByScheduleId(UUID scheduleId) {
+        return paymentRepository.findBySourceRecordId(scheduleId)
                 .map(paymentEntityMapper::toDomain);
     }
 }

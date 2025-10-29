@@ -39,7 +39,7 @@ public class KafkaRequestService {
 
         return Mono.fromFuture(future)
                 .onErrorMap(TimeoutException.class, ex -> {
-                    log.error("Se excedio el tiempo de espera para la respuesta de: {}", replyTopic);
+                    log.error("The waiting time has exceeded: {}", replyTopic);
                     return ex;
                 });
     }

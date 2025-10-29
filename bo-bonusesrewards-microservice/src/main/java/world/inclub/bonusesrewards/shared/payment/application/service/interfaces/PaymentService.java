@@ -15,7 +15,7 @@ public interface PaymentService {
 
     Mono<PaymentResponseDto> rejectPayment(UUID paymentId, Long reasonId, String detail);
 
-    Mono<PaymentResponseDto> correctRejectedPayment(UUID paymentId, FilePart voucherFile,
+    Mono<PaymentResponseDto> correctRejectedPayment(UUID scheduleId, FilePart voucherFile,
                                                     String operationNumber, String note);
 }
 

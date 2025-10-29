@@ -13,6 +13,8 @@ public interface ClassificationR2dbcRepository
         extends R2dbcRepository<ClassificationEntity, UUID> {
     Flux<ClassificationEntity> findByMemberIdAndRankIdIn(Long memberId, Collection<Long> rankIds);
 
+    Flux<ClassificationEntity> findByRankId(Long rankId);
+
     @Query("""
                 SELECT c.*
                 FROM bo_bonus_reward.classifications c
@@ -22,5 +24,7 @@ public interface ClassificationR2dbcRepository
                 LIMIT 1
             """)
     Mono<ClassificationEntity> findByCarAssignmentId(UUID carAssignmentId);
+
+    Flux<ClassificationEntity> findByIdIn(Collection<UUID> ids);
 
 }

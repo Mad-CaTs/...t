@@ -9,6 +9,8 @@ import java.util.UUID;
 
 public interface NotificationRepositoryPort {
 
+    Mono<Notification> save(Notification notification);
+
     Flux<Notification> saveAll(List<Notification> notifications);
 
     Mono<Notification> findById(UUID id);

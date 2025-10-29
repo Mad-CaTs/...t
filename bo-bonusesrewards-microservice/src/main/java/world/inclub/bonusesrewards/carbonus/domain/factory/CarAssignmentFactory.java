@@ -62,6 +62,19 @@ public class CarAssignmentFactory {
                 .build();
     }
 
+    public CarAssignment updateTotals(
+            CarAssignment carAssignment,
+            BigDecimal totalGpsUsd,
+            BigDecimal totalInsuranceUsd,
+            BigDecimal totalMandatoryInsuranceAmount
+    ) {
+        return carAssignment.toBuilder()
+                .totalGpsUsd(getBigDecimalOrZero(totalGpsUsd))
+                .totalInsuranceUsd(getBigDecimalOrZero(totalInsuranceUsd))
+                .totalMandatoryInsuranceAmount(getBigDecimalOrZero(totalMandatoryInsuranceAmount))
+                .build();
+    }
+
     private BigDecimal getMemberInitialOrNull(CarAssignment carAssignment, CarRankBonus carRankBonus) {
         if (carRankBonus == null) return null;
         BigDecimal carPrice = carAssignment.price();
@@ -88,6 +101,10 @@ public class CarAssignmentFactory {
 
     private UUID getRankBonusId(CarRankBonus rankBonus) {
         return rankBonus != null ? rankBonus.id() : null;
+    }
+
+    private BigDecimal getBigDecimalOrZero(BigDecimal value) {
+        return value != null ? value : BigDecimal.ZERO;
     }
 
 }

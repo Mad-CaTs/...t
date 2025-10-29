@@ -5,7 +5,7 @@ import lombok.Builder;
 import java.time.Instant;
 import java.util.UUID;
 
-@Builder
+@Builder(toBuilder = true)
 public record Classification(
         UUID id,
         Long memberId,

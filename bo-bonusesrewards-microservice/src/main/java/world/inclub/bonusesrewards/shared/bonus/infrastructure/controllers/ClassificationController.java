@@ -26,6 +26,7 @@ import world.inclub.bonusesrewards.shared.utils.pagination.infrastructure.utils.
 import world.inclub.bonusesrewards.shared.utils.reports.domain.ReportExporter;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -36,6 +37,7 @@ public class ClassificationController {
     private final GetAllClassificationWithMemberUseCase getAllClassificationWithMemberUseCase;
     private final SearchClassificationsWithMemberUseCase searchClassificationsUseCase;
     private final GetClassificationDetailsUseCase getClassificationByMemberIdAndBonusTypedUseCase;
+    private final NotifyMembersUseCase notifyMembersUseCase;
     private final ReportExporter<ClassificationExcelResponse> classificationReportExporter;
     private final ClassificationResponseMapper classificationResponseMapper;
     private final ClassificationExcelResponseMapper classificationExcelResponseMapper;
@@ -98,6 +100,18 @@ public class ClassificationController {
                 getClassificationByMemberIdAndBonusTypedUseCase.getDetails(memberId, bonusType),
                 true
         );
+    }
+
+    @PostMapping("/notify/{classificationIds}")
+    public Mono<ResponseEntity<ApiResponse<String>>> notifyMembers(
+            @PathVariable List<UUID> classificationIds
+    ) {
+        return notifyMembersUseCase
+                .notifyClassifiedMembers(classificationIds)
+                .then(ResponseHandler.generateResponse(
+                        HttpStatus.OK,
+                        "Members notified successfully",
+                        true));
     }
 
 }

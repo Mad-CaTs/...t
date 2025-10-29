@@ -17,6 +17,8 @@ public record PaymentListView(
         Long bonusTypeId,
         String bonusTypeName,
         Integer installmentNum,
+        Long currencyTypeId,
+        String currencyTypeCode,
         BigDecimal subTotalAmount,
         BigDecimal commissionAmount,
         BigDecimal rateAmount,

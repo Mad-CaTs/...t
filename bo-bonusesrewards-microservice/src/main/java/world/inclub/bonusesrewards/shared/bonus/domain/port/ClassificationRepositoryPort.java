@@ -12,7 +12,11 @@ public interface ClassificationRepositoryPort {
 
     Flux<Classification> findByMemberIdAndRankIds(Long memberId, Collection<Long> rankId);
 
+    Flux<Classification> findByRankId(Long rankId);
+
     Mono<Classification> findById(UUID id);
+
+    Flux<Classification> findByIds(Collection<UUID> ids);
 
     Mono<Classification> findByCarAssignmentId(UUID carAssignmentId);
 }

@@ -26,7 +26,7 @@ public class CarFactory {
                 .brandId(car.brandId())
                 .modelId(car.modelId())
                 .color(car.color())
-                .imageUrl(getImageUrlOrNull(imageUrl))
+                .imageUrl(getImageUrlOrNull(imageUrl) != null ? imageUrl : existingCar.imageUrl())
                 .build();
     }
 

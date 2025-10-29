@@ -16,7 +16,7 @@ public interface CarAssignmentDocumentSummaryR2dbcRepository
             SELECT * FROM bo_bonus_reward.car_assignment_documents_summary_view
             WHERE (:member IS NULL OR LOWER(CONCAT(member_full_name, ' ', username)) LIKE LOWER(CONCAT('%', :member, '%')))
               AND (:rankId IS NULL OR member_rank_id = :rankId)
-              AND (:documentCount IS NULL OR total_documents >= :documentCount)
+              AND (:documentCount IS NULL OR total_documents = :documentCount)
             ORDER BY last_document_updated_at DESC
             LIMIT :limit OFFSET :offset
             """)
@@ -32,7 +32,7 @@ public interface CarAssignmentDocumentSummaryR2dbcRepository
             SELECT COUNT(*) FROM bo_bonus_reward.car_assignment_documents_summary_view
             WHERE (:member IS NULL OR LOWER(CONCAT(member_full_name, ' ', username)) LIKE LOWER(CONCAT('%', :member, '%')))
               AND (:rankId IS NULL OR member_rank_id = :rankId)
-              AND (:documentCount IS NULL OR total_documents >= :documentCount)
+              AND (:documentCount IS NULL OR total_documents = :documentCount)
             """)
     Mono<Long> countWithFilters(
             @Param("member") String member,

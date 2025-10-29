@@ -55,7 +55,7 @@ public class CarQuotationSelectedRepositoryAdapter
         return carQuotationSelectedR2dbcRepository.getAll()
                 .collectMap(CarQuotationPendingAssignmentViewEntity::getRankId)
                 .flatMapMany(rankMap -> rankRepositoryPort
-                .findByIds(rankMap.keySet().stream().distinct().toList())
+                        .findByIds(rankMap.keySet().stream().distinct().toList())
                         .collectMap(Rank::id)
                         .flatMapMany(rankMapNames -> Flux.fromIterable(rankMap.values())
                                 .map(entity -> new CarQuotationPendingAssignment(
@@ -69,20 +69,13 @@ public class CarQuotationSelectedRepositoryAdapter
     }
 
     private Flux<CarQuotationSelected> findSelected(Flux<CarQuotationSelectedViewEntity> source) {
-        return source
-                .collectMap(CarQuotationSelectedViewEntity::getMemberId)
-                .flatMapMany(memberMap -> rankRepositoryPort
-                        .findByIds(
-                                memberMap.values().stream()
-                                        .map(CarQuotationSelectedViewEntity::getRankId)
-                                        .distinct()
-                                        .toList()
-                        )
-                        .collectMap(Rank::id)
-                        .flatMapMany(rankMap -> Flux.fromIterable(memberMap.values())
-                                .map(entity -> carQuotationSelectedViewEntityMapper
-                                        .toDomain(entity, rankMap.get(entity.getRankId()))))
-                );
+        return RankMappingUtil.mapEntitiesWithRanks(
+                source,
+                CarQuotationSelectedViewEntity::getMemberId,
+                CarQuotationSelectedViewEntity::getRankId,
+                carQuotationSelectedViewEntityMapper::toDomain,
+                rankRepositoryPort
+        );
     }
 
 }

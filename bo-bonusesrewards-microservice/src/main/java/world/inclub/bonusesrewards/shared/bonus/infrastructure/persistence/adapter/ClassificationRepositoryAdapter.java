@@ -35,8 +35,21 @@ public class ClassificationRepositoryAdapter
     }
 
     @Override
+    public Flux<Classification> findByRankId(Long rankId) {
+        return classificationR2dbcRepository
+                .findByRankId(rankId)
+                .map(classificationEntityMapper::toDomain);
+    }
+
+    @Override
     public Mono<Classification> findById(UUID id) {
         return classificationR2dbcRepository.findById(id)
+                .map(classificationEntityMapper::toDomain);
+    }
+
+    @Override
+    public Flux<Classification> findByIds(Collection<UUID> ids) {
+        return classificationR2dbcRepository.findByIdIn(ids)
                 .map(classificationEntityMapper::toDomain);
     }
 

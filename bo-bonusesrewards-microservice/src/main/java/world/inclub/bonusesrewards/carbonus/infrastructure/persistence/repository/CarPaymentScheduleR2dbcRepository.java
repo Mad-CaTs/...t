@@ -32,11 +32,15 @@ public interface CarPaymentScheduleR2dbcRepository
     @Query("""
             SELECT cps.* FROM bo_bonus_reward.car_payment_schedules cps
             WHERE cps.car_assignment_id = :carAssignmentId
+                AND (:numberOfInstallments IS NULL OR cps.order_num <= :numberOfInstallments)
+                AND (:statusId IS NULL OR cps.status_id = :statusId)
             ORDER BY cps.order_num ASC
             LIMIT :limit OFFSET :offset
             """)
     Flux<CarPaymentScheduleEntity> findAllByCarAssignmentIdWithPagination(
             @Param("carAssignmentId") UUID carAssignmentId,
+            @Param("numberOfInstallments") Integer numberOfInstallments,
+            @Param("statusId") Long statusId,
             @Param("limit") int limit,
             @Param("offset") long offset
     );
@@ -44,8 +48,14 @@ public interface CarPaymentScheduleR2dbcRepository
     @Query("""
             SELECT COUNT(cps.id) FROM bo_bonus_reward.car_payment_schedules cps
             WHERE cps.car_assignment_id = :carAssignmentId
+                AND (:numberOfInstallments IS NULL OR cps.order_num <= :numberOfInstallments)
+                AND (:statusId IS NULL OR cps.status_id = :statusId)
             """)
-    Mono<Long> countByCarAssignmentId(@Param("carAssignmentId") UUID carAssignmentId);
+    Mono<Long> countByCarAssignmentId(
+            @Param("carAssignmentId") UUID carAssignmentId,
+            @Param("numberOfInstallments") Integer numberOfInstallments,
+            @Param("statusId") Long statusId
+    );
 
     @Query("""
             SELECT cps.* FROM bo_bonus_reward.car_payment_schedules cps

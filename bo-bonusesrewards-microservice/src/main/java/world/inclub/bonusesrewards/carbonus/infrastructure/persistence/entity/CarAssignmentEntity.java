@@ -59,6 +59,15 @@ public class CarAssignmentEntity
     @Column("payment_start_date")
     private LocalDate paymentStartDate;
 
+    @Column("total_gps_usd")
+    private BigDecimal totalGpsUsd;
+
+    @Column("total_insurance_usd")
+    private BigDecimal totalInsuranceUsd;
+
+    @Column("total_mandatory_insurance_amount")
+    private BigDecimal totalMandatoryInsuranceAmount;
+
     @Column("assigned_date")
     private Instant assignedDate;
 

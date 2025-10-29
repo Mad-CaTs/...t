@@ -9,7 +9,6 @@ import world.inclub.bonusesrewards.carbonus.domain.port.CarQuotationSummaryRepos
 import world.inclub.bonusesrewards.carbonus.infrastructure.persistence.entity.CarQuotationSummaryViewEntity;
 import world.inclub.bonusesrewards.carbonus.infrastructure.persistence.mapper.CarQuotationSummaryViewEntityMapper;
 import world.inclub.bonusesrewards.carbonus.infrastructure.persistence.repository.CarQuotationSummaryR2dbcRepository;
-import world.inclub.bonusesrewards.shared.rank.domain.model.Rank;
 import world.inclub.bonusesrewards.shared.rank.domain.port.RankRepositoryPort;
 import world.inclub.bonusesrewards.shared.utils.pagination.domain.Pageable;
 
@@ -50,20 +49,13 @@ public class CarQuotationSummaryRepositoryAdapter
     }
 
     private Flux<CarQuotationSummary> findSummaries(Flux<CarQuotationSummaryViewEntity> source) {
-        return source
-                .collectMap(CarQuotationSummaryViewEntity::getMemberId)
-                .flatMapMany(memberMap -> rankRepositoryPort
-                        .findByIds(
-                                memberMap.values().stream()
-                                        .map(CarQuotationSummaryViewEntity::getRankId)
-                                        .distinct()
-                                        .toList()
-                        )
-                        .collectMap(Rank::id)
-                        .flatMapMany(rankMap -> Flux.fromIterable(memberMap.values())
-                                .map(entity -> carQuotationSummaryViewEntityMapper
-                                        .toDomain(entity, rankMap.get(entity.getRankId()))))
-                );
+        return RankMappingUtil.mapEntitiesWithRanks(
+                source,
+                CarQuotationSummaryViewEntity::getMemberId,
+                CarQuotationSummaryViewEntity::getRankId,
+                carQuotationSummaryViewEntityMapper::toDomain,
+                rankRepositoryPort
+        );
     }
 
 }

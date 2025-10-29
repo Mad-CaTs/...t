@@ -48,6 +48,12 @@ public class PaymentListViewEntity {
     @Column("installment_num")
     private Integer installmentNum;
 
+    @Column("currency_type_id")
+    private Long currencyTypeId;
+
+    @Column("code")
+    private String currencyTypeCode;
+
     @Column("sub_total_amount")
     private BigDecimal subTotalAmount;
 

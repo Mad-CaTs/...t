@@ -152,8 +152,7 @@ public interface CompoundPeriodReactiveMongoRepository
             "{ $match: { id_user: ?0, id_range: { $in: ?1 }, id_state: 1 } }",
             "{ $sort: { id_user: 1, id_range: 1, period_id: -1 } }",
             "{ $group: { " +
-                    "_id: '$id_user', " +
-                    "rankId: { $first: '$id_range' }, " +
+                    "_id: { userId: '$id_user', rankId: '$id_range' }, " +
                     "rankName: { $first: '$range' }, " +
                     "periods: { $push: '$period_id' }, " +
                     "totalDirectPoints: { $first: { $add: [ " +
@@ -162,8 +161,9 @@ public interface CompoundPeriodReactiveMongoRepository
                     "{ $ifNull: ['$points_direct3', 0] } ] } } " +
                     "} }",
             "{ $project: { " +
-                    "userId: '$_id', " +
-                    "rankId: 1, " +
+                    "_id: 0, " +
+                    "userId: '$_id.userId', " +
+                    "rankId: '$_id.rankId', " +
                     "rankName: 1, " +
                     "totalDirectPoints: 1, " +
                     "numRequalifications: { $subtract: [ { $size: '$periods' }, 1 ] }, " +

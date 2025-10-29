@@ -59,6 +59,7 @@ public class PaymentAmountServiceImpl implements PaymentAmountService {
                     BigDecimal commission = BigDecimal.ZERO;
                     BigDecimal rateAmount = BigDecimal.ZERO;
                     BigDecimal ratePercentage = BigDecimal.ZERO;
+                    BigDecimal total;
 
                     if (command.currencyType() == CurrencyType.USD) {
                         commission = paymentSubType.commissionDollars();
@@ -66,18 +67,26 @@ public class PaymentAmountServiceImpl implements PaymentAmountService {
                         commission = paymentSubType.commissionSoles();
                     }
 
+                    commission = commission.setScale(2, RoundingMode.HALF_UP);
+
                     if (paymentSubType.ratePercentage() != null &&
                             paymentSubType.ratePercentage().compareTo(BigDecimal.ZERO) > 0) {
+
                         ratePercentage = paymentSubType.ratePercentage();
                         BigDecimal tasaDecimal = paymentSubType.ratePercentage()
                                 .divide(BigDecimal.valueOf(100), 8, RoundingMode.HALF_UP);
-                        rateAmount = subTotal.multiply(tasaDecimal)
+
+                        BigDecimal divisor = BigDecimal.ONE.subtract(tasaDecimal);
+                        BigDecimal totalWithRate = subTotal.add(commission)
+                                .divide(divisor, 8, RoundingMode.HALF_UP);
+
+                        rateAmount = totalWithRate.multiply(tasaDecimal)
                                 .setScale(2, RoundingMode.HALF_UP);
+
+                        total = totalWithRate.setScale(2, RoundingMode.HALF_UP);
+                    } else {
+                        total = subTotal.add(commission);
                     }
-
-                    commission = commission.setScale(2, RoundingMode.HALF_UP);
-
-                    BigDecimal total = subTotal.add(commission).add(rateAmount);
 
                     return new PaymentAmounts(subTotal, commission, rateAmount, ratePercentage, total);
                 });

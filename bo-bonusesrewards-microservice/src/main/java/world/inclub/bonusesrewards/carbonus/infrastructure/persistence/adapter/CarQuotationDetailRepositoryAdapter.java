@@ -10,6 +10,7 @@ import world.inclub.bonusesrewards.carbonus.infrastructure.persistence.mapper.Ca
 import world.inclub.bonusesrewards.carbonus.infrastructure.persistence.repository.CarQuotationDetailR2dbcRepository;
 import world.inclub.bonusesrewards.shared.event.domain.model.Event;
 import world.inclub.bonusesrewards.shared.event.domain.port.EventRepositoryPort;
+import world.inclub.bonusesrewards.shared.exceptions.EntityNotFoundException;
 
 import java.util.Set;
 import java.util.UUID;
@@ -27,6 +28,8 @@ public class CarQuotationDetailRepositoryAdapter
     @Override
     public Flux<CarQuotationDetail> findByClassificationId(UUID classificationId) {
         return carQuotationDetailR2dbcRepository.findByClassificationId(classificationId)
+                .switchIfEmpty(Flux.error(new EntityNotFoundException(
+                        "Quotation details not found for classification id: " + classificationId)))
                 .collectList()
                 .flatMapMany(carQuotationDetailEntities -> {
                     Set<Long> eventIds = carQuotationDetailEntities.stream()

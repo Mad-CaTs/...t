@@ -10,4 +10,6 @@ public interface PaymentRepositoryPort {
     Mono<Payment> findById(UUID id);
 
     Mono<Payment> save(Payment payment);
+
+    Mono<Payment> findByScheduleId(UUID scheduleId);
 }

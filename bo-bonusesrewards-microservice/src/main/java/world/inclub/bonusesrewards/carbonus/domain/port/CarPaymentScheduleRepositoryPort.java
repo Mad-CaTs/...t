@@ -43,9 +43,18 @@ public interface CarPaymentScheduleRepositoryPort {
 
     Flux<CarPaymentSchedule> findByCarAssignmentId(UUID carAssignmentId);
 
-    Flux<CarPaymentSchedule> findAllByCarAssignmentIdWithPagination(UUID carAssignmentId, Pageable pageable);
+    Flux<CarPaymentSchedule> findAllByCarAssignmentIdWithPagination(
+            UUID carAssignmentId,
+            Integer numberOfInstallments,
+            Long statusId,
+            Pageable pageable
+    );
 
-    Mono<Long> countByCarAssignmentId(UUID carAssignmentId);
+    Mono<Long> countByCarAssignmentId(
+            UUID carAssignmentId,
+            Integer numberOfInstallments,
+            Long statusId
+    );
 
     Flux<CarPaymentSchedule> findInitialsByCarAssignmentId(UUID carAssignmentId, Pageable pageable);
 

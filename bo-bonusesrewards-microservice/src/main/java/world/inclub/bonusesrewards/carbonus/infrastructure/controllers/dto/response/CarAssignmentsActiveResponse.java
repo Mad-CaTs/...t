@@ -50,9 +50,21 @@ public class CarAssignmentsActiveResponse {
     
     @ExcelProperty("Cuota Mensual (USD)") 
     private String monthlyInstallmentUsd;
+
+    @ExcelProperty("Rango Recompensado")
+    private String rewardedRankName;
     
     @ExcelProperty("Rango Actual") 
     private String currentRankName;
+
+    @ExcelProperty("Total GPS (USD)")
+    private BigDecimal totalGpsUsd;
+
+    @ExcelProperty("Total Seguro (USD)")
+    private BigDecimal totalInsuranceUsd;
+
+    @ExcelProperty("Total SOAT (USD)")
+    private BigDecimal totalMandatoryInsuranceAmount;
     
     @ExcelProperty("Fecha de Asignación") 
     private String assignedDate;

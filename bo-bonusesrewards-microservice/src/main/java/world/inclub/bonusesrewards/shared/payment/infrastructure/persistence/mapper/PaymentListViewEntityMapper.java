@@ -19,6 +19,8 @@ public class PaymentListViewEntityMapper {
                 .bonusTypeId(entity.getBonusTypeId())
                 .bonusTypeName(entity.getBonusTypeName())
                 .installmentNum(entity.getInstallmentNum())
+                .currencyTypeId(entity.getCurrencyTypeId())
+                .currencyTypeCode(entity.getCurrencyTypeCode())
                 .subTotalAmount(entity.getSubTotalAmount())
                 .commissionAmount(entity.getCommissionAmount())
                 .rateAmount(entity.getRateAmount())

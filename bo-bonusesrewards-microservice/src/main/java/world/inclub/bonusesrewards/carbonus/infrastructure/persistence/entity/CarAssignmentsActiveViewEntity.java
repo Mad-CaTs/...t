@@ -60,6 +60,18 @@ public class CarAssignmentsActiveViewEntity {
     @Column("monthly_installment_usd")
     private BigDecimal monthlyInstallmentUsd;
 
+    @Column("rewarded_rank_id")
+    private Long rewardedRankId;
+
+    @Column("total_gps_usd")
+    private BigDecimal totalGpsUsd;
+
+    @Column("total_insurance_usd")
+    private BigDecimal totalInsuranceUsd;
+
+    @Column("total_mandatory_insurance_amount")
+    private BigDecimal totalMandatoryInsuranceAmount;
+
     @Column("assigned_date")
     private Instant assignedDate;
 

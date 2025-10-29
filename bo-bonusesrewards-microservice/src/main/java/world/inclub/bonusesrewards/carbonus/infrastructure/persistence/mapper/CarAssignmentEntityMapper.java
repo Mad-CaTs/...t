@@ -26,6 +26,9 @@ public class CarAssignmentEntityMapper {
         entity.setInitialInstallmentsCount(carAssignment.initialInstallmentsCount());
         entity.setMonthlyInstallmentsCount(carAssignment.monthlyInstallmentsCount());
         entity.setPaymentStartDate(carAssignment.paymentStartDate());
+        entity.setTotalGpsUsd(carAssignment.totalGpsUsd());
+        entity.setTotalInsuranceUsd(carAssignment.totalInsuranceUsd());
+        entity.setTotalMandatoryInsuranceAmount(carAssignment.totalMandatoryInsuranceAmount());
         entity.setAssignedDate(carAssignment.assignedDate());
         entity.setIsAssigned(carAssignment.isAssigned());
         entity.setCreatedAt(carAssignment.createdAt());
@@ -49,6 +52,9 @@ public class CarAssignmentEntityMapper {
                 .initialInstallmentsCount(entity.getInitialInstallmentsCount())
                 .monthlyInstallmentsCount(entity.getMonthlyInstallmentsCount())
                 .paymentStartDate(entity.getPaymentStartDate())
+                .totalGpsUsd(entity.getTotalGpsUsd())
+                .totalInsuranceUsd(entity.getTotalInsuranceUsd())
+                .totalMandatoryInsuranceAmount(entity.getTotalMandatoryInsuranceAmount())
                 .assignedDate(entity.getAssignedDate())
                 .isAssigned(entity.getIsAssigned())
                 .createdAt(entity.getCreatedAt())

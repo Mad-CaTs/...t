@@ -8,13 +8,16 @@ import world.inclub.bonusesrewards.carbonus.application.usecase.carpaymentschedu
 import world.inclub.bonusesrewards.carbonus.application.usecase.carpaymentschedule.GetAllCarPaymentSchedulesUseCase;
 import world.inclub.bonusesrewards.carbonus.application.usecase.carpaymentschedule.SearchCarPaymentScheduleInitialsUseCase;
 import world.inclub.bonusesrewards.carbonus.application.usecase.carpaymentschedule.SearchCarPaymentSchedulesUseCase;
+import world.inclub.bonusesrewards.carbonus.domain.factory.CarAssignmentFactory;
 import world.inclub.bonusesrewards.carbonus.domain.factory.CarPaymentScheduleFactory;
+import world.inclub.bonusesrewards.carbonus.domain.model.CarAssignment;
 import world.inclub.bonusesrewards.carbonus.domain.model.CarPaymentSchedule;
 import world.inclub.bonusesrewards.carbonus.domain.port.CarAssignmentRepositoryPort;
 import world.inclub.bonusesrewards.carbonus.domain.port.CarPaymentScheduleRepositoryPort;
 import world.inclub.bonusesrewards.carbonus.domain.port.CarRankBonusRepositoryPort;
 import world.inclub.bonusesrewards.carbonus.domain.validator.CarPaymentScheduleValidator;
 import world.inclub.bonusesrewards.shared.exceptions.EntityNotFoundException;
+import world.inclub.bonusesrewards.shared.payment.domain.model.PaymentStatus;
 import world.inclub.bonusesrewards.shared.utils.pagination.application.PageDataBuilder;
 import world.inclub.bonusesrewards.shared.utils.pagination.application.PagedData;
 import world.inclub.bonusesrewards.shared.utils.pagination.domain.Pageable;
@@ -34,6 +37,7 @@ public class CarPaymentScheduleService
     private final CarAssignmentRepositoryPort carAssignmentRepositoryPort;
     private final CarRankBonusRepositoryPort carRankBonusRepositoryPort;
     private final CarPaymentScheduleRepositoryPort carPaymentScheduleRepositoryPort;
+    private final CarAssignmentFactory carAssignmentFactory;
     private final CarPaymentScheduleFactory carPaymentScheduleFactory;
     private final CarPaymentScheduleValidator carPaymentScheduleValidator;
 
@@ -62,8 +66,16 @@ public class CarPaymentScheduleService
                                         insuranceAmount,
                                         mandatoryInsuranceAmount,
                                         rankBonus
-                                ))))
-                .flatMapMany(carPaymentScheduleRepositoryPort::saveAll);
+                                ))
+                                .zipWith(Mono.just(carAssignment))))
+                .flatMapMany(tuple -> {
+                    List<CarPaymentSchedule> schedules = tuple.getT1();
+                    CarAssignment carAssignment = tuple.getT2();
+                    CarAssignment updatedAssignment = carAssignmentFactory
+                            .updateTotals(carAssignment, gpsAmount, insuranceAmount, mandatoryInsuranceAmount);
+                    return carAssignmentRepositoryPort.save(updatedAssignment)
+                            .thenMany(carPaymentScheduleRepositoryPort.saveAll(schedules));
+                });
     }
 
     @Override
@@ -101,15 +113,21 @@ public class CarPaymentScheduleService
     @Override
     public Mono<PagedData<CarPaymentSchedule>> searchCarPaymentSchedules(
             UUID carAssignmentId,
+            Integer numberOfInstallments,
+            String statusCode,
             Pageable pageable
     ) {
+        Long statusId = statusCode != null
+                ? PaymentStatus.fromName(statusCode).getId()
+                : null;
+
         Flux<CarPaymentSchedule> schedulesFlux = carPaymentScheduleRepositoryPort
-                .findAllByCarAssignmentIdWithPagination(carAssignmentId, pageable)
+                .findAllByCarAssignmentIdWithPagination(carAssignmentId, numberOfInstallments, statusId, pageable)
                 .switchIfEmpty(Mono.error(new EntityNotFoundException(
                         "No payment schedules found matching the criteria")));
 
         Mono<Long> countMono = carPaymentScheduleRepositoryPort
-                .countByCarAssignmentId(carAssignmentId)
+                .countByCarAssignmentId(carAssignmentId, numberOfInstallments, statusId)
                 .defaultIfEmpty(0L);
 
         return Mono.zip(schedulesFlux.collectList(), countMono)

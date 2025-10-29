@@ -9,10 +9,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 import world.inclub.bonusesrewards.carbonus.application.usecase.carpaymentschedule.*;
+import world.inclub.bonusesrewards.carbonus.domain.model.CarPaymentSchedule;
 import world.inclub.bonusesrewards.carbonus.infrastructure.controllers.constants.CarBonusApiPaths.PaymentSchedules;
 import world.inclub.bonusesrewards.carbonus.infrastructure.controllers.dto.excel.CarPaymentScheduleExelResponse;
 import world.inclub.bonusesrewards.carbonus.infrastructure.controllers.dto.request.CarPaymentScheduleInstallmentsRequest;
 import world.inclub.bonusesrewards.carbonus.application.dto.CarPaymentScheduleExtraInfoSummary;
+import world.inclub.bonusesrewards.carbonus.infrastructure.controllers.dto.request.CarPaymentScheduleSearchRequest;
 import world.inclub.bonusesrewards.carbonus.infrastructure.controllers.dto.response.CarPaymentScheduleResponse;
 import world.inclub.bonusesrewards.carbonus.infrastructure.controllers.mapper.carpaymentschedule.CarPaymentScheduleExelResponseMapper;
 import world.inclub.bonusesrewards.carbonus.infrastructure.controllers.mapper.carpaymentschedule.CarPaymentScheduleResponseMapper;
@@ -80,12 +82,13 @@ public class CarPaymentScheduleController {
     @GetMapping("/search/{carAssignmentId}")
     public Mono<ResponseEntity<ApiResponse<PagedData<CarPaymentScheduleResponse>>>> searchCarPaymentSchedules(
             @PathVariable UUID carAssignmentId,
-            @Valid @ModelAttribute PaginationRequest pagination
+            @Valid @ModelAttribute PaginationRequest pagination,
+            @Valid @ModelAttribute CarPaymentScheduleSearchRequest request
     ) {
         Pageable pageable = PageableUtils.createPageable(pagination, "orderNum");
 
         return searchCarPaymentSchedulesUseCase
-                .searchCarPaymentSchedules(carAssignmentId, pageable)
+                .searchCarPaymentSchedules(carAssignmentId, request.numberOfInstallments(), request.statusCode(), pageable)
                 .map(carPaymentScheduleResponseMapper::toResponse)
                 .flatMap(pagedData ->
                                  ResponseHandler.generateResponse(HttpStatus.OK, pagedData, true));

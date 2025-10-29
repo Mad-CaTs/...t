@@ -27,12 +27,18 @@ public class PaymentCurrencyConversionServiceImpl implements PaymentCurrencyConv
 
         return exchangeRateRepository.findLatestExchangeRate()
                 .map(exchangeRate -> {
+                    log.info("Exchange rate - Buy: {}, Sell: {}",
+                            exchangeRate.buyRate(), exchangeRate.sellRate());
+                    log.info("Converting {} {} a {}", amount, fromCurrency, toCurrency);
+
                     BigDecimal convertedAmount;
 
                     if (fromCurrency == CurrencyType.USD && toCurrency == CurrencyType.PEN) {
-                        convertedAmount = amount.multiply(exchangeRate.buyRate());
+                        convertedAmount = amount.multiply(exchangeRate.sellRate());
+                        log.info("USD → PEN: {} * {} = {}", amount, exchangeRate.sellRate(), convertedAmount);
                     } else {
-                        convertedAmount = amount.divide(exchangeRate.sellRate(), 2, RoundingMode.HALF_UP);
+                        convertedAmount = amount.divide(exchangeRate.buyRate(), 2, RoundingMode.HALF_UP);
+                        log.info("PEN → USD: {} / {} = {}", amount, exchangeRate.buyRate(), convertedAmount);
                     }
                     return convertedAmount.setScale(2, RoundingMode.HALF_UP);
                 });

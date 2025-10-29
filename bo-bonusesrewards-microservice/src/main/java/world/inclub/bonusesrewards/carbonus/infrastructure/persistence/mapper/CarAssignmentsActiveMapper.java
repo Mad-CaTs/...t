@@ -9,7 +9,7 @@ import world.inclub.bonusesrewards.shared.rank.domain.model.Rank;
 @Component
 public class CarAssignmentsActiveMapper {
 
-    public CarAssignmentsActive toDomain(CarAssignmentsActiveViewEntity entity, MemberRankDetail memberRankDetail) {
+    public CarAssignmentsActive toDomain(CarAssignmentsActiveViewEntity entity, MemberRankDetail memberRankDetail, Rank rank) {
         if (entity == null) return null;
 
         return CarAssignmentsActive.builder()
@@ -26,7 +26,11 @@ public class CarAssignmentsActiveMapper {
                 .paidMonthlyInstallments(entity.getPaidMonthlyInstallments())
                 .assignedMonthlyBonusUsd(entity.getAssignedMonthlyBonusUsd())
                 .monthlyInstallmentUsd(entity.getMonthlyInstallmentUsd())
+                .rewardedRank(rank)
                 .currentRank(mapToRank(memberRankDetail))
+                .totalGpsUsd(entity.getTotalGpsUsd())
+                .totalInsuranceUsd(entity.getTotalInsuranceUsd())
+                .totalMandatoryInsuranceAmount(entity.getTotalMandatoryInsuranceAmount())
                 .assignedDate(entity.getAssignedDate())
                 .build();
     }

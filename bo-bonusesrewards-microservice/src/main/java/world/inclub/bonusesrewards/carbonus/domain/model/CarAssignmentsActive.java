@@ -22,6 +22,10 @@ public record CarAssignmentsActive(
         Long paidMonthlyInstallments,
         BigDecimal assignedMonthlyBonusUsd,
         BigDecimal monthlyInstallmentUsd,
+        Rank rewardedRank,
         Rank currentRank,
+        BigDecimal totalGpsUsd,
+        BigDecimal totalInsuranceUsd,
+        BigDecimal totalMandatoryInsuranceAmount,
         Instant assignedDate
 ) {}

@@ -13,6 +13,7 @@ import world.inclub.bonusesrewards.shared.bonus.application.usecase.member.GetPr
 import world.inclub.bonusesrewards.shared.bonus.application.usecase.member.SearchPrequalificationsUseCase;
 import world.inclub.bonusesrewards.shared.bonus.domain.model.*;
 import world.inclub.bonusesrewards.shared.bonus.domain.port.BonusRequirementRepositoryPort;
+import world.inclub.bonusesrewards.shared.bonus.domain.port.ClassificationRepositoryPort;
 import world.inclub.bonusesrewards.shared.bonus.domain.port.CompoundPeriodRepositoryPort;
 import world.inclub.bonusesrewards.shared.bonus.domain.port.PeriodRepositoryPort;
 import world.inclub.bonusesrewards.shared.exceptions.EntityNotFoundException;
@@ -41,6 +42,7 @@ public class PrequalificationsService
 
     private final CompoundPeriodRepositoryPort compoundPeriodRepository;
     private final BonusRequirementRepositoryPort bonusRequirementRepository;
+    private final ClassificationRepositoryPort classificationRepository;
     private final MemberRepositoryPort memberRepository;
     private final CountryRepositoryPort countryRepository;
     private final PeriodRepositoryPort periodRepository;
@@ -59,18 +61,30 @@ public class PrequalificationsService
                 .switchIfEmpty(Mono.error(new EntityNotFoundException(
                         "No bonus requirements found for that rank")))
                 .flatMapMany(bonusRequirements -> {
-                    Flux<Prequalification> prequalificationsFlux = compoundPeriodRepository
+                    Mono<List<Prequalification>> allPrequalificationsMono = compoundPeriodRepository
                             .findTopRequalifications(
-                                    periodMin, periodMax, rankId, minRequalifications);
+                                    periodMin, periodMax, rankId, minRequalifications)
+                            .collectList();
 
-                    return prequalificationsFlux.collectList()
-                            .switchIfEmpty(Mono.error(new EntityNotFoundException(
-                                    "No prequalifications found matching the criteria")))
-                            .flatMapMany(prequalifications ->
-                                                 mapToSummaries(prequalifications, bonusRequirements)
-                                                         .collectList()
-                                                         .flatMap(this::validateSummaries)
-                                                         .flatMapMany(Flux::fromIterable));
+                    Mono<List<Long>> classifiedMemberIdsMono = classificationRepository
+                            .findByRankId(rankId)
+                            .map(Classification::memberId)
+                            .collectList();
+
+                    return Mono.zip(allPrequalificationsMono, classifiedMemberIdsMono)
+                            .flatMapMany(tuple -> {
+                                List<Prequalification> allPrequalifications = tuple.getT1();
+                                List<Long> classifiedMemberIds = tuple.getT2();
+
+                                List<Prequalification> filteredPrequalifications = allPrequalifications.stream()
+                                        .filter(p -> !classifiedMemberIds.contains(p.userId()))
+                                        .toList();
+
+                                return mapToSummaries(filteredPrequalifications, bonusRequirements)
+                                        .collectList()
+                                        .flatMap(this::validateSummaries)
+                                        .flatMapMany(Flux::fromIterable);
+                            });
                 });
     }
 
@@ -87,29 +101,38 @@ public class PrequalificationsService
                         "No bonus requirements found for that rank")))
                 .collectList()
                 .flatMap(bonusRequirements -> {
-                    Flux<Prequalification> prequalificationsFlux = compoundPeriodRepository
-                            .findTopRequalificationsPaginated(
-                                    periodMin, periodMax, rankId, minRequalifications, pageable)
-                            .switchIfEmpty(Mono.error(new EntityNotFoundException(
-                                    "No prequalifications found matching the criteria")));
+                    Mono<List<Prequalification>> allPrequalificationsMono = compoundPeriodRepository
+                            .findTopRequalifications(
+                                    periodMin, periodMax, rankId, minRequalifications)
+                            .collectList();
 
-                    Mono<Long> countMono = compoundPeriodRepository
-                            .countPrequalifications(periodMin,
-                                                    periodMax,
-                                                    rankId,
-                                                    minRequalifications)
-                            .defaultIfEmpty(0L);
+                    Mono<List<Long>> classifiedMemberIdsMono = classificationRepository
+                            .findByRankId(rankId)
+                            .map(Classification::memberId)
+                            .collectList();
 
-                    return Mono.zip(prequalificationsFlux.collectList(), countMono)
+                    return Mono.zip(allPrequalificationsMono, classifiedMemberIdsMono)
                             .flatMap(tuple -> {
-                                List<Prequalification> prequalifications = tuple.getT1();
-                                Long total = tuple.getT2();
+                                List<Prequalification> allPrequalifications = tuple.getT1();
+                                List<Long> classifiedMemberIds = tuple.getT2();
 
-                                return mapToSummaries(prequalifications, bonusRequirements)
+                                List<Prequalification> filteredPrequalifications = allPrequalifications.stream()
+                                        .filter(p -> !classifiedMemberIds.contains(p.userId()))
+                                        .toList();
+
+                                int total = filteredPrequalifications.size();
+                                int offset = pageable.offset();
+                                int limit = pageable.limit();
+                                List<Prequalification> paginatedPrequalifications = filteredPrequalifications.stream()
+                                        .skip(offset)
+                                        .limit(limit)
+                                        .toList();
+
+                                return mapToSummaries(paginatedPrequalifications, bonusRequirements)
                                         .collectList()
                                         .flatMap(this::validateSummaries)
                                         .map(validSummaries ->
-                                                     PageDataBuilder.build(validSummaries, pageable, total));
+                                                     PageDataBuilder.build(validSummaries, pageable, (long) total));
                             });
                 });
     }

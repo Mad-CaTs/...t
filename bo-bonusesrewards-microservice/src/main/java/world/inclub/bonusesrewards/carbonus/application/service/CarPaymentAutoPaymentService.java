@@ -21,7 +21,9 @@ import world.inclub.bonusesrewards.shared.exceptions.EntityNotFoundException;
 import world.inclub.bonusesrewards.shared.infrastructure.context.TimezoneContext;
 import world.inclub.bonusesrewards.shared.logging.LoggerService;
 import world.inclub.bonusesrewards.shared.payment.domain.model.PaymentStatus;
+import world.inclub.bonusesrewards.shared.rank.domain.model.MemberRankDetail;
 import world.inclub.bonusesrewards.shared.rank.domain.model.Rank;
+import world.inclub.bonusesrewards.shared.rank.domain.port.MemberRankDetailRepositoryPort;
 import world.inclub.bonusesrewards.shared.rank.domain.port.RankRepositoryPort;
 import world.inclub.bonusesrewards.shared.utils.exchange.domain.ExchangeRate;
 import world.inclub.bonusesrewards.shared.utils.exchange.domain.ExchangeRateRepositoryPort;
@@ -32,6 +34,7 @@ import world.inclub.bonusesrewards.shared.wallet.domain.model.WalletTransaction;
 import world.inclub.bonusesrewards.shared.wallet.domain.port.WalletRepositoryPort;
 import world.inclub.bonusesrewards.shared.wallet.domain.port.WalletTransactionRepositoryPort;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
@@ -50,6 +53,7 @@ public class CarPaymentAutoPaymentService
     private final CarBonusApplicationRepositoryPort carBonusApplicationRepositoryPort;
     private final WalletTransactionRepositoryPort walletTransactionRepositoryPort;
     private final ClassificationRepositoryPort classificationRepositoryPort;
+    private final MemberRankDetailRepositoryPort memberRankDetailRepositoryPort;
     private final ExchangeRateRepositoryPort exchangeRateRepositoryPort;
     private final WalletRepositoryPort walletRepositoryPort;
     private final CarPaymentScheduleFactory carPaymentScheduleFactory;
@@ -122,14 +126,51 @@ public class CarPaymentAutoPaymentService
                 .flatMap(tuple2 -> {
                     CarAssignment carAssignment = tuple2.getT1();
                     Classification classification = tuple2.getT2();
-                    return walletRepositoryPort
+
+                    Mono<Wallet> walletMono = walletRepositoryPort
                             .findByMemberId(carAssignment.memberId())
-                            .flatMap(wallet -> {
-                                Wallet updatedWallet = walletFactory.updateWalletBalance(wallet,
-                                                                                         schedule.memberAssumedPayment());
+                            .switchIfEmpty(Mono.error(new EntityNotFoundException(
+                                    "Wallet not found for member ID: " + carAssignment.memberId())));
+
+                    Mono<MemberRankDetail> memberRankDetailMono = memberRankDetailRepositoryPort
+                            .findByMemberId(carAssignment.memberId())
+                            .switchIfEmpty(Mono.error(new EntityNotFoundException(
+                                    "Member Rank Detail not found for member ID: " + carAssignment.memberId())));
+
+                    return Mono.zip(walletMono, memberRankDetailMono)
+                            .flatMap(objects -> {
+                                Wallet wallet = objects.getT1();
+                                MemberRankDetail memberRankDetail = objects.getT2();
+
+                                // Find current rank and classification rank positions
+                                Rank currentRank = ranks.stream()
+                                        .filter(r -> r.id().equals(memberRankDetail.rankId()))
+                                        .findFirst()
+                                        .orElse(Rank.empty());
+                                Rank classificationRank = ranks.stream()
+                                        .filter(r -> r.id().equals(classification.rankId()))
+                                        .findFirst()
+                                        .orElse(Rank.empty());
+
+                                boolean applyBonus = currentRank.position() != null &&
+                                        classificationRank.position() != null &&
+                                        currentRank.position() >= classificationRank.position();
+
+                                BigDecimal amountToPay = applyBonus ?
+                                        schedule.memberAssumedPayment() :
+                                        schedule.total();
+
+                                Wallet updatedWallet = walletFactory.updateWalletBalance(wallet, amountToPay);
                                 String descriptionRecharge = getReferenceRechargeForSchedule(classification, ranks);
-                                WalletTransaction rechargeWallet = walletTransactionFactory
-                                        .createRechargeWallet(schedule, wallet, exchangeRate.id(), descriptionRecharge);
+                                WalletTransaction rechargeWallet = null;
+
+                                if (applyBonus) {
+                                    rechargeWallet = walletTransactionFactory
+                                            .createRechargeWallet(schedule,
+                                                                  wallet,
+                                                                  exchangeRate.id(),
+                                                                  descriptionRecharge);
+                                }
 
                                 String descriptionDiscount = getReferenceDiscountForSchedule(schedule);
                                 WalletTransaction discountWallet = walletTransactionFactory
@@ -138,11 +179,16 @@ public class CarPaymentAutoPaymentService
 
                                 String description = String.format("%s : %s", descriptionRecharge, descriptionDiscount);
                                 CarBonusApplication carBonusApplication = carBonusApplicationFactory
-                                        .create(schedule, description);
+                                        .create(schedule, description, applyBonus);
+
+                                List<WalletTransaction> transactions = applyBonus ?
+                                        List.of(rechargeWallet, discountWallet) :
+                                        List.of(discountWallet);
+
                                 return walletRepositoryPort
                                         .save(updatedWallet)
                                         .then(walletTransactionRepositoryPort
-                                                      .saveAll(List.of(rechargeWallet, discountWallet))
+                                                      .saveAll(transactions)
                                                       .then(carBonusApplicationRepositoryPort
                                                                     .save(carBonusApplication))
                                         )

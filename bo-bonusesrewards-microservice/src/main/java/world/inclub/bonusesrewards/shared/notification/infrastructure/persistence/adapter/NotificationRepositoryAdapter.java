@@ -20,6 +20,12 @@ public class NotificationRepositoryAdapter
     private final NotificationR2dbcRepository notificationR2dbcRepository;
 
     @Override
+    public Mono<Notification> save(Notification notification) {
+        return notificationR2dbcRepository.save(toEntity(notification))
+                .map(this::toDomain);
+    }
+
+    @Override
     public Flux<Notification> saveAll(List<Notification> notifications) {
         return notificationR2dbcRepository.saveAll(
                         notifications.stream()

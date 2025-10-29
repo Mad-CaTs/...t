@@ -7,10 +7,10 @@ import reactor.core.publisher.Mono;
 import world.inclub.bonusesrewards.shared.notification.application.usecase.CreateNotificationUseCase;
 import world.inclub.bonusesrewards.shared.notification.application.usecase.GetLatestNotificationsUseCase;
 import world.inclub.bonusesrewards.shared.notification.application.usecase.MarkAsReadUseCase;
+import world.inclub.bonusesrewards.shared.notification.domain.factory.NotificationFactory;
 import world.inclub.bonusesrewards.shared.notification.domain.model.Notification;
 import world.inclub.bonusesrewards.shared.notification.domain.port.NotificationRepositoryPort;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,19 +22,16 @@ public class NotificationService
                    MarkAsReadUseCase {
 
     private final NotificationRepositoryPort notificationRepositoryPort;
+    private final NotificationFactory notificationFactory;
 
     @Override
     public Flux<Notification> createNotifications(List<Notification> notifications) {
         List<Notification> newNotifications = notifications.stream()
-                .map(n -> Notification.builder()
-                        .memberId(n.memberId())
-                        .typeId(n.typeId())
-                        .title(n.title())
-                        .message(n.message())
-                        .read(false)
-                        .createdAt(Instant.now())
-                        .readAt(null)
-                        .build())
+                .map(n -> notificationFactory.create(
+                        n.memberId(),
+                        n.typeId(),
+                        n.title(),
+                        n.message()))
                 .toList();
         return notificationRepositoryPort.saveAll(newNotifications);
     }

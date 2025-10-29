@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 import world.inclub.bonusesrewards.shared.payment.application.service.interfaces.PaymentService;
+import world.inclub.bonusesrewards.shared.payment.application.usecase.GetAllPaymentRejectionReasonsUseCase;
 import world.inclub.bonusesrewards.shared.payment.infrastructure.controllers.dto.CorrectPaymentRequest;
 import world.inclub.bonusesrewards.shared.payment.infrastructure.controllers.dto.MakePaymentRequest;
 import world.inclub.bonusesrewards.shared.payment.infrastructure.controllers.dto.RejectPaymentRequest;
@@ -23,6 +24,7 @@ public class PaymentController {
 
     private final PaymentService paymentService;
     private final PaymentRequestMapper paymentRequestMapper;
+    private final GetAllPaymentRejectionReasonsUseCase getAllPaymentRejectionReasonsUseCase;
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Mono<ResponseEntity<Object>> makePaymentMultipart(@Valid @ModelAttribute MakePaymentRequest request) {
@@ -40,14 +42,19 @@ public class PaymentController {
         return ResponseHandler.generateResponse(HttpStatus.OK, paymentService.rejectPayment(paymentId, request.getReasonId(), request.getDetail()), true);
     }
 
-    @PutMapping(value = "/{paymentId}/correct", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @GetMapping("/payment-rejection-reasons")
+    public Mono<ResponseEntity<Object>> getAllPaymentRejectionReasons() {
+        return ResponseHandler.generateResponse(HttpStatus.OK, getAllPaymentRejectionReasonsUseCase.getAllPaymentRejectionReasons(), true);
+    }
+
+    @PutMapping(value = "/{scheduleId}/correct", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Mono<ResponseEntity<Object>> correctRejectedPayment(
-            @PathVariable UUID paymentId,
+            @PathVariable UUID scheduleId,
             @Valid @ModelAttribute CorrectPaymentRequest request) {
         return ResponseHandler.generateResponse(
                 HttpStatus.OK,
                 paymentService.correctRejectedPayment(
-                        paymentId,
+                        scheduleId,
                         request.getVoucherFile(),
                         request.getOperationNumber(),
                         request.getNote()

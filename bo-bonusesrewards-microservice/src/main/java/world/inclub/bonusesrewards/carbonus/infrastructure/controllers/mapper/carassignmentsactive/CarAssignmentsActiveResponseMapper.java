@@ -26,7 +26,11 @@ public class CarAssignmentsActiveResponseMapper {
                 .assignedMonthlyBonusUsd(domain.assignedMonthlyBonusUsd())
                 .monthlyInstallmentUsd(domain.monthlyInstallmentUsd() != null ? domain.monthlyInstallmentUsd()
                         .toString() : "Sin Asignar")
+                .rewardedRankName(domain.rewardedRank() != null ? domain.rewardedRank().name() : "Unknown")
                 .currentRankName(domain.currentRank() != null ? domain.currentRank().name() : "Unknown")
+                .totalGpsUsd(domain.totalGpsUsd())
+                .totalInsuranceUsd(domain.totalInsuranceUsd())
+                .totalMandatoryInsuranceAmount(domain.totalMandatoryInsuranceAmount())
                 .assignedDate(DateTimeFormatter.formatInstantWithContext(domain.assignedDate()))
                 .build();
     }
