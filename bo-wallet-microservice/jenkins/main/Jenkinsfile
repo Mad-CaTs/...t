@@ -3,6 +3,8 @@ pipeline {
 
     parameters {
         string(name: 'COMMIT_HASH', defaultValue: '', description: 'Hash of the commit to deploy')
+        booleanParam(name: 'SKIP_SONAR', defaultValue: false, description: 'Skip SonarQube analysis')
+        booleanParam(name: 'SKIP_TESTS', defaultValue: false, description: 'Skip running tests')
     }
 
     environment {
@@ -17,6 +19,8 @@ pipeline {
         SSH_USER = 'elperez'
         SSH_IP = '212.56.44.91'
         BRANCH = 'master'
+        SONAR_TOKEN = 'sqa_580551e14490b1cc69f0060b654e1ed465cb0870'
+        SONAR_NAME = "${APP_IMAGE}-${BRANCH}"
     }
 
     stages {
@@ -35,26 +39,50 @@ pipeline {
 
         }
 
-       stage('Prepare repository') {
-           steps {
-               script {
-                   def command = """
-                       if [ -d ${REPO_DIR_PATH} ]; then
-                           cd ${REPO_DIR_PATH} && git fetch origin
-                       else
-                           git clone ${REPO_URL} ${REPO_DIR_PATH}
-                           cd ${REPO_DIR_PATH}
-                           git fetch origin
-                       fi
+        stage('Prepare repository') {
+            steps {
+                script {
+                    def command = """
+                        if [ -d ${REPO_DIR_PATH} ]; then
+                            cd ${REPO_DIR_PATH} && git fetch origin
+                        else
+                            git clone ${REPO_URL} ${REPO_DIR_PATH}
+                            cd ${REPO_DIR_PATH}
+                            git fetch origin
+                        fi
 
-                       cd ${REPO_DIR_PATH}
-                       ${params.COMMIT_HASH ? "git checkout ${params.COMMIT_HASH}" : "git checkout origin/${REPO_BRANCH}"}
-                       echo 'COMMIT_HASH:\$(git rev-parse HEAD)'
-                   """
-                   executeRemote(command)
-               }
-           }
-       }
+                        cd ${REPO_DIR_PATH}
+                        ${params.COMMIT_HASH ? "git checkout ${params.COMMIT_HASH}" : "git checkout origin/${REPO_BRANCH}"}
+                        echo 'COMMIT_HASH:\$(git rev-parse HEAD)'
+                    """
+                    executeRemote(command)
+                }
+            }
+        }
+
+        stage('SonarQube Analysis') {
+            when {
+                expression { !params.SKIP_SONAR }
+            }
+            steps {
+                script {
+                    def command = """
+                        cd ${REPO_DIR_PATH}
+                        docker run --rm \
+                            -v "${REPO_DIR_PATH}":/usr/src/app \
+                            -w /usr/src/app \
+                            maven:3.8-openjdk-17 \
+                            mvn clean verify sonar:sonar \
+                            -Dsonar.projectKey=${SONAR_NAME} \
+                            -Dsonar.projectName="${SONAR_NAME}" \
+                            -Dsonar.host.url=https://sonar.inclub.world \
+                            -Dsonar.login=${SONAR_TOKEN} \
+                            ${params.SKIP_TESTS ? '-DskipTests' : ''}
+                    """
+                    executeRemote(command)
+                }
+            }
+        }
 
         stage('Build image') {
             steps {

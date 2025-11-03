@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.r2dbc.core.DatabaseClient;
 import org.springframework.stereotype.Repository;
 
@@ -14,8 +15,10 @@ import reactor.core.publisher.Mono;
 import world.inclub.wallet.api.dtos.WalletTransactionResponseDTO;
 import world.inclub.wallet.domain.entity.WalletTransaction;
 import world.inclub.wallet.domain.port.IWalletTransactionPort;
+import world.inclub.wallet.infraestructure.exception.common.ResourceNotFoundException;
 import world.inclub.wallet.infraestructure.repository.IWalletTransactionRepository;
 
+@Slf4j
 @Repository
 @RequiredArgsConstructor
 public class WalletTransactionRepositoryImpl implements IWalletTransactionPort {
@@ -120,6 +123,13 @@ public class WalletTransactionRepositoryImpl implements IWalletTransactionPort {
     @Override
     public Mono<WalletTransaction> getWalletTransactionById(Long idWalletTransaction) {
         return iWalletTransactionRepository.findById(idWalletTransaction);
+    }
+
+    @Override
+    public Flux<WalletTransaction> getTransactionsByIdWallet(Long idWallet) {
+        log.info("Buscando transacciones para idWallet: {}", idWallet);
+        return iWalletTransactionRepository.findAllByIdWallet(idWallet)
+                .switchIfEmpty(Mono.error(new ResourceNotFoundException("No se encontraron transacciones para el wallet id: " + idWallet)));
     }
 
     public WalletTransactionResponseDTO mapRowToWalletTransactionResponseDTO(Map<String, Object> row) {

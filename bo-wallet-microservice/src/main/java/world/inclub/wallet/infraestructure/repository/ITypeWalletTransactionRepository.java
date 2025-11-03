@@ -12,4 +12,7 @@ public interface ITypeWalletTransactionRepository extends ReactiveCrudRepository
 
     @Query("SELECT * FROM bo_wallet.typewallettransaction WHERE idtypewallettransaction IN (:typeBonusIds) ORDER BY idtypewallettransaction ASC")
     Flux<TypeWalletTransaction> listTypeWalletTransactionByIds(List<Integer> typeBonusIds);
+
+    @Query("SELECT * FROM bo_wallet.typewallettransaction WHERE idtypewallettransaction IN (:ids)")
+    Flux<TypeWalletTransaction> findAllByIdTypeWalletTransactionIn(List<Integer> ids);
 }

@@ -722,4 +722,10 @@ public class WalletTransactionServiceImpl implements IWalletTransactionService {
         });
     }
 
+    @Override
+    public Flux<WalletTransaction> getTransactionsByIdWallet(Long idWallet) {
+        log.info("Obteniendo transacciones del wallet {}", idWallet);
+        return iWalletTransactionPort.getTransactionsByIdWallet(idWallet);
+    }
+
 }

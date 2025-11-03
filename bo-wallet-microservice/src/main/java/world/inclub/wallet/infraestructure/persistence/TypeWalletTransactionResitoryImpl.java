@@ -1,5 +1,6 @@
 package world.inclub.wallet.infraestructure.persistence;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import reactor.core.publisher.Flux;
@@ -10,6 +11,7 @@ import world.inclub.wallet.infraestructure.repository.ITypeWalletTransactionRepo
 
 import java.util.List;
 
+@Slf4j
 @Repository
 public class TypeWalletTransactionResitoryImpl implements ITypeWalletTransactionPort {
 
@@ -28,6 +30,12 @@ public class TypeWalletTransactionResitoryImpl implements ITypeWalletTransaction
     @Override
     public Flux<TypeWalletTransaction> listTypeWalletTransactionByIds(List<Integer> typeBonusIds) {
         return iTypeWalletTransactionRepository.listTypeWalletTransactionByIds(typeBonusIds);
+    }
+
+    @Override
+    public Flux<TypeWalletTransaction> findAllByIds(List<Integer> ids) {
+        log.info("Buscando descripciones para ids: {}", ids);
+        return iTypeWalletTransactionRepository.findAllByIdTypeWalletTransactionIn(ids);
     }
 
 }

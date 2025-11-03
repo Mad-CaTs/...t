@@ -14,5 +14,5 @@ public interface IWalletTransactionPort {
     Flux<WalletTransactionResponseDTO> getWalletTransferTransactionsResponse(int idWallet,List<Integer> transferTypeIds,String search);
     Flux<WalletTransactionResponseDTO> getWalletRechargeTransactionsResponse(int idWallet,Integer transferTypeIds,String search);
     Mono<WalletTransaction> getWalletTransactionById( Long idWalletTransaction);
-
+    Flux<WalletTransaction> getTransactionsByIdWallet(Long idWallet);
 }

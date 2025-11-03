@@ -51,4 +51,6 @@ public interface IWalletTransactionService {
 
     Mono<Boolean> registerTransferBetweenWallets(WalletTransactionRequest request);
 
+    Flux<WalletTransaction> getTransactionsByIdWallet(Long idWallet);
+
 }

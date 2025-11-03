@@ -11,5 +11,6 @@ public interface ITypeWalletTransactionPort {
 
     public Mono<TypeWalletTransaction> geTypeWalletTransactionByIdUser(int idTypeWalletTransaction);
     public Flux<TypeWalletTransaction> listTypeWalletTransactionByIds(List<Integer> typeBonusIds);
+    Flux<TypeWalletTransaction> findAllByIds(List<Integer> ids);
 
 }
