@@ -3,7 +3,7 @@ spring:
   devtools:
     add-properties: false
   r2dbc:
-    url: r2dbc:postgresql://${DB_HOSTNAME:212.56.44.91}:${DB_PORT:32534}/${DB_NAME:dev_inclub}
+    url: r2dbc:postgresql://${DB_HOSTNAME:212.56.44.91}:${DB_PORT:30472}/${DB_NAME:dev_inclub}
     username: ${DB_USER:postgres}
     password: ${DB_PASSWORD:CsOyVa08Q835}
   security:
@@ -65,3 +65,10 @@ application:
   description: bo-wallet-microservice
   version: v0.0.1-SNAPSHOT
   inceptionYear: 2024
+
+scheduler:
+  wallet:
+    balance:
+      reconciliation:
+        enabled: true
+        cron: "0 0 1 * * ?"

@@ -6,9 +6,9 @@ spring:
     add-properties: false
 
   r2dbc:
-    url: r2dbc:postgresql://${DB_HOSTNAME}:${DB_PORT}/${DB_NAME}
-    username: ${DB_USER}
-    password: ${DB_PASSWORD}
+    url: r2dbc:postgresql://${DB_HOSTNAME:212.56.44.91}:${DB_PORT:32534}/${DB_NAME:dev_bo_ticketera}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:CsOyVa08Q835}
 
   security:
     oauth2:
@@ -29,16 +29,8 @@ springdoc:
   swagger-ui:
     use-root-path: true
     oauth:
-      clientId: back-office
-      clientSecret: secret
-
-database:
-  host: ${DB_HOSTNAME}
-  port: ${DB_PORT}
-  user: ${DB_USER}
-  password: ${DB_PASSWORD}
-  database: ${DB_NAME}
-  driver: postgresql
+      clientId: ${OAUTH_CLIENT_ID:back-office}
+      clientSecret: ${OAUTH_CLIENT_SECRET:secret}
 
 storage:
   vouchers-folder: "30"
