@@ -6,6 +6,7 @@ public class ApiPaths {
     public static final String NAME_SERVICE_WALLET = "wallet";
     public static final String NAME_SERVICE_TOKENWALLETTRANSACTION ="tokenwallet";
     public static final String NAME_SERVICE_WALLETTRANSACTION = "wallettransaction";
+    public static final String NAME_SERVICE_WALLETBALANCESCHEDULED = "walletbalancescheduled";
     public static final String NAME_SERVICE_ELECTRONICPURSE = "electronicpurse";
     public static final String NAME_SERVICE_ACCOUNTBANK = "accountbank";
     public static final String NAME_SERVICE_SOLICITUDEACCOUNTBANK = "solicitudebank";
