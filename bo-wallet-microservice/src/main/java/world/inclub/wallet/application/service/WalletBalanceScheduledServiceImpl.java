@@ -46,7 +46,7 @@ public class WalletBalanceScheduledServiceImpl {
                         })
                         .onErrorResume(error -> {
                             errorCount.incrementAndGet();
-                            log.error("Error processing Wallet ID: {} - {}",
+                            log.error("Error procesando Wallet ID: {} - {}",
                                     wallet.getIdWallet(), error.getMessage(), error);
                             return Mono.just(false);
                         })
@@ -69,7 +69,7 @@ public class WalletBalanceScheduledServiceImpl {
                     return Mono.just(result);
                 }))
                 .onErrorResume(error -> {
-                    log.error("Error during wallets reconciliation: {}", error.getMessage(), error);
+                    log.error("ERROR CRÍTICO en reconciliación de wallets: {}", error.getMessage(), error);
                     LocalDateTime endTime = LocalDateTime.now();
                     Duration duration = Duration.between(startTime, endTime);
 
@@ -90,7 +90,7 @@ public class WalletBalanceScheduledServiceImpl {
     }
 
     private Mono<Boolean> reconcileSingleWallet(Wallet wallet) {
-        log.debug("Processing Wallet ID: {}, User ID: {}", wallet.getIdWallet(), wallet.getIdUser());
+        log.debug("Procesando Wallet ID: {}, Usuario ID: {}", wallet.getIdWallet(), wallet.getIdUser());
 
         return walletTransactionPort.getTransactionsByIdWallet(wallet.getIdWallet())
                 .filter(tx -> tx.getIsSucessfulTransaction() != null && tx.getIsSucessfulTransaction())
@@ -98,7 +98,7 @@ public class WalletBalanceScheduledServiceImpl {
                 .collectList()
                 .flatMap(transactions -> {
                     if (transactions.isEmpty()) {
-                        log.debug("Wallet ID: {} does not have successful transactions", wallet.getIdWallet());
+                        log.debug("Wallet ID: {} no tiene transacciones exitosas", wallet.getIdWallet());
                         return validateAndUpdateIfNeeded(wallet, BigDecimal.ZERO);
                     }
 
@@ -106,7 +106,7 @@ public class WalletBalanceScheduledServiceImpl {
                     return validateAndUpdateIfNeeded(wallet, expectedBalance);
                 })
                 .onErrorResume(error -> {
-                    log.error("Error during wallet reconciliation ID: {} - {}",
+                    log.error("Error en reconciliación de Wallet ID: {} - {}",
                             wallet.getIdWallet(), error.getMessage());
                     return Mono.just(false);
                 });
@@ -128,7 +128,7 @@ public class WalletBalanceScheduledServiceImpl {
         boolean hasRetention = !currentAvailable.equals(currentAccounting);
 
         if (hasRetention) {
-            log.debug("Wallet ID: {} tiene retención (Disp: {}, Cont: {}). NO se balancea.",
+            log.info("Wallet ID: {} tiene retención (Disp: {}, Cont: {}). NO se balancea.",
                     wallet.getIdWallet(), currentAvailable, currentAccounting);
             return Mono.just(false);
         }
@@ -147,19 +147,19 @@ public class WalletBalanceScheduledServiceImpl {
             return walletPort.updateWallet(wallet)
                     .doOnSuccess(updated -> {
                         if (updated) {
-                            log.info("Wallet ID: {} updated successfully", wallet.getIdWallet());
+                            log.info("Wallet ID: {} ACTUALIZADO correctamente", wallet.getIdWallet());
                         } else {
-                            log.error("Error updating... Wallet ID: {}", wallet.getIdWallet());
+                            log.error("Falló actualización de Wallet ID: {}", wallet.getIdWallet());
                         }
                     });
         } else {
-            log.debug("Wallet ID: {} - Balance OK, no update needed", wallet.getIdWallet());
+            log.debug("✓ Wallet ID: {} - Saldos OK, no requiere actualización", wallet.getIdWallet());
             return Mono.just(false);
         }
     }
 
     private void logSummary(WalletScheduledResult result) {
-        log.info("=== RESUMEN DE RECONCILIACIÓN ===");
+        log.info("=== RESUMEN FINAL DE RECONCILIACIÓN ===");
         log.info("Hora de inicio: {}", result.getStartTime());
         log.info("Hora de fin: {}", result.getEndTime());
         log.info("Duración: {} minutos {} segundos",
@@ -171,7 +171,20 @@ public class WalletBalanceScheduledServiceImpl {
         log.info("Errores: {}", result.getTotalErrors());
 
         if (result.getCriticalError() != null) {
-            log.error("ERROR: {}", result.getCriticalError());
+            log.error("ERROR CRÍTICO: {}", result.getCriticalError());
+        }
+
+        if (result.getTotalProcessed() > 0) {
+            double errorRate = (double) result.getTotalErrors() / result.getTotalProcessed() * 100;
+            double updateRate = (double) result.getTotalUpdated() / result.getTotalProcessed() * 100;
+
+            if (errorRate > 10) {
+                log.error("ALERTA CRÍTICA: {}% de wallets con errores", String.format("%.2f", errorRate));
+            }
+
+            if (updateRate > 10) {
+                log.warn("ALERTA: {}% de wallets requirieron actualización", String.format("%.2f", updateRate));
+            }
         }
 
         log.info("=== FIN DE RECONCILIACIÓN ===");

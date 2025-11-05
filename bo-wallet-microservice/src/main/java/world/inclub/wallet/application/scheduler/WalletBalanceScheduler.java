@@ -24,7 +24,7 @@ public class WalletBalanceScheduler {
             zone = "America/Lima"
     )
     public void executeBalanceReconciliation() {
-        log.info("Iniciando cronjob de reconciliación de saldos de wallet");
+        log.info("Iniciando cronjob de reconciliación de saldos de wallet [Programado: 1:00 AM]");
 
         reconciliationService.reconcileAllWallets()
                 .doOnSuccess(result -> {
@@ -36,7 +36,7 @@ public class WalletBalanceScheduler {
                     }
                 })
                 .doOnError(error -> {
-                    log.error("Error en cronjob de reconciliación: {}",
+                    log.error("Error crítico en cronjob de reconciliación: {}",
                             error.getMessage(), error);
                 })
                 .subscribe();

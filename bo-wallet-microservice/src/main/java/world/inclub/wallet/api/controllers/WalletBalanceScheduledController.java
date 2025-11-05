@@ -20,6 +20,8 @@ public class WalletBalanceScheduledController {
 
     @PostMapping("/execute-manual")
     public Mono<ResponseEntity<String>> executeManualReconciliation() {
+        log.info("Solicitud de ejecución manual de reconciliación recibida");
+
         return reconciliationService.reconcileAllWallets()
                 .map(result -> ResponseEntity.ok(
                         String.format("Reconciliación completada: %d procesados, %d actualizados, %d errores",
